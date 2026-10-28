@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.35.0";
+const VERSION = "1.33.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -170,7 +170,6 @@ const STRINGS = {
     "toggle": "Turn on/off",
     "confirm_off": "Cycle running – click again to cut power",
     "f_name": "Name",
-    "f_labels": "Custom tile labels (key: text)",
     "f_entity": "Status entity (switch, sensor, input_select…)",
     "f_power": "Power sensor (W)",
     "f_energy": "Energy sensor (kWh)",
@@ -216,12 +215,7 @@ const STRINGS = {
     "energy_day": "Today",
     "energy_week": "This week",
     "energy_month": "This month",
-    "f_energy_period": "Energy shown (counter or period)",
-    "flex_temp": "Flex zone",
-    "f_flex_temperature": "Flex zone temperature sensor",
-    "f_flex_max_temperature": "Alert flex zone above (°C)",
-    "f_illustration_size": "Illustration size",
-    "f_transparent": "Transparent background"
+    "f_energy_period": "Energy shown (counter or period)"
   },
   "de": {
     "washer": "Waschmaschine",
@@ -379,7 +373,6 @@ const STRINGS = {
     "toggle": "Ein/Aus",
     "confirm_off": "Zyklus läuft – erneut klicken zum Abschalten",
     "f_name": "Name",
-    "f_labels": "Eigene Kachelbeschriftungen (Schlüssel: Text)",
     "f_entity": "Status-Entität (switch, sensor, input_select…)",
     "f_power": "Leistungssensor (W)",
     "f_energy": "Energiesensor (kWh)",
@@ -425,12 +418,36 @@ const STRINGS = {
     "energy_day": "Heute",
     "energy_week": "Diese Woche",
     "energy_month": "Dieser Monat",
-    "f_energy_period": "Angezeigte Energie (Zähler oder Zeitraum)",
-    "flex_temp": "Flex-Zone",
-    "f_flex_temperature": "Temperatursensor Flex-Zone",
-    "f_flex_max_temperature": "Alarm Flex-Zone über (°C)",
-    "f_illustration_size": "Größe der Illustration",
-    "f_transparent": "Transparenter Hintergrund"
+    "f_energy_period": "Angezeigte Energie (Zähler oder Zeitraum)"
+  },
+it: {
+    washer: "Lavatrice", dryer: "Asciugatrice", dishwasher: "Lavastoviglie",
+    water_heater: "Scaldacqua", oven: "Forno", microwave: "Microonde", air_fryer: "Friggitrice ad aria", coffee_maker: "Macchina del caffè", tv: "TV", range_hood: "Cappa aspirante", towel_dryer: "Scaldasalviette", server_rack: "Armadio server (homelab)", desktop_pc: "PC desktop", laptop: "Portatile", online: "Online", f_max_power_rack: "Carico massimo (W)", f_power_solar: "Sensore potenza surplus solare (W)", f_energy_solar: "Sensore energia surplus solare (kWh)", solar_surplus: "Surplus solare", mode_off: "Spento", wine_cooler: "Cantinetta vino", f_max_temperature_wine: "Avviso sopra (°C)", f_show_modes: "Mostra pulsanti modalità", grid: "Rete elettrica", energy_grid: "Energia dalla rete", energy_solar: "Energia solare", ac_split: "Climatizzatore (unità interna)", heat_pump: "Pompa di calore (unità esterna)", ac_dry: "Deumidificazione", ac_fan: "Solo ventilazione", at_target: "Temperatura raggiunta", defrost: "Sbrinamento", f_hvac: "Modalità senza entità climate", screen_on: "Acceso", lights: "Solo luci", f_light: "Entità luce (opzionale)", brewing: "Preparazione caffè", keep_warm: "Mantenimento in caldo", f_style: "Tipo di macchina del caffè", f_warm_threshold: "Mantenimento in caldo / pronta sopra (W)", fridge: "Frigorifero", pellet_stove: "Stufa a pellet", pool_pump: "Pompa piscina", printer_3d: "Stampante 3D", chest_freezer: "Congelatore a pozzetto", drawer_freezer: "Congelatore verticale", solar: "Pannelli solari", vmc: "Ventola di estrazione", hob: "Piano cottura", radiator: "Radiatore elettrico",
+    comfort: "Comfort", eco: "Eco", frost: "Antigelo", window_open: "Finestra aperta", f_mode: "Entità modalità (filo pilota, select…)", f_window: "Sensore finestra", f_max_power_rad: "Potenza radiatore (W)",
+    cooking: "Cottura", residual: "Calore residuo", zones: "Zone attive", f_zone_power: "Potenza di una zona (W)", f_zone_1: "Zona anteriore sinistra (livello o W)", f_zone_2: "Zona anteriore destra", f_zone_3: "Zona posteriore sinistra", f_zone_4: "Zona posteriore destra", f_residual_minutes: "Visualizza calore residuo (min)",
+    speed1: "Velocità bassa", speed2: "Velocità alta", humid: "Umidità elevata", humidity: "Umidità", f_humidity: "Sensore umidità (%)", f_high_threshold: "Velocità alta sopra (W)", f_humidity_max: "Avviso umidità sopra (%)",
+    producing: "In produzione", low: "Produzione bassa", night: "Notte", production: "Produzione", savings: "Risparmio", f_sun_entity: "Entità sole", f_max_power_solar: "Potenza di picco (Wp)",
+    printing: "Stampa in corso", paused: "In pausa", failed: "Non riuscita", progress: "Avanzamento", nozzle: "Ugello", bed: "Piano",
+    f_bed_temperature: "Sensore temperatura piano", f_filament_color: "Colore filamento (CSS)",
+    filtering: "Filtrazione", water: "Acqua", today: "Oggi", speed: "Velocità",
+    f_runtime: "Sensore durata filtrazione odierna", f_speed: "Sensore velocità (giri/min o %)", f_max_power: "Potenza massima alla massima velocità (W)",
+    ignition: "Accensione", extinguishing: "Spegnimento", alarm: "Allarme", pellets: "Pellet", pellets_low: "Pellet in esaurimento", level: "Livello",
+    f_power_level: "Sensore livello di calore (1-5)", f_pellet_level: "Sensore livello pellet (%)", f_ignition_threshold: "Accensione sopra (W)", f_pellet_alert: "Avviso pellet sotto (%)",
+    off: "Spento", idle: "Inattivo", standby: "Stand-by", running: "In funzione", finished: "Terminato",
+    heating: "Riscaldamento", ready: "Pronto", preheating: "Preriscaldamento", cooling: "Raffreddamento",
+    door_open: "Sportello aperto", unavailable: "Non disponibile", too_warm: "Temperatura troppo alta",
+    ph_wash: "Lavaggio", ph_rinse: "Risciacquo", ph_spin: "Centrifuga", ph_dry: "Asciugatura", ph_cool: "Raffreddamento",
+    power: "Potenza", energy: "Energia", cost: "Costo", remaining: "Rimanente", program: "Programma",
+    temperature: "Temperatura", target: "Obiettivo", fridge_temp: "Frigorifero", freezer_temp: "Congelatore",
+    ends_at: "Fine alle", toggle: "Accendi/spegni", confirm_off: "Ciclo in corso: premi di nuovo per interrompere l'alimentazione",
+    f_name: "Nome", f_entity: "Entità stato (switch, sensor, input_select…)",
+    f_power: "Sensore potenza (W)", f_energy: "Sensore energia (kWh)", f_cost: "Sensore costo",
+    f_remaining: "Sensore tempo rimanente", f_progress: "Sensore avanzamento (%)", f_program: "Sensore programma / fase",
+    f_door: "Sensore sportello", f_switch: "Interruttore da comandare (opzionale)", f_threshold: "Soglia di funzionamento (W)",
+    f_temperature: "Sensore temperatura", f_target_temperature: "Sensore temperatura obiettivo",
+    f_freezer_temperature: "Sensore temperatura congelatore", f_freezer_door: "Sensore sportello congelatore",
+    f_max_temperature: "Avviso frigorifero sopra (°C)", f_freezer_max_temperature: "Avviso congelatore sopra (°C)",
+    f_color: "Colore accento (CSS)", f_animations: "Animazioni", f_confirm_off: "Conferma prima di interrompere l'alimentazione durante un ciclo",
   },
   "fr": {
     "washer": "Lave-linge",
@@ -588,7 +605,6 @@ const STRINGS = {
     "toggle": "Allumer/éteindre",
     "confirm_off": "Cycle en cours – cliquer encore pour couper",
     "f_name": "Nom",
-    "f_labels": "Libellés perso des tuiles (clé : texte)",
     "f_entity": "Entité d'état (switch, sensor, input_select…)",
     "f_power": "Capteur de puissance (W)",
     "f_energy": "Capteur d'énergie (kWh)",
@@ -634,19 +650,9 @@ const STRINGS = {
     "energy_day": "Aujourd'hui",
     "energy_week": "Cette semaine",
     "energy_month": "Ce mois",
-    "f_energy_period": "Énergie affichée (compteur ou période)",
-    "flex_temp": "Zone flex",
-    "f_flex_temperature": "Capteur température zone flex",
-    "f_flex_max_temperature": "Alerte zone flex au-dessus de (°C)",
-    "f_illustration_size": "Taille de l'illustration",
-    "f_transparent": "Fond transparent"
+    "f_energy_period": "Énergie affichée (compteur ou période)"
   },
   "nb": {
-    "f_illustration_size": "Størrelse på illustrasjonen",
-    "f_transparent": "Gjennomsiktig bakgrunn",
-    "flex_temp": "Fleksisone",
-    "f_flex_temperature": "Temperatursensor fleksisone",
-    "f_flex_max_temperature": "Varsle fleksisone over (°C)",
     "energy_day": "I dag",
     "energy_week": "Denne uken",
     "energy_month": "Denne måneden",
@@ -807,7 +813,6 @@ const STRINGS = {
     "toggle": "Slå på/av",
     "confirm_off": "Syklus pågår – trykk igjen for å bryte strømmen",
     "f_name": "Navn",
-    "f_labels": "Egne flisetiketter (nøkkel: tekst)",
     "f_entity": "Status-entitet (switch, sensor, input_select…)",
     "f_power": "Effektsensor (W)",
     "f_energy": "Energisensor (kWh)",
@@ -1006,7 +1011,6 @@ const STRINGS = {
     "toggle": "Aan/uit",
     "confirm_off": "Cyclus bezig – klik nog eens om de stroom te onderbreken",
     "f_name": "Naam",
-    "f_labels": "Eigen tegellabels (sleutel: tekst)",
     "f_entity": "Statusentiteit (switch, sensor, input_select…)",
     "f_power": "Vermogenssensor (W)",
     "f_energy": "Energiesensor (kWh)",
@@ -1052,12 +1056,7 @@ const STRINGS = {
     "energy_day": "Vandaag",
     "energy_week": "Deze week",
     "energy_month": "Deze maand",
-    "f_energy_period": "Getoonde energie (teller of periode)",
-    "flex_temp": "Flexzone",
-    "f_flex_temperature": "Temperatuursensor flexzone",
-    "f_flex_max_temperature": "Alarm flexzone boven (°C)",
-    "f_illustration_size": "Grootte van de illustratie",
-    "f_transparent": "Transparante achtergrond"
+    "f_energy_period": "Getoonde energie (teller of periode)"
   },
   "ro": {
     "washer": "Mașină de spălat rufe",
@@ -1215,7 +1214,6 @@ const STRINGS = {
     "toggle": "Pornește/oprește",
     "confirm_off": "Ciclu în desfășurare – apasă din nou pentru a tăia alimentarea",
     "f_name": "Nume",
-    "f_labels": "Etichete proprii pentru plăci (cheie: text)",
     "f_entity": "Entitate de stare (switch, sensor, input_select…)",
     "f_power": "Senzor de putere (W)",
     "f_energy": "Senzor de energie (kWh)",
@@ -1261,12 +1259,7 @@ const STRINGS = {
     "energy_day": "Azi",
     "energy_week": "Săptămâna aceasta",
     "energy_month": "Luna aceasta",
-    "f_energy_period": "Energie afișată (contor sau perioadă)",
-    "flex_temp": "Zonă flex",
-    "f_flex_temperature": "Senzor temperatură zonă flex",
-    "f_flex_max_temperature": "Alertă zonă flex peste (°C)",
-    "f_illustration_size": "Dimensiunea ilustrației",
-    "f_transparent": "Fundal transparent"
+    "f_energy_period": "Energie afișată (contor sau perioadă)"
   },
   "ru": {
     "washer": "Стиральная машина",
@@ -1424,7 +1417,6 @@ const STRINGS = {
     "toggle": "Вкл./выкл.",
     "confirm_off": "Цикл выполняется – нажмите ещё раз, чтобы отключить питание",
     "f_name": "Название",
-    "f_labels": "Свои подписи плиток (ключ: текст)",
     "f_entity": "Сущность статуса (switch, sensor, input_select…)",
     "f_power": "Датчик мощности (Вт)",
     "f_energy": "Датчик энергии (кВт·ч)",
@@ -1470,18 +1462,14 @@ const STRINGS = {
     "energy_day": "Сегодня",
     "energy_week": "На этой неделе",
     "energy_month": "В этом месяце",
-    "f_energy_period": "Отображаемая энергия (счётчик или период)",
-    "flex_temp": "Флекс-зона",
-    "f_flex_temperature": "Датчик температуры флекс-зоны",
-    "f_flex_max_temperature": "Оповещать о флекс-зоне выше (°C)",
-    "f_illustration_size": "Размер иллюстрации",
-    "f_transparent": "Прозрачный фон"
+    "f_energy_period": "Отображаемая энергия (счётчик или период)"
   }
 };
 const lang = (hass) => {
-  let l = ((hass && (hass.locale?.language || hass.language)) || document.documentElement.lang || "en").toLowerCase().slice(0, 2);
-  if (l === "no" || l === "nn") l = "nb"; // norvégien : no / nn → nb (bokmål)
-  return STRINGS[l] ? l : "en";
+  const l = (hass && (hass.locale?.language || hass.language)) || document.documentElement.lang || "en";
+  const x = l.toLowerCase();
+  return x.startsWith("fr") ? "fr" : (x.startsWith("it") ? "it" : "en");
+
 };
 const tr = (hass, key) => STRINGS[lang(hass)][key] ?? STRINGS.en[key] ?? key;
 
@@ -1503,7 +1491,7 @@ const DEFS = `
 
 const lcd = (x, y, w, h) => `
 <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="1.5" fill="#0c1720" stroke="#8f98a2" stroke-width=".6"/>
-<text class="lcd" x="${x + w / 2}" y="${y + h / 2 + 0.3}" text-anchor="middle" dominant-baseline="central" fill="#7ec8e3">OFF</text>`;
+<text class="lcd" x="${x + w / 2}" y="${y + h / 2 + 2.5}" text-anchor="middle">OFF</text>`;
 
 const clothes = `
 <g class="clothes">
@@ -1905,7 +1893,7 @@ SVG.dishwasher = () => `
   <rect x="14" y="8" width="92" height="120" rx="6" fill="url(#ID-inox)" stroke="#9aa2ab" stroke-width=".8"/>
   <rect x="14" y="8" width="92" height="15" rx="6" fill="url(#ID-dark)"/>
   <rect x="14" y="17" width="92" height="6" fill="url(#ID-dark)"/>
-  ${lcd(45, 10, 30, 11)}
+  ${lcd(45, 11, 30, 9)}
   <circle class="led l1" cx="22" cy="15.5" r="1.4"/><circle class="led l2" cx="28" cy="15.5" r="1.4"/>
   <circle class="led l4" cx="34" cy="15.5" r="1.4"/>
   <rect x="82" y="12.5" width="7" height="6" rx="1.5" fill="#3b424a" stroke="#58616b" stroke-width=".5"/>
@@ -2038,7 +2026,7 @@ SVG.fan = () => `
 </g>`;
 
 /* style de réfrigérateur : congélateur en haut (défaut), en bas (tiroirs ou porte), French door, 4 portes, américain */
-const fridgeStyle = (c) => ({ top: "top", haut: "top", bottom: "bottom", bas: "bottom", combi: "bottom", french: "french", french_door: "french", bottom_door: "bottom_door", "bottom-door": "bottom_door", combi_door: "bottom_door", combi_porte: "bottom_door", combi_clean: "combi_clean", "combi-clean": "combi_clean", clean: "combi_clean", modern: "combi_clean", four_door: "four_door", "4_door": "four_door", "4-door": "four_door", cross_door: "four_door", american: "american", americain: "american", side_by_side: "american", us: "american" }[String(c?.style || "top").toLowerCase()] || "top");
+const fridgeStyle = (c) => ({ top: "top", haut: "top", bottom: "bottom", bas: "bottom", combi: "bottom", french: "french", french_door: "french", bottom_door: "bottom_door", "bottom-door": "bottom_door", combi_door: "bottom_door", combi_porte: "bottom_door", four_door: "four_door", "4_door": "four_door", "4-door": "four_door", cross_door: "four_door", american: "american", americain: "american", side_by_side: "american", us: "american" }[String(c?.style || "top").toLowerCase()] || "top");
 
 // contenu du compartiment frigo (bouteilles, pots, fruits, bac à légumes), dessiné dans la zone x, y, w, h
 const fridgeFood = (x, y, w, h) => {
@@ -2065,13 +2053,9 @@ const fzInside = (x, y, w, h) => `
 <rect x="${x + 5}" y="${y + h * 0.68 - 9}" width="${w * 0.5}" height="9" rx="2" fill="#d9eefb" stroke="#a9cbe2" stroke-width=".6"/>`;
 // afficheur température + flocon
 const fridgeLcd = (x, y) => `
-<rect x="${x}" y="${y}" width="30" height="14" rx="2" fill="#0c1720" stroke="#7d868f" stroke-width=".6"/>
-<g class="flake"><path d="M${x + 5.5} ${y + 4}v6M${x + 2.9} ${y + 5.5}l5.2 3M${x + 2.9} ${y + 8.5}l5.2-3" stroke="#38d9ff" stroke-width=".8" stroke-linecap="round"/></g>
-<text class="lcd fr-temp" x="${x + 19.5}" y="${y + 10.8}" text-anchor="middle" fill="#38d9ff" font-size="11.5" font-weight="800">--°</text>`;
-// afficheur de la zone flex (option flex_temperature)
-const flexLcd = (x, y) => `
-<rect x="${x}" y="${y}" width="22" height="11" rx="2" fill="#0c1720" stroke="#7d868f" stroke-width=".6"/>
-<text class="lcd3" x="${x + 11}" y="${y + 8.4}" text-anchor="middle" fill="#7cf0c4" font-size="8.5" font-weight="800">--°</text>`;
+<rect x="${x}" y="${y}" width="24" height="12" rx="2" fill="#0c1720" stroke="#7d868f" stroke-width=".5"/>
+<text class="lcd fr-temp" x="${x + 14.5}" y="${y + 8.8}" text-anchor="middle">--°</text>
+<g class="flake"><path d="M${x + 4.5} ${y + 3}v6M${x + 1.9} ${y + 4.5}l5.2 3M${x + 1.9} ${y + 7.5}l5.2-3" stroke-width=".8" stroke-linecap="round"/></g>`;
 const FRIDGE_DEFS = `<defs>${DEFS}
 <linearGradient id="ID-in" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dfe9f2"/></linearGradient>
 <linearGradient id="ID-frost" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9f6ff"/><stop offset="1" stop-color="#bfe0f5"/></linearGradient></defs>`;
@@ -2100,7 +2084,9 @@ const FRIDGE = {
 <g class="fr-door">
   <rect x="26" y="46" width="68" height="84" rx="6" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
   <rect x="84" y="52" width="3.4" height="40" rx="1.7" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
-  ${fridgeLcd(35, 54)}
+  <rect x="35" y="54" width="24" height="12" rx="2" fill="#0c1720" stroke="#7d868f" stroke-width=".5"/>
+  <text class="lcd fr-temp" x="49.5" y="62.8" text-anchor="middle">--°</text>
+  <g class="flake"><path d="M39.5 57v6M36.9 58.5l5.2 3M36.9 61.5l5.2-3" stroke-width=".8" stroke-linecap="round"/></g>
   <path d="M30 50v76" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
 </g>`,
 
@@ -2118,7 +2104,7 @@ ${fzDrawer(26, 85, 68, 22, "fzd fzd-pull")}
 <g class="fr-door">
   <rect x="26" y="4" width="68" height="79" rx="6" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
   <rect x="84" y="40" width="3.4" height="38" rx="1.7" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
-  ${fridgeLcd(45, 11.5)}
+  ${fridgeLcd(35, 12)}
   <path d="M30 8v71" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
 </g>`,
 
@@ -2132,34 +2118,18 @@ ${fridgeFood(29, 7, 62, 74)}
 ${fzInside(29, 86, 62, 41)}
 <g class="fz-door">
   <rect x="26" y="84" width="68" height="46" rx="6" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
+  <rect x="84" y="90" width="3.4" height="26" rx="1.7" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
   <path d="M30 88v38" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
 </g>
 <g class="fr-door">
   <rect x="26" y="4" width="68" height="79" rx="6" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
-  ${fridgeLcd(45, 11.5)}
+  <rect x="84" y="40" width="3.4" height="38" rx="1.7" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
+  ${fridgeLcd(35, 12)}
   <path d="M30 8v71" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
 </g>`,
 
   // 4 portes (cross door) : deux portes battantes en haut, deux portes battantes de congélateur en bas
-    // combiné moderne (sans poignées saillantes, frigo en haut, congélateur battant en bas)
-  combi_clean: () => `
-<ellipse cx="60" cy="134" rx="40" ry="4.5" fill="url(#ID-shadow)"/>
-<rect x="26" y="4" width="68" height="126" rx="6" fill="#9aa2ab"/>
-<rect x="29" y="7" width="62" height="74" rx="3" fill="url(#ID-in)"/>
-${fridgeFood(29, 7, 62, 74)}
-<rect class="flight" x="29" y="7" width="62" height="74" fill="#fffbe6" opacity="0"/>
-${fzInside(29, 86, 62, 41)}
-<g class="fz-door">
-  <rect x="26" y="84" width="68" height="46" rx="6" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
-  <path d="M30 88v38" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
-</g>
-<g class="fr-door">
-  <rect x="26" y="4" width="68" height="79" rx="6" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
-  ${fridgeLcd(45, 11.5)}
-  <path d="M30 8v71" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
-</g>`,
-
-  four_door: (flex) => `
+  four_door: () => `
 <ellipse cx="60" cy="134" rx="50" ry="4.5" fill="url(#ID-shadow)"/>
 <rect x="16" y="4" width="88" height="126" rx="6" fill="#9aa2ab"/>
 <rect x="19" y="7" width="82" height="70" rx="3" fill="url(#ID-in)"/>
@@ -2175,7 +2145,6 @@ ${fzInside(19, 82, 40, 45)}${fzInside(61, 82, 40, 45)}
   <rect x="60.4" y="80" width="43.6" height="50" rx="5" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
   <rect x="63.8" y="88" width="3.2" height="30" rx="1.6" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
   <path d="M71 84v42" stroke="#fff" stroke-opacity=".4" stroke-width="2"/>
-  ${flex ? flexLcd(74, 86) : ""}
 </g>
 <g class="fr-door fr-l">
   <rect x="16" y="4" width="43.6" height="75" rx="5" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
@@ -2190,7 +2159,7 @@ ${fzInside(19, 82, 40, 45)}${fzInside(61, 82, 40, 45)}
 </g>`,
 
   // French door : deux portes battantes en haut, deux tiroirs de congélation en bas
-  french: (flex) => `
+  french: () => `
 <ellipse cx="60" cy="134" rx="50" ry="4.5" fill="url(#ID-shadow)"/>
 <rect x="16" y="4" width="88" height="126" rx="6" fill="#9aa2ab"/>
 <rect x="19" y="7" width="82" height="70" rx="3" fill="url(#ID-in)"/>
@@ -2199,7 +2168,7 @@ ${fridgeFood(19, 7, 82, 70)}
 <rect x="19" y="82" width="82" height="45" rx="3" fill="url(#ID-frost)"/>
 <path d="M21 106h78" stroke="#a9cbe2" stroke-width="1"/>
 ${fzDrawer(16, 106, 88, 24, "fzd")}
-<g class="fzd fzd-pull">${fzDrawer(16, 81, 88, 23, "")}${flex ? flexLcd(76, 88) : ""}</g>
+${fzDrawer(16, 81, 88, 23, "fzd fzd-pull")}
 <g class="fr-door fr-l">
   <rect x="16" y="4" width="43.6" height="75" rx="5" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
   <rect x="53" y="16" width="3.2" height="46" rx="1.6" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
@@ -2243,7 +2212,7 @@ ${fridgeFood(62, 7, 43, 120)}
 </g>`,
 };
 
-SVG.fridge = (c) => `${FRIDGE_DEFS}${FRIDGE[fridgeStyle(c)](!!(c && c.flex_temperature))}${fridgeMist}`;
+SVG.fridge = (c) => `${FRIDGE_DEFS}${FRIDGE[fridgeStyle(c)]()}${fridgeMist}`;
 
 /* Carte générique : l'utilisateur fournit sa propre image (option `image`) */
 SVG.generic = (c = {}) => {
@@ -3171,7 +3140,7 @@ const DEF = {
     fields: ["entity", "power", "energy", "cost", "temperature", "zone2_temperature", "door", "switch"],
     keys: ["cave_a_vin", "cave", "vin", "wine", "cellar", "wine_cooler", "wine_fridge", "vinotheque"] },
   fridge: { accent: "cold", threshold: 20,
-    fields: ["entity", "power", "energy", "cost", "temperature", "freezer_temperature", "flex_temperature", "door", "freezer_door", "switch"],
+    fields: ["entity", "power", "energy", "cost", "temperature", "freezer_temperature", "door", "freezer_door", "switch"],
     keys: ["refrigerateur", "frigo", "fridge", "refrigerator", "frigidaire"] },
   pellet_stove: { accent: "heat", threshold: 20,
     fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "power_level", "pellet_level", "switch"],
@@ -3316,7 +3285,6 @@ class ApplianceCardBase extends HTMLElement {
 
   setConfig(config) {
     if (!config) throw new Error("Invalid configuration");
-    if (window.applianceSize) window.applianceSize(this, config);
     if (!["entity", "power", "power_solar", "switch", "temperature", "zone_1"].some((f) => config[f])) {
       throw new Error(tr(undefined, "err_need_entity"));
     }
@@ -3340,7 +3308,7 @@ class ApplianceCardBase extends HTMLElement {
   disconnectedCallback() { clearInterval(this._tick); }
 
   getCardSize() { return 4; }
-  getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+  getGridOptions() { return { columns: 12, min_columns: 6 }; }
 
   // liste des capteurs de buse (imprimante multi-buses) ; une simple chaîne est acceptée
   _nozzles() {
@@ -3351,7 +3319,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "power_level", "pellet_level", "runtime", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door"].map((k) => c[k]).filter(Boolean).concat(this._nozzles())
+      "power_level", "pellet_level", "runtime", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "freezer_door"].map((k) => c[k]).filter(Boolean).concat(this._nozzles())
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -3428,7 +3396,7 @@ class ApplianceCardBase extends HTMLElement {
       energy: S(c.energy), energyS: S(c.energy_solar), cost: S(c.cost), remaining: parseRemaining(S(c.remaining)),
       progress: num(S(c.progress)), program: S(c.program), door: S(c.door),
       temp: S(c.temperature), target: S(c.target_temperature),
-      ftemp: S(c.freezer_temperature), fdoor: S(c.freezer_door), flex: S(c.flex_temperature),
+      ftemp: S(c.freezer_temperature), fdoor: S(c.freezer_door),
       level: num(S(c.power_level)), pellets: num(S(c.pellet_level)),
       runtime: parseRemaining(S(c.runtime)), speed: S(c.speed), bedTemp: num(S(c.bed_temperature)), humidity: num(S(c.humidity)), mode: S(c.mode), window: S(c.window), light: S(c.light), keg: num(S(c.keg_level)), pouring: S(c.pouring), batt: num(S(c.battery_level)), zone2: num(S(c.zone2_temperature)), zone2Ent: S(c.zone2_temperature),
       status: "idle", phase: null, alerts: [],
@@ -3437,12 +3405,8 @@ class ApplianceCardBase extends HTMLElement {
       if (!m.temp && main.attributes.current_temperature != null) m.tempVal = main.attributes.current_temperature;
       if (!m.target && main.attributes.temperature != null) m.targetVal = main.attributes.temperature;
     }
-    // une entité climate / water_heater dans temperature ou target_temperature : son état est un mode (« off », « heat »),
-    // les valeurs sont dans current_temperature et temperature
-    const tOf = (st, key) => (st && ["climate", "water_heater"].includes(domainOf(st.entity_id))
-      ? (st.attributes[key] != null && Number.isFinite(Number(st.attributes[key])) ? Number(st.attributes[key]) : null) : num(st));
-    if (m.tempVal == null) m.tempVal = tOf(m.temp, "current_temperature");
-    if (m.targetVal == null) m.targetVal = tOf(m.target, "temperature");
+    if (m.tempVal == null) m.tempVal = num(m.temp);
+    if (m.targetVal == null) m.targetVal = num(m.target);
     m.tempUnit = m.temp?.attributes.unit_of_measurement || hass.config?.unit_system?.temperature || "°C";
     m.nozzles = kind === "printer_3d" ? this._nozzles() : [];
     if (m.nozzles.length) {
@@ -3710,9 +3674,6 @@ class ApplianceCardBase extends HTMLElement {
       const maxF = c.max_temperature ?? 8, maxZ = c.freezer_max_temperature ?? -12;
       if (m.tempVal != null && m.tempVal > maxF) m.alerts.push("too_warm");
       if (num(m.ftemp) != null && num(m.ftemp) > maxZ) m.alerts.push("too_warm");
-      // zone flex (3e compartiment à température réglable) : alerte seulement si un seuil est donné
-      m.flexVal = m.flex && ["climate", "water_heater"].includes(domainOf(m.flex.entity_id)) ? num({ state: m.flex.attributes.current_temperature }) : num(m.flex);
-      if (m.flexVal != null && c.flex_max_temperature != null && m.flexVal > c.flex_max_temperature) m.alerts.push("too_warm");
     } else {
       m.status = base;
     }
@@ -3919,8 +3880,6 @@ class ApplianceCardBase extends HTMLElement {
     const sr = this.shadowRoot;
     const lcdEl = sr.querySelector(".lcd");
     if (lcdEl) lcdEl.textContent = this._lcdText(m);
-    const lcd3 = sr.querySelector(".lcd3");
-    if (lcd3) lcd3.textContent = m.status === "unavailable" || m.flexVal == null ? "--°" : `${fmtNum(hass, m.flexVal, 0)}°`;
     const lcd2 = sr.querySelector(".lcd2");
     if (lcd2) lcd2.textContent = m.status === "unavailable" ? "--" : m.zone2 != null ? `${fmtNum(hass, m.zone2, 0)}°` : "--°";
     if (kind === "generic" && Array.isArray(c.images)) {
@@ -4121,8 +4080,6 @@ class ApplianceCardBase extends HTMLElement {
         m.tempVal > (c.max_temperature ?? 8) ? "warn" : "");
       if (m.ftemp) tile("mdi:snowflake", fmtUnit(hass, m.ftemp, 1), lb("freezer_temp"), c.freezer_temperature,
         num(m.ftemp) > (c.freezer_max_temperature ?? -12) ? "warn" : "");
-      if (m.flexVal != null) tile("mdi:thermometer-lines", `${fmtNum(hass, m.flexVal, 1)} ${m.flex.attributes.unit_of_measurement || m.tempUnit}`, lb("flex_temp"), c.flex_temperature,
-        c.flex_max_temperature != null && m.flexVal > c.flex_max_temperature ? "warn" : "");
     } else if (kind === "radiator") {
       const te = c.temperature || (domainOf(c.entity) === "climate" ? c.entity : null);
       if (m.tempVal != null) tile("mdi:home-thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("temperature"), te);
@@ -4196,11 +4153,9 @@ const SEL = {
   door: { entity: { domain: "binary_sensor" } },
   freezer_door: { entity: { domain: "binary_sensor" } },
   switch: { entity: { domain: ["switch", "input_boolean", "light"] } },
-  // climate / water_heater acceptés : la carte lit alors current_temperature / temperature (pas l'état, qui est un mode)
-  temperature: { entity: { filter: [{ domain: ["sensor", "input_number"], device_class: "temperature" }, { domain: ["climate", "water_heater"] }] } },
-  target_temperature: { entity: { domain: ["sensor", "input_number", "number", "climate", "water_heater"] } },
+  temperature: { entity: { domain: ["sensor", "input_number"], device_class: "temperature" } },
+  target_temperature: { entity: { domain: ["sensor", "input_number", "number"] } },
   freezer_temperature: { entity: { domain: "sensor", device_class: "temperature" } },
-  flex_temperature: { entity: { domain: ["sensor", "climate"] } },
   power_level: { entity: { domain: ["sensor", "number", "input_number", "select", "input_select"] } },
   pellet_level: { entity: { domain: ["sensor", "number", "input_number"] } },
   runtime: { entity: { domain: ["sensor"] } },
@@ -4249,12 +4204,9 @@ function buildForm(kind) {
               { value: "french", label: "French door" }, { value: "four_door", label: "4 portes / 4-door" }, { value: "american", label: "Américain / Side-by-side" }] } } },
             { name: "max_temperature", selector: { number: { min: 0, max: 15, step: 0.5, mode: "box" } } },
             { name: "freezer_max_temperature", selector: { number: { min: -30, max: 0, step: 0.5, mode: "box" } } },
-            { name: "flex_max_temperature", selector: { number: { min: -30, max: 15, step: 0.5, mode: "box" } } },
           ] : []),
           ...(d.fields.includes("energy") ? [{ name: "energy_period", selector: { select: { mode: "dropdown", options: [
             { value: "", label: tr(null, "energy") }, ...["day", "week", "month"].map((value) => ({ value, label: tr(null, `energy_${value}`) }))] } } }] : []),
-          { name: "illustration_size", selector: { number: { min: 30, max: 300, step: 5, mode: "slider", unit_of_measurement: "%" } } },
-          { name: "transparent", selector: { boolean: {} } },
           { name: "animations", selector: { boolean: {} }, default: true },
           ...(kind === "generic" ? [{ name: "image", selector: { text: {} } }, { name: "images", selector: { object: {} } }] : []),
           ...(kind === "printer_3d" ? [
@@ -4375,10 +4327,9 @@ const STYLE = `
   --ac-alert: var(--appliance-alert-color, var(--error-color, #db4437));
   --ac-ok: var(--appliance-ok-color, var(--success-color, #43a047));
   --ac-lcd: #38d9ff;
-  display: block; height: 100%;
+  display: block;
 }
-/* carte plus haute que son contenu (grille en sections) : contenu centré verticalement ; « safe » garde le haut visible si ça déborde */
-ha-card { display: flex; flex-direction: column; justify-content: safe center; height: 100%; cursor: pointer; overflow: hidden; container-type: inline-size; }
+ha-card { display: block; height: 100%; cursor: pointer; overflow: hidden; container-type: inline-size; }
 .wrap { padding: 14px; display: flex; flex-direction: column; gap: 12px; --c: var(--ac-accent, var(--ac-active)); }
 .wrap.accent-heat { --c: var(--ac-accent, var(--ac-heat)); }
 .wrap.accent-cold { --c: var(--ac-accent, var(--ac-cold)); }
@@ -4388,7 +4339,7 @@ ha-card { display: flex; flex-direction: column; justify-content: safe center; h
 }
 .illus { grid-area: illus; } .head { grid-area: head; } .stats { grid-area: stats; }
 .illus {
-  width: calc(var(--appliance-illustration-size, 116px) * var(--illus-scale, 1)); flex: none; aspect-ratio: 120 / 140; border-radius: 16px; padding: 4px; box-sizing: content-box;
+  width: var(--appliance-illustration-size, 116px); flex: none; aspect-ratio: 120 / 140; border-radius: 16px; padding: 4px; box-sizing: content-box;
   background: radial-gradient(circle at 50% 40%, rgba(127,127,127,.10), rgba(127,127,127,.03) 70%);
 }
 .st-unavailable .illus { opacity: .5; filter: grayscale(1); }
@@ -4431,7 +4382,7 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .tile.warn .val, .tile.warn .lbl { color: var(--ac-alert); }
 @container (max-width: 400px) {
   .top { grid-template-areas: "illus head" "stats stats"; }
-  .illus { width: calc(var(--appliance-illustration-size-small, 84px) * var(--illus-scale, 1)); }
+  .illus { width: var(--appliance-illustration-size-small, 84px); }
   .stats { grid-template-columns: repeat(auto-fit, minmax(88px, 1fr)); }
 }
 /* carte très étroite (ex. 3 cartes côte à côte) : illustration au-dessus, titre et statut centrés et sur plusieurs lignes */
@@ -4442,18 +4393,6 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
   .name { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere; }
   .status { justify-content: center; flex-wrap: wrap; }
   .status span:last-child { white-space: normal; overflow: visible; text-overflow: clip; }
-  /* les tuiles gardent toute la largeur (justify-items: center les réduisait à leur contenu) */
-  .stats { justify-self: stretch; width: 100%; }
-}
-/* même disposition empilée, plus tôt, quand illustration_size agrandit le dessin (attribut posé par applianceSize) */
-@container (max-width: 320px) {
-  :host([illus-big]) .top { grid-template-columns: minmax(0, 1fr); grid-template-areas: "illus" "head" "stats"; justify-items: center; }
-  :host([illus-big]) .head { flex-direction: column; align-items: center; text-align: center; width: 100%; }
-  :host([illus-big]) .info { align-items: center; width: 100%; }
-  :host([illus-big]) .name { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere; }
-  :host([illus-big]) .status { justify-content: center; flex-wrap: wrap; }
-  :host([illus-big]) .status span:last-child { white-space: normal; overflow: visible; text-overflow: clip; }
-  :host([illus-big]) .stats { justify-self: stretch; width: 100%; }
 }
 
 /* Icon colors for power, yesterday energy, today energy and temperature */
@@ -4595,13 +4534,12 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
   margin-top: 1.5px !important;
 }
 
-﻿/* ---------- illustration: shared ---------- */
-.lcd { font: 700 8.5px ui-monospace, "Courier New", monospace; letter-spacing: .25px; fill: #7ec8e3 !important; font-weight: 700; dominant-baseline: central; transition: fill .3s; }
-.active .lcd { fill: var(--ac-lcd, #38d9ff) !important; }
-.st-finished .lcd { fill: #3ddc84 !important; }
-.k-oven .lcd, .k-microwave .lcd { fill: #6fd8ff !important; }
-.k-fridge .lcd { font-size: 11.5px !important; font-weight: 800 !important; fill: var(--ac-lcd, #38d9ff) !important; opacity: 1 !important; }
-.warm .fr-temp { fill: var(--ac-alert, #ff3b30) !important; }
+/* ---------- illustration: shared ---------- */
+.lcd { font: 700 7.2px "Courier New", ui-monospace, monospace; letter-spacing: .4px; fill: #24404f; transition: fill .3s; }
+.active .lcd { fill: var(--ac-lcd); }
+.st-finished .lcd { fill: #3ddc84; }
+.k-oven .lcd, .k-microwave .lcd { fill: #6fd8ff; }
+.warm .fr-temp { fill: var(--ac-alert); }
 .led { fill: #5a636d; transition: fill .3s; }
 .ph-wash .l1, .ph-heat .l1, .ph-dry .l1, .k-dishwasher.active .l1, .k-oven.active .l1,
 .ph-rinse .l2, .ph-cool .l2, .ph-spin .l3 { fill: var(--ac-lcd); }
@@ -5337,29 +5275,6 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-ceiling_fan.lights-on .cf-beam { opacity: 1; }
 @keyframes cf-down { to { stroke-dashoffset: -22; } }
 @keyframes cf-sway { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
-
-/* Global LCD & Screen Overrides: Maximum legibility on dark bezels across all cards */
-.wrap svg text.lcd, svg text.lcd, .lcd {
-  font-size: 8.5px !important;
-  letter-spacing: .25px !important;
-  fill: #7ec8e3 !important;
-  font-weight: 700 !important;
-  dominant-baseline: central;
-  opacity: 0.95 !important;
-}
-.wrap.active svg text.lcd, .wrap.active .lcd {
-  fill: var(--ac-lcd, #38d9ff) !important;
-  opacity: 1 !important;
-}
-.wrap.k-fridge svg text.lcd, .wrap.k-fridge .lcd {
-  font-size: 11.5px !important;
-  font-weight: 800 !important;
-  fill: var(--ac-lcd, #38d9ff) !important;
-  opacity: 1 !important;
-}
-.wrap.warm .fr-temp {
-  fill: var(--ac-alert, #ff3b30) !important;
-}
 `;
 
 /* ------------------------------------------------------------------ */
@@ -5478,7 +5393,6 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "ignition_threshold": "Ignition threshold (W)",
       "indexes": "Meter indexes",
       "invert": "Invert state",
-      "invert_position": "Invert position (open ↔ closed)",
       "invert_power": "Invert power sign",
       "jets_threshold": "Jets threshold (W)",
       "language": "Language",
@@ -5576,9 +5490,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "shutter_color": "Shutter colour",
       "show_slider": "Show sliders",
       "show_tilt": "Show tilt",
-      "image": "Your own image (URL)",
-      "illustration_size": "Illustration size",
-      "transparent": "Transparent background"
+      "image": "Your own image (URL)"
     },
     "de": {
       "animations": "Animationen",
@@ -5668,7 +5580,6 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "ignition_threshold": "Zündschwelle (W)",
       "indexes": "Zählerstände",
       "invert": "Zustand umkehren",
-      "invert_position": "Position umkehren (offen ↔ geschlossen)",
       "invert_power": "Leistungsvorzeichen umkehren",
       "jets_threshold": "Düsenschwelle (W)",
       "language": "Sprache",
@@ -5766,9 +5677,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "shutter_color": "Farbe des Ladens",
       "show_slider": "Schieberegler anzeigen",
       "show_tilt": "Neigung anzeigen",
-      "image": "Eigenes Bild (URL)",
-      "illustration_size": "Größe der Illustration",
-      "transparent": "Transparenter Hintergrund"
+      "image": "Eigenes Bild (URL)"
     },
     "fr": {
       "animations": "Animations",
@@ -5858,7 +5767,6 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "ignition_threshold": "Seuil d'allumage (W)",
       "indexes": "Index du compteur",
       "invert": "Inverser l'état",
-      "invert_position": "Inverser la position (ouvert ↔ fermé)",
       "invert_power": "Inverser le signe de la puissance",
       "jets_threshold": "Seuil des jets (W)",
       "language": "Langue",
@@ -5956,13 +5864,9 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "shutter_color": "Couleur du volet",
       "show_slider": "Afficher les curseurs",
       "show_tilt": "Afficher l'inclinaison",
-      "image": "Image perso (URL)",
-      "illustration_size": "Taille de l'illustration",
-      "transparent": "Fond transparent"
+      "image": "Image perso (URL)"
     },
     "nb": {
-      "illustration_size": "Størrelse på illustrasjonen",
-      "transparent": "Gjennomsiktig bakgrunn",
       "image": "Eget bilde (URL)",
       "sun_entity": "Sol-entitet (dag / natt)",
       "shutter_color": "Farge på skodden",
@@ -6056,7 +5960,6 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "ignition_threshold": "Tenningsterskel (W)",
       "indexes": "Målerindekser",
       "invert": "Inverter tilstand",
-      "invert_position": "Inverter posisjon (åpen ↔ lukket)",
       "invert_power": "Inverter effektfortegn",
       "jets_threshold": "Dyseterskel (W)",
       "language": "Språk",
@@ -6238,7 +6141,6 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "ignition_threshold": "Ontstekingsdrempel (W)",
       "indexes": "Meterstanden",
       "invert": "Status omkeren",
-      "invert_position": "Positie omkeren (open ↔ dicht)",
       "invert_power": "Teken van vermogen omkeren",
       "jets_threshold": "Jetsdrempel (W)",
       "language": "Taal",
@@ -6336,9 +6238,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "shutter_color": "Kleur van het luik",
       "show_slider": "Schuifregelaars tonen",
       "show_tilt": "Kanteling tonen",
-      "image": "Eigen afbeelding (URL)",
-      "illustration_size": "Grootte van de illustratie",
-      "transparent": "Transparante achtergrond"
+      "image": "Eigen afbeelding (URL)"
     },
     "ro": {
       "animations": "Animații",
@@ -6428,7 +6328,6 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "ignition_threshold": "Prag de aprindere (W)",
       "indexes": "Indexuri contor",
       "invert": "Inversează starea",
-      "invert_position": "Inversează poziția (deschis ↔ închis)",
       "invert_power": "Inversează semnul puterii",
       "jets_threshold": "Prag jeturi (W)",
       "language": "Limbă",
@@ -6526,9 +6425,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "shutter_color": "Culoarea obloanelor",
       "show_slider": "Afișează cursoarele",
       "show_tilt": "Afișează înclinarea",
-      "image": "Imagine proprie (URL)",
-      "illustration_size": "Dimensiunea ilustrației",
-      "transparent": "Fundal transparent"
+      "image": "Imagine proprie (URL)"
     },
     "ru": {
       "animations": "Анимации",
@@ -6618,7 +6515,6 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "ignition_threshold": "Порог розжига (Вт)",
       "indexes": "Индексы счётчика",
       "invert": "Инвертировать состояние",
-      "invert_position": "Инвертировать положение (открыто ↔ закрыто)",
       "invert_power": "Инвертировать знак мощности",
       "jets_threshold": "Порог форсунок (Вт)",
       "language": "Язык",
@@ -6716,9 +6612,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "shutter_color": "Цвет ставней",
       "show_slider": "Показывать ползунки",
       "show_tilt": "Показывать наклон",
-      "image": "Своё изображение (URL)",
-      "illustration_size": "Размер иллюстрации",
-      "transparent": "Прозрачный фон"
+      "image": "Своё изображение (URL)"
     }
   };
   const lang = (hass) => {
@@ -6728,17 +6622,6 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
     return L[l] ? l : 'en';
   };
   const human = (n) => { const t = String(n).replace(/^entity_/, '').replace(/_/g, ' '); return t.charAt(0).toUpperCase() + t.slice(1); };
-  // illustration_size (en %, 30 à 300) : échelle du dessin, lue par chaque carte via --illus-scale
-  window.applianceSize = (el, cfg) => {
-    const n = Number(cfg && cfg.illustration_size);
-    if (n > 0) el.style.setProperty('--illus-scale', String(Math.max(0.3, Math.min(3, n / 100))));
-    else el.style.removeProperty('--illus-scale');
-    // dessin agrandi : la carte passe en disposition empilée plus tôt (voir card.css), sinon le titre est tronqué
-    el.toggleAttribute('illus-big', n > 100);
-    // transparent : la carte laisse voir le fond du tableau de bord (variables de ha-card, héritées dans le shadow DOM)
-    const T = { '--ha-card-background': 'transparent', '--ha-card-box-shadow': 'none', '--ha-card-border-width': '0' };
-    for (const [k, v] of Object.entries(T)) { if (cfg && cfg.transparent) el.style.setProperty(k, v); else el.style.removeProperty(k); }
-  };
   window.applianceEditorLabel = (name, hass) => (name ? (L[lang(hass)] || L.en)[name] ?? L.en[name] ?? human(name) : '');
 })();
 
@@ -6816,6 +6699,15 @@ const I18N_AQUARIUM = {
     "name": "Аквариум",
     "alert": "Температура вне диапазона",
     "unavailable": "Недоступно"
+  },
+  "it": {
+    "power": "Potenza",
+    "energy": "Energia",
+    "temp": "Acqua",
+    "cost": "Costo",
+    "name": "Acquario",
+    "alert": "Temperatura fuori intervallo",
+    "unavailable": "Non disponibile"
   }
 };
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
@@ -6832,8 +6724,6 @@ class ApplianceAquariumCard extends HTMLElement {
       schema: [
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
-        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
-        { name: 'transparent', selector: { boolean: {} } },
         { name: 'entity_power', selector: { entity: { domain: 'sensor', device_class: 'power' } } },
         { name: 'entity_energy', selector: { entity: { domain: 'sensor', device_class: 'energy' } } },
         { name: 'entity_temperature', selector: { entity: { domain: 'sensor', device_class: 'temperature' } } },
@@ -6857,7 +6747,6 @@ class ApplianceAquariumCard extends HTMLElement {
   }
 
   setConfig(config) {
-    if (window.applianceSize) window.applianceSize(this, config);
     this._config = {
       show_power: true, show_energy: true, show_temperature: true, show_cost: true,
       temp_min: 24, temp_max: 27, price_per_kwh: 0.2, max_power: 200,
@@ -6877,7 +6766,6 @@ class ApplianceAquariumCard extends HTMLElement {
   }
 
   getCardSize() { return 5; }
-  getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
   _t(k) { return (I18N_AQUARIUM[this._config.language || lang(this._hass)] || I18N_AQUARIUM.en)[k] ?? I18N_AQUARIUM.en[k] ?? k; }
   // libellé perso (option labels) sinon traduction
@@ -6912,12 +6800,12 @@ class ApplianceAquariumCard extends HTMLElement {
     if (!this.shadowRoot) this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = `
     <style>
-      :host { display:block; }:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+      :host { display:block; }
       ha-card { padding:12px; overflow:hidden; }
       .title { font-weight:600; font-size:1.05em; margin:0 4px 8px; display:flex; justify-content:space-between; align-items:center; }
       .badge { font-size:.75em; color:#fff; background:#e53935; border-radius:10px; padding:2px 8px; display:none; animation:blink 1s infinite; }
       .alert .badge { display:inline-block; }
-      svg { width:100%; max-width:calc(100% * var(--illus-scale,1)); margin-left:auto; margin-right:auto; height:auto; display:block; border-radius:10px; transform:scale(0.8); transform-origin:top center; }
+      svg { width:100%; height:auto; display:block; border-radius:10px; transform:scale(0.8); transform-origin:top center; }
       .tint { fill:var(--water, #2a8fd6); opacity:.45; transition:fill 1.5s; }
       .night-overlay { fill:#050b24; opacity:0; transition:opacity 1.2s; }
       .night .night-overlay { opacity:.6; }
@@ -7180,6 +7068,25 @@ const I18N_LINKY = {
     "injection": "ИНДЕКС ЭКСПОРТА",
     "injection_power": "ЭКСПОРТ",
     "prod": "экспорт"
+  },
+  "it": {
+    "power": "POTENZA",
+    "hp": "INDICE F1",
+    "hc": "INDICE F2",
+    "tariff": "TARIFFA ATTUALE",
+    "cost": "COSTO OGGI",
+    "subscribed": "Impegnata",
+    "name": "Contatore Linky",
+    "conso": "consumo",
+    "alert": "Sovraccarico",
+    "active": "POTENZA ATTIVA",
+    "active_short": "Attiva",
+    "per_phase": "per fase",
+    "peak": "FASCIA F1",
+    "offpeak": "FASCIA F2",
+    "injection": "INDICE IMMISSIONE",
+    "injection_power": "IMMISSIONE",
+    "prod": "immissione"
   }
 };
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
@@ -7197,8 +7104,6 @@ class ApplianceLinkyCard extends HTMLElement {
       schema: [
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
-        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
-        { name: 'transparent', selector: { boolean: {} } },
         { name: 'entity_power', selector: { entity: { domain: 'sensor' } } },
         { name: 'entity_active_power', selector: { entity: { domain: 'sensor', device_class: 'power' } } },
         { type: 'grid', name: '', schema: [
@@ -7232,7 +7137,6 @@ class ApplianceLinkyCard extends HTMLElement {
   }
 
   setConfig(config) {
-    if (window.applianceSize) window.applianceSize(this, config);
     this._config = {
       show_gauge: true, show_phases: true, show_index: true, show_injection: true, show_tariff: true, show_cost: true,
       phase_gauge: 'needles', subscribed_power: 9, hc_ranges: '', ...config,
@@ -7247,7 +7151,6 @@ class ApplianceLinkyCard extends HTMLElement {
     if (l && l !== this._lng) { this._lng = l; this._hass = hass; this._built = false; this._build(); }
     this._hass = hass; this._update(); }
   getCardSize() { return 5; }
-  getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
   _t(k) { return (I18N_LINKY[this._config.language || lang(this._hass)] || I18N_LINKY.en)[k] ?? I18N_LINKY.en[k] ?? k; }
   // libellé perso (option labels) sinon traduction
   _l(k) { const L = this._config && this._config.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
@@ -7272,13 +7175,12 @@ class ApplianceLinkyCard extends HTMLElement {
     }).join('');
     this.shadowRoot.innerHTML = `
     <style>
-      :host { display:block; }:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+      :host { display:block; }
       ha-card { padding:12px; }
       .title { font-weight:600; margin:0 4px 10px; }
       .wrap { display:flex; gap:14px; align-items:center; flex-wrap:wrap; justify-content:center; }
       /* Boîtier : coque vert anis, cadre blanc, écran LCD vert sombre, 2 boutons, croix en bas */
-      /* illustration_size : le compteur (HTML) est agrandi d'un bloc avec zoom */
-      .box { zoom:var(--illus-scale,1); width:150px; background:linear-gradient(160deg,#d4ea35,#b5d11c); border-radius:10px; padding:16px 14px 14px;
+      .box { width:150px; background:linear-gradient(160deg,#d4ea35,#b5d11c); border-radius:10px; padding:16px 14px 14px;
         box-shadow:0 3px 10px rgba(0,0,0,.35), inset 0 0 0 2px rgba(255,255,255,.35); position:relative; }
       .eye { width:8px; height:8px; background:#1d2a05; border-radius:2px; margin:-6px auto 8px; }
       .bezel { background:linear-gradient(#f7f7f7,#dcdcdc); border-radius:12px; padding:10px 9px 8px; box-shadow:inset 0 0 0 1px #c9c9c9; }
@@ -7296,7 +7198,7 @@ class ApplianceLinkyCard extends HTMLElement {
       .led.conso { background:#ff3b30; box-shadow:0 0 8px #ff3b30; animation:pulse var(--pulse,2s) infinite; }
       .led.hc { background:#ffb300; box-shadow:0 0 8px #ffb300; } .led.hp { background:#f4511e; box-shadow:0 0 8px #f4511e; }
       .led.prod { background:#2a4a2a; } .led.prod.on { background:#43a047; box-shadow:0 0 8px #43a047; }
-      .gauge { flex:1; min-width:calc(170px * min(var(--illus-scale,1),1)); max-width:calc(260px * var(--illus-scale,1)); }
+      .gauge { flex:1; min-width:170px; max-width:260px; }
       .gauge svg { width:100%; display:block; transform:scale(0.8); transform-origin:top center; }
       .arc-bg { fill:none; stroke:rgba(127,127,127,.25); stroke-width:12; stroke-linecap:round; }
       .arc { fill:none; stroke:var(--gc,#43a047); stroke-width:12; stroke-linecap:round; transition:stroke-dashoffset 1s ease, stroke .6s; }
@@ -7613,6 +7515,19 @@ const I18N_BAT = {
     "full": "Полный заряд через",
     "empty": "Разрядка через",
     "low": "Низкий заряд"
+  },
+  "it": {
+    "name": "Batteria domestica",
+    "soc": "Carica",
+    "power": "Potenza",
+    "energy": "Energia",
+    "temp": "Temperatura",
+    "charging": "In carica",
+    "discharging": "In scarica",
+    "idle": "Inattiva",
+    "full": "Carica completa tra",
+    "empty": "Scarica completa tra",
+    "low": "Batteria scarica"
   }
 };
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
@@ -7626,8 +7541,6 @@ class ApplianceBatteryCard extends HTMLElement {
       schema: [
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
-        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
-        { name: 'transparent', selector: { boolean: {} } },
         { name: 'entity_soc', selector: { entity: { domain: 'sensor', device_class: 'battery' } } },
         { name: 'entity_power', selector: { entity: { domain: 'sensor', device_class: 'power' } } },
         { name: 'invert_power', selector: { boolean: {} } },
@@ -7653,7 +7566,6 @@ class ApplianceBatteryCard extends HTMLElement {
   }
 
   setConfig(config) {
-    if (window.applianceSize) window.applianceSize(this, config);
     // Convention : puissance > 0 = charge (inverser avec invert_power si ton capteur est l'inverse)
     this._config = { show_power: true, show_energy: true, show_temperature: true, show_time: true,
       capacity_kwh: 10, max_power: 5000, low_threshold: 15, invert_power: false, status_position: 'auto', layout: 'default', ...config };
@@ -7667,7 +7579,6 @@ class ApplianceBatteryCard extends HTMLElement {
     this._update();
   }
   getCardSize() { return 5; }
-  getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
   _t(k) { return (I18N_BAT[this._config.language || lang(this._hass)] || I18N_BAT.en)[k] ?? I18N_BAT.en[k] ?? k; }
   // libellé perso (option labels) sinon traduction
   _l(k) { const L = this._config && this._config.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
@@ -7702,12 +7613,12 @@ class ApplianceBatteryCard extends HTMLElement {
     const cables = [cab(46, 128), cab(134, 216), `M${X[2] + W + 8} ${TOP - 6} C ${X[2] + W + 30} ${TOP - 20}, ${X[2] + W + 26} ${TOP + 60}, ${X[2] + W + 22} ${TOP + 110}`];
     this.shadowRoot.innerHTML = `
     <style>
-      :host { display:block; }:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+      :host { display:block; }
       ha-card { padding:12px; overflow:hidden; container-type:inline-size; }
       .title { font-weight:600; margin:0 4px 4px; display:flex; justify-content:space-between; align-items:center; }
       .badge { font-size:.75em; color:#fff; background:#e53935; border-radius:10px; padding:2px 8px; display:none; animation:blink 1s infinite; }
       .low .badge { display:inline-block; }
-      svg { width:100%; max-width:calc(100% * var(--illus-scale,1)); margin-left:auto; margin-right:auto; height:auto; display:block; overflow:visible; transform:scale(0.8); transform-origin:top center; }
+      svg { width:100%; height:auto; display:block; overflow:visible; transform:scale(0.8); transform-origin:top center; }
       .liquid { fill:var(--lc,#43a047); opacity:.35; transition:y 1.2s ease, height 1.2s ease, fill .8s; }
       .wave { fill:var(--lc,#43a047); opacity:.45; animation:wave 2.6s ease-in-out infinite alternate; transition:fill .8s; }
       .led { fill:var(--lc,#43a047); animation:blink var(--bl,2s) infinite; filter:drop-shadow(0 0 3px var(--lc,#43a047)); }
@@ -7912,6 +7823,19 @@ const I18N_EV = {
     "plugged": "Подключено",
     "done": "Завершено",
     "disconnected": "Отключено"
+  },
+  "it": {
+    "name": "Colonnina di ricarica",
+    "power": "Potenza",
+    "energy": "Sessione",
+    "soc": "Batteria",
+    "status": "Stato",
+    "duration": "Durata",
+    "cost": "Costo",
+    "charging": "In carica",
+    "plugged": "Collegata",
+    "done": "Completata",
+    "disconnected": "Scollegata"
   }
 };
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
@@ -7925,8 +7849,6 @@ class ApplianceEvChargerCard extends HTMLElement {
       schema: [
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
-        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
-        { name: 'transparent', selector: { boolean: {} } },
         { name: 'entity_power', selector: { entity: { domain: 'sensor', device_class: 'power' } } },
         { name: 'entity_session_energy', selector: { entity: { domain: 'sensor', device_class: 'energy' } } },
         { name: 'entity_car_soc', selector: { entity: { domain: 'sensor' } } },
@@ -7952,7 +7874,6 @@ class ApplianceEvChargerCard extends HTMLElement {
   }
 
   setConfig(config) {
-    if (window.applianceSize) window.applianceSize(this, config);
     this._config = { show_power: true, show_energy: true, show_soc: true, show_status: true, show_duration: true, show_cost: true,
       max_power: 7400, price_per_kwh: 0.2, car_color: '#3d6fb6', ...config };
     this._built = false; this._build();
@@ -7965,7 +7886,6 @@ class ApplianceEvChargerCard extends HTMLElement {
     this._update();
   }
   getCardSize() { return 5; }
-  getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
   connectedCallback() { this._timer = setInterval(() => this._update(), 30000); } // rafraîchit la durée
   disconnectedCallback() { clearInterval(this._timer); }
   _t(k) { return (I18N_EV[this._config.language || lang(this._hass)] || I18N_EV.en)[k] ?? I18N_EV.en[k] ?? k; }
@@ -7978,10 +7898,10 @@ class ApplianceEvChargerCard extends HTMLElement {
     const cable = 'M44 112 C 44 168, 112 170, 134 118';
     this.shadowRoot.innerHTML = `
     <style>
-      :host { display:block; }:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+      :host { display:block; }
       ha-card { padding:12px; overflow:hidden; }
       .title { font-weight:600; margin:0 4px 4px; }
-      svg { width:100%; max-width:calc(100% * var(--illus-scale,1)); margin-left:auto; margin-right:auto; height:auto; display:block; overflow:visible; }
+      svg { width:100%; height:auto; display:block; overflow:visible; }
       .ledbar { fill:var(--st,#9e9e9e); filter:drop-shadow(0 0 4px var(--st,#9e9e9e)); transition:fill .6s; }
       .charging .ledbar { animation:breathe var(--sp,2s) ease-in-out infinite; }
       .scr { fill:#0c1a24; } .scrtxt { fill:#7fe0ff; font:700 8px 'Courier New',monospace; text-anchor:middle; }
@@ -8285,6 +8205,27 @@ const I18N_VAC = {
     "idle": "Простой",
     "error": "Ошибка",
     "emptying": "Очистка"
+  },
+  "it": {
+    "name": "Robot aspirapolvere",
+    "battery": "Batteria",
+    "area": "Superficie",
+    "time": "Durata",
+    "fan": "Aspirazione",
+    "status": "Stato",
+    "filter": "Filtro",
+    "brush": "Spazzola",
+    "start": "Avvia",
+    "pause": "Pausa",
+    "dock": "Base",
+    "cleaning": "Pulizia",
+    "docked": "Alla base",
+    "charging": "In carica",
+    "returning": "Ritorno alla base",
+    "paused": "In pausa",
+    "idle": "Inattivo",
+    "error": "Errore",
+    "emptying": "Svuotamento"
   }
 };
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
@@ -8305,8 +8246,6 @@ class ApplianceRobotVacuumCard extends HTMLElement {
         { name: 'entity', required: true, selector: { entity: { domain: 'vacuum' } } },
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
-        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
-        { name: 'transparent', selector: { boolean: {} } },
         { name: 'entity_battery', selector: { entity: { domain: 'sensor', device_class: 'battery' } } },
         { name: 'entity_area', selector: { entity: { domain: 'sensor' } } },
         { name: 'entity_time', selector: { entity: { domain: 'sensor' } } },
@@ -8331,7 +8270,6 @@ class ApplianceRobotVacuumCard extends HTMLElement {
   }
 
   setConfig(config) {
-    if (window.applianceSize) window.applianceSize(this, config);
     if (!config.entity) throw new Error('entity (vacuum.xxx) requise');
     this._config = { show_battery: true, show_area: true, show_time: true, show_fan: true, show_status: true,
       show_consumables: true, show_buttons: true, ...config };
@@ -8343,7 +8281,6 @@ class ApplianceRobotVacuumCard extends HTMLElement {
     if (l && l !== this._lng) { this._lng = l; this._hass = h; this._built = false; this._build(); }
     this._hass = h; this._update(); }
   getCardSize() { return this._config && this._config.layout === 'compact' ? 3 : 6; }
-  getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
   _t(k) { return (I18N_VAC[this._config.language || lang(this._hass)] || I18N_VAC.en)[k] ?? I18N_VAC.en[k] ?? k; }
   // libellé perso (option labels) sinon traduction
   _l(k) { const L = this._config && this._config.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
@@ -8412,12 +8349,12 @@ window.customCards = window.customCards || [];
  * type: custom:appliance-robot-vacuum-solo-card  (mêmes options que la carte complète)
  * ─────────────────────────────────────────────────────────────── */
 const COMMON_CSS_VAC = `
-  :host { display:block; }:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+  :host { display:block; }
   ha-card { padding:12px; overflow:hidden; }
   .title { font-weight:600; margin:0 4px 4px; display:flex; justify-content:space-between; align-items:center; }
   .badge { font-size:.75em; color:#fff; background:#e53935; border-radius:10px; padding:2px 8px; display:none; animation:blink 1s infinite; }
   .error .badge { display:inline-block; }
-  svg { width:100%; max-width:calc(100% * var(--illus-scale,1)); margin-left:auto; margin-right:auto; height:auto; display:block; overflow:visible; }
+  svg { width:100%; height:auto; display:block; overflow:visible; }
   .btns { display:flex; gap:8px; margin-top:8px; }
   .btn { flex:1; display:flex; align-items:center; justify-content:center; gap:6px; border:none; cursor:pointer; border-radius:999px; padding:8px 6px;
     background:var(--secondary-background-color, rgba(127,127,127,.15)); color:var(--primary-text-color,#222); font:600 .85em system-ui,sans-serif; transition:transform .1s, background .2s; }
@@ -8694,6 +8631,26 @@ const I18N_MOW = {
     "paused": "Пауза",
     "idle": "Простой",
     "error": "Ошибка"
+  },
+  "it": {
+    "name": "Robot tagliaerba",
+    "battery": "Batteria",
+    "area": "Superficie",
+    "time": "Taglio",
+    "next": "Prossimo avvio",
+    "status": "Stato",
+    "blade": "Lama",
+    "rain": "Pioggia",
+    "start": "Taglia",
+    "pause": "Pausa",
+    "dock": "Base",
+    "mowing": "Taglio in corso",
+    "docked": "Alla base",
+    "charging": "In carica",
+    "returning": "Ritorno alla base",
+    "paused": "In pausa",
+    "idle": "Inattivo",
+    "error": "Errore"
   }
 };
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
@@ -8714,8 +8671,6 @@ class ApplianceRobotMowerCard extends HTMLElement {
         { name: 'entity', required: true, selector: { entity: { domain: ['lawn_mower', 'vacuum'] } } },
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
-        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
-        { name: 'transparent', selector: { boolean: {} } },
         { name: 'entity_battery', selector: { entity: { domain: 'sensor', device_class: 'battery' } } },
         { name: 'entity_area', selector: { entity: { domain: 'sensor' } } },
         { name: 'entity_time', selector: { entity: { domain: 'sensor' } } },
@@ -8741,7 +8696,6 @@ class ApplianceRobotMowerCard extends HTMLElement {
   }
 
   setConfig(config) {
-    if (window.applianceSize) window.applianceSize(this, config);
     if (!config.entity) throw new Error('entity (lawn_mower.xxx) requise');
     this._config = { show_battery: true, show_area: true, show_time: true, show_next: true, show_status: true,
       show_blade: true, show_buttons: true, ...config };
@@ -8753,7 +8707,6 @@ class ApplianceRobotMowerCard extends HTMLElement {
     if (l && l !== this._lng) { this._lng = l; this._hass = h; this._built = false; this._build(); }
     this._hass = h; this._update(); }
   getCardSize() { return this._config && this._config.layout === 'compact' ? 3 : 6; }
-  getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
   _t(k) { return (I18N_MOW[this._config.language || lang(this._hass)] || I18N_MOW.en)[k] ?? I18N_MOW.en[k] ?? k; }
   // libellé perso (option labels) sinon traduction
   _l(k) { const L = this._config && this._config.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
@@ -8900,12 +8853,12 @@ class ApplianceRobotMowerSoloCard extends ApplianceRobotMowerCard {
   }
 }
 const COMMON_CSS_MOW = `
-  :host { display:block; }:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+  :host { display:block; }
   ha-card { padding:12px; overflow:hidden; }
   .title { font-weight:600; margin:0 4px 4px; display:flex; justify-content:space-between; align-items:center; }
   .badge { font-size:.75em; color:#fff; background:#e53935; border-radius:10px; padding:2px 8px; display:none; animation:blink 1s infinite; }
   .error .badge { display:inline-block; }
-  svg { width:100%; max-width:calc(100% * var(--illus-scale,1)); margin-left:auto; margin-right:auto; height:auto; display:block; overflow:visible; }
+  svg { width:100%; height:auto; display:block; overflow:visible; }
   .btns { display:flex; gap:8px; margin-top:8px; }
   .btn { flex:1; display:flex; align-items:center; justify-content:center; gap:6px; border:none; cursor:pointer; border-radius:999px; padding:8px 6px;
     background:var(--secondary-background-color, rgba(127,127,127,.15)); color:var(--primary-text-color,#222); font:600 .85em system-ui,sans-serif; transition:transform .1s, background .2s; }
@@ -9065,6 +9018,22 @@ const I18N_PB = {
     "extinguishing": "Выключение",
     "alarm": "Тревога",
     "low": "Мало пеллет"
+  },
+  "it": {
+    "name": "Caldaia a pellet",
+    "power": "Potenza",
+    "energy": "Energia",
+    "cost": "Costo",
+    "flow": "Mandata",
+    "ret": "Ritorno",
+    "pellets": "Pellet",
+    "status": "Stato",
+    "off": "Spenta",
+    "ignition": "Accensione",
+    "heating": "Riscaldamento",
+    "extinguishing": "Spegnimento",
+    "alarm": "Allarme",
+    "low": "Pellet in esaurimento"
   }
 };
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
@@ -9078,8 +9047,6 @@ class AppliancePelletBoilerCard extends HTMLElement {
       schema: [
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
-        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
-        { name: 'transparent', selector: { boolean: {} } },
         { name: 'entity_status', selector: { entity: { domain: ['sensor', 'select', 'climate', 'switch', 'binary_sensor'] } } },
         { name: 'entity_power', selector: { entity: { domain: 'sensor', device_class: 'power' } } },
         { name: 'entity_energy', selector: { entity: { domain: 'sensor', device_class: 'energy' } } },
@@ -9109,7 +9076,6 @@ class AppliancePelletBoilerCard extends HTMLElement {
   }
 
   setConfig(config) {
-    if (window.applianceSize) window.applianceSize(this, config);
     this._config = { show_power: true, show_energy: true, show_cost: true, show_temps: true, show_pellets: true, show_status: true,
       price_per_kwh: 0, threshold: 30, ignition_threshold: 300, pellet_alert: 15, flow_temp_max: 80, ...config };
     this._built = false; this._build();
@@ -9120,7 +9086,6 @@ class AppliancePelletBoilerCard extends HTMLElement {
     if (l && l !== this._lng) { this._lng = l; this._hass = h; this._built = false; this._build(); }
     this._hass = h; this._update(); }
   getCardSize() { return 6; }
-  getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
   _t(k) { return (I18N_PB[this._config.language || lang(this._hass)] || I18N_PB.en)[k] ?? I18N_PB.en[k] ?? k; }
   // libellé perso (option labels) sinon traduction
   _l(k) { const L = this._config && this._config.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
@@ -9135,12 +9100,12 @@ class AppliancePelletBoilerCard extends HTMLElement {
     const tube = 'M76 172 L136 112';
     this.shadowRoot.innerHTML = `
     <style>
-      :host { display:block; }:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+      :host { display:block; }
       ha-card { padding:12px; overflow:hidden; }
       .title { font-weight:600; margin:0 4px 4px; display:flex; justify-content:space-between; align-items:center; gap:6px; }
       .badge { font-size:.75em; color:#fff; background:#e53935; border-radius:10px; padding:2px 8px; display:none; animation:blink 1s infinite; }
       .alarm .badge.al, .low .badge.lo { display:inline-block; } .badge.lo { background:#fb8c00; }
-      svg { width:100%; max-width:calc(100% * var(--illus-scale,1)); margin-left:auto; margin-right:auto; height:auto; display:block; overflow:visible; }
+      svg { width:100%; height:auto; display:block; overflow:visible; }
       /* Flamme dans le hublot */
       .flame { transform-box:fill-box; transform-origin:50% 100%; opacity:0; transition:opacity .8s; }
       .ignition .flame.small, .heating .flame, .extinguishing .flame.small { opacity:1; animation:flick .35s ease-in-out infinite alternate; }
@@ -9482,7 +9447,7 @@ window.customCards.push({ type: 'appliance-pellet-boiler-card', name: 'Appliance
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
 
   const CSS = `
-:host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+:host{display:block}
 ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--gb-heat:var(--appliance-heat-color,#ff8a3d);--gb-cold:var(--appliance-cold-color,#2b9af9);
   --gb-alert:var(--appliance-alert-color,#db4437);--gb-ok:var(--appliance-ok-color,#43a047);--gb-flow:#3b8fe8;--gb-ret:#3b8fe8;--mod:1}
 .head{display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -9493,7 +9458,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--gb-heat:var(--app
 .alarm .badge{background:color-mix(in srgb,var(--gb-alert) 22%,transparent);color:var(--gb-alert)}
 .alert{display:none;margin-top:4px;font-size:11px;color:var(--gb-alert);font-weight:500;text-align:center}
 .alert.on{display:block}
-svg{display:block;width:100%;max-width:calc(170px * var(--illus-scale,1));height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible}
+svg{display:block;width:100%;max-width:170px;height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:6px;margin-top:6px}
 .tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center}
 .tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
@@ -9615,7 +9580,6 @@ svg{display:block;width:100%;max-width:calc(170px * var(--illus-scale,1));height
       };
     }
     setConfig(c) {
-      if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { show_power: true, show_energy: true, show_gas: true, show_cost: true, show_temps: true,
         show_pressure: true, show_modulation: true, show_status: true, threshold: 15, off_threshold: 0.5,
@@ -9625,7 +9589,7 @@ svg{display:block;width:100%;max-width:calc(170px * var(--illus-scale,1));height
     }
     set hass(h) { this._hass = h; if (this._c) this._render(); }
     getCardSize() { return 5; }
-    getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+    getGridOptions() { return { columns: 12, min_columns: 6, rows: 'auto' }; }
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
@@ -9634,8 +9598,6 @@ svg{display:block;width:100%;max-width:calc(170px * var(--illus-scale,1));height
     _st(id) { return id && this._hass.states[id]; }
     _num(id) {
       const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
       const v = parseFloat(String(s.state).replace(',', '.'));
       return isFinite(v) ? v : NaN;
     }
@@ -9772,8 +9734,6 @@ svg{display:block;width:100%;max-width:calc(170px * var(--illus-scale,1));height
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
-        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
-        { name: 'transparent', selector: { boolean: {} } },
         ent('entity_status'), ent('entity_flame', 'binary_sensor'), ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'),
         ent('entity_gas', 'sensor'), ent('entity_cost', 'sensor'), { name: 'price_per_unit', selector: { number: { min: 0, step: 0.0001, mode: 'box' } } },
         ent('entity_flow_temp', 'sensor'), ent('entity_return_temp', 'sensor'), ent('entity_pressure', 'sensor'), ent('entity_modulation', 'sensor'),
@@ -9970,7 +9930,7 @@ svg{display:block;width:100%;max-width:calc(170px * var(--illus-scale,1));height
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
 
   const CSS = `
-:host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+:host{display:block}
 ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--wp-heat:var(--appliance-heat-color,#ff8a3d);--wp-cold:var(--appliance-cold-color,#2b9af9);
   --wp-alert:var(--appliance-alert-color,#db4437)}
 .head{display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -9979,7 +9939,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--wp-heat:var(--app
 .heating .badge{background:color-mix(in srgb,var(--wp-heat) 22%,transparent);color:var(--wp-heat)}
 .dhw .badge,.cooling .badge{background:color-mix(in srgb,var(--wp-cold) 22%,transparent);color:var(--wp-cold)}
 .alarm .badge{background:color-mix(in srgb,var(--wp-alert) 22%,transparent);color:var(--wp-alert)}
-svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible}
+svg{display:block;width:100%;height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:6px;margin-top:6px}
 .tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
 .tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
@@ -10126,8 +10086,6 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
         schema: [
           { name: 'name', selector: { text: {} } },
           { name: 'labels', selector: { object: {} } },
-          { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
-          { name: 'transparent', selector: { boolean: {} } },
           ent('entity_status', ['climate', 'sensor', 'select', 'input_select', 'water_heater']),
           { type: 'grid', name: '', schema: [ent('entity_power', 'sensor'), ent('entity_heat_power', 'sensor'), ent('entity_cop', 'sensor')] },
           { type: 'grid', name: '', schema: [ent('entity_flow_temp', 'sensor'), ent('entity_return_temp', 'sensor'), ent('entity_flow_rate', 'sensor')] },
@@ -10149,7 +10107,6 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       };
     }
     setConfig(c) {
-      if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { ...Object.fromEntries(SHOW.map((k) => [k, true])), threshold: 100, off_threshold: 0.5, ...c };
       this._built = false;
@@ -10171,7 +10128,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       if (!this._dt) this._dt = setTimeout(() => { this._dt = null; if (this._hass) this._render(); }, left + 50);
       return false;
     }
-    getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+    getGridOptions() { return { columns: 12, min_columns: 6, rows: 'auto' }; }
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
@@ -10180,8 +10137,6 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
     _st(id) { return id && this._hass.states[id]; }
     _num(id) {
       const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
       const v = parseFloat(String(s.state).replace(',', '.'));
       return isFinite(v) ? v : NaN;
     }
@@ -10453,7 +10408,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
 
   const CSS = `
-:host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+:host{display:block}
 ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--dh-heat:var(--appliance-heat-color,#ff8a3d);--dh-cold:var(--appliance-cold-color,#2b9af9);
   --dh-alert:var(--appliance-alert-color,#db4437);--dh-ok:var(--appliance-ok-color,#43a047);--mod:1}
 .head{display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -10464,7 +10419,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--dh-heat:var(--app
 .alarm .badge{background:color-mix(in srgb,var(--dh-alert) 22%,transparent);color:var(--dh-alert)}
 .alert{display:none;margin-top:4px;font-size:11px;color:var(--dh-alert);font-weight:500;text-align:center}
 .alert.on{display:block}
-svg{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible}
+svg{display:block;width:100%;max-width:190px;height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:6px;margin-top:6px}
 .tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center}
 .tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
@@ -10626,7 +10581,6 @@ svg{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));height
       };
     }
     setConfig(c) {
-      if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { show_power: true, show_energy: true, show_fuel: true, show_fuel_used: true, show_cost: true, show_temps: true,
         show_status: true, threshold: 15, ignition_threshold: 60, off_threshold: 0.5, fuel_alert: 15, flue_temp_max: 300, ...c };
@@ -10635,7 +10589,7 @@ svg{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));height
     }
     set hass(h) { this._hass = h; if (this._c) this._render(); }
     getCardSize() { return 5; }
-    getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+    getGridOptions() { return { columns: 12, min_columns: 6, rows: 'auto' }; }
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
@@ -10644,8 +10598,6 @@ svg{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));height
     _st(id) { return id && this._hass.states[id]; }
     _num(id) {
       const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
       const v = parseFloat(String(s.state).replace(',', '.'));
       return isFinite(v) ? v : NaN;
     }
@@ -10777,12 +10729,10 @@ svg{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));height
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
-        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
-        { name: 'transparent', selector: { boolean: {} } },
         ent('entity_status'), ent('entity_flame', 'binary_sensor'), ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'),
         ent('entity_fuel_level', 'sensor'), ent('entity_fuel_used', 'sensor'), ent('entity_cost', 'sensor'),
         { name: 'price_per_liter', selector: { number: { min: 0, step: 0.0001, mode: 'box' } } },
-        ent('entity_temp', ['sensor', 'climate', 'water_heater']), ent('entity_flue_temp', 'sensor'), ent('entity_modulation', 'sensor'),
+        ent('entity_temp', 'sensor'), ent('entity_flue_temp', 'sensor'), ent('entity_modulation', 'sensor'),
         { type: 'grid', name: '', schema: [
           { name: 'threshold', selector: { number: { min: 0, max: 2000, step: 1, mode: 'box', unit_of_measurement: 'W' } } },
           { name: 'ignition_threshold', selector: { number: { min: 0, max: 2000, step: 1, mode: 'box', unit_of_measurement: 'W' } } },
@@ -10950,7 +10900,7 @@ svg{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));height
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
 
   const CSS = `
-:host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+:host{display:block}
 ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--jz-heat:var(--appliance-heat-color,#ff8a3d);--jz-cold:var(--appliance-cold-color,#2b9af9);
   --jz-alert:var(--appliance-alert-color,#db4437);--jz-ok:var(--appliance-ok-color,#43a047);--spd:1;--jz-led:#7a5cff}
 .head{display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -10961,7 +10911,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--jz-heat:var(--app
 .alarm .badge{background:color-mix(in srgb,var(--jz-alert) 22%,transparent);color:var(--jz-alert)}
 .alert{display:none;margin-top:4px;font-size:11px;color:var(--jz-alert);font-weight:500;text-align:center}
 .alert.on{display:block}
-svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible}
+svg{display:block;width:100%;max-width:230px;height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:6px;margin-top:6px}
 .tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center}
 .tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
@@ -11099,7 +11049,6 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       };
     }
     setConfig(c) {
-      if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { show_power: true, show_energy: true, show_temp: true, show_ph: true, show_cost: true, show_status: true,
         filter_threshold: 30, jets_threshold: 700, heater_threshold: 1800, power_max: 2500, off_threshold: 0.5,
@@ -11109,23 +11058,15 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     }
     set hass(h) { this._hass = h; if (this._c) this._render(); }
     getCardSize() { return 5; }
-    getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+    getGridOptions() { return { columns: 12, min_columns: 6, rows: 'auto' }; }
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
     _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en').slice(0, 2); return T[l] ? l : 'en'; }
     _st(id) { return id && this._hass.states[id]; }
-    // consigne : attribut temperature d'une entité climate / water_heater, sinon valeur numérique de l'état
-    _tgt(id) {
-      const s = this._st(id);
-      if (s && /^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.temperature); return s.attributes && s.attributes.temperature != null && isFinite(t) ? t : NaN; }
-      return this._num(id);
-    }
     _num(id) {
       const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
       const v = parseFloat(String(s.state).replace(',', '.'));
       return isFinite(v) ? v : NaN;
     }
@@ -11192,7 +11133,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       if (!this._built) this._build();
       const c = this._c, card = this._card, r = this._root;
       const { st, pw } = this._compute();
-      const temp = this._num(c.entity_temp), target = this._tgt(c.entity_target_temp), ph = this._num(c.entity_ph);
+      const temp = this._num(c.entity_temp), target = this._num(c.entity_target_temp), ph = this._num(c.entity_ph);
       // vitesse des animations : suit la puissance (0.7 à 2.3), 1.4 si on ne la connaît pas en mode jets
       const spd = !isNaN(pw) ? 0.7 + 1.6 * Math.max(0, Math.min(1, pw / Number(c.power_max || 2500))) : (st === 'jets' ? 1.4 : 1);
       // éclairage : entité allumée ; la couleur vient de rgb_color si la lumière la fournit
@@ -11261,11 +11202,9 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
-        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
-        { name: 'transparent', selector: { boolean: {} } },
         ent('entity_status'), ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'), ent('entity_cost', 'sensor'),
         { name: 'price_per_kwh', selector: { number: { min: 0, step: 0.0001, mode: 'box' } } },
-        ent('entity_temp', ['sensor', 'climate', 'water_heater']), ent('entity_target_temp'), ent('entity_ph', 'sensor'), ent('entity_light'),
+        ent('entity_temp', 'sensor'), ent('entity_target_temp'), ent('entity_ph', 'sensor'), ent('entity_light'),
         { type: 'grid', name: '', schema: [
           num('filter_threshold', 0, 2000, 1, 'W'), num('jets_threshold', 0, 5000, 1, 'W'),
           num('heater_threshold', 0, 10000, 1, 'W'), num('power_max', 100, 10000, 10, 'W'),
@@ -11461,7 +11400,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
   catch (e) { typed = !!e && e.name === 'InvalidModificationError'; } // déjà enregistrée par une autre copie
 
   const CSS_TXT = `
-:host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+:host{display:block}
 ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--appliance-heat-color,#ff8a3d);--acc-ok:var(--appliance-ok-color,#43a047);
   --acc-cold:var(--appliance-cold-color,#2b9af9);--acc-beacon:#ffa31a}
 .head{display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -11470,7 +11409,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
 .open .badge{background:color-mix(in srgb,var(--acc-ok) 22%,transparent);color:var(--acc-ok)}
 .opening .badge,.closing .badge{background:color-mix(in srgb,var(--acc-move) 22%,transparent);color:var(--acc-move)}
 .partial .badge{background:color-mix(in srgb,var(--acc-cold) 22%,transparent);color:var(--acc-cold)}
-.scene{position:relative;width:100%;max-width:calc(260px * var(--illus-scale,1));height:var(--appliance-illustration-height,auto);margin:4px auto 0;cursor:pointer;
+.scene{position:relative;width:100%;max-width:260px;height:var(--appliance-illustration-height,auto);margin:4px auto 0;cursor:pointer;
   --acc-p:0;transition:--acc-p var(--acc-t,0s) linear}
 .scene>svg,.scene>.leaf{position:absolute}
 .scene>svg{inset:0;width:100%;height:100%;overflow:visible}
@@ -11730,7 +11669,6 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
 
   class ApplianceAccessCard extends HTMLElement {
     setConfig(c) {
-      if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { show_status: true, show_controls: true, show_position: true, show_power: true, show_energy: true, show_cost: true, show_since: true,
         travel_time: KINDS[this.kind].travel, moving_threshold: 15, invert: false, leaves: 2, ...c };
@@ -11739,7 +11677,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
     }
     set hass(h) { this._hass = h; if (this._c) this._render(); }
     getCardSize() { return 5; }
-    getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+    getGridOptions() { return { columns: 12, min_columns: 6, rows: 'auto' }; }
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
@@ -11748,8 +11686,6 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
     _st(id) { return id && this._hass.states[id]; }
     _num(id) {
       const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
       const v = parseFloat(String(s.state).replace(',', '.'));
       return isFinite(v) ? v : NaN;
     }
@@ -11918,8 +11854,6 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
-        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
-        { name: 'transparent', selector: { boolean: {} } },
         ent('entity'), ent('entity_control'),
         ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'), ent('entity_cost', 'sensor'),
         { name: 'price_per_kwh', selector: { number: { min: 0, step: 0.0001, mode: 'box' } } },
@@ -12103,7 +12037,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
 
   const CSS = `
-:host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+:host{display:block}
 ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sn-heat-c:var(--appliance-heat-color,#ff8a3d);--sn-ok:var(--appliance-ok-color,#43a047);
   --sn-cold:var(--appliance-cold-color,#2b9af9);--sn-alert:var(--appliance-alert-color,#db4437);--heat:0;--tf:0}
 .head{display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -12115,7 +12049,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sn-heat-c:var(--a
 .fault .badge{background:color-mix(in srgb,var(--sn-alert) 22%,transparent);color:var(--sn-alert)}
 .alert{display:none;margin-top:4px;font-size:11px;color:var(--sn-alert);font-weight:500;text-align:center}
 .alert.on{display:block}
-svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible;cursor:pointer}
+svg{display:block;width:100%;max-width:250px;height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible;cursor:pointer}
 .ctl{display:flex;justify-content:center;gap:6px;margin-top:6px}
 .ctl.hide,.ctl button.hide{display:none}
 .ctl button{flex:1 1 0;max-width:120px;display:flex;align-items:center;justify-content:center;gap:4px;border:0;border-radius:10px;padding:6px 4px;cursor:pointer;
@@ -12242,7 +12176,6 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
       };
     }
     setConfig(c) {
-      if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { show_status: true, show_controls: true, show_temp: true, show_humidity: true, show_power: true, show_energy: true, show_cost: true,
         target_temp: 80, ready_margin: 3, heater_threshold: 300, off_threshold: 5, temp_max: 110, temp_scale: 120, ...c };
@@ -12251,23 +12184,15 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
     }
     set hass(h) { this._hass = h; if (this._c) this._render(); }
     getCardSize() { return 5; }
-    getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+    getGridOptions() { return { columns: 12, min_columns: 6, rows: 'auto' }; }
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
     _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en').slice(0, 2); return T[l] ? l : 'en'; }
     _st(id) { return id && this._hass.states[id]; }
-    // consigne : attribut temperature d'une entité climate / water_heater, sinon valeur numérique de l'état
-    _tgt(id) {
-      const s = this._st(id);
-      if (s && /^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.temperature); return s.attributes && s.attributes.temperature != null && isFinite(t) ? t : NaN; }
-      return this._num(id);
-    }
     _num(id) {
       const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
       const v = parseFloat(String(s.state).replace(',', '.'));
       return isFinite(v) ? v : NaN;
     }
@@ -12327,7 +12252,7 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
       const pw = this._watts(c.entity_power);
       let temp = this._num(c.entity_temp);
       if (isNaN(temp) && isFinite(Number(a.current_temperature))) temp = Number(a.current_temperature);
-      let target = this._tgt(c.entity_target_temp);
+      let target = this._num(c.entity_target_temp);
       if (isNaN(target) && isFinite(Number(a.temperature))) target = Number(a.temperature);
       if (isNaN(target)) target = Number(c.target_temp);
       const txt = s ? String(s.state).toLowerCase() : '';
@@ -12411,9 +12336,7 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
-        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
-        { name: 'transparent', selector: { boolean: {} } },
-        ent('entity'), ent('entity_temp', ['sensor', 'climate', 'water_heater']), ent('entity_target_temp'), ent('entity_humidity', 'sensor'),
+        ent('entity'), ent('entity_temp', 'sensor'), ent('entity_target_temp'), ent('entity_humidity', 'sensor'),
         ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'), ent('entity_cost', 'sensor'),
         { name: 'price_per_kwh', selector: { number: { min: 0, step: 0.0001, mode: 'box' } } },
         { type: 'grid', name: '', schema: [
@@ -12656,7 +12579,7 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
 
   const CSS = `
-:host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+:host{display:block}
 ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--pp-ok:var(--appliance-ok-color,#43a047);--pp-warn:#ffa31a;
   --pp-alert:var(--appliance-alert-color,#db4437);--fluid:#3fa9f5;--spd:0;--lvl:.6;--pr:0}
 .head{display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -12668,7 +12591,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--pp-ok:var(--appli
 .fault .badge{background:color-mix(in srgb,var(--pp-alert) 22%,transparent);color:var(--pp-alert)}
 .alert{display:none;margin-top:4px;font-size:11px;color:var(--pp-alert);font-weight:500;text-align:center}
 .alert.on{display:block}
-svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible;cursor:pointer}
+svg{display:block;width:100%;max-width:270px;height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible;cursor:pointer}
 .ctl{display:flex;justify-content:center;gap:6px;margin-top:6px}
 .ctl.hide{display:none}
 .ctl button{flex:1 1 0;max-width:140px;display:flex;align-items:center;justify-content:center;gap:4px;border:0;border-radius:10px;padding:6px 4px;cursor:pointer;
@@ -12974,7 +12897,6 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
 
   class AppliancePumpCard extends HTMLElement {
     setConfig(c) {
-      if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { show_status: true, show_controls: true, show_flow: true, show_pressure: true, show_power: true, show_temp: true, show_level: true,
         show_runtime: true, show_starts: true, show_energy: true, show_cost: true, no_flow_threshold: 0.5, ...KINDS[this.kind].d, ...c };
@@ -12983,7 +12905,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
     }
     set hass(h) { this._hass = h; if (this._c) this._render(); }
     getCardSize() { return 5; }
-    getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+    getGridOptions() { return { columns: 12, min_columns: 6, rows: 'auto' }; }
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
@@ -12992,8 +12914,6 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
     _st(id) { return id && this._hass.states[id]; }
     _num(id) {
       const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
       const v = parseFloat(String(s.state).replace(',', '.'));
       return isFinite(v) ? v : NaN;
     }
@@ -13151,10 +13071,8 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
-        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
-        { name: 'transparent', selector: { boolean: {} } },
         ent('entity'), ent('entity_power', 'sensor'), ent('entity_flow', 'sensor'), ent('entity_pressure', 'sensor'),
-        ent('entity_temp', ['sensor', 'climate', 'water_heater']), ent('entity_level', 'sensor'), ent('entity_fault', 'binary_sensor'), ent('entity_runtime', 'sensor'),
+        ent('entity_temp', 'sensor'), ent('entity_level', 'sensor'), ent('entity_fault', 'binary_sensor'), ent('entity_runtime', 'sensor'),
         ...(KINDS[this.kind].sump ? [ent('entity_float', 'binary_sensor'), ent('entity_starts', 'sensor')] : []),
         ent('entity_energy', 'sensor'), ent('entity_cost', 'sensor'),
         { name: 'price_per_kwh', selector: { number: { min: 0, step: 0.0001, mode: 'box' } } },
@@ -13396,7 +13314,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
 
   const CSS = `
-:host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+:host{display:block}
 ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--pr-ok:var(--appliance-ok-color,#43a047);--pr-cold:var(--appliance-cold-color,#2b9af9);
   --pr-warn:#ffa31a;--pr-alert:var(--appliance-alert-color,#db4437);--wl:.85;--dirt:0;--pr-water:#2fa6d9}
 .head{display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -13407,7 +13325,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--pr-ok:var(--appli
 .error .badge{background:color-mix(in srgb,var(--pr-alert) 22%,transparent);color:var(--pr-alert)}
 .alert{display:none;margin-top:4px;font-size:11px;color:var(--pr-alert);font-weight:500;text-align:center}
 .alert.on{display:block}
-svg{display:block;width:100%;max-width:calc(280px * var(--illus-scale,1));height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible;cursor:pointer}
+svg{display:block;width:100%;max-width:280px;height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible;cursor:pointer}
 .ctl{display:flex;justify-content:center;gap:6px;margin-top:6px}
 .ctl.hide,.ctl button.hide{display:none}
 .ctl button{flex:1 1 0;max-width:120px;display:flex;align-items:center;justify-content:center;gap:4px;border:0;border-radius:10px;padding:6px 4px;cursor:pointer;
@@ -13550,7 +13468,6 @@ svg{display:block;width:100%;max-width:calc(280px * var(--illus-scale,1));height
       };
     }
     setConfig(c) {
-      if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { show_status: true, show_controls: true, show_status_tile: true, show_filter: true, show_water_level: true, show_water_temp: true,
         show_time: true, show_battery: true, show_mode: true, show_power: true, show_energy: true,
@@ -13560,7 +13477,7 @@ svg{display:block;width:100%;max-width:calc(280px * var(--illus-scale,1));height
     }
     set hass(h) { this._hass = h; if (this._c) this._render(); }
     getCardSize() { return 6; }
-    getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+    getGridOptions() { return { columns: 12, min_columns: 6, rows: 'auto' }; }
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
@@ -13569,8 +13486,6 @@ svg{display:block;width:100%;max-width:calc(280px * var(--illus-scale,1));height
     _st(id) { return id && this._hass.states[id]; }
     _num(id) {
       const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
       const v = parseFloat(String(s.state).replace(',', '.'));
       return isFinite(v) ? v : NaN;
     }
@@ -13734,8 +13649,6 @@ svg{display:block;width:100%;max-width:calc(280px * var(--illus-scale,1));height
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
-        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
-        { name: 'transparent', selector: { boolean: {} } },
         ent('entity'), ent('entity_switch'), ent('entity_status', 'sensor'), ent('entity_filter', 'sensor'), ent('entity_water_level', 'sensor'),
         ent('entity_water_temp', 'sensor'), ent('entity_time', 'sensor'), ent('entity_battery', 'sensor'), ent('entity_mode'),
         ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'),
@@ -13905,7 +13818,7 @@ svg{display:block;width:100%;max-width:calc(280px * var(--illus-scale,1));height
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
 
   const CSS = `
-:host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+:host{display:block}
 ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--up-ok:var(--appliance-ok-color,#43a047);--up-warn:#ffa31a;
   --up-alert:var(--appliance-alert-color,#db4437);--up-cold:var(--appliance-cold-color,#2b9af9);--bat:1;--load:0}
 .head{display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -13917,7 +13830,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--up-ok:var(--appli
 .low_battery .badge,.offline .badge{background:color-mix(in srgb,var(--up-alert) 22%,transparent);color:var(--up-alert)}
 .alert{display:none;margin-top:4px;font-size:11px;color:var(--up-alert);font-weight:500;text-align:center}
 .alert.on{display:block}
-svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible;cursor:pointer}
+svg{display:block;width:100%;max-width:270px;height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible;cursor:pointer}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:6px;margin-top:6px}
 .tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
 .tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
@@ -14048,7 +13961,6 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       };
     }
     setConfig(c) {
-      if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { show_status: true, show_charge: true, show_runtime: true, show_load: true, show_power: true, show_voltage: true, show_energy: true,
         battery_low: 20, load_max: 90, mains_min: 100, ...c };
@@ -14057,7 +13969,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
     }
     set hass(h) { this._hass = h; if (this._c) this._render(); }
     getCardSize() { return 5; }
-    getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+    getGridOptions() { return { columns: 12, min_columns: 6, rows: 'auto' }; }
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
@@ -14066,8 +13978,6 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
     _st(id) { return id && this._hass.states[id]; }
     _num(id) {
       const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
       const v = parseFloat(String(s.state).replace(',', '.'));
       return isFinite(v) ? v : NaN;
     }
@@ -14193,8 +14103,6 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
-        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
-        { name: 'transparent', selector: { boolean: {} } },
         ent('entity'), ent('entity_charge', 'sensor'), ent('entity_runtime', 'sensor'), ent('entity_load', 'sensor'), ent('entity_power', 'sensor'),
         ent('entity_input_voltage', 'sensor'), ent('entity_output_voltage', 'sensor'), ent('entity_energy', 'sensor'),
         { type: 'grid', name: '', schema: [num('battery_low', 0, 100, 1, 20, '%'), num('load_max', 10, 100, 1, 90, '%'), num('mains_min', 0, 250, 1, 100, 'V')] },
@@ -14359,7 +14267,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
 
   const CSS = `
-:host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+:host{display:block}
 ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--uf-heat-c:var(--appliance-heat-color,#ff8a3d);--uf-ok:var(--appliance-ok-color,#43a047);
   --uf-alert:var(--appliance-alert-color,#db4437);--heat:0}
 .head{display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -14370,7 +14278,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--uf-heat-c:var(--a
 .fault .badge{background:color-mix(in srgb,var(--uf-alert) 22%,transparent);color:var(--uf-alert)}
 .alert{display:none;margin-top:4px;font-size:11px;color:var(--uf-alert);font-weight:500;text-align:center}
 .alert.on{display:block}
-svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible;cursor:pointer}
+svg{display:block;width:100%;max-width:270px;height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible;cursor:pointer}
 .ctl{display:flex;justify-content:center;gap:6px;margin-top:6px}
 .ctl.hide,.ctl button.hide{display:none}
 .ctl button{flex:1 1 0;max-width:120px;display:flex;align-items:center;justify-content:center;gap:4px;border:0;border-radius:10px;padding:6px 4px;cursor:pointer;
@@ -14483,7 +14391,6 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       return { entity: f(re, 'climate') || f(re, 'switch'), entity_floor_temp: f(/(plancher|floor|sol).*temp/i, 'sensor') };
     }
     setConfig(c) {
-      if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { show_status: true, show_controls: true, show_temp: true, show_floor: true, show_water: true, show_power: true, show_energy: true, show_cost: true,
         heating_type: 'water', floor_max: 29, water_max: 45, heat_threshold: 20, ...c };
@@ -14492,23 +14399,15 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
     }
     set hass(h) { this._hass = h; if (this._c) this._render(); }
     getCardSize() { return 5; }
-    getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+    getGridOptions() { return { columns: 12, min_columns: 6, rows: 'auto' }; }
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
     _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en').slice(0, 2); return T[l] ? l : 'en'; }
     _st(id) { return id && this._hass.states[id]; }
-    // consigne : attribut temperature d'une entité climate / water_heater, sinon valeur numérique de l'état
-    _tgt(id) {
-      const s = this._st(id);
-      if (s && /^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.temperature); return s.attributes && s.attributes.temperature != null && isFinite(t) ? t : NaN; }
-      return this._num(id);
-    }
     _num(id) {
       const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
       const v = parseFloat(String(s.state).replace(',', '.'));
       return isFinite(v) ? v : NaN;
     }
@@ -14564,7 +14463,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       const pw = this._watts(c.entity_power);
       let temp = this._num(c.entity_temp);
       if (isNaN(temp) && isFinite(Number(a.current_temperature))) temp = Number(a.current_temperature);
-      let target = this._tgt(c.entity_target_temp);
+      let target = this._num(c.entity_target_temp);
       if (isNaN(target) && isFinite(Number(a.temperature))) target = Number(a.temperature);
       const floor = this._num(c.entity_floor_temp), water = this._num(c.entity_water_temp);
       const v = { pw, temp, target, floor, water };
@@ -14656,9 +14555,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
-        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
-        { name: 'transparent', selector: { boolean: {} } },
-        ent('entity'), ent('entity_temp', ['sensor', 'climate', 'water_heater']), ent('entity_target_temp'), ent('entity_floor_temp', 'sensor'), ent('entity_water_temp', 'sensor'),
+        ent('entity'), ent('entity_temp', 'sensor'), ent('entity_target_temp'), ent('entity_floor_temp', 'sensor'), ent('entity_water_temp', 'sensor'),
         ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'), ent('entity_cost', 'sensor'),
         { name: 'price_per_kwh', selector: { number: { min: 0, step: 0.0001, mode: 'box' } } },
         { name: 'heating_type', selector: { select: { options: ['water', 'electric'] } } },
@@ -14845,13 +14742,13 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
 
   const CSS = `
-:host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+:host{display:block}
 ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--lc:#ffb347;--b:1;--lt-ok:#f5c45e}
 .head{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
 .on .badge{background:color-mix(in srgb,var(--lc) 26%,transparent);color:color-mix(in srgb,var(--lc) 75%,var(--primary-text-color))}
-.stage{position:relative;margin:4px auto 0;max-width:calc(240px * var(--illus-scale,1));border-radius:14px;background:radial-gradient(ellipse at 50% 55%,#1d232b,#12161b 75%);overflow:hidden;cursor:pointer}
+.stage{position:relative;margin:4px auto 0;max-width:240px;border-radius:14px;background:radial-gradient(ellipse at 50% 55%,#1d232b,#12161b 75%);overflow:hidden;cursor:pointer}
 svg{display:block;width:100%;height:auto;overflow:visible}
 .ctl{display:flex;justify-content:center;gap:6px;margin-top:8px}
 .ctl.hide,.ctl button.hide{display:none}
@@ -15074,7 +14971,6 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 
   class ApplianceLightCard extends HTMLElement {
     setConfig(c) {
-      if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { show_status: true, show_controls: true, show_brightness: true, show_power: true, show_energy: true, follow_light_color: true, ...c };
       this._built = false;
@@ -15082,7 +14978,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
     }
     set hass(h) { this._hass = h; if (this._c) this._render(); }
     getCardSize() { return 5; }
-    getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+    getGridOptions() { return { columns: 6, min_columns: 4, rows: 'auto' }; }
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
@@ -15091,8 +14987,6 @@ svg{display:block;width:100%;height:auto;overflow:visible}
     _st(id) { return id && this._hass.states[id]; }
     _num(id) {
       const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
       const v = parseFloat(String(s.state).replace(',', '.'));
       return isFinite(v) ? v : NaN;
     }
@@ -15218,8 +15112,6 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
-        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
-        { name: 'transparent', selector: { boolean: {} } },
         ent('entity'), ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'),
         { name: 'color', selector: { color_rgb: {} } },
         { type: 'grid', name: '', schema: [
@@ -15396,7 +15288,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
 
   const CSS = `
-:host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+:host{display:block}
 ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--appliance-heat-color,#ff8a3d);--sh-ok:var(--appliance-ok-color,#43a047);
   --sh-cold:var(--appliance-cold-color,#2b9af9);--sc:#d5dbe1;--p:0;--t:100;--sh-d:1.2s}
 .head{display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -15405,7 +15297,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
 .open .badge{background:color-mix(in srgb,var(--sh-ok) 22%,transparent);color:var(--sh-ok)}
 .partial .badge{background:color-mix(in srgb,var(--sh-cold) 22%,transparent);color:var(--sh-cold)}
 .opening .badge,.closing .badge{background:color-mix(in srgb,var(--sh-move) 22%,transparent);color:var(--sh-move)}
-.scene{position:relative;max-width:calc(250px * var(--illus-scale,1));margin:4px auto 0;cursor:pointer}
+.scene{position:relative;max-width:250px;margin:4px auto 0;cursor:pointer}
 .scene>svg{display:block;width:100%;height:auto}
 .ctl{display:flex;justify-content:center;gap:6px;margin-top:6px}
 .ctl.hide,.ctl button.hide{display:none}
@@ -15556,7 +15448,6 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
 
   class ApplianceShutterCard extends HTMLElement {
     setConfig(c) {
-      if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { show_status: true, show_controls: true, show_slider: true, show_position: true, show_tilt: true, show_power: true, show_since: true,
         sun_entity: 'sun.sun', ...c };
@@ -15565,7 +15456,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
     }
     set hass(h) { this._hass = h; if (this._c) this._render(); }
     getCardSize() { return 6; }
-    getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+    getGridOptions() { return { columns: 6, min_columns: 4, rows: 'auto' }; }
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
@@ -15574,8 +15465,6 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
     _st(id) { return id && this._hass.states[id]; }
     _num(id) {
       const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
       const v = parseFloat(String(s.state).replace(',', '.'));
       return isFinite(v) ? v : NaN;
     }
@@ -15613,7 +15502,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         if (this._hass && this._c.entity) this._hass.callService('cover', `${b.dataset.a}_cover`, { entity_id: this._c.entity });
       }));
       root.querySelector('#shpos input').addEventListener('change', (e) => {
-        if (this._hass) this._hass.callService('cover', 'set_cover_position', { entity_id: this._c.entity, position: this._c.invert ? 100 - Number(e.target.value) : Number(e.target.value) });
+        if (this._hass) this._hass.callService('cover', 'set_cover_position', { entity_id: this._c.entity, position: Number(e.target.value) });
       });
       root.querySelector('#shtilt input').addEventListener('change', (e) => {
         if (this._hass) this._hass.callService('cover', 'set_cover_tilt_position', { entity_id: this._c.entity, tilt_position: Number(e.target.value) });
@@ -15634,14 +15523,6 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         if (a.current_tilt_position != null && isFinite(Number(a.current_tilt_position))) tilt = Math.max(0, Math.min(100, Number(a.current_tilt_position)));
       }
       const known = !isNaN(pos); // position réelle fournie par la cover
-      // invert : cover qui remonte sa position à l'envers (fréquent avec Tuya), 0 = ouvert et 100 = fermé.
-      // L'état HA en découle et est donc faux lui aussi : on le recalcule depuis la position corrigée.
-      if (c.invert && st !== 'unavailable') {
-        if (st === 'opening' || st === 'closing') st = st === 'opening' ? 'closing' : 'opening';
-        else if (known) st = 'open';
-        else st = st === 'open' ? 'closed' : 'open';
-        if (known) pos = 100 - pos;
-      }
       if (!known) pos = st === 'open' || st === 'opening' ? 100 : 0;
       else if (st === 'open' && pos < 100) st = pos > 0 ? 'partial' : 'closed';
       return { st, pos, known, tilt, s };
@@ -15732,14 +15613,11 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
-        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
-        { name: 'transparent', selector: { boolean: {} } },
         ent('entity', 'cover'), ent('entity_power', 'sensor'), ent('sun_entity', 'sun'),
         { type: 'grid', name: '', schema: [
           { name: 'color', selector: { text: {} } },
           { name: 'travel_time', selector: { number: { min: 0, max: 120, step: 1, mode: 'box', unit_of_measurement: 's' } } },
         ] },
-        bool('invert', false),
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_controls'), bool('show_slider'), bool('show_position'),
@@ -15747,7 +15625,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         ] },
       ];
       // « color » a le libellé « couleur de la lumière » pour les lampes : ici, couleur du volet
-      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'color' ? 'shutter_color' : s.name === 'invert' ? 'invert_position' : s.name, this._hass);
+      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'color' ? 'shutter_color' : s.name, this._hass);
     }
   }
 
