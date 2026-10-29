@@ -243,7 +243,10 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
     _compute() {
       const c = this._c, s = this._st(c.entity);
       let st = 'unavailable', pos = NaN, tilt = NaN;
-      if (s && !/^(unavailable|unknown)$/i.test(String(s.state))) {
+      // unknown : HA ne connaît pas l'état (ex. après redémarrage), mais la cover reste pilotable
+      if (s && /^unknown$/i.test(String(s.state))) {
+        st = 'unknown';
+      } else if (s && !/^(unavailable|unknown)$/i.test(String(s.state))) {
         const v = String(s.state).toLowerCase(), a = s.attributes || {};
         st = ['open', 'closed', 'opening', 'closing'].includes(v) ? v : /^(on|true|1)$/.test(v) ? 'open' : 'closed';
         if (a.current_position != null && isFinite(Number(a.current_position))) pos = Math.max(0, Math.min(100, Number(a.current_position)));
@@ -252,7 +255,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       const known = !isNaN(pos); // position réelle fournie par la cover
       // invert : cover qui remonte sa position à l'envers (fréquent avec Tuya), 0 = ouvert et 100 = fermé.
       // L'état HA en découle et est donc faux lui aussi : on le recalcule depuis la position corrigée.
-      if (c.invert && st !== 'unavailable') {
+      if (c.invert && st !== 'unavailable' && st !== 'unknown') {
         if (st === 'opening' || st === 'closing') st = st === 'opening' ? 'closing' : 'opening';
         else if (known) st = 'open';
         else st = st === 'open' ? 'closed' : 'open';
@@ -288,7 +291,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       const badge = r.getElementById('shbadge');
       const moving = st === 'opening' || st === 'closing';
       badge.textContent = st === 'partial' ? `${this._t('partial')} ${Math.round(pos)} %` : moving && known ? `${this._t(st)}… ${Math.round(pos)} %` : this._t(st);
-      badge.style.display = c.show_status === false ? 'none' : '';
+      badge.style.display = c.show_status === false || st === 'unknown' ? 'none' : '';
 
       // commandes et curseurs selon ce que la cover sait faire (supported_features)
       const isCover = (c.entity || '').startsWith('cover.');
