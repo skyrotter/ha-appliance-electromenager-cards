@@ -8,6 +8,8 @@ Four cards driven by a smart plug (`power`), with an optional `entity` and `swit
 - **Monitors** (`custom:appliance-monitor-card`): one, two or three screens on their own plug (`screens`, default 2). Above `threshold` (10 W) they show a code editor, a dashboard and a video; between `standby_threshold` (0.3 W) and the threshold: standby (amber LED, "no signal" box).
 - **Laptop** (`custom:appliance-laptop-card`): above `threshold` (15 W) the screen shows a live dashboard and the keys are backlit; below it: sleep (amber LED).
 
+![Tower only and monitors cards](../monitors-pc-tower.gif)
+
 ```yaml
 type: custom:appliance-towel-dryer-card
 power: sensor.towel_rail_power
