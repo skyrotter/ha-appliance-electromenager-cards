@@ -1,0 +1,29 @@
+/* ---------- écrans PC ---------- */
+.mn-screen { opacity: 0; transition: opacity .5s; }
+.k-monitor.st-screen_on .mn-screen { opacity: 1; }
+.mn-glow { opacity: 0; transition: opacity .6s; }
+.k-monitor.st-screen_on .mn-glow { opacity: .7; }
+/* veille : dalle noire, petite fenêtre « pas de signal » qui pulse */
+.mn-sleep { opacity: 0; transition: opacity .4s; }
+.k-monitor.st-standby .mn-sleep { opacity: 1; animation: ac-pulse 2.8s ease-in-out infinite; }
+.mn-led { fill: #3a424b; transition: fill .3s; }
+.k-monitor.st-screen_on .mn-led { fill: #43c07a; filter: drop-shadow(0 0 1px #43c07a); }
+.k-monitor.st-standby .mn-led { fill: #ffb020; animation: ac-pulse 2.4s ease-in-out infinite; }
+.mn-code rect { transform-box: fill-box; transform-origin: 0 50%; }
+.k-monitor.st-screen_on .mn-code rect { animation: pc-type 4.4s ease-in-out infinite; }
+.mn-code rect:nth-child(2) { animation-delay: .5s !important; } .mn-code rect:nth-child(3) { animation-delay: 1s !important; }
+.mn-code rect:nth-child(4) { animation-delay: 1.5s !important; } .mn-code rect:nth-child(5) { animation-delay: 2s !important; } .mn-code rect:nth-child(6) { animation-delay: 2.5s !important; }
+.mn-bars rect { transform-box: fill-box; transform-origin: 50% 100%; }
+.k-monitor.st-screen_on .mn-bars rect { animation: pc-bar 3.2s ease-in-out infinite alternate; }
+.mn-bars rect:nth-child(2) { animation-delay: .4s !important; } .mn-bars rect:nth-child(3) { animation-delay: .8s !important; } .mn-bars rect:nth-child(4) { animation-delay: 1.2s !important; }
+.mn-line { stroke-dasharray: 60; stroke-dashoffset: 0; }
+.k-monitor.st-screen_on .mn-line { animation: mn-draw 5s ease-in-out infinite; }
+.mn-sun { transform-box: fill-box; transform-origin: 50% 50%; }
+.k-monitor.st-screen_on .mn-sun { animation: ac-pulse 3.6s ease-in-out infinite; }
+.mn-prog { transform-box: fill-box; transform-origin: 0 50%; transform: scaleX(.3); }
+.k-monitor.st-screen_on .mn-prog { animation: mn-prog 12s linear infinite; }
+.mn-cursor { transform: translate(30px, 40px); }
+.k-monitor.st-screen_on .mn-cursor { animation: mn-mouse 7s ease-in-out infinite; }
+@keyframes mn-draw { 0% { stroke-dashoffset: 60; } 45%, 85% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -60; } }
+@keyframes mn-prog { from { transform: scaleX(.05); } to { transform: scaleX(1); } }
+@keyframes mn-mouse { 0%, 100% { transform: translate(30px, 40px); } 30% { transform: translate(70px, 30px); } 55% { transform: translate(80px, 42px); } 80% { transform: translate(40px, 22px); } }
