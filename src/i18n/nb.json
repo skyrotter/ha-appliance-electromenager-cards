@@ -184,6 +184,7 @@
 "ends_at": "Ferdig kl.",
 "toggle": "Slå på/av",
 "confirm_off": "Syklus pågår – trykk igjen for å bryte strømmen",
+"confirm_off_pc": "Datamaskinen er på – klikk igjen for å kutte strømmen",
 "f_name": "Navn",
 "f_labels": "Egne flisetiketter (nøkkel: tekst)",
 "f_entity": "Status-entitet (switch, sensor, input_select…)",

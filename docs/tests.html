@@ -150,6 +150,10 @@ c=card('laptop',{power:'sensor.p'},[mk('sensor.p',45,W)]); ok('laptop screen on'
 c=card('laptop',{power:'sensor.p'},[mk('sensor.p',5,W)]); ok('laptop sleep',has(c,'st-standby'),c.wrap.className);
 c=card('laptop',{power:'sensor.p'},[mk('sensor.p',0,W)]); ok('laptop off',has(c,'st-off'),c.wrap.className);
 c=card('desktop-pc',{power:'sensor.p',style:'tower'},[mk('sensor.p',120,W)]); ok('pc tower only: no screen, tower title',has(c,'st-screen_on')&&!c.sr.querySelector('.pc-screen')&&c.sr.querySelectorAll('.pc-fan').length===3&&/Unité centrale/.test(c.txt()),c.wrap.className+' '+c.txt());
+c=card('desktop-pc',{power:'sensor.p',switch:'switch.s'},[mk('sensor.p',120,W),mk('switch.s','on')]); c.sr.querySelector('.toggle').click(); {const armed=!c.h.calls.length&&/Ordinateur allumé/.test(c.sr.getElementById('actions').textContent); c.sr.querySelector('.toggle').click(); ok('pc off needs two clicks',armed&&c.h.calls.length===1,JSON.stringify(c.h.calls));}
+c=card('desktop-pc',{power:'sensor.p',switch:'switch.s'},[mk('sensor.p',0,W),mk('switch.s','on')]); c.sr.querySelector('.toggle').click(); ok('pc off at 0 W: one click',c.h.calls.length===1,JSON.stringify(c.h.calls));
+c=card('desktop-pc',{power:'sensor.p',switch:'switch.s',confirm_off:false},[mk('sensor.p',120,W),mk('switch.s','on')]); c.sr.querySelector('.toggle').click(); ok('pc confirm_off false: one click',c.h.calls.length===1,JSON.stringify(c.h.calls));
+c=card('server-rack',{power:'sensor.p',switch:'switch.s'},[mk('sensor.p',150,W),mk('switch.s','on')]); c.sr.querySelector('.toggle').click(); ok('rack off needs confirmation',!c.h.calls.length,JSON.stringify(c.h.calls));
 // écrans PC
 c=card('monitor',{power:'sensor.p'},[mk('sensor.p',38,W)]); ok('monitor on, 2 screens by default',has(c,'st-screen_on')&&c.sr.querySelectorAll('.mn-screen').length===2&&/Écrans PC/.test(c.txt())&&/Allumés/.test(c.txt()),c.wrap.className+' '+c.txt());
 c=card('monitor',{power:'sensor.p'},[mk('sensor.p',0.4,W)]); ok('monitor standby',has(c,'st-standby'),c.wrap.className);

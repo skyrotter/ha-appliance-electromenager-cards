@@ -154,6 +154,7 @@
     "ends_at": "Ends at",
     "toggle": "Turn on/off",
     "confirm_off": "Cycle running – click again to cut power",
+    "confirm_off_pc": "Computer on – click again to cut power",
     "f_name": "Name",
     "f_labels": "Custom tile labels (key: text)",
     "f_entity": "Status entity (switch, sensor, input_select…)",

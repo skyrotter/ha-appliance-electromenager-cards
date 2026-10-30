@@ -154,6 +154,7 @@
     "ends_at": "Klaar om",
     "toggle": "Aan/uit",
     "confirm_off": "Cyclus bezig – klik nog eens om de stroom te onderbreken",
+    "confirm_off_pc": "Computer staat aan – klik nogmaals om uit te schakelen",
     "f_name": "Naam",
     "f_labels": "Eigen tegellabels (sleutel: tekst)",
     "f_entity": "Statusentiteit (switch, sensor, input_select…)",

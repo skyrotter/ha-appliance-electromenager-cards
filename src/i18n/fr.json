@@ -154,6 +154,7 @@
     "ends_at": "Fin à",
     "toggle": "Allumer/éteindre",
     "confirm_off": "Cycle en cours – cliquer encore pour couper",
+    "confirm_off_pc": "Ordinateur allumé – cliquer encore pour couper",
     "f_name": "Nom",
     "f_labels": "Libellés perso des tuiles (clé : texte)",
     "f_entity": "Entité d'état (switch, sensor, input_select…)",

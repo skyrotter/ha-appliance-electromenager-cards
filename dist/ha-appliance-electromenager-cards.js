@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.38.1";
+const VERSION = "1.38.2";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -169,6 +169,7 @@ const STRINGS = {
     "ends_at": "Ends at",
     "toggle": "Turn on/off",
     "confirm_off": "Cycle running – click again to cut power",
+    "confirm_off_pc": "Computer on – click again to cut power",
     "f_name": "Name",
     "f_labels": "Custom tile labels (key: text)",
     "f_entity": "Status entity (switch, sensor, input_select…)",
@@ -398,6 +399,7 @@ const STRINGS = {
     "ends_at": "Endet um",
     "toggle": "Ein/Aus",
     "confirm_off": "Zyklus läuft – erneut klicken zum Abschalten",
+    "confirm_off_pc": "Computer läuft – erneut klicken zum Abschalten",
     "f_name": "Name",
     "f_labels": "Eigene Kachelbeschriftungen (Schlüssel: Text)",
     "f_entity": "Status-Entität (switch, sensor, input_select…)",
@@ -627,6 +629,7 @@ const STRINGS = {
     "ends_at": "Fin à",
     "toggle": "Allumer/éteindre",
     "confirm_off": "Cycle en cours – cliquer encore pour couper",
+    "confirm_off_pc": "Ordinateur allumé – cliquer encore pour couper",
     "f_name": "Nom",
     "f_labels": "Libellés perso des tuiles (clé : texte)",
     "f_entity": "Entité d'état (switch, sensor, input_select…)",
@@ -886,6 +889,7 @@ const STRINGS = {
     "ends_at": "Ferdig kl.",
     "toggle": "Slå på/av",
     "confirm_off": "Syklus pågår – trykk igjen for å bryte strømmen",
+    "confirm_off_pc": "Datamaskinen er på – klikk igjen for å kutte strømmen",
     "f_name": "Navn",
     "f_labels": "Egne flisetiketter (nøkkel: tekst)",
     "f_entity": "Status-entitet (switch, sensor, input_select…)",
@@ -1085,6 +1089,7 @@ const STRINGS = {
     "ends_at": "Klaar om",
     "toggle": "Aan/uit",
     "confirm_off": "Cyclus bezig – klik nog eens om de stroom te onderbreken",
+    "confirm_off_pc": "Computer staat aan – klik nogmaals om uit te schakelen",
     "f_name": "Naam",
     "f_labels": "Eigen tegellabels (sleutel: tekst)",
     "f_entity": "Statusentiteit (switch, sensor, input_select…)",
@@ -1314,6 +1319,7 @@ const STRINGS = {
     "ends_at": "Se termină la",
     "toggle": "Pornește/oprește",
     "confirm_off": "Ciclu în desfășurare – apasă din nou pentru a tăia alimentarea",
+    "confirm_off_pc": "Computer pornit – apăsați din nou pentru a opri",
     "f_name": "Nume",
     "f_labels": "Etichete proprii pentru plăci (cheie: text)",
     "f_entity": "Entitate de stare (switch, sensor, input_select…)",
@@ -1543,6 +1549,7 @@ const STRINGS = {
     "ends_at": "Окончание в",
     "toggle": "Вкл./выкл.",
     "confirm_off": "Цикл выполняется – нажмите ещё раз, чтобы отключить питание",
+    "confirm_off_pc": "Компьютер включён – нажмите ещё раз, чтобы отключить",
     "f_name": "Название",
     "f_labels": "Свои подписи плиток (ключ: текст)",
     "f_entity": "Сущность статуса (switch, sensor, input_select…)",
@@ -4395,9 +4402,11 @@ class ApplianceCardBase extends HTMLElement {
       const on = isOn(hass.states[swId]);
       // safety: cutting a washer/dryer/dishwasher mid-cycle needs a second click
       const freezer = ["chest_freezer", "drawer_freezer"].includes(kind);
-      const guarded = c.confirm_off !== false && on && (freezer || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d"].includes(kind)));
+      // PC fixe / baie serveur : couper la prise d'une machine allumée ou en veille = arrêt brutal
+      const computer = ["desktop_pc", "server_rack"].includes(kind) && ["screen_on", "online", "standby"].includes(m.status);
+      const guarded = c.confirm_off !== false && on && (freezer || computer || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d"].includes(kind)));
       const arming = guarded && this._confirmUntil && Date.now() < this._confirmUntil;
-      const label = arming ? tr(hass, "confirm_off") : tr(hass, "toggle");
+      const label = arming ? tr(hass, computer ? "confirm_off_pc" : "confirm_off") : tr(hass, "toggle");
       $("actions").innerHTML = `<button class="toggle ${on ? "on" : ""} ${arming ? "confirm" : ""}" title="${esc(label)}" aria-label="${esc(label)}" aria-pressed="${on}"><ha-icon icon="${arming ? "mdi:alert" : "mdi:power"}"></ha-icon></button>${arming ? `<div class="confirm-tip">${esc(label)}</div>` : ""}`;
       $("actions").querySelector("button").onclick = (ev) => {
         ev.stopPropagation();
@@ -4691,7 +4700,7 @@ function buildForm(kind) {
             { name: "ignition_threshold", selector: { number: { min: 50, max: 1000, step: 10, mode: "box", unit_of_measurement: "W" } } },
             { name: "pellet_alert", selector: { number: { min: 0, max: 50, step: 1, mode: "box", unit_of_measurement: "%" } } },
           ] : []),
-          ...(["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "chest_freezer", "drawer_freezer"].includes(kind) ? [{ name: "confirm_off", selector: { boolean: {} }, default: true }] : []),
+          ...(["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "chest_freezer", "drawer_freezer", "desktop_pc", "server_rack"].includes(kind) ? [{ name: "confirm_off", selector: { boolean: {} }, default: true }] : []),
           { name: "color", selector: { text: {} } },
         ],
       },

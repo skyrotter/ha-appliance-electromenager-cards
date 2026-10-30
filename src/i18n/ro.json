@@ -154,6 +154,7 @@
     "ends_at": "Se termină la",
     "toggle": "Pornește/oprește",
     "confirm_off": "Ciclu în desfășurare – apasă din nou pentru a tăia alimentarea",
+    "confirm_off_pc": "Computer pornit – apăsați din nou pentru a opri",
     "f_name": "Nume",
     "f_labels": "Etichete proprii pentru plăci (cheie: text)",
     "f_entity": "Entitate de stare (switch, sensor, input_select…)",

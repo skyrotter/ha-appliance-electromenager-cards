@@ -154,6 +154,7 @@
     "ends_at": "Endet um",
     "toggle": "Ein/Aus",
     "confirm_off": "Zyklus läuft – erneut klicken zum Abschalten",
+    "confirm_off_pc": "Computer läuft – erneut klicken zum Abschalten",
     "f_name": "Name",
     "f_labels": "Eigene Kachelbeschriftungen (Schlüssel: Text)",
     "f_entity": "Status-Entität (switch, sensor, input_select…)",
