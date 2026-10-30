@@ -15774,13 +15774,15 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       const isCover = (c.entity || '').startsWith('cover.');
       const sf = Number(s && s.attributes && s.attributes.supported_features);
       const has = (bit) => !isFinite(sf) || sf <= 0 || !!(sf & bit);
+      const assumed = !!(s && s.attributes && s.attributes.assumed_state === true);
       const ctl = r.getElementById('shctl');
       ctl.classList.toggle('hide', c.show_controls === false || !isCover);
       ctl.querySelectorAll('button').forEach((b) => {
         const a = b.dataset.a;
         b.querySelector('span').textContent = this._t(`btn_${a}`);
         b.classList.toggle('hide', a === 'stop' && !has(8));
-        b.disabled = st === 'unavailable' || (a === 'open' && (st === 'open' || st === 'opening')) || (a === 'close' && (st === 'closed' || st === 'closing'));
+        // assumed_state (RFXCOM, Somfy RTS…) : l'état est supposé, pas mesuré, donc on laisse tout cliquable comme la carte HA
+        b.disabled = st === 'unavailable' || (!assumed && ((a === 'open' && (st === 'open' || st === 'opening')) || (a === 'close' && (st === 'closed' || st === 'closing'))));
       });
       const rng = (id, show, label, val) => {
         const el = r.getElementById(id), inp = el.querySelector('input');
