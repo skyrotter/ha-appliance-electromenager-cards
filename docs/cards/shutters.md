@@ -1,10 +1,10 @@
 # Shutters and blinds
 
-`custom:appliance-roller-shutter-card · custom:appliance-venetian-blind-card · custom:appliance-swing-shutter-card · custom:appliance-pergola-card`
+`custom:appliance-roller-shutter-card · custom:appliance-venetian-blind-card · custom:appliance-swing-shutter-card · custom:appliance-pergola-card · custom:appliance-roof-window-card`
 
 <p align="center"><img src="../shutters.gif" width="600" alt="Animated shutter cards"></p>
 
-Three window coverings and a bioclimatic pergola driven by a `cover` entity. The view through the window follows the sun: day sky with the sun, or night sky with the moon and stars when `sun.sun` is below the horizon.
+Three window coverings, a bioclimatic pergola and a roof window driven by a `cover` entity. The view through the window follows the sun: day sky with the sun, or night sky with the moon and stars when `sun.sun` is below the horizon.
 
 | Card | Animation |
 |---|---|
@@ -34,6 +34,24 @@ entity_rain: binary_sensor.rain
 entity_light: light.pergola_led
 entity_wind: sensor.wind_speed
 travel_time: 25
+```
+
+## Roof window
+
+<p align="center"><img src="../water-roof-window.gif" width="600" alt="Animated roof window card"></p>
+
+`custom:appliance-roof-window-card`: a centre-pivot roof window (Velux, Fakro…) on a tiled roof. The sash pivots with `current_position` and shows the room inside (lit at night). Same states, buttons and options as the shutters; badge **Open 60 %** / **Closing… 20 %**. Extra options:
+
+- `entity_blind` (cover of the exterior roller blind): the blind rolls down over the glass, **Blind** button (raise / lower) and tile, "Blind down" in the badge
+- `entity_rain` (binary_sensor `on`, or a sensor above 0): grey sky and rain, **Rain** tile
+- `show_blind`, `show_rain`
+
+```yaml
+type: custom:appliance-roof-window-card
+name: Bedroom Velux
+entity: cover.velux_bedroom
+entity_blind: cover.velux_bedroom_blind
+entity_rain: binary_sensor.velux_rain_sensor
 ```
 
 ## Options

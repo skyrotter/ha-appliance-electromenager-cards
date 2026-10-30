@@ -757,7 +757,16 @@
     "entity_wind": "Windsensor",
     "show_rain": "Regen anzeigen",
     "show_wind": "Wind anzeigen",
-    "louvre_color": "Lamellenfarbe"
+    "louvre_color": "Lamellenfarbe",
+    "entity_index": "Zählerstand (gesamt)",
+    "entity_today": "Verbrauch heute",
+    "entity_leak": "Lecksensor",
+    "entity_valve": "Absperrventil",
+    "leak_minutes": "Leckalarm nach (min Dauerfluss)",
+    "flow_threshold": "Durchfluss gilt als null unter",
+    "show_today": "Heute anzeigen",
+    "entity_blind": "Außenrollladen (cover)",
+    "show_blind": "Rollladen anzeigen"
   },
   "light": {
     "light_bulb": "Glühbirne",
@@ -806,6 +815,30 @@
     "wind": "Wind",
     "yes": "Ja",
     "no": "Nein",
-    "btn_light": "LED"
+    "btn_light": "LED",
+    "roof_window": "Dachfenster",
+    "rw_open": "Offen",
+    "rw_closed": "Geschlossen",
+    "rw_partial": "Offen",
+    "rw_position": "Öffnung",
+    "blind": "Rollladen",
+    "blind_down": "Rollladen unten",
+    "btn_blind": "Rollladen"
+  },
+  "water_meter": {
+    "name": "Wasserzähler",
+    "idle": "Kein Verbrauch",
+    "flowing": "Wasser läuft",
+    "leak": "Mögliches Leck",
+    "valve_closed": "Ventil geschlossen",
+    "unavailable": "Nicht verfügbar",
+    "leak_detected": "Leck vom Sensor erkannt",
+    "leak_continuous": "Wasser läuft seit über {n} min ununterbrochen",
+    "open_valve": "Ventil öffnen",
+    "close_valve": "Ventil schließen",
+    "flow": "Durchfluss",
+    "today": "Heute",
+    "index": "Zählerstand",
+    "cost": "Kosten"
   }
 }

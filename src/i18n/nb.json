@@ -757,7 +757,16 @@
 "entity_wind": "Vindsensor",
 "show_rain": "Vis regn",
 "show_wind": "Vis vind",
-"louvre_color": "Lamellfarge"
+"louvre_color": "Lamellfarge",
+"entity_index": "Målerstand (totalt)",
+"entity_today": "Forbruk i dag",
+"entity_leak": "Lekkasjesensor",
+"entity_valve": "Stengeventil",
+"leak_minutes": "Lekkasjevarsel etter (min sammenhengende strømning)",
+"flow_threshold": "Strømning regnes som null under",
+"show_today": "Vis i dag",
+"entity_blind": "Utvendig rullegardin (cover)",
+"show_blind": "Vis rullegardin"
 },
 "light": {
 "light_bulb": "Lyspære",
@@ -806,6 +815,30 @@
 "wind": "Vind",
 "yes": "Ja",
 "no": "Nei",
-"btn_light": "LED"
+"btn_light": "LED",
+"roof_window": "Takvindu",
+"rw_open": "Åpent",
+"rw_closed": "Lukket",
+"rw_partial": "Åpent",
+"rw_position": "Åpning",
+"blind": "Rullegardin",
+"blind_down": "Rullegardin nede",
+"btn_blind": "Rullegardin"
+},
+"water_meter": {
+"name": "Vannmåler",
+"idle": "Ikke noe forbruk",
+"flowing": "Vannet renner",
+"leak": "Mulig lekkasje",
+"valve_closed": "Ventil stengt",
+"unavailable": "Utilgjengelig",
+"leak_detected": "Lekkasje oppdaget av sensoren",
+"leak_continuous": "Vannet har rent uten stopp i over {n} min",
+"open_valve": "Åpne ventil",
+"close_valve": "Steng ventil",
+"flow": "Strømning",
+"today": "I dag",
+"index": "Målerstand",
+"cost": "Kostnad"
 }
 }

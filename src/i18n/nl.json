@@ -757,7 +757,16 @@
     "entity_wind": "Windsensor",
     "show_rain": "Regen tonen",
     "show_wind": "Wind tonen",
-    "louvre_color": "Kleur van de lamellen"
+    "louvre_color": "Kleur van de lamellen",
+    "entity_index": "Meterstand (totaal)",
+    "entity_today": "Verbruik vandaag",
+    "entity_leak": "Leksensor",
+    "entity_valve": "Afsluitkraan",
+    "leak_minutes": "Lekmelding na (min onafgebroken stroming)",
+    "flow_threshold": "Debiet telt als nul onder",
+    "show_today": "Vandaag tonen",
+    "entity_blind": "Buitenrolluik (cover)",
+    "show_blind": "Rolluik tonen"
   },
   "light": {
     "light_bulb": "Lamp",
@@ -806,6 +815,30 @@
     "wind": "Wind",
     "yes": "Ja",
     "no": "Nee",
-    "btn_light": "LED"
+    "btn_light": "LED",
+    "roof_window": "Dakraam",
+    "rw_open": "Open",
+    "rw_closed": "Gesloten",
+    "rw_partial": "Open",
+    "rw_position": "Opening",
+    "blind": "Rolluik",
+    "blind_down": "Rolluik dicht",
+    "btn_blind": "Rolluik"
+  },
+  "water_meter": {
+    "name": "Watermeter",
+    "idle": "Geen verbruik",
+    "flowing": "Water stroomt",
+    "leak": "Mogelijk lek",
+    "valve_closed": "Kraan dicht",
+    "unavailable": "Niet beschikbaar",
+    "leak_detected": "Lek gedetecteerd door de sensor",
+    "leak_continuous": "Water stroomt al meer dan {n} min onafgebroken",
+    "open_valve": "Kraan openen",
+    "close_valve": "Kraan sluiten",
+    "flow": "Debiet",
+    "today": "Vandaag",
+    "index": "Meterstand",
+    "cost": "Kosten"
   }
 }
