@@ -99,7 +99,9 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
 .pg-ray:nth-child(2){animation-delay:-1.2s}.pg-ray:nth-child(3){animation-delay:-2.4s}.pg-ray:nth-child(4){animation-delay:-3.1s}
 @keyframes pgray{50%{fill-opacity:.45}}
 .pg-strip,.pg-pool{opacity:0;transition:opacity .6s}.leds .pg-strip{opacity:1;filter:drop-shadow(0 0 2px #ffd27a)}.isnight.leds .pg-pool{opacity:1}
-.pg-candle{opacity:0}.isnight .pg-candle{opacity:1}.pg-candle circle{animation:pgflick 1.3s ease-in-out infinite}
+.pg-candle,.pg-glow{opacity:0}.isnight .pg-candle,.isnight .pg-glow{opacity:.7}
+.pg-water path{animation:pgwave 3s ease-in-out infinite alternate}.pg-water path:nth-child(2n){animation-delay:-1.5s}
+@keyframes pgwave{to{transform:translateX(6px)}}.pg-candle circle{animation:pgflick 1.3s ease-in-out infinite}
 @keyframes pgflick{50%{opacity:.6}}
 .pg-drops line{animation:pgdrop .7s linear infinite}
 .pg-drops line:nth-child(3n){animation-delay:-.23s}.pg-drops line:nth-child(3n+1){animation-delay:-.47s}
@@ -107,7 +109,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
 .pg-drain circle{animation:pgdrain 1.4s linear infinite}.pg-drain circle:nth-child(2){animation-delay:-.7s}
 @keyframes pgdrain{from{transform:translateY(0);opacity:1}to{transform:translateY(80px);opacity:.3}}
 .ctl button.on{background:color-mix(in srgb,#ffc94a 35%,var(--secondary-background-color))}
-.noanim .pg-ray,.noanim .pg-candle circle,.noanim .pg-drops line,.noanim .pg-drain circle{animation:none}
+.noanim .pg-water path,.noanim .pg-ray,.noanim .pg-candle circle,.noanim .pg-drops line,.noanim .pg-drain circle{animation:none}
 `;
 
   // ciel et paysage vus par la fenêtre (x0..x1, y0..y1), en version jour et nuit
@@ -206,64 +208,87 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
     }
     return [bl, sh];
   };
+  // décor : maison contemporaine à toit plat (bardage bois, baie vitrée), terrasse en pierre, piscine au premier plan
   const PERGOLA = () => {
-    const { BL, BR, FL, FR, H } = PG, floor = [[BL[0], BL[1] + H], [BR[0], BR[1] + H], [FR[0], FR[1] + H], [FL[0], FL[1] + H]];
+    const { BL, BR, FL, FR, H } = PG, gy = BL[1] + H, floor = [[BL[0], gy], [BR[0], gy], [FR[0], FR[1] + H], [FL[0], FL[1] + H]];
     const post = (x, y, w) => `<rect x="${x - w / 2}" y="${y}" width="${w}" height="${H}" fill="url(#pgalu)"/>`;
     const rays = [.18, .38, .58, .78].map((k) => { const P = lerp(lerp(BL, FL, k), lerp(BR, FR, k), .35); return `<path class="pg-ray" d="M${P[0].toFixed(1)} ${P[1].toFixed(1)}l${PG.SX} ${H}h12l${-PG.SX} ${-H}z"/>`; }).join('');
     const drops = [...Array(30)].map((_, k) => { const x = (k * 37.3) % 250, y = (k * 23) % 40; return `<line x1="${x.toFixed(1)}" y1="${y}" x2="${(x - 2).toFixed(1)}" y2="${y + 8}"/>`; }).join('');
+    // bardage : lames verticales de teintes légèrement différentes
+    const clad = [...Array(60)].map((_, k) => `<rect x="${k * 4}" y="22" width="4" height="${gy - 22}" fill="${['#b9834f', '#ad7845', '#c08b57', '#a87344'][(k * 7) % 4]}"/>`).join('')
+      + [...Array(60)].map((_, k) => `<path d="M${k * 4} 22V${gy}" stroke="#7d522c" stroke-width=".35"/>`).join('');
+    // claustra bois sur le côté gauche, entre les deux poteaux
+    const screen = [...Array(9)].map((_, k) => {
+      const y = 76 + k * 6.4, t = (y - FL[1]) / H;
+      return `<polygon points="${pts([[FL[0] + 3, FL[1] + t * H], [BL[0] - 3, BL[1] + t * H], [BL[0] - 3, BL[1] + t * H + 4], [FL[0] + 3, FL[1] + t * H + 4]])}" fill="${k % 2 ? '#a5703f' : '#b27b48'}"/>`;
+    }).join('');
+    const lantern = (x, y) => `<g><rect x="${x - 3}" y="${y - 8}" width="6" height="8" rx="1.5" fill="none" stroke="#3a3027" stroke-width=".8"/>
+      <path d="M${x - 3} ${y - 5}h6M${x - 3} ${y - 2.5}h6M${x} ${y - 8}v8" stroke="#3a3027" stroke-width=".5"/><circle class="pg-glow" cx="${x}" cy="${y - 4}" r="4.5" fill="#ffcf6a"/></g>`;
     return `<defs>
-      <linearGradient id="pgsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5fb2f0"/><stop offset="1" stop-color="#cfe9fb"/></linearGradient>
-      <linearGradient id="pgwall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#efe4d2"/><stop offset="1" stop-color="#e2d3bb"/></linearGradient>
-      <linearGradient id="pgdeck" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c99f72"/><stop offset="1" stop-color="#b0855a"/></linearGradient>
+      <linearGradient id="pgsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6db7ef"/><stop offset="1" stop-color="#d6ecfb"/></linearGradient>
+      <linearGradient id="pgglass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3e5466"/><stop offset=".5" stop-color="#6f8ba0"/><stop offset="1" stop-color="#2f4252"/></linearGradient>
+      <linearGradient id="pgwarm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd08a"/><stop offset="1" stop-color="#e8954a"/></linearGradient>
+      <linearGradient id="pgstone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ddd7cc"/><stop offset="1" stop-color="#c9c2b5"/></linearGradient>
+      <linearGradient id="pgwater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4cc3e6"/><stop offset="1" stop-color="#1f8fc4"/></linearGradient>
       <linearGradient id="pgalu" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3d434b"/><stop offset=".5" stop-color="#5b626b"/><stop offset="1" stop-color="#2e3339"/></linearGradient>
-      <radialGradient id="pgpool" cx=".5" cy=".3" r=".7"><stop offset="0" stop-color="#ffd27a" stop-opacity=".75"/><stop offset="1" stop-color="#ffd27a" stop-opacity="0"/></radialGradient>
+      <radialGradient id="pgpool" cx=".5" cy=".3" r=".7"><stop offset="0" stop-color="#ffd27a" stop-opacity=".7"/><stop offset="1" stop-color="#ffd27a" stop-opacity="0"/></radialGradient>
       <clipPath id="pgfloor"><polygon points="${pts(floor)}"/></clipPath></defs>
-      <g class="day"><rect width="240" height="180" fill="url(#pgsky)"/><g class="pg-sun"><circle cx="26" cy="6" r="10" fill="#ffe17a" opacity=".3"/><circle cx="26" cy="6" r="6" fill="#ffe17a"/></g></g>
-      <g class="night"><rect width="240" height="180" fill="url(#shskyn)"/><circle cx="212" cy="6" r="4.5" fill="#f4f1d0"/><circle cx="214" cy="4.6" r="3.8" fill="#0b1430"/>
+      <g class="day"><rect width="240" height="180" fill="url(#pgsky)"/><g class="pg-sun"><circle cx="30" cy="9" r="11" fill="#ffe17a" opacity=".3"/><circle cx="30" cy="9" r="6.5" fill="#ffe17a"/></g></g>
+      <g class="night"><rect width="240" height="180" fill="url(#shskyn)"/><circle cx="212" cy="8" r="4.5" fill="#f4f1d0"/><circle cx="214" cy="6.6" r="3.8" fill="#0b1430"/>
         ${[[50, 8], [80, 4], [130, 9], [165, 3], [110, 5]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r=".8" fill="#fff"/>`).join('')}</g>
-      <g class="pg-cloud"><rect width="240" height="16" fill="#8d99a8"/><ellipse cx="70" cy="5" rx="40" ry="7" fill="#7d8896"/><ellipse cx="170" cy="4" rx="48" ry="7" fill="#86919f"/></g>
-      <rect x="0" y="22" width="240" height="${BL[1] + H - 22}" fill="url(#pgwall)"/>
-      <rect x="0" y="22" width="240" height="5" fill="#000" opacity=".08"/>
-      <polygon points="-6,25 246,25 238,11 2,11" fill="#a9503a"/>
-      ${[14, 17.5, 21].map((y) => `<path d="M0 ${y}H240" stroke="#7f3a28" stroke-width=".8"/>`).join('')}
-      ${[...Array(30)].map((_, k) => `<path d="M${k * 8.4 + ((k % 2) * 4)} 11v14" stroke="#8a412e" stroke-width=".5" opacity=".7"/>`).join('')}
-      <polygon points="-6,25 246,25 238,11 2,11" fill="url(#shrelief)" opacity=".6"/>
-      <rect x="-2" y="24.5" width="244" height="3.2" rx="1.5" fill="#c3c9cf"/><rect x="-2" y="26.6" width="244" height="1.1" fill="#8d959d"/>
-      <rect x="226" y="27" width="3" height="${BL[1] + H - 27}" fill="#b9c0c7"/>
-      <rect x="104" y="60" width="44" height="58" fill="#5d7690"/>
-      <rect x="0" y="${BL[1] + H}" width="240" height="70" fill="#79b35c"/>
-      <polygon points="${pts([[BL[0] - 14, BL[1] + H], [BR[0] + 14, BR[1] + H], [FR[0] + 10, FR[1] + H + 8], [FL[0] - 14, FL[1] + H + 8]])}" fill="url(#pgdeck)"/>
+      <g class="pg-cloud"><rect width="240" height="20" fill="#8d99a8"/><ellipse cx="70" cy="6" rx="40" ry="8" fill="#7d8896"/><ellipse cx="170" cy="5" rx="48" ry="8" fill="#86919f"/></g>
+      <!-- maison : bardage bois, acrotère du toit plat, baie vitrée, appliques -->
+      ${clad}
+      <rect x="-2" y="16" width="244" height="7" fill="#3a3f46"/><rect x="-2" y="16" width="244" height="1.4" fill="#5b626b"/>
+      <rect x="0" y="23" width="240" height="3" fill="#000" opacity=".15"/>
+      <rect x="96" y="52" width="76" height="${gy - 52}" fill="#24292f"/>
+      <rect x="99" y="55" width="34" height="${gy - 55}" fill="url(#pgglass)"/><rect x="135" y="55" width="34" height="${gy - 55}" fill="url(#pgglass)"/>
+      <path d="M99 ${gy - 6}l14 -${gy - 61}h8l-14 ${gy - 61}zM135 ${gy - 10}l12 -${gy - 65}h5l-12 ${gy - 65}z" fill="#fff" opacity=".12"/>
+      <rect x="88" y="62" width="2.6" height="5" rx=".8" fill="#2b2f35"/><rect x="178" y="62" width="2.6" height="5" rx=".8" fill="#2b2f35"/>
+      <!-- terrasse en pierre, pelouse, piscine -->
+      <rect x="0" y="${gy}" width="240" height="${180 - gy}" fill="#6fae58"/>
+      <polygon points="${pts([[0, gy], [240, gy], [240, 164], [0, 164]])}" fill="url(#pgstone)"/>
+      ${[0, 1, 2, 3].map((k) => `<path d="M0 ${gy + 11 + k * 11}H240" stroke="#b9b1a3" stroke-width=".5"/>`).join('')}
       <g clip-path="url(#pgfloor)"><g class="pg-shadow" fill="#000"></g></g>
       ${post(BL[0], BL[1], 6)}${post(BR[0], BR[1], 6)}
-      <path d="M70 140l12-12h88l14 12z" fill="#e8dcc6" opacity=".9"/><path d="M70 140l12-12h88l14 12z" fill="none" stroke="#cdbb9c" stroke-width="1" stroke-dasharray="3 2"/>
-      <rect x="84" y="111" width="74" height="16" rx="4" fill="#3b4048"/>
-      <rect x="88" y="113" width="22" height="13" rx="3" fill="#ece6da"/><rect x="110" y="113" width="22" height="13" rx="3" fill="#e6dfd1"/><rect x="132" y="113" width="22" height="13" rx="3" fill="#ece6da"/>
-      <rect x="82" y="124" width="78" height="9" rx="2.5" fill="#3b4048"/><rect x="88" y="122" width="66" height="6" rx="2.5" fill="#f4efe5"/>
-      <path d="M110 122.2v5.6M132 122.2v5.6" stroke="#d8cfbd" stroke-width=".6"/>
-      <rect x="80" y="114" width="7" height="19" rx="2.5" fill="#454b54"/><rect x="155" y="114" width="7" height="19" rx="2.5" fill="#454b54"/>
-      <rect x="83" y="133" width="2.4" height="3" fill="#2b2f35"/><rect x="157" y="133" width="2.4" height="3" fill="#2b2f35"/>
-      <path d="M91 121q-1-7 6-8q6 1 5 8z" fill="#d9774a"/><path d="M140 121q-1-7 6-8q7 1 5 8z" fill="#5aa39b"/><path d="M146 121q0-6 5-6q5 1 3 6z" fill="#e7b54a"/>
-      <ellipse cx="121" cy="146" rx="22" ry="2.4" fill="#000" opacity=".18"/>
-      <rect x="100" y="136" width="42" height="5" rx="1.5" fill="#a4774b"/><rect x="100" y="136" width="42" height="1.6" rx="1" fill="#c39566"/>
-      <rect x="103" y="141" width="2.4" height="5" fill="#7a5532"/><rect x="137" y="141" width="2.4" height="5" fill="#7a5532"/>
-      <path d="M110 136l1.5-6h7l1.5 6z" fill="#c9673f"/>
-      <path d="M115 130q-6-6-3-12q4 4 3 12zM115 130q5-7 9-9q-1 6-9 9zM115 130q-1-9 2-13q2 6-2 13z" fill="#4f9a55"/>
-      <rect x="128" y="132" width="4" height="4" rx=".6" fill="#f3efe6"/>
-      <rect class="pg-dim" x="0" y="11" width="240" height="169" fill="#0a1020"/>
-      <rect class="night" x="104" y="60" width="44" height="58" fill="#ffcf7a" opacity=".75"/>
-      <rect x="104" y="60" width="44" height="58" fill="none" stroke="#fff" stroke-width="2"/><path d="M126 60v58" stroke="#fff" stroke-width="1.5"/>
-      <g clip-path="url(#pgfloor)"><ellipse class="pg-pool" cx="122" cy="135" rx="90" ry="28" fill="url(#pgpool)"/></g>
-      <g class="pg-candle"><circle cx="130" cy="131" r="7" fill="#ffcf6a" opacity=".22"/><circle cx="130" cy="130.6" r="1.4" fill="#ffcf6a"/></g>
+      <!-- tapis, canapé d'angle, fauteuil en rotin, table basse, plante -->
+      <path d="M56 142l12-12h96l12 12z" fill="#cfc4b2"/>
+      <rect x="66" y="110" width="88" height="15" rx="3" fill="#c49a62"/><rect x="66" y="110" width="88" height="15" rx="3" fill="#000" opacity=".08"/>
+      ${[0, 1, 2, 3].map((k) => `<rect x="${69 + k * 21}" y="111" width="20" height="12" rx="3" fill="${k % 2 ? '#dcd9d3' : '#e6e3dd'}"/>`).join('')}
+      <rect x="64" y="122" width="92" height="9" rx="2.5" fill="#c49a62"/><rect x="67" y="120.5" width="86" height="6" rx="2.5" fill="#efece6"/>
+      <path d="M48 128l12-8h8v12l-14 7z" fill="#c49a62"/><path d="M51 127l10-6.5h6v7l-12 6z" fill="#efece6"/>
+      <path d="M72 119q0-6 6-6q5 1 4 6z" fill="#9a8f80"/><path d="M134 119q0-6 6-6q6 1 4 6z" fill="#7d8a7a"/><path d="M142 120q0-5 5-5q5 1 3 5z" fill="#d6cdbd"/>
+      <g transform="translate(166 116)"><path d="M0 4h18l-2 12h-14z" fill="#a98454"/>
+        ${[0, 1, 2, 3, 4].map((k) => `<path d="M${1 + k * 3.6} 5l1 10" stroke="#8a683f" stroke-width=".5"/>`).join('')}
+        <rect x="2" y="-2" width="14" height="8" rx="2.5" fill="#efece6"/><rect x="3" y="15" width="1.6" height="4" fill="#3a3027"/><rect x="13.4" y="15" width="1.6" height="4" fill="#3a3027"/></g>
+      <ellipse cx="110" cy="146" rx="18" ry="2.2" fill="#000" opacity=".15"/>
+      <ellipse cx="110" cy="135.5" rx="17" ry="3.4" fill="#2f3237"/><rect x="108.8" y="137" width="2.4" height="8" fill="#2f3237"/>
+      <path d="M104 135l1-4h5l1 4z" fill="#d9d4ca"/><path d="M107.5 131q-4-5-1-9q3 3 1 9zM107.5 131q3-6 7-7q-1 5-7 7z" fill="#5c8f52"/>
+      <rect x="114" y="132" width="3" height="3" rx=".5" fill="#f3efe6"/>
+      <g transform="translate(205 102)"><path d="M-6 10h12l-1.5 14h-9z" fill="#5b5f66"/><circle cx="0" cy="2" r="9" fill="#5f8a55"/><circle cx="-4" cy="-3" r="5" fill="#6f9c63"/><circle cx="5" cy="-2" r="5" fill="#557d4c"/></g>
+      ${lantern(36, 152)}${lantern(196, 150)}
+      <rect class="pg-dim" x="0" y="0" width="240" height="180" fill="#0a1020"/>
+      <!-- nuit : intérieur éclairé, appliques, halos -->
+      <g class="night"><rect x="99" y="55" width="34" height="${gy - 55}" fill="url(#pgwarm)" opacity=".85"/><rect x="135" y="55" width="34" height="${gy - 55}" fill="url(#pgwarm)" opacity=".85"/>
+        <circle cx="89.3" cy="64" r="5" fill="#ffcf6a" opacity=".45"/><circle cx="179.3" cy="64" r="5" fill="#ffcf6a" opacity=".45"/></g>
+      <g clip-path="url(#pgfloor)"><ellipse class="pg-pool" cx="112" cy="135" rx="90" ry="28" fill="url(#pgpool)"/></g>
+      <g class="pg-candle"><circle cx="115.5" cy="131" r="6" fill="#ffcf6a" opacity=".22"/><circle cx="115.5" cy="131" r="1.2" fill="#ffcf6a"/></g>
       <g fill="#fff6c8" fill-opacity=".3">${rays}</g>
-      <g class="pg-roof"><polygon class="pg-gap" points="${pts([BL, BR, FR, FL])}"/><g class="pg-blades mv-js"></g></g>
+      ${screen}
+      <g class="pg-roof"><polygon class="pg-gap" points="${pts([BL, BR, FR, FL])}"/><g class="pg-blades"></g></g>
       <polyline points="${pts([FL, BL, BR])}" fill="none" stroke="#2b3036" stroke-width="3"/>
       <polyline points="${pts([BR, FR])}" fill="none" stroke="#3a4048" stroke-width="3.4"/>
       <rect x="${FL[0] - 2}" y="${FL[1] - 4}" width="${FR[0] - FL[0] + 4}" height="8" fill="url(#pgalu)"/>
       <rect class="pg-strip" x="${FL[0] + 2}" y="${FL[1] + 4}" width="${FR[0] - FL[0] - 4}" height="1.6" fill="#ffd27a"/>
       ${post(FL[0], FL[1], 7)}${post(FR[0], FR[1], 7)}
-      <rect x="${FL[0] - 5}" y="${FL[1] + H - 2}" width="10" height="3" fill="#2b3036"/><rect x="${FR[0] - 5}" y="${FR[1] + H - 2}" width="10" height="3" fill="#2b3036"/>
-      <g class="pg-drain"><circle cx="${FR[0]}" cy="${FR[1] + 4}" r="1.4" fill="#9fd0ff"/><circle cx="${FR[0]}" cy="${FR[1] + 4}" r="1.2" fill="#9fd0ff"/>
-        <path d="M${FR[0] + 3} ${FR[1] + H + 1}q6 2 12 0" stroke="#9fd0ff" stroke-width="1.4" fill="none"/></g>
+      <g class="pg-drain"><circle cx="${FR[0]}" cy="${FR[1] + 4}" r="1.4" fill="#9fd0ff"/><circle cx="${FR[0]}" cy="${FR[1] + 4}" r="1.2" fill="#9fd0ff"/></g>
+      <!-- piscine au premier plan : margelle, eau, reflets -->
+      <rect x="-2" y="162" width="176" height="20" fill="#e9e5dd"/>
+      <rect x="4" y="166" width="164" height="16" fill="url(#pgwater)"/>
+      <g class="pg-water" stroke="#bff0ff" stroke-width=".8" fill="none" opacity=".8">
+        <path d="M10 170q6-2 12 0t12 0"/><path d="M60 173q6-2 12 0t12 0"/><path d="M118 169q6-2 12 0t12 0"/><path d="M30 177q6-2 12 0t12 0"/><path d="M95 178q6-2 12 0t12 0"/></g>
+      <rect class="pg-dim" x="4" y="166" width="164" height="16" fill="#0a1020"/>
+      <g class="night"><ellipse cx="86" cy="174" rx="60" ry="6" fill="#5fe1ff" opacity=".35"/></g>
       <g class="pg-drops" stroke="#dfeeff" stroke-width="1" opacity=".8">${drops}</g>
       <circle class="led" cx="${FL[0] + 8}" cy="${FL[1]}" r="1.8"/>${ARROW(FR[0] + 16, FR[1] - 14)}`;
   };
