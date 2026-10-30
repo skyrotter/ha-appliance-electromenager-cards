@@ -437,6 +437,15 @@ class ApplianceCardBase extends HTMLElement {
       else m.status = base === "running" ? "brewing" : "idle";
     } else if (kind === "air_fryer") {
       m.status = base === "running" ? "cooking" : base === "standby" ? "idle" : base;
+    } else if (kind === "kettle" || kind === "toaster") {
+      // en marche au-dessus du seuil ; après la coupure : « eau chaude » / « toasts prêts » pendant quelques minutes
+      const on = powered || (watts === null && base === "running"), now = Date.now();
+      const keep = (kind === "kettle" ? c.hot_minutes ?? 5 : c.ready_minutes ?? 2) * 60000;
+      if (on && base !== "unavailable") this._onAt = now;
+      if (base === "unavailable") m.status = "unavailable";
+      else if (on) m.status = kind === "kettle" ? "boiling" : "toasting";
+      else if (kind === "kettle" && m.tempVal != null) m.status = m.tempVal >= (c.hot_temperature ?? 60) ? "hot_water" : "off";
+      else m.status = this._onAt && now - this._onAt < keep ? (kind === "kettle" ? "hot_water" : "toast_ready") : "off";
     } else if (kind === "wine_cooler") {
       if (base === "off" || base === "unavailable") m.status = base;
       else m.status = powered || (watts === null && base === "running") ? "cooling" : "standby";
@@ -527,7 +536,7 @@ class ApplianceCardBase extends HTMLElement {
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
     const hass = this._hass, kind = this._kind;
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
@@ -629,7 +638,7 @@ class ApplianceCardBase extends HTMLElement {
   _render(m) {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting"].includes(m.status);
     $("wrap").className = [
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
       active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
@@ -826,6 +835,7 @@ class ApplianceCardBase extends HTMLElement {
     let pct = null;
     if (active && m.progress != null) pct = m.progress;
     else if (kind === "tool_charger" && m.status === "charging" && m.batt != null) pct = m.batt;
+    else if (kind === "kettle" && m.status === "boiling" && m.tempVal != null) pct = ((m.tempVal - 15) / 85) * 100;
     else if ((kind === "oven" && m.status === "preheating") || (kind === "water_heater" && m.status !== "off")) {
       if (m.tempVal != null && m.targetVal) {
         const floor = kind === "water_heater" ? 10 : 20;
@@ -864,6 +874,8 @@ class ApplianceCardBase extends HTMLElement {
     } else if (kind === "beer_tap") {
       if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("temperature"), tEntity);
       if (m.keg != null) tile("mdi:keg", `${fmtNum(hass, m.keg, 0)} %`, lb("keg"), c.keg_level, m.alerts.includes("keg_low") ? "warn" : "");
+    } else if (kind === "kettle") {
+      if (m.tempVal != null) tile("mdi:thermometer-water", `${fmtNum(hass, m.tempVal, 0)} ${m.tempUnit}`, lb("water"), tEntity);
     } else if (kind === "tool_charger") {
       if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0)} %`, lb("battery"), c.battery_level);
     } else if (kind === "wine_cooler") {
