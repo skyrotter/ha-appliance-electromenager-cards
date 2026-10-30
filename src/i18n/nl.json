@@ -206,7 +206,19 @@
     "f_flex_temperature": "Temperatuursensor flexzone",
     "f_flex_max_temperature": "Alarm flexzone boven (°C)",
     "f_illustration_size": "Grootte van de illustratie",
-    "f_transparent": "Transparante achtergrond"
+    "f_transparent": "Transparante achtergrond",
+    "dehumidifier": "Luchtontvochtiger",
+    "drying": "Ontvochtigen",
+    "tank_full": "Reservoir vol",
+    "empty_tank": "Leeg het reservoir",
+    "tank": "Reservoir",
+    "tank_full_short": "Vol",
+    "tank_ok": "OK",
+    "fan_speed": "Ventilator",
+    "mode": "Modus",
+    "f_target_humidity": "Doelvochtigheid (sensor, number of humidifier)",
+    "f_tank_full": "Sensor reservoir vol",
+    "f_fan_speed": "Ventilatorsnelheid (select, number, fan…)"
   },
   "aquarium": {
     "power": "Vermogen",

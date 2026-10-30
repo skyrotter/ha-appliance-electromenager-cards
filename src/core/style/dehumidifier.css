@@ -1,0 +1,36 @@
+/* ---------- dehumidifier ---------- */
+/* --spd : vitesse du ventilateur (0,5 lente → 1,6 rapide), --lvl : niveau du bac (0 → 1) */
+.dh-fan { transform-box: view-box; transform-origin: 60px 64px; }
+.k-dehumidifier.st-drying .dh-fan { animation: ac-rot calc(.9s / var(--spd, 1)) linear infinite; }
+.k-dehumidifier.st-at_target .dh-fan { animation: ac-rot 2.6s linear infinite; }
+.dh-led { fill: #5a636d; transition: fill .3s; }
+.k-dehumidifier.st-drying .dh-led { fill: #38d9ff; filter: drop-shadow(0 0 1.4px #38d9ff); animation: ac-pulse 2.4s ease-in-out infinite; }
+.k-dehumidifier.st-at_target .dh-led { fill: #43c07a; }
+.dh-full { fill: #3a424b; transition: fill .3s; }
+.k-dehumidifier.tank-full .dh-full { fill: var(--ac-alert, #ff5252); filter: drop-shadow(0 0 1.4px var(--ac-alert, #ff5252)); animation: ac-pulse 1.2s ease-in-out infinite; }
+/* air humide aspiré sur les côtés, air sec soufflé par le haut */
+.dh-in path { stroke: #7fc4ff; stroke-width: 1.3; stroke-dasharray: 2 4; opacity: 0; transition: opacity .6s; }
+.k-dehumidifier.st-drying .dh-in path { opacity: .7; animation: dh-suck calc(1.6s / var(--spd, 1)) linear infinite; }
+.dh-in path:nth-child(2n) { animation-delay: -.5s !important; } .dh-in path:nth-child(3n) { animation-delay: -1s !important; }
+.dh-out path { stroke: #ffd9a8; stroke-width: 1.5; stroke-dasharray: 3 5; opacity: 0; transition: opacity .6s; }
+.k-dehumidifier.st-drying .dh-out path { opacity: .75; animation: hd-up calc(1.4s / var(--spd, 1)) linear infinite; }
+.dh-out path:nth-child(2) { animation-delay: -.4s !important; } .dh-out path:nth-child(3) { animation-delay: -.8s !important; } .dh-out path:nth-child(4) { animation-delay: -1.1s !important; }
+/* gouttelettes captées derrière la grille */
+.dh-mist circle { fill: #bfe6ff; opacity: 0; transform-box: view-box; transform-origin: 60px 64px; }
+.k-dehumidifier.st-drying .dh-mist circle { animation: dh-mist 2.2s ease-in infinite; }
+.dh-mist circle:nth-child(2) { animation-delay: -.4s !important; } .dh-mist circle:nth-child(3) { animation-delay: -.9s !important; }
+.dh-mist circle:nth-child(4) { animation-delay: -1.4s !important; } .dh-mist circle:nth-child(5) { animation-delay: -1.8s !important; }
+/* bac : niveau, vaguelettes, gouttes qui tombent pendant la déshumidification */
+.dh-water { transform: translateY(calc((1 - var(--lvl, .35)) * 20px)); transition: transform 1.2s ease-in-out; }
+.dh-wave { transform-box: view-box; }
+.k-dehumidifier.st-drying .dh-wave { animation: dh-wave 2.4s linear infinite; }
+.dh-drops path { fill: #9fdcff; opacity: 0; }
+.k-dehumidifier.st-drying .dh-drops path { animation: dh-drop 1.8s ease-in infinite; }
+.dh-drops path:nth-child(2) { animation-delay: -.6s !important; } .dh-drops path:nth-child(3) { animation-delay: -1.2s !important; }
+.k-dehumidifier.tank-full .dh-water rect { fill: #2d7fd0; }
+.k-dehumidifier.tank-full .lcd { fill: var(--ac-alert, #ff5252) !important; }
+.k-dehumidifier.st-off .lcd { fill: #24404f !important; }
+@keyframes dh-suck { from { stroke-dashoffset: 12; } to { stroke-dashoffset: 0; } }
+@keyframes dh-mist { 0% { opacity: 0; transform: scale(1.35); } 30% { opacity: .9; } 100% { opacity: 0; transform: scale(.4); } }
+@keyframes dh-wave { from { transform: translateX(0); } to { transform: translateX(-12px); } }
+@keyframes dh-drop { 0% { opacity: 0; transform: translateY(0); } 15% { opacity: .95; } 100% { opacity: 0; transform: translateY(calc((1 - var(--lvl, .35)) * 20px)); } }

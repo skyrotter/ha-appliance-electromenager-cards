@@ -206,7 +206,19 @@
     "f_flex_temperature": "Temperatursensor Flex-Zone",
     "f_flex_max_temperature": "Alarm Flex-Zone über (°C)",
     "f_illustration_size": "Größe der Illustration",
-    "f_transparent": "Transparenter Hintergrund"
+    "f_transparent": "Transparenter Hintergrund",
+    "dehumidifier": "Luftentfeuchter",
+    "drying": "Entfeuchtung",
+    "tank_full": "Tank voll",
+    "empty_tank": "Tank leeren",
+    "tank": "Tank",
+    "tank_full_short": "Voll",
+    "tank_ok": "OK",
+    "fan_speed": "Lüfter",
+    "mode": "Modus",
+    "f_target_humidity": "Zielfeuchte (Sensor, number oder humidifier)",
+    "f_tank_full": "Sensor Tank voll",
+    "f_fan_speed": "Lüfterstufe (select, number, fan…)"
   },
   "aquarium": {
     "power": "Leistung",

@@ -337,6 +337,18 @@ const SCEN = [
       range(ctl, 'Puissance', 'sensor.cfan_power', 0, 60, 1, 35, 'W', W);
       checks(ctl, [['Lampe', 'light.cfan_light', true]]);
     } },
+  { kind: 'dehumidifier', title: 'Déshumidificateur',
+    cfg: { power: 'sensor.dehum_power', humidity: 'sensor.dehum_humidity', target_humidity: 'input_number.dehum_target', temperature: 'sensor.dehum_temp', tank_full: 'binary_sensor.dehum_tank', fan_speed: 'select.dehum_fan', mode: 'select.dehum_mode', energy: 'sensor.dehum_energy' },
+    build(ctl) {
+      range(ctl, 'Puissance', 'sensor.dehum_power', 0, 400, 1, 220, 'W', W);
+      range(ctl, 'Humidité', 'sensor.dehum_humidity', 20, 95, 1, 68, '%', { unit_of_measurement: '%', device_class: 'humidity' });
+      set('input_number.dehum_target', 50, { unit_of_measurement: '%' });
+      set('sensor.dehum_temp', 19.5, T);
+      set('sensor.dehum_energy', 1.4, KWH);
+      set('select.dehum_mode', 'Linge', { options: ['Auto', 'Linge', 'Continu'] });
+      select(ctl, 'Ventilation', 'select.dehum_fan', [['low', 'Basse'], ['medium', 'Moyenne'], ['high', 'Haute']], 'medium');
+      checks(ctl, [['Bac plein', 'binary_sensor.dehum_tank', false]]);
+    } },
   { kind: 'tool-charger', title: "Chargeur de batterie d'outils",
     cfg: { switch: 'switch.tool_charger', power: 'sensor.tool_charger_power', battery_level: 'sensor.drill_battery', energy: 'sensor.tool_charger_energy' },
     build(ctl) {
