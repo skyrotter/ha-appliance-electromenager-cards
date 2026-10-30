@@ -42,7 +42,7 @@ const CSS_FILES = [
   "card", "illustration-shared", "washer-dryer", "dishwasher", "water-heater", "oven-microwave",
   "radiator", "cooktop", "vmc", "solar", "freezers", "printer-3d", "pool-pump", "pellet-stove",
   "fridge", "air-fryer", "coffee-maker", "tv", "range-hood", "ac-split", "heat-pump",
-  "towel-dryer", "server-rack", "desktop-pc", "laptop", "wine-cooler", "beer-tap", "av-receiver", "fan", "generic", "tool-charger", "ceiling-fan", "dehumidifier",
+  "towel-dryer", "server-rack", "desktop-pc", "laptop", "wine-cooler", "beer-tap", "av-receiver", "fan", "generic", "tool-charger", "ceiling-fan", "dehumidifier", "monitor",
 ].map((n) => `core/style/${n}.css`);
 /* Self-contained cards, each in its own IIFE. */
 const CARD_FILES = [

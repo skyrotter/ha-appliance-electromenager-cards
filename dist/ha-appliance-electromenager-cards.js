@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.37.1";
+const VERSION = "1.38.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -222,6 +222,14 @@ const STRINGS = {
     "f_flex_max_temperature": "Alert flex zone above (°C)",
     "f_illustration_size": "Illustration size",
     "f_transparent": "Transparent background",
+    "monitor": "Monitor",
+    "monitors": "Monitors",
+    "monitor_on": "On",
+    "monitors_on": "On",
+    "pc_tower": "Desktop tower",
+    "f_screens": "Number of screens",
+    "f_pc_style": "Illustration",
+    "f_standby_threshold_monitor": "Standby above (W)",
     "dehumidifier": "Dehumidifier",
     "drying": "Drying",
     "tank_full": "Tank full",
@@ -443,6 +451,14 @@ const STRINGS = {
     "f_flex_max_temperature": "Alarm Flex-Zone über (°C)",
     "f_illustration_size": "Größe der Illustration",
     "f_transparent": "Transparenter Hintergrund",
+    "monitor": "Monitor",
+    "monitors": "Monitore",
+    "monitor_on": "An",
+    "monitors_on": "An",
+    "pc_tower": "PC-Gehäuse",
+    "f_screens": "Anzahl der Bildschirme",
+    "f_pc_style": "Darstellung",
+    "f_standby_threshold_monitor": "Standby über (W)",
     "dehumidifier": "Luftentfeuchter",
     "drying": "Entfeuchtung",
     "tank_full": "Tank voll",
@@ -664,6 +680,14 @@ const STRINGS = {
     "f_flex_max_temperature": "Alerte zone flex au-dessus de (°C)",
     "f_illustration_size": "Taille de l'illustration",
     "f_transparent": "Fond transparent",
+    "monitor": "Écran PC",
+    "monitors": "Écrans PC",
+    "monitor_on": "Allumé",
+    "monitors_on": "Allumés",
+    "pc_tower": "Unité centrale",
+    "f_screens": "Nombre d'écrans",
+    "f_pc_style": "Illustration",
+    "f_standby_threshold_monitor": "Veille au-dessus de (W)",
     "dehumidifier": "Déshumidificateur",
     "drying": "Déshumidification",
     "tank_full": "Bac plein",
@@ -680,6 +704,14 @@ const STRINGS = {
   "nb": {
     "f_illustration_size": "Størrelse på illustrasjonen",
     "f_transparent": "Gjennomsiktig bakgrunn",
+    "monitor": "Skjerm",
+    "monitors": "Skjermer",
+    "monitor_on": "På",
+    "monitors_on": "På",
+    "pc_tower": "PC-kabinett",
+    "f_screens": "Antall skjermer",
+    "f_pc_style": "Illustrasjon",
+    "f_standby_threshold_monitor": "Hvilemodus over (W)",
     "dehumidifier": "Avfukter",
     "drying": "Avfukting",
     "tank_full": "Tanken er full",
@@ -1106,6 +1138,14 @@ const STRINGS = {
     "f_flex_max_temperature": "Alarm flexzone boven (°C)",
     "f_illustration_size": "Grootte van de illustratie",
     "f_transparent": "Transparante achtergrond",
+    "monitor": "Monitor",
+    "monitors": "Monitoren",
+    "monitor_on": "Aan",
+    "monitors_on": "Aan",
+    "pc_tower": "Pc-kast",
+    "f_screens": "Aantal schermen",
+    "f_pc_style": "Weergave",
+    "f_standby_threshold_monitor": "Stand-by boven (W)",
     "dehumidifier": "Luchtontvochtiger",
     "drying": "Ontvochtigen",
     "tank_full": "Reservoir vol",
@@ -1327,6 +1367,14 @@ const STRINGS = {
     "f_flex_max_temperature": "Alertă zonă flex peste (°C)",
     "f_illustration_size": "Dimensiunea ilustrației",
     "f_transparent": "Fundal transparent",
+    "monitor": "Monitor",
+    "monitors": "Monitoare",
+    "monitor_on": "Pornit",
+    "monitors_on": "Pornite",
+    "pc_tower": "Unitate centrală",
+    "f_screens": "Număr de ecrane",
+    "f_pc_style": "Ilustrație",
+    "f_standby_threshold_monitor": "Standby peste (W)",
     "dehumidifier": "Dezumidificator",
     "drying": "Dezumidificare",
     "tank_full": "Rezervor plin",
@@ -1548,6 +1596,14 @@ const STRINGS = {
     "f_flex_max_temperature": "Оповещать о флекс-зоне выше (°C)",
     "f_illustration_size": "Размер иллюстрации",
     "f_transparent": "Прозрачный фон",
+    "monitor": "Монитор",
+    "monitors": "Мониторы",
+    "monitor_on": "Включён",
+    "monitors_on": "Включены",
+    "pc_tower": "Системный блок",
+    "f_screens": "Количество экранов",
+    "f_pc_style": "Иллюстрация",
+    "f_standby_threshold_monitor": "Режим ожидания выше (Вт)",
     "dehumidifier": "Осушитель",
     "drying": "Осушение",
     "tank_full": "Бак полон",
@@ -1972,7 +2028,27 @@ SVG.dehumidifier = () => `
 <path d="M78 98.5v15" stroke="#fff" stroke-opacity=".5" stroke-width=".6" stroke-dasharray="1 2.4"/>
 <rect x="34" y="124" width="10" height="5" rx="2.4" fill="#3a3f45"/><rect x="76" y="124" width="10" height="5" rx="2.4" fill="#3a3f45"/>`;
 
-SVG.desktop_pc = () => `
+const PC_TOWER = `
+<g class="pc-tower">
+  <rect x="86" y="38" width="28" height="74" rx="3" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".6"/>
+  <rect x="90" y="43" width="20" height="62" rx="1.5" fill="url(#ID-pcglass)" stroke="#3b424a" stroke-width=".4"/>
+  <g class="pc-rgb" fill="none" stroke-width="1.3">
+    <circle cx="100" cy="53" r="7.6"/><circle cx="100" cy="72" r="7.6"/><circle cx="100" cy="91" r="7.6"/>
+  </g>
+  <g class="pc-fan"><circle cx="100" cy="53" r="6.5" fill="#12161a"/><path d="M100 53v-6M100 53l5.2 3M100 53l-5.2 3" stroke="#a9b1ba" stroke-width="2" stroke-linecap="round"/><circle cx="100" cy="53" r="7.6" fill="none"/></g>
+  <g class="pc-fan"><circle cx="100" cy="72" r="6.5" fill="#12161a"/><path d="M100 72v-6M100 72l5.2 3M100 72l-5.2 3" stroke="#a9b1ba" stroke-width="2" stroke-linecap="round"/><circle cx="100" cy="72" r="7.6" fill="none"/></g>
+  <g class="pc-fan"><circle cx="100" cy="91" r="6.5" fill="#12161a"/><path d="M100 91v-6M100 91l5.2 3M100 91l-5.2 3" stroke="#a9b1ba" stroke-width="2" stroke-linecap="round"/><circle cx="100" cy="91" r="7.6" fill="none"/></g>
+  <circle cx="100" cy="53" r="1.4" fill="#d7dce1"/><circle cx="100" cy="72" r="1.4" fill="#d7dce1"/><circle cx="100" cy="91" r="1.4" fill="#d7dce1"/>
+  <path d="M91 44h8l-8 14z" fill="#fff" opacity=".07"/>
+  <rect x="104" y="40.2" width="6" height="1.8" rx=".9" fill="#2a2f35"/>
+  <circle class="pc-led" cx="94" cy="41" r="1.2"/>
+  <rect x="90" y="106.6" width="20" height="3" rx="1" fill="#2a2f35"/>
+</g>`;
+
+/* style du PC fixe : complet (écran + tour + clavier, défaut) ou unité centrale seule */
+const pcStyle = (c) => ({ tower: "tower", tour: "tower", unite_centrale: "tower", case: "tower" }[String(c?.style || "full").toLowerCase()] || "full");
+
+SVG.desktop_pc = (c) => pcStyle(c) === "tower" ? pcTowerSvg() : `
 <defs>${DEFS}
 <linearGradient id="ID-pcwall" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f2a5c"/><stop offset=".55" stop-color="#1c5fc4"/><stop offset="1" stop-color="#5ec8ff"/></linearGradient>
 <linearGradient id="ID-pcdesk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9c3a5"/><stop offset="1" stop-color="#b79a74"/></linearGradient>
@@ -2001,25 +2077,22 @@ SVG.desktop_pc = () => `
 </g>
 <path d="M10 22h68l-28 44h-40z" fill="url(#ID-gloss)" opacity=".35"/>
 <circle class="pc-mled" cx="44" cy="68" r=".9"/>
-<g class="pc-tower">
-  <rect x="86" y="38" width="28" height="74" rx="3" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".6"/>
-  <rect x="90" y="43" width="20" height="62" rx="1.5" fill="url(#ID-pcglass)" stroke="#3b424a" stroke-width=".4"/>
-  <g class="pc-rgb" fill="none" stroke-width="1.3">
-    <circle cx="100" cy="53" r="7.6"/><circle cx="100" cy="72" r="7.6"/><circle cx="100" cy="91" r="7.6"/>
-  </g>
-  <g class="pc-fan"><circle cx="100" cy="53" r="6.5" fill="#12161a"/><path d="M100 53v-6M100 53l5.2 3M100 53l-5.2 3" stroke="#a9b1ba" stroke-width="2" stroke-linecap="round"/><circle cx="100" cy="53" r="7.6" fill="none"/></g>
-  <g class="pc-fan"><circle cx="100" cy="72" r="6.5" fill="#12161a"/><path d="M100 72v-6M100 72l5.2 3M100 72l-5.2 3" stroke="#a9b1ba" stroke-width="2" stroke-linecap="round"/><circle cx="100" cy="72" r="7.6" fill="none"/></g>
-  <g class="pc-fan"><circle cx="100" cy="91" r="6.5" fill="#12161a"/><path d="M100 91v-6M100 91l5.2 3M100 91l-5.2 3" stroke="#a9b1ba" stroke-width="2" stroke-linecap="round"/><circle cx="100" cy="91" r="7.6" fill="none"/></g>
-  <circle cx="100" cy="53" r="1.4" fill="#d7dce1"/><circle cx="100" cy="72" r="1.4" fill="#d7dce1"/><circle cx="100" cy="91" r="1.4" fill="#d7dce1"/>
-  <path d="M91 44h8l-8 14z" fill="#fff" opacity=".07"/>
-  <rect x="104" y="40.2" width="6" height="1.8" rx=".9" fill="#2a2f35"/>
-  <circle class="pc-led" cx="94" cy="41" r="1.2"/>
-  <rect x="90" y="106.6" width="20" height="3" rx="1" fill="#2a2f35"/>
-</g>
+${PC_TOWER}
 <rect x="10" y="114" width="62" height="7" rx="1.4" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".4"/>
 <g class="pc-keys" fill="#4b535c"><rect x="12" y="115.2" width="58" height="1.2" opacity=".9"/><rect x="12" y="117.2" width="58" height="1.2" opacity=".9"/><rect x="12" y="119.2" width="58" height="1.2" opacity=".9"/></g>
 <path d="M12 116.4h58M12 118.4h58" stroke="#05070a" stroke-width=".4" stroke-dasharray="2.2 .8"/>
 <ellipse cx="78" cy="117" rx="3.6" ry="3" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".4"/><path d="M78 114.2v2" stroke="#6f7780" stroke-width=".6"/>`;
+
+
+const pcTowerSvg = () => `
+<defs>${DEFS}
+<linearGradient id="ID-pcdesk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9c3a5"/><stop offset="1" stop-color="#b79a74"/></linearGradient>
+<linearGradient id="ID-pcglass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b3138"/><stop offset="1" stop-color="#090b0e"/></linearGradient></defs>
+<ellipse cx="60" cy="126" rx="56" ry="3.5" fill="url(#ID-shadow)"/>
+<path d="M2 110h116l-5 12h-106z" fill="url(#ID-pcdesk)"/>
+<path d="M2 110h116" stroke="#fff" stroke-opacity=".5" stroke-width="1"/>
+<ellipse cx="60" cy="110.5" rx="24" ry="2.4" fill="url(#ID-shadow)"/>
+<g transform="translate(60 110) scale(1.3) translate(-100 -110)">${PC_TOWER}</g>`;
 
 SVG.dishwasher = () => `
 <defs>${DEFS}<clipPath id="ID-win"><rect x="22" y="38" width="76" height="76" rx="4"/></clipPath>
@@ -2544,6 +2617,91 @@ ${lcd(90, 42, 21, 10)}
 <circle cx="100.5" cy="88" r="4.6" fill="#e9ecef"/>
 <g class="knob"><line x1="100.5" y1="88" x2="100.5" y2="84.2" stroke="#4f5964" stroke-width="1.3" stroke-linecap="round"/></g>
 <rect class="start" x="90" y="98" width="21" height="6" rx="2"/>`;
+
+/* nombre d'écrans dessinés : 1, 2 (défaut) ou 3 */
+const mnCount = (c) => Math.max(1, Math.min(3, Math.round(Number(c?.screens) || 2)));
+
+/* contenu d'un écran, dessiné dans un repère local 100 × 60 puis mis à l'échelle */
+const MN_CONTENT = [
+  // éditeur de code
+  `<rect width="100" height="60" fill="url(#ID-mnwall)"/>
+  <circle cx="84" cy="12" r="10" fill="#bfeaff" opacity=".3"/>
+  <rect x="5" y="6" width="54" height="42" rx="2" fill="#0d1520" stroke="#2b4a73" stroke-width=".5"/>
+  <rect x="5" y="6" width="54" height="5" rx="2" fill="#22344d"/>
+  <circle cx="8.5" cy="8.5" r="1" fill="#ff5f56"/><circle cx="12" cy="8.5" r="1" fill="#ffbd2e"/><circle cx="15.5" cy="8.5" r="1" fill="#27c93f"/>
+  <g class="mn-code"><rect x="10" y="15" width="28" height="2.4" rx="1.2" fill="#6fd8ff"/><rect x="15" y="20" width="34" height="2.4" rx="1.2" fill="#b894ff"/><rect x="15" y="25" width="20" height="2.4" rx="1.2" fill="#ffd76a"/><rect x="10" y="30" width="38" height="2.4" rx="1.2" fill="#6fe3a1"/><rect x="15" y="35" width="24" height="2.4" rx="1.2" fill="#6fd8ff"/><rect x="10" y="40" width="16" height="2.4" rx="1.2" fill="#ff8fab"/></g>
+  <rect x="64" y="26" width="31" height="22" rx="2" fill="#f4f7fb" opacity=".9"/>
+  <rect x="67" y="30" width="18" height="2" rx="1" fill="#8fa3bd"/><rect x="67" y="35" width="24" height="2" rx="1" fill="#c3cfdc"/><rect x="67" y="40" width="14" height="2" rx="1" fill="#c3cfdc"/>
+  <rect y="53" width="100" height="7" fill="#0b1626" opacity=".85"/>
+  <circle cx="5" cy="56.5" r="2" fill="#5ec8ff"/><rect x="11" y="55.3" width="5" height="2.4" rx=".6" fill="#8fa3bd"/><rect x="18" y="55.3" width="5" height="2.4" rx=".6" fill="#8fa3bd"/><rect x="25" y="55.3" width="5" height="2.4" rx=".6" fill="#8fa3bd"/>`,
+  // tableau de bord
+  `<rect width="100" height="60" fill="#eef2f7"/>
+  <rect width="100" height="7" fill="#1f3b63"/><circle cx="5" cy="3.5" r="1.6" fill="#5ec8ff"/><rect x="10" y="2.5" width="22" height="2" rx="1" fill="#9fb4d1"/>
+  <rect x="4" y="11" width="44" height="30" rx="2" fill="#fff"/>
+  <g class="mn-bars"><rect x="9" y="25" width="6" height="12" fill="#3b82f6"/><rect x="18" y="18" width="6" height="19" fill="#22c55e"/><rect x="27" y="22" width="6" height="15" fill="#f59e0b"/><rect x="36" y="15" width="6" height="22" fill="#ef4444"/></g>
+  <rect x="52" y="11" width="44" height="30" rx="2" fill="#fff"/>
+  <path class="mn-line" d="M56 35l7-6l6 3l7-9l6 4l6-8l4 3" fill="none" stroke="#8b5cf6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="4" y="45" width="28" height="11" rx="2" fill="#fff"/><rect x="7" y="48" width="12" height="2" rx="1" fill="#8fa3bd"/><rect x="7" y="52" width="18" height="2" rx="1" fill="#22c55e"/>
+  <rect x="36" y="45" width="28" height="11" rx="2" fill="#fff"/><rect x="39" y="48" width="12" height="2" rx="1" fill="#8fa3bd"/><rect x="39" y="52" width="16" height="2" rx="1" fill="#3b82f6"/>
+  <rect x="68" y="45" width="28" height="11" rx="2" fill="#fff"/><rect x="71" y="48" width="12" height="2" rx="1" fill="#8fa3bd"/><rect x="71" y="52" width="20" height="2" rx="1" fill="#f59e0b"/>`,
+  // visio / vidéo
+  `<rect width="100" height="60" fill="url(#ID-mnsky)"/>
+  <circle class="mn-sun" cx="74" cy="20" r="7" fill="#ffd27a"/>
+  <path d="M0 46l18-16l12 9l18-20l22 22l12-8l18 13v14h-100z" fill="#2c4a6e"/>
+  <path d="M0 52l24-12l20 10l22-9l34 13v6h-100z" fill="#17304d"/>
+  <rect y="53" width="100" height="7" fill="#000" opacity=".55"/>
+  <path d="M4 54.5v4l3.4-2z" fill="#fff"/>
+  <rect x="11" y="56" width="80" height="1.2" rx=".6" fill="#fff" opacity=".35"/>
+  <rect class="mn-prog" x="11" y="56" width="80" height="1.2" rx=".6" fill="#ff4d5e"/>`,
+];
+
+/* un écran : cadre, dalle, contenu, pied ; `skew` incline les écrans latéraux */
+const mnScreen = (i, x, y, w, h, content, skew, cursor) => {
+  const cx = x + w / 2, neckH = 110 - (y + h) - 3;
+  return `
+<g${skew ? ` transform="translate(${cx} ${y + h}) skewY(${skew}) translate(${-cx} ${-(y + h)})"` : ""}>
+  <rect x="${cx - 3}" y="${y + h - 2}" width="6" height="${neckH + 2}" fill="url(#ID-inox)" stroke="#7d858e" stroke-width=".4"/>
+  <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2.5" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".6"/>
+  <rect x="${x + 2}" y="${y + 2}" width="${w - 4}" height="${h - 5}" rx=".8" fill="#0a0d11"/>
+  <g class="mn-screen" clip-path="url(#ID-mnclip${i})">
+    <g transform="translate(${x + 2} ${y + 2}) scale(${(w - 4) / 100} ${(h - 5) / 60})">${MN_CONTENT[content]}${cursor ? `
+      <path class="mn-cursor" d="M0 0v8l2.3-2.1l1.6 3.6l1.5-.7l-1.6-3.5l3.1 0z" fill="#fff" stroke="#000" stroke-width=".5"/>` : ""}</g>
+  </g>
+  <rect class="mn-sleep" x="${cx - 6}" y="${y + h / 2 - 3}" width="12" height="4" rx="1" fill="#1d2630" stroke="#3a4552" stroke-width=".3"/>
+  <path d="M${x + 2} ${y + 2}h${w - 4}l${-(w - 4) * 0.42} ${h - 5}h${-(w - 4) * 0.58}z" fill="url(#ID-gloss)" opacity=".28"/>
+  <circle class="mn-led" cx="${x + w - 4}" cy="${y + h - 1.5}" r=".75"/>
+</g>
+<ellipse cx="${cx}" cy="109.4" rx="${Math.min(14, w * 0.28)}" ry="2.4" fill="url(#ID-inox)" stroke="#7d858e" stroke-width=".4"/>`;
+};
+
+SVG.monitor = (c) => {
+  const n = mnCount(c);
+  // [x, y, largeur, hauteur, contenu, inclinaison, curseur]
+  const L = {
+    1: [[16, 30, 88, 56, 0, 0, true]],
+    2: [[2, 44, 57, 40, 0, 0, true], [61, 44, 57, 40, 1, 0, false]],
+    3: [[1, 50, 38, 28, 1, 8, false], [40, 44, 40, 34, 0, 0, true], [81, 50, 38, 28, 2, -8, false]],
+  }[n];
+  const clips = L.map(([x, y, w, h], i) => `<clipPath id="ID-mnclip${i}"><rect x="${x + 2}" y="${y + 2}" width="${w - 4}" height="${h - 5}" rx=".8"/></clipPath>`).join("");
+  // écran central dessiné en dernier (au premier plan)
+  const order = n === 3 ? [0, 2, 1] : L.map((_, i) => i);
+  return `
+<defs>${DEFS}
+<linearGradient id="ID-mnwall" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f2a5c"/><stop offset=".55" stop-color="#1c5fc4"/><stop offset="1" stop-color="#5ec8ff"/></linearGradient>
+<linearGradient id="ID-mnsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9a6b"/><stop offset=".6" stop-color="#c8577f"/><stop offset="1" stop-color="#4b2c6e"/></linearGradient>
+<linearGradient id="ID-mndesk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9c3a5"/><stop offset="1" stop-color="#b79a74"/></linearGradient>
+<radialGradient id="ID-mnglow" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#7fd0ff" stop-opacity=".6"/><stop offset="1" stop-color="#7fd0ff" stop-opacity="0"/></radialGradient>
+${clips}</defs>
+<ellipse cx="60" cy="126" rx="56" ry="3.5" fill="url(#ID-shadow)"/>
+<path d="M2 110h116l-5 12h-106z" fill="url(#ID-mndesk)"/>
+<path d="M2 110h116" stroke="#fff" stroke-opacity=".5" stroke-width="1"/>
+<ellipse class="mn-glow" cx="60" cy="111" rx="54" ry="7" fill="url(#ID-mnglow)"/>
+${order.map((i) => mnScreen(i, ...L[i])).join("")}
+<rect x="24" y="114" width="58" height="7" rx="1.4" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".4"/>
+<g fill="#4b535c"><rect x="26" y="115.2" width="54" height="1.2" opacity=".9"/><rect x="26" y="117.2" width="54" height="1.2" opacity=".9"/><rect x="26" y="119.2" width="54" height="1.2" opacity=".9"/></g>
+<path d="M26 116.4h54M26 118.4h54" stroke="#05070a" stroke-width=".4" stroke-dasharray="2.2 .8"/>
+<ellipse cx="90" cy="117" rx="3.6" ry="3" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".4"/><path d="M90 114.2v2" stroke="#6f7780" stroke-width=".6"/>`;
+};
 
 SVG.oven = () => `
 <defs>${DEFS}<clipPath id="ID-win"><rect x="22" y="56" width="76" height="56" rx="4"/></clipPath>
@@ -3288,7 +3446,10 @@ const DEF = {
     keys: ["baie", "rack", "homelab", "home_lab", "serveur", "server", "proxmox", "unraid", "nas"] },
   desktop_pc: { accent: "active", threshold: 40,
     fields: ["entity", "power", "energy", "cost", "switch"],
-    keys: ["pc_fixe", "pcfixe", "desktop", "ordinateur", "gaming", "workstation", "pc_bureau"] },
+    keys: ["pc_fixe", "pcfixe", "desktop", "ordinateur", "gaming", "workstation", "pc_bureau", "unite_centrale", "tour_pc"] },
+  monitor: { accent: "active", threshold: 10,
+    fields: ["entity", "power", "energy", "cost", "switch"],
+    keys: ["ecran", "moniteur", "monitor", "screens", "display"] },
   laptop: { accent: "active", threshold: 15,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["pc_portable", "portable", "laptop", "macbook", "notebook", "thinkpad", "chromebook"] },
@@ -3818,10 +3979,10 @@ class ApplianceCardBase extends HTMLElement {
       else if (watts !== null) m.status = powered ? "online" : watts > 0.5 ? "standby" : "off";
       else m.status = base === "running" ? "online" : base === "standby" ? "standby" : "off";
       m.load = watts !== null ? Math.max(0, Math.min(1, watts / (c.max_power || 300))) : 0.4;
-    } else if (kind === "desktop_pc" || kind === "laptop") {
+    } else if (kind === "desktop_pc" || kind === "laptop" || kind === "monitor") {
       if (base === "off" || base === "unavailable") m.status = base;
       else if (explicitState) m.status = base === "running" ? "screen_on" : powered ? "standby" : "off";
-      else if (watts !== null) m.status = powered ? "screen_on" : watts >= (c.standby_threshold ?? 0.5) ? "standby" : "off";
+      else if (watts !== null) m.status = powered ? "screen_on" : watts >= (c.standby_threshold ?? (kind === "monitor" ? 0.3 : 0.5)) ? "standby" : "off";
       else m.status = base === "running" ? "screen_on" : "standby";
     } else if (kind === "dehumidifier") {
       // entité humidifier : action (drying / idle / off) fait foi, sinon la puissance, sinon humidité ≤ consigne
@@ -4171,8 +4332,9 @@ class ApplianceCardBase extends HTMLElement {
     }
 
     // name + status
-    const name = c.name || tr(hass, kind);
+    const name = c.name || tr(hass, kind === "monitor" && mnCount(c) > 1 ? "monitors" : kind === "desktop_pc" && pcStyle(c) === "tower" ? "pc_tower" : kind);
     let statusTxt = m.phase ? tr(hass, `ph_${m.phase}`) : tr(hass, m.status);
+    if (kind === "monitor" && m.status === "screen_on") statusTxt = tr(hass, mnCount(c) > 1 ? "monitors_on" : "monitor_on");
     if (m.main && ["sensor", "input_select", "select"].includes(domainOf(c.entity)) &&
         active && !["fridge", "water_heater", "printer_3d", "pool_pump"].includes(kind)) {
       const raw = String(m.main.state).toLowerCase();
@@ -4476,6 +4638,15 @@ function buildForm(kind) {
             { name: "style", selector: { select: { mode: "dropdown", options: [
               { value: "wall", label: "Murale / Wall-mounted" }, { value: "stand", label: "Pied central / Center stand" }, { value: "feet", label: "Deux pieds / Two feet" }] } } },
           ] : []),
+          ...(kind === "desktop_pc" ? [
+            { name: "style", selector: { select: { mode: "dropdown", options: [
+              { value: "full", label: "Écran + unité centrale / Monitor + tower" }, { value: "tower", label: "Unité centrale seule / Tower only" }] } } },
+          ] : []),
+          ...(kind === "monitor" ? [
+            { name: "screens", selector: { select: { mode: "dropdown", options: [
+              { value: "1", label: "1" }, { value: "2", label: "2" }, { value: "3", label: "3" }] } } },
+            { name: "standby_threshold", selector: { number: { min: 0, max: 10, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
+          ] : []),
           ...(kind === "range_hood" ? [
             { name: "high_threshold", selector: { number: { min: 40, max: 600, step: 5, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
@@ -4519,7 +4690,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "monitor" && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
   };
 }
 
@@ -4548,7 +4719,7 @@ function stubFor(kind, hass) {
   if (power) cfg.power = power;
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "laptop", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "laptop", "monitor", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;
@@ -5599,6 +5770,36 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 @keyframes dh-mist { 0% { opacity: 0; transform: scale(1.35); } 30% { opacity: .9; } 100% { opacity: 0; transform: scale(.4); } }
 @keyframes dh-wave { from { transform: translateX(0); } to { transform: translateX(-12px); } }
 @keyframes dh-drop { 0% { opacity: 0; transform: translateY(0); } 15% { opacity: .95; } 100% { opacity: 0; transform: translateY(calc((1 - var(--lvl, .35)) * 20px)); } }
+
+/* ---------- écrans PC ---------- */
+.mn-screen { opacity: 0; transition: opacity .5s; }
+.k-monitor.st-screen_on .mn-screen { opacity: 1; }
+.mn-glow { opacity: 0; transition: opacity .6s; }
+.k-monitor.st-screen_on .mn-glow { opacity: .7; }
+/* veille : dalle noire, petite fenêtre « pas de signal » qui pulse */
+.mn-sleep { opacity: 0; transition: opacity .4s; }
+.k-monitor.st-standby .mn-sleep { opacity: 1; animation: ac-pulse 2.8s ease-in-out infinite; }
+.mn-led { fill: #3a424b; transition: fill .3s; }
+.k-monitor.st-screen_on .mn-led { fill: #43c07a; filter: drop-shadow(0 0 1px #43c07a); }
+.k-monitor.st-standby .mn-led { fill: #ffb020; animation: ac-pulse 2.4s ease-in-out infinite; }
+.mn-code rect { transform-box: fill-box; transform-origin: 0 50%; }
+.k-monitor.st-screen_on .mn-code rect { animation: pc-type 4.4s ease-in-out infinite; }
+.mn-code rect:nth-child(2) { animation-delay: .5s !important; } .mn-code rect:nth-child(3) { animation-delay: 1s !important; }
+.mn-code rect:nth-child(4) { animation-delay: 1.5s !important; } .mn-code rect:nth-child(5) { animation-delay: 2s !important; } .mn-code rect:nth-child(6) { animation-delay: 2.5s !important; }
+.mn-bars rect { transform-box: fill-box; transform-origin: 50% 100%; }
+.k-monitor.st-screen_on .mn-bars rect { animation: pc-bar 3.2s ease-in-out infinite alternate; }
+.mn-bars rect:nth-child(2) { animation-delay: .4s !important; } .mn-bars rect:nth-child(3) { animation-delay: .8s !important; } .mn-bars rect:nth-child(4) { animation-delay: 1.2s !important; }
+.mn-line { stroke-dasharray: 60; stroke-dashoffset: 0; }
+.k-monitor.st-screen_on .mn-line { animation: mn-draw 5s ease-in-out infinite; }
+.mn-sun { transform-box: fill-box; transform-origin: 50% 50%; }
+.k-monitor.st-screen_on .mn-sun { animation: ac-pulse 3.6s ease-in-out infinite; }
+.mn-prog { transform-box: fill-box; transform-origin: 0 50%; transform: scaleX(.3); }
+.k-monitor.st-screen_on .mn-prog { animation: mn-prog 12s linear infinite; }
+.mn-cursor { transform: translate(30px, 40px); }
+.k-monitor.st-screen_on .mn-cursor { animation: mn-mouse 7s ease-in-out infinite; }
+@keyframes mn-draw { 0% { stroke-dashoffset: 60; } 45%, 85% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -60; } }
+@keyframes mn-prog { from { transform: scaleX(.05); } to { transform: scaleX(1); } }
+@keyframes mn-mouse { 0%, 100% { transform: translate(30px, 40px); } 30% { transform: translate(70px, 30px); } 55% { transform: translate(80px, 42px); } 80% { transform: translate(40px, 22px); } }
 `;
 
 /* ------------------------------------------------------------------ */

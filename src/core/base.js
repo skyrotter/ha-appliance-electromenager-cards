@@ -384,10 +384,10 @@ class ApplianceCardBase extends HTMLElement {
       else if (watts !== null) m.status = powered ? "online" : watts > 0.5 ? "standby" : "off";
       else m.status = base === "running" ? "online" : base === "standby" ? "standby" : "off";
       m.load = watts !== null ? Math.max(0, Math.min(1, watts / (c.max_power || 300))) : 0.4;
-    } else if (kind === "desktop_pc" || kind === "laptop") {
+    } else if (kind === "desktop_pc" || kind === "laptop" || kind === "monitor") {
       if (base === "off" || base === "unavailable") m.status = base;
       else if (explicitState) m.status = base === "running" ? "screen_on" : powered ? "standby" : "off";
-      else if (watts !== null) m.status = powered ? "screen_on" : watts >= (c.standby_threshold ?? 0.5) ? "standby" : "off";
+      else if (watts !== null) m.status = powered ? "screen_on" : watts >= (c.standby_threshold ?? (kind === "monitor" ? 0.3 : 0.5)) ? "standby" : "off";
       else m.status = base === "running" ? "screen_on" : "standby";
     } else if (kind === "dehumidifier") {
       // entité humidifier : action (drying / idle / off) fait foi, sinon la puissance, sinon humidité ≤ consigne
@@ -737,8 +737,9 @@ class ApplianceCardBase extends HTMLElement {
     }
 
     // name + status
-    const name = c.name || tr(hass, kind);
+    const name = c.name || tr(hass, kind === "monitor" && mnCount(c) > 1 ? "monitors" : kind === "desktop_pc" && pcStyle(c) === "tower" ? "pc_tower" : kind);
     let statusTxt = m.phase ? tr(hass, `ph_${m.phase}`) : tr(hass, m.status);
+    if (kind === "monitor" && m.status === "screen_on") statusTxt = tr(hass, mnCount(c) > 1 ? "monitors_on" : "monitor_on");
     if (m.main && ["sensor", "input_select", "select"].includes(domainOf(c.entity)) &&
         active && !["fridge", "water_heater", "printer_3d", "pool_pump"].includes(kind)) {
       const raw = String(m.main.state).toLowerCase();
