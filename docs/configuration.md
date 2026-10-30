@@ -25,7 +25,7 @@ All cards have a visual editor. When added from the card picker, entities are de
 | `illustration_size` | Size of the drawing in % (30–300, default 100), on every card. In a sections dashboard, every card can also be resized with the mouse, from 3 columns wide and in height |
 | `transparent` | `true` removes the card background, shadow and border, so the dashboard background shows through, on every card |
 | `temperature_unit` | `C` or `F`: temperature unit of the aquarium, battery, pellet boiler, gas boiler, diesel heater, hot tub, pump, pool robot, sauna, underfloor heating and water heat pump cards. Default: the unit of Home Assistant. Sensors are converted from their own unit, and temperature thresholds are entered in this unit |
-| `confirm_off` | Washer, dryer, dishwasher: `false` to turn off the safety confirmation (default `true`, see below) |
+| `confirm_off` | Washer, dryer, dishwasher, pellet stove, 3D printer, freezers, desktop PC, server rack: `false` to turn off the safety confirmation (default `true`, see below) |
 
 ### Custom tile labels
 
@@ -114,7 +114,7 @@ mode: select.towel_rail_mode
 
 ## Power button safety
 
-The power button only appears when you set `switch:`. On the **washer, dryer, dishwasher and pellet stove**, cutting the plug **while a cycle is running (or the stove is burning)** takes **two clicks**: the first one turns the button red and shows "Cycle running – click again to cut power" for 4 seconds. Turning the plug on, or off while idle, stays a single click. Set `confirm_off: false` to turn this off.
+The power button only appears when you set `switch:`. On the **washer, dryer, dishwasher and pellet stove**, cutting the plug **while a cycle is running (or the stove is burning)** takes **two clicks**: the first one turns the button red and shows "Cycle running – click again to cut power" for 4 seconds. On the **desktop PC and server rack**, cutting the plug while the machine is on or asleep also takes two clicks ("Computer on – click again to cut power"). Turning the plug on, or off while idle, stays a single click. Set `confirm_off: false` to turn this off.
 
 Advice: on a washing machine you usually don't need `switch:` at all. Leave it out and the button won't be shown.
 

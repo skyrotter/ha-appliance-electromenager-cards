@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.38.1";
+const VERSION = "1.39.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -169,6 +169,7 @@ const STRINGS = {
     "ends_at": "Ends at",
     "toggle": "Turn on/off",
     "confirm_off": "Cycle running – click again to cut power",
+    "confirm_off_pc": "Computer on – click again to cut power",
     "f_name": "Name",
     "f_labels": "Custom tile labels (key: text)",
     "f_entity": "Status entity (switch, sensor, input_select…)",
@@ -398,6 +399,7 @@ const STRINGS = {
     "ends_at": "Endet um",
     "toggle": "Ein/Aus",
     "confirm_off": "Zyklus läuft – erneut klicken zum Abschalten",
+    "confirm_off_pc": "Computer läuft – erneut klicken zum Abschalten",
     "f_name": "Name",
     "f_labels": "Eigene Kachelbeschriftungen (Schlüssel: Text)",
     "f_entity": "Status-Entität (switch, sensor, input_select…)",
@@ -627,6 +629,7 @@ const STRINGS = {
     "ends_at": "Fin à",
     "toggle": "Allumer/éteindre",
     "confirm_off": "Cycle en cours – cliquer encore pour couper",
+    "confirm_off_pc": "Ordinateur allumé – cliquer encore pour couper",
     "f_name": "Nom",
     "f_labels": "Libellés perso des tuiles (clé : texte)",
     "f_entity": "Entité d'état (switch, sensor, input_select…)",
@@ -886,6 +889,7 @@ const STRINGS = {
     "ends_at": "Ferdig kl.",
     "toggle": "Slå på/av",
     "confirm_off": "Syklus pågår – trykk igjen for å bryte strømmen",
+    "confirm_off_pc": "Datamaskinen er på – klikk igjen for å kutte strømmen",
     "f_name": "Navn",
     "f_labels": "Egne flisetiketter (nøkkel: tekst)",
     "f_entity": "Status-entitet (switch, sensor, input_select…)",
@@ -1085,6 +1089,7 @@ const STRINGS = {
     "ends_at": "Klaar om",
     "toggle": "Aan/uit",
     "confirm_off": "Cyclus bezig – klik nog eens om de stroom te onderbreken",
+    "confirm_off_pc": "Computer staat aan – klik nogmaals om uit te schakelen",
     "f_name": "Naam",
     "f_labels": "Eigen tegellabels (sleutel: tekst)",
     "f_entity": "Statusentiteit (switch, sensor, input_select…)",
@@ -1314,6 +1319,7 @@ const STRINGS = {
     "ends_at": "Se termină la",
     "toggle": "Pornește/oprește",
     "confirm_off": "Ciclu în desfășurare – apasă din nou pentru a tăia alimentarea",
+    "confirm_off_pc": "Computer pornit – apăsați din nou pentru a opri",
     "f_name": "Nume",
     "f_labels": "Etichete proprii pentru plăci (cheie: text)",
     "f_entity": "Entitate de stare (switch, sensor, input_select…)",
@@ -1543,6 +1549,7 @@ const STRINGS = {
     "ends_at": "Окончание в",
     "toggle": "Вкл./выкл.",
     "confirm_off": "Цикл выполняется – нажмите ещё раз, чтобы отключить питание",
+    "confirm_off_pc": "Компьютер включён – нажмите ещё раз, чтобы отключить",
     "f_name": "Название",
     "f_labels": "Свои подписи плиток (ключ: текст)",
     "f_entity": "Сущность статуса (switch, sensor, input_select…)",
@@ -4395,9 +4402,11 @@ class ApplianceCardBase extends HTMLElement {
       const on = isOn(hass.states[swId]);
       // safety: cutting a washer/dryer/dishwasher mid-cycle needs a second click
       const freezer = ["chest_freezer", "drawer_freezer"].includes(kind);
-      const guarded = c.confirm_off !== false && on && (freezer || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d"].includes(kind)));
+      // PC fixe / baie serveur : couper la prise d'une machine allumée ou en veille = arrêt brutal
+      const computer = ["desktop_pc", "server_rack"].includes(kind) && ["screen_on", "online", "standby"].includes(m.status);
+      const guarded = c.confirm_off !== false && on && (freezer || computer || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d"].includes(kind)));
       const arming = guarded && this._confirmUntil && Date.now() < this._confirmUntil;
-      const label = arming ? tr(hass, "confirm_off") : tr(hass, "toggle");
+      const label = arming ? tr(hass, computer ? "confirm_off_pc" : "confirm_off") : tr(hass, "toggle");
       $("actions").innerHTML = `<button class="toggle ${on ? "on" : ""} ${arming ? "confirm" : ""}" title="${esc(label)}" aria-label="${esc(label)}" aria-pressed="${on}"><ha-icon icon="${arming ? "mdi:alert" : "mdi:power"}"></ha-icon></button>${arming ? `<div class="confirm-tip">${esc(label)}</div>` : ""}`;
       $("actions").querySelector("button").onclick = (ev) => {
         ev.stopPropagation();
@@ -4691,7 +4700,7 @@ function buildForm(kind) {
             { name: "ignition_threshold", selector: { number: { min: 50, max: 1000, step: 10, mode: "box", unit_of_measurement: "W" } } },
             { name: "pellet_alert", selector: { number: { min: 0, max: 50, step: 1, mode: "box", unit_of_measurement: "%" } } },
           ] : []),
-          ...(["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "chest_freezer", "drawer_freezer"].includes(kind) ? [{ name: "confirm_off", selector: { boolean: {} }, default: true }] : []),
+          ...(["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "chest_freezer", "drawer_freezer", "desktop_pc", "server_rack"].includes(kind) ? [{ name: "confirm_off", selector: { boolean: {} }, default: true }] : []),
           { name: "color", selector: { text: {} } },
         ],
       },
@@ -6026,7 +6035,11 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_tilt": "Show tilt",
       "image": "Your own image (URL)",
       "illustration_size": "Illustration size",
-      "transparent": "Transparent background"
+      "transparent": "Transparent background",
+      "entity_wind": "Wind speed sensor",
+      "show_rain": "Show rain",
+      "show_wind": "Show wind",
+      "louvre_color": "Louvre colour"
     },
     "de": {
       "animations": "Animationen",
@@ -6217,7 +6230,11 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_tilt": "Neigung anzeigen",
       "image": "Eigenes Bild (URL)",
       "illustration_size": "Größe der Illustration",
-      "transparent": "Transparenter Hintergrund"
+      "transparent": "Transparenter Hintergrund",
+      "entity_wind": "Windsensor",
+      "show_rain": "Regen anzeigen",
+      "show_wind": "Wind anzeigen",
+      "louvre_color": "Lamellenfarbe"
     },
     "fr": {
       "animations": "Animations",
@@ -6408,7 +6425,11 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_tilt": "Afficher l'inclinaison",
       "image": "Image perso (URL)",
       "illustration_size": "Taille de l'illustration",
-      "transparent": "Fond transparent"
+      "transparent": "Fond transparent",
+      "entity_wind": "Capteur de vent",
+      "show_rain": "Afficher la pluie",
+      "show_wind": "Afficher le vent",
+      "louvre_color": "Couleur des lames"
     },
     "nb": {
       "illustration_size": "Størrelse på illustrasjonen",
@@ -6599,7 +6620,11 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "follow_light_color": "Følg pærens farge",
       "color_cycle": "Fargesyklus",
       "multicolor": "Flerfarget lysslynge",
-      "show_brightness": "Vis lysstyrke"
+      "show_brightness": "Vis lysstyrke",
+      "entity_wind": "Vindsensor",
+      "show_rain": "Vis regn",
+      "show_wind": "Vis vind",
+      "louvre_color": "Lamellfarge"
     },
     "nl": {
       "animations": "Animaties",
@@ -6790,7 +6815,11 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_tilt": "Kanteling tonen",
       "image": "Eigen afbeelding (URL)",
       "illustration_size": "Grootte van de illustratie",
-      "transparent": "Transparante achtergrond"
+      "transparent": "Transparante achtergrond",
+      "entity_wind": "Windsensor",
+      "show_rain": "Regen tonen",
+      "show_wind": "Wind tonen",
+      "louvre_color": "Kleur van de lamellen"
     },
     "ro": {
       "animations": "Animații",
@@ -6981,7 +7010,11 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_tilt": "Afișează înclinarea",
       "image": "Imagine proprie (URL)",
       "illustration_size": "Dimensiunea ilustrației",
-      "transparent": "Fundal transparent"
+      "transparent": "Fundal transparent",
+      "entity_wind": "Senzor de vânt",
+      "show_rain": "Afișează ploaia",
+      "show_wind": "Afișează vântul",
+      "louvre_color": "Culoarea lamelelor"
     },
     "ru": {
       "animations": "Анимации",
@@ -7172,7 +7205,11 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_tilt": "Показывать наклон",
       "image": "Своё изображение (URL)",
       "illustration_size": "Размер иллюстрации",
-      "transparent": "Прозрачный фон"
+      "transparent": "Прозрачный фон",
+      "entity_wind": "Датчик ветра",
+      "show_rain": "Показывать дождь",
+      "show_wind": "Показывать ветер",
+      "louvre_color": "Цвет ламелей"
     }
   };
   const lang = (hass) => {
@@ -15790,12 +15827,14 @@ svg{display:block;width:100%;height:auto;overflow:visible}
   }
 })();
 
-/* Cartes « Volets » — volet roulant, store vénitien, volets battants
- * custom:appliance-roller-shutter-card, appliance-venetian-blind-card, appliance-swing-shutter-card.
+/* Cartes « Volets » — volet roulant, store vénitien, volets battants, pergola bioclimatique
+ * custom:appliance-roller-shutter-card, appliance-venetian-blind-card, appliance-swing-shutter-card, appliance-pergola-card.
  * Une entité cover donne l'état (open, closed, opening, closing) ; current_position (0 fermé → 100 ouvert)
  * et current_tilt_position (store vénitien) pilotent le dessin par des variables CSS (--p, --t) dont
  * les transformations sont animées. La vue extérieure passe en nuit quand sun.sun est sous l'horizon.
  * Boutons ouvrir / stop / fermer, curseurs de position et d'inclinaison, puissance du moteur.
+ * Pergola : les lames pivotent selon l'inclinaison (sinon la position), redessinées image par image ;
+ * en option pluie (entity_rain), éclairage LED (entity_light) et vent (entity_wind).
  */
 (() => {
   if (customElements.get('appliance-roller-shutter-card')) return;
@@ -15817,7 +15856,17 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       "position": "Position",
       "tilt": "Tilt",
       "power": "Motor",
-      "since": "Last change"
+      "since": "Last change",
+      "pergola": "Bioclimatic pergola",
+      "pg_open": "Open",
+      "pg_closed": "Closed",
+      "pg_partial": "Open",
+      "pg_position": "Louvres",
+      "rain": "Rain",
+      "wind": "Wind",
+      "yes": "Yes",
+      "no": "No",
+      "btn_light": "LED"
     },
     "de": {
       "roller_shutter": "Rollladen",
@@ -15835,7 +15884,17 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       "position": "Position",
       "tilt": "Neigung",
       "power": "Motor",
-      "since": "Letzte Änderung"
+      "since": "Letzte Änderung",
+      "pergola": "Bioklimatische Pergola",
+      "pg_open": "Offen",
+      "pg_closed": "Geschlossen",
+      "pg_partial": "Offen",
+      "pg_position": "Lamellen",
+      "rain": "Regen",
+      "wind": "Wind",
+      "yes": "Ja",
+      "no": "Nein",
+      "btn_light": "LED"
     },
     "fr": {
       "roller_shutter": "Volet roulant",
@@ -15853,7 +15912,17 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       "position": "Position",
       "tilt": "Inclinaison",
       "power": "Moteur",
-      "since": "Depuis"
+      "since": "Depuis",
+      "pergola": "Pergola bioclimatique",
+      "pg_open": "Ouverte",
+      "pg_closed": "Fermée",
+      "pg_partial": "Ouverte à",
+      "pg_position": "Lames",
+      "rain": "Pluie",
+      "wind": "Vent",
+      "yes": "Oui",
+      "no": "Non",
+      "btn_light": "LED"
     },
     "nb": {
       "roller_shutter": "Rullegardin",
@@ -15871,7 +15940,17 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       "position": "Posisjon",
       "tilt": "Vinkel",
       "power": "Motor",
-      "since": "Sist endret"
+      "since": "Sist endret",
+      "pergola": "Bioklimatisk pergola",
+      "pg_open": "Åpen",
+      "pg_closed": "Lukket",
+      "pg_partial": "Åpen",
+      "pg_position": "Lameller",
+      "rain": "Regn",
+      "wind": "Vind",
+      "yes": "Ja",
+      "no": "Nei",
+      "btn_light": "LED"
     },
     "nl": {
       "roller_shutter": "Rolluik",
@@ -15889,7 +15968,17 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       "position": "Positie",
       "tilt": "Kanteling",
       "power": "Motor",
-      "since": "Laatste wijziging"
+      "since": "Laatste wijziging",
+      "pergola": "Bioklimatische pergola",
+      "pg_open": "Open",
+      "pg_closed": "Gesloten",
+      "pg_partial": "Open",
+      "pg_position": "Lamellen",
+      "rain": "Regen",
+      "wind": "Wind",
+      "yes": "Ja",
+      "no": "Nee",
+      "btn_light": "LED"
     },
     "ro": {
       "roller_shutter": "Rulou exterior",
@@ -15907,7 +15996,17 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       "position": "Poziție",
       "tilt": "Înclinare",
       "power": "Motor",
-      "since": "Ultima schimbare"
+      "since": "Ultima schimbare",
+      "pergola": "Pergolă bioclimatică",
+      "pg_open": "Deschisă",
+      "pg_closed": "Închisă",
+      "pg_partial": "Deschisă",
+      "pg_position": "Lamele",
+      "rain": "Ploaie",
+      "wind": "Vânt",
+      "yes": "Da",
+      "no": "Nu",
+      "btn_light": "LED"
     },
     "ru": {
       "roller_shutter": "Рольставни",
@@ -15925,7 +16024,17 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       "position": "Позиция",
       "tilt": "Наклон",
       "power": "Мотор",
-      "since": "Последнее изменение"
+      "since": "Последнее изменение",
+      "pergola": "Биоклиматическая пергола",
+      "pg_open": "Открыта",
+      "pg_closed": "Закрыта",
+      "pg_partial": "Открыта на",
+      "pg_position": "Ламели",
+      "rain": "Дождь",
+      "wind": "Ветер",
+      "yes": "Да",
+      "no": "Нет",
+      "btn_light": "LED"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
@@ -15942,6 +16051,8 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
 .opening .badge,.closing .badge{background:color-mix(in srgb,var(--sh-move) 22%,transparent);color:var(--sh-move)}
 .scene{position:relative;max-width:calc(250px * var(--illus-scale,1));margin:4px auto 0;cursor:pointer}
 .scene>svg{display:block;width:100%;height:auto}
+.scene.pg{max-width:calc(360px * var(--illus-scale,1))}
+.scene.pg>svg{border-radius:10px}
 .ctl{display:flex;justify-content:center;gap:6px;margin-top:6px}
 .ctl.hide,.ctl button.hide{display:none}
 .ctl button{flex:1 1 0;max-width:110px;display:flex;align-items:center;justify-content:center;gap:4px;border:0;border-radius:10px;padding:6px 4px;cursor:pointer;
@@ -16002,6 +16113,29 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
 .leaf.l{left:30%;transform-origin:0 50%;transform:rotateY(calc(var(--p) * 1.72deg))}
 .leaf.r{left:50%;transform-origin:100% 50%;transform:rotateY(calc(var(--p) * -1.72deg))}
 .leaf .sh{opacity:calc(var(--p) * .004);transition:opacity var(--sh-d)}
+
+/* ---- pergola bioclimatique : pluie, nuit, éclairage LED ---- */
+.pg-gap{fill:#8fd0f7;transition:fill .8s}.isnight .pg-gap{fill:#24305a}.rain .pg-gap{fill:#b9c4d0}
+.pg-cloud,.pg-drops,.pg-drain{opacity:0;transition:opacity .8s}.rain .pg-cloud,.rain .pg-drops,.rain .pg-drain{opacity:1}
+.rain .pg-sun{opacity:0}
+.pg-dim{opacity:0;transition:opacity .8s}.isnight .pg-dim{opacity:.6}
+.pg-roof{transition:filter .8s}.isnight .pg-roof{filter:brightness(.42)}
+.pg-shadow{opacity:.22;transition:opacity .8s}.rain .pg-shadow{opacity:.1}.isnight .pg-shadow{opacity:0}
+.pg-ray{opacity:calc(var(--a) * .004);animation:pgray 4s ease-in-out infinite}.isnight .pg-ray,.rain .pg-ray{opacity:0}
+.pg-ray:nth-child(2){animation-delay:-1.2s}.pg-ray:nth-child(3){animation-delay:-2.4s}.pg-ray:nth-child(4){animation-delay:-3.1s}
+@keyframes pgray{50%{fill-opacity:.45}}
+.pg-strip,.pg-pool{opacity:0;transition:opacity .6s}.leds .pg-strip{opacity:1;filter:drop-shadow(0 0 2px #ffd27a)}.isnight.leds .pg-pool{opacity:1}
+.pg-candle,.pg-glow{opacity:0}.isnight .pg-candle,.isnight .pg-glow{opacity:.7}
+.pg-water path{animation:pgwave 3s ease-in-out infinite alternate}.pg-water path:nth-child(2n){animation-delay:-1.5s}
+@keyframes pgwave{to{transform:translateX(6px)}}.pg-candle circle{animation:pgflick 1.3s ease-in-out infinite}
+@keyframes pgflick{50%{opacity:.6}}
+.pg-drops line{animation:pgdrop .7s linear infinite}
+.pg-drops line:nth-child(3n){animation-delay:-.23s}.pg-drops line:nth-child(3n+1){animation-delay:-.47s}
+@keyframes pgdrop{from{transform:translate(0,-40px)}to{transform:translate(-8px,150px)}}
+.pg-drain circle{animation:pgdrain 1.4s linear infinite}.pg-drain circle:nth-child(2){animation-delay:-.7s}
+@keyframes pgdrain{from{transform:translateY(0);opacity:1}to{transform:translateY(80px);opacity:.3}}
+.ctl button.on{background:color-mix(in srgb,#ffc94a 35%,var(--secondary-background-color))}
+.noanim .pg-water path,.noanim .pg-ray,.noanim .pg-candle circle,.noanim .pg-drops line,.noanim .pg-drain circle{animation:none}
 `;
 
   // ciel et paysage vus par la fenêtre (x0..x1, y0..y1), en version jour et nuit
@@ -16080,21 +16214,127 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       <rect class="sh" width="40" height="104" fill="#000"/></svg>`;
   };
 
+  /* ---- pergola : repère 240 × 180 ; coins du toit (arrière / avant, gauche / droite), hauteur des poteaux, nombre de lames ---- */
+  const PG = { BL: [62, 34], BR: [222, 34], FL: [22, 70], FR: [182, 70], H: 84, N: 9, SX: 16 };
+  const lerp = (a, b, k) => [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k];
+  const pts = (a) => a.map((q) => `${q[0].toFixed(1)},${q[1].toFixed(1)}`).join(' ');
+  // lames et leur ombre sur la terrasse pour un angle a (0 = fermée, à plat ; 100 = lames verticales)
+  const pgBlades = (a) => {
+    const th = a / 100 * Math.PI / 2, co = Math.cos(th), up = 1.2 * Math.sin(th);
+    const dv = [(PG.FL[0] - PG.BL[0]) / PG.N / 2 * co, (PG.FL[1] - PG.BL[1]) / PG.N / 2 * co];
+    let bl = '', sh = '';
+    for (let i = 0; i < PG.N; i++) {
+      const k = (i + .5) / PG.N, L = lerp(PG.BL, PG.FL, k), R = lerp(PG.BR, PG.FR, k);
+      const q = [[L[0] - dv[0], L[1] - dv[1] + up], [R[0] - dv[0], R[1] - dv[1] + up], [R[0] + dv[0], R[1] + dv[1] - up], [L[0] + dv[0], L[1] + dv[1] - up]];
+      // face qui fonce en pivotant, arête claire
+      bl += `<polygon points="${pts(q)}" fill="var(--sc)" stroke="#8d969f" stroke-width=".5"/><polygon points="${pts(q)}" fill="#000" opacity="${(.3 * (1 - co)).toFixed(2)}"/>`;
+      if (a > 8) bl += `<line x1="${q[3][0].toFixed(1)}" y1="${q[3][1].toFixed(1)}" x2="${q[2][0].toFixed(1)}" y2="${q[2][1].toFixed(1)}" stroke="#fff" stroke-width="1" opacity=".9"/>`;
+      const f = (p) => [p[0] + PG.SX, p[1] + PG.H];
+      sh += `<polygon points="${pts([f([L[0] - dv[0], L[1] - dv[1]]), f([R[0] - dv[0], R[1] - dv[1]]), f([R[0] + dv[0], R[1] + dv[1]]), f([L[0] + dv[0], L[1] + dv[1]])])}"/>`;
+    }
+    return [bl, sh];
+  };
+  // décor : maison contemporaine à toit plat (bardage bois, baie vitrée), terrasse en pierre, piscine au premier plan
+  const PERGOLA = () => {
+    const { BL, BR, FL, FR, H } = PG, gy = BL[1] + H, floor = [[BL[0], gy], [BR[0], gy], [FR[0], FR[1] + H], [FL[0], FL[1] + H]];
+    const post = (x, y, w) => `<rect x="${x - w / 2}" y="${y}" width="${w}" height="${H}" fill="url(#pgalu)"/>`;
+    const rays = [.18, .38, .58, .78].map((k) => { const P = lerp(lerp(BL, FL, k), lerp(BR, FR, k), .35); return `<path class="pg-ray" d="M${P[0].toFixed(1)} ${P[1].toFixed(1)}l${PG.SX} ${H}h12l${-PG.SX} ${-H}z"/>`; }).join('');
+    const drops = [...Array(30)].map((_, k) => { const x = (k * 37.3) % 250, y = (k * 23) % 40; return `<line x1="${x.toFixed(1)}" y1="${y}" x2="${(x - 2).toFixed(1)}" y2="${y + 8}"/>`; }).join('');
+    // bardage : lames verticales de teintes légèrement différentes
+    const clad = [...Array(60)].map((_, k) => `<rect x="${k * 4}" y="22" width="4" height="${gy - 22}" fill="${['#b9834f', '#ad7845', '#c08b57', '#a87344'][(k * 7) % 4]}"/>`).join('')
+      + [...Array(60)].map((_, k) => `<path d="M${k * 4} 22V${gy}" stroke="#7d522c" stroke-width=".35"/>`).join('');
+    // claustra bois sur le côté gauche, entre les deux poteaux
+    const screen = [...Array(9)].map((_, k) => {
+      const y = 76 + k * 6.4, t = (y - FL[1]) / H;
+      return `<polygon points="${pts([[FL[0] + 3, FL[1] + t * H], [BL[0] - 3, BL[1] + t * H], [BL[0] - 3, BL[1] + t * H + 4], [FL[0] + 3, FL[1] + t * H + 4]])}" fill="${k % 2 ? '#a5703f' : '#b27b48'}"/>`;
+    }).join('');
+    const lantern = (x, y) => `<g><rect x="${x - 3}" y="${y - 8}" width="6" height="8" rx="1.5" fill="none" stroke="#3a3027" stroke-width=".8"/>
+      <path d="M${x - 3} ${y - 5}h6M${x - 3} ${y - 2.5}h6M${x} ${y - 8}v8" stroke="#3a3027" stroke-width=".5"/><circle class="pg-glow" cx="${x}" cy="${y - 4}" r="4.5" fill="#ffcf6a"/></g>`;
+    return `<defs>
+      <linearGradient id="pgsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6db7ef"/><stop offset="1" stop-color="#d6ecfb"/></linearGradient>
+      <linearGradient id="pgglass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3e5466"/><stop offset=".5" stop-color="#6f8ba0"/><stop offset="1" stop-color="#2f4252"/></linearGradient>
+      <linearGradient id="pgwarm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd08a"/><stop offset="1" stop-color="#e8954a"/></linearGradient>
+      <linearGradient id="pgstone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ddd7cc"/><stop offset="1" stop-color="#c9c2b5"/></linearGradient>
+      <linearGradient id="pgwater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4cc3e6"/><stop offset="1" stop-color="#1f8fc4"/></linearGradient>
+      <linearGradient id="pgalu" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3d434b"/><stop offset=".5" stop-color="#5b626b"/><stop offset="1" stop-color="#2e3339"/></linearGradient>
+      <radialGradient id="pgpool" cx=".5" cy=".3" r=".7"><stop offset="0" stop-color="#ffd27a" stop-opacity=".7"/><stop offset="1" stop-color="#ffd27a" stop-opacity="0"/></radialGradient>
+      <clipPath id="pgfloor"><polygon points="${pts(floor)}"/></clipPath></defs>
+      <g class="day"><rect width="240" height="180" fill="url(#pgsky)"/><g class="pg-sun"><circle cx="30" cy="9" r="11" fill="#ffe17a" opacity=".3"/><circle cx="30" cy="9" r="6.5" fill="#ffe17a"/></g></g>
+      <g class="night"><rect width="240" height="180" fill="url(#shskyn)"/><circle cx="212" cy="8" r="4.5" fill="#f4f1d0"/><circle cx="214" cy="6.6" r="3.8" fill="#0b1430"/>
+        ${[[50, 8], [80, 4], [130, 9], [165, 3], [110, 5]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r=".8" fill="#fff"/>`).join('')}</g>
+      <g class="pg-cloud"><rect width="240" height="20" fill="#8d99a8"/><ellipse cx="70" cy="6" rx="40" ry="8" fill="#7d8896"/><ellipse cx="170" cy="5" rx="48" ry="8" fill="#86919f"/></g>
+      <!-- maison : bardage bois, acrotère du toit plat, baie vitrée, appliques -->
+      ${clad}
+      <rect x="-2" y="16" width="244" height="7" fill="#3a3f46"/><rect x="-2" y="16" width="244" height="1.4" fill="#5b626b"/>
+      <rect x="0" y="23" width="240" height="3" fill="#000" opacity=".15"/>
+      <rect x="96" y="52" width="76" height="${gy - 52}" fill="#24292f"/>
+      <rect x="99" y="55" width="34" height="${gy - 55}" fill="url(#pgglass)"/><rect x="135" y="55" width="34" height="${gy - 55}" fill="url(#pgglass)"/>
+      <path d="M99 ${gy - 6}l14 -${gy - 61}h8l-14 ${gy - 61}zM135 ${gy - 10}l12 -${gy - 65}h5l-12 ${gy - 65}z" fill="#fff" opacity=".12"/>
+      <rect x="88" y="62" width="2.6" height="5" rx=".8" fill="#2b2f35"/><rect x="178" y="62" width="2.6" height="5" rx=".8" fill="#2b2f35"/>
+      <!-- terrasse en pierre, pelouse, piscine -->
+      <rect x="0" y="${gy}" width="240" height="${180 - gy}" fill="#6fae58"/>
+      <polygon points="${pts([[0, gy], [240, gy], [240, 164], [0, 164]])}" fill="url(#pgstone)"/>
+      ${[0, 1, 2, 3].map((k) => `<path d="M0 ${gy + 11 + k * 11}H240" stroke="#b9b1a3" stroke-width=".5"/>`).join('')}
+      <g clip-path="url(#pgfloor)"><g class="pg-shadow" fill="#000"></g></g>
+      ${post(BL[0], BL[1], 6)}${post(BR[0], BR[1], 6)}
+      <!-- tapis, canapé d'angle, fauteuil en rotin, table basse, plante -->
+      <path d="M56 142l12-12h96l12 12z" fill="#cfc4b2"/>
+      <rect x="66" y="110" width="88" height="15" rx="3" fill="#c49a62"/><rect x="66" y="110" width="88" height="15" rx="3" fill="#000" opacity=".08"/>
+      ${[0, 1, 2, 3].map((k) => `<rect x="${69 + k * 21}" y="111" width="20" height="12" rx="3" fill="${k % 2 ? '#dcd9d3' : '#e6e3dd'}"/>`).join('')}
+      <rect x="64" y="122" width="92" height="9" rx="2.5" fill="#c49a62"/><rect x="67" y="120.5" width="86" height="6" rx="2.5" fill="#efece6"/>
+      <path d="M48 128l12-8h8v12l-14 7z" fill="#c49a62"/><path d="M51 127l10-6.5h6v7l-12 6z" fill="#efece6"/>
+      <path d="M72 119q0-6 6-6q5 1 4 6z" fill="#9a8f80"/><path d="M134 119q0-6 6-6q6 1 4 6z" fill="#7d8a7a"/><path d="M142 120q0-5 5-5q5 1 3 5z" fill="#d6cdbd"/>
+      <g transform="translate(166 116)"><path d="M0 4h18l-2 12h-14z" fill="#a98454"/>
+        ${[0, 1, 2, 3, 4].map((k) => `<path d="M${1 + k * 3.6} 5l1 10" stroke="#8a683f" stroke-width=".5"/>`).join('')}
+        <rect x="2" y="-2" width="14" height="8" rx="2.5" fill="#efece6"/><rect x="3" y="15" width="1.6" height="4" fill="#3a3027"/><rect x="13.4" y="15" width="1.6" height="4" fill="#3a3027"/></g>
+      <ellipse cx="110" cy="146" rx="18" ry="2.2" fill="#000" opacity=".15"/>
+      <ellipse cx="110" cy="135.5" rx="17" ry="3.4" fill="#2f3237"/><rect x="108.8" y="137" width="2.4" height="8" fill="#2f3237"/>
+      <path d="M104 135l1-4h5l1 4z" fill="#d9d4ca"/><path d="M107.5 131q-4-5-1-9q3 3 1 9zM107.5 131q3-6 7-7q-1 5-7 7z" fill="#5c8f52"/>
+      <rect x="114" y="132" width="3" height="3" rx=".5" fill="#f3efe6"/>
+      <g transform="translate(205 102)"><path d="M-6 10h12l-1.5 14h-9z" fill="#5b5f66"/><circle cx="0" cy="2" r="9" fill="#5f8a55"/><circle cx="-4" cy="-3" r="5" fill="#6f9c63"/><circle cx="5" cy="-2" r="5" fill="#557d4c"/></g>
+      ${lantern(36, 152)}${lantern(196, 150)}
+      <rect class="pg-dim" x="0" y="0" width="240" height="180" fill="#0a1020"/>
+      <!-- nuit : intérieur éclairé, appliques, halos -->
+      <g class="night"><rect x="99" y="55" width="34" height="${gy - 55}" fill="url(#pgwarm)" opacity=".85"/><rect x="135" y="55" width="34" height="${gy - 55}" fill="url(#pgwarm)" opacity=".85"/>
+        <circle cx="89.3" cy="64" r="5" fill="#ffcf6a" opacity=".45"/><circle cx="179.3" cy="64" r="5" fill="#ffcf6a" opacity=".45"/></g>
+      <g clip-path="url(#pgfloor)"><ellipse class="pg-pool" cx="112" cy="135" rx="90" ry="28" fill="url(#pgpool)"/></g>
+      <g class="pg-candle"><circle cx="115.5" cy="131" r="6" fill="#ffcf6a" opacity=".22"/><circle cx="115.5" cy="131" r="1.2" fill="#ffcf6a"/></g>
+      <g fill="#fff6c8" fill-opacity=".3">${rays}</g>
+      ${screen}
+      <g class="pg-roof"><polygon class="pg-gap" points="${pts([BL, BR, FR, FL])}"/><g class="pg-blades"></g></g>
+      <polyline points="${pts([FL, BL, BR])}" fill="none" stroke="#2b3036" stroke-width="3"/>
+      <polyline points="${pts([BR, FR])}" fill="none" stroke="#3a4048" stroke-width="3.4"/>
+      <rect x="${FL[0] - 2}" y="${FL[1] - 4}" width="${FR[0] - FL[0] + 4}" height="8" fill="url(#pgalu)"/>
+      <rect class="pg-strip" x="${FL[0] + 2}" y="${FL[1] + 4}" width="${FR[0] - FL[0] - 4}" height="1.6" fill="#ffd27a"/>
+      ${post(FL[0], FL[1], 7)}${post(FR[0], FR[1], 7)}
+      <g class="pg-drain"><circle cx="${FR[0]}" cy="${FR[1] + 4}" r="1.4" fill="#9fd0ff"/><circle cx="${FR[0]}" cy="${FR[1] + 4}" r="1.2" fill="#9fd0ff"/></g>
+      <!-- piscine au premier plan : margelle, eau, reflets -->
+      <rect x="-2" y="162" width="176" height="20" fill="#e9e5dd"/>
+      <rect x="4" y="166" width="164" height="16" fill="url(#pgwater)"/>
+      <g class="pg-water" stroke="#bff0ff" stroke-width=".8" fill="none" opacity=".8">
+        <path d="M10 170q6-2 12 0t12 0"/><path d="M60 173q6-2 12 0t12 0"/><path d="M118 169q6-2 12 0t12 0"/><path d="M30 177q6-2 12 0t12 0"/><path d="M95 178q6-2 12 0t12 0"/></g>
+      <rect class="pg-dim" x="4" y="166" width="164" height="16" fill="#0a1020"/>
+      <g class="night"><ellipse cx="86" cy="174" rx="60" ry="6" fill="#5fe1ff" opacity=".35"/></g>
+      <g class="pg-drops" stroke="#dfeeff" stroke-width="1" opacity=".8">${drops}</g>
+      <circle class="led" cx="${FL[0] + 8}" cy="${FL[1]}" r="1.8"/>${ARROW(FR[0] + 16, FR[1] - 14)}`;
+  };
+
   // couleur du tablier / des lamelles / des vantaux par défaut, et motifs de nom pour l'éditeur
   const KINDS = {
     roller_shutter: { color: '#d5dbe1', re: /volet|shutter|roll|rollo|store/i, icon: 'mdi:window-shutter' },
     venetian_blind: { color: '#ece2cf', re: /venitien|vénitien|venetian|blind|jalousie|lamel|store/i, icon: 'mdi:blinds-horizontal' },
     swing_shutter: { color: '#4f7d5c', re: /volet|shutter|battant|persienne|swing/i, icon: 'mdi:window-shutter-open' },
+    pergola: { color: '#d5dae0', re: /pergola|bioclim|lame|louvre|lamelle/i, icon: 'mdi:pergola' },
   };
   const TILES = [['position', 'mdi:arrow-expand-vertical', 'show_position'], ['tilt', 'mdi:rotate-3d-variant', 'show_tilt'],
-    ['power', 'mdi:flash', 'show_power'], ['since', 'mdi:history', 'show_since']];
+    ['power', 'mdi:flash', 'show_power'], ['rain', 'mdi:weather-pouring', 'show_rain'], ['wind', 'mdi:weather-windy', 'show_wind'], ['since', 'mdi:history', 'show_since']];
 
   class ApplianceShutterCard extends HTMLElement {
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { show_status: true, show_controls: true, show_slider: true, show_position: true, show_tilt: true, show_power: true, show_since: true,
-        sun_entity: 'sun.sun', ...c };
+        show_rain: true, show_wind: true, sun_entity: 'sun.sun', ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -16102,7 +16342,11 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
     getCardSize() { return 6; }
     getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
-    _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
+    _t(k) {
+      // pergola : libellés au féminin (« Ouverte », « Fermée ») et « Lames » au lieu de « Position »
+      const L = T[this._lang()], pk = this.kind === 'pergola' ? `pg_${k}` : null;
+      return (pk && (L[pk] ?? T.en[pk])) ?? L[k] ?? T.en[k] ?? k;
+    }
     // libellé perso (option labels) sinon traduction
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
     _lang() { let l = (this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en').slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
@@ -16129,10 +16373,10 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
 
     _build() {
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
-      const swing = this.kind === 'swing_shutter';
+      const swing = this.kind === 'swing_shutter', pergola = this.kind === 'pergola';
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="shtitle"></div><div class="badge" id="shbadge"></div></div>
-        <div class="scene${swing ? ' sw' : ''}"><svg viewBox="0 0 200 172" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${SVGS[this.kind]()}</svg>
+        <div class="scene${swing ? ' sw' : pergola ? ' pg' : ''}"><svg viewBox="${pergola ? '0 0 240 180' : '0 0 200 172'}" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${pergola ? PERGOLA() : SVGS[this.kind]()}</svg>
           ${swing ? `<div class="leaf l mv">${LEAF(false)}</div><div class="leaf r mv">${LEAF(true)}</div>` : ''}</div>
         <div class="rng ps" id="shpos"><span></span><input type="range" min="0" max="100" step="1"></div>
         <div class="rng tl" id="shtilt"><span></span><input type="range" min="0" max="100" step="1"></div>
@@ -16140,23 +16384,29 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
           <button data-a="open"><ha-icon icon="mdi:arrow-up"></ha-icon><span></span></button>
           <button data-a="stop"><ha-icon icon="mdi:stop"></ha-icon><span></span></button>
           <button data-a="close"><ha-icon icon="mdi:arrow-down"></ha-icon><span></span></button>
+          ${pergola ? '<button data-a="light"><ha-icon icon="mdi:led-strip-variant"></ha-icon><span></span></button>' : ''}
         </div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
       root.querySelector('.scene').addEventListener('click', () => this._more(this._c.entity));
       root.querySelectorAll('.ctl button').forEach((b) => b.addEventListener('click', () => {
+        if (b.dataset.a === 'light') { if (this._hass && this._c.entity_light) this._hass.callService('homeassistant', 'toggle', { entity_id: this._c.entity_light }); return; }
         if (this._hass && this._c.entity) this._hass.callService('cover', `${b.dataset.a}_cover`, { entity_id: this._c.entity });
       }));
       root.querySelector('#shpos input').addEventListener('change', (e) => {
-        if (this._hass) this._hass.callService('cover', 'set_cover_position', { entity_id: this._c.entity, position: this._c.invert ? 100 - Number(e.target.value) : Number(e.target.value) });
+        if (!this._hass) return;
+        const v = this._c.invert ? 100 - Number(e.target.value) : Number(e.target.value);
+        // pergola pilotée par l'inclinaison des lames
+        if (this._tiltDriven) this._hass.callService('cover', 'set_cover_tilt_position', { entity_id: this._c.entity, tilt_position: v });
+        else this._hass.callService('cover', 'set_cover_position', { entity_id: this._c.entity, position: v });
       });
       root.querySelector('#shtilt input').addEventListener('change', (e) => {
         if (this._hass) this._hass.callService('cover', 'set_cover_tilt_position', { entity_id: this._c.entity, tilt_position: Number(e.target.value) });
       });
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
-        const k = el.dataset.k; this._more(k === 'power' ? this._c.entity_power : this._c.entity);
+        const k = el.dataset.k; this._more({ power: this._c.entity_power, rain: this._c.entity_rain, wind: this._c.entity_wind }[k] || this._c.entity);
       }));
-      this._root = root; this._card = root.querySelector('ha-card'); this._built = true; this._pos = null;
+      this._root = root; this._card = root.querySelector('ha-card'); this._built = true; this._pos = null; this._ang = null;
     }
 
     _compute() {
@@ -16171,6 +16421,9 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         if (a.current_position != null && isFinite(Number(a.current_position))) pos = Math.max(0, Math.min(100, Number(a.current_position)));
         if (a.current_tilt_position != null && isFinite(Number(a.current_tilt_position))) tilt = Math.max(0, Math.min(100, Number(a.current_tilt_position)));
       }
+      // pergola : l'angle des lames est dans current_tilt_position si la cover le donne, sinon dans current_position
+      this._tiltDriven = this.kind === 'pergola' && !isNaN(tilt);
+      if (this._tiltDriven) { pos = tilt; if (st === 'closed' && pos > 0) st = 'open'; }
       const known = !isNaN(pos); // position réelle fournie par la cover
       // invert : cover qui remonte sa position à l'envers (fréquent avec Tuya), 0 = ouvert et 100 = fermé.
       // L'état HA en découle et est donc faux lui aussi : on le recalcule depuis la position corrigée.
@@ -16185,12 +16438,34 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       return { st, pos, known, tilt, s };
     }
 
+    // pergola : fait pivoter les lames de l'angle affiché vers la cible en dur secondes
+    _tween(to, dur, linear) {
+      const from = this._ang == null ? to : this._ang, t0 = performance.now(), card = this._card;
+      cancelAnimationFrame(this._raf);
+      const draw = (a) => {
+        this._ang = a;
+        const [bl, sh] = pgBlades(a);
+        this._root.querySelector('.pg-blades').innerHTML = bl;
+        this._root.querySelector('.pg-shadow').innerHTML = sh;
+        card.style.setProperty('--a', a.toFixed(1));
+      };
+      if (!(dur > 0) || from === to) { draw(to); return; }
+      const step = (now) => {
+        const k = Math.min(1, (now - t0) / (dur * 1000)), e = linear ? k : k < .5 ? 2 * k * k : 1 - (-2 * k + 2) ** 2 / 2;
+        draw(from + (to - from) * e);
+        if (k < 1) this._raf = requestAnimationFrame(step);
+      };
+      this._raf = requestAnimationFrame(step);
+    }
+
     _render() {
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card;
       const { st, pos, known, tilt, s } = this._compute();
       const sun = this._st(c.sun_entity), night = !!sun && sun.state === 'below_horizon';
-      card.className = `${st}${night ? ' isnight' : ''}${c.animations === false ? ' noanim' : ''}`;
+      const rainS = this._st(c.entity_rain), rain = !!rainS && (/^(on|true|wet|rain|pluie|raining)$/i.test(String(rainS.state)) || this._num(c.entity_rain) > 0);
+      const lightS = this._st(c.entity_light), leds = !!lightS && /^on$/i.test(String(lightS.state));
+      card.className = `${st}${night ? ' isnight' : ''}${c.animations === false ? ' noanim' : ''}${rain ? ' rain' : ''}${leds ? ' leds' : ''}`;
 
       // course : durée proportionnelle à l'écart si travel_time est donné, sinon 1,2 s
       if (pos !== this._pos) {
@@ -16199,6 +16474,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         card.style.setProperty('--sh-d', `${dur.toFixed(2)}s`);
         // avec un temps de course, la cover envoie sa position par paliers : mouvement linéaire pour enchaîner sans à-coups
         card.style.setProperty('--sh-e', tt > 0 ? 'linear' : 'ease-in-out');
+        if (this.kind === 'pergola') this._tween(pos, c.animations === false ? 0 : dur, tt > 0);
         this._pos = pos;
       }
       card.style.setProperty('--p', String(pos));
@@ -16222,7 +16498,8 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       ctl.querySelectorAll('button').forEach((b) => {
         const a = b.dataset.a;
         b.querySelector('span').textContent = this._t(`btn_${a}`);
-        b.classList.toggle('hide', a === 'stop' && !has(8));
+        b.classList.toggle('hide', (a === 'stop' && !has(8)) || (a === 'light' && !c.entity_light));
+        if (a === 'light') { b.classList.toggle('on', leds); b.disabled = !lightS; return; }
         // assumed_state (RFXCOM, Somfy RTS…) : l'état est supposé, pas mesuré, donc on laisse tout cliquable comme la carte HA
         b.disabled = st === 'unavailable' || (!assumed && ((a === 'open' && (st === 'open' || st === 'opening')) || (a === 'close' && (st === 'closed' || st === 'closing'))));
       });
@@ -16232,7 +16509,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         el.querySelector('span').textContent = label;
         if (this._root.activeElement !== inp) inp.value = String(Math.round(val));
       };
-      rng('shpos', isCover && known && has(4) && c.show_slider !== false && st !== 'unavailable', this._l('position'), pos);
+      rng('shpos', isCover && known && (this._tiltDriven ? has(128) : has(4)) && c.show_slider !== false && st !== 'unavailable', this._l('position'), pos);
       rng('shtilt', isCover && this.kind === 'venetian_blind' && !isNaN(tilt) && has(128) && c.show_slider !== false && st !== 'unavailable', this._l('tilt'), tilt);
 
       const pw = this._watts(c.entity_power);
@@ -16240,6 +16517,8 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         position: [known && st !== 'unavailable', this._fmt(pos, 0), '%'],
         tilt: [this.kind === 'venetian_blind' && !isNaN(tilt), this._fmt(tilt, 0), '%'],
         power: [c.entity_power, isNaN(pw) ? '--' : this._fmt(pw, 0), isNaN(pw) ? '' : 'W'],
+        rain: [this.kind === 'pergola' && rainS, this._t(rain ? 'yes' : 'no'), ''],
+        wind: [this.kind === 'pergola' && c.entity_wind, this._fmt(this._num(c.entity_wind), 0), this._unit(c.entity_wind, 'km/h')],
         since: [s, this._since(s), ''],
       };
       TILES.forEach(([k, , opt]) => {
@@ -16275,6 +16554,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ent('entity', 'cover'), ent('entity_power', 'sensor'), ent('sun_entity', 'sun'),
+        ...(this.kind === 'pergola' ? [ent('entity_rain'), ent('entity_light'), ent('entity_wind', 'sensor')] : []),
         { type: 'grid', name: '', schema: [
           { name: 'color', selector: { text: {} } },
           { name: 'travel_time', selector: { number: { min: 0, max: 120, step: 1, mode: 'box', unit_of_measurement: 's' } } },
@@ -16283,11 +16563,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_controls'), bool('show_slider'), bool('show_position'),
-          ...(this.kind === 'venetian_blind' ? [bool('show_tilt')] : []), bool('show_power'), bool('show_since'), bool('animations'),
+          ...(this.kind === 'venetian_blind' ? [bool('show_tilt')] : []), bool('show_power'),
+          ...(this.kind === 'pergola' ? [bool('show_rain'), bool('show_wind')] : []), bool('show_since'), bool('animations'),
         ] },
       ];
       // « color » a le libellé « couleur de la lumière » pour les lampes : ici, couleur du volet
-      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'color' ? 'shutter_color' : s.name === 'invert' ? 'invert_position' : s.name, this._hass);
+      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'color' ? (this.kind === 'pergola' ? 'louvre_color' : 'shutter_color') : s.name === 'invert' ? 'invert_position' : s.name, this._hass);
     }
   }
 
@@ -16305,7 +16586,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
     });
     customElements.define(tag + '-editor', class extends ApplianceShutterCardEditor { get kind() { return kind; } });
     window.customCards.push({ type: tag, name: `Appliance – ${T.en[kind]} / ${T.fr[kind]}`, preview: true,
-      description: `${T.fr[kind]} animé : position, inclinaison, mouvement et vue jour / nuit.`,
+      description: kind === 'pergola' ? `${T.fr[kind]} animée : lames orientables, pluie, éclairage LED et vue jour / nuit.` : `${T.fr[kind]} animé : position, inclinaison, mouvement et vue jour / nuit.`,
       documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards' });
   }
 })();

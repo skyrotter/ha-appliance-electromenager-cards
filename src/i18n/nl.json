@@ -154,6 +154,7 @@
     "ends_at": "Klaar om",
     "toggle": "Aan/uit",
     "confirm_off": "Cyclus bezig – klik nog eens om de stroom te onderbreken",
+    "confirm_off_pc": "Computer staat aan – klik nogmaals om uit te schakelen",
     "f_name": "Naam",
     "f_labels": "Eigen tegellabels (sleutel: tekst)",
     "f_entity": "Statusentiteit (switch, sensor, input_select…)",
@@ -733,7 +734,11 @@
     "show_tilt": "Kanteling tonen",
     "image": "Eigen afbeelding (URL)",
     "illustration_size": "Grootte van de illustratie",
-    "transparent": "Transparante achtergrond"
+    "transparent": "Transparante achtergrond",
+    "entity_wind": "Windsensor",
+    "show_rain": "Regen tonen",
+    "show_wind": "Wind tonen",
+    "louvre_color": "Kleur van de lamellen"
   },
   "light": {
     "light_bulb": "Lamp",
@@ -772,6 +777,16 @@
     "position": "Positie",
     "tilt": "Kanteling",
     "power": "Motor",
-    "since": "Laatste wijziging"
+    "since": "Laatste wijziging",
+    "pergola": "Bioklimatische pergola",
+    "pg_open": "Open",
+    "pg_closed": "Gesloten",
+    "pg_partial": "Open",
+    "pg_position": "Lamellen",
+    "rain": "Regen",
+    "wind": "Wind",
+    "yes": "Ja",
+    "no": "Nee",
+    "btn_light": "LED"
   }
 }

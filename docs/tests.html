@@ -19,7 +19,7 @@ const has=(c,cls)=>c.wrap.classList.contains(cls);
 const tags=['washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','fan','generic','tool-charger','ceiling-fan','dehumidifier','monitor'];
 tags.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 // card picker: every core card and every self-contained card listed exactly once
-const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','roller-shutter','venetian-blind','swing-shutter'];
+const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','roller-shutter','venetian-blind','swing-shutter','pergola'];
 solo.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 const picked=window.customCards.map(c=>c.type), wanted=[...tags,...solo].map(t=>`appliance-${t}-card`);
 ok(`customCards = ${wanted.length}`,picked.length===wanted.length&&wanted.every(t=>picked.filter(p=>p===t).length===1),
@@ -150,6 +150,10 @@ c=card('laptop',{power:'sensor.p'},[mk('sensor.p',45,W)]); ok('laptop screen on'
 c=card('laptop',{power:'sensor.p'},[mk('sensor.p',5,W)]); ok('laptop sleep',has(c,'st-standby'),c.wrap.className);
 c=card('laptop',{power:'sensor.p'},[mk('sensor.p',0,W)]); ok('laptop off',has(c,'st-off'),c.wrap.className);
 c=card('desktop-pc',{power:'sensor.p',style:'tower'},[mk('sensor.p',120,W)]); ok('pc tower only: no screen, tower title',has(c,'st-screen_on')&&!c.sr.querySelector('.pc-screen')&&c.sr.querySelectorAll('.pc-fan').length===3&&/Unité centrale/.test(c.txt()),c.wrap.className+' '+c.txt());
+c=card('desktop-pc',{power:'sensor.p',switch:'switch.s'},[mk('sensor.p',120,W),mk('switch.s','on')]); c.sr.querySelector('.toggle').click(); {const armed=!c.h.calls.length&&/Ordinateur allumé/.test(c.sr.getElementById('actions').textContent); c.sr.querySelector('.toggle').click(); ok('pc off needs two clicks',armed&&c.h.calls.length===1,JSON.stringify(c.h.calls));}
+c=card('desktop-pc',{power:'sensor.p',switch:'switch.s'},[mk('sensor.p',0,W),mk('switch.s','on')]); c.sr.querySelector('.toggle').click(); ok('pc off at 0 W: one click',c.h.calls.length===1,JSON.stringify(c.h.calls));
+c=card('desktop-pc',{power:'sensor.p',switch:'switch.s',confirm_off:false},[mk('sensor.p',120,W),mk('switch.s','on')]); c.sr.querySelector('.toggle').click(); ok('pc confirm_off false: one click',c.h.calls.length===1,JSON.stringify(c.h.calls));
+c=card('server-rack',{power:'sensor.p',switch:'switch.s'},[mk('sensor.p',150,W),mk('switch.s','on')]); c.sr.querySelector('.toggle').click(); ok('rack off needs confirmation',!c.h.calls.length,JSON.stringify(c.h.calls));
 // écrans PC
 c=card('monitor',{power:'sensor.p'},[mk('sensor.p',38,W)]); ok('monitor on, 2 screens by default',has(c,'st-screen_on')&&c.sr.querySelectorAll('.mn-screen').length===2&&/Écrans PC/.test(c.txt())&&/Allumés/.test(c.txt()),c.wrap.className+' '+c.txt());
 c=card('monitor',{power:'sensor.p'},[mk('sensor.p',0.4,W)]); ok('monitor standby',has(c,'st-standby'),c.wrap.className);
@@ -783,6 +787,17 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
  ok('swing no stop hidden with stop support, no slider without position support',!c.sr.querySelector('[data-a=stop]').classList.contains('hide')&&c.sr.getElementById('shpos').classList.contains('hide'));
  c=card('swing-shutter',{entity:'cover.v',color:'red;background:url(x)'},[mk('cover.v','open')]);
  ok('swing bad colour ignored',v(c,'--sc')==='#4f7d5c',v(c,'--sc'));
+ // pergola bioclimatique : lames (inclinaison sinon position), pluie, LED, vent
+ c=card('pergola',{entity:'cover.p'},[mk('cover.p','open',{current_position:40,supported_features:15}),mk('sun.sun','above_horizon')]);
+ ok('pergola 40 % by position',/partial/.test(cls(c))&&badge(c)==='Ouverte à 40 %'&&c.sr.querySelectorAll('.pg-blades polygon').length===18&&v(c,'--a')==='40.0',cls(c)+' '+badge(c)+' '+v(c,'--a'));
+ c=card('pergola',{entity:'cover.p'},[mk('cover.p','closed',{current_tilt_position:70,supported_features:255})]);
+ ok('pergola follows tilt',v(c,'--a')==='70.0'&&/partial/.test(cls(c))&&c.sr.querySelector('.tile[data-k=position] .lbl').textContent==='Lames',cls(c)+' '+v(c,'--a'));
+ {const pi=c.sr.querySelector('#shpos input'); pi.value='20'; pi.dispatchEvent(new Event('change'));
+ ok('pergola slider -> set_cover_tilt_position',JSON.stringify(c.h.calls[0])==='["cover","set_cover_tilt_position",{"entity_id":"cover.p","tilt_position":20}]',JSON.stringify(c.h.calls));}
+ c=card('pergola',{entity:'cover.p'},[mk('cover.p','closed',{current_position:0})]); ok('pergola closed',/closed/.test(cls(c))&&badge(c)==='Fermée'&&c.sr.querySelector('[data-a=light]').classList.contains('hide'),badge(c));
+ c=card('pergola',{entity:'cover.p',entity_rain:'binary_sensor.r',entity_light:'light.l',entity_wind:'sensor.w'},[mk('cover.p','closing',{current_position:30}),mk('binary_sensor.r','on'),mk('light.l','on'),mk('sensor.w',24,{unit_of_measurement:'km/h'}),mk('sun.sun','below_horizon')]);
+ {const st=c.sr.querySelector('.tiles').textContent; ok('pergola rain + leds + wind + night',/rain/.test(cls(c))&&/leds/.test(cls(c))&&/isnight/.test(cls(c))&&/closing/.test(cls(c))&&/Oui/.test(st)&&/24/.test(st)&&badge(c)==='Fermeture… 30 %',cls(c)+' '+st+' '+badge(c));}
+ c.sr.querySelector('[data-a=light]').click(); ok('pergola LED button toggles light',JSON.stringify(c.h.calls[0])==='["homeassistant","toggle",{"entity_id":"light.l"}]',JSON.stringify(c.h.calls));
  c=card('roller-shutter',{entity:'cover.v'},[mk('cover.v','unavailable')]); ok('roller unavailable',/unavailable/.test(cls(c))&&badge(c)==='Indisponible');
  // invert: position remontée à l'envers (Tuya), 100 = fermé
  c=card('roller-shutter',{entity:'cover.v',invert:true},[mk('cover.v','open',{current_position:100,supported_features:15})]);

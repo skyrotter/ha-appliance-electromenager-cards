@@ -184,6 +184,7 @@
 "ends_at": "Ferdig kl.",
 "toggle": "Slå på/av",
 "confirm_off": "Syklus pågår – trykk igjen for å bryte strømmen",
+"confirm_off_pc": "Datamaskinen er på – klikk igjen for å kutte strømmen",
 "f_name": "Navn",
 "f_labels": "Egne flisetiketter (nøkkel: tekst)",
 "f_entity": "Status-entitet (switch, sensor, input_select…)",
@@ -733,7 +734,11 @@
 "follow_light_color": "Følg pærens farge",
 "color_cycle": "Fargesyklus",
 "multicolor": "Flerfarget lysslynge",
-"show_brightness": "Vis lysstyrke"
+"show_brightness": "Vis lysstyrke",
+"entity_wind": "Vindsensor",
+"show_rain": "Vis regn",
+"show_wind": "Vis vind",
+"louvre_color": "Lamellfarge"
 },
 "light": {
 "light_bulb": "Lyspære",
@@ -772,6 +777,16 @@
 "position": "Posisjon",
 "tilt": "Vinkel",
 "power": "Motor",
-"since": "Sist endret"
+"since": "Sist endret",
+"pergola": "Bioklimatisk pergola",
+"pg_open": "Åpen",
+"pg_closed": "Lukket",
+"pg_partial": "Åpen",
+"pg_position": "Lameller",
+"rain": "Regn",
+"wind": "Vind",
+"yes": "Ja",
+"no": "Nei",
+"btn_light": "LED"
 }
 }

@@ -746,6 +746,13 @@ const SCEN = [
   { kind: 'swing-shutter', title: 'Volets battants', lang: true,
     cfg: { entity: 'cover.demo_swing_shutter', entity_power: 'sensor.demo_swing_shutter_power', travel_time: 8 },
     build(ctl) { shutterCtl(ctl, 'cover.demo_swing_shutter', 'sensor.demo_swing_shutter_power', 8, 100); } },
+  { kind: 'pergola', title: 'Pergola bioclimatique', lang: true,
+    cfg: { entity: 'cover.demo_pergola', entity_power: 'sensor.demo_pergola_power', entity_rain: 'binary_sensor.demo_rain', entity_light: 'light.demo_pergola_led', entity_wind: 'sensor.demo_wind', travel_time: 6 },
+    build(ctl) {
+      shutterCtl(ctl, 'cover.demo_pergola', 'sensor.demo_pergola_power', 6, 40);
+      set('sensor.demo_wind', 12, { unit_of_measurement: 'km/h' });
+      checks(ctl, [['Pluie', 'binary_sensor.demo_rain', false], ['LED', 'light.demo_pergola_led', false]]);
+    } },
 ];
 const ROBOT_SEL = {}, LIGHT_SEL = {};
 // volets : cover positionnable (et inclinable pour le store vénitien), moteur, soleil jour / nuit
