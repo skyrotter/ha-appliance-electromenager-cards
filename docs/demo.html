@@ -337,6 +337,21 @@ const SCEN = [
       range(ctl, 'Puissance', 'sensor.cfan_power', 0, 60, 1, 35, 'W', W);
       checks(ctl, [['Lampe', 'light.cfan_light', true]]);
     } },
+  { kind: 'kettle', title: 'Bouilloire',
+    cfg: { switch: 'switch.kettle', power: 'sensor.kettle_power', temperature: 'sensor.kettle_temp', energy: 'sensor.kettle_energy' },
+    build(ctl) {
+      set('switch.kettle', 'on');
+      range(ctl, 'Puissance', 'sensor.kettle_power', 0, 2400, 10, 2180, 'W', W);
+      range(ctl, 'Eau', 'sensor.kettle_temp', 10, 100, 1, 72, '°C', T);
+      set('sensor.kettle_energy', 0.12, KWH);
+    } },
+  { kind: 'toaster', title: 'Grille-pain',
+    cfg: { switch: 'switch.toaster', power: 'sensor.toaster_power', energy: 'sensor.toaster_energy' },
+    build(ctl) {
+      set('switch.toaster', 'on');
+      range(ctl, 'Puissance', 'sensor.toaster_power', 0, 1200, 10, 850, 'W', W);
+      set('sensor.toaster_energy', 0.05, KWH);
+    } },
   { kind: 'dehumidifier', title: 'Déshumidificateur',
     cfg: { power: 'sensor.dehum_power', humidity: 'sensor.dehum_humidity', target_humidity: 'input_number.dehum_target', temperature: 'sensor.dehum_temp', tank_full: 'binary_sensor.dehum_tank', fan_speed: 'select.dehum_fan', mode: 'select.dehum_mode', energy: 'sensor.dehum_energy' },
     build(ctl) {

@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.39.0";
+const VERSION = "1.40.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -231,6 +231,14 @@ const STRINGS = {
     "f_screens": "Number of screens",
     "f_pc_style": "Illustration",
     "f_standby_threshold_monitor": "Standby above (W)",
+    "kettle": "Kettle",
+    "toaster": "Toaster",
+    "boiling": "Boiling",
+    "hot_water": "Hot water",
+    "toasting": "Toasting",
+    "toast_ready": "Toast ready!",
+    "f_hot_minutes": "Show \"hot water\" for (min)",
+    "f_ready_minutes": "Show \"toast ready\" for (min)",
     "dehumidifier": "Dehumidifier",
     "drying": "Drying",
     "tank_full": "Tank full",
@@ -461,6 +469,14 @@ const STRINGS = {
     "f_screens": "Anzahl der Bildschirme",
     "f_pc_style": "Darstellung",
     "f_standby_threshold_monitor": "Standby über (W)",
+    "kettle": "Wasserkocher",
+    "toaster": "Toaster",
+    "boiling": "Kocht",
+    "hot_water": "Heißes Wasser",
+    "toasting": "Toastet",
+    "toast_ready": "Toast fertig!",
+    "f_hot_minutes": "„Heißes Wasser“ anzeigen für (min)",
+    "f_ready_minutes": "„Toast fertig“ anzeigen für (min)",
     "dehumidifier": "Luftentfeuchter",
     "drying": "Entfeuchtung",
     "tank_full": "Tank voll",
@@ -691,6 +707,14 @@ const STRINGS = {
     "f_screens": "Nombre d'écrans",
     "f_pc_style": "Illustration",
     "f_standby_threshold_monitor": "Veille au-dessus de (W)",
+    "kettle": "Bouilloire",
+    "toaster": "Grille-pain",
+    "boiling": "Ébullition",
+    "hot_water": "Eau chaude",
+    "toasting": "Grillage",
+    "toast_ready": "Toasts prêts !",
+    "f_hot_minutes": "Afficher « eau chaude » pendant (min)",
+    "f_ready_minutes": "Afficher « toasts prêts » pendant (min)",
     "dehumidifier": "Déshumidificateur",
     "drying": "Déshumidification",
     "tank_full": "Bac plein",
@@ -715,6 +739,14 @@ const STRINGS = {
     "f_screens": "Antall skjermer",
     "f_pc_style": "Illustrasjon",
     "f_standby_threshold_monitor": "Hvilemodus over (W)",
+    "kettle": "Vannkoker",
+    "toaster": "Brødrister",
+    "boiling": "Koker",
+    "hot_water": "Varmt vann",
+    "toasting": "Rister",
+    "toast_ready": "Toast ferdig!",
+    "f_hot_minutes": "Vis «varmt vann» i (min)",
+    "f_ready_minutes": "Vis «toast ferdig» i (min)",
     "dehumidifier": "Avfukter",
     "drying": "Avfukting",
     "tank_full": "Tanken er full",
@@ -1151,6 +1183,14 @@ const STRINGS = {
     "f_screens": "Aantal schermen",
     "f_pc_style": "Weergave",
     "f_standby_threshold_monitor": "Stand-by boven (W)",
+    "kettle": "Waterkoker",
+    "toaster": "Broodrooster",
+    "boiling": "Kookt",
+    "hot_water": "Heet water",
+    "toasting": "Roostert",
+    "toast_ready": "Toast klaar!",
+    "f_hot_minutes": "\"Heet water\" tonen gedurende (min)",
+    "f_ready_minutes": "\"Toast klaar\" tonen gedurende (min)",
     "dehumidifier": "Luchtontvochtiger",
     "drying": "Ontvochtigen",
     "tank_full": "Reservoir vol",
@@ -1381,6 +1421,14 @@ const STRINGS = {
     "f_screens": "Număr de ecrane",
     "f_pc_style": "Ilustrație",
     "f_standby_threshold_monitor": "Standby peste (W)",
+    "kettle": "Fierbător",
+    "toaster": "Prăjitor de pâine",
+    "boiling": "Fierbe",
+    "hot_water": "Apă caldă",
+    "toasting": "Prăjește",
+    "toast_ready": "Pâinea e gata!",
+    "f_hot_minutes": "Afișează „apă caldă” timp de (min)",
+    "f_ready_minutes": "Afișează „pâinea e gata” timp de (min)",
     "dehumidifier": "Dezumidificator",
     "drying": "Dezumidificare",
     "tank_full": "Rezervor plin",
@@ -1611,6 +1659,14 @@ const STRINGS = {
     "f_screens": "Количество экранов",
     "f_pc_style": "Иллюстрация",
     "f_standby_threshold_monitor": "Режим ожидания выше (Вт)",
+    "kettle": "Чайник",
+    "toaster": "Тостер",
+    "boiling": "Кипит",
+    "hot_water": "Горячая вода",
+    "toasting": "Поджаривает",
+    "toast_ready": "Тосты готовы!",
+    "f_hot_minutes": "Показывать «горячая вода» (мин)",
+    "f_ready_minutes": "Показывать «тосты готовы» (мин)",
     "dehumidifier": "Осушитель",
     "drying": "Осушение",
     "tank_full": "Бак полон",
@@ -2555,6 +2611,33 @@ SVG.hob = () => `
   <g class="steam-pot"><path d="M34 72q-3-5 0-10t0-10"/><path d="M41 70q-3-5 0-10t0-10"/><path d="M48 72q-3-5 0-10t0-10"/></g>
 </g></g>`;
 
+SVG.kettle = () => `
+<defs>${DEFS}
+<linearGradient id="ID-ktglass" x1="0" x2="1"><stop offset="0" stop-color="#dfe9ef" stop-opacity=".55"/><stop offset=".25" stop-color="#fff" stop-opacity=".25"/><stop offset=".8" stop-color="#cfdbe3" stop-opacity=".3"/><stop offset="1" stop-color="#9fb3c0" stop-opacity=".55"/></linearGradient>
+<linearGradient id="ID-ktwater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe6fb" stop-opacity=".85"/><stop offset="1" stop-color="#7cc6f0" stop-opacity=".9"/></linearGradient>
+<radialGradient id="ID-ktglow" cx=".5" cy="1" r=".8"><stop offset="0" stop-color="#38a8ff"/><stop offset="1" stop-color="#38a8ff" stop-opacity="0"/></radialGradient>
+<clipPath id="ID-ktin"><path d="M36 50 Q33 80 34 112 Q34 116 40 116 H80 Q86 116 86 112 Q87 80 84 50 Z"/></clipPath></defs>
+<ellipse cx="60" cy="131" rx="40" ry="4" fill="url(#ID-shadow)"/>
+<g class="kt-steam"><path d="M30 36q-4-6 0-12t0-12"/><path d="M58 30q-4-6 0-12t0-12"/><path d="M24 40q-4-6 0-12t0-10"/></g>
+<path d="M26 120h68l-3 8h-62z" fill="url(#ID-dark)"/><ellipse cx="60" cy="120" rx="34" ry="3" fill="#2a3037"/>
+<circle class="kt-led" cx="60" cy="125" r="1.4"/>
+<path d="M84 52 q22 2 20 30 q-2 26 -18 30" fill="none" stroke="url(#ID-dark)" stroke-width="9" stroke-linecap="round"/>
+<path d="M98 66 v-6" stroke="#5a626b" stroke-width="3" stroke-linecap="round"/>
+<path d="M36 50 Q33 80 34 112 Q34 116 40 116 H80 Q86 116 86 112 Q87 80 84 50 Z" fill="#eaf4f9" opacity=".5"/>
+<g clip-path="url(#ID-ktin)">
+  <rect x="30" y="70" width="60" height="50" fill="url(#ID-ktwater)"/>
+  <ellipse class="kt-surf" cx="60" cy="70" rx="26" ry="1.6" fill="#e6f6ff"/>
+  <ellipse class="kt-glow" cx="60" cy="116" rx="30" ry="20" fill="url(#ID-ktglow)"/>
+  <g class="kt-bub" fill="#fff">${[...Array(16)].map((_, k) => `<circle cx="${40 + (k * 7.3) % 40}" cy="${110 - (k * 3) % 10}" r="${1 + (k % 3) * .6}"/>`).join("")}</g>
+  <path d="M36 98h48M36 84h48" stroke="#9fb3c0" stroke-width=".5" opacity=".6"/>
+</g>
+<path d="M36 50 Q33 80 34 112 Q34 116 40 116 H80 Q86 116 86 112 Q87 80 84 50 Z" fill="url(#ID-ktglass)" stroke="#9fb3c0" stroke-width=".8"/>
+<path d="M40 56 Q38 80 39 108" stroke="#fff" stroke-width="2.4" opacity=".7" fill="none" stroke-linecap="round"/>
+<rect x="33" y="112" width="54" height="8" rx="2" fill="url(#ID-dark)"/>
+<path d="M36 50 l-12 -8 h10 l6 6z" fill="url(#ID-dark)"/>
+<path d="M34 44 Q60 36 86 44 L84 52 H36 Z" fill="url(#ID-dark)"/>
+<rect x="54" y="35" width="12" height="5" rx="2.5" fill="#2a3037"/>`;
+
 SVG.laptop = () => `
 <defs>${DEFS}
 <linearGradient id="ID-lpwall" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a1a63"/><stop offset=".5" stop-color="#6b3fc9"/><stop offset="1" stop-color="#ff8fab"/></linearGradient>
@@ -3060,6 +3143,25 @@ ${lcd(93, 71, 18, 8)}
 <circle class="led l1" cx="96" cy="83" r="1.3"/>
 <path d="M104 80l-2 4h3l-2 4" stroke="#ffb400" stroke-width=".9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
 
+SVG.toaster = () => `
+<defs>${DEFS}
+<linearGradient id="ID-tbinox" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f6f8"/><stop offset="1" stop-color="#b9c0c7"/></linearGradient></defs>
+<ellipse cx="60" cy="126" rx="48" ry="4" fill="url(#ID-shadow)"/>
+<g class="tb-heat"><path d="M44 40q-3-5 0-10t0-10"/><path d="M62 38q-3-5 0-10t0-10"/><path d="M76 40q-3-5 0-10t0-10"/></g>
+<g class="tb-bread">
+  <path class="tb-crust" d="M38 64 v-18 q0-8 10-8 q10 0 10 8 v18z" stroke="#a8692b" stroke-width="1"/><path d="M41 64v-16q0-6 7-6q7 0 7 6v16z" fill="#f4dcae" opacity=".55"/>
+  <path class="tb-crust" d="M62 64 v-18 q0-8 10-8 q10 0 10 8 v18z" stroke="#a8692b" stroke-width="1"/><path d="M65 64v-16q0-6 7-6q7 0 7 6v16z" fill="#f4dcae" opacity=".55"/>
+</g>
+<path d="M16 72 q0-12 14-12 h60 q14 0 14 12 v40 q0 8-8 8 h-72 q-8 0-8-8z" fill="url(#ID-inox)" stroke="#8d969f" stroke-width=".8"/>
+<rect class="tb-slot" x="34" y="61" width="26" height="4" rx="2"/><rect class="tb-slot" x="60" y="61" width="26" height="4" rx="2"/>
+<path d="M22 74 q0-8 10-8" stroke="#fff" stroke-width="2" fill="none" opacity=".8"/>
+<circle cx="44" cy="98" r="7" fill="url(#ID-tbinox)" stroke="#8d969f" stroke-width=".8"/><path d="M44 98l3-5" stroke="#3a414b" stroke-width="1.4" stroke-linecap="round"/>
+${[0, 1, 2, 3, 4, 5].map((k) => { const a = (-150 + k * 60) * Math.PI / 180; return `<circle cx="${(44 + 10 * Math.cos(a)).toFixed(1)}" cy="${(98 + 10 * Math.sin(a)).toFixed(1)}" r=".7" fill="#59616a"/>`; }).join("")}
+<rect x="64" y="94" width="16" height="7" rx="3.5" fill="#2b3036"/><circle class="tb-led" cx="86" cy="97.5" r="1.6"/>
+<rect x="102" y="76" width="4" height="34" rx="2" fill="#7f8891"/>
+<rect class="tb-lever" x="100" y="74" width="10" height="6" rx="2" fill="#2b3036"/>
+<rect x="20" y="120" width="10" height="3" rx="1" fill="#2b3036"/><rect x="90" y="120" width="10" height="3" rx="1" fill="#2b3036"/>`;
+
 /* Chargeur de batterie d'outils (perceuse, visseuse…) : batterie posée sur son socle, vue de 3/4 */
 SVG.tool_charger = () => {
   // repère de la batterie : P0 = coin avant-gauche du dessus, a = arête avant, b = profondeur, H = hauteur
@@ -3454,6 +3556,12 @@ const DEF = {
   desktop_pc: { accent: "active", threshold: 40,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["pc_fixe", "pcfixe", "desktop", "ordinateur", "gaming", "workstation", "pc_bureau", "unite_centrale", "tour_pc"] },
+  kettle: { accent: "heat", threshold: 500,
+    fields: ["entity", "power", "energy", "cost", "temperature", "switch"],
+    keys: ["bouilloire", "kettle", "wasserkocher", "waterkoker", "theiere"] },
+  toaster: { accent: "heat", threshold: 200,
+    fields: ["entity", "power", "energy", "cost", "switch"],
+    keys: ["grille_pain", "grillepain", "toaster", "toast"] },
   monitor: { accent: "active", threshold: 10,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["ecran", "moniteur", "monitor", "screens", "display"] },
@@ -4039,6 +4147,15 @@ class ApplianceCardBase extends HTMLElement {
       else m.status = base === "running" ? "brewing" : "idle";
     } else if (kind === "air_fryer") {
       m.status = base === "running" ? "cooking" : base === "standby" ? "idle" : base;
+    } else if (kind === "kettle" || kind === "toaster") {
+      // en marche au-dessus du seuil ; après la coupure : « eau chaude » / « toasts prêts » pendant quelques minutes
+      const on = powered || (watts === null && base === "running"), now = Date.now();
+      const keep = (kind === "kettle" ? c.hot_minutes ?? 5 : c.ready_minutes ?? 2) * 60000;
+      if (on && base !== "unavailable") this._onAt = now;
+      if (base === "unavailable") m.status = "unavailable";
+      else if (on) m.status = kind === "kettle" ? "boiling" : "toasting";
+      else if (kind === "kettle" && m.tempVal != null) m.status = m.tempVal >= (c.hot_temperature ?? 60) ? "hot_water" : "off";
+      else m.status = this._onAt && now - this._onAt < keep ? (kind === "kettle" ? "hot_water" : "toast_ready") : "off";
     } else if (kind === "wine_cooler") {
       if (base === "off" || base === "unavailable") m.status = base;
       else m.status = powered || (watts === null && base === "running") ? "cooling" : "standby";
@@ -4129,7 +4246,7 @@ class ApplianceCardBase extends HTMLElement {
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
     const hass = this._hass, kind = this._kind;
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
@@ -4231,7 +4348,7 @@ class ApplianceCardBase extends HTMLElement {
   _render(m) {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting"].includes(m.status);
     $("wrap").className = [
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
       active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
@@ -4428,6 +4545,7 @@ class ApplianceCardBase extends HTMLElement {
     let pct = null;
     if (active && m.progress != null) pct = m.progress;
     else if (kind === "tool_charger" && m.status === "charging" && m.batt != null) pct = m.batt;
+    else if (kind === "kettle" && m.status === "boiling" && m.tempVal != null) pct = ((m.tempVal - 15) / 85) * 100;
     else if ((kind === "oven" && m.status === "preheating") || (kind === "water_heater" && m.status !== "off")) {
       if (m.tempVal != null && m.targetVal) {
         const floor = kind === "water_heater" ? 10 : 20;
@@ -4466,6 +4584,8 @@ class ApplianceCardBase extends HTMLElement {
     } else if (kind === "beer_tap") {
       if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("temperature"), tEntity);
       if (m.keg != null) tile("mdi:keg", `${fmtNum(hass, m.keg, 0)} %`, lb("keg"), c.keg_level, m.alerts.includes("keg_low") ? "warn" : "");
+    } else if (kind === "kettle") {
+      if (m.tempVal != null) tile("mdi:thermometer-water", `${fmtNum(hass, m.tempVal, 0)} ${m.tempUnit}`, lb("water"), tEntity);
     } else if (kind === "tool_charger") {
       if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0)} %`, lb("battery"), c.battery_level);
     } else if (kind === "wine_cooler") {
@@ -4682,6 +4802,12 @@ function buildForm(kind) {
             { name: "zone_power", selector: { number: { min: 500, max: 4000, step: 50, mode: "box", unit_of_measurement: "W" } } },
             { name: "residual_minutes", selector: { number: { min: 0, max: 60, step: 1, mode: "box", unit_of_measurement: "min" } } },
           ] : []),
+          ...(kind === "kettle" ? [
+            { name: "hot_minutes", selector: { number: { min: 0, max: 60, step: 1, mode: "box", unit_of_measurement: "min" } } },
+          ] : []),
+          ...(kind === "toaster" ? [
+            { name: "ready_minutes", selector: { number: { min: 0, max: 30, step: 1, mode: "box", unit_of_measurement: "min" } } },
+          ] : []),
           ...(kind === "dehumidifier" ? [
             { name: "humidity_max", selector: { number: { min: 40, max: 100, step: 1, mode: "box", unit_of_measurement: "%" } } },
           ] : []),
@@ -4734,11 +4860,11 @@ function stubFor(kind, hass) {
   if (power) cfg.power = power;
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "laptop", "monitor", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "laptop", "monitor", "kettle", "toaster", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;
-  if (temp && ["fridge", "water_heater", "oven", "air_fryer", "beer_tap", "pellet_stove", "pool_pump", "printer_3d", "chest_freezer", "drawer_freezer", "radiator", "towel_dryer", "server_rack", "wine_cooler"].includes(kind)) cfg.temperature = temp;
+  if (temp && ["kettle", "fridge", "water_heater", "oven", "air_fryer", "beer_tap", "pellet_stove", "pool_pump", "printer_3d", "chest_freezer", "drawer_freezer", "radiator", "towel_dryer", "server_rack", "wine_cooler"].includes(kind)) cfg.temperature = temp;
   if (kind === "dehumidifier") {
     const hum = pick((i, st) => i.startsWith("sensor.") && dc(st) === "humidity");
     const tank = pick((i) => i.startsWith("binary_sensor.") && /(tank|bac|reservoir|full|plein)/.test(i));
@@ -5815,6 +5941,43 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 @keyframes mn-draw { 0% { stroke-dashoffset: 60; } 45%, 85% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -60; } }
 @keyframes mn-prog { from { transform: scaleX(.05); } to { transform: scaleX(1); } }
 @keyframes mn-mouse { 0%, 100% { transform: translate(30px, 40px); } 30% { transform: translate(70px, 30px); } 55% { transform: translate(80px, 42px); } 80% { transform: translate(40px, 22px); } }
+
+/* ---------- bouilloire ---------- */
+.kt-led { fill: #2d3440; transition: fill .3s; }
+.k-kettle.st-boiling .kt-led { fill: #38a8ff; filter: drop-shadow(0 0 3px #38a8ff); }
+.k-kettle.st-hot_water .kt-led { fill: #ff9b3d; }
+.kt-glow { opacity: 0; transition: opacity .5s; }
+.k-kettle.st-boiling .kt-glow { opacity: .55; animation: ac-pulse 1.4s ease-in-out infinite; }
+.kt-bub circle { opacity: 0; }
+.k-kettle.st-boiling .kt-bub circle { animation: kt-bub 1.6s ease-in infinite; }
+.kt-bub circle:nth-child(2n) { animation-delay: -.5s !important; } .kt-bub circle:nth-child(3n) { animation-delay: -1.1s !important; } .kt-bub circle:nth-child(5n) { animation-delay: -.8s !important; }
+.kt-surf { transform-box: fill-box; transform-origin: 50% 50%; }
+.k-kettle.st-boiling .kt-surf { animation: kt-surf .5s ease-in-out infinite alternate; }
+.kt-steam path, .tb-heat path { opacity: 0; fill: none; stroke: #c3ced8; stroke-width: 3.4; stroke-linecap: round; }
+.k-kettle.st-boiling .kt-steam path { animation: kt-steam 2.2s ease-out infinite; }
+.k-kettle.st-hot_water .kt-steam path { animation: kt-steam 3.6s ease-out infinite; stroke-width: 2.4; }
+.kt-steam path:nth-child(2), .tb-heat path:nth-child(2) { animation-delay: -.7s !important; }
+.kt-steam path:nth-child(3), .tb-heat path:nth-child(3) { animation-delay: -1.4s !important; }
+@keyframes kt-bub { 0% { opacity: 0; transform: translateY(0); } 15% { opacity: .9; } 100% { opacity: 0; transform: translateY(-40px); } }
+@keyframes kt-surf { to { transform: scaleY(1.8); } }
+@keyframes kt-steam { 0% { opacity: 0; transform: translateY(6px); } 30% { opacity: .85; } 100% { opacity: 0; transform: translate(3px, -22px); } }
+/* ---------- grille-pain ---------- */
+.tb-bread { transition: transform .6s ease-in-out; }
+.k-toaster.st-toasting .tb-bread { transform: translateY(22px); }
+.k-toaster.st-toast_ready .tb-bread { animation: tb-pop .9s cubic-bezier(.3, 1.5, .5, 1) 1; }
+.tb-crust { fill: #e9c78f; transition: fill 4s; }
+.k-toaster.st-toasting .tb-crust, .k-toaster.st-toast_ready .tb-crust { fill: #c98a3f; }
+.tb-slot { fill: #1b1e22; transition: fill .4s; }
+.k-toaster.st-toasting .tb-slot { fill: #ff7a1a; filter: drop-shadow(0 0 3px #ff6a00); animation: ac-pulse 1.2s ease-in-out infinite; }
+.tb-heat path { stroke: #ffb35c; stroke-width: 1.6; }
+.k-toaster.st-toasting .tb-heat path { animation: kt-steam 1.6s ease-out infinite; }
+.k-toaster.st-toast_ready .tb-heat path { animation: kt-steam 3s ease-out infinite; stroke: #c3ced8; stroke-width: 2.4; }
+.tb-lever { transition: transform .5s; }
+.k-toaster.st-toasting .tb-lever { transform: translateY(16px); }
+.tb-led { fill: #3a414b; }
+.k-toaster.st-toasting .tb-led { fill: #ff8a3d; filter: drop-shadow(0 0 2px #ff8a3d); }
+.k-toaster.st-toast_ready .tb-led { fill: #43c07a; }
+@keyframes tb-pop { 0% { transform: translateY(22px); } 55% { transform: translateY(-14px); } 100% { transform: translateY(0); } }
 `;
 
 /* ------------------------------------------------------------------ */

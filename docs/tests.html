@@ -16,7 +16,7 @@ function card(kind,cfg,states,lang){const el=document.createElement(`appliance-$
 const has=(c,cls)=>c.wrap.classList.contains(cls);
 
 // registration
-const tags=['washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','fan','generic','tool-charger','ceiling-fan','dehumidifier','monitor'];
+const tags=['washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','fan','generic','tool-charger','ceiling-fan','dehumidifier','monitor','kettle','toaster'];
 tags.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 // card picker: every core card and every self-contained card listed exactly once
 const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','roller-shutter','venetian-blind','swing-shutter','pergola'];
@@ -214,6 +214,15 @@ c=card('vmc',{entity:'fan.v'},[mk('fan.v','on',{percentage:100})]); ok('vmc fan 
 c=card('vmc',{entity:'fan.v'},[mk('fan.v','on',{percentage:30})]); ok('vmc fan 30 % -> speed1',has(c,'st-speed1'),c.wrap.className);
 c=card('vmc',{entity:'fan.v'},[mk('fan.v','on',{preset_mode:'boost',percentage:30})]); ok('vmc fan preset boost -> speed2',has(c,'st-speed2'),c.wrap.className);
 c=card('vmc',{entity:'fan.v'},[mk('fan.v','off',{percentage:0})]); ok('vmc fan off',has(c,'st-off'),c.wrap.className);
+// bouilloire / grille-pain
+c=card('kettle',{power:'sensor.p'},[mk('sensor.p',2100,W)]); ok('kettle boiling',has(c,'st-boiling')&&has(c,'active')&&/Ébullition/.test(c.txt()),c.wrap.className+' '+c.txt());
+c.el.hass=hassOf([mk('sensor.p',0,W)]); ok('kettle hot water after boiling',has(c,'st-hot_water')&&/Eau chaude/.test(c.txt()),c.wrap.className);
+c=card('kettle',{power:'sensor.p'},[mk('sensor.p',0,W)]); ok('kettle off at start',has(c,'st-off'),c.wrap.className);
+c=card('kettle',{power:'sensor.p',temperature:'sensor.t'},[mk('sensor.p',0,W),mk('sensor.t',85,T)]); ok('kettle hot by temperature',has(c,'st-hot_water')&&/85/.test(c.sr.getElementById('stats').textContent),c.wrap.className);
+c=card('kettle',{power:'sensor.p',hot_minutes:0},[mk('sensor.p',2100,W)]); c.el.hass=hassOf([mk('sensor.p',0,W)]); ok('kettle hot_minutes 0',has(c,'st-off'),c.wrap.className);
+c=card('toaster',{power:'sensor.p'},[mk('sensor.p',850,W)]); ok('toaster toasting',has(c,'st-toasting')&&/Grillage/.test(c.txt()),c.wrap.className+' '+c.txt());
+c.el.hass=hassOf([mk('sensor.p',0,W)]); ok('toaster ready after toasting',has(c,'st-toast_ready')&&/Toasts prêts/.test(c.txt()),c.wrap.className+' '+c.txt());
+c=card('toaster',{power:'sensor.p'},[mk('sensor.p',1,W)]); ok('toaster off',has(c,'st-off'),c.wrap.className);
 // déshumidificateur
 c=card('dehumidifier',{power:'sensor.p',humidity:'sensor.h'},[mk('sensor.p',220,W),mk('sensor.h',68,{unit_of_measurement:'%',device_class:'humidity'})]); ok('dehumidifier drying + lcd',has(c,'st-drying')&&has(c,'active')&&c.lcd()==='68%'&&/Déshumidification/.test(c.txt()),c.wrap.className+' '+c.lcd()+' '+c.txt());
 c=card('dehumidifier',{power:'sensor.p'},[mk('sensor.p',4,W)]); ok('dehumidifier at target on low power',has(c,'st-at_target'),c.wrap.className);
