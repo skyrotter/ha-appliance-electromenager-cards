@@ -204,6 +204,12 @@ c=card('ceiling-fan',{power:'sensor.p'},[mk('sensor.p',45,W)]); ok('ceiling fan 
 c=card('ceiling-fan',{entity:'fan.f',light:'light.l'},[mk('fan.f','on',{percentage:50}),mk('light.l','on')]); ok('ceiling fan entity 50 % + light',has(c,'st-fan_2')&&has(c,'lights-on')&&/50 %/.test(c.txt()),c.wrap.className+' '+c.txt());
 c=card('ceiling-fan',{power:'sensor.p',light:'light.l'},[mk('sensor.p',0,W),mk('light.l','on')]); ok('ceiling fan light only',has(c,'st-lights')&&has(c,'lights-on'),c.wrap.className);
 c=card('ceiling-fan',{power:'sensor.p',switch:'switch.s'},[mk('sensor.p',0,W),mk('switch.s','off')]); ok('ceiling fan off',has(c,'st-off')&&!has(c,'lights-on'),c.wrap.className);
+// VMC pilotée par une entité fan
+c=card('vmc',{entity:'fan.v'},[mk('fan.v','on')]); ok('vmc fan on -> speed1',has(c,'st-speed1'),c.wrap.className);
+c=card('vmc',{entity:'fan.v'},[mk('fan.v','on',{percentage:100})]); ok('vmc fan 100 % -> speed2',has(c,'st-speed2'),c.wrap.className);
+c=card('vmc',{entity:'fan.v'},[mk('fan.v','on',{percentage:30})]); ok('vmc fan 30 % -> speed1',has(c,'st-speed1'),c.wrap.className);
+c=card('vmc',{entity:'fan.v'},[mk('fan.v','on',{preset_mode:'boost',percentage:30})]); ok('vmc fan preset boost -> speed2',has(c,'st-speed2'),c.wrap.className);
+c=card('vmc',{entity:'fan.v'},[mk('fan.v','off',{percentage:0})]); ok('vmc fan off',has(c,'st-off'),c.wrap.className);
 // déshumidificateur
 c=card('dehumidifier',{power:'sensor.p',humidity:'sensor.h'},[mk('sensor.p',220,W),mk('sensor.h',68,{unit_of_measurement:'%',device_class:'humidity'})]); ok('dehumidifier drying + lcd',has(c,'st-drying')&&has(c,'active')&&c.lcd()==='68%'&&/Déshumidification/.test(c.txt()),c.wrap.className+' '+c.lcd()+' '+c.txt());
 c=card('dehumidifier',{power:'sensor.p'},[mk('sensor.p',4,W)]); ok('dehumidifier at target on low power',has(c,'st-at_target'),c.wrap.className);
