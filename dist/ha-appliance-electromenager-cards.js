@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.42.0";
+const VERSION = "1.42.1";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -4550,7 +4550,7 @@ class ApplianceCardBase extends HTMLElement {
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
       active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
       m.alerts.length ? "alert" : "", isOn(m.door) ? "door-open" : "", isOn(m.fdoor) ? "fz-open" : "",
-      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", c.animations === false ? "no-anim" : "", m.lights ? "lights-on" : "", m.solarHeat ? "solar-heat" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "",
+      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", m.solarHeat ? "solar-heat" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "",
     ].filter(Boolean).join(" ");
 
     // illustration dynamic parts
@@ -5936,7 +5936,8 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-wine_cooler.st-off .lcd { fill: #24404f; }
 .k-wine_cooler.warm .lcd { fill: var(--ac-alert); }
 .no-anim *, .no-anim { animation: none !important; }
-@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+/* réglage « réduire les animations » du système, sauf si la carte force animations: true */
+@media (prefers-reduced-motion: reduce) { .wrap:not(.force-anim), .wrap:not(.force-anim) * { animation: none !important; } }
 
 /* ---------- beer tap ---------- */
 .k-beer_tap svg { overflow: visible; }
