@@ -1,0 +1,49 @@
+/* ---------- multiprise ---------- */
+.k-power_strip .illus { overflow: hidden; }
+.ms-sw { fill: #8a2d2d; transition: fill .3s; }
+.k-power_strip.st-powered .ms-sw { fill: #ff4d4d; filter: drop-shadow(0 0 3px #ff4d4d); }
+.ms-flow { stroke-dasharray: 3 6; opacity: 0; }
+.k-power_strip.st-powered .ms-flow { opacity: 1; animation: ms-flow .8s linear infinite; }
+.ms-ring { stroke: transparent; transition: stroke .3s; }
+.ms-s.on .ms-ring { stroke: #38a8ff; filter: drop-shadow(0 0 1.5px #38a8ff); }
+.ms-plug { opacity: 0; transform: translateY(-14px); transition: transform .5s, opacity .5s; }
+.ms-s.plug .ms-plug { opacity: 1; transform: none; }
+@keyframes ms-flow { to { stroke-dashoffset: -9; } }
+/* ---------- chargeur de téléphone ---------- */
+.phn-ring { stroke: #38a8ff; opacity: .15; }
+.k-phone_charger.st-charging .phn-ring { opacity: 1; animation: ac-pulse 1.6s ease-in-out infinite; }
+.k-phone_charger.st-charged .phn-ring { opacity: .6; stroke: #43c07a; }
+.phn-scr, .phn-ui { opacity: 0; transition: opacity .5s; }
+.k-phone_charger.st-charging .phn-scr, .k-phone_charger.st-charging .phn-ui,
+.k-phone_charger.st-charged .phn-scr, .k-phone_charger.st-charged .phn-ui { opacity: 1; }
+.phn-fill { fill: #43c07a; transform-box: fill-box; transform-origin: 0 50%; transform: scaleX(var(--batt, .6)); transition: transform 1s; }
+.phn-bolt { opacity: 0; }
+.k-phone_charger.st-charging .phn-bolt { opacity: 1; animation: ac-pulse 1.2s ease-in-out infinite; }
+.k-phone_charger.st-charging.seq .phn-fill { animation: phn-seq 3s linear infinite; }
+@keyframes phn-seq { from { transform: scaleX(.05); } to { transform: scaleX(1); } }
+/* ---------- piano ---------- */
+.pn-scr { fill: #10161c; transition: fill .3s; }
+.k-piano.st-powered .pn-scr { fill: #1aa3ff; filter: drop-shadow(0 0 2px #1aa3ff); }
+.pn-led { fill: #3a414b; }
+.k-piano.st-powered .pn-led { fill: #43c07a; } .k-piano.st-standby .pn-led { fill: #ffb020; }
+.k-piano.st-powered .pn-k { animation: pn-press var(--t, 2.4s) steps(1) infinite; animation-delay: var(--d, 0s); }
+.k-piano.st-powered .pn-kb { animation: pn-pressb var(--t, 2.8s) steps(1) infinite; animation-delay: var(--d, 0s); }
+@keyframes pn-press { 0% { fill: #9ad7ff; } 12% { fill: #fbfbfb; } }
+@keyframes pn-pressb { 0% { fill: #2b6fb0; } 10% { fill: #14171b; } }
+.pn-notes text { opacity: 0; }
+.k-piano.st-powered .pn-notes text { animation: pn-note 2.6s ease-out infinite; }
+.pn-notes text:nth-child(2) { animation-delay: -.9s !important; } .pn-notes text:nth-child(3) { animation-delay: -1.7s !important; }
+@keyframes pn-note { 0% { opacity: 0; transform: translate(0, 0); } 20% { opacity: 1; } 100% { opacity: 0; transform: translate(10px, -34px); } }
+/* ---------- guirlande ---------- */
+.k-garland .illus { overflow: hidden; }
+.gl-sky { fill: #cfe2f3; transition: fill .6s; }
+.k-garland.st-lit .gl-sky { fill: #141b38; }
+.gl-hedge { fill: #3f6b3a; transition: fill .6s; } .k-garland.st-lit .gl-hedge { fill: #1f3a24; }
+.gl-b { fill: #c9ccd1; transition: fill .4s; }
+.gl-h { opacity: 0; transition: opacity .4s; }
+.gl-g { opacity: .35; }
+.k-garland.st-lit .gl-g { opacity: .9; }
+.k-garland.st-lit .gl-h { opacity: calc(var(--bri, 1) * .45); }
+.k-garland.st-lit.gl-multi .gl-b, .k-garland.st-lit.gl-multi .gl-h { animation: gl-rgb 2.4s linear infinite; animation-delay: var(--d, 0s); }
+.k-garland.st-lit:not(.gl-multi) .gl-b, .k-garland.st-lit:not(.gl-multi) .gl-h { fill: var(--glc, #ffcf6a); }
+@keyframes gl-rgb { 0% { fill: #ff3b5c; } 25% { fill: #ffd23b; } 50% { fill: #3bff8a; } 75% { fill: #3bb8ff; } 100% { fill: #ff3b5c; } }

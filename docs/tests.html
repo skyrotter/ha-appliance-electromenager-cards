@@ -16,7 +16,7 @@ function card(kind,cfg,states,lang){const el=document.createElement(`appliance-$
 const has=(c,cls)=>c.wrap.classList.contains(cls);
 
 // registration
-const tags=['washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','fan','generic','tool-charger','ceiling-fan','dehumidifier','monitor','kettle','toaster'];
+const tags=['washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','fan','generic','tool-charger','ceiling-fan','dehumidifier','monitor','kettle','toaster','power-strip','phone-charger','piano','garland'];
 tags.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 // card picker: every core card and every self-contained card listed exactly once
 const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','roller-shutter','venetian-blind','swing-shutter','pergola'];
@@ -223,6 +223,22 @@ c=card('kettle',{power:'sensor.p',hot_minutes:0},[mk('sensor.p',2100,W)]); c.el.
 c=card('toaster',{power:'sensor.p'},[mk('sensor.p',850,W)]); ok('toaster toasting',has(c,'st-toasting')&&/Grillage/.test(c.txt()),c.wrap.className+' '+c.txt());
 c.el.hass=hassOf([mk('sensor.p',0,W)]); ok('toaster ready after toasting',has(c,'st-toast_ready')&&/Toasts prêts/.test(c.txt()),c.wrap.className+' '+c.txt());
 c=card('toaster',{power:'sensor.p'},[mk('sensor.p',1,W)]); ok('toaster off',has(c,'st-off'),c.wrap.className);
+// multiprise / chargeur de téléphone / piano / guirlande
+c=card('power-strip',{switch:'switch.m',outlets:['switch.a','switch.b','switch.c']},[mk('switch.m','on'),mk('switch.a','on'),mk('switch.b','off'),mk('switch.c','on')]);
+ok('strip powered, 3 sockets, 2 on',has(c,'st-powered')&&c.sr.querySelectorAll('.ms-s').length===3&&c.sr.querySelectorAll('.ms-s.on').length===2&&/2 \/ 3/.test(c.sr.getElementById('stats').textContent),c.wrap.className+' '+c.sr.getElementById('stats').textContent);
+c=card('power-strip',{power:'sensor.p'},[mk('sensor.p',0,W)]); ok('strip off, 4 sockets',has(c,'st-off')&&c.sr.querySelectorAll('.ms-s').length===4&&c.sr.querySelectorAll('.ms-s.plug').length===3,c.wrap.className);
+c=card('power-strip',{power:'sensor.p',sockets:6},[mk('sensor.p',40,W)]); ok('strip 6 sockets lit',has(c,'st-powered')&&c.sr.querySelectorAll('.ms-s.on').length===5,c.sr.querySelectorAll('.ms-s.on').length);
+c=card('phone-charger',{power:'sensor.p',battery_level:'sensor.b'},[mk('sensor.p',7.5,W),mk('sensor.b',68,{unit_of_measurement:'%'})]);
+ok('phone charging 68 %',has(c,'st-charging')&&c.wrap.style.getPropertyValue('--batt')==='0.68'&&c.sr.querySelector('.phn-pct').textContent==='68 %',c.wrap.className+' '+c.wrap.style.getPropertyValue('--batt'));
+c=card('phone-charger',{power:'sensor.p',battery_level:'sensor.b'},[mk('sensor.p',0.5,W),mk('sensor.b',100,{unit_of_measurement:'%'})]); ok('phone charged',has(c,'st-charged'),c.wrap.className);
+c=card('phone-charger',{power:'sensor.p'},[mk('sensor.p',0,W)]); ok('phone charger idle',has(c,'st-standby'),c.wrap.className);
+c=card('piano',{power:'sensor.p'},[mk('sensor.p',14,W)]); ok('piano on',has(c,'st-powered')&&/En marche/.test(c.txt()),c.wrap.className+' '+c.txt());
+c=card('piano',{power:'sensor.p'},[mk('sensor.p',0.4,W)]); ok('piano standby',has(c,'st-standby'),c.wrap.className);
+c=card('garland',{entity:'light.g'},[mk('light.g','on',{brightness:128,effect:'Rainbow'})]);
+ok('garland lit rainbow + effect tile',has(c,'st-lit')&&has(c,'gl-multi')&&/Rainbow/.test(c.sr.getElementById('stats').textContent)&&/Allumée/.test(c.txt()),c.wrap.className);
+c=card('garland',{entity:'light.g'},[mk('light.g','on',{rgb_color:[255,0,0],effect:'none'})]); ok('garland single colour',has(c,'st-lit')&&!has(c,'gl-multi')&&c.wrap.style.getPropertyValue('--glc')==='rgb(255,0,0)',c.wrap.className);
+c.sr.querySelector('.toggle')?.click(); ok('garland toggles its light',JSON.stringify(c.h.calls[0])==='["light","toggle",{"entity_id":"light.g"}]',JSON.stringify(c.h.calls));
+c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has(c,'st-off'),c.wrap.className);
 // déshumidificateur
 c=card('dehumidifier',{power:'sensor.p',humidity:'sensor.h'},[mk('sensor.p',220,W),mk('sensor.h',68,{unit_of_measurement:'%',device_class:'humidity'})]); ok('dehumidifier drying + lcd',has(c,'st-drying')&&has(c,'active')&&c.lcd()==='68%'&&/Déshumidification/.test(c.txt()),c.wrap.className+' '+c.lcd()+' '+c.txt());
 c=card('dehumidifier',{power:'sensor.p'},[mk('sensor.p',4,W)]); ok('dehumidifier at target on low power',has(c,'st-at_target'),c.wrap.className);
