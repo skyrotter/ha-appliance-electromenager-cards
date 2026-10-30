@@ -6,7 +6,7 @@
 
 [🇬🇧 English](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/README.md) · 🇫🇷 Français
 
-<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/43-cartes.gif" width="560" alt="Cartes animées pour Home Assistant"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/69-cartes.png" width="560" alt="69 cartes animées pour Home Assistant"></p>
 
 **69 cartes Lovelace pour l'électroménager**, chacune avec une illustration animée réaliste : tambour de lave-linge, flamme de poêle à granulés, chauffage diesel et sa couronne bleue, jacuzzi et ses jets, robot aspirateur, compteur Linky, batterie domestique… Elles affichent l'état en direct, la puissance, l'énergie et le coût, suivent le thème de Home Assistant (clair/sombre) et parlent français, anglais, allemand, norvégien, néerlandais, roumain et russe.
 
