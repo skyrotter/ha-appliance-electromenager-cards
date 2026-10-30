@@ -221,7 +221,19 @@ const STRINGS = {
     "f_flex_temperature": "Flex zone temperature sensor",
     "f_flex_max_temperature": "Alert flex zone above (°C)",
     "f_illustration_size": "Illustration size",
-    "f_transparent": "Transparent background"
+    "f_transparent": "Transparent background",
+    "dehumidifier": "Dehumidifier",
+    "drying": "Drying",
+    "tank_full": "Tank full",
+    "empty_tank": "Empty the tank",
+    "tank": "Tank",
+    "tank_full_short": "Full",
+    "tank_ok": "OK",
+    "fan_speed": "Fan",
+    "mode": "Mode",
+    "f_target_humidity": "Target humidity (sensor, number or humidifier)",
+    "f_tank_full": "Tank full sensor",
+    "f_fan_speed": "Fan speed entity (select, number, fan…)"
   },
   "de": {
     "washer": "Waschmaschine",
@@ -430,7 +442,19 @@ const STRINGS = {
     "f_flex_temperature": "Temperatursensor Flex-Zone",
     "f_flex_max_temperature": "Alarm Flex-Zone über (°C)",
     "f_illustration_size": "Größe der Illustration",
-    "f_transparent": "Transparenter Hintergrund"
+    "f_transparent": "Transparenter Hintergrund",
+    "dehumidifier": "Luftentfeuchter",
+    "drying": "Entfeuchtung",
+    "tank_full": "Tank voll",
+    "empty_tank": "Tank leeren",
+    "tank": "Tank",
+    "tank_full_short": "Voll",
+    "tank_ok": "OK",
+    "fan_speed": "Lüfter",
+    "mode": "Modus",
+    "f_target_humidity": "Zielfeuchte (Sensor, number oder humidifier)",
+    "f_tank_full": "Sensor Tank voll",
+    "f_fan_speed": "Lüfterstufe (select, number, fan…)"
   },
   "fr": {
     "washer": "Lave-linge",
@@ -639,11 +663,35 @@ const STRINGS = {
     "f_flex_temperature": "Capteur température zone flex",
     "f_flex_max_temperature": "Alerte zone flex au-dessus de (°C)",
     "f_illustration_size": "Taille de l'illustration",
-    "f_transparent": "Fond transparent"
+    "f_transparent": "Fond transparent",
+    "dehumidifier": "Déshumidificateur",
+    "drying": "Déshumidification",
+    "tank_full": "Bac plein",
+    "empty_tank": "Videz le bac",
+    "tank": "Bac",
+    "tank_full_short": "Plein",
+    "tank_ok": "OK",
+    "fan_speed": "Ventilation",
+    "mode": "Mode",
+    "f_target_humidity": "Consigne d'humidité (capteur, number ou humidifier)",
+    "f_tank_full": "Capteur de bac plein",
+    "f_fan_speed": "Vitesse du ventilateur (select, number, fan…)"
   },
   "nb": {
     "f_illustration_size": "Størrelse på illustrasjonen",
     "f_transparent": "Gjennomsiktig bakgrunn",
+    "dehumidifier": "Avfukter",
+    "drying": "Avfukting",
+    "tank_full": "Tanken er full",
+    "empty_tank": "Tøm tanken",
+    "tank": "Tank",
+    "tank_full_short": "Full",
+    "tank_ok": "OK",
+    "fan_speed": "Vifte",
+    "mode": "Modus",
+    "f_target_humidity": "Ønsket fuktighet (sensor, number eller humidifier)",
+    "f_tank_full": "Sensor for full tank",
+    "f_fan_speed": "Viftehastighet (select, number, fan…)",
     "flex_temp": "Fleksisone",
     "f_flex_temperature": "Temperatursensor fleksisone",
     "f_flex_max_temperature": "Varsle fleksisone over (°C)",
@@ -1057,7 +1105,19 @@ const STRINGS = {
     "f_flex_temperature": "Temperatuursensor flexzone",
     "f_flex_max_temperature": "Alarm flexzone boven (°C)",
     "f_illustration_size": "Grootte van de illustratie",
-    "f_transparent": "Transparante achtergrond"
+    "f_transparent": "Transparante achtergrond",
+    "dehumidifier": "Luchtontvochtiger",
+    "drying": "Ontvochtigen",
+    "tank_full": "Reservoir vol",
+    "empty_tank": "Leeg het reservoir",
+    "tank": "Reservoir",
+    "tank_full_short": "Vol",
+    "tank_ok": "OK",
+    "fan_speed": "Ventilator",
+    "mode": "Modus",
+    "f_target_humidity": "Doelvochtigheid (sensor, number of humidifier)",
+    "f_tank_full": "Sensor reservoir vol",
+    "f_fan_speed": "Ventilatorsnelheid (select, number, fan…)"
   },
   "ro": {
     "washer": "Mașină de spălat rufe",
@@ -1266,7 +1326,19 @@ const STRINGS = {
     "f_flex_temperature": "Senzor temperatură zonă flex",
     "f_flex_max_temperature": "Alertă zonă flex peste (°C)",
     "f_illustration_size": "Dimensiunea ilustrației",
-    "f_transparent": "Fundal transparent"
+    "f_transparent": "Fundal transparent",
+    "dehumidifier": "Dezumidificator",
+    "drying": "Dezumidificare",
+    "tank_full": "Rezervor plin",
+    "empty_tank": "Goliți rezervorul",
+    "tank": "Rezervor",
+    "tank_full_short": "Plin",
+    "tank_ok": "OK",
+    "fan_speed": "Ventilator",
+    "mode": "Mod",
+    "f_target_humidity": "Umiditate țintă (senzor, number sau humidifier)",
+    "f_tank_full": "Senzor rezervor plin",
+    "f_fan_speed": "Viteza ventilatorului (select, number, fan…)"
   },
   "ru": {
     "washer": "Стиральная машина",
@@ -1475,7 +1547,19 @@ const STRINGS = {
     "f_flex_temperature": "Датчик температуры флекс-зоны",
     "f_flex_max_temperature": "Оповещать о флекс-зоне выше (°C)",
     "f_illustration_size": "Размер иллюстрации",
-    "f_transparent": "Прозрачный фон"
+    "f_transparent": "Прозрачный фон",
+    "dehumidifier": "Осушитель",
+    "drying": "Осушение",
+    "tank_full": "Бак полон",
+    "empty_tank": "Опорожните бак",
+    "tank": "Бак",
+    "tank_full_short": "Полон",
+    "tank_ok": "OK",
+    "fan_speed": "Вентилятор",
+    "mode": "Режим",
+    "f_target_humidity": "Целевая влажность (sensor, number или humidifier)",
+    "f_tank_full": "Датчик полного бака",
+    "f_fan_speed": "Скорость вентилятора (select, number, fan…)"
   }
 };
 const lang = (hass) => {
@@ -1846,6 +1930,47 @@ ${lcd(80, 112, 24, 9)}
 ${steam([44, 56], 19)}
 </g>`;
   };
+
+/* déshumidificateur mobile à bac : grille de sortie en haut, ventilateur derrière la grille avant, bac à eau transparent en bas */
+SVG.dehumidifier = () => `
+<defs>${DEFS}
+<linearGradient id="ID-dhbody" x1="0" x2="1"><stop offset="0" stop-color="#dfe4e9"/><stop offset=".45" stop-color="#ffffff"/><stop offset="1" stop-color="#c8cfd6"/></linearGradient>
+<linearGradient id="ID-dhtankb" x1="0" x2="1"><stop offset="0" stop-color="#cfd6dd"/><stop offset=".5" stop-color="#eef2f5"/><stop offset="1" stop-color="#bcc4cc"/></linearGradient>
+<linearGradient id="ID-dhwater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fd3ff"/><stop offset="1" stop-color="#2d7fd0"/></linearGradient>
+<clipPath id="ID-dhtank"><rect x="38" y="96" width="44" height="20" rx="1.6"/></clipPath>
+<clipPath id="ID-dhgrill"><circle cx="60" cy="64" r="18"/></clipPath></defs>
+<ellipse cx="60" cy="133" rx="40" ry="3.5" fill="url(#ID-shadow)"/>
+<g class="dh-out" fill="none" stroke-linecap="round"><path d="M42 14q-3-5 0-10"/><path d="M52 14q3-5 0-10"/><path d="M68 14q-3-5 0-10"/><path d="M78 14q3-5 0-10"/></g>
+<g class="dh-in" fill="none" stroke-linecap="round"><path d="M6 52q8 4 16 2"/><path d="M4 66q9 0 18 -1"/><path d="M6 80q8 -4 16 -3"/><path d="M114 52q-8 4 -16 2"/><path d="M116 66q-9 0 -18 -1"/><path d="M114 80q-8 -4 -16 -3"/></g>
+<rect x="28" y="16" width="64" height="110" rx="9" fill="url(#ID-dhbody)" stroke="#97a0a9" stroke-width=".6"/>
+<rect x="34" y="18" width="52" height="8" rx="2" fill="#2a3036"/>
+<path d="M37 20.5h46M37 23.5h46" stroke="#5a636d" stroke-width=".9" stroke-linecap="round"/>
+<rect x="34" y="29" width="52" height="13" rx="2.2" fill="#1a1f25"/>
+<rect x="56" y="31.5" width="26" height="8" rx="1.4" fill="#0c1720" stroke="#59616b" stroke-width=".4"/>
+<text class="lcd" x="69" y="35.7" text-anchor="middle">OFF</text>
+<circle class="dh-led" cx="39" cy="35.5" r="1.5"/>
+<path class="dh-full" d="M47 32.4q-2.4 3 -2.4 4.4a2.4 2.4 0 0 0 4.8 0q0-1.4 -2.4-4.4z"/>
+<circle cx="60" cy="64" r="21" fill="#e6eaee" stroke="#a6aeb6" stroke-width=".6"/>
+<circle cx="60" cy="64" r="18" fill="#1d2329"/>
+<g clip-path="url(#ID-dhgrill)">
+  <g class="dh-fan"><circle cx="60" cy="64" r="15" fill="#2b3239"/>
+    <path d="M60 64q-3-8 0-13q5 2 3 10zM60 64q8-3 13 0q-2 5-10 3zM60 64q3 8 0 13q-5-2-3-10zM60 64q-8 3-13 0q2-5 10-3z" fill="#7d8791"/>
+    <circle cx="60" cy="64" r="2.6" fill="#c6ccd2"/></g>
+  <rect x="42" y="46" width="36" height="36" fill="url(#ID-mesh)"/>
+  <g class="dh-mist"><circle cx="50" cy="56" r="1.2"/><circle cx="68" cy="60" r="1"/><circle cx="56" cy="72" r="1.1"/><circle cx="66" cy="70" r="1.2"/><circle cx="53" cy="64" r=".9"/></g>
+</g>
+<path d="M44 52a19 19 0 0 1 14 -7" stroke="#fff" stroke-opacity=".55" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+<rect x="34" y="90" width="52" height="30" rx="3" fill="url(#ID-dhtankb)" stroke="#97a0a9" stroke-width=".6"/>
+<path d="M50 92.6h20" stroke="#8e979f" stroke-width="1.6" stroke-linecap="round"/>
+<rect x="38" y="96" width="44" height="20" rx="1.6" fill="#0f2a3d" opacity=".55"/>
+<g clip-path="url(#ID-dhtank)">
+  <g class="dh-water"><rect x="34" y="96" width="52" height="24" fill="url(#ID-dhwater)" opacity=".85"/>
+    <path class="dh-wave" d="M30 96.6q3 -1.4 6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0v3h-60z" fill="#c6ebff" opacity=".7"/></g>
+  <g class="dh-drops"><path d="M50 96q-.9 1.2 -.9 1.8a.9 .9 0 0 0 1.8 0q0-.6 -.9-1.8z"/><path d="M60 96q-.9 1.2 -.9 1.8a.9 .9 0 0 0 1.8 0q0-.6 -.9-1.8z"/><path d="M70 96q-.9 1.2 -.9 1.8a.9 .9 0 0 0 1.8 0q0-.6 -.9-1.8z"/></g>
+</g>
+<path d="M39 97h8l-6 18h-2z" fill="#fff" opacity=".16"/>
+<path d="M78 98.5v15" stroke="#fff" stroke-opacity=".5" stroke-width=".6" stroke-dasharray="1 2.4"/>
+<rect x="34" y="124" width="10" height="5" rx="2.4" fill="#3a3f45"/><rect x="76" y="124" width="10" height="5" rx="2.4" fill="#3a3f45"/>`;
 
 SVG.desktop_pc = () => `
 <defs>${DEFS}
@@ -3137,6 +3262,9 @@ const DEF = {
   ceiling_fan: { accent: "cold", threshold: 5,
     fields: ["entity", "power", "energy", "cost", "light", "switch"],
     keys: ["ventilateur_plafond", "ventilo_plafond", "plafond", "ceiling_fan", "ceiling", "brasseur_d_air"] },
+  dehumidifier: { accent: "cold", threshold: 50,
+    fields: ["entity", "power", "energy", "cost", "humidity", "target_humidity", "temperature", "tank_full", "fan_speed", "mode", "switch"],
+    keys: ["deshumidificateur", "deshumidifier", "dehumidifier", "dehumidificateur", "absorbeur", "midea_dehum", "dehum"] },
   generic: { accent: "active", threshold: 5,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: [] },
@@ -3351,7 +3479,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "power_level", "pellet_level", "runtime", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door"].map((k) => c[k]).filter(Boolean).concat(this._nozzles())
+      "power_level", "pellet_level", "runtime", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed"].map((k) => c[k]).filter(Boolean).concat(this._nozzles())
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -3407,7 +3535,7 @@ class ApplianceCardBase extends HTMLElement {
     this._fetchPeriod();
     const key = this._ids().map((i) => {
       const s = hass.states[i];
-      return s ? `${s.state}|${s.attributes.temperature ?? ""}|${s.attributes.current_temperature ?? ""}|${s.attributes.current_humidity ?? ""}` : "x";
+      return s ? `${s.state}|${s.attributes.temperature ?? ""}|${s.attributes.current_temperature ?? ""}|${s.attributes.current_humidity ?? ""}|${s.attributes.humidity ?? ""}|${s.attributes.action ?? ""}|${s.attributes.mode ?? ""}|${s.attributes.percentage ?? ""}` : "x";
     }).join(";") + "|" + lang(hass) + "|" + Math.floor(Date.now() / 30000);
     if (!force && key === this._lastKey) return;
     this._lastKey = key;
@@ -3431,6 +3559,7 @@ class ApplianceCardBase extends HTMLElement {
       ftemp: S(c.freezer_temperature), fdoor: S(c.freezer_door), flex: S(c.flex_temperature),
       level: num(S(c.power_level)), pellets: num(S(c.pellet_level)),
       runtime: parseRemaining(S(c.runtime)), speed: S(c.speed), bedTemp: num(S(c.bed_temperature)), humidity: num(S(c.humidity)), mode: S(c.mode), window: S(c.window), light: S(c.light), keg: num(S(c.keg_level)), pouring: S(c.pouring), batt: num(S(c.battery_level)), zone2: num(S(c.zone2_temperature)), zone2Ent: S(c.zone2_temperature),
+      tank: S(c.tank_full), fanSpeed: S(c.fan_speed), targetHum: S(c.target_humidity),
       status: "idle", phase: null, alerts: [],
     };
     if (main && ["water_heater", "climate"].includes(domainOf(c.entity))) {
@@ -3439,6 +3568,14 @@ class ApplianceCardBase extends HTMLElement {
       // humidité du thermostat (current_humidity) quand aucun capteur n'est choisi
       if (!c.humidity && Number.isFinite(Number(main.attributes.current_humidity ?? NaN))) m.humidity = Number(main.attributes.current_humidity);
     }
+    // déshumidificateur : entité humidifier, humidité mesurée (current_humidity) et consigne (humidity)
+    if (main && domainOf(c.entity) === "humidifier") {
+      const a = main.attributes || {};
+      if (!c.humidity && Number.isFinite(Number(a.current_humidity ?? NaN))) m.humidity = Number(a.current_humidity);
+      if (!c.target_humidity && Number.isFinite(Number(a.humidity ?? NaN))) m.targetHumVal = Number(a.humidity);
+    }
+    if (m.targetHumVal == null) m.targetHumVal = m.targetHum && domainOf(c.target_humidity) === "humidifier"
+      ? (Number.isFinite(Number(m.targetHum.attributes.humidity ?? NaN)) ? Number(m.targetHum.attributes.humidity) : null) : num(m.targetHum);
     // une entité climate / water_heater dans temperature ou target_temperature : son état est un mode (« off », « heat »),
     // les valeurs sont dans current_temperature et temperature
     const tOf = (st, key) => (st && ["climate", "water_heater"].includes(domainOf(st.entity_id))
@@ -3686,6 +3823,34 @@ class ApplianceCardBase extends HTMLElement {
       else if (explicitState) m.status = base === "running" ? "screen_on" : powered ? "standby" : "off";
       else if (watts !== null) m.status = powered ? "screen_on" : watts >= (c.standby_threshold ?? 0.5) ? "standby" : "off";
       else m.status = base === "running" ? "screen_on" : "standby";
+    } else if (kind === "dehumidifier") {
+      // entité humidifier : action (drying / idle / off) fait foi, sinon la puissance, sinon humidité ≤ consigne
+      const isHum = main && domainOf(c.entity) === "humidifier";
+      const act = isHum ? String(main.attributes.action || "").toLowerCase() : "";
+      const reached = m.humidity != null && m.targetHumVal != null && m.humidity <= m.targetHumVal;
+      if (base === "off" || base === "unavailable") m.status = base;
+      else if (act === "off") m.status = "off";
+      else if (act === "drying") m.status = "drying";
+      else if (act === "idle") m.status = "at_target";
+      else if (watts !== null) m.status = powered ? "drying" : watts >= (c.standby_threshold ?? 1) || isHum ? "at_target" : "off";
+      else m.status = reached ? "at_target" : "drying";
+      // bac plein : binary_sensor « on » ou texte (full, plein…) ; l'appareil s'arrête
+      const tk = m.tank ? String(m.tank.state).toLowerCase() : "";
+      m.tankFull = isOn(m.tank) || /full|plein|voll|vol\b|pieno|lleno/.test(tk);
+      if (m.tankFull && m.status !== "unavailable") { m.alerts.push("empty_tank"); if (m.status !== "off") m.status = "tank_full"; }
+      if (c.humidity_max != null && m.humidity != null && m.humidity > c.humidity_max && m.status !== "off") m.alerts.push("humid");
+      // vitesse du ventilateur : pourcentage, entité fan, ou texte (silence / bas / moyen / haut / turbo)
+      const fs = m.fanSpeed, fsTxt = fs ? String(fs.state).toLowerCase() : "";
+      const fsDom = domainOf(c.fan_speed), pct = !fs ? NaN : fsDom === "fan" ? Number(fs.attributes.percentage) : num(fs) ?? NaN;
+      let lvl = 2;
+      // 0 à 3 : numéro de vitesse ; au-delà : pourcentage
+      if (Number.isFinite(pct)) lvl = pct > 3 || fsDom === "fan" ? (pct <= 34 ? 1 : pct <= 67 ? 2 : 3) : Math.max(1, Math.round(pct));
+      else if (/silen|quiet|sleep|night|nuit|low|bas|faible|lent|min|eco/.test(fsTxt)) lvl = 1;
+      else if (/high|haut|fort|[eé]lev|max|turbo|boost|rapide|fast|strong/.test(fsTxt)) lvl = 3;
+      m.spd = fs ? [0, .55, 1, 1.6][lvl] : 1;
+      const md = m.mode && !BAD.includes(String(m.mode.state).toLowerCase()) ? m.mode : null;
+      const attrTxt = (st, k) => { try { if (hass.formatEntityAttributeValue) return hass.formatEntityAttributeValue(st, k); } catch (e) { /* ignore */ } return String(st.attributes[k]); };
+      m.dhMode = md ? stateText(hass, md) : isHum && main.attributes.mode ? attrTxt(main, "mode") : null;
     } else if (kind === "tool_charger") {
       // > seuil : en charge ; petite conso résiduelle : batterie chargée (maintien) ; sinon socle vide / veille
       const full = m.batt != null && m.batt >= (c.full_level ?? 100);
@@ -3790,7 +3955,7 @@ class ApplianceCardBase extends HTMLElement {
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
     const hass = this._hass, kind = this._kind;
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
@@ -3846,6 +4011,11 @@ class ApplianceCardBase extends HTMLElement {
       if (active) return m.remaining ? lcdDuration(m.remaining) : "ON";
       return fmtClock(hass, new Date());
     }
+    if (kind === "dehumidifier") {
+      if (m.status === "off") return "OFF";
+      if (m.status === "tank_full") return "FULL";
+      return m.humidity != null ? `${Math.round(m.humidity)}%` : m.targetHumVal != null ? `${Math.round(m.targetHumVal)}%` : "ON";
+    }
     if (kind === "beer_tap") {
       if (m.status === "off" || m.status === "unavailable") return "";
       return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 1)}°` : m.status === "cooling" ? "COLD" : "READY";
@@ -3887,7 +4057,7 @@ class ApplianceCardBase extends HTMLElement {
   _render(m) {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying"].includes(m.status);
     $("wrap").className = [
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
       active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
@@ -3941,6 +4111,12 @@ class ApplianceCardBase extends HTMLElement {
       }
       const img = sr.querySelector(".gn-img");
       if (img && img.tagName.toLowerCase() === "image" && img.getAttribute("href") !== String(src).trim()) img.setAttribute("href", String(src).trim());
+    }
+    if (kind === "dehumidifier") {
+      // bac : plein si capteur, sinon un tiers
+      $("wrap").style.setProperty("--lvl", m.tankFull ? "0.95" : "0.35");
+      $("wrap").style.setProperty("--spd", String(m.spd ?? 1));
+      $("wrap").classList.toggle("tank-full", !!m.tankFull);
     }
     if (kind === "server_rack") $("wrap").style.setProperty("--load", (m.load ?? 0.4).toFixed(2));
     if (kind === "solar") $("wrap").style.setProperty("--sun", (m.frac || 0).toFixed(2));
@@ -4046,8 +4222,9 @@ class ApplianceCardBase extends HTMLElement {
         ${sub ? `<div class="sub">${esc(sub)}</div>` : ""}`;
     }
 
-    if (c.switch && c.show_toggle !== false) {
-      const on = isOn(m.sw);
+    const swId = c.switch || (kind === "dehumidifier" && domainOf(c.entity) === "humidifier" ? c.entity : null);
+    if (swId && c.show_toggle !== false) {
+      const on = isOn(hass.states[swId]);
       // safety: cutting a washer/dryer/dishwasher mid-cycle needs a second click
       const freezer = ["chest_freezer", "drawer_freezer"].includes(kind);
       const guarded = c.confirm_off !== false && on && (freezer || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d"].includes(kind)));
@@ -4065,8 +4242,8 @@ class ApplianceCardBase extends HTMLElement {
         }
         this._confirmUntil = 0;
         clearTimeout(this._confirmTimer);
-        const dom = domainOf(c.switch);
-        hass.callService(["switch", "input_boolean", "light", "fan"].includes(dom) ? dom : "homeassistant", "toggle", { entity_id: c.switch });
+        const dom = domainOf(swId);
+        hass.callService(["switch", "input_boolean", "light", "fan", "humidifier"].includes(dom) ? dom : "homeassistant", "toggle", { entity_id: swId });
       };
     } else $("actions").innerHTML = "";
 
@@ -4130,6 +4307,14 @@ class ApplianceCardBase extends HTMLElement {
       if (m.tempVal != null) tile("mdi:home-thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("temperature"), te);
       if (m.targetVal != null) tile("mdi:target", `${fmtNum(hass, m.targetVal, 1)} ${m.tempUnit}`, lb("target"), c.target_temperature || te);
       if (m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0)} %`, lb("humidity"), c.humidity || c.entity);
+    } else if (kind === "dehumidifier") {
+      const hEnt = c.humidity || (domainOf(c.entity) === "humidifier" ? c.entity : null);
+      if (m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0)} %`, lb("humidity"), hEnt, m.alerts.includes("humid") ? "warn" : "");
+      if (m.targetHumVal != null) tile("mdi:target", `${fmtNum(hass, m.targetHumVal, 0)} %`, lb("target"), c.target_humidity || hEnt);
+      if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("temperature"), tEntity);
+      if (m.tank) tile(m.tankFull ? "mdi:cup-water" : "mdi:cup-outline", tr(hass, m.tankFull ? "tank_full_short" : "tank_ok"), lb("tank"), c.tank_full, m.tankFull ? "warn" : "");
+      if (m.fanSpeed && !BAD.includes(String(m.fanSpeed.state).toLowerCase())) tile("mdi:fan", domainOf(c.fan_speed) === "fan" ? `${fmtNum(hass, Number(m.fanSpeed.attributes.percentage) || 0, 0)} %` : stateText(hass, m.fanSpeed), lb("fan_speed"), c.fan_speed);
+      if (m.dhMode) tile("mdi:tune-variant", m.dhMode, lb("mode"), c.mode || c.entity);
     } else if (kind === "hob") {
       /* no extra tile */
     } else if (kind === "vmc") {
@@ -4222,6 +4407,9 @@ const SEL = {
   zone_3: { entity: { domain: ["sensor", "number", "select", "input_number"] } },
   zone_4: { entity: { domain: ["sensor", "number", "select", "input_number"] } },
   speed: { entity: { domain: ["sensor", "number", "input_number", "select"] } },
+  target_humidity: { entity: { domain: ["sensor", "number", "input_number", "humidifier"] } },
+  tank_full: { entity: { domain: ["binary_sensor", "input_boolean", "sensor"] } },
+  fan_speed: { entity: { domain: ["select", "input_select", "sensor", "number", "input_number", "fan"] } },
 };
 function buildForm(kind) {
   const d = DEF[kind];
@@ -4308,6 +4496,9 @@ function buildForm(kind) {
             { name: "zone_power", selector: { number: { min: 500, max: 4000, step: 50, mode: "box", unit_of_measurement: "W" } } },
             { name: "residual_minutes", selector: { number: { min: 0, max: 60, step: 1, mode: "box", unit_of_measurement: "min" } } },
           ] : []),
+          ...(kind === "dehumidifier" ? [
+            { name: "humidity_max", selector: { number: { min: 40, max: 100, step: 1, mode: "box", unit_of_measurement: "%" } } },
+          ] : []),
           ...(kind === "vmc" ? [
             { name: "high_threshold", selector: { number: { min: 5, max: 300, step: 1, mode: "box", unit_of_measurement: "W" } } },
             { name: "humidity_max", selector: { number: { min: 40, max: 100, step: 1, mode: "box", unit_of_measurement: "%" } } },
@@ -4348,7 +4539,7 @@ function stubFor(kind, hass) {
   const cost = pick((i) => i.startsWith("sensor.") && /(cout|cost|prix)/.test(i) && /(jour|daily|today|day)/.test(i))
     || pick((i, st) => i.startsWith("sensor.") && dc(st) === "monetary");
   const sw = pick((i) => i.startsWith("switch.") && !/(child_lock|lock|led|indicator)/.test(i));
-  const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : kind === "tv" || kind === "av_receiver" ? pick((i) => i.startsWith("media_player.")) : ["fan", "ceiling_fan"].includes(kind) ? pick((i) => i.startsWith("fan.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : null;
+  const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : kind === "tv" || kind === "av_receiver" ? pick((i) => i.startsWith("media_player.")) : ["fan", "ceiling_fan"].includes(kind) ? pick((i) => i.startsWith("fan.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : kind === "dehumidifier" ? pick((i) => i.startsWith("humidifier.")) : null;
   const temp = pick((i, st) => i.startsWith("sensor.") && dc(st) === "temperature");
   const flag = ["washer", "dryer", "dishwasher", "microwave"].includes(kind)
     ? pick((i) => /^(input_boolean|binary_sensor)\./.test(i) && /(running|en_cours|marche|cycle)/.test(i)) : null;
@@ -4357,11 +4548,18 @@ function stubFor(kind, hass) {
   if (power) cfg.power = power;
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "laptop", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "laptop", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;
   if (temp && ["fridge", "water_heater", "oven", "air_fryer", "beer_tap", "pellet_stove", "pool_pump", "printer_3d", "chest_freezer", "drawer_freezer", "radiator", "towel_dryer", "server_rack", "wine_cooler"].includes(kind)) cfg.temperature = temp;
+  if (kind === "dehumidifier") {
+    const hum = pick((i, st) => i.startsWith("sensor.") && dc(st) === "humidity");
+    const tank = pick((i) => i.startsWith("binary_sensor.") && /(tank|bac|reservoir|full|plein)/.test(i));
+    if (hum) cfg.humidity = hum;
+    if (tank) cfg.tank_full = tank;
+    if (temp) cfg.temperature = temp;
+  }
   const batt = kind === "tool_charger" ? pick((i, st) => i.startsWith("sensor.") && dc(st) === "battery") : null;
   if (batt) cfg.battery_level = batt;
   if (!cfg.entity && !cfg.power && !cfg.switch && !cfg.temperature) cfg.power = "sensor.example_power";
@@ -5364,6 +5562,43 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .wrap.warm .fr-temp {
   fill: var(--ac-alert, #ff3b30) !important;
 }
+
+/* ---------- dehumidifier ---------- */
+/* --spd : vitesse du ventilateur (0,5 lente → 1,6 rapide), --lvl : niveau du bac (0 → 1) */
+.dh-fan { transform-box: view-box; transform-origin: 60px 64px; }
+.k-dehumidifier.st-drying .dh-fan { animation: ac-rot calc(.9s / var(--spd, 1)) linear infinite; }
+.k-dehumidifier.st-at_target .dh-fan { animation: ac-rot 2.6s linear infinite; }
+.dh-led { fill: #5a636d; transition: fill .3s; }
+.k-dehumidifier.st-drying .dh-led { fill: #38d9ff; filter: drop-shadow(0 0 1.4px #38d9ff); animation: ac-pulse 2.4s ease-in-out infinite; }
+.k-dehumidifier.st-at_target .dh-led { fill: #43c07a; }
+.dh-full { fill: #3a424b; transition: fill .3s; }
+.k-dehumidifier.tank-full .dh-full { fill: var(--ac-alert, #ff5252); filter: drop-shadow(0 0 1.4px var(--ac-alert, #ff5252)); animation: ac-pulse 1.2s ease-in-out infinite; }
+/* air humide aspiré sur les côtés, air sec soufflé par le haut */
+.dh-in path { stroke: #7fc4ff; stroke-width: 1.3; stroke-dasharray: 2 4; opacity: 0; transition: opacity .6s; }
+.k-dehumidifier.st-drying .dh-in path { opacity: .7; animation: dh-suck calc(1.6s / var(--spd, 1)) linear infinite; }
+.dh-in path:nth-child(2n) { animation-delay: -.5s !important; } .dh-in path:nth-child(3n) { animation-delay: -1s !important; }
+.dh-out path { stroke: #ffd9a8; stroke-width: 1.5; stroke-dasharray: 3 5; opacity: 0; transition: opacity .6s; }
+.k-dehumidifier.st-drying .dh-out path { opacity: .75; animation: hd-up calc(1.4s / var(--spd, 1)) linear infinite; }
+.dh-out path:nth-child(2) { animation-delay: -.4s !important; } .dh-out path:nth-child(3) { animation-delay: -.8s !important; } .dh-out path:nth-child(4) { animation-delay: -1.1s !important; }
+/* gouttelettes captées derrière la grille */
+.dh-mist circle { fill: #bfe6ff; opacity: 0; transform-box: view-box; transform-origin: 60px 64px; }
+.k-dehumidifier.st-drying .dh-mist circle { animation: dh-mist 2.2s ease-in infinite; }
+.dh-mist circle:nth-child(2) { animation-delay: -.4s !important; } .dh-mist circle:nth-child(3) { animation-delay: -.9s !important; }
+.dh-mist circle:nth-child(4) { animation-delay: -1.4s !important; } .dh-mist circle:nth-child(5) { animation-delay: -1.8s !important; }
+/* bac : niveau, vaguelettes, gouttes qui tombent pendant la déshumidification */
+.dh-water { transform: translateY(calc((1 - var(--lvl, .35)) * 20px)); transition: transform 1.2s ease-in-out; }
+.dh-wave { transform-box: view-box; }
+.k-dehumidifier.st-drying .dh-wave { animation: dh-wave 2.4s linear infinite; }
+.dh-drops path { fill: #9fdcff; opacity: 0; }
+.k-dehumidifier.st-drying .dh-drops path { animation: dh-drop 1.8s ease-in infinite; }
+.dh-drops path:nth-child(2) { animation-delay: -.6s !important; } .dh-drops path:nth-child(3) { animation-delay: -1.2s !important; }
+.k-dehumidifier.tank-full .dh-water rect { fill: #2d7fd0; }
+.k-dehumidifier.tank-full .lcd { fill: var(--ac-alert, #ff5252) !important; }
+.k-dehumidifier.st-off .lcd { fill: #24404f !important; }
+@keyframes dh-suck { from { stroke-dashoffset: 12; } to { stroke-dashoffset: 0; } }
+@keyframes dh-mist { 0% { opacity: 0; transform: scale(1.35); } 30% { opacity: .9; } 100% { opacity: 0; transform: scale(.4); } }
+@keyframes dh-wave { from { transform: translateX(0); } to { transform: translateX(-12px); } }
+@keyframes dh-drop { 0% { opacity: 0; transform: translateY(0); } 15% { opacity: .95; } 100% { opacity: 0; transform: translateY(calc((1 - var(--lvl, .35)) * 20px)); } }
 `;
 
 /* ------------------------------------------------------------------ */

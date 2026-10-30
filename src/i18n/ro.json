@@ -206,7 +206,19 @@
     "f_flex_temperature": "Senzor temperatură zonă flex",
     "f_flex_max_temperature": "Alertă zonă flex peste (°C)",
     "f_illustration_size": "Dimensiunea ilustrației",
-    "f_transparent": "Fundal transparent"
+    "f_transparent": "Fundal transparent",
+    "dehumidifier": "Dezumidificator",
+    "drying": "Dezumidificare",
+    "tank_full": "Rezervor plin",
+    "empty_tank": "Goliți rezervorul",
+    "tank": "Rezervor",
+    "tank_full_short": "Plin",
+    "tank_ok": "OK",
+    "fan_speed": "Ventilator",
+    "mode": "Mod",
+    "f_target_humidity": "Umiditate țintă (senzor, number sau humidifier)",
+    "f_tank_full": "Senzor rezervor plin",
+    "f_fan_speed": "Viteza ventilatorului (select, number, fan…)"
   },
   "aquarium": {
     "power": "Putere",

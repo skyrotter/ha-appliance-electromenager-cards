@@ -45,7 +45,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "power_level", "pellet_level", "runtime", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door"].map((k) => c[k]).filter(Boolean).concat(this._nozzles())
+      "power_level", "pellet_level", "runtime", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed"].map((k) => c[k]).filter(Boolean).concat(this._nozzles())
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -101,7 +101,7 @@ class ApplianceCardBase extends HTMLElement {
     this._fetchPeriod();
     const key = this._ids().map((i) => {
       const s = hass.states[i];
-      return s ? `${s.state}|${s.attributes.temperature ?? ""}|${s.attributes.current_temperature ?? ""}|${s.attributes.current_humidity ?? ""}` : "x";
+      return s ? `${s.state}|${s.attributes.temperature ?? ""}|${s.attributes.current_temperature ?? ""}|${s.attributes.current_humidity ?? ""}|${s.attributes.humidity ?? ""}|${s.attributes.action ?? ""}|${s.attributes.mode ?? ""}|${s.attributes.percentage ?? ""}` : "x";
     }).join(";") + "|" + lang(hass) + "|" + Math.floor(Date.now() / 30000);
     if (!force && key === this._lastKey) return;
     this._lastKey = key;
@@ -125,6 +125,7 @@ class ApplianceCardBase extends HTMLElement {
       ftemp: S(c.freezer_temperature), fdoor: S(c.freezer_door), flex: S(c.flex_temperature),
       level: num(S(c.power_level)), pellets: num(S(c.pellet_level)),
       runtime: parseRemaining(S(c.runtime)), speed: S(c.speed), bedTemp: num(S(c.bed_temperature)), humidity: num(S(c.humidity)), mode: S(c.mode), window: S(c.window), light: S(c.light), keg: num(S(c.keg_level)), pouring: S(c.pouring), batt: num(S(c.battery_level)), zone2: num(S(c.zone2_temperature)), zone2Ent: S(c.zone2_temperature),
+      tank: S(c.tank_full), fanSpeed: S(c.fan_speed), targetHum: S(c.target_humidity),
       status: "idle", phase: null, alerts: [],
     };
     if (main && ["water_heater", "climate"].includes(domainOf(c.entity))) {
@@ -133,6 +134,14 @@ class ApplianceCardBase extends HTMLElement {
       // humidité du thermostat (current_humidity) quand aucun capteur n'est choisi
       if (!c.humidity && Number.isFinite(Number(main.attributes.current_humidity ?? NaN))) m.humidity = Number(main.attributes.current_humidity);
     }
+    // déshumidificateur : entité humidifier, humidité mesurée (current_humidity) et consigne (humidity)
+    if (main && domainOf(c.entity) === "humidifier") {
+      const a = main.attributes || {};
+      if (!c.humidity && Number.isFinite(Number(a.current_humidity ?? NaN))) m.humidity = Number(a.current_humidity);
+      if (!c.target_humidity && Number.isFinite(Number(a.humidity ?? NaN))) m.targetHumVal = Number(a.humidity);
+    }
+    if (m.targetHumVal == null) m.targetHumVal = m.targetHum && domainOf(c.target_humidity) === "humidifier"
+      ? (Number.isFinite(Number(m.targetHum.attributes.humidity ?? NaN)) ? Number(m.targetHum.attributes.humidity) : null) : num(m.targetHum);
     // une entité climate / water_heater dans temperature ou target_temperature : son état est un mode (« off », « heat »),
     // les valeurs sont dans current_temperature et temperature
     const tOf = (st, key) => (st && ["climate", "water_heater"].includes(domainOf(st.entity_id))
@@ -380,6 +389,34 @@ class ApplianceCardBase extends HTMLElement {
       else if (explicitState) m.status = base === "running" ? "screen_on" : powered ? "standby" : "off";
       else if (watts !== null) m.status = powered ? "screen_on" : watts >= (c.standby_threshold ?? 0.5) ? "standby" : "off";
       else m.status = base === "running" ? "screen_on" : "standby";
+    } else if (kind === "dehumidifier") {
+      // entité humidifier : action (drying / idle / off) fait foi, sinon la puissance, sinon humidité ≤ consigne
+      const isHum = main && domainOf(c.entity) === "humidifier";
+      const act = isHum ? String(main.attributes.action || "").toLowerCase() : "";
+      const reached = m.humidity != null && m.targetHumVal != null && m.humidity <= m.targetHumVal;
+      if (base === "off" || base === "unavailable") m.status = base;
+      else if (act === "off") m.status = "off";
+      else if (act === "drying") m.status = "drying";
+      else if (act === "idle") m.status = "at_target";
+      else if (watts !== null) m.status = powered ? "drying" : watts >= (c.standby_threshold ?? 1) || isHum ? "at_target" : "off";
+      else m.status = reached ? "at_target" : "drying";
+      // bac plein : binary_sensor « on » ou texte (full, plein…) ; l'appareil s'arrête
+      const tk = m.tank ? String(m.tank.state).toLowerCase() : "";
+      m.tankFull = isOn(m.tank) || /full|plein|voll|vol\b|pieno|lleno/.test(tk);
+      if (m.tankFull && m.status !== "unavailable") { m.alerts.push("empty_tank"); if (m.status !== "off") m.status = "tank_full"; }
+      if (c.humidity_max != null && m.humidity != null && m.humidity > c.humidity_max && m.status !== "off") m.alerts.push("humid");
+      // vitesse du ventilateur : pourcentage, entité fan, ou texte (silence / bas / moyen / haut / turbo)
+      const fs = m.fanSpeed, fsTxt = fs ? String(fs.state).toLowerCase() : "";
+      const fsDom = domainOf(c.fan_speed), pct = !fs ? NaN : fsDom === "fan" ? Number(fs.attributes.percentage) : num(fs) ?? NaN;
+      let lvl = 2;
+      // 0 à 3 : numéro de vitesse ; au-delà : pourcentage
+      if (Number.isFinite(pct)) lvl = pct > 3 || fsDom === "fan" ? (pct <= 34 ? 1 : pct <= 67 ? 2 : 3) : Math.max(1, Math.round(pct));
+      else if (/silen|quiet|sleep|night|nuit|low|bas|faible|lent|min|eco/.test(fsTxt)) lvl = 1;
+      else if (/high|haut|fort|[eé]lev|max|turbo|boost|rapide|fast|strong/.test(fsTxt)) lvl = 3;
+      m.spd = fs ? [0, .55, 1, 1.6][lvl] : 1;
+      const md = m.mode && !BAD.includes(String(m.mode.state).toLowerCase()) ? m.mode : null;
+      const attrTxt = (st, k) => { try { if (hass.formatEntityAttributeValue) return hass.formatEntityAttributeValue(st, k); } catch (e) { /* ignore */ } return String(st.attributes[k]); };
+      m.dhMode = md ? stateText(hass, md) : isHum && main.attributes.mode ? attrTxt(main, "mode") : null;
     } else if (kind === "tool_charger") {
       // > seuil : en charge ; petite conso résiduelle : batterie chargée (maintien) ; sinon socle vide / veille
       const full = m.batt != null && m.batt >= (c.full_level ?? 100);
@@ -484,7 +521,7 @@ class ApplianceCardBase extends HTMLElement {
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
     const hass = this._hass, kind = this._kind;
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
@@ -540,6 +577,11 @@ class ApplianceCardBase extends HTMLElement {
       if (active) return m.remaining ? lcdDuration(m.remaining) : "ON";
       return fmtClock(hass, new Date());
     }
+    if (kind === "dehumidifier") {
+      if (m.status === "off") return "OFF";
+      if (m.status === "tank_full") return "FULL";
+      return m.humidity != null ? `${Math.round(m.humidity)}%` : m.targetHumVal != null ? `${Math.round(m.targetHumVal)}%` : "ON";
+    }
     if (kind === "beer_tap") {
       if (m.status === "off" || m.status === "unavailable") return "";
       return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 1)}°` : m.status === "cooling" ? "COLD" : "READY";
@@ -581,7 +623,7 @@ class ApplianceCardBase extends HTMLElement {
   _render(m) {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying"].includes(m.status);
     $("wrap").className = [
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
       active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
@@ -635,6 +677,12 @@ class ApplianceCardBase extends HTMLElement {
       }
       const img = sr.querySelector(".gn-img");
       if (img && img.tagName.toLowerCase() === "image" && img.getAttribute("href") !== String(src).trim()) img.setAttribute("href", String(src).trim());
+    }
+    if (kind === "dehumidifier") {
+      // bac : plein si capteur, sinon un tiers
+      $("wrap").style.setProperty("--lvl", m.tankFull ? "0.95" : "0.35");
+      $("wrap").style.setProperty("--spd", String(m.spd ?? 1));
+      $("wrap").classList.toggle("tank-full", !!m.tankFull);
     }
     if (kind === "server_rack") $("wrap").style.setProperty("--load", (m.load ?? 0.4).toFixed(2));
     if (kind === "solar") $("wrap").style.setProperty("--sun", (m.frac || 0).toFixed(2));
@@ -740,8 +788,9 @@ class ApplianceCardBase extends HTMLElement {
         ${sub ? `<div class="sub">${esc(sub)}</div>` : ""}`;
     }
 
-    if (c.switch && c.show_toggle !== false) {
-      const on = isOn(m.sw);
+    const swId = c.switch || (kind === "dehumidifier" && domainOf(c.entity) === "humidifier" ? c.entity : null);
+    if (swId && c.show_toggle !== false) {
+      const on = isOn(hass.states[swId]);
       // safety: cutting a washer/dryer/dishwasher mid-cycle needs a second click
       const freezer = ["chest_freezer", "drawer_freezer"].includes(kind);
       const guarded = c.confirm_off !== false && on && (freezer || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d"].includes(kind)));
@@ -759,8 +808,8 @@ class ApplianceCardBase extends HTMLElement {
         }
         this._confirmUntil = 0;
         clearTimeout(this._confirmTimer);
-        const dom = domainOf(c.switch);
-        hass.callService(["switch", "input_boolean", "light", "fan"].includes(dom) ? dom : "homeassistant", "toggle", { entity_id: c.switch });
+        const dom = domainOf(swId);
+        hass.callService(["switch", "input_boolean", "light", "fan", "humidifier"].includes(dom) ? dom : "homeassistant", "toggle", { entity_id: swId });
       };
     } else $("actions").innerHTML = "";
 
@@ -824,6 +873,14 @@ class ApplianceCardBase extends HTMLElement {
       if (m.tempVal != null) tile("mdi:home-thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("temperature"), te);
       if (m.targetVal != null) tile("mdi:target", `${fmtNum(hass, m.targetVal, 1)} ${m.tempUnit}`, lb("target"), c.target_temperature || te);
       if (m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0)} %`, lb("humidity"), c.humidity || c.entity);
+    } else if (kind === "dehumidifier") {
+      const hEnt = c.humidity || (domainOf(c.entity) === "humidifier" ? c.entity : null);
+      if (m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0)} %`, lb("humidity"), hEnt, m.alerts.includes("humid") ? "warn" : "");
+      if (m.targetHumVal != null) tile("mdi:target", `${fmtNum(hass, m.targetHumVal, 0)} %`, lb("target"), c.target_humidity || hEnt);
+      if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("temperature"), tEntity);
+      if (m.tank) tile(m.tankFull ? "mdi:cup-water" : "mdi:cup-outline", tr(hass, m.tankFull ? "tank_full_short" : "tank_ok"), lb("tank"), c.tank_full, m.tankFull ? "warn" : "");
+      if (m.fanSpeed && !BAD.includes(String(m.fanSpeed.state).toLowerCase())) tile("mdi:fan", domainOf(c.fan_speed) === "fan" ? `${fmtNum(hass, Number(m.fanSpeed.attributes.percentage) || 0, 0)} %` : stateText(hass, m.fanSpeed), lb("fan_speed"), c.fan_speed);
+      if (m.dhMode) tile("mdi:tune-variant", m.dhMode, lb("mode"), c.mode || c.entity);
     } else if (kind === "hob") {
       /* no extra tile */
     } else if (kind === "vmc") {

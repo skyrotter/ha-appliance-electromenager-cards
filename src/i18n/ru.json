@@ -206,7 +206,19 @@
     "f_flex_temperature": "Датчик температуры флекс-зоны",
     "f_flex_max_temperature": "Оповещать о флекс-зоне выше (°C)",
     "f_illustration_size": "Размер иллюстрации",
-    "f_transparent": "Прозрачный фон"
+    "f_transparent": "Прозрачный фон",
+    "dehumidifier": "Осушитель",
+    "drying": "Осушение",
+    "tank_full": "Бак полон",
+    "empty_tank": "Опорожните бак",
+    "tank": "Бак",
+    "tank_full_short": "Полон",
+    "tank_ok": "OK",
+    "fan_speed": "Вентилятор",
+    "mode": "Режим",
+    "f_target_humidity": "Целевая влажность (sensor, number или humidifier)",
+    "f_tank_full": "Датчик полного бака",
+    "f_fan_speed": "Скорость вентилятора (select, number, fan…)"
   },
   "aquarium": {
     "power": "Мощность",
