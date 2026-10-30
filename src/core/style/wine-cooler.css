@@ -25,4 +25,5 @@
 .k-wine_cooler.st-off .lcd { fill: #24404f; }
 .k-wine_cooler.warm .lcd { fill: var(--ac-alert); }
 .no-anim *, .no-anim { animation: none !important; }
-@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+/* réglage « réduire les animations » du système, sauf si la carte force animations: true */
+@media (prefers-reduced-motion: reduce) { .wrap:not(.force-anim), .wrap:not(.force-anim) * { animation: none !important; } }

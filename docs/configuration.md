@@ -21,7 +21,7 @@ All cards have a visual editor. When added from the card picker, entities are de
 | `color` | Accent color (any CSS color) |
 | `show_toggle` | `false` to hide the power button |
 | `show_power` | `false` to hide the power chip (e.g. when `power` is an estimated sensor used only to detect the running state) |
-| `animations` | `false` to disable animations |
+| `animations` | `false` to disable animations. By default the cards follow the "reduce animations" setting of the device (Windows: Accessibility → Visual effects → Animation effects; Android: Remove animations; iOS / macOS: Reduce motion); `true` keeps the core cards animated even when it is on |
 | `illustration_size` | Size of the drawing in % (30–300, default 100), on every card. In a sections dashboard, every card can also be resized with the mouse, from 3 columns wide and in height |
 | `transparent` | `true` removes the card background, shadow and border, so the dashboard background shows through, on every card |
 | `temperature_unit` | `C` or `F`: temperature unit of the aquarium, battery, pellet boiler, gas boiler, diesel heater, hot tub, pump, pool robot, sauna, underfloor heating and water heat pump cards. Default: the unit of Home Assistant. Sensors are converted from their own unit, and temperature thresholds are entered in this unit |
