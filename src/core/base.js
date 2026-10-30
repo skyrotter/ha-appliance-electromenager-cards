@@ -277,7 +277,13 @@ class ApplianceCardBase extends HTMLElement {
       const sp = m.speed ? String(m.speed.state).toLowerCase() : "";
       const spn = num(m.speed);
       const hi = c.high_threshold ?? 35;
+      // entité fan : preset_mode (texte) puis percentage, si aucun capteur `speed` n'est fourni
+      const isFan = !m.speed && main && domainOf(c.entity) === "fan";
+      const fPre = isFan ? String(main.attributes.preset_mode || "").toLowerCase() : "", fPct = isFan ? Number(main.attributes.percentage) : NaN;
       if (base === "off" || base === "unavailable") m.status = base;
+      else if (isFan && /boost|grande|high|max|rapide|fast|gv/.test(fPre)) m.status = "speed2";
+      else if (isFan && /petite|low|eco|lente|slow|min|pv|auto|normal/.test(fPre)) m.status = "speed1";
+      else if (isFan && Number.isFinite(fPct) && fPct > 0) m.status = fPct > 60 ? "speed2" : "speed1";
       else if (m.speed && !BAD.includes(sp) && /boost|grande|high|max|rapide|fast|gv/.test(sp)) m.status = "speed2";
       else if (m.speed && !BAD.includes(sp) && /petite|low|eco|lente|slow|min|pv|auto|normal/.test(sp)) m.status = "speed1";
       else if (spn != null && spn > 0) m.status = (String(m.speed.attributes.unit_of_measurement || "") === "%" ? spn > 60 : spn >= 2) ? "speed2" : "speed1";
