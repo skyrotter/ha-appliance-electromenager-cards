@@ -512,6 +512,15 @@ const SCEN = [
       set('sensor.aquarium_energy', 0.8, KWH);
       checks(ctl, [['Éclairage', 'light.aquarium', true]]);
     } },
+  { kind: 'water-meter', title: "Compteur d'eau", lang: true,
+    cfg: { entity_index: 'sensor.water_index', entity_flow: 'sensor.water_flow', entity_today: 'sensor.water_today', entity_valve: 'valve.water_main', entity_leak: 'binary_sensor.water_leak' },
+    build(ctl) {
+      set('sensor.water_index', 412.537, { unit_of_measurement: 'm³', device_class: 'water' });
+      range(ctl, 'Débit', 'sensor.water_flow', 0, 30, 0.1, 9.5, 'L/min', { unit_of_measurement: 'L/min' });
+      set('sensor.water_today', 212, { unit_of_measurement: 'L' });
+      set('valve.water_main', 'open');
+      checks(ctl, [['Fuite', 'binary_sensor.water_leak', false]]);
+    } },
   { kind: 'linky', title: 'Compteur Linky', lang: true,
     cfg: { entity_power: 'sensor.linky_sinsts', entity_hp: 'sensor.linky_hp', entity_hc: 'sensor.linky_hc', entity_cost: 'sensor.linky_cost', subscribed_power: 9, hc_ranges: '01:00-07:00,12:30-14:30' },
     build(ctl) {
@@ -787,6 +796,14 @@ const SCEN = [
   { kind: 'swing-shutter', title: 'Volets battants', lang: true,
     cfg: { entity: 'cover.demo_swing_shutter', entity_power: 'sensor.demo_swing_shutter_power', travel_time: 8 },
     build(ctl) { shutterCtl(ctl, 'cover.demo_swing_shutter', 'sensor.demo_swing_shutter_power', 8, 100); } },
+  { kind: 'roof-window', title: 'Fenêtre de toit', lang: true,
+    cfg: { entity: 'cover.demo_roof_window', entity_power: 'sensor.demo_roof_window_power', entity_blind: 'cover.demo_roof_blind', entity_rain: 'binary_sensor.demo_roof_rain', travel_time: 6 },
+    build(ctl) {
+      shutterCtl(ctl, 'cover.demo_roof_window', 'sensor.demo_roof_window_power', 6, 40);
+      cover(ctl, 'cover.demo_roof_blind', 6, true, 'open');
+      Object.assign(states['cover.demo_roof_blind'].attributes, { current_position: 100, supported_features: 15 });
+      checks(ctl, [['Pluie', 'binary_sensor.demo_roof_rain', false]]);
+    } },
   { kind: 'pergola', title: 'Pergola bioclimatique', lang: true,
     cfg: { entity: 'cover.demo_pergola', entity_power: 'sensor.demo_pergola_power', entity_rain: 'binary_sensor.demo_rain', entity_light: 'light.demo_pergola_led', entity_wind: 'sensor.demo_wind', travel_time: 6 },
     build(ctl) {

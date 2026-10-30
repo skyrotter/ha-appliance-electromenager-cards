@@ -46,7 +46,7 @@ const CSS_FILES = [
 ].map((n) => `core/style/${n}.css`);
 /* Self-contained cards, each in its own IIFE. */
 const CARD_FILES = [
-  "editor-labels", "aquarium", "linky", "battery", "ev-charger", "robot-vacuum", "robot-mower", "pellet-boiler", "gas-boiler", "water-heat-pump", "diesel-heater", "jacuzzi", "access", "sauna", "pumps", "pool-robot", "ups", "underfloor-heating", "lights", "shutters",
+  "editor-labels", "aquarium", "linky", "battery", "ev-charger", "robot-vacuum", "robot-mower", "pellet-boiler", "gas-boiler", "water-heat-pump", "diesel-heater", "jacuzzi", "access", "sauna", "pumps", "pool-robot", "ups", "underfloor-heating", "lights", "shutters", "water-meter",
 ].map((n) => `cards/${n}.js`);
 
 const read = (p) => fs.readFileSync(p, "utf8").replace(/\r\n/g, "\n");

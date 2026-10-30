@@ -6,6 +6,7 @@
  * Boutons ouvrir / stop / fermer, curseurs de position et d'inclinaison, puissance du moteur.
  * Pergola : les lames pivotent selon l'inclinaison (sinon la position), redessinées image par image ;
  * en option pluie (entity_rain), éclairage LED (entity_light) et vent (entity_wind).
+ * Fenêtre de toit (Velux) : l'ouvrant pivote sur son axe, volet roulant extérieur en option (entity_blind), pluie.
  */
 (() => {
   if (customElements.get('appliance-roller-shutter-card')) return;
@@ -109,6 +110,9 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
 .pg-drain circle{animation:pgdrain 1.4s linear infinite}.pg-drain circle:nth-child(2){animation-delay:-.7s}
 @keyframes pgdrain{from{transform:translateY(0);opacity:1}to{transform:translateY(80px);opacity:.3}}
 .ctl button.on{background:color-mix(in srgb,#ffc94a 35%,var(--secondary-background-color))}
+.rw-blind{transform:translateY(calc((var(--bl,0) - 100) * .96px));transition:transform 1.2s ease-in-out}
+.rw-in{transition:fill .8s}.isnight .rw-in{fill:#ffcf7a}.isnight .rw-in2{fill:#e9a85a}
+.noanim .rw-blind{transition:none}
 .noanim .pg-water path,.noanim .pg-ray,.noanim .pg-candle circle,.noanim .pg-drops line,.noanim .pg-drain circle{animation:none}
 `;
 
@@ -293,22 +297,69 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       <circle class="led" cx="${FL[0] + 8}" cy="${FL[1]}" r="1.8"/>${ARROW(FR[0] + 16, FR[1] - 14)}`;
   };
 
+  /* ---- fenêtre de toit : pan de toit en tuiles, ouvrant à rotation (transform posé par JS), volet roulant extérieur ---- */
+  const RW = { X: 58, Y: 40, W: 84, H: 96 };
+  // ouvrant pour une ouverture a (0 à 100) : il pivote sur son axe médian, le bas sort vers l'extérieur
+  const rwSash = (a) => {
+    const { X, Y, W, H } = RW, ang = a / 100 * .9, cx = X + W / 2, cy = Y + H / 2;
+    return `translate(0 ${(Math.sin(ang) * H * .22).toFixed(1)}) translate(${cx} ${cy}) scale(1 ${Math.cos(ang).toFixed(3)}) translate(${-cx} ${-cy})`;
+  };
+  const ROOF = () => {
+    const { X, Y, W, H } = RW;
+    // rangs de tuiles de plus en plus serrés vers le faîtage (effet de pente)
+    const rows = []; let y = 26; for (let r = 0; r < 12; r++) { const h = 6 + r * 1.25; rows.push([y, h]); y += h; }
+    const tiles = rows.map(([y, h], r) => {
+      const w = 10 + r * .9, o = (r % 2) * w / 2; let d = '';
+      for (let x = -w; x < 210; x += w) d += `M${(x + o).toFixed(1)} ${(y + h).toFixed(1)}q${(w / 2).toFixed(1)} ${(-h * .5).toFixed(1)} ${w.toFixed(1)} 0`;
+      return `<path d="M0 ${y.toFixed(1)}h200" stroke="#8f3f2c" stroke-width=".5" opacity=".6"/><path d="${d}" stroke="#8f3f2c" stroke-width="1.1" fill="none"/>`;
+    }).join('');
+    const drops = [...Array(28)].map((_, k) => { const x = (k * 37.3) % 210, y = (k * 23) % 60; return `<line x1="${x.toFixed(1)}" y1="${y}" x2="${(x - 2).toFixed(1)}" y2="${y + 8}"/>`; }).join('');
+    return `<defs><linearGradient id="rwtile" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c0573c"/><stop offset="1" stop-color="#a94a33"/></linearGradient>
+      <linearGradient id="rwrefl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a9d6f5"/><stop offset=".5" stop-color="#e6f4fd"/><stop offset="1" stop-color="#7fb8e3"/></linearGradient>
+      <clipPath id="rwclip"><rect x="${X}" y="${Y}" width="${W}" height="${H}"/></clipPath></defs>
+      <g class="day"><rect width="200" height="172" fill="url(#shskyd)"/><g class="pg-sun"><circle cx="24" cy="10" r="7" fill="#ffd54a"/></g></g>
+      <g class="night"><rect width="200" height="172" fill="url(#shskyn)"/><circle cx="130" cy="9" r="4.5" fill="#f4f1d0"/><circle cx="132" cy="7.6" r="3.8" fill="#0b1430"/></g>
+      <g class="pg-cloud"><rect width="200" height="22" fill="#8d99a8"/><ellipse cx="60" cy="8" rx="36" ry="8" fill="#7d8896"/><ellipse cx="140" cy="6" rx="40" ry="8" fill="#86919f"/></g>
+      <rect y="22" width="200" height="150" fill="url(#rwtile)"/>${tiles}
+      <rect y="18" width="200" height="6" fill="#7d3524"/><path d="M0 18h200" stroke="#5a2a1d" stroke-width="1.2"/>
+      <rect x="160" y="2" width="16" height="20" fill="#b9ad9c"/><rect x="158" y="0" width="20" height="4" fill="#9a8f80"/>
+      <rect x="0" y="164" width="200" height="8" fill="#d6dadf"/><rect x="0" y="164" width="200" height="2" fill="#f1f3f5"/>
+      <rect class="pg-dim" x="0" y="0" width="200" height="172" fill="#0a1020"/>
+      <rect x="${X - 10}" y="${Y - 10}" width="${W + 20}" height="${H + 18}" rx="2" fill="#3e444c"/>
+      <rect x="${X - 6}" y="${Y - 6}" width="${W + 12}" height="${H + 10}" rx="1.5" fill="#575e67"/>
+      <rect x="${X}" y="${Y}" width="${W}" height="${H}" fill="#2a2f35"/>
+      <g clip-path="url(#rwclip)"><rect class="rw-in" x="${X}" y="${Y}" width="${W}" height="${H}" fill="#efe9df"/><rect class="rw-in rw-in2" x="${X}" y="${Y + H * .55}" width="${W}" height="${H * .45}" fill="#d8cfc0"/></g>
+      <g class="rw-sash">
+        <rect x="${X}" y="${Y}" width="${W}" height="${H}" fill="var(--sc)"/>
+        <rect x="${X + 4}" y="${Y + 4}" width="${W - 8}" height="${H - 8}" fill="url(#rwrefl)"/>
+        <rect class="night" x="${X + 4}" y="${Y + 4}" width="${W - 8}" height="${H - 8}" fill="#1b2a55"/>
+        <path d="M${X + 10} ${Y + H - 10}L${X + W - 30} ${Y + 8}h12L${X + 20} ${Y + H - 10}z" fill="#fff" opacity=".35"/>
+        <rect x="${X}" y="${Y}" width="${W}" height="7" fill="#3e444c"/><rect x="${X + W / 2 - 12}" y="${Y + 1.5}" width="24" height="3" rx="1.5" fill="#22262b"/>
+      </g>
+      <g clip-path="url(#rwclip)"><g class="rw-blind">${[...Array(16)].map((_, k) => `<rect x="${X}" y="${Y + k * 6}" width="${W}" height="6" fill="#3a3f46" stroke="#22262b" stroke-width=".5"/>`).join('')}</g></g>
+      <rect x="${X - 10}" y="${Y - 14}" width="${W + 20}" height="8" rx="2" fill="#3e444c"/>
+      <circle class="led" cx="${X + W + 4}" cy="${Y - 10}" r="1.8"/>
+      <g class="pg-drops" stroke="#e7f2ff" stroke-width="1" opacity=".85">${drops}</g>
+      ${ARROW(X + W / 2, Y + H + 20)}`;
+  };
+
   // couleur du tablier / des lamelles / des vantaux par défaut, et motifs de nom pour l'éditeur
   const KINDS = {
     roller_shutter: { color: '#d5dbe1', re: /volet|shutter|roll|rollo|store/i, icon: 'mdi:window-shutter' },
     venetian_blind: { color: '#ece2cf', re: /venitien|vénitien|venetian|blind|jalousie|lamel|store/i, icon: 'mdi:blinds-horizontal' },
     swing_shutter: { color: '#4f7d5c', re: /volet|shutter|battant|persienne|swing/i, icon: 'mdi:window-shutter-open' },
     pergola: { color: '#d5dae0', re: /pergola|bioclim|lame|louvre|lamelle/i, icon: 'mdi:pergola' },
+    roof_window: { color: '#4b525b', re: /velux|fenetre_toit|fenetre_de_toit|roof|skylight|dachfenster|tabatiere|fakro/i, icon: 'mdi:window-open-variant' },
   };
   const TILES = [['position', 'mdi:arrow-expand-vertical', 'show_position'], ['tilt', 'mdi:rotate-3d-variant', 'show_tilt'],
-    ['power', 'mdi:flash', 'show_power'], ['rain', 'mdi:weather-pouring', 'show_rain'], ['wind', 'mdi:weather-windy', 'show_wind'], ['since', 'mdi:history', 'show_since']];
+    ['power', 'mdi:flash', 'show_power'], ['blind', 'mdi:window-shutter', 'show_blind'], ['rain', 'mdi:weather-pouring', 'show_rain'], ['wind', 'mdi:weather-windy', 'show_wind'], ['since', 'mdi:history', 'show_since']];
 
   class ApplianceShutterCard extends HTMLElement {
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { show_status: true, show_controls: true, show_slider: true, show_position: true, show_tilt: true, show_power: true, show_since: true,
-        show_rain: true, show_wind: true, sun_entity: 'sun.sun', ...c };
+        show_rain: true, show_wind: true, show_blind: true, sun_entity: 'sun.sun', ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -318,7 +369,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
 
     _t(k) {
       // pergola : libellés au féminin (« Ouverte », « Fermée ») et « Lames » au lieu de « Position »
-      const L = T[this._lang()], pk = this.kind === 'pergola' ? `pg_${k}` : null;
+      const L = T[this._lang()], pre = { pergola: 'pg_', roof_window: 'rw_' }[this.kind], pk = pre ? `${pre}${k}` : null;
       return (pk && (L[pk] ?? T.en[pk])) ?? L[k] ?? T.en[k] ?? k;
     }
     // libellé perso (option labels) sinon traduction
@@ -347,10 +398,10 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
 
     _build() {
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
-      const swing = this.kind === 'swing_shutter', pergola = this.kind === 'pergola';
+      const swing = this.kind === 'swing_shutter', pergola = this.kind === 'pergola', roof = this.kind === 'roof_window';
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="shtitle"></div><div class="badge" id="shbadge"></div></div>
-        <div class="scene${swing ? ' sw' : pergola ? ' pg' : ''}"><svg viewBox="${pergola ? '0 0 240 180' : '0 0 200 172'}" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${pergola ? PERGOLA() : SVGS[this.kind]()}</svg>
+        <div class="scene${swing ? ' sw' : pergola ? ' pg' : ''}"><svg viewBox="${pergola ? '0 0 240 180' : '0 0 200 172'}" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${pergola ? PERGOLA() : roof ? ROOF() : SVGS[this.kind]()}</svg>
           ${swing ? `<div class="leaf l mv">${LEAF(false)}</div><div class="leaf r mv">${LEAF(true)}</div>` : ''}</div>
         <div class="rng ps" id="shpos"><span></span><input type="range" min="0" max="100" step="1"></div>
         <div class="rng tl" id="shtilt"><span></span><input type="range" min="0" max="100" step="1"></div>
@@ -359,11 +410,16 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
           <button data-a="stop"><ha-icon icon="mdi:stop"></ha-icon><span></span></button>
           <button data-a="close"><ha-icon icon="mdi:arrow-down"></ha-icon><span></span></button>
           ${pergola ? '<button data-a="light"><ha-icon icon="mdi:led-strip-variant"></ha-icon><span></span></button>' : ''}
+          ${roof ? '<button data-a="blind"><ha-icon icon="mdi:window-shutter"></ha-icon><span></span></button>' : ''}
         </div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
       root.querySelector('.scene').addEventListener('click', () => this._more(this._c.entity));
       root.querySelectorAll('.ctl button').forEach((b) => b.addEventListener('click', () => {
+        if (b.dataset.a === 'blind') {
+          const id = this._c.entity_blind; if (!this._hass || !id) return;
+          this._hass.callService('cover', this._blindDown > 0 ? 'open_cover' : 'close_cover', { entity_id: id }); return;
+        }
         if (b.dataset.a === 'light') { if (this._hass && this._c.entity_light) this._hass.callService('homeassistant', 'toggle', { entity_id: this._c.entity_light }); return; }
         if (this._hass && this._c.entity) this._hass.callService('cover', `${b.dataset.a}_cover`, { entity_id: this._c.entity });
       }));
@@ -378,7 +434,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         if (this._hass) this._hass.callService('cover', 'set_cover_tilt_position', { entity_id: this._c.entity, tilt_position: Number(e.target.value) });
       });
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
-        const k = el.dataset.k; this._more({ power: this._c.entity_power, rain: this._c.entity_rain, wind: this._c.entity_wind }[k] || this._c.entity);
+        const k = el.dataset.k; this._more({ power: this._c.entity_power, rain: this._c.entity_rain, wind: this._c.entity_wind, blind: this._c.entity_blind }[k] || this._c.entity);
       }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true; this._pos = null; this._ang = null;
     }
@@ -418,6 +474,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       cancelAnimationFrame(this._raf);
       const draw = (a) => {
         this._ang = a;
+        if (this.kind === 'roof_window') { this._root.querySelector('.rw-sash').setAttribute('transform', rwSash(a)); return; }
         const [bl, sh] = pgBlades(a);
         this._root.querySelector('.pg-blades').innerHTML = bl;
         this._root.querySelector('.pg-shadow').innerHTML = sh;
@@ -440,6 +497,10 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       const rainS = this._st(c.entity_rain), rain = !!rainS && (/^(on|true|wet|rain|pluie|raining)$/i.test(String(rainS.state)) || this._num(c.entity_rain) > 0);
       const lightS = this._st(c.entity_light), leds = !!lightS && /^on$/i.test(String(lightS.state));
       card.className = `${st}${night ? ' isnight' : ''}${c.animations === false ? ' noanim' : ''}${rain ? ' rain' : ''}${leds ? ' leds' : ''}`;
+      const blS = this._st(c.entity_blind), blA = (blS && blS.attributes) || {};
+      const blPos = blS ? (isFinite(Number(blA.current_position)) && blA.current_position != null ? Number(blA.current_position) : /^(closed|closing)$/i.test(blS.state) ? 0 : 100) : 100;
+      this._blindDown = 100 - Math.max(0, Math.min(100, blPos));
+      card.style.setProperty('--bl', String(this._blindDown));
 
       // course : durée proportionnelle à l'écart si travel_time est donné, sinon 1,2 s
       if (pos !== this._pos) {
@@ -448,7 +509,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         card.style.setProperty('--sh-d', `${dur.toFixed(2)}s`);
         // avec un temps de course, la cover envoie sa position par paliers : mouvement linéaire pour enchaîner sans à-coups
         card.style.setProperty('--sh-e', tt > 0 ? 'linear' : 'ease-in-out');
-        if (this.kind === 'pergola') this._tween(pos, c.animations === false ? 0 : dur, tt > 0);
+        if (this.kind === 'pergola' || this.kind === 'roof_window') this._tween(pos, c.animations === false ? 0 : dur, tt > 0);
         this._pos = pos;
       }
       card.style.setProperty('--p', String(pos));
@@ -460,6 +521,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       const badge = r.getElementById('shbadge');
       const moving = st === 'opening' || st === 'closing';
       badge.textContent = st === 'partial' ? `${this._t('partial')} ${Math.round(pos)} %` : moving && known ? `${this._t(st)}… ${Math.round(pos)} %` : this._t(st);
+      if (this.kind === 'roof_window' && this._blindDown >= 100 && !moving) badge.textContent += ` · ${this._t('blind_down')}`;
       badge.style.display = c.show_status === false || st === 'unknown' ? 'none' : '';
 
       // commandes et curseurs selon ce que la cover sait faire (supported_features)
@@ -472,7 +534,8 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       ctl.querySelectorAll('button').forEach((b) => {
         const a = b.dataset.a;
         b.querySelector('span').textContent = this._t(`btn_${a}`);
-        b.classList.toggle('hide', (a === 'stop' && !has(8)) || (a === 'light' && !c.entity_light));
+        b.classList.toggle('hide', (a === 'stop' && !has(8)) || (a === 'light' && !c.entity_light) || (a === 'blind' && !c.entity_blind));
+        if (a === 'blind') { b.classList.toggle('on', this._blindDown > 0); b.disabled = !blS; return; }
         if (a === 'light') { b.classList.toggle('on', leds); b.disabled = !lightS; return; }
         // assumed_state (RFXCOM, Somfy RTS…) : l'état est supposé, pas mesuré, donc on laisse tout cliquable comme la carte HA
         b.disabled = st === 'unavailable' || (!assumed && ((a === 'open' && (st === 'open' || st === 'opening')) || (a === 'close' && (st === 'closed' || st === 'closing'))));
@@ -491,7 +554,8 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         position: [known && st !== 'unavailable', this._fmt(pos, 0), '%'],
         tilt: [this.kind === 'venetian_blind' && !isNaN(tilt), this._fmt(tilt, 0), '%'],
         power: [c.entity_power, isNaN(pw) ? '--' : this._fmt(pw, 0), isNaN(pw) ? '' : 'W'],
-        rain: [this.kind === 'pergola' && rainS, this._t(rain ? 'yes' : 'no'), ''],
+        blind: [this.kind === 'roof_window' && blS, this._fmt(blPos, 0), '%'],
+        rain: [['pergola', 'roof_window'].includes(this.kind) && rainS, this._t(rain ? 'yes' : 'no'), ''],
         wind: [this.kind === 'pergola' && c.entity_wind, this._fmt(this._num(c.entity_wind), 0), this._unit(c.entity_wind, 'km/h')],
         since: [s, this._since(s), ''],
       };
@@ -529,6 +593,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         { name: 'transparent', selector: { boolean: {} } },
         ent('entity', 'cover'), ent('entity_power', 'sensor'), ent('sun_entity', 'sun'),
         ...(this.kind === 'pergola' ? [ent('entity_rain'), ent('entity_light'), ent('entity_wind', 'sensor')] : []),
+        ...(this.kind === 'roof_window' ? [ent('entity_blind', 'cover'), ent('entity_rain')] : []),
         { type: 'grid', name: '', schema: [
           { name: 'color', selector: { text: {} } },
           { name: 'travel_time', selector: { number: { min: 0, max: 120, step: 1, mode: 'box', unit_of_measurement: 's' } } },
@@ -538,7 +603,8 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_controls'), bool('show_slider'), bool('show_position'),
           ...(this.kind === 'venetian_blind' ? [bool('show_tilt')] : []), bool('show_power'),
-          ...(this.kind === 'pergola' ? [bool('show_rain'), bool('show_wind')] : []), bool('show_since'), bool('animations'),
+          ...(this.kind === 'pergola' ? [bool('show_rain'), bool('show_wind')] : []),
+          ...(this.kind === 'roof_window' ? [bool('show_blind'), bool('show_rain')] : []), bool('show_since'), bool('animations'),
         ] },
       ];
       // « color » a le libellé « couleur de la lumière » pour les lampes : ici, couleur du volet
@@ -560,7 +626,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
     });
     customElements.define(tag + '-editor', class extends ApplianceShutterCardEditor { get kind() { return kind; } });
     window.customCards.push({ type: tag, name: `Appliance – ${T.en[kind]} / ${T.fr[kind]}`, preview: true,
-      description: kind === 'pergola' ? `${T.fr[kind]} animée : lames orientables, pluie, éclairage LED et vue jour / nuit.` : `${T.fr[kind]} animé : position, inclinaison, mouvement et vue jour / nuit.`,
+      description: kind === 'roof_window' ? `${T.fr[kind]} animée : ouvrant à rotation, volet roulant extérieur, pluie et vue jour / nuit.` : kind === 'pergola' ? `${T.fr[kind]} animée : lames orientables, pluie, éclairage LED et vue jour / nuit.` : `${T.fr[kind]} animé : position, inclinaison, mouvement et vue jour / nuit.`,
       documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards' });
   }
 })();

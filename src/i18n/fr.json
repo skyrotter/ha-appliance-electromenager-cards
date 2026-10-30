@@ -757,7 +757,16 @@
     "entity_wind": "Capteur de vent",
     "show_rain": "Afficher la pluie",
     "show_wind": "Afficher le vent",
-    "louvre_color": "Couleur des lames"
+    "louvre_color": "Couleur des lames",
+    "entity_index": "Index du compteur (total)",
+    "entity_today": "Consommation du jour",
+    "entity_leak": "Détecteur de fuite",
+    "entity_valve": "Vanne d'arrêt",
+    "leak_minutes": "Alerte fuite après (min d'écoulement continu)",
+    "flow_threshold": "Débit considéré nul en dessous de",
+    "show_today": "Afficher le jour",
+    "entity_blind": "Volet roulant extérieur (cover)",
+    "show_blind": "Afficher le volet"
   },
   "light": {
     "light_bulb": "Ampoule",
@@ -806,6 +815,30 @@
     "wind": "Vent",
     "yes": "Oui",
     "no": "Non",
-    "btn_light": "LED"
+    "btn_light": "LED",
+    "roof_window": "Fenêtre de toit",
+    "rw_open": "Ouverte",
+    "rw_closed": "Fermée",
+    "rw_partial": "Ouverte à",
+    "rw_position": "Ouverture",
+    "blind": "Volet",
+    "blind_down": "Volet baissé",
+    "btn_blind": "Volet"
+  },
+  "water_meter": {
+    "name": "Compteur d'eau",
+    "idle": "Pas de consommation",
+    "flowing": "Eau qui coule",
+    "leak": "Fuite possible",
+    "valve_closed": "Vanne fermée",
+    "unavailable": "Indisponible",
+    "leak_detected": "Fuite détectée par le capteur",
+    "leak_continuous": "L'eau coule sans interruption depuis plus de {n} min",
+    "open_valve": "Ouvrir la vanne",
+    "close_valve": "Fermer la vanne",
+    "flow": "Débit",
+    "today": "Aujourd'hui",
+    "index": "Index",
+    "cost": "Coût"
   }
 }

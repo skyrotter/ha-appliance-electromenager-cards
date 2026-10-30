@@ -757,7 +757,16 @@
     "entity_wind": "Wind speed sensor",
     "show_rain": "Show rain",
     "show_wind": "Show wind",
-    "louvre_color": "Louvre colour"
+    "louvre_color": "Louvre colour",
+    "entity_index": "Meter index (total)",
+    "entity_today": "Today's consumption",
+    "entity_leak": "Leak sensor",
+    "entity_valve": "Shut-off valve",
+    "leak_minutes": "Leak alert after (min of continuous flow)",
+    "flow_threshold": "Flow considered zero below",
+    "show_today": "Show today",
+    "entity_blind": "Exterior blind (cover)",
+    "show_blind": "Show blind"
   },
   "light": {
     "light_bulb": "Bulb",
@@ -806,6 +815,30 @@
     "wind": "Wind",
     "yes": "Yes",
     "no": "No",
-    "btn_light": "LED"
+    "btn_light": "LED",
+    "roof_window": "Roof window",
+    "rw_open": "Open",
+    "rw_closed": "Closed",
+    "rw_partial": "Open",
+    "rw_position": "Opening",
+    "blind": "Blind",
+    "blind_down": "Blind down",
+    "btn_blind": "Blind"
+  },
+  "water_meter": {
+    "name": "Water meter",
+    "idle": "No flow",
+    "flowing": "Flowing",
+    "leak": "Possible leak",
+    "valve_closed": "Valve closed",
+    "unavailable": "Unavailable",
+    "leak_detected": "Leak detected by the sensor",
+    "leak_continuous": "Water has been running non-stop for more than {n} min",
+    "open_valve": "Open valve",
+    "close_valve": "Close valve",
+    "flow": "Flow",
+    "today": "Today",
+    "index": "Index",
+    "cost": "Cost"
   }
 }

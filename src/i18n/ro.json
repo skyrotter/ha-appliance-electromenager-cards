@@ -757,7 +757,16 @@
     "entity_wind": "Senzor de vânt",
     "show_rain": "Afișează ploaia",
     "show_wind": "Afișează vântul",
-    "louvre_color": "Culoarea lamelelor"
+    "louvre_color": "Culoarea lamelelor",
+    "entity_index": "Index contor (total)",
+    "entity_today": "Consumul de azi",
+    "entity_leak": "Senzor de scurgere",
+    "entity_valve": "Robinet de închidere",
+    "leak_minutes": "Alertă scurgere după (min de curgere continuă)",
+    "flow_threshold": "Debit considerat nul sub",
+    "show_today": "Afișează ziua",
+    "entity_blind": "Rulou exterior (cover)",
+    "show_blind": "Afișează ruloul"
   },
   "light": {
     "light_bulb": "Bec",
@@ -806,6 +815,30 @@
     "wind": "Vânt",
     "yes": "Da",
     "no": "Nu",
-    "btn_light": "LED"
+    "btn_light": "LED",
+    "roof_window": "Fereastră de mansardă",
+    "rw_open": "Deschisă",
+    "rw_closed": "Închisă",
+    "rw_partial": "Deschisă",
+    "rw_position": "Deschidere",
+    "blind": "Rulou",
+    "blind_down": "Rulou coborât",
+    "btn_blind": "Rulou"
+  },
+  "water_meter": {
+    "name": "Contor de apă",
+    "idle": "Fără consum",
+    "flowing": "Curge apa",
+    "leak": "Posibilă scurgere",
+    "valve_closed": "Robinet închis",
+    "unavailable": "Indisponibil",
+    "leak_detected": "Scurgere detectată de senzor",
+    "leak_continuous": "Apa curge neîntrerupt de peste {n} min",
+    "open_valve": "Deschide robinetul",
+    "close_valve": "Închide robinetul",
+    "flow": "Debit",
+    "today": "Azi",
+    "index": "Index",
+    "cost": "Cost"
   }
 }

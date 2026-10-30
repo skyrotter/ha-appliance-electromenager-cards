@@ -19,7 +19,7 @@ const has=(c,cls)=>c.wrap.classList.contains(cls);
 const tags=['washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','fan','generic','tool-charger','ceiling-fan','dehumidifier','monitor','kettle','toaster','power-strip','phone-charger','piano','garland'];
 tags.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 // card picker: every core card and every self-contained card listed exactly once
-const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','roller-shutter','venetian-blind','swing-shutter','pergola'];
+const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','water-meter'];
 solo.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 const picked=window.customCards.map(c=>c.type), wanted=[...tags,...solo].map(t=>`appliance-${t}-card`);
 ok(`customCards = ${wanted.length}`,picked.length===wanted.length&&wanted.every(t=>picked.filter(p=>p===t).length===1),
@@ -239,6 +239,23 @@ ok('garland lit rainbow + effect tile',has(c,'st-lit')&&has(c,'gl-multi')&&/Rain
 c=card('garland',{entity:'light.g'},[mk('light.g','on',{rgb_color:[255,0,0],effect:'none'})]); ok('garland single colour',has(c,'st-lit')&&!has(c,'gl-multi')&&c.wrap.style.getPropertyValue('--glc')==='rgb(255,0,0)',c.wrap.className);
 c.sr.querySelector('.toggle')?.click(); ok('garland toggles its light',JSON.stringify(c.h.calls[0])==='["light","toggle",{"entity_id":"light.g"}]',JSON.stringify(c.h.calls));
 c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has(c,'st-off'),c.wrap.className);
+// compteur d'eau : capteurs facultatifs, unités converties
+{const L=(u)=>({unit_of_measurement:u}), wm=(c)=>c.sr.querySelector('ha-card'), wb=(c)=>c.sr.getElementById('wmbadge').textContent;
+ let c=card('water-meter',{entity_index:'sensor.i',entity_flow:'sensor.f',entity_today:'sensor.t'},[mk('sensor.i',412.537,L('m³')),mk('sensor.f',0.57,L('m³/h')),mk('sensor.t',212,L('L'))]);
+ ok('water flowing, m³/h -> L/min, odometer',/flowing/.test(wm(c).className)&&wb(c)==='9,5 L/min'&&[...c.sr.querySelectorAll('.wm-d')].map(e=>e.textContent).join('')==='00412'&&[...c.sr.querySelectorAll('.wm-l')].map(e=>e.textContent).join('')==='537',wm(c).className+' '+wb(c));
+ c=card('water-meter',{entity_index:'sensor.i',entity_flow:'sensor.f'},[mk('sensor.i',412537,L('L')),mk('sensor.f',0,L('L/min'))]);
+ ok('water idle, index in litres',/idle/.test(wm(c).className)&&/Pas de consommation/.test(wb(c))&&/412,537/.test(c.sr.querySelector('.tiles').textContent),wm(c).className+' '+c.sr.querySelector('.tiles').textContent);
+ c=card('water-meter',{entity_index:'sensor.i',entity_leak:'binary_sensor.l'},[mk('sensor.i',12,L('m³')),mk('binary_sensor.l','on')]);
+ ok('water leak sensor',/leak/.test(wm(c).className)&&/Fuite détectée/.test(c.sr.getElementById('wmalert').textContent),wm(c).className);
+ c=card('water-meter',{entity_flow:'sensor.f',leak_minutes:0.0001},[mk('sensor.f',0.4,L('L/min'))]); c.el._flowSince=Date.now()-60000; c.el.hass=hassOf([mk('sensor.f',0.4,L('L/min'))]);
+ ok('water continuous flow -> possible leak',/leak/.test(wm(c).className),wm(c).className);
+ c=card('water-meter',{entity_index:'sensor.i',entity_valve:'valve.v'},[mk('sensor.i',12,L('m³')),mk('valve.v','closed')]);
+ ok('water valve closed',/valve_closed/.test(wm(c).className)&&/Ouvrir la vanne/.test(c.sr.getElementById('wmctl').textContent),wm(c).className);
+ c.sr.querySelector('#wmctl button').click(); ok('water valve toggles',JSON.stringify(c.h.calls[0])==='["valve","toggle",{"entity_id":"valve.v"}]',JSON.stringify(c.h.calls));
+ c=card('water-meter',{entity_index:'sensor.i'},[mk('sensor.i',100,L('m³'))]); c.el._lastAt=Date.now()-60000; c.el.hass=hassOf([mk('sensor.i',100.006,L('m³'))]);
+ ok('water flow derived from index',/flowing/.test(wm(c).className)&&/^6/.test(wb(c)),wm(c).className+' '+wb(c));
+ document.querySelectorAll('appliance-water-meter-card').forEach((e)=>e.remove()); // keep the SVG id check about the core cards
+}
 // déshumidificateur
 c=card('dehumidifier',{power:'sensor.p',humidity:'sensor.h'},[mk('sensor.p',220,W),mk('sensor.h',68,{unit_of_measurement:'%',device_class:'humidity'})]); ok('dehumidifier drying + lcd',has(c,'st-drying')&&has(c,'active')&&c.lcd()==='68%'&&/Déshumidification/.test(c.txt()),c.wrap.className+' '+c.lcd()+' '+c.txt());
 c=card('dehumidifier',{power:'sensor.p'},[mk('sensor.p',4,W)]); ok('dehumidifier at target on low power',has(c,'st-at_target'),c.wrap.className);
@@ -823,6 +840,15 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
  c=card('pergola',{entity:'cover.p',entity_rain:'binary_sensor.r',entity_light:'light.l',entity_wind:'sensor.w'},[mk('cover.p','closing',{current_position:30}),mk('binary_sensor.r','on'),mk('light.l','on'),mk('sensor.w',24,{unit_of_measurement:'km/h'}),mk('sun.sun','below_horizon')]);
  {const st=c.sr.querySelector('.tiles').textContent; ok('pergola rain + leds + wind + night',/rain/.test(cls(c))&&/leds/.test(cls(c))&&/isnight/.test(cls(c))&&/closing/.test(cls(c))&&/Oui/.test(st)&&/24/.test(st)&&badge(c)==='Fermeture… 30 %',cls(c)+' '+st+' '+badge(c));}
  c.sr.querySelector('[data-a=light]').click(); ok('pergola LED button toggles light',JSON.stringify(c.h.calls[0])==='["homeassistant","toggle",{"entity_id":"light.l"}]',JSON.stringify(c.h.calls));
+ // fenêtre de toit : ouvrant, volet extérieur, pluie
+ c=card('roof-window',{entity:'cover.w',entity_blind:'cover.b',entity_rain:'binary_sensor.r'},[mk('cover.w','open',{current_position:60,supported_features:15}),mk('cover.b','open',{current_position:100}),mk('binary_sensor.r','off')]);
+ ok('roof window open 60 %',/partial/.test(cls(c))&&badge(c)==='Ouverte à 60 %'&&c.sr.querySelector('.rw-sash').getAttribute('transform').includes('scale(1 0.'),cls(c)+' '+badge(c));
+ c.sr.querySelector('[data-a=blind]').click(); ok('roof window blind button -> close_cover',JSON.stringify(c.h.calls[0])==='["cover","close_cover",{"entity_id":"cover.b"}]',JSON.stringify(c.h.calls));
+ c=card('roof-window',{entity:'cover.w',entity_blind:'cover.b'},[mk('cover.w','closed',{current_position:0}),mk('cover.b','closed',{current_position:0}),mk('sun.sun','below_horizon')]);
+ ok('roof window closed, blind down, night',/closed/.test(cls(c))&&/isnight/.test(cls(c))&&badge(c)==='Fermée · Volet baissé'&&v(c,'--bl')==='100',cls(c)+' '+badge(c)+' '+v(c,'--bl'));
+ c=card('roof-window',{entity:'cover.w',entity_rain:'binary_sensor.r'},[mk('cover.w','closing',{current_position:20}),mk('binary_sensor.r','on')]);
+ ok('roof window closing in the rain, no blind button',/closing/.test(cls(c))&&/rain/.test(cls(c))&&c.sr.querySelector('[data-a=blind]').classList.contains('hide')&&badge(c)==='Fermeture… 20 %',cls(c)+' '+badge(c));
+ document.querySelectorAll('appliance-roof-window-card').forEach((e)=>e.remove());
  c=card('roller-shutter',{entity:'cover.v'},[mk('cover.v','unavailable')]); ok('roller unavailable',/unavailable/.test(cls(c))&&badge(c)==='Indisponible');
  // invert: position remontée à l'envers (Tuya), 100 = fermé
  c=card('roller-shutter',{entity:'cover.v',invert:true},[mk('cover.v','open',{current_position:100,supported_features:15})]);
