@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.40.0";
+const VERSION = "1.41.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -239,6 +239,17 @@ const STRINGS = {
     "toast_ready": "Toast ready!",
     "f_hot_minutes": "Show \"hot water\" for (min)",
     "f_ready_minutes": "Show \"toast ready\" for (min)",
+    "power_strip": "Power strip",
+    "phone_charger": "Phone charger",
+    "piano": "Digital piano",
+    "garland": "LED string lights",
+    "powered": "On",
+    "lit": "Lit",
+    "outlets": "Outlets",
+    "effect": "Effect",
+    "f_outlets": "Controlled outlets (switches)",
+    "f_sockets": "Number of sockets",
+    "f_multicolor": "Multicolour (rainbow)",
     "dehumidifier": "Dehumidifier",
     "drying": "Drying",
     "tank_full": "Tank full",
@@ -477,6 +488,17 @@ const STRINGS = {
     "toast_ready": "Toast fertig!",
     "f_hot_minutes": "„Heißes Wasser“ anzeigen für (min)",
     "f_ready_minutes": "„Toast fertig“ anzeigen für (min)",
+    "power_strip": "Steckdosenleiste",
+    "phone_charger": "Handy-Ladegerät",
+    "piano": "Digitalpiano",
+    "garland": "LED-Lichterkette",
+    "powered": "An",
+    "lit": "Leuchtet",
+    "outlets": "Steckdosen",
+    "effect": "Effekt",
+    "f_outlets": "Geschaltete Steckdosen (Schalter)",
+    "f_sockets": "Anzahl der Steckdosen",
+    "f_multicolor": "Mehrfarbig (Regenbogen)",
     "dehumidifier": "Luftentfeuchter",
     "drying": "Entfeuchtung",
     "tank_full": "Tank voll",
@@ -715,6 +737,17 @@ const STRINGS = {
     "toast_ready": "Toasts prêts !",
     "f_hot_minutes": "Afficher « eau chaude » pendant (min)",
     "f_ready_minutes": "Afficher « toasts prêts » pendant (min)",
+    "power_strip": "Multiprise",
+    "phone_charger": "Chargeur de téléphone",
+    "piano": "Piano numérique",
+    "garland": "Guirlande LED",
+    "powered": "En marche",
+    "lit": "Allumée",
+    "outlets": "Prises",
+    "effect": "Effet",
+    "f_outlets": "Prises commandées (switch)",
+    "f_sockets": "Nombre de prises",
+    "f_multicolor": "Multicolore (arc-en-ciel)",
     "dehumidifier": "Déshumidificateur",
     "drying": "Déshumidification",
     "tank_full": "Bac plein",
@@ -747,6 +780,17 @@ const STRINGS = {
     "toast_ready": "Toast ferdig!",
     "f_hot_minutes": "Vis «varmt vann» i (min)",
     "f_ready_minutes": "Vis «toast ferdig» i (min)",
+    "power_strip": "Grenuttak",
+    "phone_charger": "Mobillader",
+    "piano": "Digitalpiano",
+    "garland": "LED-lysslynge",
+    "powered": "På",
+    "lit": "Tent",
+    "outlets": "Uttak",
+    "effect": "Effekt",
+    "f_outlets": "Styrte uttak (brytere)",
+    "f_sockets": "Antall uttak",
+    "f_multicolor": "Flerfarget (regnbue)",
     "dehumidifier": "Avfukter",
     "drying": "Avfukting",
     "tank_full": "Tanken er full",
@@ -1191,6 +1235,17 @@ const STRINGS = {
     "toast_ready": "Toast klaar!",
     "f_hot_minutes": "\"Heet water\" tonen gedurende (min)",
     "f_ready_minutes": "\"Toast klaar\" tonen gedurende (min)",
+    "power_strip": "Stekkerdoos",
+    "phone_charger": "Telefoonlader",
+    "piano": "Digitale piano",
+    "garland": "LED-lichtsnoer",
+    "powered": "Aan",
+    "lit": "Brandt",
+    "outlets": "Stopcontacten",
+    "effect": "Effect",
+    "f_outlets": "Geschakelde stopcontacten (schakelaars)",
+    "f_sockets": "Aantal stopcontacten",
+    "f_multicolor": "Meerkleurig (regenboog)",
     "dehumidifier": "Luchtontvochtiger",
     "drying": "Ontvochtigen",
     "tank_full": "Reservoir vol",
@@ -1429,6 +1484,17 @@ const STRINGS = {
     "toast_ready": "Pâinea e gata!",
     "f_hot_minutes": "Afișează „apă caldă” timp de (min)",
     "f_ready_minutes": "Afișează „pâinea e gata” timp de (min)",
+    "power_strip": "Prelungitor",
+    "phone_charger": "Încărcător de telefon",
+    "piano": "Pian digital",
+    "garland": "Instalație LED",
+    "powered": "Pornit",
+    "lit": "Aprinsă",
+    "outlets": "Prize",
+    "effect": "Efect",
+    "f_outlets": "Prize comandate (comutatoare)",
+    "f_sockets": "Număr de prize",
+    "f_multicolor": "Multicolor (curcubeu)",
     "dehumidifier": "Dezumidificator",
     "drying": "Dezumidificare",
     "tank_full": "Rezervor plin",
@@ -1667,6 +1733,17 @@ const STRINGS = {
     "toast_ready": "Тосты готовы!",
     "f_hot_minutes": "Показывать «горячая вода» (мин)",
     "f_ready_minutes": "Показывать «тосты готовы» (мин)",
+    "power_strip": "Удлинитель",
+    "phone_charger": "Зарядка телефона",
+    "piano": "Цифровое пианино",
+    "garland": "Светодиодная гирлянда",
+    "powered": "Включено",
+    "lit": "Горит",
+    "outlets": "Розетки",
+    "effect": "Эффект",
+    "f_outlets": "Управляемые розетки (выключатели)",
+    "f_sockets": "Количество розеток",
+    "f_multicolor": "Разноцветная (радуга)",
     "dehumidifier": "Осушитель",
     "drying": "Осушение",
     "tank_full": "Бак полон",
@@ -2506,6 +2583,27 @@ ${fridgeFood(62, 7, 43, 120)}
 
 SVG.fridge = (c) => `${FRIDGE_DEFS}${FRIDGE[fridgeStyle(c)](!!(c && c.flex_temperature))}${fridgeMist}`;
 
+SVG.garland = () => {
+  // deux rangées de festons sous une poutre de terrasse, trois globes par feston
+  const sw = [[6, 24, 60, 26], [60, 24, 114, 26], [6, 62, 42, 16], [42, 62, 78, 16], [78, 62, 114, 16]], P = [];
+  sw.forEach(([x0, y, x1, h]) => { for (const t of [.25, .5, .75]) P.push([x0 + (x1 - x0) * t, y + 4 * h * t * (1 - t)]); });
+  const cord = sw.map(([x0, y, x1, h]) => `M${x0} ${y} Q${(x0 + x1) / 2} ${y + 2 * h} ${x1} ${y}`).join("");
+  return `
+<defs>${DEFS}<radialGradient id="ID-glh"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".35" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
+<rect class="gl-sky" width="120" height="140"/>
+<rect x="0" y="18" width="120" height="7" fill="#8a6239"/><rect x="0" y="18" width="120" height="2" fill="#a77a4b"/>
+<rect x="2" y="25" width="6" height="115" fill="#7a5532"/><rect x="112" y="25" width="6" height="115" fill="#7a5532"/>
+<path class="gl-hedge" d="M8 118 q8-10 16 0 q8-12 18 0 q9-10 18 0 q9-12 18 0 q8-10 16 0 q6-8 10 0 v22 h-96z"/>
+<rect x="0" y="128" width="120" height="12" fill="#b9a68a"/>
+<path d="${cord}" stroke="#2b3036" stroke-width="1.1" fill="none"/>
+${P.map(([x, y], i) => `<g class="gl-bulb" style="--d:${(-i * .3).toFixed(1)}s">
+  <circle class="gl-h" cx="${x.toFixed(1)}" cy="${(y + 8).toFixed(1)}" r="8"/>
+  <rect x="${(x - 1.8).toFixed(1)}" y="${y.toFixed(1)}" width="3.6" height="3" rx=".6" fill="#2b3036"/>
+  <circle class="gl-b" cx="${x.toFixed(1)}" cy="${(y + 8).toFixed(1)}" r="5"/>
+  <circle class="gl-g" cx="${x.toFixed(1)}" cy="${(y + 8).toFixed(1)}" r="5" fill="url(#ID-glh)"/>
+</g>`).join("")}`;
+};
+
 /* Carte générique : l'utilisateur fournit sa propre image (option `image`) */
 SVG.generic = (c = {}) => {
   // `images` (liste conditionnelle) : on part de la première ; la carte choisit ensuite selon l'état
@@ -2875,6 +2973,43 @@ ${lcd(46, 31.5, 28, 9)}
 <g class="warm-air"><path d="M42 30q-2-3 0-6t0-6"/><path d="M54 30q-2-3 0-6t0-6"/><path d="M66 30q-2-3 0-6t0-6"/><path d="M78 30q-2-3 0-6t0-6"/></g>
 </g>`;
 
+SVG.phone_charger = () => `
+<defs>${DEFS}<linearGradient id="ID-phnwall" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a1a63"/><stop offset=".5" stop-color="#6b3fc9"/><stop offset="1" stop-color="#ff8fab"/></linearGradient></defs>
+<ellipse cx="60" cy="122" rx="46" ry="6" fill="url(#ID-shadow)"/>
+<ellipse cx="60" cy="112" rx="40" ry="10" fill="url(#ID-dark)"/><ellipse cx="60" cy="110" rx="38" ry="9" fill="#2b3036"/>
+<ellipse class="phn-ring" cx="60" cy="110" rx="34" ry="7.5" fill="none" stroke-width="1.6"/>
+<g transform="rotate(-6 60 70)">
+  <rect x="34" y="18" width="52" height="92" rx="9" fill="#1b1f24"/>
+  <rect x="37" y="22" width="46" height="84" rx="6.5" fill="#0d1116"/>
+  <rect class="phn-scr" x="37" y="22" width="46" height="84" rx="6.5" fill="url(#ID-phnwall)"/>
+  <rect x="53" y="24" width="14" height="3.4" rx="1.7" fill="#0b0d10"/>
+  <g class="phn-ui">
+    <text class="phn-time" x="60" y="52" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="sans-serif">--:--</text>
+    <rect x="45" y="66" width="30" height="12" rx="3" fill="none" stroke="#fff" stroke-width="1.4"/><rect x="75" y="70" width="2.4" height="4" rx="1" fill="#fff"/>
+    <rect class="phn-fill" x="47" y="68" width="26" height="8" rx="1.6"/>
+    <path class="phn-bolt" d="M61 63l-5 9h4l-2 7l6-10h-4z" fill="#fff" stroke="#1b1f24" stroke-width=".5"/>
+    <text class="phn-pct" x="60" y="92" text-anchor="middle" font-size="7" fill="#fff" font-family="sans-serif"></text>
+  </g>
+</g>`;
+
+SVG.piano = () => {
+  // 14 touches blanches, touches noires selon le motif d'une octave
+  const X0 = 8, KW = 104 / 14;
+  const white = [...Array(14)].map((_, i) => `<path class="pn-k" style="--d:${((i * 7) % 11) * -.37}s;--t:${2.2 + (i % 5) * .45}s" d="M${(X0 + i * KW).toFixed(2)} 86h${(KW - .5).toFixed(2)}l2 26h-${(KW + 1.5).toFixed(2)}z" fill="#fbfbfb" stroke="#b7bcc2" stroke-width=".5"/>`).join("");
+  const black = [0, 1, 3, 4, 5, 7, 8, 10, 11, 12].map((i, k) => `<rect class="pn-kb" style="--d:${((k * 5) % 9) * -.41}s;--t:${2.6 + (k % 4) * .5}s" x="${(X0 + (i + 1) * KW - 2.2).toFixed(2)}" y="86" width="4.4" height="15" rx=".8" fill="#14171b"/>`).join("");
+  return `
+<defs>${DEFS}</defs>
+<ellipse cx="60" cy="128" rx="56" ry="4" fill="url(#ID-shadow)"/>
+<g class="pn-notes" fill="#3b8fe0"><text x="30" y="60" font-size="14">♪</text><text x="62" y="58" font-size="12">♫</text><text x="88" y="62" font-size="13">♪</text></g>
+<rect x="2" y="74" width="116" height="40" fill="url(#ID-dark)"/><rect x="2" y="70" width="116" height="16" rx="3" fill="#2b3036"/>
+<rect class="pn-scr" x="48" y="74" width="24" height="8" rx="1.5"/>
+<g fill="#5b626b">${[0, 1, 2, 3].map((k) => `<circle cx="${12 + k * 7}" cy="78" r="2"/>`).join("")}${[0, 1, 2].map((k) => `<rect x="${82 + k * 8}" y="75" width="5" height="6" rx="1"/>`).join("")}</g>
+<circle class="pn-led" cx="112" cy="78" r="1.2"/>
+${white}${black}
+<rect x="2" y="112" width="116" height="4" rx="1.5" fill="#16191d"/>
+<rect x="10" y="116" width="4" height="12" fill="#2b3036"/><rect x="106" y="116" width="4" height="12" fill="#2b3036"/>`;
+};
+
 SVG.pool_pump = () => `
 <defs>${DEFS}
 <clipPath id="ID-win"><rect x="22" y="52" width="16" height="32" rx="3"/></clipPath>
@@ -2929,6 +3064,34 @@ ${lcd(66, 46.5, 24, 8)}
 <path d="M100.5 63h7M100.5 67h7M100.5 71h7M100.5 75h7M100.5 79h7M100.5 83h7" stroke="#6f7881" stroke-width=".9"/>
 <path d="M64 60q10-3 34 0" stroke="#fff" stroke-opacity=".35" stroke-width="1.4" fill="none"/>
 </g>`;
+
+/* nombre de prises dessinées : option sockets, sinon nombre d'entités outlets, sinon 4 (2 à 6) */
+const msCount = (c) => Math.max(2, Math.min(6, Math.round(Number(c?.sockets) || (Array.isArray(c?.outlets) && c.outlets.length) || 4)));
+
+SVG.power_strip = (c) => {
+  const n = msCount(c), cols = ["#2b3036", "#8d96a0"];
+  // positions des prises le long de la face supérieure, vue de trois quarts
+  const sock = [...Array(n)].map((_, i) => { const t = (i + .9) / (n + .6); return [14 + t * 96, 73 - t * 12]; });
+  return `
+<defs>${DEFS}<linearGradient id="ID-mstop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e6e9ed"/></linearGradient></defs>
+<g transform="translate(60 104) scale(1.06) translate(-62 -78)">
+<ellipse cx="62" cy="96" rx="56" ry="6" fill="url(#ID-shadow)"/>
+<path d="M116 72 q10 4 4 30 q-4 20 -2 40" stroke="#d5dae0" stroke-width="3.4" fill="none"/>
+<path class="ms-flow" d="M116 72 q10 4 4 30 q-4 20 -2 40" stroke="#38a8ff" stroke-width="1.6" fill="none"/>
+<polygon points="20,78 116,66 116,78 20,90" fill="#d3d8de" stroke="#b5bcc4" stroke-width=".6"/>
+<polygon points="8,70 104,58 116,66 20,78" fill="url(#ID-mstop)" stroke="#c4cad1" stroke-width=".6"/>
+<polygon class="ms-sw" points="10,71 17,70 19,73 12,74"/>
+${sock.map(([x, y], i) => { const col = cols[i % 2]; return `<g class="ms-s ms-s${i}">
+  <ellipse cx="${x}" cy="${y}" rx="8" ry="4.2" fill="#eef1f4" stroke="#bfc6ce" stroke-width=".7"/>
+  <ellipse class="ms-ring" cx="${x}" cy="${y}" rx="8.8" ry="4.8" fill="none" stroke-width="1"/>
+  <circle cx="${x - 2.6}" cy="${y + .4}" r=".9" fill="#5b6168"/><circle cx="${x + 2.6}" cy="${y - .4}" r=".9" fill="#5b6168"/><rect x="${x - .6}" y="${y - 3.4}" width="1.2" height="1.6" fill="#9aa2ab"/>
+  <g class="ms-plug">
+    <path d="M${x} ${y - 12} q${-4 + i * 3} -18 ${-10 + i * 7} -40" stroke="${col}" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+    <path d="M${x - 6.5} ${y - 1} v-11 q0 -3 6.5 -3 q6.5 0 6.5 3 v11 q0 3 -6.5 3 q-6.5 0 -6.5 -3z" fill="${col}" stroke="#7c848d" stroke-width=".6"/>
+    <ellipse cx="${x}" cy="${y - 12}" rx="6.5" ry="2.6" fill="${i % 2 ? "#b7bec6" : "#4a525c"}"/>
+  </g></g>`; }).join("")}
+</g>`;
+};
 
 SVG.printer_3d = () => `
 <defs>${DEFS}
@@ -3562,6 +3725,18 @@ const DEF = {
   toaster: { accent: "heat", threshold: 200,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["grille_pain", "grillepain", "toaster", "toast"] },
+  power_strip: { accent: "active", threshold: 1,
+    fields: ["entity", "power", "energy", "cost", "switch"],
+    keys: ["multiprise", "power_strip", "powerstrip", "steckdosenleiste", "bloc_prise"] },
+  phone_charger: { accent: "active", threshold: 2,
+    fields: ["entity", "power", "energy", "cost", "battery_level", "switch"],
+    keys: ["chargeur_tel", "chargeur_telephone", "phone_charger", "telephone", "phone", "iphone", "smartphone", "pixel", "galaxy"] },
+  piano: { accent: "active", threshold: 3,
+    fields: ["entity", "power", "energy", "cost", "switch"],
+    keys: ["piano", "clavier", "keyboard", "synth", "yamaha_p", "roland", "casio"] },
+  garland: { accent: "active", threshold: 1,
+    fields: ["entity", "power", "energy", "cost", "switch"],
+    keys: ["guirlande", "garland", "string_light", "fairy", "guinguette", "lichterkette"] },
   monitor: { accent: "active", threshold: 10,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["ecran", "moniteur", "monitor", "screens", "display"] },
@@ -3755,9 +3930,12 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "power_level", "pellet_level", "runtime", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed"].map((k) => c[k]).filter(Boolean).concat(this._nozzles())
+      "power_level", "pellet_level", "runtime", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed"].map((k) => c[k]).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
+
+  // guirlande : une couleur choisie autre que blanc chaud → unicolore ; sinon arc-en-ciel
+  _glSingle(m) { return !/^rgb\(255,\s*2[0-9]{2},\s*1[0-9]{2}\)$|^rgb\(255,255,255\)$/.test(String(m.glColor).replace(/ /g, "")); }
 
   _build() {
     if (!this.shadowRoot) this.attachShadow({ mode: "open" });
@@ -4133,11 +4311,30 @@ class ApplianceCardBase extends HTMLElement {
       const md = m.mode && !BAD.includes(String(m.mode.state).toLowerCase()) ? m.mode : null;
       const attrTxt = (st, k) => { try { if (hass.formatEntityAttributeValue) return hass.formatEntityAttributeValue(st, k); } catch (e) { /* ignore */ } return String(st.attributes[k]); };
       m.dhMode = md ? stateText(hass, md) : isHum && main.attributes.mode ? attrTxt(main, "mode") : null;
-    } else if (kind === "tool_charger") {
+    } else if (kind === "power_strip") {
+      // sous tension si la prise / l'interrupteur est allumé, si ça consomme, ou si une des prises commandées est allumée
+      const outs = (Array.isArray(c.outlets) ? c.outlets : []).map((i) => hass.states[i]);
+      m.outlets = outs.map((o) => isOn(o));
+      const on = (watts !== null && powered) || (watts === null && base === "running") || isOn(sw) || m.outlets.some(Boolean);
+      m.status = base === "off" || base === "unavailable" ? base : on ? "powered" : "off";
+    } else if (kind === "piano") {
+      if (base === "off" || base === "unavailable") m.status = base;
+      else if (watts !== null) m.status = powered ? "powered" : watts >= (c.standby_threshold ?? 0.3) ? "standby" : "off";
+      else m.status = base === "running" ? "powered" : "off";
+    } else if (kind === "garland") {
+      // entité light : état, couleur et luminosité ; sinon la prise
+      const isLight = main && domainOf(c.entity) === "light";
+      const on = isLight ? isOn(main) : (watts !== null ? powered : base === "running");
+      m.status = base === "unavailable" ? "unavailable" : on ? "lit" : "off";
+      const a = isLight ? main.attributes || {} : {};
+      m.glColor = Array.isArray(a.rgb_color) ? `rgb(${a.rgb_color.join(",")})` : null;
+      m.glBri = a.brightness != null ? Math.max(.25, Number(a.brightness) / 255) : 1;
+      m.glEffect = a.effect && !/^(none|off|aucun)$/i.test(a.effect) ? String(a.effect) : null;
+    } else if (kind === "tool_charger" || kind === "phone_charger") {
       // > seuil : en charge ; petite conso résiduelle : batterie chargée (maintien) ; sinon socle vide / veille
       const full = m.batt != null && m.batt >= (c.full_level ?? 100);
       if (base === "off" || base === "unavailable") m.status = base;
-      else if (watts !== null) m.status = powered && !full ? "charging" : full || watts >= (c.standby_threshold ?? 1) ? "charged" : "standby";
+      else if (watts !== null) m.status = powered && !full ? "charging" : full || watts >= (c.standby_threshold ?? (kind === "phone_charger" ? 0.3 : 1)) ? "charged" : "standby";
       else m.status = base === "running" && !full ? "charging" : full ? "charged" : "standby";
     } else if (kind === "coffee_maker") {
       const warmT = c.warm_threshold ?? 5;
@@ -4246,7 +4443,7 @@ class ApplianceCardBase extends HTMLElement {
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
     const hass = this._hass, kind = this._kind;
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
@@ -4348,7 +4545,7 @@ class ApplianceCardBase extends HTMLElement {
   _render(m) {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit"].includes(m.status);
     $("wrap").className = [
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
       active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
@@ -4359,6 +4556,28 @@ class ApplianceCardBase extends HTMLElement {
     // illustration dynamic parts
     if (kind === "av_receiver") $("wrap").style.setProperty("--amp", (m.amp ?? .6).toFixed(2));
     if (kind === "beer_tap") $("wrap").style.setProperty("--keg", ((m.keg ?? 70) / 100).toFixed(2));
+    if (kind === "power_strip") {
+      // fiche branchée : prises commandées (outlets), sinon toutes sauf la dernière ; LED allumée si la prise est active
+      const outs = m.outlets || [], on = m.status === "powered";
+      this.shadowRoot.querySelectorAll(".ms-s").forEach((g, i) => {
+        const plug = outs.length ? i < outs.length : i < this.shadowRoot.querySelectorAll(".ms-s").length - 1;
+        g.classList.toggle("plug", plug);
+        g.classList.toggle("on", on && (outs.length ? !!outs[i] : plug));
+      });
+    }
+    if (kind === "phone_charger") {
+      const lv = m.batt != null ? Math.max(0, Math.min(100, m.batt)) : null;
+      $("wrap").style.setProperty("--batt", String(lv != null ? Math.max(.04, lv / 100) : m.status === "charged" ? 1 : .6));
+      $("wrap").classList.toggle("seq", m.status === "charging" && lv == null);
+      this.shadowRoot.querySelector(".phn-time").textContent = fmtClock(hass, new Date());
+      this.shadowRoot.querySelector(".phn-pct").textContent = lv != null ? `${Math.round(lv)} %` : "";
+    }
+    if (kind === "garland") {
+      const multi = c.multicolor !== false && !(m.glColor && c.multicolor === undefined && m.glEffect == null && this._glSingle(m));
+      $("wrap").classList.toggle("gl-multi", multi);
+      $("wrap").style.setProperty("--glc", m.glColor || "#ffcf6a");
+      $("wrap").style.setProperty("--bri", (m.glBri ?? 1).toFixed(2));
+    }
     if (kind === "tool_charger") {
       // jauge 4 LED : niveau réel si capteur, sinon remplissage en boucle pendant la charge
       const st = m.status, lv = m.batt != null ? Math.max(0, Math.min(100, m.batt)) : null;
@@ -4514,7 +4733,8 @@ class ApplianceCardBase extends HTMLElement {
         ${sub ? `<div class="sub">${esc(sub)}</div>` : ""}`;
     }
 
-    const swId = c.switch || (kind === "dehumidifier" && domainOf(c.entity) === "humidifier" ? c.entity : null);
+    const swId = c.switch || (kind === "dehumidifier" && domainOf(c.entity) === "humidifier" ? c.entity : null)
+      || (kind === "garland" && domainOf(c.entity) === "light" ? c.entity : null);
     if (swId && c.show_toggle !== false) {
       const on = isOn(hass.states[swId]);
       // safety: cutting a washer/dryer/dishwasher mid-cycle needs a second click
@@ -4544,7 +4764,7 @@ class ApplianceCardBase extends HTMLElement {
     // progress bar
     let pct = null;
     if (active && m.progress != null) pct = m.progress;
-    else if (kind === "tool_charger" && m.status === "charging" && m.batt != null) pct = m.batt;
+    else if ((kind === "tool_charger" || kind === "phone_charger") && m.status === "charging" && m.batt != null) pct = m.batt;
     else if (kind === "kettle" && m.status === "boiling" && m.tempVal != null) pct = ((m.tempVal - 15) / 85) * 100;
     else if ((kind === "oven" && m.status === "preheating") || (kind === "water_heater" && m.status !== "off")) {
       if (m.tempVal != null && m.targetVal) {
@@ -4584,6 +4804,12 @@ class ApplianceCardBase extends HTMLElement {
     } else if (kind === "beer_tap") {
       if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("temperature"), tEntity);
       if (m.keg != null) tile("mdi:keg", `${fmtNum(hass, m.keg, 0)} %`, lb("keg"), c.keg_level, m.alerts.includes("keg_low") ? "warn" : "");
+    } else if (kind === "power_strip") {
+      if (m.outlets && m.outlets.length) tile("mdi:power-socket-fr", `${m.outlets.filter(Boolean).length} / ${m.outlets.length}`, lb("outlets"), c.outlets[0]);
+    } else if (kind === "phone_charger") {
+      if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0)} %`, lb("battery"), c.battery_level);
+    } else if (kind === "garland") {
+      if (m.glEffect && m.status === "lit") tile("mdi:auto-fix", m.glEffect, lb("effect"), c.entity);
     } else if (kind === "kettle") {
       if (m.tempVal != null) tile("mdi:thermometer-water", `${fmtNum(hass, m.tempVal, 0)} ${m.tempUnit}`, lb("water"), tEntity);
     } else if (kind === "tool_charger") {
@@ -4802,6 +5028,14 @@ function buildForm(kind) {
             { name: "zone_power", selector: { number: { min: 500, max: 4000, step: 50, mode: "box", unit_of_measurement: "W" } } },
             { name: "residual_minutes", selector: { number: { min: 0, max: 60, step: 1, mode: "box", unit_of_measurement: "min" } } },
           ] : []),
+          ...(kind === "power_strip" ? [
+            { name: "outlets", selector: { entity: { multiple: true, domain: ["switch", "light", "input_boolean"] } } },
+            { name: "sockets", selector: { number: { min: 2, max: 6, step: 1, mode: "box" } } },
+          ] : []),
+          ...(["phone_charger", "piano"].includes(kind) ? [
+            { name: "standby_threshold", selector: { number: { min: 0, max: 10, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
+          ] : []),
+          ...(kind === "garland" ? [{ name: "multicolor", selector: { boolean: {} }, default: true }] : []),
           ...(kind === "kettle" ? [
             { name: "hot_minutes", selector: { number: { min: 0, max: 60, step: 1, mode: "box", unit_of_measurement: "min" } } },
           ] : []),
@@ -4831,7 +5065,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "monitor" && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : ["monitor", "phone_charger", "piano"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
   };
 }
 
@@ -4860,7 +5094,7 @@ function stubFor(kind, hass) {
   if (power) cfg.power = power;
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "laptop", "monitor", "kettle", "toaster", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "laptop", "monitor", "kettle", "toaster", "power_strip", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;
@@ -5978,6 +6212,56 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-toaster.st-toasting .tb-led { fill: #ff8a3d; filter: drop-shadow(0 0 2px #ff8a3d); }
 .k-toaster.st-toast_ready .tb-led { fill: #43c07a; }
 @keyframes tb-pop { 0% { transform: translateY(22px); } 55% { transform: translateY(-14px); } 100% { transform: translateY(0); } }
+
+/* ---------- multiprise ---------- */
+.k-power_strip .illus { overflow: hidden; }
+.ms-sw { fill: #8a2d2d; transition: fill .3s; }
+.k-power_strip.st-powered .ms-sw { fill: #ff4d4d; filter: drop-shadow(0 0 3px #ff4d4d); }
+.ms-flow { stroke-dasharray: 3 6; opacity: 0; }
+.k-power_strip.st-powered .ms-flow { opacity: 1; animation: ms-flow .8s linear infinite; }
+.ms-ring { stroke: transparent; transition: stroke .3s; }
+.ms-s.on .ms-ring { stroke: #38a8ff; filter: drop-shadow(0 0 1.5px #38a8ff); }
+.ms-plug { opacity: 0; transform: translateY(-14px); transition: transform .5s, opacity .5s; }
+.ms-s.plug .ms-plug { opacity: 1; transform: none; }
+@keyframes ms-flow { to { stroke-dashoffset: -9; } }
+/* ---------- chargeur de téléphone ---------- */
+.phn-ring { stroke: #38a8ff; opacity: .15; }
+.k-phone_charger.st-charging .phn-ring { opacity: 1; animation: ac-pulse 1.6s ease-in-out infinite; }
+.k-phone_charger.st-charged .phn-ring { opacity: .6; stroke: #43c07a; }
+.phn-scr, .phn-ui { opacity: 0; transition: opacity .5s; }
+.k-phone_charger.st-charging .phn-scr, .k-phone_charger.st-charging .phn-ui,
+.k-phone_charger.st-charged .phn-scr, .k-phone_charger.st-charged .phn-ui { opacity: 1; }
+.phn-fill { fill: #43c07a; transform-box: fill-box; transform-origin: 0 50%; transform: scaleX(var(--batt, .6)); transition: transform 1s; }
+.phn-bolt { opacity: 0; }
+.k-phone_charger.st-charging .phn-bolt { opacity: 1; animation: ac-pulse 1.2s ease-in-out infinite; }
+.k-phone_charger.st-charging.seq .phn-fill { animation: phn-seq 3s linear infinite; }
+@keyframes phn-seq { from { transform: scaleX(.05); } to { transform: scaleX(1); } }
+/* ---------- piano ---------- */
+.pn-scr { fill: #10161c; transition: fill .3s; }
+.k-piano.st-powered .pn-scr { fill: #1aa3ff; filter: drop-shadow(0 0 2px #1aa3ff); }
+.pn-led { fill: #3a414b; }
+.k-piano.st-powered .pn-led { fill: #43c07a; } .k-piano.st-standby .pn-led { fill: #ffb020; }
+.k-piano.st-powered .pn-k { animation: pn-press var(--t, 2.4s) steps(1) infinite; animation-delay: var(--d, 0s); }
+.k-piano.st-powered .pn-kb { animation: pn-pressb var(--t, 2.8s) steps(1) infinite; animation-delay: var(--d, 0s); }
+@keyframes pn-press { 0% { fill: #9ad7ff; } 12% { fill: #fbfbfb; } }
+@keyframes pn-pressb { 0% { fill: #2b6fb0; } 10% { fill: #14171b; } }
+.pn-notes text { opacity: 0; }
+.k-piano.st-powered .pn-notes text { animation: pn-note 2.6s ease-out infinite; }
+.pn-notes text:nth-child(2) { animation-delay: -.9s !important; } .pn-notes text:nth-child(3) { animation-delay: -1.7s !important; }
+@keyframes pn-note { 0% { opacity: 0; transform: translate(0, 0); } 20% { opacity: 1; } 100% { opacity: 0; transform: translate(10px, -34px); } }
+/* ---------- guirlande ---------- */
+.k-garland .illus { overflow: hidden; }
+.gl-sky { fill: #cfe2f3; transition: fill .6s; }
+.k-garland.st-lit .gl-sky { fill: #141b38; }
+.gl-hedge { fill: #3f6b3a; transition: fill .6s; } .k-garland.st-lit .gl-hedge { fill: #1f3a24; }
+.gl-b { fill: #c9ccd1; transition: fill .4s; }
+.gl-h { opacity: 0; transition: opacity .4s; }
+.gl-g { opacity: .35; }
+.k-garland.st-lit .gl-g { opacity: .9; }
+.k-garland.st-lit .gl-h { opacity: calc(var(--bri, 1) * .45); }
+.k-garland.st-lit.gl-multi .gl-b, .k-garland.st-lit.gl-multi .gl-h { animation: gl-rgb 2.4s linear infinite; animation-delay: var(--d, 0s); }
+.k-garland.st-lit:not(.gl-multi) .gl-b, .k-garland.st-lit:not(.gl-multi) .gl-h { fill: var(--glc, #ffcf6a); }
+@keyframes gl-rgb { 0% { fill: #ff3b5c; } 25% { fill: #ffd23b; } 50% { fill: #3bff8a; } 75% { fill: #3bb8ff; } 100% { fill: #ff3b5c; } }
 `;
 
 /* ------------------------------------------------------------------ */

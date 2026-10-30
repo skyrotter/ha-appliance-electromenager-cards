@@ -45,9 +45,12 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "power_level", "pellet_level", "runtime", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed"].map((k) => c[k]).filter(Boolean).concat(this._nozzles())
+      "power_level", "pellet_level", "runtime", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed"].map((k) => c[k]).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
+
+  // guirlande : une couleur choisie autre que blanc chaud → unicolore ; sinon arc-en-ciel
+  _glSingle(m) { return !/^rgb\(255,\s*2[0-9]{2},\s*1[0-9]{2}\)$|^rgb\(255,255,255\)$/.test(String(m.glColor).replace(/ /g, "")); }
 
   _build() {
     if (!this.shadowRoot) this.attachShadow({ mode: "open" });
@@ -423,11 +426,30 @@ class ApplianceCardBase extends HTMLElement {
       const md = m.mode && !BAD.includes(String(m.mode.state).toLowerCase()) ? m.mode : null;
       const attrTxt = (st, k) => { try { if (hass.formatEntityAttributeValue) return hass.formatEntityAttributeValue(st, k); } catch (e) { /* ignore */ } return String(st.attributes[k]); };
       m.dhMode = md ? stateText(hass, md) : isHum && main.attributes.mode ? attrTxt(main, "mode") : null;
-    } else if (kind === "tool_charger") {
+    } else if (kind === "power_strip") {
+      // sous tension si la prise / l'interrupteur est allumé, si ça consomme, ou si une des prises commandées est allumée
+      const outs = (Array.isArray(c.outlets) ? c.outlets : []).map((i) => hass.states[i]);
+      m.outlets = outs.map((o) => isOn(o));
+      const on = (watts !== null && powered) || (watts === null && base === "running") || isOn(sw) || m.outlets.some(Boolean);
+      m.status = base === "off" || base === "unavailable" ? base : on ? "powered" : "off";
+    } else if (kind === "piano") {
+      if (base === "off" || base === "unavailable") m.status = base;
+      else if (watts !== null) m.status = powered ? "powered" : watts >= (c.standby_threshold ?? 0.3) ? "standby" : "off";
+      else m.status = base === "running" ? "powered" : "off";
+    } else if (kind === "garland") {
+      // entité light : état, couleur et luminosité ; sinon la prise
+      const isLight = main && domainOf(c.entity) === "light";
+      const on = isLight ? isOn(main) : (watts !== null ? powered : base === "running");
+      m.status = base === "unavailable" ? "unavailable" : on ? "lit" : "off";
+      const a = isLight ? main.attributes || {} : {};
+      m.glColor = Array.isArray(a.rgb_color) ? `rgb(${a.rgb_color.join(",")})` : null;
+      m.glBri = a.brightness != null ? Math.max(.25, Number(a.brightness) / 255) : 1;
+      m.glEffect = a.effect && !/^(none|off|aucun)$/i.test(a.effect) ? String(a.effect) : null;
+    } else if (kind === "tool_charger" || kind === "phone_charger") {
       // > seuil : en charge ; petite conso résiduelle : batterie chargée (maintien) ; sinon socle vide / veille
       const full = m.batt != null && m.batt >= (c.full_level ?? 100);
       if (base === "off" || base === "unavailable") m.status = base;
-      else if (watts !== null) m.status = powered && !full ? "charging" : full || watts >= (c.standby_threshold ?? 1) ? "charged" : "standby";
+      else if (watts !== null) m.status = powered && !full ? "charging" : full || watts >= (c.standby_threshold ?? (kind === "phone_charger" ? 0.3 : 1)) ? "charged" : "standby";
       else m.status = base === "running" && !full ? "charging" : full ? "charged" : "standby";
     } else if (kind === "coffee_maker") {
       const warmT = c.warm_threshold ?? 5;
@@ -536,7 +558,7 @@ class ApplianceCardBase extends HTMLElement {
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
     const hass = this._hass, kind = this._kind;
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
@@ -638,7 +660,7 @@ class ApplianceCardBase extends HTMLElement {
   _render(m) {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit"].includes(m.status);
     $("wrap").className = [
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
       active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
@@ -649,6 +671,28 @@ class ApplianceCardBase extends HTMLElement {
     // illustration dynamic parts
     if (kind === "av_receiver") $("wrap").style.setProperty("--amp", (m.amp ?? .6).toFixed(2));
     if (kind === "beer_tap") $("wrap").style.setProperty("--keg", ((m.keg ?? 70) / 100).toFixed(2));
+    if (kind === "power_strip") {
+      // fiche branchée : prises commandées (outlets), sinon toutes sauf la dernière ; LED allumée si la prise est active
+      const outs = m.outlets || [], on = m.status === "powered";
+      this.shadowRoot.querySelectorAll(".ms-s").forEach((g, i) => {
+        const plug = outs.length ? i < outs.length : i < this.shadowRoot.querySelectorAll(".ms-s").length - 1;
+        g.classList.toggle("plug", plug);
+        g.classList.toggle("on", on && (outs.length ? !!outs[i] : plug));
+      });
+    }
+    if (kind === "phone_charger") {
+      const lv = m.batt != null ? Math.max(0, Math.min(100, m.batt)) : null;
+      $("wrap").style.setProperty("--batt", String(lv != null ? Math.max(.04, lv / 100) : m.status === "charged" ? 1 : .6));
+      $("wrap").classList.toggle("seq", m.status === "charging" && lv == null);
+      this.shadowRoot.querySelector(".phn-time").textContent = fmtClock(hass, new Date());
+      this.shadowRoot.querySelector(".phn-pct").textContent = lv != null ? `${Math.round(lv)} %` : "";
+    }
+    if (kind === "garland") {
+      const multi = c.multicolor !== false && !(m.glColor && c.multicolor === undefined && m.glEffect == null && this._glSingle(m));
+      $("wrap").classList.toggle("gl-multi", multi);
+      $("wrap").style.setProperty("--glc", m.glColor || "#ffcf6a");
+      $("wrap").style.setProperty("--bri", (m.glBri ?? 1).toFixed(2));
+    }
     if (kind === "tool_charger") {
       // jauge 4 LED : niveau réel si capteur, sinon remplissage en boucle pendant la charge
       const st = m.status, lv = m.batt != null ? Math.max(0, Math.min(100, m.batt)) : null;
@@ -804,7 +848,8 @@ class ApplianceCardBase extends HTMLElement {
         ${sub ? `<div class="sub">${esc(sub)}</div>` : ""}`;
     }
 
-    const swId = c.switch || (kind === "dehumidifier" && domainOf(c.entity) === "humidifier" ? c.entity : null);
+    const swId = c.switch || (kind === "dehumidifier" && domainOf(c.entity) === "humidifier" ? c.entity : null)
+      || (kind === "garland" && domainOf(c.entity) === "light" ? c.entity : null);
     if (swId && c.show_toggle !== false) {
       const on = isOn(hass.states[swId]);
       // safety: cutting a washer/dryer/dishwasher mid-cycle needs a second click
@@ -834,7 +879,7 @@ class ApplianceCardBase extends HTMLElement {
     // progress bar
     let pct = null;
     if (active && m.progress != null) pct = m.progress;
-    else if (kind === "tool_charger" && m.status === "charging" && m.batt != null) pct = m.batt;
+    else if ((kind === "tool_charger" || kind === "phone_charger") && m.status === "charging" && m.batt != null) pct = m.batt;
     else if (kind === "kettle" && m.status === "boiling" && m.tempVal != null) pct = ((m.tempVal - 15) / 85) * 100;
     else if ((kind === "oven" && m.status === "preheating") || (kind === "water_heater" && m.status !== "off")) {
       if (m.tempVal != null && m.targetVal) {
@@ -874,6 +919,12 @@ class ApplianceCardBase extends HTMLElement {
     } else if (kind === "beer_tap") {
       if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("temperature"), tEntity);
       if (m.keg != null) tile("mdi:keg", `${fmtNum(hass, m.keg, 0)} %`, lb("keg"), c.keg_level, m.alerts.includes("keg_low") ? "warn" : "");
+    } else if (kind === "power_strip") {
+      if (m.outlets && m.outlets.length) tile("mdi:power-socket-fr", `${m.outlets.filter(Boolean).length} / ${m.outlets.length}`, lb("outlets"), c.outlets[0]);
+    } else if (kind === "phone_charger") {
+      if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0)} %`, lb("battery"), c.battery_level);
+    } else if (kind === "garland") {
+      if (m.glEffect && m.status === "lit") tile("mdi:auto-fix", m.glEffect, lb("effect"), c.entity);
     } else if (kind === "kettle") {
       if (m.tempVal != null) tile("mdi:thermometer-water", `${fmtNum(hass, m.tempVal, 0)} ${m.tempUnit}`, lb("water"), tEntity);
     } else if (kind === "tool_charger") {

@@ -352,6 +352,32 @@ const SCEN = [
       range(ctl, 'Puissance', 'sensor.toaster_power', 0, 1200, 10, 850, 'W', W);
       set('sensor.toaster_energy', 0.05, KWH);
     } },
+  { kind: 'power-strip', title: 'Multiprise',
+    cfg: { switch: 'switch.strip', power: 'sensor.strip_power', outlets: ['switch.strip_1', 'switch.strip_2', 'switch.strip_3', 'switch.strip_4'] },
+    build(ctl) {
+      set('switch.strip', 'on');
+      range(ctl, 'Puissance', 'sensor.strip_power', 0, 500, 1, 62, 'W', W);
+      checks(ctl, [['Prise 1', 'switch.strip_1', true], ['Prise 2', 'switch.strip_2', true], ['Prise 3', 'switch.strip_3', false], ['Prise 4', 'switch.strip_4', true]]);
+    } },
+  { kind: 'phone-charger', title: 'Chargeur de téléphone',
+    cfg: { power: 'sensor.phone_charger_power', battery_level: 'sensor.phone_battery' },
+    build(ctl) {
+      range(ctl, 'Puissance', 'sensor.phone_charger_power', 0, 20, 0.1, 7.5, 'W', W);
+      range(ctl, 'Batterie', 'sensor.phone_battery', 0, 100, 1, 68, '%', { unit_of_measurement: '%', device_class: 'battery' });
+    } },
+  { kind: 'piano', title: 'Piano numérique',
+    cfg: { switch: 'switch.piano', power: 'sensor.piano_power' },
+    build(ctl) {
+      set('switch.piano', 'on');
+      range(ctl, 'Puissance', 'sensor.piano_power', 0, 40, 0.1, 14, 'W', W);
+    } },
+  { kind: 'garland', title: 'Guirlande LED',
+    cfg: { entity: 'light.demo_garland', power: 'sensor.garland_power' },
+    build(ctl) {
+      set('light.demo_garland', 'on', { brightness: 230, effect: 'Rainbow' });
+      checks(ctl, [['Allumée', 'light.demo_garland', true]]);
+      range(ctl, 'Puissance', 'sensor.garland_power', 0, 30, 0.5, 9, 'W', W);
+    } },
   { kind: 'dehumidifier', title: 'Déshumidificateur',
     cfg: { power: 'sensor.dehum_power', humidity: 'sensor.dehum_humidity', target_humidity: 'input_number.dehum_target', temperature: 'sensor.dehum_temp', tank_full: 'binary_sensor.dehum_tank', fan_speed: 'select.dehum_fan', mode: 'select.dehum_mode', energy: 'sensor.dehum_energy' },
     build(ctl) {
