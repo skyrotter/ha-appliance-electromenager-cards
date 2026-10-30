@@ -734,7 +734,11 @@
     "show_tilt": "Afișează înclinarea",
     "image": "Imagine proprie (URL)",
     "illustration_size": "Dimensiunea ilustrației",
-    "transparent": "Fundal transparent"
+    "transparent": "Fundal transparent",
+    "entity_wind": "Senzor de vânt",
+    "show_rain": "Afișează ploaia",
+    "show_wind": "Afișează vântul",
+    "louvre_color": "Culoarea lamelelor"
   },
   "light": {
     "light_bulb": "Bec",
@@ -773,6 +777,16 @@
     "position": "Poziție",
     "tilt": "Înclinare",
     "power": "Motor",
-    "since": "Ultima schimbare"
+    "since": "Ultima schimbare",
+    "pergola": "Pergolă bioclimatică",
+    "pg_open": "Deschisă",
+    "pg_closed": "Închisă",
+    "pg_partial": "Deschisă",
+    "pg_position": "Lamele",
+    "rain": "Ploaie",
+    "wind": "Vânt",
+    "yes": "Da",
+    "no": "Nu",
+    "btn_light": "LED"
   }
 }

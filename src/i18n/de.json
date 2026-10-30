@@ -734,7 +734,11 @@
     "show_tilt": "Neigung anzeigen",
     "image": "Eigenes Bild (URL)",
     "illustration_size": "Größe der Illustration",
-    "transparent": "Transparenter Hintergrund"
+    "transparent": "Transparenter Hintergrund",
+    "entity_wind": "Windsensor",
+    "show_rain": "Regen anzeigen",
+    "show_wind": "Wind anzeigen",
+    "louvre_color": "Lamellenfarbe"
   },
   "light": {
     "light_bulb": "Glühbirne",
@@ -773,6 +777,16 @@
     "position": "Position",
     "tilt": "Neigung",
     "power": "Motor",
-    "since": "Letzte Änderung"
+    "since": "Letzte Änderung",
+    "pergola": "Bioklimatische Pergola",
+    "pg_open": "Offen",
+    "pg_closed": "Geschlossen",
+    "pg_partial": "Offen",
+    "pg_position": "Lamellen",
+    "rain": "Regen",
+    "wind": "Wind",
+    "yes": "Ja",
+    "no": "Nein",
+    "btn_light": "LED"
   }
 }

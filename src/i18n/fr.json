@@ -734,7 +734,11 @@
     "show_tilt": "Afficher l'inclinaison",
     "image": "Image perso (URL)",
     "illustration_size": "Taille de l'illustration",
-    "transparent": "Fond transparent"
+    "transparent": "Fond transparent",
+    "entity_wind": "Capteur de vent",
+    "show_rain": "Afficher la pluie",
+    "show_wind": "Afficher le vent",
+    "louvre_color": "Couleur des lames"
   },
   "light": {
     "light_bulb": "Ampoule",
@@ -773,6 +777,16 @@
     "position": "Position",
     "tilt": "Inclinaison",
     "power": "Moteur",
-    "since": "Depuis"
+    "since": "Depuis",
+    "pergola": "Pergola bioclimatique",
+    "pg_open": "Ouverte",
+    "pg_closed": "Fermée",
+    "pg_partial": "Ouverte à",
+    "pg_position": "Lames",
+    "rain": "Pluie",
+    "wind": "Vent",
+    "yes": "Oui",
+    "no": "Non",
+    "btn_light": "LED"
   }
 }

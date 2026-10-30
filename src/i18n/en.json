@@ -734,7 +734,11 @@
     "show_tilt": "Show tilt",
     "image": "Your own image (URL)",
     "illustration_size": "Illustration size",
-    "transparent": "Transparent background"
+    "transparent": "Transparent background",
+    "entity_wind": "Wind speed sensor",
+    "show_rain": "Show rain",
+    "show_wind": "Show wind",
+    "louvre_color": "Louvre colour"
   },
   "light": {
     "light_bulb": "Bulb",
@@ -773,6 +777,16 @@
     "position": "Position",
     "tilt": "Tilt",
     "power": "Motor",
-    "since": "Last change"
+    "since": "Last change",
+    "pergola": "Bioclimatic pergola",
+    "pg_open": "Open",
+    "pg_closed": "Closed",
+    "pg_partial": "Open",
+    "pg_position": "Louvres",
+    "rain": "Rain",
+    "wind": "Wind",
+    "yes": "Yes",
+    "no": "No",
+    "btn_light": "LED"
   }
 }
