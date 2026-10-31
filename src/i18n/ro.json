@@ -206,6 +206,8 @@
     "cost_week": "Cost săptămâna aceasta",
     "cost_month": "Cost luna aceasta",
     "f_display": "Consum afișat ca (kWh, cost sau ambele)",
+    "f_tap_action": "Acțiune la atingere (ilustrație)",
+    "f_hold_action": "Acțiune la apăsare lungă (ilustrație)",
     "f_energy_period": "Energie afișată (contor sau perioadă)",
     "flex_temp": "Zonă flex",
     "f_flex_temperature": "Senzor temperatură zonă flex",

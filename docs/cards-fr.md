@@ -46,6 +46,18 @@ cost: sensor.lave_linge_cout_jour
 
 **Sécurité du bouton marche/arrêt** : sur le lave-linge, le sèche-linge, le lave-vaisselle et le poêle à granulés, couper la prise pendant un cycle (ou poêle allumé) demande deux clics (le bouton devient rouge et affiche « Cycle en cours – cliquer encore pour couper »). Sur le PC fixe et la baie serveur, couper la prise machine allumée ou en veille demande aussi deux clics (« Ordinateur allumé – cliquer encore pour couper »). Option `confirm_off: false` pour désactiver. Conseil : sur un lave-linge, ne mets pas de `switch:` du tout.
 
+**Clic sur l'illustration** (cartes principales) : `tap_action` et `hold_action` (appui long, 0,5 s) acceptent les actions standard de Home Assistant (`more-info`, `toggle`, `navigate`, `url`, `perform-action`, `none`). `toggle` allume / éteint la prise `switch`, avec la même confirmation que le bouton pendant un cycle. Par défaut, un clic ouvre la fiche de l'entité ; les tuiles ouvrent toujours la fiche de leur propre entité.
+
+```yaml
+type: custom:appliance-washer-card
+entity: input_boolean.washer_running
+switch: switch.washer_plug
+tap_action:
+  action: toggle
+hold_action:
+  action: more-info
+```
+
 **Pompe à bière** (`custom:appliance-beer-tap-card`) : tireuse avec fenêtre du fût, robinet chromé et pinte. Au-dessus de 30 W : refroidissement (flocon, brume froide, buée sur le verre) ; prise allumée sous le seuil : prête (pinte pleine, bulles). Avec un capteur `pouring` : la manette bascule, la bière coule et le verre se remplit. `temperature` sur l'écran, `keg_level` (%) remplit la fenêtre du fût avec alerte « Fût presque vide ».
 
 **Ampli home cinéma** (`custom:appliance-av-receiver-card`) : ampli avec écran, gros bouton de volume et égaliseur. En lecture, les barres dansent, l'anneau du volume s'illumine, des ondes et des notes sortent ; l'amplitude suit le volume (`media_player`) ou la puissance. L'écran affiche la source, `MUTE` en sourdine ; veille : voyant rouge. Avec une prise : lecture au-dessus de 40 W.

@@ -206,6 +206,8 @@
     "cost_week": "Kosten deze week",
     "cost_month": "Kosten deze maand",
     "f_display": "Verbruik tonen als (kWh, kosten of beide)",
+    "f_tap_action": "Tikactie (illustratie)",
+    "f_hold_action": "Vasthoudactie (illustratie)",
     "f_energy_period": "Getoonde energie (teller of periode)",
     "flex_temp": "Flexzone",
     "f_flex_temperature": "Temperatuursensor flexzone",

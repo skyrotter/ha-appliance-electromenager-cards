@@ -23,6 +23,7 @@ All cards have a visual editor. When added from the card picker, entities are de
 | `name` | Custom name |
 | `color` | Accent color (any CSS color) |
 | `show_toggle` | `false` to hide the power button |
+| `tap_action` / `hold_action` | Core cards: standard Home Assistant action when tapping / holding (0.5 s) the illustration: `more-info`, `toggle`, `navigate`, `url`, `perform-action`, `none`. `toggle` switches the `switch` plug, with the same safety confirmation as the power button (`confirm_off`). Default: tap opens more-info, hold does nothing. The tiles keep opening the more-info of their own entity |
 | `show_power` | `false` to hide the power chip (e.g. when `power` is an estimated sensor used only to detect the running state) |
 | `animations` | `false` to disable animations. By default the cards follow the "reduce animations" setting of the device (Windows: Accessibility → Visual effects → Animation effects; Android: Remove animations; iOS / macOS: Reduce motion); `true` keeps the core cards animated even when it is on |
 | `illustration_size` | Size of the drawing in % (30–300, default 100), on every card. In a sections dashboard, every card can also be resized with the mouse, from 3 columns wide and in height |
