@@ -246,7 +246,14 @@
     "mode": "Modus",
     "f_target_humidity": "Zielfeuchte (Sensor, number oder humidifier)",
     "f_tank_full": "Sensor Tank voll",
-    "f_fan_speed": "Lüfterstufe (select, number, fan…)"
+    "f_fan_speed": "Lüfterstufe (select, number, fan…)",
+    "last_cycle": "Letzter Zyklus",
+    "cycle_duration": "Zyklusdauer",
+    "cycle_energy": "Zyklusverbrauch",
+    "cycle_cost": "Zykluskosten",
+    "yesterday": "gestern",
+    "f_last_cycle": "Letzten Zyklus anzeigen (Start, Ende, Dauer, Verbrauch, Kosten)",
+    "f_price_per_kwh": "Preis pro kWh (Kosten des letzten Zyklus)"
   },
   "aquarium": {
     "power": "Leistung",

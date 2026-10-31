@@ -31,7 +31,7 @@ class ApplianceCardBase extends HTMLElement {
     // keep LCD clock / countdown fresh even when no entity changes
     this._tick = setInterval(() => { if (this._hass && this._config) this._update(false); }, 20000);
   }
-  disconnectedCallback() { clearInterval(this._tick); }
+  disconnectedCallback() { clearInterval(this._tick); clearTimeout(this._cycTimer); this._cycBusy = false; }
 
   getCardSize() { return 4; }
   getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
@@ -97,6 +97,33 @@ class ApplianceCardBase extends HTMLElement {
       .then((r) => { this._perKwh = r && Number.isFinite(r.change) ? r.change : null; })
       .catch(() => { this._perKwh = null; })
       .finally(() => { this._perBusy = false; if (this._hass) this._render(this._compute()); });
+  }
+
+  // last_cycle : début, fin, durée, énergie et coût du dernier cycle, lus dans l'historique de Home Assistant (4 derniers jours).
+  // Relu au chargement puis 20 s après chaque fin de cycle (le temps que l'enregistreur écrive les derniers points).
+  _fetchCycle(active) {
+    const c = this._config, hass = this._hass;
+    if (!c.last_cycle || !c.power || !["washer", "dryer", "dishwasher"].includes(this._kind) || !hass || typeof hass.callWS !== "function") return;
+    const was = this._cycActive;
+    this._cycActive = active;
+    if (active || this._cycBusy || (this._cycAt && was === active)) return;
+    this._cycBusy = true; this._cycAt = Date.now();
+    clearTimeout(this._cycTimer);
+    this._cycTimer = setTimeout(() => {
+      const now = Date.now(), ids = [c.power].concat(c.energy ? [c.energy] : []);
+      const unit = (i, f) => f[(hass.states[i] && hass.states[i].attributes.unit_of_measurement) || ""] ?? 1;
+      const pf = unit(c.power, { kW: 1000 }), ef = c.energy ? unit(c.energy, { Wh: 1e-3, MWh: 1e3 }) : 1;
+      hass.callWS({ type: "history/history_during_period", start_time: new Date(now - 4 * 86400000).toISOString(), end_time: new Date(now).toISOString(),
+        entity_ids: ids, minimal_response: true, no_attributes: true, significant_changes_only: false })
+        .then((r) => {
+          const pts = (i, f) => ((r && r[i]) || []).map((p) => ({ t: (p.lu ?? p.lc) * 1000, v: parseFloat(p.s) * f })).filter((p) => Number.isFinite(p.t));
+          const pw = pts(c.power, pf).map((p) => ({ t: p.t, w: Number.isFinite(p.v) ? p.v : 0 }));
+          const en = c.energy ? pts(c.energy, ef).filter((p) => Number.isFinite(p.v)) : [];
+          this._cycle = lastCycle(pw, c.threshold ?? this._def.threshold, c.cycle_gap ?? 15, en);
+        })
+        .catch(() => { this._cycle = null; })
+        .finally(() => { this._cycBusy = false; if (this._hass) this._render(this._compute()); });
+    }, was === true ? 20000 : 0);
   }
 
   _update(force) {
@@ -661,6 +688,7 @@ class ApplianceCardBase extends HTMLElement {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
     const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit"].includes(m.status);
+    this._fetchCycle(active);
     $("wrap").className = [
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
       active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
@@ -1012,6 +1040,27 @@ class ApplianceCardBase extends HTMLElement {
     }
     if (m.energyS) tile("mdi:solar-power-variant", fmtEnergy(hass, m.energyS) ?? "—", lb("energy_solar"), c.energy_solar);
     if (m.cost) tile(solar ? "mdi:piggy-bank-outline" : "mdi:cash", fmtUnit(hass, m.cost, 2, 2) ?? "—", lb(solar ? "savings" : "cost"), c.cost);
+    // dernier cycle (option last_cycle), affiché hors cycle
+    const cy = c.last_cycle && !active ? this._cycle : null;
+    if (cy) {
+      const s0 = new Date(cy.start), s1 = new Date(cy.end), today = new Date().toDateString();
+      const ago = Math.round((new Date(today) - new Date(s0.toDateString())) / 86400000);
+      let day = "";
+      if (ago === 1) day = ` · ${tr(hass, "yesterday")}`;
+      else if (ago > 1) { try { day = ` · ${s0.toLocaleDateString(loc(hass), { day: "numeric", month: "short" })}`; } catch (e) { day = ` · ${s0.getDate()}/${s0.getMonth() + 1}`; } }
+      tile("mdi:history", `${fmtClock(hass, s0)} → ${fmtClock(hass, s1)}`, `${lb("last_cycle")}${day}`, c.power);
+      tile("mdi:timer-outline", fmtDuration((cy.end - cy.start) / 60000), lb("cycle_duration"), c.power);
+      tile("mdi:lightning-bolt", `${fmtNum(hass, cy.kwh, 2)} kWh`, lb("cycle_energy"), c.energy || c.power);
+      // prix du kWh : nombre, ou entité (tarif) ; devise de Home Assistant
+      const pr = typeof c.price_per_kwh === "string" ? num(hass.states[c.price_per_kwh]) : Number(c.price_per_kwh);
+      if (c.price_per_kwh != null && c.price_per_kwh !== "" && Number.isFinite(pr)) {
+        const cur = (hass.config && hass.config.currency) || "EUR";
+        let v;
+        try { v = new Intl.NumberFormat(loc(hass), { style: "currency", currency: cur, minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(cy.kwh * pr); }
+        catch (e) { v = `${fmtNum(hass, cy.kwh * pr, 2, 2)} ${cur}`; }
+        tile("mdi:cash", v, lb("cycle_cost"), typeof c.price_per_kwh === "string" ? c.price_per_kwh : c.energy || c.power);
+      }
+    }
     if (solar && m.status !== "night" && m.frac != null && m.pw && !BAD.includes(String(m.pw.state).toLowerCase())) tile("mdi:white-balance-sunny", `${Math.round(m.frac * 100)} %`, lb("of_peak"), c.power);
     $("stats").innerHTML = tiles.join("");
     $("stats").style.display = tiles.length ? "" : "none";

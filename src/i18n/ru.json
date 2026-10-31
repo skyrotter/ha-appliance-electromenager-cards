@@ -246,7 +246,14 @@
     "mode": "Режим",
     "f_target_humidity": "Целевая влажность (sensor, number или humidifier)",
     "f_tank_full": "Датчик полного бака",
-    "f_fan_speed": "Скорость вентилятора (select, number, fan…)"
+    "f_fan_speed": "Скорость вентилятора (select, number, fan…)",
+    "last_cycle": "Последний цикл",
+    "cycle_duration": "Длительность цикла",
+    "cycle_energy": "Расход за цикл",
+    "cycle_cost": "Стоимость цикла",
+    "yesterday": "вчера",
+    "f_last_cycle": "Показывать последний цикл (начало, конец, длительность, расход, стоимость)",
+    "f_price_per_kwh": "Цена за кВт·ч (стоимость последнего цикла)"
   },
   "aquarium": {
     "power": "Мощность",

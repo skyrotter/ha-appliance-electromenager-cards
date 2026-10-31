@@ -246,7 +246,14 @@
 "f_mid_threshold": "Hastighet 2 over (W)",
     "ph_heat": "Oppvarming",
     "f_heating_power": "Effektterskel for oppvarming (W)",
-    "f_spin_power": "Effektterskel for sentrifugering (W)"
+    "f_spin_power": "Effektterskel for sentrifugering (W)",
+"last_cycle": "Siste syklus",
+"cycle_duration": "Syklusvarighet",
+"cycle_energy": "Syklusforbruk",
+"cycle_cost": "Sykluskostnad",
+"yesterday": "i går",
+"f_last_cycle": "Vis siste syklus (start, slutt, varighet, forbruk, kostnad)",
+"f_price_per_kwh": "Pris per kWh (kostnad for siste syklus)"
 },
 "aquarium": {
 "power": "Effekt",

@@ -15,6 +15,22 @@ How the card reads the power:
 - **Idle**: power is at or below `threshold`. If your plug itself draws a few watts, or the appliance sits at more than 10 W in standby, raise it: `threshold: 15`. Check your plug's power history to choose the value.
 - The dryer shows **Drying** while it runs (the phase detection below only applies to washers and dishwashers).
 
+## Last cycle: start, end, duration, energy, cost
+
+`last_cycle: true` adds, between cycles, the **last cycle** tiles: start → end time (with "yesterday" or the date when it was not today), duration, energy used and, with `price_per_kwh`, its cost. The card reads them from the Home Assistant history of `power` (last 4 days): no helper, no automation, no template sensor.
+
+```yaml
+type: custom:appliance-dishwasher-card
+power: sensor.dishwasher_plug_power
+energy: sensor.dishwasher_plug_energy   # optional: more accurate energy
+last_cycle: true
+price_per_kwh: 0.2516                   # or a tariff entity: sensor.electricity_price
+```
+
+- A cycle is power above `threshold`; drops below it shorter than `cycle_gap` (**15 min** by default) stay in the same cycle (soaking, drying). Raise `cycle_gap` if a long drying phase splits the cycle in two.
+- Energy is the difference of the `energy` counter over the cycle, otherwise the power history integrated over time.
+- The cost uses the Home Assistant currency.
+
 The rest of this page is only needed if the card flickers during a cycle.
 
 ## Cycle detection (stops the flicker)
