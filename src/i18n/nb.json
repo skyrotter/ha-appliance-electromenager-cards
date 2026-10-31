@@ -844,7 +844,8 @@
 "color_warm": "Farge: varmt",
 "color_humidity": "Farge: fuktighet",
 "color_dry": "Farge: tørt",
-"color_alert": "Farge: varsel"
+"color_alert": "Farge: varsel",
+"show_trend": "Vis trend (1 t)"
 },
 "light": {
 "light_bulb": "Lyspære",

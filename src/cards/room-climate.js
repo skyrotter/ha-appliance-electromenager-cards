@@ -38,6 +38,8 @@ ha-card:focus-visible{outline:2px solid var(--c);outline-offset:-2px}
 .halo{position:absolute;top:-50px;right:-40px;width:150px;height:150px;border-radius:50%;pointer-events:none;
   background:radial-gradient(circle,color-mix(in srgb,var(--c) 22%,transparent),transparent 70%);animation:rcbreathe 5s ease-in-out infinite}
 .alert .halo{animation-duration:1.6s}
+/* fond transparent : pas de halo coloré (carte superposée à autre chose) */
+.transparent .halo{display:none}
 .head{display:flex;align-items:center;gap:6px;position:relative;min-width:0}
 .ric{--mdc-icon-size:18px;flex:none;color:var(--c)}
 .name{flex:1;min-width:0;font-size:14px;font-weight:600;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -579,7 +581,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       this._loadHist();
       const c = this._c, r = this._root, s = this._compute(), tmp = s.tmp, st = this._style();
       const $ = (id) => r.getElementById(id), txt = (id, v) => { const e = $(id); if (e) e.textContent = v; };
-      this._card.className = `st-${st} ${s.cls}${c.animations === false ? ' noanim' : ''}`;
+      this._card.className = `st-${st} ${s.cls}${c.animations === false ? ' noanim' : ''}${c.transparent ? ' transparent' : ''}`;
       this._card.style.setProperty('--tc', s.tcol);
       // couleurs personnalisées (éditeur) : variables --appliance-*, lues aussi par le pop-up
       Object.entries(COLORS).forEach(([k, v]) => { const col = cssColor(c[k]); if (col) this.style.setProperty(v, col); else this.style.removeProperty(v); });
@@ -596,6 +598,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       if (tr) {
         const dt = Math.round(s.trend * 10) / 10;
         tr.className = 'trend' + (dt > 0 ? ' up' : dt < 0 ? ' down' : '');
+        tr.hidden = c.show_trend === false;
         tr.textContent = !fin(s.trend) ? '' : Math.abs(dt) < 0.2 ? `= ${this._t('stable')}` : `${dt > 0 ? '▲' : '▼'} ${this._fmt(Math.abs(dt))}°`;
         tr.title = this._t('trend_1h');
       }
@@ -1126,7 +1129,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский' }[value] || value })) } } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'labels', selector: { object: {} } },
-        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_outdoor'), bool('show_dew_point'), bool('show_advice'), bool('show_graph'), bool('animations'), { name: 'transparent', selector: { boolean: {} } }] },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_outdoor'), bool('show_dew_point'), bool('show_advice'), bool('show_graph'), bool('show_trend'), bool('animations'), { name: 'transparent', selector: { boolean: {} } }] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }

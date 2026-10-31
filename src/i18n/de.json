@@ -844,7 +844,8 @@
     "color_warm": "Farbe: warm",
     "color_humidity": "Farbe: Luftfeuchtigkeit",
     "color_dry": "Farbe: trocken",
-    "color_alert": "Farbe: Alarm"
+    "color_alert": "Farbe: Alarm",
+    "show_trend": "Tendenz anzeigen (1 h)"
   },
   "light": {
     "light_bulb": "Glühbirne",

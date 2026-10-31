@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.53.2";
+const VERSION = "1.53.3";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -7414,7 +7414,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "color_warm": "Colour: warm",
       "color_humidity": "Colour: humidity",
       "color_dry": "Colour: dry",
-      "color_alert": "Colour: alert"
+      "color_alert": "Colour: alert",
+      "show_trend": "Show the trend (1 h)"
     },
     "de": {
       "animations": "Animationen",
@@ -7649,7 +7650,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "color_warm": "Farbe: warm",
       "color_humidity": "Farbe: Luftfeuchtigkeit",
       "color_dry": "Farbe: trocken",
-      "color_alert": "Farbe: Alarm"
+      "color_alert": "Farbe: Alarm",
+      "show_trend": "Tendenz anzeigen (1 h)"
     },
     "fr": {
       "animations": "Animations",
@@ -7884,7 +7886,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "color_warm": "Couleur : chaud",
       "color_humidity": "Couleur : humidité",
       "color_dry": "Couleur : sec",
-      "color_alert": "Couleur : alerte"
+      "color_alert": "Couleur : alerte",
+      "show_trend": "Afficher la tendance (1 h)"
     },
     "nb": {
       "illustration_size": "Størrelse på illustrasjonen",
@@ -8119,7 +8122,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "color_warm": "Farge: varmt",
       "color_humidity": "Farge: fuktighet",
       "color_dry": "Farge: tørt",
-      "color_alert": "Farge: varsel"
+      "color_alert": "Farge: varsel",
+      "show_trend": "Vis trend (1 t)"
     },
     "nl": {
       "animations": "Animaties",
@@ -8354,7 +8358,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "color_warm": "Kleur: warm",
       "color_humidity": "Kleur: luchtvochtigheid",
       "color_dry": "Kleur: droog",
-      "color_alert": "Kleur: alarm"
+      "color_alert": "Kleur: alarm",
+      "show_trend": "Trend tonen (1 u)"
     },
     "ro": {
       "animations": "Animații",
@@ -8589,7 +8594,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "color_warm": "Culoare: cald",
       "color_humidity": "Culoare: umiditate",
       "color_dry": "Culoare: uscat",
-      "color_alert": "Culoare: alertă"
+      "color_alert": "Culoare: alertă",
+      "show_trend": "Afișează tendința (1 h)"
     },
     "ru": {
       "animations": "Анимации",
@@ -8824,7 +8830,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "color_warm": "Цвет: тепло",
       "color_humidity": "Цвет: влажность",
       "color_dry": "Цвет: сухо",
-      "color_alert": "Цвет: тревога"
+      "color_alert": "Цвет: тревога",
+      "show_trend": "Показывать тенденцию (1 ч)"
     }
   };
   const lang = (hass) => {
@@ -19284,6 +19291,8 @@ ha-card:focus-visible{outline:2px solid var(--c);outline-offset:-2px}
 .halo{position:absolute;top:-50px;right:-40px;width:150px;height:150px;border-radius:50%;pointer-events:none;
   background:radial-gradient(circle,color-mix(in srgb,var(--c) 22%,transparent),transparent 70%);animation:rcbreathe 5s ease-in-out infinite}
 .alert .halo{animation-duration:1.6s}
+/* fond transparent : pas de halo coloré (carte superposée à autre chose) */
+.transparent .halo{display:none}
 .head{display:flex;align-items:center;gap:6px;position:relative;min-width:0}
 .ric{--mdc-icon-size:18px;flex:none;color:var(--c)}
 .name{flex:1;min-width:0;font-size:14px;font-weight:600;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -19825,7 +19834,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       this._loadHist();
       const c = this._c, r = this._root, s = this._compute(), tmp = s.tmp, st = this._style();
       const $ = (id) => r.getElementById(id), txt = (id, v) => { const e = $(id); if (e) e.textContent = v; };
-      this._card.className = `st-${st} ${s.cls}${c.animations === false ? ' noanim' : ''}`;
+      this._card.className = `st-${st} ${s.cls}${c.animations === false ? ' noanim' : ''}${c.transparent ? ' transparent' : ''}`;
       this._card.style.setProperty('--tc', s.tcol);
       // couleurs personnalisées (éditeur) : variables --appliance-*, lues aussi par le pop-up
       Object.entries(COLORS).forEach(([k, v]) => { const col = cssColor(c[k]); if (col) this.style.setProperty(v, col); else this.style.removeProperty(v); });
@@ -19842,6 +19851,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       if (tr) {
         const dt = Math.round(s.trend * 10) / 10;
         tr.className = 'trend' + (dt > 0 ? ' up' : dt < 0 ? ' down' : '');
+        tr.hidden = c.show_trend === false;
         tr.textContent = !fin(s.trend) ? '' : Math.abs(dt) < 0.2 ? `= ${this._t('stable')}` : `${dt > 0 ? '▲' : '▼'} ${this._fmt(Math.abs(dt))}°`;
         tr.title = this._t('trend_1h');
       }
@@ -20372,7 +20382,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский' }[value] || value })) } } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'labels', selector: { object: {} } },
-        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_outdoor'), bool('show_dew_point'), bool('show_advice'), bool('show_graph'), bool('animations'), { name: 'transparent', selector: { boolean: {} } }] },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_outdoor'), bool('show_dew_point'), bool('show_advice'), bool('show_graph'), bool('show_trend'), bool('animations'), { name: 'transparent', selector: { boolean: {} } }] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }

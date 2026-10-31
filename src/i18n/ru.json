@@ -844,7 +844,8 @@
     "color_warm": "Цвет: тепло",
     "color_humidity": "Цвет: влажность",
     "color_dry": "Цвет: сухо",
-    "color_alert": "Цвет: тревога"
+    "color_alert": "Цвет: тревога",
+    "show_trend": "Показывать тенденцию (1 ч)"
   },
   "light": {
     "light_bulb": "Лампа",
