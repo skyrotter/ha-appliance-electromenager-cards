@@ -16,7 +16,7 @@ function card(kind,cfg,states,lang){const el=document.createElement(`appliance-$
 const has=(c,cls)=>c.wrap.classList.contains(cls);
 
 // registration
-const tags=['washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','fan','generic','tool-charger','ceiling-fan','dehumidifier','monitor','kettle','toaster','power-strip','phone-charger','piano','garland','wet-vacuum'];
+const tags=['washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','fan','generic','tool-charger','ceiling-fan','dehumidifier','monitor','kettle','toaster','power-strip','phone-charger','piano','garland','wet-vacuum','ps5'];
 tags.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 // card picker: every core card and every self-contained card listed exactly once
 const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','water-meter'];
@@ -930,6 +930,17 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
   ok('display cost without price: kWh kept',/ 2 kWh/.test(txt(d3)),txt(d3));
   ok('default display: unchanged',/ 2 kWh/.test(txt(d4))&&!/Coût du jour/.test(txt(d4)),txt(d4));
  },300);}
+// PlayStation 5: plug decides off / rest / on / gaming, PSN media_player adds the game
+{const ps=(w,ms,extra={})=>card('ps5',{entity:'media_player.ps5',power:'sensor.p',switch:'switch.s',...extra},[mk('sensor.p',w,W),mk('switch.s','on'),mk('media_player.ps5',ms,{media_title:'Astro Bot'})]);
+ let c=ps(0.2,'off'); ok('ps5 off',has(c,'st-off'),c.wrap.className);
+ c=ps(2,'off'); ok('ps5 rest mode',has(c,'st-ps_rest')&&/Mode repos/.test(c.txt()),c.txt());
+ c=ps(60,'on'); ok('ps5 on (menu)',has(c,'st-screen_on')&&has(c,'active')&&/Allumée/.test(c.txt()),c.txt());
+ c=ps(60,'playing'); ok('ps5 gaming from PSN + title',has(c,'st-ps_gaming')&&/En jeu · Astro Bot/.test(c.txt()),c.txt());
+ c=ps(180,'off'); ok('ps5 gaming from power, no title',has(c,'st-ps_gaming')&&!/Astro/.test(c.txt()),c.txt());
+ c=card('ps5',{entity:'media_player.ps5'},[mk('media_player.ps5','playing',{media_title:'Astro Bot'})]); ok('ps5 PSN only',has(c,'st-ps_gaming')&&/Astro Bot/.test(c.txt()),c.txt());
+ c=ps(60,'on'); c.sr.querySelector('.toggle').click(); {const armed=!c.h.calls.length&&/Console allumée/.test(c.sr.getElementById('actions').textContent); c.sr.querySelector('.toggle').click(); ok('ps5 off needs two clicks',armed&&c.h.calls.length===1,JSON.stringify(c.h.calls));}
+ c=ps(2,'off'); c.sr.querySelector('.toggle').click(); ok('ps5 rest mode: cut needs confirmation',!c.h.calls.length,JSON.stringify(c.h.calls));
+ c=ps(0.2,'off'); c.sr.querySelector('.toggle').click(); ok('ps5 off: one click',c.h.calls.length===1,JSON.stringify(c.h.calls));}
 // tap_action / hold_action on the illustration — issue #142
 {const ev=(c)=>{const e=[];['hass-more-info','hass-action'].forEach(t=>c.el.addEventListener(t,x=>e.push([t,x.detail])));return e;};
  const il=(c)=>c.sr.querySelector('.illus');

@@ -477,6 +477,16 @@ class ApplianceCardBase extends HTMLElement {
       else if (watts !== null) m.status = powered ? "online" : watts > 0.5 ? "standby" : "off";
       else m.status = base === "running" ? "online" : base === "standby" ? "standby" : "off";
       m.load = watts !== null ? Math.max(0, Math.min(1, watts / (c.max_power || 300))) : 0.4;
+    } else if (kind === "ps5") {
+      // PlayStation 5 : la prise fait foi (éteinte / mode repos / allumée / en jeu au-dessus de gaming_threshold) ;
+      // le media_player PlayStation Network donne « en jeu » et le titre du jeu, et sert seul s'il n'y a pas de prise
+      const isMp = main && domainOf(c.entity) === "media_player", ms = isMp ? String(main.state).toLowerCase() : "";
+      const mpOk = isMp && !BAD.includes(ms), playing = mpOk && ms === "playing";
+      if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
+      else if (watts !== null) m.status = watts > threshold ? (playing || watts > (c.gaming_threshold ?? 100) ? "ps_gaming" : "screen_on") : watts >= (c.standby_threshold ?? 0.8) ? "ps_rest" : "off";
+      else if (mpOk) m.status = playing ? "ps_gaming" : ["on", "idle", "paused", "buffering"].includes(ms) ? "screen_on" : "off";
+      else m.status = base === "unavailable" ? "unavailable" : base === "running" ? "screen_on" : base === "standby" ? "ps_rest" : "off";
+      m.game = m.status === "ps_gaming" && playing ? main.attributes.media_title || null : null;
     } else if (kind === "desktop_pc" || kind === "laptop" || kind === "monitor") {
       if (base === "off" || base === "unavailable") m.status = base;
       else if (explicitState) m.status = base === "running" ? "screen_on" : powered ? "standby" : "off";
@@ -677,7 +687,7 @@ class ApplianceCardBase extends HTMLElement {
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
     const hass = this._hass, kind = this._kind;
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
@@ -784,7 +794,7 @@ class ApplianceCardBase extends HTMLElement {
   _render(m) {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming"].includes(m.status);
     this._fetchCycle(active);
     $("wrap").className = [
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
@@ -827,6 +837,16 @@ class ApplianceCardBase extends HTMLElement {
         g.classList.toggle("on", i < lit);
         g.classList.toggle("next", st === "charging" && lv != null && i === lit);
       });
+    }
+    if (kind === "ps5") {
+      // démarrage (éteinte / repos → allumée) : balayage bleu des bandeaux, puis blanc
+      const on = (s) => ["screen_on", "ps_gaming"].includes(s), prev = this._psPrev;
+      if (prev !== undefined && on(m.status) && !on(prev)) {
+        const g = this.shadowRoot.querySelector("svg");
+        g.classList.remove("ps-boot"); void g.getBoundingClientRect(); g.classList.add("ps-boot");
+        clearTimeout(this._psT); this._psT = setTimeout(() => g.classList.remove("ps-boot"), 2600);
+      }
+      this._psPrev = m.status;
     }
     if (kind === "tv") {
       const prev = this._tvPrev, on = m.status === "screen_on";
@@ -948,6 +968,7 @@ class ApplianceCardBase extends HTMLElement {
       const a = m.main.attributes || {}, what = a.app_name || a.media_title || a.source;
       if (what) statusTxt += ` · ${what}`;
     }
+    if (kind === "ps5" && m.game) statusTxt += ` · ${m.game}`;
     if (m.solarHeat && active) statusTxt += ` · ${tr(hass, "solar_surplus")}`;
     const prog = m.program && active && !BAD.includes(String(m.program.state).toLowerCase()) ? stateText(hass, m.program) : "";
     let sub = "";
@@ -993,10 +1014,12 @@ class ApplianceCardBase extends HTMLElement {
       const freezer = ["chest_freezer", "drawer_freezer"].includes(kind);
       // PC fixe / baie serveur : couper la prise d'une machine allumée ou en veille = arrêt brutal
       const computer = ["desktop_pc", "server_rack"].includes(kind) && ["screen_on", "online", "standby"].includes(m.status);
-      const guarded = c.confirm_off !== false && on && (freezer || computer || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d"].includes(kind)));
+      // PS5 : couper la prise allumée ou en mode repos (téléchargements, mises à jour) peut abîmer les données
+      const console_ = kind === "ps5" && ["screen_on", "ps_gaming", "ps_rest"].includes(m.status);
+      const guarded = c.confirm_off !== false && on && (freezer || computer || console_ || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d"].includes(kind)));
       this._sw = { id: swId, guarded };
       const arming = guarded && this._confirmUntil && Date.now() < this._confirmUntil;
-      const label = arming ? tr(hass, computer ? "confirm_off_pc" : "confirm_off") : tr(hass, "toggle");
+      const label = arming ? tr(hass, computer ? "confirm_off_pc" : console_ ? "confirm_off_console" : "confirm_off") : tr(hass, "toggle");
       const tip = arming ? `<div class="confirm-tip">${esc(label)}</div>` : "";
       if (c.show_toggle !== false) {
         $("actions").innerHTML = `<button class="toggle ${on ? "on" : ""} ${arming ? "confirm" : ""}" title="${esc(label)}" aria-label="${esc(label)}" aria-pressed="${on}"><ha-icon icon="${arming ? "mdi:alert" : "mdi:power"}"></ha-icon></button>${tip}`;

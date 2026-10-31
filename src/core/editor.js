@@ -115,6 +115,10 @@ function buildForm(kind) {
             { name: "style", selector: { select: { mode: "dropdown", options: [
               { value: "wall", label: "Murale / Wall-mounted" }, { value: "stand", label: "Pied central / Center stand" }, { value: "feet", label: "Deux pieds / Two feet" }] } } },
           ] : []),
+          ...(kind === "ps5" ? [
+            { name: "standby_threshold", selector: { number: { min: 0, max: 20, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
+            { name: "gaming_threshold", selector: { number: { min: 30, max: 400, step: 5, mode: "box", unit_of_measurement: "W" } } },
+          ] : []),
           ...(kind === "desktop_pc" ? [
             { name: "style", selector: { select: { mode: "dropdown", options: [
               { value: "full", label: "Écran + unité centrale / Monitor + tower" }, { value: "tower", label: "Unité centrale seule / Tower only" }] } } },
@@ -180,14 +184,14 @@ function buildForm(kind) {
             { name: "ignition_threshold", selector: { number: { min: 50, max: 1000, step: 10, mode: "box", unit_of_measurement: "W" } } },
             { name: "pellet_alert", selector: { number: { min: 0, max: 50, step: 1, mode: "box", unit_of_measurement: "%" } } },
           ] : []),
-          ...(["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "chest_freezer", "drawer_freezer", "desktop_pc", "server_rack"].includes(kind) ? [{ name: "confirm_off", selector: { boolean: {} }, default: true }] : []),
+          ...(["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "chest_freezer", "drawer_freezer", "desktop_pc", "server_rack", "ps5"].includes(kind) ? [{ name: "confirm_off", selector: { boolean: {} }, default: true }] : []),
           { name: "tap_action", selector: { ui_action: { actions: ["more-info", "toggle", "navigate", "url", "perform-action", "none"] } } },
           { name: "hold_action", selector: { ui_action: { actions: ["more-info", "toggle", "navigate", "url", "perform-action", "none"] } } },
           { name: "color", selector: { text: {} } },
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : ["monitor", "phone_charger", "piano"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : ["monitor", "phone_charger", "piano"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
   };
 }
 
@@ -207,7 +211,7 @@ function stubFor(kind, hass) {
   const cost = pick((i) => i.startsWith("sensor.") && /(cout|cost|prix)/.test(i) && /(jour|daily|today|day)/.test(i))
     || pick((i, st) => i.startsWith("sensor.") && dc(st) === "monetary");
   const sw = pick((i) => i.startsWith("switch.") && !/(child_lock|lock|led|indicator)/.test(i));
-  const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : kind === "tv" || kind === "av_receiver" ? pick((i) => i.startsWith("media_player.")) : ["fan", "ceiling_fan"].includes(kind) ? pick((i) => i.startsWith("fan.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : kind === "dehumidifier" ? pick((i) => i.startsWith("humidifier.")) : null;
+  const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : ["tv", "av_receiver", "ps5"].includes(kind) ? pick((i) => i.startsWith("media_player.")) : ["fan", "ceiling_fan"].includes(kind) ? pick((i) => i.startsWith("fan.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : kind === "dehumidifier" ? pick((i) => i.startsWith("humidifier.")) : null;
   const temp = pick((i, st) => i.startsWith("sensor.") && dc(st) === "temperature");
   const flag = ["washer", "dryer", "dishwasher", "microwave"].includes(kind)
     ? pick((i) => /^(input_boolean|binary_sensor)\./.test(i) && /(running|en_cours|marche|cycle)/.test(i)) : null;
@@ -216,7 +220,7 @@ function stubFor(kind, hass) {
   if (power) cfg.power = power;
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "laptop", "monitor", "kettle", "toaster", "power_strip", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;

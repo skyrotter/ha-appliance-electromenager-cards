@@ -229,6 +229,12 @@ const STRINGS = {
     "f_display": "Consumption shown as (kWh, cost or both)",
     "f_tap_action": "Tap action (illustration)",
     "f_hold_action": "Hold action (illustration)",
+    "ps5": "PlayStation 5",
+    "ps_rest": "Rest mode",
+    "ps_gaming": "Gaming",
+    "confirm_off_console": "Console on – click again to cut power",
+    "f_standby_threshold_ps5": "Rest mode above (W)",
+    "f_gaming_threshold": "Gaming above (W)",
     "f_energy_period": "Energy shown (counter or period)",
     "flex_temp": "Flex zone",
     "f_flex_temperature": "Flex zone temperature sensor",
@@ -512,6 +518,12 @@ const STRINGS = {
     "f_display": "Verbrauch anzeigen als (kWh, Kosten oder beides)",
     "f_tap_action": "Tipp-Aktion (Illustration)",
     "f_hold_action": "Halte-Aktion (Illustration)",
+    "ps5": "PlayStation 5",
+    "ps_rest": "Ruhemodus",
+    "ps_gaming": "Im Spiel",
+    "confirm_off_console": "Konsole an – erneut klicken zum Ausschalten",
+    "f_standby_threshold_ps5": "Ruhemodus über (W)",
+    "f_gaming_threshold": "Im Spiel über (W)",
     "f_energy_period": "Angezeigte Energie (Zähler oder Zeitraum)",
     "flex_temp": "Flex-Zone",
     "f_flex_temperature": "Temperatursensor Flex-Zone",
@@ -795,6 +807,12 @@ const STRINGS = {
     "f_display": "Affichage de la conso (kWh, € ou les deux)",
     "f_tap_action": "Action au clic sur l'illustration",
     "f_hold_action": "Action à l'appui long sur l'illustration",
+    "ps5": "PlayStation 5",
+    "ps_rest": "Mode repos",
+    "ps_gaming": "En jeu",
+    "confirm_off_console": "Console allumée – cliquer encore pour couper",
+    "f_standby_threshold_ps5": "Mode repos au-dessus de (W)",
+    "f_gaming_threshold": "En jeu au-dessus de (W)",
     "f_energy_period": "Énergie affichée (compteur ou période)",
     "flex_temp": "Zone flex",
     "f_flex_temperature": "Capteur température zone flex",
@@ -923,6 +941,12 @@ const STRINGS = {
     "f_display": "Forbruk vist som (kWh, kostnad eller begge)",
     "f_tap_action": "Trykkhandling (illustrasjon)",
     "f_hold_action": "Holdhandling (illustrasjon)",
+    "ps5": "PlayStation 5",
+    "ps_rest": "Hvilemodus",
+    "ps_gaming": "Spiller",
+    "confirm_off_console": "Konsollen er på – klikk igjen for å kutte strømmen",
+    "f_standby_threshold_ps5": "Hvilemodus over (W)",
+    "f_gaming_threshold": "Spiller over (W)",
     "f_energy_period": "Vist energi (teller eller periode)",
     "washer": "Vaskemaskin",
     "dryer": "Tørketrommel",
@@ -1361,6 +1385,12 @@ const STRINGS = {
     "f_display": "Verbruik tonen als (kWh, kosten of beide)",
     "f_tap_action": "Tikactie (illustratie)",
     "f_hold_action": "Vasthoudactie (illustratie)",
+    "ps5": "PlayStation 5",
+    "ps_rest": "Rustmodus",
+    "ps_gaming": "Aan het gamen",
+    "confirm_off_console": "Console aan – klik nogmaals om uit te schakelen",
+    "f_standby_threshold_ps5": "Rustmodus boven (W)",
+    "f_gaming_threshold": "Gamen boven (W)",
     "f_energy_period": "Getoonde energie (teller of periode)",
     "flex_temp": "Flexzone",
     "f_flex_temperature": "Temperatuursensor flexzone",
@@ -1644,6 +1674,12 @@ const STRINGS = {
     "f_display": "Consum afișat ca (kWh, cost sau ambele)",
     "f_tap_action": "Acțiune la atingere (ilustrație)",
     "f_hold_action": "Acțiune la apăsare lungă (ilustrație)",
+    "ps5": "PlayStation 5",
+    "ps_rest": "Mod repaus",
+    "ps_gaming": "În joc",
+    "confirm_off_console": "Consola pornită – apasă din nou pentru a opri",
+    "f_standby_threshold_ps5": "Mod repaus peste (W)",
+    "f_gaming_threshold": "În joc peste (W)",
     "f_energy_period": "Energie afișată (contor sau perioadă)",
     "flex_temp": "Zonă flex",
     "f_flex_temperature": "Senzor temperatură zonă flex",
@@ -1927,6 +1963,12 @@ const STRINGS = {
     "f_display": "Показывать расход как (кВт·ч, стоимость или оба)",
     "f_tap_action": "Действие при нажатии (иллюстрация)",
     "f_hold_action": "Действие при удержании (иллюстрация)",
+    "ps5": "PlayStation 5",
+    "ps_rest": "Режим покоя",
+    "ps_gaming": "Игра",
+    "confirm_off_console": "Консоль включена – нажмите ещё раз, чтобы отключить",
+    "f_standby_threshold_ps5": "Режим покоя выше (Вт)",
+    "f_gaming_threshold": "Игра выше (Вт)",
     "f_energy_period": "Отображаемая энергия (счётчик или период)",
     "flex_temp": "Флекс-зона",
     "f_flex_temperature": "Датчик температуры флекс-зоны",
@@ -3379,6 +3421,48 @@ ${lcd(78, 116, 26, 9)}
   </g>
 </g>`;
 
+/* PlayStation 5 : console debout sur son socle, vue de trois quarts (grande face blanche galbée, cœur noir,
+   bandeaux lumineux le long du cœur, ouïes en haut) et manette posée au pied, reliée par un câble en mode repos.
+   Silhouette seulement : aucun logo ni symbole de boutons. */
+SVG.ps5 = () => `
+<defs>${DEFS}
+<linearGradient id="ID-psw" x1="0" y1="0" x2="1" y2=".2"><stop offset="0" stop-color="#f4f6f8"/><stop offset=".45" stop-color="#ffffff"/><stop offset="1" stop-color="#cfd5db"/></linearGradient>
+<linearGradient id="ID-psfar" x1="0" x2="1"><stop offset="0" stop-color="#aab2ba"/><stop offset="1" stop-color="#dde2e7"/></linearGradient>
+<linearGradient id="ID-pscore" x1="0" x2="1"><stop offset="0" stop-color="#0b0d10"/><stop offset=".6" stop-color="#262b31"/><stop offset="1" stop-color="#121519"/></linearGradient>
+<linearGradient id="ID-pspad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d3d9df"/></linearGradient>
+<radialGradient id="ID-psamb"><stop offset="0" stop-color="#3b8cff" stop-opacity=".55"/><stop offset="1" stop-color="#3b8cff" stop-opacity="0"/></radialGradient></defs>
+<ellipse class="ps-amb" cx="46" cy="70" rx="46" ry="58" fill="url(#ID-psamb)"/>
+<ellipse cx="60" cy="134" rx="54" ry="3.6" fill="url(#ID-shadow)"/>
+<g class="ps-air" fill="none" stroke-width="1.3" stroke-linecap="round">
+  <path d="M42 14q-2.5-3 0-6t0-6"/><path d="M54 11q-2.5-3 0-6t0-6"/><path d="M66 9q-2.5-3 0-6t0-6"/>
+</g>
+<g class="ps-body">
+  <ellipse cx="34" cy="128" rx="17" ry="3.4" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".5"/>
+  <path d="M17 19C20 23 23 26 26 27C27 60 28 94 29 125L24 124C23 96 22 62 21 30C20 26 18.5 22 17 19Z" fill="url(#ID-psfar)" stroke="#8d969f" stroke-width=".4"/>
+  <path d="M26 27C27 60 28 94 29 125L36 126C35 94 34 58 33 24Z" fill="url(#ID-pscore)"/>
+  <path d="M33 24C44 19 58 15 70 13C66 34 63 60 64 86C65 104 67 116 70 126L36 126C35 94 34 58 33 24Z" fill="url(#ID-psw)" stroke="#9aa3ac" stroke-width=".5"/>
+  <path d="M33 24C44 19 58 15 70 13L69.3 16.4C58 18.2 44.6 22 33.7 27Z" fill="#1b2026"/>
+  <path d="M38 23.4l.6 1.8M44 21.2l.6 1.8M50 19.4l.6 1.8M56 17.8l.6 1.8M62 16.4l.6 1.8" stroke="#4a525b" stroke-width=".6"/>
+  <path d="M37 30C39 60 40 92 41 120" stroke="#fff" stroke-opacity=".9" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <path d="M60 22C58 50 57 80 59 110" stroke="#000" stroke-opacity=".05" stroke-width="5" fill="none"/>
+  <path class="ps-led" pathLength="100" d="M36 126C35 94 34 58 33 24" fill="none" stroke-width="1.2" stroke-linecap="round"/>
+  <path class="ps-led" pathLength="100" d="M29 125C28 94 27 60 26 27" fill="none" stroke-width="1.2" stroke-linecap="round"/>
+  <rect x="29.6" y="108" width="3.2" height="1.4" rx=".5" fill="#4a525b"/>
+  <rect x="29.9" y="112" width="2.6" height="1.6" rx=".6" fill="#05070a" stroke="#3a424b" stroke-width=".3"/>
+  <circle class="ps-pwr" cx="31.2" cy="104" r=".8"/>
+</g>
+<path class="ps-cable" d="M31.2 113.6C34 124 50 131 66 129C74 128 78 124 82 117" fill="none" stroke="#1d2228" stroke-width="1.1" stroke-linecap="round"/>
+<g transform="translate(-4 0)"><g class="ps-pad">
+  <path d="M70 116C76 112 100 112 106 116C110 120 113 129 110 134.5C108 137.5 104 137 102 134L98 129H78L74 134C72 137 68 137.5 66 134.5C63 129 66 120 70 116Z" fill="url(#ID-pspad)" stroke="#8d969f" stroke-width=".5"/>
+  <path d="M78 122.5H98L96.4 129H79.6Z" fill="#1d2228"/>
+  <rect x="80.5" y="114" width="15" height="7" rx="1.6" fill="#eef1f4" stroke="#aab2ba" stroke-width=".4"/>
+  <path class="ps-bar" d="M80 114.6V120.4M96 114.6V120.4" fill="none" stroke-width="1.1" stroke-linecap="round"/>
+  <circle cx="83" cy="125.4" r="2.5" fill="#2a2f35"/><circle cx="83" cy="125.4" r="1.5" fill="#3d444c"/>
+  <circle cx="93" cy="125.4" r="2.5" fill="#2a2f35"/><circle cx="93" cy="125.4" r="1.5" fill="#3d444c"/>
+  <path d="M72 119.6h4M74 117.6v4" stroke="#6f7780" stroke-width="1.3" stroke-linecap="round"/>
+  <g class="ps-btn"><circle cx="104" cy="117.6" r=".9"/><circle cx="106" cy="119.6" r=".9"/><circle cx="104" cy="121.6" r=".9"/><circle cx="102" cy="119.6" r=".9"/></g>
+</g></g>`;
+
 SVG.radiator = () => `
 <defs>${DEFS}
 <clipPath id="ID-fins"><path d="M12.0 27H23.4V100Q23.4 104 20.4 104H15.0Q12.0 104 12.0 100Z"/><path d="M24.8 27H36.2V100Q36.2 104 33.2 104H27.8Q24.8 104 24.8 100Z"/><path d="M37.6 27H49.0V100Q49.0 104 46.0 104H40.6Q37.6 104 37.6 100Z"/><path d="M50.4 27H61.8V100Q61.8 104 58.8 104H53.4Q50.4 104 50.4 100Z"/><path d="M63.2 27H74.6V100Q74.6 104 71.6 104H66.2Q63.2 104 63.2 100Z"/><path d="M76.0 27H87.4V100Q87.4 104 84.4 104H79.0Q76.0 104 76.0 100Z"/></clipPath>
@@ -4014,6 +4098,9 @@ const DEF = {
   server_rack: { accent: "active", threshold: 30,
     fields: ["entity", "power", "energy", "cost", "temperature", "switch"],
     keys: ["baie", "rack", "homelab", "home_lab", "serveur", "server", "proxmox", "unraid", "nas"] },
+  ps5: { accent: "active", threshold: 25,
+    fields: ["entity", "power", "energy", "cost", "switch"],
+    keys: ["ps5", "playstation", "play_station"] },
   desktop_pc: { accent: "active", threshold: 40,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["pc_fixe", "pcfixe", "desktop", "ordinateur", "gaming", "workstation", "pc_bureau", "unite_centrale", "tour_pc"] },
@@ -4690,6 +4777,16 @@ class ApplianceCardBase extends HTMLElement {
       else if (watts !== null) m.status = powered ? "online" : watts > 0.5 ? "standby" : "off";
       else m.status = base === "running" ? "online" : base === "standby" ? "standby" : "off";
       m.load = watts !== null ? Math.max(0, Math.min(1, watts / (c.max_power || 300))) : 0.4;
+    } else if (kind === "ps5") {
+      // PlayStation 5 : la prise fait foi (éteinte / mode repos / allumée / en jeu au-dessus de gaming_threshold) ;
+      // le media_player PlayStation Network donne « en jeu » et le titre du jeu, et sert seul s'il n'y a pas de prise
+      const isMp = main && domainOf(c.entity) === "media_player", ms = isMp ? String(main.state).toLowerCase() : "";
+      const mpOk = isMp && !BAD.includes(ms), playing = mpOk && ms === "playing";
+      if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
+      else if (watts !== null) m.status = watts > threshold ? (playing || watts > (c.gaming_threshold ?? 100) ? "ps_gaming" : "screen_on") : watts >= (c.standby_threshold ?? 0.8) ? "ps_rest" : "off";
+      else if (mpOk) m.status = playing ? "ps_gaming" : ["on", "idle", "paused", "buffering"].includes(ms) ? "screen_on" : "off";
+      else m.status = base === "unavailable" ? "unavailable" : base === "running" ? "screen_on" : base === "standby" ? "ps_rest" : "off";
+      m.game = m.status === "ps_gaming" && playing ? main.attributes.media_title || null : null;
     } else if (kind === "desktop_pc" || kind === "laptop" || kind === "monitor") {
       if (base === "off" || base === "unavailable") m.status = base;
       else if (explicitState) m.status = base === "running" ? "screen_on" : powered ? "standby" : "off";
@@ -4890,7 +4987,7 @@ class ApplianceCardBase extends HTMLElement {
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
     const hass = this._hass, kind = this._kind;
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
@@ -4997,7 +5094,7 @@ class ApplianceCardBase extends HTMLElement {
   _render(m) {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming"].includes(m.status);
     this._fetchCycle(active);
     $("wrap").className = [
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
@@ -5040,6 +5137,16 @@ class ApplianceCardBase extends HTMLElement {
         g.classList.toggle("on", i < lit);
         g.classList.toggle("next", st === "charging" && lv != null && i === lit);
       });
+    }
+    if (kind === "ps5") {
+      // démarrage (éteinte / repos → allumée) : balayage bleu des bandeaux, puis blanc
+      const on = (s) => ["screen_on", "ps_gaming"].includes(s), prev = this._psPrev;
+      if (prev !== undefined && on(m.status) && !on(prev)) {
+        const g = this.shadowRoot.querySelector("svg");
+        g.classList.remove("ps-boot"); void g.getBoundingClientRect(); g.classList.add("ps-boot");
+        clearTimeout(this._psT); this._psT = setTimeout(() => g.classList.remove("ps-boot"), 2600);
+      }
+      this._psPrev = m.status;
     }
     if (kind === "tv") {
       const prev = this._tvPrev, on = m.status === "screen_on";
@@ -5161,6 +5268,7 @@ class ApplianceCardBase extends HTMLElement {
       const a = m.main.attributes || {}, what = a.app_name || a.media_title || a.source;
       if (what) statusTxt += ` · ${what}`;
     }
+    if (kind === "ps5" && m.game) statusTxt += ` · ${m.game}`;
     if (m.solarHeat && active) statusTxt += ` · ${tr(hass, "solar_surplus")}`;
     const prog = m.program && active && !BAD.includes(String(m.program.state).toLowerCase()) ? stateText(hass, m.program) : "";
     let sub = "";
@@ -5206,10 +5314,12 @@ class ApplianceCardBase extends HTMLElement {
       const freezer = ["chest_freezer", "drawer_freezer"].includes(kind);
       // PC fixe / baie serveur : couper la prise d'une machine allumée ou en veille = arrêt brutal
       const computer = ["desktop_pc", "server_rack"].includes(kind) && ["screen_on", "online", "standby"].includes(m.status);
-      const guarded = c.confirm_off !== false && on && (freezer || computer || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d"].includes(kind)));
+      // PS5 : couper la prise allumée ou en mode repos (téléchargements, mises à jour) peut abîmer les données
+      const console_ = kind === "ps5" && ["screen_on", "ps_gaming", "ps_rest"].includes(m.status);
+      const guarded = c.confirm_off !== false && on && (freezer || computer || console_ || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d"].includes(kind)));
       this._sw = { id: swId, guarded };
       const arming = guarded && this._confirmUntil && Date.now() < this._confirmUntil;
-      const label = arming ? tr(hass, computer ? "confirm_off_pc" : "confirm_off") : tr(hass, "toggle");
+      const label = arming ? tr(hass, computer ? "confirm_off_pc" : console_ ? "confirm_off_console" : "confirm_off") : tr(hass, "toggle");
       const tip = arming ? `<div class="confirm-tip">${esc(label)}</div>` : "";
       if (c.show_toggle !== false) {
         $("actions").innerHTML = `<button class="toggle ${on ? "on" : ""} ${arming ? "confirm" : ""}" title="${esc(label)}" aria-label="${esc(label)}" aria-pressed="${on}"><ha-icon icon="${arming ? "mdi:alert" : "mdi:power"}"></ha-icon></button>${tip}`;
@@ -5508,6 +5618,10 @@ function buildForm(kind) {
             { name: "style", selector: { select: { mode: "dropdown", options: [
               { value: "wall", label: "Murale / Wall-mounted" }, { value: "stand", label: "Pied central / Center stand" }, { value: "feet", label: "Deux pieds / Two feet" }] } } },
           ] : []),
+          ...(kind === "ps5" ? [
+            { name: "standby_threshold", selector: { number: { min: 0, max: 20, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
+            { name: "gaming_threshold", selector: { number: { min: 30, max: 400, step: 5, mode: "box", unit_of_measurement: "W" } } },
+          ] : []),
           ...(kind === "desktop_pc" ? [
             { name: "style", selector: { select: { mode: "dropdown", options: [
               { value: "full", label: "Écran + unité centrale / Monitor + tower" }, { value: "tower", label: "Unité centrale seule / Tower only" }] } } },
@@ -5573,14 +5687,14 @@ function buildForm(kind) {
             { name: "ignition_threshold", selector: { number: { min: 50, max: 1000, step: 10, mode: "box", unit_of_measurement: "W" } } },
             { name: "pellet_alert", selector: { number: { min: 0, max: 50, step: 1, mode: "box", unit_of_measurement: "%" } } },
           ] : []),
-          ...(["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "chest_freezer", "drawer_freezer", "desktop_pc", "server_rack"].includes(kind) ? [{ name: "confirm_off", selector: { boolean: {} }, default: true }] : []),
+          ...(["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "chest_freezer", "drawer_freezer", "desktop_pc", "server_rack", "ps5"].includes(kind) ? [{ name: "confirm_off", selector: { boolean: {} }, default: true }] : []),
           { name: "tap_action", selector: { ui_action: { actions: ["more-info", "toggle", "navigate", "url", "perform-action", "none"] } } },
           { name: "hold_action", selector: { ui_action: { actions: ["more-info", "toggle", "navigate", "url", "perform-action", "none"] } } },
           { name: "color", selector: { text: {} } },
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : ["monitor", "phone_charger", "piano"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : ["monitor", "phone_charger", "piano"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
   };
 }
 
@@ -5600,7 +5714,7 @@ function stubFor(kind, hass) {
   const cost = pick((i) => i.startsWith("sensor.") && /(cout|cost|prix)/.test(i) && /(jour|daily|today|day)/.test(i))
     || pick((i, st) => i.startsWith("sensor.") && dc(st) === "monetary");
   const sw = pick((i) => i.startsWith("switch.") && !/(child_lock|lock|led|indicator)/.test(i));
-  const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : kind === "tv" || kind === "av_receiver" ? pick((i) => i.startsWith("media_player.")) : ["fan", "ceiling_fan"].includes(kind) ? pick((i) => i.startsWith("fan.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : kind === "dehumidifier" ? pick((i) => i.startsWith("humidifier.")) : null;
+  const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : ["tv", "av_receiver", "ps5"].includes(kind) ? pick((i) => i.startsWith("media_player.")) : ["fan", "ceiling_fan"].includes(kind) ? pick((i) => i.startsWith("fan.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : kind === "dehumidifier" ? pick((i) => i.startsWith("humidifier.")) : null;
   const temp = pick((i, st) => i.startsWith("sensor.") && dc(st) === "temperature");
   const flag = ["washer", "dryer", "dishwasher", "microwave"].includes(kind)
     ? pick((i) => /^(input_boolean|binary_sensor)\./.test(i) && /(running|en_cours|marche|cycle)/.test(i)) : null;
@@ -5609,7 +5723,7 @@ function stubFor(kind, hass) {
   if (power) cfg.power = power;
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "laptop", "monitor", "kettle", "toaster", "power_strip", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;
@@ -6857,6 +6971,39 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 @keyframes wv-bub { 0% { opacity: 0; transform: translateY(2px); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(-9px); } }
 @keyframes wv-spin { 0% { stroke-dasharray: 20 80; stroke-dashoffset: 0; } 100% { stroke-dasharray: 20 80; stroke-dashoffset: -100; } }
 @keyframes wv-air { 0% { opacity: 0; transform: translateY(4px); } 30% { opacity: .9; } 100% { opacity: 0; transform: translateY(-10px); } }
+
+/* ---------- PlayStation 5 ---------- */
+/* bandeaux : gris éteinte, orange qui respire en mode repos, blanc allumée, balayage bleu au démarrage */
+.k-ps5 .ps-led { stroke: #4a525b; stroke-opacity: .55; transition: stroke .5s, stroke-opacity .5s; }
+.k-ps5.st-ps_rest .ps-led { stroke: #ff9d2e; stroke-opacity: 1; filter: drop-shadow(0 0 1.6px #ff9d2e); animation: ac-pulse 3.2s ease-in-out infinite; }
+.k-ps5.st-screen_on .ps-led, .k-ps5.st-ps_gaming .ps-led { stroke: #f2f8ff; stroke-opacity: 1; filter: drop-shadow(0 0 2px #cfe6ff); }
+.k-ps5 .ps-boot .ps-led { stroke: #3b9cff; stroke-dasharray: 100; animation: ps-sweep 1.5s ease-out, ps-boot 2.4s ease-in-out; filter: drop-shadow(0 0 2.4px #3b9cff); }
+.ps-pwr { fill: #3a424b; } .k-ps5.st-ps_rest .ps-pwr { fill: #ff9d2e; } .k-ps5.active .ps-pwr { fill: #f2f8ff; }
+/* air chaud par les ouïes du haut : léger allumée, plus franc en jeu */
+.ps-air { opacity: 0; } .ps-air path { stroke: #9aa7b4; }
+.k-ps5.st-screen_on .ps-air { opacity: .5; } .k-ps5.st-ps_gaming .ps-air { opacity: 1; } .k-ps5.st-ps_gaming .ps-air path { stroke: #ffab70; }
+.k-ps5.active .ps-air path { animation: ac-steam 2.6s ease-out infinite; }
+.ps-air path:nth-child(2) { animation-delay: .8s !important; } .ps-air path:nth-child(3) { animation-delay: 1.6s !important; }
+.k-ps5.st-ps_gaming .ps-air path { animation-duration: 1.6s; }
+/* halo bleu de l'écran en jeu */
+.ps-amb { opacity: 0; transition: opacity .8s; }
+.k-ps5.st-ps_gaming .ps-amb { opacity: 1; animation: ps-amb 5s ease-in-out infinite; }
+/* manette : barre lumineuse, câble de charge en mode repos, prise en main et boutons en jeu */
+.ps-bar { stroke: #c3c9cf; transition: stroke .4s; }
+.k-ps5.st-ps_rest .ps-bar { stroke: #ff9d2e; animation: ac-pulse 2.4s ease-in-out infinite; }
+.k-ps5.active .ps-bar { stroke: #3b9cff; filter: drop-shadow(0 0 1.6px #3b9cff); }
+.k-ps5.st-ps_gaming .ps-bar { animation: ac-glow 1.6s ease-in-out infinite; }
+.ps-cable { opacity: 0; transition: opacity .5s; } .k-ps5.st-ps_rest .ps-cable { opacity: 1; }
+.ps-pad { transform-box: fill-box; transform-origin: 50% 100%; transition: transform .6s ease; }
+.k-ps5.st-ps_gaming .ps-pad { animation: ps-play 2.8s ease-in-out infinite; }
+.ps-btn circle { fill: #9aa3ac; }
+.k-ps5.st-ps_gaming .ps-btn circle { animation: ps-press 1.2s steps(1) infinite; }
+.ps-btn circle:nth-child(2) { animation-delay: .3s !important; } .ps-btn circle:nth-child(3) { animation-delay: .6s !important; } .ps-btn circle:nth-child(4) { animation-delay: .9s !important; }
+@keyframes ps-sweep { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+@keyframes ps-boot { 0%, 60% { stroke: #3b9cff; } 100% { stroke: #f2f8ff; } }
+@keyframes ps-amb { 0%, 100% { opacity: .65; } 50% { opacity: 1; } }
+@keyframes ps-play { 0%, 100% { transform: translate(0, -7px) rotate(-3deg); } 25% { transform: translate(-1px, -8px) rotate(2deg); } 50% { transform: translate(.6px, -6.4px) rotate(-1deg); } 75% { transform: translate(-.4px, -8px) rotate(3deg); } }
+@keyframes ps-press { 0% { fill: #3b9cff; } 25%, 100% { fill: #9aa3ac; } }
 `;
 
 /* ------------------------------------------------------------------ */
