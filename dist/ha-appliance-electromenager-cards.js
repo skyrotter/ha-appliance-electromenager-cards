@@ -217,6 +217,10 @@ const STRINGS = {
     "energy_day": "Today",
     "energy_week": "This week",
     "energy_month": "This month",
+    "cost_day": "Cost today",
+    "cost_week": "Cost this week",
+    "cost_month": "Cost this month",
+    "f_display": "Consumption shown as (kWh, cost or both)",
     "f_energy_period": "Energy shown (counter or period)",
     "flex_temp": "Flex zone",
     "f_flex_temperature": "Flex zone temperature sensor",
@@ -268,7 +272,7 @@ const STRINGS = {
     "cycle_cost": "Cycle cost",
     "yesterday": "yesterday",
     "f_last_cycle": "Show the last cycle (start, end, duration, energy, cost)",
-    "f_price_per_kwh": "Price per kWh (last cycle cost)",
+    "f_price_per_kwh": "Price per kWh (number or entity, for costs)",
     "wet_vacuum": "Wet & dry vacuum",
     "wv_cleaning": "Cleaning",
     "wv_selfclean": "Self-cleaning",
@@ -488,6 +492,10 @@ const STRINGS = {
     "energy_day": "Heute",
     "energy_week": "Diese Woche",
     "energy_month": "Dieser Monat",
+    "cost_day": "Kosten heute",
+    "cost_week": "Kosten diese Woche",
+    "cost_month": "Kosten diesen Monat",
+    "f_display": "Verbrauch anzeigen als (kWh, Kosten oder beides)",
     "f_energy_period": "Angezeigte Energie (Zähler oder Zeitraum)",
     "flex_temp": "Flex-Zone",
     "f_flex_temperature": "Temperatursensor Flex-Zone",
@@ -539,7 +547,7 @@ const STRINGS = {
     "cycle_cost": "Zykluskosten",
     "yesterday": "gestern",
     "f_last_cycle": "Letzten Zyklus anzeigen (Start, Ende, Dauer, Verbrauch, Kosten)",
-    "f_price_per_kwh": "Preis pro kWh (Kosten des letzten Zyklus)",
+    "f_price_per_kwh": "Preis pro kWh (Zahl oder Entität, für Kosten)",
     "wet_vacuum": "Nass-Trockensauger",
     "wv_cleaning": "Reinigung",
     "wv_selfclean": "Selbstreinigung",
@@ -759,6 +767,10 @@ const STRINGS = {
     "energy_day": "Aujourd'hui",
     "energy_week": "Cette semaine",
     "energy_month": "Ce mois",
+    "cost_day": "Coût du jour",
+    "cost_week": "Coût de la semaine",
+    "cost_month": "Coût du mois",
+    "f_display": "Affichage de la conso (kWh, € ou les deux)",
     "f_energy_period": "Énergie affichée (compteur ou période)",
     "flex_temp": "Zone flex",
     "f_flex_temperature": "Capteur température zone flex",
@@ -810,7 +822,7 @@ const STRINGS = {
     "cycle_cost": "Coût du cycle",
     "yesterday": "hier",
     "f_last_cycle": "Afficher le dernier cycle (début, fin, durée, conso, coût)",
-    "f_price_per_kwh": "Prix du kWh (coût du dernier cycle)",
+    "f_price_per_kwh": "Prix du kWh (nombre ou entité, pour les coûts)",
     "wet_vacuum": "Aspirateur laveur",
     "wv_cleaning": "Lavage",
     "wv_selfclean": "Auto-nettoyage",
@@ -875,6 +887,10 @@ const STRINGS = {
     "energy_day": "I dag",
     "energy_week": "Denne uken",
     "energy_month": "Denne måneden",
+    "cost_day": "Kostnad i dag",
+    "cost_week": "Kostnad denne uken",
+    "cost_month": "Kostnad denne måneden",
+    "f_display": "Forbruk vist som (kWh, kostnad eller begge)",
     "f_energy_period": "Vist energi (teller eller periode)",
     "washer": "Vaskemaskin",
     "dryer": "Tørketrommel",
@@ -1081,7 +1097,7 @@ const STRINGS = {
     "cycle_cost": "Sykluskostnad",
     "yesterday": "i går",
     "f_last_cycle": "Vis siste syklus (start, slutt, varighet, forbruk, kostnad)",
-    "f_price_per_kwh": "Pris per kWh (kostnad for siste syklus)",
+    "f_price_per_kwh": "Pris per kWh (tall eller entitet, for kostnader)",
     "wet_vacuum": "Våt- og tørrstøvsuger",
     "wv_cleaning": "Vasker",
     "wv_selfclean": "Selvrens",
@@ -1301,6 +1317,10 @@ const STRINGS = {
     "energy_day": "Vandaag",
     "energy_week": "Deze week",
     "energy_month": "Deze maand",
+    "cost_day": "Kosten vandaag",
+    "cost_week": "Kosten deze week",
+    "cost_month": "Kosten deze maand",
+    "f_display": "Verbruik tonen als (kWh, kosten of beide)",
     "f_energy_period": "Getoonde energie (teller of periode)",
     "flex_temp": "Flexzone",
     "f_flex_temperature": "Temperatuursensor flexzone",
@@ -1352,7 +1372,7 @@ const STRINGS = {
     "cycle_cost": "Cycluskosten",
     "yesterday": "gisteren",
     "f_last_cycle": "Laatste cyclus tonen (start, einde, duur, verbruik, kosten)",
-    "f_price_per_kwh": "Prijs per kWh (kosten laatste cyclus)",
+    "f_price_per_kwh": "Prijs per kWh (getal of entiteit, voor kosten)",
     "wet_vacuum": "Nat-droogstofzuiger",
     "wv_cleaning": "Reinigen",
     "wv_selfclean": "Zelfreiniging",
@@ -1572,6 +1592,10 @@ const STRINGS = {
     "energy_day": "Azi",
     "energy_week": "Săptămâna aceasta",
     "energy_month": "Luna aceasta",
+    "cost_day": "Cost azi",
+    "cost_week": "Cost săptămâna aceasta",
+    "cost_month": "Cost luna aceasta",
+    "f_display": "Consum afișat ca (kWh, cost sau ambele)",
     "f_energy_period": "Energie afișată (contor sau perioadă)",
     "flex_temp": "Zonă flex",
     "f_flex_temperature": "Senzor temperatură zonă flex",
@@ -1623,7 +1647,7 @@ const STRINGS = {
     "cycle_cost": "Costul ciclului",
     "yesterday": "ieri",
     "f_last_cycle": "Afișează ultimul ciclu (început, sfârșit, durată, consum, cost)",
-    "f_price_per_kwh": "Preț pe kWh (costul ultimului ciclu)",
+    "f_price_per_kwh": "Preț pe kWh (număr sau entitate, pentru costuri)",
     "wet_vacuum": "Aspirator de spălat",
     "wv_cleaning": "Spălare",
     "wv_selfclean": "Autocurățare",
@@ -1843,6 +1867,10 @@ const STRINGS = {
     "energy_day": "Сегодня",
     "energy_week": "На этой неделе",
     "energy_month": "В этом месяце",
+    "cost_day": "Стоимость сегодня",
+    "cost_week": "Стоимость за неделю",
+    "cost_month": "Стоимость за месяц",
+    "f_display": "Показывать расход как (кВт·ч, стоимость или оба)",
     "f_energy_period": "Отображаемая энергия (счётчик или период)",
     "flex_temp": "Флекс-зона",
     "f_flex_temperature": "Датчик температуры флекс-зоны",
@@ -1894,7 +1922,7 @@ const STRINGS = {
     "cycle_cost": "Стоимость цикла",
     "yesterday": "вчера",
     "f_last_cycle": "Показывать последний цикл (начало, конец, длительность, расход, стоимость)",
-    "f_price_per_kwh": "Цена за кВт·ч (стоимость последнего цикла)",
+    "f_price_per_kwh": "Цена за кВт·ч (число или сущность, для стоимости)",
     "wet_vacuum": "Моющий пылесос",
     "wv_cleaning": "Уборка",
     "wv_selfclean": "Самоочистка",
@@ -5211,9 +5239,21 @@ class ApplianceCardBase extends HTMLElement {
     const dual = kind === "water_heater" && (m.pwS || m.energyS);
     if (m.pw && c.show_power !== false) tile(solar ? "mdi:solar-power" : "mdi:flash", fmtPower(hass, m.pw) ?? "—", lb(solar ? "production" : dual ? "grid" : "power"), c.power);
     if (m.pwS) tile("mdi:solar-power", fmtPower(hass, m.pwS) ?? "—", lb("solar_surplus"), c.power_solar);
+    // display : "energy" (kWh seuls), "cost" (€ seuls, si price_per_kwh est valide), sinon les deux
+    const pr = typeof c.price_per_kwh === "string" ? num(hass.states[c.price_per_kwh]) : Number(c.price_per_kwh);
+    const hasPr = c.price_per_kwh != null && c.price_per_kwh !== "" && Number.isFinite(pr);
+    const prEnt = typeof c.price_per_kwh === "string" ? c.price_per_kwh : null;
+    const showKwh = !(c.display === "cost" && hasPr), showCost = hasPr && c.display !== "energy";
+    const money = (x) => {
+      const cur = (hass.config && hass.config.currency) || "EUR";
+      try { return new Intl.NumberFormat(loc(hass), { style: "currency", currency: cur, minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x); }
+      catch (e) { return `${fmtNum(hass, x, 2, 2)} ${cur}`; }
+    };
     const per = ["day", "week", "month"].includes(c.energy_period) && this._perKwh != null ? c.energy_period : null;
     if (m.energy && per && !dual && !solar) {
-      tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.energy);
+      if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.energy);
+      // coût de la période (mode € ou les deux) : conso de la période × prix du kWh actuel
+      if (showCost && c.display === "cost") tile("mdi:cash", money(this._perKwh * pr), tr(hass, `cost_${per}`), prEnt || c.energy);
     } else if (m.energy) {
       const eVal = fmtEnergy(hass, m.energy) ?? "—";
       const yp = m.energy.attributes && m.energy.attributes.last_period;
@@ -5236,16 +5276,9 @@ class ApplianceCardBase extends HTMLElement {
       else if (ago > 1) { try { day = ` · ${s0.toLocaleDateString(loc(hass), { day: "numeric", month: "short" })}`; } catch (e) { day = ` · ${s0.getDate()}/${s0.getMonth() + 1}`; } }
       tile("mdi:history", `${fmtClock(hass, s0)} → ${fmtClock(hass, s1)}`, `${lb("last_cycle")}${day}`, c.power);
       tile("mdi:timer-outline", fmtDuration((cy.end - cy.start) / 60000), lb("cycle_duration"), c.power);
-      tile("mdi:lightning-bolt", `${fmtNum(hass, cy.kwh, 2)} kWh`, lb("cycle_energy"), c.energy || c.power);
+      if (showKwh) tile("mdi:lightning-bolt", `${fmtNum(hass, cy.kwh, 2)} kWh`, lb("cycle_energy"), c.energy || c.power);
       // prix du kWh : nombre, ou entité (tarif) ; devise de Home Assistant
-      const pr = typeof c.price_per_kwh === "string" ? num(hass.states[c.price_per_kwh]) : Number(c.price_per_kwh);
-      if (c.price_per_kwh != null && c.price_per_kwh !== "" && Number.isFinite(pr)) {
-        const cur = (hass.config && hass.config.currency) || "EUR";
-        let v;
-        try { v = new Intl.NumberFormat(loc(hass), { style: "currency", currency: cur, minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(cy.kwh * pr); }
-        catch (e) { v = `${fmtNum(hass, cy.kwh * pr, 2, 2)} ${cur}`; }
-        tile("mdi:cash", v, lb("cycle_cost"), typeof c.price_per_kwh === "string" ? c.price_per_kwh : c.energy || c.power);
-      }
+      if (showCost) tile("mdi:cash", money(cy.kwh * pr), lb("cycle_cost"), prEnt || c.energy || c.power);
     }
     if (solar && m.status !== "night" && m.frac != null && m.pw && !BAD.includes(String(m.pw.state).toLowerCase())) tile("mdi:white-balance-sunny", `${Math.round(m.frac * 100)} %`, lb("of_peak"), c.power);
     $("stats").innerHTML = tiles.join("");
@@ -5331,10 +5364,14 @@ function buildForm(kind) {
           ] : []),
           ...(["washer", "dryer", "dishwasher"].includes(kind) ? [
             { name: "last_cycle", selector: { boolean: {} } },
-            { name: "price_per_kwh", selector: { number: { min: 0, max: 2, step: 0.0001, mode: "box" } } },
           ] : []),
           ...(d.fields.includes("energy") ? [{ name: "energy_period", selector: { select: { mode: "dropdown", options: [
             { value: "", label: tr(null, "energy") }, ...["day", "week", "month"].map((value) => ({ value, label: tr(null, `energy_${value}`) }))] } } }] : []),
+          ...(d.fields.includes("energy") || ["washer", "dryer", "dishwasher"].includes(kind) ? [
+            { name: "price_per_kwh", selector: { number: { min: 0, max: 2, step: 0.0001, mode: "box" } } },
+            { name: "display", selector: { select: { mode: "dropdown", options: [
+              { value: "", label: "kWh + €" }, { value: "energy", label: "kWh" }, { value: "cost", label: "€" }] } } },
+          ] : []),
           { name: "illustration_size", selector: { number: { min: 30, max: 300, step: 5, mode: "slider", unit_of_measurement: "%" } } },
           { name: "transparent", selector: { boolean: {} } },
           { name: "animations", selector: { boolean: {} }, default: true },
