@@ -58,7 +58,7 @@ cost: sensor.lave_linge_cout_jour
 
 **Grille-pain** (`custom:appliance-toaster-card`) : grille-pain inox deux fentes. Au-dessus de `threshold` (200 W) : « Grillage », le levier descend, les tranches s'enfoncent, les fentes rougeoient. À la coupure, les toasts dorés sautent : « Toasts prêts ! » pendant `ready_minutes` (2 min).
 
-**Multiprise** (`custom:appliance-power-strip-card`) : multiprise française vue de trois quarts. Sous tension (puissance au-dessus de 1 W, `switch` allumé ou une prise commandée allumée), l'interrupteur rougeoie et le courant circule dans le cordon. `outlets` : une entité `switch` par prise, chacune dessine une fiche avec un anneau LED bleu quand elle est allumée, et une tuile **Prises** (`2 / 4`). `sockets` (2 à 6) règle le nombre de prises.
+**Multiprise** (`custom:appliance-power-strip-card`) : multiprise française vue de trois quarts. Sous tension (puissance au-dessus de 1 W, `switch` allumé ou une prise commandée allumée), l'interrupteur rougeoie et le courant circule dans le cordon. `outlets` : une entité `switch` par prise, chacune dessine une fiche avec un anneau LED bleu quand elle est allumée, et un bouton numéroté sous la carte la bascule (nom de l'entité en infobulle). `sockets` (2 à 6) règle le nombre de prises.
 
 **Chargeur de téléphone** (`custom:appliance-phone-charger-card`) : smartphone sur un socle à induction. Au-dessus de 2 W : « En charge », l'anneau pulse en bleu, l'écran affiche l'heure et la batterie qui se remplit (`battery_level`). Entre 0,3 W et le seuil, ou à 100 % : « Chargée », anneau vert.
 

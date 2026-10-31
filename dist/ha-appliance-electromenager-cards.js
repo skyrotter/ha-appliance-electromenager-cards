@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.42.2";
+const VERSION = "1.43.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -4786,6 +4786,17 @@ class ApplianceCardBase extends HTMLElement {
       modesEl.innerHTML = MODE_ORDER.filter((k) => pickMode(opts, k)).map((k) =>
         `<button class="mode-btn ${cur === k ? "on" : ""}" data-mode="${k}" aria-pressed="${cur === k}"><ha-icon icon="${MODE_ICON[k]}"></ha-icon>${esc(tr(hass, k === "off" ? "mode_off" : k))}</button>`).join("");
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._setMode(b.dataset.mode); }; });
+    } else if (kind === "power_strip" && Array.isArray(c.outlets) && c.outlets.length) {
+      // multiprise : un bouton par prise commandée (numéro, nom de l'entité en infobulle), clic = bascule
+      modesEl.innerHTML = c.outlets.map((id, i) => {
+        const st = hass.states[id], on = isOn(st), name = (st && st.attributes.friendly_name) || id;
+        return `<button class="mode-btn outlet-btn ${on ? "on" : ""}" data-outlet="${esc(id)}" title="${esc(name)}" aria-label="${esc(name)}" aria-pressed="${on}" ${!st || st.state === "unavailable" ? "disabled" : ""}><ha-icon icon="mdi:power-socket-fr"></ha-icon>${i + 1}</button>`;
+      }).join("");
+      modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => {
+        ev.stopPropagation();
+        const id = b.dataset.outlet, dom = domainOf(id);
+        hass.callService(["switch", "input_boolean", "light"].includes(dom) ? dom : "homeassistant", "toggle", { entity_id: id });
+      }; });
     } else modesEl.innerHTML = "";
 
     // stats
@@ -4805,7 +4816,7 @@ class ApplianceCardBase extends HTMLElement {
       if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("temperature"), tEntity);
       if (m.keg != null) tile("mdi:keg", `${fmtNum(hass, m.keg, 0)} %`, lb("keg"), c.keg_level, m.alerts.includes("keg_low") ? "warn" : "");
     } else if (kind === "power_strip") {
-      if (m.outlets && m.outlets.length) tile("mdi:power-socket-fr", `${m.outlets.filter(Boolean).length} / ${m.outlets.length}`, lb("outlets"), c.outlets[0]);
+      // prises commandées : boutons dans la rangée .modes (plus de tuile « 1 / 3 »)
     } else if (kind === "phone_charger") {
       if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0)} %`, lb("battery"), c.battery_level);
     } else if (kind === "garland") {
@@ -6264,6 +6275,10 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-garland.st-lit.gl-multi .gl-b, .k-garland.st-lit.gl-multi .gl-h { animation: gl-rgb 2.4s linear infinite; animation-delay: var(--d, 0s); }
 .k-garland.st-lit:not(.gl-multi) .gl-b, .k-garland.st-lit:not(.gl-multi) .gl-h { fill: var(--glc, #ffcf6a); }
 @keyframes gl-rgb { 0% { fill: #ff3b5c; } 25% { fill: #ffd23b; } 50% { fill: #3bff8a; } 75% { fill: #3bb8ff; } 100% { fill: #ff3b5c; } }
+/* un bouton par prise commandée (option outlets) */
+.k-power_strip .modes { grid-template-columns: repeat(auto-fit, minmax(48px, 1fr)); }
+.outlet-btn { font-weight: 600; }
+.outlet-btn:disabled { opacity: .45; cursor: default; }
 `;
 
 /* ------------------------------------------------------------------ */
