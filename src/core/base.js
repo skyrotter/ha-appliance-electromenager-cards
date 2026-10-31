@@ -3,6 +3,10 @@
 /* ------------------------------------------------------------------ */
 let SEQ = 0;
 
+// energy_period : périodes calendaires, puis glissantes (durée en jours)
+const ROLLING = { "24h": 1, "7d": 7, "30d": 30 };
+const PERIODS = ["day", "week", "month", ...Object.keys(ROLLING)];
+
 class ApplianceCardBase extends HTMLElement {
   static get kind() { return "washer"; }
   static getConfigForm() { return buildForm(this.kind); }
@@ -136,15 +140,17 @@ class ApplianceCardBase extends HTMLElement {
     hass.callService(["switch", "input_boolean", "light", "fan", "humidifier"].includes(dom) ? dom : "homeassistant", "toggle", { entity_id: sw.id });
   }
 
-  // energy_period (day / week / month) : consommation de la période d'après les statistiques de Home Assistant
-  // (même calcul que le tableau de bord Énergie), relue au plus toutes les 5 min ou quand le compteur bouge
+  // energy_period : consommation de la période d'après les statistiques de Home Assistant,
+  // calendaire (day / week / month, comme le tableau de bord Énergie) ou glissante (24h / 7d / 30d),
+  // relue au plus toutes les 5 min ou quand le compteur bouge
   _fetchPeriod() {
     const c = this._config, hass = this._hass, per = c.energy_period;
-    if (!["day", "week", "month"].includes(per) || !c.energy || !hass || typeof hass.callWS !== "function") return;
+    if (!PERIODS.includes(per) || !c.energy || !hass || typeof hass.callWS !== "function") return;
     const st = hass.states[c.energy], sig = `${per}|${c.energy}|${st ? st.state : ""}`, now = Date.now();
     if (this._perBusy || (sig === this._perSig && now - (this._perAt || 0) < 300000) || (this._perAt && now - this._perAt < 60000)) return;
     this._perBusy = true; this._perSig = sig; this._perAt = now;
-    hass.callWS({ type: "recorder/statistic_during_period", statistic_id: c.energy, calendar: { period: per }, types: ["change"], units: { energy: "kWh" } })
+    const win = ROLLING[per] ? { rolling_window: { duration: { days: ROLLING[per] } } } : { calendar: { period: per } };
+    hass.callWS({ type: "recorder/statistic_during_period", statistic_id: c.energy, ...win, types: ["change"], units: { energy: "kWh" } })
       .then((r) => { this._perKwh = r && Number.isFinite(r.change) ? r.change : null; })
       .catch(() => { this._perKwh = null; })
       .finally(() => { this._perBusy = false; if (this._hass) this._render(this._compute()); });
@@ -1135,7 +1141,7 @@ class ApplianceCardBase extends HTMLElement {
       try { return new Intl.NumberFormat(loc(hass), { style: "currency", currency: cur, minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x); }
       catch (e) { return `${fmtNum(hass, x, 2, 2)} ${cur}`; }
     };
-    const per = ["day", "week", "month"].includes(c.energy_period) && this._perKwh != null ? c.energy_period : null;
+    const per = PERIODS.includes(c.energy_period) && this._perKwh != null ? c.energy_period : null;
     if (m.energy && per && !dual && !solar) {
       if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.energy);
       // coût de la période (mode € ou les deux) : conso de la période × prix du kWh actuel

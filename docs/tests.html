@@ -908,7 +908,17 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
   ok('energy_period: statistics request',calls.some(m=>m.type==='recorder/statistic_during_period'&&m.statistic_id==='sensor.e'&&m.calendar.period==='day'&&m.types[0]==='change'),JSON.stringify(calls[0]));
   ok('energy_period month',/42,1 kWh/.test(txt(c2))&&/Ce mois/.test(txt(c2)),txt(c2));
   ok('energy_period: failure falls back to the counter',/1.235 kWh/.test(txt(c3))&&/Énergie/.test(txt(c3)),txt(c3));
-  ok('no energy_period: counter',/1.235 kWh/.test(txt(c4))&&calls.length===3,txt(c4)+' '+calls.length);
+  ok('no energy_period: counter',/1.235 kWh/.test(txt(c4))&&calls.filter(m=>m.calendar).length===3,txt(c4)+' '+calls.length);
+ },300);}
+// energy_period rolling (24h / 7d / 30d): rolling_window instead of calendar
+{const calls=[]; const mkr=(per,display)=>{const c=card('dishwasher',{power:'sensor.p',energy:'sensor.e',energy_period:per,price_per_kwh:0.25,display},[mk('sensor.p',0,W),mk('sensor.e',1234.5,{unit_of_measurement:'kWh',state_class:'total_increasing'})]);c.h.callWS=(m)=>{calls.push(m);return Promise.resolve({change:4});};c.el.hass={...c.h,states:{...c.h.states}};return c;};
+ const r1=mkr('7d'), r2=mkr('24h'), r3=mkr('30d','cost');
+ setTimeout(()=>{
+  const txt=(c)=>c.sr.getElementById('stats').textContent.replace(/\s+/g,' ');
+  ok('energy_period 7d: rolling request',calls.some(m=>m.rolling_window&&m.rolling_window.duration.days===7&&!m.calendar),JSON.stringify(calls));
+  ok('energy_period 7d: label',/ 4 kWh/.test(txt(r1))&&/7 derniers jours/.test(txt(r1)),txt(r1));
+  ok('energy_period 24h',calls.some(m=>m.rolling_window&&m.rolling_window.duration.days===1)&&/24 dernières heures/.test(txt(r2)),txt(r2));
+  ok('energy_period 30d cost',/1,00/.test(txt(r3))&&/Coût sur 30 jours/.test(txt(r3)),txt(r3));
  },300);}
 // display: energy / cost — period cost replaces the kWh tile in cost mode, kWh kept without a valid price
 {const mkd=(display,price)=>{const c=card('dishwasher',{power:'sensor.p',energy:'sensor.e',energy_period:'day',price_per_kwh:price,display},[mk('sensor.p',600,W),mk('sensor.e',1234.5,{unit_of_measurement:'kWh',state_class:'total_increasing'})]);c.h.callWS=()=>Promise.resolve({change:2});c.el.hass={...c.h,states:{...c.h.states}};return c;};
