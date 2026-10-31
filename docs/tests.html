@@ -290,6 +290,10 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c=card('room-climate',{...base,style:'gauge',show_trend:false,transparent:true},[TH('sensor.t',19),HU('sensor.h',51)]);
  ok('room climate show_trend false hides the trend',c.sr.getElementById('trend').hidden,'shown');
  ok('room climate transparent hides the halo',getComputedStyle(c.sr.querySelector('.halo')).display==='none',getComputedStyle(c.sr.querySelector('.halo')).display);
+ // variant (nouveau nom) ; style texte encore accepté ; style objet (picture-elements) ignoré
+ c=card('room-climate',{...base,variant:'dial'},[TH('sensor.t',21),HU('sensor.h',50)]); ok('room climate variant',rc(c).classList.contains('st-dial'),rc(c).className);
+ c=card('room-climate',{...base,variant:'dial',style:{left:'30%',top:'40%',width:'180px'}},[TH('sensor.t',21),HU('sensor.h',50)]); ok('room climate variant + picture-elements style object',rc(c).classList.contains('st-dial'),rc(c).className);
+ c=card('room-climate',{...base,style:{left:'30%'}},[TH('sensor.t',21),HU('sensor.h',50)]); ok('room climate style object alone -> standard',rc(c).classList.contains('st-standard'),rc(c).className);
  // 12 styles : chacun s'affiche, garde les valeurs, l'icône de la pièce et les alertes
  for(const st of ['standard','gauge','gradient','minimal','lcd','tile','thermometer','gradient_ring','double_ring','dial','neon','bars']){
   try{c=card('room-climate',{...base,style:st,icon:'mdi:sofa',alert_temp_max:24},[TH('sensor.t',24.5),HU('sensor.h',52)]);

@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.53.3";
+const VERSION = "1.53.4";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -7415,7 +7415,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "color_humidity": "Colour: humidity",
       "color_dry": "Colour: dry",
       "color_alert": "Colour: alert",
-      "show_trend": "Show the trend (1 h)"
+      "show_trend": "Show the trend (1 h)",
+      "variant": "Style"
     },
     "de": {
       "animations": "Animationen",
@@ -7651,7 +7652,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "color_humidity": "Farbe: Luftfeuchtigkeit",
       "color_dry": "Farbe: trocken",
       "color_alert": "Farbe: Alarm",
-      "show_trend": "Tendenz anzeigen (1 h)"
+      "show_trend": "Tendenz anzeigen (1 h)",
+      "variant": "Stil"
     },
     "fr": {
       "animations": "Animations",
@@ -7887,7 +7889,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "color_humidity": "Couleur : humidité",
       "color_dry": "Couleur : sec",
       "color_alert": "Couleur : alerte",
-      "show_trend": "Afficher la tendance (1 h)"
+      "show_trend": "Afficher la tendance (1 h)",
+      "variant": "Style"
     },
     "nb": {
       "illustration_size": "Størrelse på illustrasjonen",
@@ -8123,7 +8126,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "color_humidity": "Farge: fuktighet",
       "color_dry": "Farge: tørt",
       "color_alert": "Farge: varsel",
-      "show_trend": "Vis trend (1 t)"
+      "show_trend": "Vis trend (1 t)",
+      "variant": "Stil"
     },
     "nl": {
       "animations": "Animaties",
@@ -8359,7 +8363,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "color_humidity": "Kleur: luchtvochtigheid",
       "color_dry": "Kleur: droog",
       "color_alert": "Kleur: alarm",
-      "show_trend": "Trend tonen (1 u)"
+      "show_trend": "Trend tonen (1 u)",
+      "variant": "Stijl"
     },
     "ro": {
       "animations": "Animații",
@@ -8595,7 +8600,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "color_humidity": "Culoare: umiditate",
       "color_dry": "Culoare: uscat",
       "color_alert": "Culoare: alertă",
-      "show_trend": "Afișează tendința (1 h)"
+      "show_trend": "Afișează tendința (1 h)",
+      "variant": "Stil"
     },
     "ru": {
       "animations": "Анимации",
@@ -8831,7 +8837,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "color_humidity": "Цвет: влажность",
       "color_dry": "Цвет: сухо",
       "color_alert": "Цвет: тревога",
-      "show_trend": "Показывать тенденцию (1 ч)"
+      "show_trend": "Показывать тенденцию (1 ч)",
+      "variant": "Стиль"
     }
   };
   const lang = (hass) => {
@@ -19673,7 +19680,9 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
     get hass() { return this._hass; }
     connectedCallback() { this._tick = setInterval(() => { if (this._hass && this._c) this._render(); }, 60000); }
     disconnectedCallback() { clearInterval(this._tick); }
-    _style() { return STYLES.includes(this._c && this._c.style) ? this._c.style : 'standard'; }
+    // variant : nom du style ; « style » reste accepté (anciennes configs) quand c'est un nom de style,
+    // car dans une carte picture-elements, style est l'objet CSS de positionnement de Home Assistant
+    _style() { const c = this._c || {}, v = STYLES.includes(c.variant) ? c.variant : c.style; return STYLES.includes(v) ? v : 'standard'; }
     getCardSize() { return { thermometer: 6, double_ring: 5, gradient_ring: 4, dial: 5, tile: 2 }[this._style()] || 2; }
     getGridOptions() {
       const st = this._style();
@@ -20361,10 +20370,12 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
       const sel = (name, opts) => ({ name, selector: { select: { mode: 'dropdown', options: opts.map(([value, k]) => ({ value, label: (T[this._lang()] || T.en)[k] || T.en[k] })) } } });
       this._form.hass = this._hass;
-      this._form.data = this._c;
+      const d = { ...this._c };
+      if (!d.variant && typeof d.style === 'string' && STYLES.includes(d.style)) { d.variant = d.style; delete d.style; }
+      this._form.data = d;
       const color = (name) => ({ name, selector: { color_rgb: {} } });
       this._form.schema = [
-        { type: 'grid', name: '', schema: [sel('style', STYLES.map((v) => [v, `st_${v}`])), { name: 'icon', selector: { icon: {} } }] },
+        { type: 'grid', name: '', schema: [sel('variant', STYLES.map((v) => [v, `st_${v}`])), { name: 'icon', selector: { icon: {} } }] },
         { name: 'name', selector: { text: {} } },
         ent('entity_temperature', 'sensor', 'temperature'), ent('entity_humidity', 'sensor', 'humidity'),
         ent('entity_outdoor_temperature', 'sensor', 'temperature'), ent('entity_outdoor_humidity', 'sensor', 'humidity'),
@@ -20376,7 +20387,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
         { type: 'grid', name: '', schema: [sel('history_days', [['1', 'h24'], ['7', 'd7'], ['30', 'd30']]), sel('history_mode', [['both', 'both'], ['temperature', 'temperature'], ['humidity', 'humidity']])] },
         { type: 'grid', name: '', schema: [sel('tap_action', [['history', 'tap_history'], ['more-info', 'tap_more_info'], ['navigate', 'tap_navigate'], ['none', 'tap_none']]),
           ...(this._c && this._c.tap_action === 'navigate' ? [{ name: 'navigation_path', selector: { text: {} } }] : [])] },
-        ...((this._c && this._c.style) === 'lcd' ? [sel('lcd_color', [['auto', 'lcd_auto'], ['green', 'lcd_green'], ['blue', 'lcd_blue'], ['amber', 'lcd_amber']])] : []),
+        ...((this._c && (this._c.variant || this._c.style)) === 'lcd' ? [sel('lcd_color', [['auto', 'lcd_auto'], ['green', 'lcd_green'], ['blue', 'lcd_blue'], ['amber', 'lcd_amber']])] : []),
         { type: 'grid', name: '', schema: [color('color_comfort'), color('color_cool'), color('color_warm'), color('color_humidity'), color('color_dry'), color('color_alert')] },
         window.applianceTempField,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский' }[value] || value })) } } },
