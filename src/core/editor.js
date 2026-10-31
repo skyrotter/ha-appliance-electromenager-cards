@@ -76,6 +76,7 @@ function buildForm(kind) {
           ] : []),
           ...(["washer", "dryer", "dishwasher"].includes(kind) ? [
             { name: "last_cycle", selector: { boolean: {} } },
+            { name: "estimate", selector: { boolean: {} } },
           ] : []),
           ...(d.fields.includes("energy") ? [{ name: "energy_period", selector: { select: { mode: "dropdown", options: [
             { value: "", label: tr(null, "energy") }, ...PERIODS.map((value) => ({ value, label: tr(null, `energy_${value}`) }))] } } }] : []),

@@ -167,6 +167,8 @@ const STRINGS = {
     "fridge_temp": "Fridge",
     "freezer_temp": "Freezer",
     "ends_at": "Ends at",
+    "ends_at_est": "Estimated end",
+    "almost_done": "Almost done",
     "toggle": "Turn on/off",
     "confirm_off": "Cycle running – click again to cut power",
     "confirm_off_pc": "Computer on – click again to cut power",
@@ -286,6 +288,7 @@ const STRINGS = {
     "cycle_cost": "Cycle cost",
     "yesterday": "yesterday",
     "f_last_cycle": "Show the last cycle (start, end, duration, energy, cost)",
+    "f_estimate": "Estimate remaining time and progress (no sensor)",
     "f_price_per_kwh": "Price per kWh (number or entity, for costs)",
     "wet_vacuum": "Wet & dry vacuum",
     "wv_cleaning": "Cleaning",
@@ -456,6 +459,8 @@ const STRINGS = {
     "fridge_temp": "Kühlschrank",
     "freezer_temp": "Gefrierfach",
     "ends_at": "Endet um",
+    "ends_at_est": "Voraussichtlich fertig um",
+    "almost_done": "Gleich fertig",
     "toggle": "Ein/Aus",
     "confirm_off": "Zyklus läuft – erneut klicken zum Abschalten",
     "confirm_off_pc": "Computer läuft – erneut klicken zum Abschalten",
@@ -575,6 +580,7 @@ const STRINGS = {
     "cycle_cost": "Zykluskosten",
     "yesterday": "gestern",
     "f_last_cycle": "Letzten Zyklus anzeigen (Start, Ende, Dauer, Verbrauch, Kosten)",
+    "f_estimate": "Restzeit und Fortschritt schätzen (ohne Sensor)",
     "f_price_per_kwh": "Preis pro kWh (Zahl oder Entität, für Kosten)",
     "wet_vacuum": "Nass-Trockensauger",
     "wv_cleaning": "Reinigung",
@@ -745,6 +751,8 @@ const STRINGS = {
     "fridge_temp": "Frigo",
     "freezer_temp": "Congélateur",
     "ends_at": "Fin à",
+    "ends_at_est": "Fin estimée à",
+    "almost_done": "Bientôt fini",
     "toggle": "Allumer/éteindre",
     "confirm_off": "Cycle en cours – cliquer encore pour couper",
     "confirm_off_pc": "Ordinateur allumé – cliquer encore pour couper",
@@ -864,6 +872,7 @@ const STRINGS = {
     "cycle_cost": "Coût du cycle",
     "yesterday": "hier",
     "f_last_cycle": "Afficher le dernier cycle (début, fin, durée, conso, coût)",
+    "f_estimate": "Estimer temps restant et progression (sans capteur)",
     "f_price_per_kwh": "Prix du kWh (nombre ou entité, pour les coûts)",
     "wet_vacuum": "Aspirateur laveur",
     "wv_cleaning": "Lavage",
@@ -1101,6 +1110,8 @@ const STRINGS = {
     "fridge_temp": "Kjøleskap",
     "freezer_temp": "Fryser",
     "ends_at": "Ferdig kl.",
+    "ends_at_est": "Antatt ferdig kl.",
+    "almost_done": "Snart ferdig",
     "toggle": "Slå på/av",
     "confirm_off": "Syklus pågår – trykk igjen for å bryte strømmen",
     "confirm_off_pc": "Datamaskinen er på – klikk igjen for å kutte strømmen",
@@ -1153,6 +1164,7 @@ const STRINGS = {
     "cycle_cost": "Sykluskostnad",
     "yesterday": "i går",
     "f_last_cycle": "Vis siste syklus (start, slutt, varighet, forbruk, kostnad)",
+    "f_estimate": "Anslå gjenstående tid og fremdrift (uten sensor)",
     "f_price_per_kwh": "Pris per kWh (tall eller entitet, for kostnader)",
     "wet_vacuum": "Våt- og tørrstøvsuger",
     "wv_cleaning": "Vasker",
@@ -1323,6 +1335,8 @@ const STRINGS = {
     "fridge_temp": "Koelkast",
     "freezer_temp": "Diepvries",
     "ends_at": "Klaar om",
+    "ends_at_est": "Verwacht klaar om",
+    "almost_done": "Bijna klaar",
     "toggle": "Aan/uit",
     "confirm_off": "Cyclus bezig – klik nog eens om de stroom te onderbreken",
     "confirm_off_pc": "Computer staat aan – klik nogmaals om uit te schakelen",
@@ -1442,6 +1456,7 @@ const STRINGS = {
     "cycle_cost": "Cycluskosten",
     "yesterday": "gisteren",
     "f_last_cycle": "Laatste cyclus tonen (start, einde, duur, verbruik, kosten)",
+    "f_estimate": "Resterende tijd en voortgang schatten (zonder sensor)",
     "f_price_per_kwh": "Prijs per kWh (getal of entiteit, voor kosten)",
     "wet_vacuum": "Nat-droogstofzuiger",
     "wv_cleaning": "Reinigen",
@@ -1612,6 +1627,8 @@ const STRINGS = {
     "fridge_temp": "Frigider",
     "freezer_temp": "Congelator",
     "ends_at": "Se termină la",
+    "ends_at_est": "Final estimat la",
+    "almost_done": "Aproape gata",
     "toggle": "Pornește/oprește",
     "confirm_off": "Ciclu în desfășurare – apasă din nou pentru a tăia alimentarea",
     "confirm_off_pc": "Computer pornit – apăsați din nou pentru a opri",
@@ -1731,6 +1748,7 @@ const STRINGS = {
     "cycle_cost": "Costul ciclului",
     "yesterday": "ieri",
     "f_last_cycle": "Afișează ultimul ciclu (început, sfârșit, durată, consum, cost)",
+    "f_estimate": "Estimează timpul rămas și progresul (fără senzor)",
     "f_price_per_kwh": "Preț pe kWh (număr sau entitate, pentru costuri)",
     "wet_vacuum": "Aspirator de spălat",
     "wv_cleaning": "Spălare",
@@ -1901,6 +1919,8 @@ const STRINGS = {
     "fridge_temp": "Холодильник",
     "freezer_temp": "Морозильник",
     "ends_at": "Окончание в",
+    "ends_at_est": "Ожидаемое окончание в",
+    "almost_done": "Почти готово",
     "toggle": "Вкл./выкл.",
     "confirm_off": "Цикл выполняется – нажмите ещё раз, чтобы отключить питание",
     "confirm_off_pc": "Компьютер включён – нажмите ещё раз, чтобы отключить",
@@ -2020,6 +2040,7 @@ const STRINGS = {
     "cycle_cost": "Стоимость цикла",
     "yesterday": "вчера",
     "f_last_cycle": "Показывать последний цикл (начало, конец, длительность, расход, стоимость)",
+    "f_estimate": "Оценивать оставшееся время и прогресс (без датчика)",
     "f_price_per_kwh": "Цена за кВт·ч (число или сущность, для стоимости)",
     "wet_vacuum": "Моющий пылесос",
     "wv_cleaning": "Уборка",
@@ -4282,6 +4303,25 @@ function lastCycle(pw, threshold, gapMin = 15, en = []) {
   }
   return { ...cyc, kwh };
 }
+// estimate : cycles terminés ({ start, end }, 5 min au moins) et début du cycle en cours (cur), même découpage que lastCycle
+function cycleList(pw, threshold, gapMin = 15) {
+  const gap = gapMin * 60000, out = [];
+  let start = null, lastOn = null;
+  for (let i = 0; i < pw.length; i++) {
+    const p = pw[i], next = pw[i + 1];
+    if (!(p.w > threshold)) continue;
+    const offAt = next ? next.t : null;
+    if (start === null || p.t - lastOn > gap) { if (start !== null) out.push({ start, end: lastOn }); start = p.t; }
+    lastOn = offAt;
+    if (offAt === null) break;
+  }
+  const cur = start !== null && lastOn === null ? start : null;
+  if (start !== null && lastOn !== null) out.push({ start, end: lastOn });
+  // le premier cycle peut être tronqué par le début de l'historique
+  const t0 = pw.length ? pw[0].t : 0;
+  return { done: out.filter((x) => x.start > t0 && x.end - x.start >= 300000), cur };
+}
+const median = (a) => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y), h = s.length >> 1; return s.length % 2 ? s[h] : (s[h - 1] + s[h]) / 2; };
 // H:MM like a real washer/oven display; M:SS for short countdowns (microwave)
 const lcdDuration = (min, short = false) => {
   if (short) { const s = Math.round(min * 60); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; }
@@ -4458,25 +4498,39 @@ class ApplianceCardBase extends HTMLElement {
 
   // last_cycle : début, fin, durée, énergie et coût du dernier cycle, lus dans l'historique de Home Assistant (4 derniers jours).
   // Relu au chargement puis 20 s après chaque fin de cycle (le temps que l'enregistreur écrive les derniers points).
+  // estimate : même lecture sur 10 jours, relue aussi au chargement en plein cycle, pour la durée de référence
+  // (médiane des 7 derniers cycles) et le début du cycle en cours.
   _fetchCycle(active) {
     const c = this._config, hass = this._hass;
-    if (!c.last_cycle || !c.power || !["washer", "dryer", "dishwasher"].includes(this._kind) || !hass || typeof hass.callWS !== "function") return;
-    const was = this._cycActive;
+    if (!(c.last_cycle || c.estimate) || !c.power || !["washer", "dryer", "dishwasher"].includes(this._kind) || !hass || typeof hass.callWS !== "function") return;
+    const was = this._cycActive, gap = (c.cycle_gap ?? 15) * 60000;
     this._cycActive = active;
-    if (active || this._cycBusy || (this._cycAt && was === active)) return;
+    // départ vu en direct ; une reprise après un creux plus court que cycle_gap reste dans le même cycle
+    if (active && was === false && !(this._runStart && this._offAt && Date.now() - this._offAt < gap)) this._runStart = Date.now();
+    if (!active && was === true) this._offAt = Date.now();
+    const first = !this._cycAt, ended = was === true && !active;
+    if (this._cycBusy || !(first || ended) || (first && active && !c.estimate)) return;
     this._cycBusy = true; this._cycAt = Date.now();
     clearTimeout(this._cycTimer);
     this._cycTimer = setTimeout(() => {
       const now = Date.now(), ids = [c.power].concat(c.energy ? [c.energy] : []);
       const unit = (i, f) => f[(hass.states[i] && hass.states[i].attributes.unit_of_measurement) || ""] ?? 1;
       const pf = unit(c.power, { kW: 1000 }), ef = c.energy ? unit(c.energy, { Wh: 1e-3, MWh: 1e3 }) : 1;
-      hass.callWS({ type: "history/history_during_period", start_time: new Date(now - 4 * 86400000).toISOString(), end_time: new Date(now).toISOString(),
+      hass.callWS({ type: "history/history_during_period", start_time: new Date(now - (c.estimate ? 10 : 4) * 86400000).toISOString(), end_time: new Date(now).toISOString(),
         entity_ids: ids, minimal_response: true, no_attributes: true, significant_changes_only: false })
         .then((r) => {
           const pts = (i, f) => ((r && r[i]) || []).map((p) => ({ t: (p.lu ?? p.lc) * 1000, v: parseFloat(p.s) * f })).filter((p) => Number.isFinite(p.t));
           const pw = pts(c.power, pf).map((p) => ({ t: p.t, w: Number.isFinite(p.v) ? p.v : 0 }));
           const en = c.energy ? pts(c.energy, ef).filter((p) => Number.isFinite(p.v)) : [];
           this._cycle = lastCycle(pw, c.threshold ?? this._def.threshold, c.cycle_gap ?? 15, en);
+          if (c.estimate) {
+            const l = cycleList(pw, c.threshold ?? this._def.threshold, c.cycle_gap ?? 15), done = l.done;
+            let cur = l.cur;
+            // cycle en pause (creux plus court que cycle_gap) au moment de la lecture : c'est le cycle en cours
+            if (cur === null && this._cycActive && done.length && now - done[done.length - 1].end < gap) cur = done.pop().start;
+            this._refDur = median(done.slice(-7).map((x) => x.end - x.start));
+            if (cur !== null && this._cycActive) this._runStart = cur;
+          }
         })
         .catch(() => { this._cycle = null; })
         .finally(() => { this._cycBusy = false; if (this._hass) this._render(this._compute()); });
@@ -4958,6 +5012,12 @@ class ApplianceCardBase extends HTMLElement {
         m.phase = "wash";
       }
     }
+    // estimate : temps restant et progression d'après la durée habituelle des cycles (médiane), si aucun capteur ne les donne
+    if (c.estimate && m.status === "running" && ["washer", "dryer", "dishwasher"].includes(kind) && this._refDur && this._runStart) {
+      const el = Date.now() - this._runStart, left = (this._refDur - el) / 60000;
+      if (!c.remaining) { if (left >= 1) { m.remaining = left; m.estimated = true; } else m.soon = true; }
+      if (!c.progress && m.progress == null) m.progress = Math.max(0, Math.min(99, (el / this._refDur) * 100));
+    }
     if (isOn(m.door) || isOn(m.fdoor)) m.alerts.unshift("door_open");
     m.alerts = [...new Set(m.alerts)];
     return m;
@@ -5273,8 +5333,8 @@ class ApplianceCardBase extends HTMLElement {
     const prog = m.program && active && !BAD.includes(String(m.program.state).toLowerCase()) ? stateText(hass, m.program) : "";
     let sub = "";
     if (active && m.remaining != null && m.remaining > 0) {
-      sub = `${tr(hass, "ends_at")} ${fmtClock(hass, new Date(Date.now() + m.remaining * 60000))}`;
-    }
+      sub = `${tr(hass, m.estimated ? "ends_at_est" : "ends_at")} ${fmtClock(hass, new Date(Date.now() + m.remaining * 60000))}`;
+    } else if (active && m.soon) sub = tr(hass, "almost_done");
     const alertTxt = m.alerts.map((a) => tr(hass, a)).join(" · ");
     let frPill = "";
     if (kind === "fridge" && m.tempVal != null) {
@@ -5449,7 +5509,8 @@ class ApplianceCardBase extends HTMLElement {
       if (m.targetVal != null) tile("mdi:target", `${fmtNum(hass, m.targetVal, 0)} ${m.tempUnit}`, lb("target"), c.target_temperature || tEntity);
       if (kind === "towel_dryer" && m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0)} %`, lb("humidity"), c.humidity || c.entity);
     }
-    if (m.remaining != null && m.remaining > 0 && active && kind !== "water_heater") tile("mdi:timer-sand", fmtDuration(m.remaining), lb("remaining"), c.remaining);
+    if (m.remaining != null && m.remaining > 0 && active && kind !== "water_heater") tile("mdi:timer-sand", `${m.estimated ? "≈ " : ""}${fmtDuration(m.remaining)}`, lb("remaining"), c.remaining);
+    else if (m.soon && active) tile("mdi:timer-sand-complete", tr(hass, "almost_done"), lb("remaining"), c.power);
     const solar = kind === "solar";
     const dual = kind === "water_heater" && (m.pwS || m.energyS);
     if (m.pw && c.show_power !== false) tile(solar ? "mdi:solar-power" : "mdi:flash", fmtPower(hass, m.pw) ?? "—", lb(solar ? "production" : dual ? "grid" : "power"), c.power);
@@ -5579,6 +5640,7 @@ function buildForm(kind) {
           ] : []),
           ...(["washer", "dryer", "dishwasher"].includes(kind) ? [
             { name: "last_cycle", selector: { boolean: {} } },
+            { name: "estimate", selector: { boolean: {} } },
           ] : []),
           ...(d.fields.includes("energy") ? [{ name: "energy_period", selector: { select: { mode: "dropdown", options: [
             { value: "", label: tr(null, "energy") }, ...PERIODS.map((value) => ({ value, label: tr(null, `energy_${value}`) }))] } } }] : []),
