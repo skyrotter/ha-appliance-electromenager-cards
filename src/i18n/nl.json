@@ -292,7 +292,8 @@
     "f_battery_low": "Batterij bijna leeg onder (%)",
     "f_hide_when_inactive": "Verbergen als inactief (geen cyclus, geen alarm)",
     "f_hide_delay": "Zichtbaar houden na het einde (min)",
-    "f_cycle_gap": "Pauze binnen dezelfde cyclus (min)"
+    "f_cycle_gap": "Pauze binnen dezelfde cyclus (min)",
+    "f_hide_zero_power": "Vermogen verbergen als het 0 is"
   },
   "aquarium": {
     "power": "Vermogen",

@@ -144,6 +144,7 @@ function buildForm(kind) {
             { name: "warm_threshold", selector: { number: { min: 0, max: 300, step: 1, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
           { name: "show_power", selector: { boolean: {} }, default: true },
+          { name: "hide_zero_power", selector: { boolean: {} } },
           ...(["radiator", "towel_dryer"].includes(kind) ? [{ name: "show_modes", selector: { boolean: {} }, default: true }] : []),
           ...(kind === "server_rack" ? [
             { name: "max_power", selector: { number: { min: 50, max: 3000, step: 10, mode: "box", unit_of_measurement: "W" } } },
