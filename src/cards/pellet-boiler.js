@@ -14,7 +14,11 @@ const I18N_PB = /*@i18n pellet_boiler*/{};
 const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
 
 class AppliancePelletBoilerCard extends HTMLElement {
-  static getStubConfig() { return { entity_power: '', entity_flow_temp: '', entity_return_temp: '', entity_pellet_level: '' }; }
+  static getStubConfig(hass) {
+    // chaudière : puissance dont le nom évoque une chaudière à granulés
+    const S = (hass && hass.states) || {}, ids = Object.keys(S).filter((i) => i.startsWith('sensor.') && /pellet|granul|chaudiere|chaudière|boiler|okofen|hargassner/i.test(i)), dc = (i) => (S[i].attributes || {}).device_class;
+    return { entity_power: ids.find((i) => dc(i) === 'power') || '', entity_flow_temp: '', entity_return_temp: '', entity_pellet_level: '' };
+  }
 
   static getConfigForm() {
     const tc = window.applianceTemp();
@@ -261,18 +265,19 @@ class AppliancePelletBoilerCard extends HTMLElement {
 
     const f = (v, d, u) => (v === null ? '—' : `${v.toFixed(d)} ${u}`);
     const it = [];
-    if (c.show_status) it.push([this._l('status'), this._t(st)]);
-    if (c.show_power) it.push([this._l('power'), w === null ? '—' : w >= 1000 ? `${(w / 1000).toFixed(1)} kW` : `${Math.round(w)} W`]);
-    if (c.show_temps) { it.push([this._l('flow'), f(dep, 0, tc.unit)]); it.push([this._l('ret'), f(ret, 0, tc.unit)]); }
-    if (c.show_pellets) it.push([this._l('pellets'), f(lvl, 0, '%')]);
-    if (c.show_energy) it.push([this._l('energy'), f(e, 1, 'kWh')]);
-    if (c.show_cost && cost !== null) it.push([this._l('cost'), f(cost, 2, '€')]);
+    if (c.show_status) it.push([this._l('status'), this._t(st), c.entity_status || c.entity_power]);
+    if (c.show_power) it.push([this._l('power'), w === null ? '—' : w >= 1000 ? `${(w / 1000).toFixed(1)} kW` : `${Math.round(w)} W`, c.entity_power]);
+    if (c.show_temps) { it.push([this._l('flow'), f(dep, 0, tc.unit), c.entity_flow_temp]); it.push([this._l('ret'), f(ret, 0, tc.unit), c.entity_return_temp]); }
+    if (c.show_pellets) it.push([this._l('pellets'), f(lvl, 0, '%'), c.entity_pellet_level]);
+    if (c.show_energy) it.push([this._l('energy'), f(e, 1, 'kWh'), c.entity_energy]);
+    if (c.show_cost && cost !== null) it.push([this._l('cost'), f(cost, 2, '€'), c.entity_cost || c.entity_energy]);
     const stats = r.getElementById('stats');
     stats.style.gridTemplateColumns = `repeat(${it.length > 4 ? Math.ceil(it.length / 2) : it.length}, 1fr)`;
-    stats.innerHTML = it.map(([l, v]) => `<div class="stat"><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
+    stats.innerHTML = it.map(([l, v, id]) => `<div class="stat"${window.applianceTileAttrs(id)}><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
+    window.applianceLinkTiles(stats, this);
   }
 }
 define('appliance-pellet-boiler-card', AppliancePelletBoilerCard);
 window.customCards = window.customCards || [];
-window.customCards.push({ type: 'appliance-pellet-boiler-card', name: 'Appliance – Pellet boiler / Chaudière à granulés', description: 'Chaudière à granulés animée (trémie, vis sans fin, flamme, départ/retour)', preview: false });
+window.customCards.push({ type: 'appliance-pellet-boiler-card', name: 'Appliance – Pellet boiler / Chaudière à granulés', description: 'Chaudière à granulés animée (trémie, vis sans fin, flamme, départ/retour)', preview: true });
 })();

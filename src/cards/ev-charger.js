@@ -14,7 +14,11 @@ const I18N_EV = /*@i18n ev_charger*/{};
 const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
 
 class ApplianceEvChargerCard extends HTMLElement {
-  static getStubConfig() { return { entity_power: '', entity_session_energy: '', entity_car_soc: '', entity_status: '', max_power: 7400, price_per_kwh: 0.2 }; }
+  static getStubConfig(hass) {
+    // borne : puissance dont le nom évoque une borne / wallbox
+    const S = (hass && hass.states) || {}, ids = Object.keys(S).filter((i) => i.startsWith('sensor.') && /charger|wallbox|borne|evse|zappi|easee|_ev_/i.test(i)), dc = (i) => (S[i].attributes || {}).device_class;
+    return { entity_power: ids.find((i) => dc(i) === 'power') || '', entity_session_energy: '', entity_car_soc: '', entity_status: '', max_power: 7400, price_per_kwh: 0.2 };
+  }
 
   static getConfigForm() {
     return {
@@ -207,18 +211,19 @@ class ApplianceEvChargerCard extends HTMLElement {
 
     const f = (v, d, u) => (v === null ? '—' : `${v.toFixed(d)} ${u}`);
     const it = [];
-    if (c.show_power) it.push([this._l('power'), w === null ? '—' : w >= 1000 ? `${(w / 1000).toFixed(1)} kW` : `${Math.round(w)} W`]);
-    if (c.show_energy) it.push([this._l('energy'), f(energy, 1, 'kWh')]);
-    if (c.show_soc && soc !== null) it.push([this._l('soc'), f(soc, 0, '%')]);
-    if (c.show_status) it.push([this._l('status'), this._t(st)]);
-    if (c.show_duration) it.push([this._l('duration'), dur || '—']);
-    if (c.show_cost) it.push([this._l('cost'), f(cost, 2, '€')]);
+    if (c.show_power) it.push([this._l('power'), w === null ? '—' : w >= 1000 ? `${(w / 1000).toFixed(1)} kW` : `${Math.round(w)} W`, c.entity_power]);
+    if (c.show_energy) it.push([this._l('energy'), f(energy, 1, 'kWh'), c.entity_session_energy]);
+    if (c.show_soc && soc !== null) it.push([this._l('soc'), f(soc, 0, '%'), c.entity_car_soc]);
+    if (c.show_status) it.push([this._l('status'), this._t(st), c.entity_status || c.entity_power]);
+    if (c.show_duration) it.push([this._l('duration'), dur || '—', c.entity_status || c.entity_power]);
+    if (c.show_cost) it.push([this._l('cost'), f(cost, 2, '€'), c.entity_cost || c.entity_session_energy]);
     // 5-6 valeurs → 2 lignes équilibrées
     r.getElementById('stats').style.gridTemplateColumns = `repeat(${it.length > 4 ? Math.ceil(it.length / 2) : it.length}, 1fr)`;
-    r.getElementById('stats').innerHTML = it.map(([l, v]) => `<div class="stat"><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
+    r.getElementById('stats').innerHTML = it.map(([l, v, id]) => `<div class="stat"${window.applianceTileAttrs(id)}><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
+    window.applianceLinkTiles(r.getElementById('stats'), this);
   }
 }
 define('appliance-ev-charger-card', ApplianceEvChargerCard);
 window.customCards = window.customCards || [];
-window.customCards.push({ type: 'appliance-ev-charger-card', name: 'Appliance – EV charger / Borne de recharge', description: 'Wallbox murale animée avec voiture branchée', preview: false });
+window.customCards.push({ type: 'appliance-ev-charger-card', name: 'Appliance – EV charger / Borne de recharge', description: 'Wallbox murale animée avec voiture branchée', preview: true });
 })();

@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.53.0";
+const VERSION = "1.53.1";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -8865,6 +8865,19 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
   };
   // champ « Unité de température » des éditeurs (vide : automatique)
   window.applianceTempField = { name: 'temperature_unit', selector: { select: { mode: 'dropdown', options: [{ value: 'C', label: '°C' }, { value: 'F', label: '°F' }] } } };
+  // Fiche d'une entité (more-info de Home Assistant)
+  window.applianceMore = (el, id) => { if (id) el.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); };
+  // Tuile cliquable : attributs à ajouter à une tuile liée à une entité (rien sans entité)
+  const escA = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+  window.applianceTileAttrs = (id) => (id ? ` data-e="${escA(id)}" role="button" tabindex="0" style="cursor:pointer"` : '');
+  // Clic (ou Entrée / Espace) sur un élément [data-e] du conteneur : ouvre la fiche de son entité
+  window.applianceLinkTiles = (box, el) => {
+    if (!box || box._applianceLinked) return;
+    box._applianceLinked = true;
+    const go = (e) => { const t = e.target.closest && e.target.closest('[data-e]'); if (t && box.contains(t)) { e.stopPropagation(); window.applianceMore(el, t.dataset.e); } };
+    box.addEventListener('click', go);
+    box.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(e); } });
+  };
   window.applianceEditorLabel = (name, hass) => (name ? (L[lang(hass)] || L.en)[name] ?? L.en[name] ?? human(name) : '');
 })();
 
@@ -8950,7 +8963,12 @@ const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || do
 class ApplianceAquariumCard extends HTMLElement {
   static getStubConfig(hass) {
     const tc = window.applianceTemp(hass);
-    return { entity_power: '', entity_energy: '', entity_temperature: '', entity_light: '', temp_min: tc.c(24), temp_max: tc.c(27), price_per_kwh: 0.2 };
+    // entités dont le nom évoque un aquarium (aperçu du sélecteur de cartes), sinon vide
+    const S = (hass && hass.states) || {}, ids = Object.keys(S).filter((i) => /aqua/i.test(i));
+    const dc = (i) => (S[i].attributes || {}).device_class;
+    const find = (dom, d) => ids.find((i) => i.startsWith(dom) && (!d || dc(i) === d)) || '';
+    return { entity_power: find('sensor.', 'power'), entity_energy: find('sensor.', 'energy'), entity_temperature: find('sensor.', 'temperature'),
+      entity_light: find('light.') || find('switch.'), temp_min: tc.c(24), temp_max: tc.c(27), price_per_kwh: 0.2 };
   }
 
   // Éditeur visuel HA
@@ -9059,6 +9077,8 @@ class ApplianceAquariumCard extends HTMLElement {
       .tail { transform-origin:2px 0; animation:wag calc(.5s / var(--speed,1)) ease-in-out infinite alternate; }
       .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(70px,1fr)); gap:8px; margin-top:10px; }
       .stat { text-align:center; background:var(--secondary-background-color, rgba(127,127,127,.12)); border-radius:10px; padding:6px 4px; }
+      .stat.link { cursor:pointer; } .stat.link:hover { background:rgba(127,127,127,.2); }
+      svg { cursor:pointer; }
       .stat .v { font-weight:700; font-size:1.05em; } .stat .l { font-size:.7em; opacity:.65; text-transform:uppercase; letter-spacing:.04em; }
       .alert .stat.t .v { color:#e53935; animation:blink 1s infinite; }
       @keyframes rise { from { transform:translateY(0); opacity:.9 } to { transform:translateY(-105px); opacity:0 } }
@@ -9110,8 +9130,15 @@ class ApplianceAquariumCard extends HTMLElement {
       </svg>
       <div class="stats" id="stats"></div>
     </ha-card>`;
+    const root = this.shadowRoot;
+    root.getElementById('stats').addEventListener('click', (e) => { const t = e.target.closest('[data-e]'); if (t) this._more(t.dataset.e); });
+    root.getElementById('stats').addEventListener('keydown', (e) => { const t = e.target.closest('[data-e]'); if (t && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); this._more(t.dataset.e); } });
+    root.querySelector('svg').addEventListener('click', () => { const c2 = this._config; this._more(c2.entity_light || c2.entity_temperature || c2.entity_power); });
     this._built = true;
   }
+
+  // fiche de l'entité (more-info de Home Assistant)
+  _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
 
   _num(id) {
     if (!id || !this._hass) return null;
@@ -9154,18 +9181,18 @@ class ApplianceAquariumCard extends HTMLElement {
 
     const fmt = (v, d, u) => v === null ? '—' : `${v.toFixed(d)} ${u}`;
     const items = [];
-    if (c.show_power) items.push(['p', this._l('power'), fmt(power, 0, 'W')]);
-    if (c.show_energy) items.push(['e', this._l('energy'), fmt(energy, 2, 'kWh')]);
-    if (c.show_temperature) items.push(['t', this._l('temp'), fmt(temp, 1, tc.unit)]);
-    if (c.show_cost) items.push(['c', this._l('cost'), fmt(cost, 2, '€')]);
-    root.getElementById('stats').innerHTML = items.map(([k, l, v]) =>
-      `<div class="stat ${k}"><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
+    if (c.show_power) items.push(['p', this._l('power'), fmt(power, 0, 'W'), c.entity_power]);
+    if (c.show_energy) items.push(['e', this._l('energy'), fmt(energy, 2, 'kWh'), c.entity_energy]);
+    if (c.show_temperature) items.push(['t', this._l('temp'), fmt(temp, 1, tc.unit), c.entity_temperature]);
+    if (c.show_cost) items.push(['c', this._l('cost'), fmt(cost, 2, '€'), c.entity_cost || c.entity_energy]);
+    root.getElementById('stats').innerHTML = items.map(([k, l, v, id]) =>
+      `<div class="stat ${k}${id ? ' link' : ''}"${id ? ` data-e="${esc(id)}" role="button" tabindex="0"` : ''}><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
   }
 }
 
 define('appliance-aquarium-card', ApplianceAquariumCard);
 window.customCards = window.customCards || [];
-window.customCards.push({ type: 'appliance-aquarium-card', name: 'Appliance – Aquarium', description: 'Aquarium animé : puissance, kWh, température, coût', preview: false });
+window.customCards.push({ type: 'appliance-aquarium-card', name: 'Appliance – Aquarium', description: 'Aquarium animé : puissance, kWh, température, coût', preview: true });
 })();
 
 /* ================================================================== */
@@ -9320,8 +9347,11 @@ const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || do
 const PHASE_COLORS = ['#1e88e5', '#8e24aa', '#00897b'];
 
 class ApplianceLinkyCard extends HTMLElement {
-  static getStubConfig() {
-    return { entity_power: '', entity_hp: '', entity_hc: '', subscribed_power: 9, hc_ranges: '01:00-07:00,12:30-14:30' };
+  static getStubConfig(hass) {
+    // entités Linky (intégrations Linky / téléinfo) : puissance apparente, index HP / HC
+    const ids = Object.keys((hass && hass.states) || {}).filter((i) => i.startsWith('sensor.') && /linky|teleinfo|tic/i.test(i));
+    const f = (re) => ids.find((i) => re.test(i)) || '';
+    return { entity_power: f(/sinst|papp|puissance|power/i), entity_hp: f(/hchp|_hp|pleine|peak/i), entity_hc: f(/hchc|_hc|creuse|offpeak/i), subscribed_power: 9, hc_ranges: '01:00-07:00,12:30-14:30' };
   }
 
   static getConfigForm() {
@@ -9482,6 +9512,12 @@ class ApplianceLinkyCard extends HTMLElement {
     const flip = (d) => () => { this._page = (this._page || 0) + d; this._renderLcd(); };
     this.shadowRoot.getElementById('b1').onclick = flip(-1);
     this.shadowRoot.getElementById('b2').onclick = flip(1);
+    // clic : écran → entité de la page affichée, jauge → puissance, barre de phase → puissance de la phase
+    const sr = this.shadowRoot, c0 = this._config, more = (id) => window.applianceMore(this, id);
+    const lcd = sr.querySelector('.lcd'); lcd.style.cursor = 'pointer'; lcd.onclick = () => more(this._pageId);
+    const g = sr.getElementById('gaugebox').querySelector('svg'); g.style.cursor = 'pointer';
+    g.onclick = () => more(c0.entity_power || c0.entity_active_power || c0.entity_power_l1);
+    [1, 2, 3].forEach((i) => ['phl', 'phv'].forEach((k) => { const e = sr.getElementById(`${k}${i}`); e.style.cursor = 'pointer'; e.onclick = () => more(c0[`entity_power_l${i}`]); }));
     this._built = true;
   }
 
@@ -9516,10 +9552,10 @@ class ApplianceLinkyCard extends HTMLElement {
       return c.indexes.map((it) => {
         const id = typeof it === 'string' ? it : it && it.entity, st = id && this._hass.states[id];
         const name = (it && it.name) || (st && st.attributes.friendly_name) || id || '';
-        return [String(name).toUpperCase(), this._kwh(id)];
+        return [String(name).toUpperCase(), this._kwh(id), id];
       });
     }
-    return [[this._l('hp'), this._kwh(c.entity_hp)], [this._l('hc'), this._kwh(c.entity_hc)]];
+    return [[this._l('hp'), this._kwh(c.entity_hp), c.entity_hp], [this._l('hc'), this._kwh(c.entity_hc), c.entity_hc]];
   }
 
   // Heures creuses : entité tarif si fournie, sinon plages "HH:MM-HH:MM,..."
@@ -9540,17 +9576,18 @@ class ApplianceLinkyCard extends HTMLElement {
   _renderLcd() {
     if (!this._built || !this._data) return;
     const d = this._data, c = this._config, pages = [];
-    pages.push([this._l('power'), d.power === null ? '—' : `${Math.round(d.power)} ${d.unit}`]);
-    if (c.entity_active_power) pages.push([this._l('active'), d.active === null ? '—' : `${Math.round(d.active.v)} ${d.active.unit}`]);
+    pages.push([this._l('power'), d.power === null ? '—' : `${Math.round(d.power)} ${d.unit}`, c.entity_power || c.entity_active_power]);
+    if (c.entity_active_power) pages.push([this._l('active'), d.active === null ? '—' : `${Math.round(d.active.v)} ${d.active.unit}`, c.entity_active_power]);
     const kwh = (v) => (v === null ? '—' : `${Math.round(v)} kWh`);
-    if (c.show_index) d.indexes.forEach(([lab, v]) => pages.push([lab, kwh(v)]));
+    if (c.show_index) d.indexes.forEach(([lab, v, id]) => pages.push([lab, kwh(v), id]));
     if (c.show_injection) {
-      if (c.entity_power_injection) pages.push([this._l('injection_power'), d.injPower === null ? '—' : `${Math.round(d.injPower.v)} ${d.injPower.unit}`]);
-      if (c.entity_injection) pages.push([this._l('injection'), kwh(d.injection)]);
+      if (c.entity_power_injection) pages.push([this._l('injection_power'), d.injPower === null ? '—' : `${Math.round(d.injPower.v)} ${d.injPower.unit}`, c.entity_power_injection]);
+      if (c.entity_injection) pages.push([this._l('injection'), kwh(d.injection), c.entity_injection]);
     }
-    if (c.show_tariff) pages.push([this._l('tariff'), this._t(d.hcNow ? 'offpeak' : 'peak')]);
-    if (c.show_cost && d.cost !== null) pages.push([this._l('cost'), `${d.cost.toFixed(2)} €`]);
+    if (c.show_tariff) pages.push([this._l('tariff'), this._t(d.hcNow ? 'offpeak' : 'peak'), c.entity_tariff]);
+    if (c.show_cost && d.cost !== null) pages.push([this._l('cost'), `${d.cost.toFixed(2)} €`, c.entity_cost]);
     const p = pages[(this._page || 0) % pages.length];
+    this._pageId = p[2]; // entité de la page affichée : ouverte par un clic sur l'écran
     const lab = this.shadowRoot.getElementById('lab'), val = this.shadowRoot.getElementById('val');
     lab.textContent = p[0];
     // On ne relance le fondu que si la page affichée change (pas à chaque mise à jour d'état)
@@ -9640,7 +9677,7 @@ class ApplianceLinkyCard extends HTMLElement {
 
 define('appliance-linky-card', ApplianceLinkyCard);
 window.customCards = window.customCards || [];
-window.customCards.push({ type: 'appliance-linky-card', name: 'Appliance – Linky', description: 'Compteur Linky animé : LCD, jauge, index HP/HC', preview: false });
+window.customCards.push({ type: 'appliance-linky-card', name: 'Appliance – Linky', description: 'Compteur Linky animé : LCD, jauge, index HP/HC', preview: true });
 })();
 
 /* ================================================================== */
@@ -9751,7 +9788,11 @@ const I18N_BAT = {
 const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
 
 class ApplianceBatteryCard extends HTMLElement {
-  static getStubConfig() { return { entity_soc: '', entity_power: '', entity_energy: '', entity_temperature: '', capacity_kwh: 10, max_power: 5000 }; }
+  static getStubConfig(hass) {
+    // batterie domestique : niveau (device_class battery) et puissance dont le nom évoque une batterie
+    const S = (hass && hass.states) || {}, ids = Object.keys(S).filter((i) => i.startsWith('sensor.') && /batter|storage|powerwall/i.test(i)), dc = (i) => (S[i].attributes || {}).device_class;
+    return { entity_soc: ids.find((i) => dc(i) === 'battery') || '', entity_power: ids.find((i) => dc(i) === 'power') || '', entity_energy: '', entity_temperature: '', capacity_kwh: 10, max_power: 5000 };
+  }
 
   static getConfigForm() {
     return {
@@ -9932,16 +9973,17 @@ class ApplianceBatteryCard extends HTMLElement {
     }
     const f = (v, d, u) => (v === null ? '—' : `${v.toFixed(d)} ${u}`);
     const it = [];
-    if (c.show_power) it.push([this._l('power'), f(p === null ? null : Math.abs(p), 0, 'W')]);
-    if (c.show_energy) it.push([this._l('energy'), f(energy !== null ? energy : (soc === null ? null : c.capacity_kwh * pct / 100), 1, 'kWh')]);
-    if (c.show_temperature) it.push([this._l('temp'), f(temp, 0, tc.unit)]);
-    if (time) it.push(['⏱', time]);
-    r.getElementById('stats').innerHTML = it.map(([l, v]) => `<div class="stat"><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
+    if (c.show_power) it.push([this._l('power'), f(p === null ? null : Math.abs(p), 0, 'W'), c.entity_power]);
+    if (c.show_energy) it.push([this._l('energy'), f(energy !== null ? energy : (soc === null ? null : c.capacity_kwh * pct / 100), 1, 'kWh'), c.entity_energy || c.entity_soc]);
+    if (c.show_temperature) it.push([this._l('temp'), f(temp, 0, tc.unit), c.entity_temperature]);
+    if (time) it.push(['⏱', time, c.entity_soc]);
+    r.getElementById('stats').innerHTML = it.map(([l, v, id]) => `<div class="stat"${window.applianceTileAttrs(id)}><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
+    window.applianceLinkTiles(r.getElementById('stats'), this);
   }
 }
 define('appliance-battery-card', ApplianceBatteryCard);
 window.customCards = window.customCards || [];
-window.customCards.push({ type: 'appliance-battery-card', name: 'Appliance – Solar battery / Batterie solaire', description: 'Batterie de stockage solaire animée', preview: false });
+window.customCards.push({ type: 'appliance-battery-card', name: 'Appliance – Solar battery / Batterie solaire', description: 'Batterie de stockage solaire animée', preview: true });
 })();
 
 /* ================================================================== */
@@ -10052,7 +10094,11 @@ const I18N_EV = {
 const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
 
 class ApplianceEvChargerCard extends HTMLElement {
-  static getStubConfig() { return { entity_power: '', entity_session_energy: '', entity_car_soc: '', entity_status: '', max_power: 7400, price_per_kwh: 0.2 }; }
+  static getStubConfig(hass) {
+    // borne : puissance dont le nom évoque une borne / wallbox
+    const S = (hass && hass.states) || {}, ids = Object.keys(S).filter((i) => i.startsWith('sensor.') && /charger|wallbox|borne|evse|zappi|easee|_ev_/i.test(i)), dc = (i) => (S[i].attributes || {}).device_class;
+    return { entity_power: ids.find((i) => dc(i) === 'power') || '', entity_session_energy: '', entity_car_soc: '', entity_status: '', max_power: 7400, price_per_kwh: 0.2 };
+  }
 
   static getConfigForm() {
     return {
@@ -10245,20 +10291,21 @@ class ApplianceEvChargerCard extends HTMLElement {
 
     const f = (v, d, u) => (v === null ? '—' : `${v.toFixed(d)} ${u}`);
     const it = [];
-    if (c.show_power) it.push([this._l('power'), w === null ? '—' : w >= 1000 ? `${(w / 1000).toFixed(1)} kW` : `${Math.round(w)} W`]);
-    if (c.show_energy) it.push([this._l('energy'), f(energy, 1, 'kWh')]);
-    if (c.show_soc && soc !== null) it.push([this._l('soc'), f(soc, 0, '%')]);
-    if (c.show_status) it.push([this._l('status'), this._t(st)]);
-    if (c.show_duration) it.push([this._l('duration'), dur || '—']);
-    if (c.show_cost) it.push([this._l('cost'), f(cost, 2, '€')]);
+    if (c.show_power) it.push([this._l('power'), w === null ? '—' : w >= 1000 ? `${(w / 1000).toFixed(1)} kW` : `${Math.round(w)} W`, c.entity_power]);
+    if (c.show_energy) it.push([this._l('energy'), f(energy, 1, 'kWh'), c.entity_session_energy]);
+    if (c.show_soc && soc !== null) it.push([this._l('soc'), f(soc, 0, '%'), c.entity_car_soc]);
+    if (c.show_status) it.push([this._l('status'), this._t(st), c.entity_status || c.entity_power]);
+    if (c.show_duration) it.push([this._l('duration'), dur || '—', c.entity_status || c.entity_power]);
+    if (c.show_cost) it.push([this._l('cost'), f(cost, 2, '€'), c.entity_cost || c.entity_session_energy]);
     // 5-6 valeurs → 2 lignes équilibrées
     r.getElementById('stats').style.gridTemplateColumns = `repeat(${it.length > 4 ? Math.ceil(it.length / 2) : it.length}, 1fr)`;
-    r.getElementById('stats').innerHTML = it.map(([l, v]) => `<div class="stat"><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
+    r.getElementById('stats').innerHTML = it.map(([l, v, id]) => `<div class="stat"${window.applianceTileAttrs(id)}><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
+    window.applianceLinkTiles(r.getElementById('stats'), this);
   }
 }
 define('appliance-ev-charger-card', ApplianceEvChargerCard);
 window.customCards = window.customCards || [];
-window.customCards.push({ type: 'appliance-ev-charger-card', name: 'Appliance – EV charger / Borne de recharge', description: 'Wallbox murale animée avec voiture branchée', preview: false });
+window.customCards.push({ type: 'appliance-ev-charger-card', name: 'Appliance – EV charger / Borne de recharge', description: 'Wallbox murale animée avec voiture branchée', preview: true });
 })();
 
 /* ================================================================== */
@@ -10431,7 +10478,7 @@ const ICONS_VAC = {
 
 // Logique commune (états, services, stats) — le dessin est dans la carte « seule » ci-dessous
 class ApplianceRobotVacuumCard extends HTMLElement {
-  static getStubConfig() { return { entity: '' }; }
+  static getStubConfig(hass) { return { entity: Object.keys((hass && hass.states) || {}).find((i) => i.startsWith('vacuum.')) || '' }; }
 
   static getConfigForm() {
     return {
@@ -10523,20 +10570,21 @@ class ApplianceRobotVacuumCard extends HTMLElement {
       r.getElementById('card').dataset.st = st;
       r.getElementById('cst').textContent = this._t(emptying ? 'emptying' : st);
     }
-    if (c.show_battery) it.push([this._l('battery'), batt === null ? '—' : `${Math.round(batt)} %`]);
-    if (c.show_status && !compact) it.push([this._l('status'), this._t(emptying ? 'emptying' : st)]);
-    if (c.show_area) it.push([this._l('area'), area === null ? '—' : `${Math.round(area)} m²`]);
-    if (c.show_time) it.push([this._l('time'), time === null ? '—' : `${Math.round(time)} min`]);
-    if (c.show_fan && a.fan_speed) it.push([this._l('fan'), String(a.fan_speed)]);
+    if (c.show_battery) it.push([this._l('battery'), batt === null ? '—' : `${Math.round(batt)} %`, c.entity_battery || c.entity]);
+    if (c.show_status && !compact) it.push([this._l('status'), this._t(emptying ? 'emptying' : st), c.entity_status || c.entity]);
+    if (c.show_area) it.push([this._l('area'), area === null ? '—' : `${Math.round(area)} m²`, c.entity_area]);
+    if (c.show_time) it.push([this._l('time'), time === null ? '—' : `${Math.round(time)} min`, c.entity_time]);
+    if (c.show_fan && a.fan_speed) it.push([this._l('fan'), String(a.fan_speed), c.entity]);
     if (c.show_consumables) {
       const fl = this._num(c.entity_filter), br = this._num(c.entity_brush);
-      if (fl !== null) it.push([this._l('filter'), `${Math.round(fl)} %`]);
-      if (br !== null) it.push([this._l('brush'), `${Math.round(br)} %`]);
+      if (fl !== null) it.push([this._l('filter'), `${Math.round(fl)} %`, c.entity_filter]);
+      if (br !== null) it.push([this._l('brush'), `${Math.round(br)} %`, c.entity_brush]);
     }
     const stats = r.getElementById('stats');
-    if (compact) { stats.innerHTML = it.map(([l, v]) => `<div class="tile"><span class="val">${esc(v)}</span><span class="lbl">${esc(l)}</span></div>`).join(''); return; }
+    window.applianceLinkTiles(stats, this);
+    if (compact) { stats.innerHTML = it.map(([l, v, id]) => `<div class="tile"${window.applianceTileAttrs(id)}><span class="val">${esc(v)}</span><span class="lbl">${esc(l)}</span></div>`).join(''); return; }
     stats.style.gridTemplateColumns = `repeat(${it.length > 4 ? Math.ceil(it.length / 2) : it.length}, 1fr)`;
-    stats.innerHTML = it.map(([l, v]) => `<div class="stat"><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
+    stats.innerHTML = it.map(([l, v, id]) => `<div class="stat"${window.applianceTileAttrs(id)}><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
   }
 }
 window.customCards = window.customCards || [];
@@ -10673,7 +10721,7 @@ class ApplianceRobotVacuumSoloCard extends ApplianceRobotVacuumCard {
   }
 }
 define('appliance-robot-vacuum-solo-card', ApplianceRobotVacuumSoloCard);
-window.customCards.push({ type: 'appliance-robot-vacuum-solo-card', name: 'Appliance – Robot vacuum (solo) / Robot aspirateur (seul)', description: 'Robot aspirateur seul (sans fond ni station), animé, avec commandes', preview: false });
+window.customCards.push({ type: 'appliance-robot-vacuum-solo-card', name: 'Appliance – Robot vacuum (solo) / Robot aspirateur (seul)', description: 'Robot aspirateur seul (sans fond ni station), animé, avec commandes', preview: true });
 })();
 
 /* ================================================================== */
@@ -10840,7 +10888,7 @@ const ICONS_MOW = {
 
 // Logique commune (états, services, stats) — le dessin est dans la carte « seule » ci-dessous
 class ApplianceRobotMowerCard extends HTMLElement {
-  static getStubConfig() { return { entity: '' }; }
+  static getStubConfig(hass) { return { entity: Object.keys((hass && hass.states) || {}).find((i) => i.startsWith('lawn_mower.')) || '' }; }
 
   static getConfigForm() {
     return {
@@ -10938,16 +10986,17 @@ class ApplianceRobotMowerCard extends HTMLElement {
     const it = [], compact = c.layout === 'compact';
     const stTxt = raining && st !== 'mowing' ? `${this._t(st)} · ${this._t('rain')}` : this._t(st);
     if (compact) { r.getElementById('card').dataset.st = st; r.getElementById('cst').textContent = stTxt; }
-    if (c.show_battery) it.push([this._l('battery'), batt === null ? '—' : `${Math.round(batt)} %`]);
-    if (c.show_status && !compact) it.push([this._l('status'), stTxt]);
-    if (c.show_area && area !== null) it.push([this._l('area'), `${Math.round(area)} m²`]);
-    if (c.show_time && time !== null) it.push([this._l('time'), time >= 60 ? `${Math.floor(time / 60)}h${String(Math.round(time % 60)).padStart(2, '0')}` : `${Math.round(time)} min`]);
-    if (c.show_next && next) it.push([this._l('next'), next]);
-    if (c.show_blade && blade !== null) it.push([this._l('blade'), `${Math.round(blade)} %`]);
+    if (c.show_battery) it.push([this._l('battery'), batt === null ? '—' : `${Math.round(batt)} %`, c.entity_battery || c.entity]);
+    if (c.show_status && !compact) it.push([this._l('status'), stTxt, c.entity_status || c.entity]);
+    if (c.show_area && area !== null) it.push([this._l('area'), `${Math.round(area)} m²`, c.entity_area]);
+    if (c.show_time && time !== null) it.push([this._l('time'), time >= 60 ? `${Math.floor(time / 60)}h${String(Math.round(time % 60)).padStart(2, '0')}` : `${Math.round(time)} min`, c.entity_time]);
+    if (c.show_next && next) it.push([this._l('next'), next, c.entity_next_start]);
+    if (c.show_blade && blade !== null) it.push([this._l('blade'), `${Math.round(blade)} %`, c.entity_blade]);
     const stats = r.getElementById('stats');
-    if (compact) { stats.innerHTML = it.map(([l, v]) => `<div class="tile"><span class="val">${esc(v)}</span><span class="lbl">${esc(l)}</span></div>`).join(''); return; }
+    window.applianceLinkTiles(stats, this);
+    if (compact) { stats.innerHTML = it.map(([l, v, id]) => `<div class="tile"${window.applianceTileAttrs(id)}><span class="val">${esc(v)}</span><span class="lbl">${esc(l)}</span></div>`).join(''); return; }
     stats.style.gridTemplateColumns = `repeat(${it.length > 4 ? Math.ceil(it.length / 2) : it.length}, 1fr)`;
-    stats.innerHTML = it.map(([l, v]) => `<div class="stat"><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
+    stats.innerHTML = it.map(([l, v, id]) => `<div class="stat"${window.applianceTileAttrs(id)}><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
   }
 }
 window.customCards = window.customCards || [];
@@ -11073,7 +11122,7 @@ const COMMON_CSS_MOW = `
   .cleaning .uimg, .mowing .uimg, .returning .uimg { opacity:1; }
   .error .uimg { filter:drop-shadow(0 0 4px #e53935); }`;
 define('appliance-robot-mower-solo-card', ApplianceRobotMowerSoloCard);
-window.customCards.push({ type: 'appliance-robot-mower-solo-card', name: 'Appliance – Robot mower (solo) / Robot tondeuse (seul)', description: 'Robot tondeuse seule (sans fond ni station), animée, avec commandes', preview: false });
+window.customCards.push({ type: 'appliance-robot-mower-solo-card', name: 'Appliance – Robot mower (solo) / Robot tondeuse (seul)', description: 'Robot tondeuse seule (sans fond ni station), animée, avec commandes', preview: true });
 })();
 
 /* ================================================================== */
@@ -11205,7 +11254,11 @@ const I18N_PB = {
 const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
 
 class AppliancePelletBoilerCard extends HTMLElement {
-  static getStubConfig() { return { entity_power: '', entity_flow_temp: '', entity_return_temp: '', entity_pellet_level: '' }; }
+  static getStubConfig(hass) {
+    // chaudière : puissance dont le nom évoque une chaudière à granulés
+    const S = (hass && hass.states) || {}, ids = Object.keys(S).filter((i) => i.startsWith('sensor.') && /pellet|granul|chaudiere|chaudière|boiler|okofen|hargassner/i.test(i)), dc = (i) => (S[i].attributes || {}).device_class;
+    return { entity_power: ids.find((i) => dc(i) === 'power') || '', entity_flow_temp: '', entity_return_temp: '', entity_pellet_level: '' };
+  }
 
   static getConfigForm() {
     const tc = window.applianceTemp();
@@ -11452,20 +11505,21 @@ class AppliancePelletBoilerCard extends HTMLElement {
 
     const f = (v, d, u) => (v === null ? '—' : `${v.toFixed(d)} ${u}`);
     const it = [];
-    if (c.show_status) it.push([this._l('status'), this._t(st)]);
-    if (c.show_power) it.push([this._l('power'), w === null ? '—' : w >= 1000 ? `${(w / 1000).toFixed(1)} kW` : `${Math.round(w)} W`]);
-    if (c.show_temps) { it.push([this._l('flow'), f(dep, 0, tc.unit)]); it.push([this._l('ret'), f(ret, 0, tc.unit)]); }
-    if (c.show_pellets) it.push([this._l('pellets'), f(lvl, 0, '%')]);
-    if (c.show_energy) it.push([this._l('energy'), f(e, 1, 'kWh')]);
-    if (c.show_cost && cost !== null) it.push([this._l('cost'), f(cost, 2, '€')]);
+    if (c.show_status) it.push([this._l('status'), this._t(st), c.entity_status || c.entity_power]);
+    if (c.show_power) it.push([this._l('power'), w === null ? '—' : w >= 1000 ? `${(w / 1000).toFixed(1)} kW` : `${Math.round(w)} W`, c.entity_power]);
+    if (c.show_temps) { it.push([this._l('flow'), f(dep, 0, tc.unit), c.entity_flow_temp]); it.push([this._l('ret'), f(ret, 0, tc.unit), c.entity_return_temp]); }
+    if (c.show_pellets) it.push([this._l('pellets'), f(lvl, 0, '%'), c.entity_pellet_level]);
+    if (c.show_energy) it.push([this._l('energy'), f(e, 1, 'kWh'), c.entity_energy]);
+    if (c.show_cost && cost !== null) it.push([this._l('cost'), f(cost, 2, '€'), c.entity_cost || c.entity_energy]);
     const stats = r.getElementById('stats');
     stats.style.gridTemplateColumns = `repeat(${it.length > 4 ? Math.ceil(it.length / 2) : it.length}, 1fr)`;
-    stats.innerHTML = it.map(([l, v]) => `<div class="stat"><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
+    stats.innerHTML = it.map(([l, v, id]) => `<div class="stat"${window.applianceTileAttrs(id)}><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
+    window.applianceLinkTiles(stats, this);
   }
 }
 define('appliance-pellet-boiler-card', AppliancePelletBoilerCard);
 window.customCards = window.customCards || [];
-window.customCards.push({ type: 'appliance-pellet-boiler-card', name: 'Appliance – Pellet boiler / Chaudière à granulés', description: 'Chaudière à granulés animée (trémie, vis sans fin, flamme, départ/retour)', preview: false });
+window.customCards.push({ type: 'appliance-pellet-boiler-card', name: 'Appliance – Pellet boiler / Chaudière à granulés', description: 'Chaudière à granulés animée (trémie, vis sans fin, flamme, départ/retour)', preview: true });
 })();
 
 /* Carte « Chaudière à gaz » — custom:appliance-gas-boiler-card

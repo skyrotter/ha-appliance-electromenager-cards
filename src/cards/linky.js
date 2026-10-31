@@ -16,8 +16,11 @@ const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || do
 const PHASE_COLORS = ['#1e88e5', '#8e24aa', '#00897b'];
 
 class ApplianceLinkyCard extends HTMLElement {
-  static getStubConfig() {
-    return { entity_power: '', entity_hp: '', entity_hc: '', subscribed_power: 9, hc_ranges: '01:00-07:00,12:30-14:30' };
+  static getStubConfig(hass) {
+    // entités Linky (intégrations Linky / téléinfo) : puissance apparente, index HP / HC
+    const ids = Object.keys((hass && hass.states) || {}).filter((i) => i.startsWith('sensor.') && /linky|teleinfo|tic/i.test(i));
+    const f = (re) => ids.find((i) => re.test(i)) || '';
+    return { entity_power: f(/sinst|papp|puissance|power/i), entity_hp: f(/hchp|_hp|pleine|peak/i), entity_hc: f(/hchc|_hc|creuse|offpeak/i), subscribed_power: 9, hc_ranges: '01:00-07:00,12:30-14:30' };
   }
 
   static getConfigForm() {
@@ -178,6 +181,12 @@ class ApplianceLinkyCard extends HTMLElement {
     const flip = (d) => () => { this._page = (this._page || 0) + d; this._renderLcd(); };
     this.shadowRoot.getElementById('b1').onclick = flip(-1);
     this.shadowRoot.getElementById('b2').onclick = flip(1);
+    // clic : écran → entité de la page affichée, jauge → puissance, barre de phase → puissance de la phase
+    const sr = this.shadowRoot, c0 = this._config, more = (id) => window.applianceMore(this, id);
+    const lcd = sr.querySelector('.lcd'); lcd.style.cursor = 'pointer'; lcd.onclick = () => more(this._pageId);
+    const g = sr.getElementById('gaugebox').querySelector('svg'); g.style.cursor = 'pointer';
+    g.onclick = () => more(c0.entity_power || c0.entity_active_power || c0.entity_power_l1);
+    [1, 2, 3].forEach((i) => ['phl', 'phv'].forEach((k) => { const e = sr.getElementById(`${k}${i}`); e.style.cursor = 'pointer'; e.onclick = () => more(c0[`entity_power_l${i}`]); }));
     this._built = true;
   }
 
@@ -212,10 +221,10 @@ class ApplianceLinkyCard extends HTMLElement {
       return c.indexes.map((it) => {
         const id = typeof it === 'string' ? it : it && it.entity, st = id && this._hass.states[id];
         const name = (it && it.name) || (st && st.attributes.friendly_name) || id || '';
-        return [String(name).toUpperCase(), this._kwh(id)];
+        return [String(name).toUpperCase(), this._kwh(id), id];
       });
     }
-    return [[this._l('hp'), this._kwh(c.entity_hp)], [this._l('hc'), this._kwh(c.entity_hc)]];
+    return [[this._l('hp'), this._kwh(c.entity_hp), c.entity_hp], [this._l('hc'), this._kwh(c.entity_hc), c.entity_hc]];
   }
 
   // Heures creuses : entité tarif si fournie, sinon plages "HH:MM-HH:MM,..."
@@ -236,17 +245,18 @@ class ApplianceLinkyCard extends HTMLElement {
   _renderLcd() {
     if (!this._built || !this._data) return;
     const d = this._data, c = this._config, pages = [];
-    pages.push([this._l('power'), d.power === null ? '—' : `${Math.round(d.power)} ${d.unit}`]);
-    if (c.entity_active_power) pages.push([this._l('active'), d.active === null ? '—' : `${Math.round(d.active.v)} ${d.active.unit}`]);
+    pages.push([this._l('power'), d.power === null ? '—' : `${Math.round(d.power)} ${d.unit}`, c.entity_power || c.entity_active_power]);
+    if (c.entity_active_power) pages.push([this._l('active'), d.active === null ? '—' : `${Math.round(d.active.v)} ${d.active.unit}`, c.entity_active_power]);
     const kwh = (v) => (v === null ? '—' : `${Math.round(v)} kWh`);
-    if (c.show_index) d.indexes.forEach(([lab, v]) => pages.push([lab, kwh(v)]));
+    if (c.show_index) d.indexes.forEach(([lab, v, id]) => pages.push([lab, kwh(v), id]));
     if (c.show_injection) {
-      if (c.entity_power_injection) pages.push([this._l('injection_power'), d.injPower === null ? '—' : `${Math.round(d.injPower.v)} ${d.injPower.unit}`]);
-      if (c.entity_injection) pages.push([this._l('injection'), kwh(d.injection)]);
+      if (c.entity_power_injection) pages.push([this._l('injection_power'), d.injPower === null ? '—' : `${Math.round(d.injPower.v)} ${d.injPower.unit}`, c.entity_power_injection]);
+      if (c.entity_injection) pages.push([this._l('injection'), kwh(d.injection), c.entity_injection]);
     }
-    if (c.show_tariff) pages.push([this._l('tariff'), this._t(d.hcNow ? 'offpeak' : 'peak')]);
-    if (c.show_cost && d.cost !== null) pages.push([this._l('cost'), `${d.cost.toFixed(2)} €`]);
+    if (c.show_tariff) pages.push([this._l('tariff'), this._t(d.hcNow ? 'offpeak' : 'peak'), c.entity_tariff]);
+    if (c.show_cost && d.cost !== null) pages.push([this._l('cost'), `${d.cost.toFixed(2)} €`, c.entity_cost]);
     const p = pages[(this._page || 0) % pages.length];
+    this._pageId = p[2]; // entité de la page affichée : ouverte par un clic sur l'écran
     const lab = this.shadowRoot.getElementById('lab'), val = this.shadowRoot.getElementById('val');
     lab.textContent = p[0];
     // On ne relance le fondu que si la page affichée change (pas à chaque mise à jour d'état)
@@ -336,5 +346,5 @@ class ApplianceLinkyCard extends HTMLElement {
 
 define('appliance-linky-card', ApplianceLinkyCard);
 window.customCards = window.customCards || [];
-window.customCards.push({ type: 'appliance-linky-card', name: 'Appliance – Linky', description: 'Compteur Linky animé : LCD, jauge, index HP/HC', preview: false });
+window.customCards.push({ type: 'appliance-linky-card', name: 'Appliance – Linky', description: 'Compteur Linky animé : LCD, jauge, index HP/HC', preview: true });
 })();

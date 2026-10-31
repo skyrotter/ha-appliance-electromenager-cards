@@ -20,7 +20,7 @@ const ICONS_VAC = {
 
 // Logique commune (états, services, stats) — le dessin est dans la carte « seule » ci-dessous
 class ApplianceRobotVacuumCard extends HTMLElement {
-  static getStubConfig() { return { entity: '' }; }
+  static getStubConfig(hass) { return { entity: Object.keys((hass && hass.states) || {}).find((i) => i.startsWith('vacuum.')) || '' }; }
 
   static getConfigForm() {
     return {
@@ -112,20 +112,21 @@ class ApplianceRobotVacuumCard extends HTMLElement {
       r.getElementById('card').dataset.st = st;
       r.getElementById('cst').textContent = this._t(emptying ? 'emptying' : st);
     }
-    if (c.show_battery) it.push([this._l('battery'), batt === null ? '—' : `${Math.round(batt)} %`]);
-    if (c.show_status && !compact) it.push([this._l('status'), this._t(emptying ? 'emptying' : st)]);
-    if (c.show_area) it.push([this._l('area'), area === null ? '—' : `${Math.round(area)} m²`]);
-    if (c.show_time) it.push([this._l('time'), time === null ? '—' : `${Math.round(time)} min`]);
-    if (c.show_fan && a.fan_speed) it.push([this._l('fan'), String(a.fan_speed)]);
+    if (c.show_battery) it.push([this._l('battery'), batt === null ? '—' : `${Math.round(batt)} %`, c.entity_battery || c.entity]);
+    if (c.show_status && !compact) it.push([this._l('status'), this._t(emptying ? 'emptying' : st), c.entity_status || c.entity]);
+    if (c.show_area) it.push([this._l('area'), area === null ? '—' : `${Math.round(area)} m²`, c.entity_area]);
+    if (c.show_time) it.push([this._l('time'), time === null ? '—' : `${Math.round(time)} min`, c.entity_time]);
+    if (c.show_fan && a.fan_speed) it.push([this._l('fan'), String(a.fan_speed), c.entity]);
     if (c.show_consumables) {
       const fl = this._num(c.entity_filter), br = this._num(c.entity_brush);
-      if (fl !== null) it.push([this._l('filter'), `${Math.round(fl)} %`]);
-      if (br !== null) it.push([this._l('brush'), `${Math.round(br)} %`]);
+      if (fl !== null) it.push([this._l('filter'), `${Math.round(fl)} %`, c.entity_filter]);
+      if (br !== null) it.push([this._l('brush'), `${Math.round(br)} %`, c.entity_brush]);
     }
     const stats = r.getElementById('stats');
-    if (compact) { stats.innerHTML = it.map(([l, v]) => `<div class="tile"><span class="val">${esc(v)}</span><span class="lbl">${esc(l)}</span></div>`).join(''); return; }
+    window.applianceLinkTiles(stats, this);
+    if (compact) { stats.innerHTML = it.map(([l, v, id]) => `<div class="tile"${window.applianceTileAttrs(id)}><span class="val">${esc(v)}</span><span class="lbl">${esc(l)}</span></div>`).join(''); return; }
     stats.style.gridTemplateColumns = `repeat(${it.length > 4 ? Math.ceil(it.length / 2) : it.length}, 1fr)`;
-    stats.innerHTML = it.map(([l, v]) => `<div class="stat"><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
+    stats.innerHTML = it.map(([l, v, id]) => `<div class="stat"${window.applianceTileAttrs(id)}><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
   }
 }
 window.customCards = window.customCards || [];
@@ -262,5 +263,5 @@ class ApplianceRobotVacuumSoloCard extends ApplianceRobotVacuumCard {
   }
 }
 define('appliance-robot-vacuum-solo-card', ApplianceRobotVacuumSoloCard);
-window.customCards.push({ type: 'appliance-robot-vacuum-solo-card', name: 'Appliance – Robot vacuum (solo) / Robot aspirateur (seul)', description: 'Robot aspirateur seul (sans fond ni station), animé, avec commandes', preview: false });
+window.customCards.push({ type: 'appliance-robot-vacuum-solo-card', name: 'Appliance – Robot vacuum (solo) / Robot aspirateur (seul)', description: 'Robot aspirateur seul (sans fond ni station), animé, avec commandes', preview: true });
 })();

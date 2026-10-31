@@ -21,7 +21,7 @@ const ICONS_MOW = {
 
 // Logique commune (états, services, stats) — le dessin est dans la carte « seule » ci-dessous
 class ApplianceRobotMowerCard extends HTMLElement {
-  static getStubConfig() { return { entity: '' }; }
+  static getStubConfig(hass) { return { entity: Object.keys((hass && hass.states) || {}).find((i) => i.startsWith('lawn_mower.')) || '' }; }
 
   static getConfigForm() {
     return {
@@ -119,16 +119,17 @@ class ApplianceRobotMowerCard extends HTMLElement {
     const it = [], compact = c.layout === 'compact';
     const stTxt = raining && st !== 'mowing' ? `${this._t(st)} · ${this._t('rain')}` : this._t(st);
     if (compact) { r.getElementById('card').dataset.st = st; r.getElementById('cst').textContent = stTxt; }
-    if (c.show_battery) it.push([this._l('battery'), batt === null ? '—' : `${Math.round(batt)} %`]);
-    if (c.show_status && !compact) it.push([this._l('status'), stTxt]);
-    if (c.show_area && area !== null) it.push([this._l('area'), `${Math.round(area)} m²`]);
-    if (c.show_time && time !== null) it.push([this._l('time'), time >= 60 ? `${Math.floor(time / 60)}h${String(Math.round(time % 60)).padStart(2, '0')}` : `${Math.round(time)} min`]);
-    if (c.show_next && next) it.push([this._l('next'), next]);
-    if (c.show_blade && blade !== null) it.push([this._l('blade'), `${Math.round(blade)} %`]);
+    if (c.show_battery) it.push([this._l('battery'), batt === null ? '—' : `${Math.round(batt)} %`, c.entity_battery || c.entity]);
+    if (c.show_status && !compact) it.push([this._l('status'), stTxt, c.entity_status || c.entity]);
+    if (c.show_area && area !== null) it.push([this._l('area'), `${Math.round(area)} m²`, c.entity_area]);
+    if (c.show_time && time !== null) it.push([this._l('time'), time >= 60 ? `${Math.floor(time / 60)}h${String(Math.round(time % 60)).padStart(2, '0')}` : `${Math.round(time)} min`, c.entity_time]);
+    if (c.show_next && next) it.push([this._l('next'), next, c.entity_next_start]);
+    if (c.show_blade && blade !== null) it.push([this._l('blade'), `${Math.round(blade)} %`, c.entity_blade]);
     const stats = r.getElementById('stats');
-    if (compact) { stats.innerHTML = it.map(([l, v]) => `<div class="tile"><span class="val">${esc(v)}</span><span class="lbl">${esc(l)}</span></div>`).join(''); return; }
+    window.applianceLinkTiles(stats, this);
+    if (compact) { stats.innerHTML = it.map(([l, v, id]) => `<div class="tile"${window.applianceTileAttrs(id)}><span class="val">${esc(v)}</span><span class="lbl">${esc(l)}</span></div>`).join(''); return; }
     stats.style.gridTemplateColumns = `repeat(${it.length > 4 ? Math.ceil(it.length / 2) : it.length}, 1fr)`;
-    stats.innerHTML = it.map(([l, v]) => `<div class="stat"><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
+    stats.innerHTML = it.map(([l, v, id]) => `<div class="stat"${window.applianceTileAttrs(id)}><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
   }
 }
 window.customCards = window.customCards || [];
@@ -254,5 +255,5 @@ const COMMON_CSS_MOW = `
   .cleaning .uimg, .mowing .uimg, .returning .uimg { opacity:1; }
   .error .uimg { filter:drop-shadow(0 0 4px #e53935); }`;
 define('appliance-robot-mower-solo-card', ApplianceRobotMowerSoloCard);
-window.customCards.push({ type: 'appliance-robot-mower-solo-card', name: 'Appliance – Robot mower (solo) / Robot tondeuse (seul)', description: 'Robot tondeuse seule (sans fond ni station), animée, avec commandes', preview: false });
+window.customCards.push({ type: 'appliance-robot-mower-solo-card', name: 'Appliance – Robot mower (solo) / Robot tondeuse (seul)', description: 'Robot tondeuse seule (sans fond ni station), animée, avec commandes', preview: true });
 })();
