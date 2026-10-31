@@ -19,7 +19,7 @@ const has=(c,cls)=>c.wrap.classList.contains(cls);
 const tags=['washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','fan','generic','tool-charger','ceiling-fan','dehumidifier','monitor','kettle','toaster','power-strip','phone-charger','piano','garland','wet-vacuum','ps5'];
 tags.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 // card picker: every core card and every self-contained card listed exactly once
-const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','water-meter'];
+const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','water-meter','room-climate'];
 solo.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 const picked=window.customCards.map(c=>c.type), wanted=[...tags,...solo].map(t=>`appliance-${t}-card`);
 ok(`customCards = ${wanted.length}`,picked.length===wanted.length&&wanted.every(t=>picked.filter(p=>p===t).length===1),
@@ -255,6 +255,60 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c=card('water-meter',{entity_index:'sensor.i'},[mk('sensor.i',100,L('m³'))]); c.el._lastAt=Date.now()-60000; c.el.hass=hassOf([mk('sensor.i',100.006,L('m³'))]);
  ok('water flow derived from index',/flowing/.test(wm(c).className)&&/^6/.test(wb(c)),wm(c).className+' '+wb(c));
  document.querySelectorAll('appliance-water-meter-card').forEach((e)=>e.remove()); // keep the SVG id check about the core cards
+}
+// climat de la pièce : confort, alertes, risques, aération, fenêtre, batterie, pop-up
+{const TH=(id,v,a={})=>mk(id,v,{unit_of_measurement:'°C',device_class:'temperature',...a}), HU=(id,v)=>mk(id,v,{unit_of_measurement:'%',device_class:'humidity'});
+ const rc=(c)=>c.sr.querySelector('ha-card'), chip=(c)=>c.sr.getElementById('chip').textContent, notes=(c)=>c.sr.getElementById('notes').textContent, base={entity_temperature:'sensor.t',entity_humidity:'sensor.h'};
+ let c=card('room-climate',base,[TH('sensor.t',21.4),HU('sensor.h',48)]);
+ ok('room climate comfort',/ok/.test(rc(c).className)&&chip(c)==='Confort'&&c.sr.getElementById('t').textContent==='21,4'&&c.sr.getElementById('h').textContent==='48 %'&&/Rosée 9,9°/.test(c.sr.getElementById('meta').textContent),rc(c).className+' '+chip(c)+' '+c.sr.getElementById('meta').textContent);
+ c=card('room-climate',base,[TH('sensor.t',26),HU('sensor.h',50)]); ok('room climate warm',/warm/.test(rc(c).className)&&chip(c)==='Chaud',chip(c));
+ c=card('room-climate',{...base,comfort_temp_max:27},[TH('sensor.t',26),HU('sensor.h',50)]); ok('room climate comfort threshold from editor',chip(c)==='Confort',chip(c));
+ c=card('room-climate',base,[TH('sensor.t',20),HU('sensor.h',30)]); ok('room climate dry',chip(c)==='Sec',chip(c));
+ c=card('room-climate',{...base,alert_temp_max:24},[TH('sensor.t',24.5),HU('sensor.h',50)]); ok('room climate alert above threshold',/alert/.test(rc(c).className)&&chip(c)==='Trop chaud'&&/Trop chaud \(24,0°C\)/.test(notes(c)),chip(c)+' '+notes(c));
+ c=card('room-climate',base,[TH('sensor.t',22),HU('sensor.h',75)]); ok('room climate mould risk',/Risque de moisissure/.test(notes(c)),notes(c));
+ c=card('room-climate',{...base,entity_outdoor_temperature:'sensor.o'},[TH('sensor.t',21),HU('sensor.h',62),TH('sensor.o',-5)]); ok('room climate condensation risk (cold outside)',/Risque de condensation/.test(notes(c)),notes(c));
+ c=card('room-climate',{...base,entity_outdoor_temperature:'sensor.o',entity_outdoor_humidity:'sensor.oh'},[TH('sensor.t',22),HU('sensor.h',70),TH('sensor.o',8),HU('sensor.oh',80)]);
+ ok('room climate advice: air the room (drier outside)',/Aérer : l'air extérieur est plus sec/.test(notes(c))&&/Ext\. 8,0° · 80 %/.test(c.sr.getElementById('meta').textContent),notes(c));
+ c=card('room-climate',{...base,entity_outdoor_temperature:'sensor.o',entity_outdoor_humidity:'sensor.oh'},[TH('sensor.t',22),HU('sensor.h',70),TH('sensor.o',30),HU('sensor.oh',80)]); ok('room climate no advice when outside is wetter',!/Aérer/.test(notes(c)),notes(c));
+ c=card('room-climate',{...base,entity_window:'binary_sensor.w'},[TH('sensor.t',21),HU('sensor.h',50),mk('binary_sensor.w','on')]); ok('room climate window sensor icon',!c.sr.getElementById('win').hidden,'hidden');
+ c=card('room-climate',base,[TH('sensor.t',21),HU('sensor.h',50)]); c.el._live.t=[{t:Date.now()-5*60000,v:21}]; c.el.hass=hassOf([TH('sensor.t',19),HU('sensor.h',50)]);
+ ok('room climate window guessed from a sudden drop',!c.sr.getElementById('win').hidden&&/Fenêtre ouverte \? −2,0°/.test(notes(c)),notes(c));
+ c=card('room-climate',{...base,window_drop:0},[TH('sensor.t',21),HU('sensor.h',50)]); c.el._live.t=[{t:Date.now()-5*60000,v:21}]; c.el.hass=hassOf([TH('sensor.t',19),HU('sensor.h',50)]); ok('room climate window_drop 0 turns detection off',c.sr.getElementById('win').hidden,'shown');
+ c=card('room-climate',base,[TH('sensor.t',21,{battery_level:12}),HU('sensor.h',50)]); ok('room climate low battery from the sensor attribute',!c.sr.getElementById('bat').hidden,'hidden');
+ c=card('room-climate',{...base,entity_battery:'sensor.b'},[TH('sensor.t',21),HU('sensor.h',50),mk('sensor.b',55,{unit_of_measurement:'%'})]); ok('room climate battery ok',c.sr.getElementById('bat').hidden,'shown');
+ c=card('room-climate',{...base,temperature_unit:'F',alert_temp_max:80},[TH('sensor.t',28),HU('sensor.h',50)]); ok('room climate °F',c.sr.getElementById('t').textContent==='82,4'&&c.sr.getElementById('tu').textContent==='°F'&&chip(c)==='Trop chaud',c.sr.getElementById('t').textContent+' '+chip(c));
+ c=card('room-climate',base,[mk('sensor.t','unavailable'),mk('sensor.h','unavailable')]); ok('room climate unavailable',/unavailable/.test(rc(c).className)&&chip(c)==='Indisponible',rc(c).className);
+ c=card('room-climate',{entity_humidity:'sensor.h'},[HU('sensor.h',55)]); ok('room climate humidity only',c.sr.getElementById('t').textContent==='55'&&c.sr.getElementById('tu').textContent===' %',c.sr.getElementById('t').textContent);
+ c=card('room-climate',base,[TH('sensor.t',21),HU('sensor.h',50)],'en'); ok('room climate english',chip(c)==='Comfortable',chip(c));
+ // pop-up : sans recorder (pas de callWS), il s'ouvre et dit qu'il n'y a pas d'historique ; Échap le ferme
+ c=card('room-climate',base,[TH('sensor.t',21),HU('sensor.h',50)]); rc(c).click();
+ {const d=document.querySelector('appliance-room-climate-dialog'); ok('room climate pop-up opens',!!d&&d.shadowRoot.querySelectorAll('[data-d]').length===3&&d.shadowRoot.querySelector('[data-d="7"]').classList.contains('on')&&d.shadowRoot.querySelector('[data-m="both"]').classList.contains('on'),'no dialog');
+  ok('room climate pop-up without recorder',/Aucun historique/.test(d&&d.shadowRoot.getElementById('chart').textContent),d&&d.shadowRoot.getElementById('chart').textContent); d&&d.remove();}
+ // 12 styles : chacun s'affiche, garde les valeurs, l'icône de la pièce et les alertes
+ for(const st of ['standard','gauge','gradient','minimal','lcd','tile','thermometer','gradient_ring','double_ring','dial','neon','bars']){
+  try{c=card('room-climate',{...base,style:st,icon:'mdi:sofa',alert_temp_max:24},[TH('sensor.t',24.5),HU('sensor.h',52)]);
+   ok(`room climate style ${st}`,rc(c).classList.contains(`st-${st}`)&&/alert/.test(rc(c).className)&&c.sr.getElementById('t').textContent==='24,5'&&c.sr.getElementById('ric').getAttribute('icon')==='mdi:sofa'&&!c.sr.getElementById('ric').hidden,rc(c).className);}
+  catch(e){ok(`room climate style ${st}`,false,e.message)}}
+ c=card('room-climate',{...base,style:'thermometer'},[TH('sensor.t',20),HU('sensor.h',50)]); {const y=+c.sr.getElementById('tf').getAttribute('y'); ok('room climate thermometer level (20 °C = 2/3 of -20 → 40)',Math.abs(y-80)<1,y);}
+ c=card('room-climate',{...base,style:'dial'},[TH('sensor.t',20),HU('sensor.h',50)]); ok('room climate dial needles',c.sr.getElementById('nt').style.transform==='rotate(0deg)'&&c.sr.getElementById('nh').style.transform==='rotate(0deg)',c.sr.getElementById('nt').style.transform+' '+c.sr.getElementById('nh').style.transform);
+ c=card('room-climate',{...base,style:'lcd'},[TH('sensor.t',17),HU('sensor.h',50)]); ok('room climate LCD indicator',c.sr.getElementById('ind').textContent==='▼ Frais'&&rc(c).classList.contains('lcd-green'),c.sr.getElementById('ind').textContent);
+ c=card('room-climate',{...base,style:'double_ring'},[TH('sensor.t',21),HU('sensor.h',50)]); ok('room climate double ring default icon',c.sr.getElementById('ric').getAttribute('icon')==='mdi:home-thermometer-outline',c.sr.getElementById('ric').getAttribute('icon'));
+ c=card('room-climate',{...base,style:'nope'},[TH('sensor.t',21),HU('sensor.h',50)]); ok('room climate unknown style falls back to standard',rc(c).classList.contains('st-standard'),rc(c).className);
+ // couleurs personnalisées
+ c=card('room-climate',{...base,color_comfort:[10,20,30],color_alert:'#ff00ff'},[TH('sensor.t',21),HU('sensor.h',50)]);
+ ok('room climate custom colours',c.el.style.getPropertyValue('--appliance-ok-color')==='rgb(10,20,30)'&&c.el.style.getPropertyValue('--appliance-alert-color')==='#ff00ff',c.el.getAttribute('style'));
+ // action au clic
+ c=card('room-climate',{...base,tap_action:'more-info'},[TH('sensor.t',21),HU('sensor.h',50)]); {let got=null; c.el.addEventListener('hass-more-info',(e)=>got=e.detail.entityId); rc(c).click(); ok('room climate tap action more-info',got==='sensor.t'&&!document.querySelector('appliance-room-climate-dialog'),got);}
+ c=card('room-climate',{...base,tap_action:'none'},[TH('sensor.t',21),HU('sensor.h',50)]); rc(c).click(); ok('room climate tap action none',!document.querySelector('appliance-room-climate-dialog'),'dialog opened');
+ // thermostat lié : consigne, chauffe, − / + (appel groupé après le dernier clic)
+ c=card('room-climate',{...base,entity_climate:'climate.c'},[TH('sensor.t',19),HU('sensor.h',50),mk('climate.c','heat',{temperature:20,hvac_action:'heating',target_temp_step:0.5})]);
+ ok('room climate thermostat shown',!c.sr.getElementById('clim').hidden&&c.sr.getElementById('ct').textContent==='20,0°'&&c.sr.getElementById('clim').classList.contains('heating'),c.sr.getElementById('clim').className);
+ c.sr.getElementById('cp').click(); c.sr.getElementById('cp').click(); c.sr.getElementById('cm').click();
+ ok('room climate thermostat pending target',c.sr.getElementById('ct').textContent==='20,5°'&&!c.h.calls.length,c.sr.getElementById('ct').textContent);
+ c.el._climTimer&&clearTimeout(c.el._climTimer); c.el._pending=null;
+ c=card('room-climate',{...base,entity_climate:'climate.c'},[TH('sensor.t',19),HU('sensor.h',50),mk('climate.c','off',{temperature:20})]); ok('room climate thermostat off',c.sr.getElementById('cp').disabled&&/éteint/.test(c.sr.getElementById('cl').textContent),c.sr.getElementById('cl').textContent);
+ c=card('room-climate',base,[TH('sensor.t',19),HU('sensor.h',50)]); ok('room climate no thermostat without entity',c.sr.getElementById('clim').hidden,'shown');
+ document.querySelectorAll('appliance-room-climate-card').forEach((e)=>e.remove());
 }
 c=card('vmc',{entity:'fan.v',animations:true},[mk('fan.v','on')]); ok('animations: true forces animations (reduced motion)',has(c,'force-anim'),c.wrap.className);
 c=card('vmc',{entity:'fan.v'},[mk('fan.v','on')]); ok('animations unset follows the system setting',!has(c,'force-anim'),c.wrap.className);
