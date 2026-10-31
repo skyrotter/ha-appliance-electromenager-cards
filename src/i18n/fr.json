@@ -246,7 +246,14 @@
     "mode": "Mode",
     "f_target_humidity": "Consigne d'humidité (capteur, number ou humidifier)",
     "f_tank_full": "Capteur de bac plein",
-    "f_fan_speed": "Vitesse du ventilateur (select, number, fan…)"
+    "f_fan_speed": "Vitesse du ventilateur (select, number, fan…)",
+    "last_cycle": "Dernier cycle",
+    "cycle_duration": "Durée du cycle",
+    "cycle_energy": "Conso du cycle",
+    "cycle_cost": "Coût du cycle",
+    "yesterday": "hier",
+    "f_last_cycle": "Afficher le dernier cycle (début, fin, durée, conso, coût)",
+    "f_price_per_kwh": "Prix du kWh (coût du dernier cycle)"
   },
   "aquarium": {
     "power": "Puissance",

@@ -84,6 +84,36 @@ function fmtDuration(min) {
   const h = Math.floor(m / 60), r = m % 60;
   return r ? `${h} h ${String(r).padStart(2, "0")}` : `${h} h`;
 }
+/* Dernier cycle terminé d'après l'historique de la puissance.
+   pw : [{ t (ms), w (W) }] trié ; un cycle = puissance > seuil, les creux plus courts que gapMin (trempage, séchage) restent dans le cycle.
+   en : [{ t, v (kWh) }] compteur d'énergie, facultatif. Renvoie { start, end, kwh } ou null (aucun cycle, ou cycle en cours). */
+function lastCycle(pw, threshold, gapMin = 15, en = []) {
+  const gap = gapMin * 60000;
+  let start = null, lastOn = null, cyc = null;
+  for (let i = 0; i < pw.length; i++) {
+    const p = pw[i], next = pw[i + 1];
+    if (!(p.w > threshold)) continue;
+    // fin de cette période au-dessus du seuil : instant du point suivant (ou maintenant)
+    const offAt = next ? next.t : null;
+    if (start === null || p.t - lastOn > gap) { if (start !== null) cyc = { start, end: lastOn }; start = p.t; }
+    lastOn = offAt;
+    if (offAt === null) return null; // encore au-dessus du seuil : cycle en cours
+  }
+  if (start !== null && lastOn !== null) cyc = { start, end: lastOn };
+  if (!cyc || cyc.end - cyc.start < 120000) return null; // < 2 min : pic parasite
+  // énergie : écart du compteur, sinon intégrale de la puissance
+  const at = (T) => { let v = null; for (const e of en) { if (e.t <= T) v = e.v; else break; } return v; };
+  const e0 = at(cyc.start), e1 = at(cyc.end + 60000);
+  let kwh = e0 != null && e1 != null && e1 >= e0 ? e1 - e0 : null;
+  if (kwh === null) {
+    kwh = 0;
+    for (let i = 0; i < pw.length - 1; i++) {
+      const a = Math.max(pw[i].t, cyc.start), b = Math.min(pw[i + 1].t, cyc.end);
+      if (b > a && pw[i].w > 0) kwh += pw[i].w * (b - a) / 3.6e9;
+    }
+  }
+  return { ...cyc, kwh };
+}
 // H:MM like a real washer/oven display; M:SS for short countdowns (microwave)
 const lcdDuration = (min, short = false) => {
   if (short) { const s = Math.round(min * 60); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; }

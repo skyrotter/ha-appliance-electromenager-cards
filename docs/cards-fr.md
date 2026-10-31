@@ -95,6 +95,16 @@ energy: sensor.prise_lave_linge_energie
 energy_period: day
 ```
 
+**Dernier cycle** (lave-linge, sèche-linge, lave-vaisselle) : `last_cycle: true` affiche entre deux cycles les tuiles du **dernier cycle** : heure de début → fin (avec « hier » ou la date si ce n'était pas aujourd'hui), durée, conso et, avec `price_per_kwh`, son coût. La carte les calcule à partir de l'historique de `power` (4 derniers jours) : pas de helper, d'automatisation ni de capteur template. Un creux sous `threshold` plus court que `cycle_gap` (**15 min** par défaut) reste dans le même cycle (trempage, séchage). La conso est l'écart du compteur `energy` sur le cycle, sinon l'intégrale de la puissance. `price_per_kwh` accepte un nombre ou une entité de tarif ; le coût est dans la devise de Home Assistant.
+
+```yaml
+type: custom:appliance-dishwasher-card
+power: sensor.prise_lave_vaisselle_puissance
+energy: sensor.prise_lave_vaisselle_energie
+last_cycle: true
+price_per_kwh: 0.2516
+```
+
 **Libellés perso des tuiles** : l'option `labels` renomme les tuiles sous le dessin, dans la langue de ton choix. Tu donnes la clé de la tuile et ton texte ; les tuiles non listées gardent la traduction. Le champ **Libellés perso des tuiles** de l'éditeur visuel prend les mêmes lignes `clé: texte`. La liste des clés par carte est dans [configuration.md](configuration.md#custom-tile-labels).
 
 ```yaml

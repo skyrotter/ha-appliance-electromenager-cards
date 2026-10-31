@@ -246,7 +246,14 @@
     "mode": "Modus",
     "f_target_humidity": "Doelvochtigheid (sensor, number of humidifier)",
     "f_tank_full": "Sensor reservoir vol",
-    "f_fan_speed": "Ventilatorsnelheid (select, number, fan…)"
+    "f_fan_speed": "Ventilatorsnelheid (select, number, fan…)",
+    "last_cycle": "Laatste cyclus",
+    "cycle_duration": "Cyclusduur",
+    "cycle_energy": "Cyclusverbruik",
+    "cycle_cost": "Cycluskosten",
+    "yesterday": "gisteren",
+    "f_last_cycle": "Laatste cyclus tonen (start, einde, duur, verbruik, kosten)",
+    "f_price_per_kwh": "Prijs per kWh (kosten laatste cyclus)"
   },
   "aquarium": {
     "power": "Vermogen",

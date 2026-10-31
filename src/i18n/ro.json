@@ -246,7 +246,14 @@
     "mode": "Mod",
     "f_target_humidity": "Umiditate țintă (senzor, number sau humidifier)",
     "f_tank_full": "Senzor rezervor plin",
-    "f_fan_speed": "Viteza ventilatorului (select, number, fan…)"
+    "f_fan_speed": "Viteza ventilatorului (select, number, fan…)",
+    "last_cycle": "Ultimul ciclu",
+    "cycle_duration": "Durata ciclului",
+    "cycle_energy": "Consumul ciclului",
+    "cycle_cost": "Costul ciclului",
+    "yesterday": "ieri",
+    "f_last_cycle": "Afișează ultimul ciclu (început, sfârșit, durată, consum, cost)",
+    "f_price_per_kwh": "Preț pe kWh (costul ultimului ciclu)"
   },
   "aquarium": {
     "power": "Putere",

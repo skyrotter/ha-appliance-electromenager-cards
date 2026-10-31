@@ -246,7 +246,14 @@
     "mode": "Mode",
     "f_target_humidity": "Target humidity (sensor, number or humidifier)",
     "f_tank_full": "Tank full sensor",
-    "f_fan_speed": "Fan speed entity (select, number, fan…)"
+    "f_fan_speed": "Fan speed entity (select, number, fan…)",
+    "last_cycle": "Last cycle",
+    "cycle_duration": "Cycle duration",
+    "cycle_energy": "Cycle energy",
+    "cycle_cost": "Cycle cost",
+    "yesterday": "yesterday",
+    "f_last_cycle": "Show the last cycle (start, end, duration, energy, cost)",
+    "f_price_per_kwh": "Price per kWh (last cycle cost)"
   },
   "aquarium": {
     "power": "Power",

@@ -12,6 +12,8 @@ All cards have a visual editor. When added from the card picker, entities are de
 | `energy` | Energy sensor (Wh, kWh or MWh, shown in kWh) — e.g. today's consumption |
 | `cost` | Cost sensor (any currency) |
 | `energy_period` | `day`, `week` or `month`: show the energy used in the current period instead of the raw counter, computed by Home Assistant from the long-term statistics of `energy` (like the Energy dashboard), so a cumulative smart-plug counter works without a Utility Meter. Needs a sensor with statistics (`state_class: total_increasing`); otherwise the counter is shown |
+| `last_cycle` | Washer, dryer, dishwasher: `true` shows, between cycles, the last cycle start → end, duration, energy and cost, read from the history of `power` (last 4 days). `cycle_gap` (min, default 15): drops below `threshold` shorter than this stay in the same cycle |
+| `price_per_kwh` | Price of a kWh (number or tariff entity) for the last cycle cost |
 | `switch` | Switch controlled by the power button (button hidden if unset) |
 | `threshold` | Power above which the appliance is considered running (W). Defaults: 10 (washer/dryer/dishwasher), 20 (fridge), 50 (others) |
 | `heating_power` | Washer and dishwasher: power draw threshold (W) above which the cycle phase is inferred as `heat` (default: `1000`) |
@@ -42,7 +44,7 @@ labels:
 
 | Card | Tile keys |
 |---|---|
-| Washer, dryer, fridge, oven… (all appliance cards) | `power`, `energy`, `cost`, `remaining`, `temperature`, `target`, `fridge_temp`, `freezer_temp`, `zone_top`, `zone_bottom`, `humidity`, `level`, `pellets`, `keg`, `battery`, `water`, `today`, `speed`, `progress`, `nozzle`, `bed`; water heater: `grid`, `energy_grid`, `solar_surplus`, `energy_solar`; solar: `production`, `today`, `savings`, `of_peak` |
+| Washer, dryer, fridge, oven… (all appliance cards) | `power`, `energy`, `cost`, `remaining`, `temperature`, `target`, `fridge_temp`, `freezer_temp`, `zone_top`, `zone_bottom`, `humidity`, `level`, `pellets`, `keg`, `battery`, `water`, `today`, `speed`, `progress`, `nozzle`, `bed`; water heater: `grid`, `energy_grid`, `solar_surplus`, `energy_solar`; washer, dryer, dishwasher: `last_cycle`, `cycle_duration`, `cycle_energy`, `cycle_cost`; solar: `production`, `today`, `savings`, `of_peak` |
 | Aquarium | `power`, `energy`, `temp`, `cost` |
 | Linky | `power`, `active`, `hp`, `hc`, `injection`, `injection_power`, `tariff`, `cost` |
 | Battery | `power`, `energy`, `temp` |

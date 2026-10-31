@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.43.0";
+const VERSION = "1.44.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -261,7 +261,14 @@ const STRINGS = {
     "mode": "Mode",
     "f_target_humidity": "Target humidity (sensor, number or humidifier)",
     "f_tank_full": "Tank full sensor",
-    "f_fan_speed": "Fan speed entity (select, number, fan…)"
+    "f_fan_speed": "Fan speed entity (select, number, fan…)",
+    "last_cycle": "Last cycle",
+    "cycle_duration": "Cycle duration",
+    "cycle_energy": "Cycle energy",
+    "cycle_cost": "Cycle cost",
+    "yesterday": "yesterday",
+    "f_last_cycle": "Show the last cycle (start, end, duration, energy, cost)",
+    "f_price_per_kwh": "Price per kWh (last cycle cost)"
   },
   "de": {
     "washer": "Waschmaschine",
@@ -510,7 +517,14 @@ const STRINGS = {
     "mode": "Modus",
     "f_target_humidity": "Zielfeuchte (Sensor, number oder humidifier)",
     "f_tank_full": "Sensor Tank voll",
-    "f_fan_speed": "Lüfterstufe (select, number, fan…)"
+    "f_fan_speed": "Lüfterstufe (select, number, fan…)",
+    "last_cycle": "Letzter Zyklus",
+    "cycle_duration": "Zyklusdauer",
+    "cycle_energy": "Zyklusverbrauch",
+    "cycle_cost": "Zykluskosten",
+    "yesterday": "gestern",
+    "f_last_cycle": "Letzten Zyklus anzeigen (Start, Ende, Dauer, Verbrauch, Kosten)",
+    "f_price_per_kwh": "Preis pro kWh (Kosten des letzten Zyklus)"
   },
   "fr": {
     "washer": "Lave-linge",
@@ -759,7 +773,14 @@ const STRINGS = {
     "mode": "Mode",
     "f_target_humidity": "Consigne d'humidité (capteur, number ou humidifier)",
     "f_tank_full": "Capteur de bac plein",
-    "f_fan_speed": "Vitesse du ventilateur (select, number, fan…)"
+    "f_fan_speed": "Vitesse du ventilateur (select, number, fan…)",
+    "last_cycle": "Dernier cycle",
+    "cycle_duration": "Durée du cycle",
+    "cycle_energy": "Conso du cycle",
+    "cycle_cost": "Coût du cycle",
+    "yesterday": "hier",
+    "f_last_cycle": "Afficher le dernier cycle (début, fin, durée, conso, coût)",
+    "f_price_per_kwh": "Prix du kWh (coût du dernier cycle)"
   },
   "nb": {
     "f_illustration_size": "Størrelse på illustrasjonen",
@@ -1008,7 +1029,14 @@ const STRINGS = {
     "f_mid_threshold": "Hastighet 2 over (W)",
     "ph_heat": "Oppvarming",
     "f_heating_power": "Effektterskel for oppvarming (W)",
-    "f_spin_power": "Effektterskel for sentrifugering (W)"
+    "f_spin_power": "Effektterskel for sentrifugering (W)",
+    "last_cycle": "Siste syklus",
+    "cycle_duration": "Syklusvarighet",
+    "cycle_energy": "Syklusforbruk",
+    "cycle_cost": "Sykluskostnad",
+    "yesterday": "i går",
+    "f_last_cycle": "Vis siste syklus (start, slutt, varighet, forbruk, kostnad)",
+    "f_price_per_kwh": "Pris per kWh (kostnad for siste syklus)"
   },
   "nl": {
     "washer": "Wasmachine",
@@ -1257,7 +1285,14 @@ const STRINGS = {
     "mode": "Modus",
     "f_target_humidity": "Doelvochtigheid (sensor, number of humidifier)",
     "f_tank_full": "Sensor reservoir vol",
-    "f_fan_speed": "Ventilatorsnelheid (select, number, fan…)"
+    "f_fan_speed": "Ventilatorsnelheid (select, number, fan…)",
+    "last_cycle": "Laatste cyclus",
+    "cycle_duration": "Cyclusduur",
+    "cycle_energy": "Cyclusverbruik",
+    "cycle_cost": "Cycluskosten",
+    "yesterday": "gisteren",
+    "f_last_cycle": "Laatste cyclus tonen (start, einde, duur, verbruik, kosten)",
+    "f_price_per_kwh": "Prijs per kWh (kosten laatste cyclus)"
   },
   "ro": {
     "washer": "Mașină de spălat rufe",
@@ -1506,7 +1541,14 @@ const STRINGS = {
     "mode": "Mod",
     "f_target_humidity": "Umiditate țintă (senzor, number sau humidifier)",
     "f_tank_full": "Senzor rezervor plin",
-    "f_fan_speed": "Viteza ventilatorului (select, number, fan…)"
+    "f_fan_speed": "Viteza ventilatorului (select, number, fan…)",
+    "last_cycle": "Ultimul ciclu",
+    "cycle_duration": "Durata ciclului",
+    "cycle_energy": "Consumul ciclului",
+    "cycle_cost": "Costul ciclului",
+    "yesterday": "ieri",
+    "f_last_cycle": "Afișează ultimul ciclu (început, sfârșit, durată, consum, cost)",
+    "f_price_per_kwh": "Preț pe kWh (costul ultimului ciclu)"
   },
   "ru": {
     "washer": "Стиральная машина",
@@ -1755,7 +1797,14 @@ const STRINGS = {
     "mode": "Режим",
     "f_target_humidity": "Целевая влажность (sensor, number или humidifier)",
     "f_tank_full": "Датчик полного бака",
-    "f_fan_speed": "Скорость вентилятора (select, number, fan…)"
+    "f_fan_speed": "Скорость вентилятора (select, number, fan…)",
+    "last_cycle": "Последний цикл",
+    "cycle_duration": "Длительность цикла",
+    "cycle_energy": "Расход за цикл",
+    "cycle_cost": "Стоимость цикла",
+    "yesterday": "вчера",
+    "f_last_cycle": "Показывать последний цикл (начало, конец, длительность, расход, стоимость)",
+    "f_price_per_kwh": "Цена за кВт·ч (стоимость последнего цикла)"
   }
 };
 const lang = (hass) => {
@@ -3867,6 +3916,36 @@ function fmtDuration(min) {
   const h = Math.floor(m / 60), r = m % 60;
   return r ? `${h} h ${String(r).padStart(2, "0")}` : `${h} h`;
 }
+/* Dernier cycle terminé d'après l'historique de la puissance.
+   pw : [{ t (ms), w (W) }] trié ; un cycle = puissance > seuil, les creux plus courts que gapMin (trempage, séchage) restent dans le cycle.
+   en : [{ t, v (kWh) }] compteur d'énergie, facultatif. Renvoie { start, end, kwh } ou null (aucun cycle, ou cycle en cours). */
+function lastCycle(pw, threshold, gapMin = 15, en = []) {
+  const gap = gapMin * 60000;
+  let start = null, lastOn = null, cyc = null;
+  for (let i = 0; i < pw.length; i++) {
+    const p = pw[i], next = pw[i + 1];
+    if (!(p.w > threshold)) continue;
+    // fin de cette période au-dessus du seuil : instant du point suivant (ou maintenant)
+    const offAt = next ? next.t : null;
+    if (start === null || p.t - lastOn > gap) { if (start !== null) cyc = { start, end: lastOn }; start = p.t; }
+    lastOn = offAt;
+    if (offAt === null) return null; // encore au-dessus du seuil : cycle en cours
+  }
+  if (start !== null && lastOn !== null) cyc = { start, end: lastOn };
+  if (!cyc || cyc.end - cyc.start < 120000) return null; // < 2 min : pic parasite
+  // énergie : écart du compteur, sinon intégrale de la puissance
+  const at = (T) => { let v = null; for (const e of en) { if (e.t <= T) v = e.v; else break; } return v; };
+  const e0 = at(cyc.start), e1 = at(cyc.end + 60000);
+  let kwh = e0 != null && e1 != null && e1 >= e0 ? e1 - e0 : null;
+  if (kwh === null) {
+    kwh = 0;
+    for (let i = 0; i < pw.length - 1; i++) {
+      const a = Math.max(pw[i].t, cyc.start), b = Math.min(pw[i + 1].t, cyc.end);
+      if (b > a && pw[i].w > 0) kwh += pw[i].w * (b - a) / 3.6e9;
+    }
+  }
+  return { ...cyc, kwh };
+}
 // H:MM like a real washer/oven display; M:SS for short countdowns (microwave)
 const lcdDuration = (min, short = false) => {
   if (short) { const s = Math.round(min * 60); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; }
@@ -3916,7 +3995,7 @@ class ApplianceCardBase extends HTMLElement {
     // keep LCD clock / countdown fresh even when no entity changes
     this._tick = setInterval(() => { if (this._hass && this._config) this._update(false); }, 20000);
   }
-  disconnectedCallback() { clearInterval(this._tick); }
+  disconnectedCallback() { clearInterval(this._tick); clearTimeout(this._cycTimer); this._cycBusy = false; }
 
   getCardSize() { return 4; }
   getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
@@ -3982,6 +4061,33 @@ class ApplianceCardBase extends HTMLElement {
       .then((r) => { this._perKwh = r && Number.isFinite(r.change) ? r.change : null; })
       .catch(() => { this._perKwh = null; })
       .finally(() => { this._perBusy = false; if (this._hass) this._render(this._compute()); });
+  }
+
+  // last_cycle : début, fin, durée, énergie et coût du dernier cycle, lus dans l'historique de Home Assistant (4 derniers jours).
+  // Relu au chargement puis 20 s après chaque fin de cycle (le temps que l'enregistreur écrive les derniers points).
+  _fetchCycle(active) {
+    const c = this._config, hass = this._hass;
+    if (!c.last_cycle || !c.power || !["washer", "dryer", "dishwasher"].includes(this._kind) || !hass || typeof hass.callWS !== "function") return;
+    const was = this._cycActive;
+    this._cycActive = active;
+    if (active || this._cycBusy || (this._cycAt && was === active)) return;
+    this._cycBusy = true; this._cycAt = Date.now();
+    clearTimeout(this._cycTimer);
+    this._cycTimer = setTimeout(() => {
+      const now = Date.now(), ids = [c.power].concat(c.energy ? [c.energy] : []);
+      const unit = (i, f) => f[(hass.states[i] && hass.states[i].attributes.unit_of_measurement) || ""] ?? 1;
+      const pf = unit(c.power, { kW: 1000 }), ef = c.energy ? unit(c.energy, { Wh: 1e-3, MWh: 1e3 }) : 1;
+      hass.callWS({ type: "history/history_during_period", start_time: new Date(now - 4 * 86400000).toISOString(), end_time: new Date(now).toISOString(),
+        entity_ids: ids, minimal_response: true, no_attributes: true, significant_changes_only: false })
+        .then((r) => {
+          const pts = (i, f) => ((r && r[i]) || []).map((p) => ({ t: (p.lu ?? p.lc) * 1000, v: parseFloat(p.s) * f })).filter((p) => Number.isFinite(p.t));
+          const pw = pts(c.power, pf).map((p) => ({ t: p.t, w: Number.isFinite(p.v) ? p.v : 0 }));
+          const en = c.energy ? pts(c.energy, ef).filter((p) => Number.isFinite(p.v)) : [];
+          this._cycle = lastCycle(pw, c.threshold ?? this._def.threshold, c.cycle_gap ?? 15, en);
+        })
+        .catch(() => { this._cycle = null; })
+        .finally(() => { this._cycBusy = false; if (this._hass) this._render(this._compute()); });
+    }, was === true ? 20000 : 0);
   }
 
   _update(force) {
@@ -4546,6 +4652,7 @@ class ApplianceCardBase extends HTMLElement {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
     const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit"].includes(m.status);
+    this._fetchCycle(active);
     $("wrap").className = [
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
       active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
@@ -4897,6 +5004,27 @@ class ApplianceCardBase extends HTMLElement {
     }
     if (m.energyS) tile("mdi:solar-power-variant", fmtEnergy(hass, m.energyS) ?? "—", lb("energy_solar"), c.energy_solar);
     if (m.cost) tile(solar ? "mdi:piggy-bank-outline" : "mdi:cash", fmtUnit(hass, m.cost, 2, 2) ?? "—", lb(solar ? "savings" : "cost"), c.cost);
+    // dernier cycle (option last_cycle), affiché hors cycle
+    const cy = c.last_cycle && !active ? this._cycle : null;
+    if (cy) {
+      const s0 = new Date(cy.start), s1 = new Date(cy.end), today = new Date().toDateString();
+      const ago = Math.round((new Date(today) - new Date(s0.toDateString())) / 86400000);
+      let day = "";
+      if (ago === 1) day = ` · ${tr(hass, "yesterday")}`;
+      else if (ago > 1) { try { day = ` · ${s0.toLocaleDateString(loc(hass), { day: "numeric", month: "short" })}`; } catch (e) { day = ` · ${s0.getDate()}/${s0.getMonth() + 1}`; } }
+      tile("mdi:history", `${fmtClock(hass, s0)} → ${fmtClock(hass, s1)}`, `${lb("last_cycle")}${day}`, c.power);
+      tile("mdi:timer-outline", fmtDuration((cy.end - cy.start) / 60000), lb("cycle_duration"), c.power);
+      tile("mdi:lightning-bolt", `${fmtNum(hass, cy.kwh, 2)} kWh`, lb("cycle_energy"), c.energy || c.power);
+      // prix du kWh : nombre, ou entité (tarif) ; devise de Home Assistant
+      const pr = typeof c.price_per_kwh === "string" ? num(hass.states[c.price_per_kwh]) : Number(c.price_per_kwh);
+      if (c.price_per_kwh != null && c.price_per_kwh !== "" && Number.isFinite(pr)) {
+        const cur = (hass.config && hass.config.currency) || "EUR";
+        let v;
+        try { v = new Intl.NumberFormat(loc(hass), { style: "currency", currency: cur, minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(cy.kwh * pr); }
+        catch (e) { v = `${fmtNum(hass, cy.kwh * pr, 2, 2)} ${cur}`; }
+        tile("mdi:cash", v, lb("cycle_cost"), typeof c.price_per_kwh === "string" ? c.price_per_kwh : c.energy || c.power);
+      }
+    }
     if (solar && m.status !== "night" && m.frac != null && m.pw && !BAD.includes(String(m.pw.state).toLowerCase())) tile("mdi:white-balance-sunny", `${Math.round(m.frac * 100)} %`, lb("of_peak"), c.power);
     $("stats").innerHTML = tiles.join("");
     $("stats").style.display = tiles.length ? "" : "none";
@@ -4976,6 +5104,10 @@ function buildForm(kind) {
             { name: "max_temperature", selector: { number: { min: 0, max: 15, step: 0.5, mode: "box" } } },
             { name: "freezer_max_temperature", selector: { number: { min: -30, max: 0, step: 0.5, mode: "box" } } },
             { name: "flex_max_temperature", selector: { number: { min: -30, max: 15, step: 0.5, mode: "box" } } },
+          ] : []),
+          ...(["washer", "dryer", "dishwasher"].includes(kind) ? [
+            { name: "last_cycle", selector: { boolean: {} } },
+            { name: "price_per_kwh", selector: { number: { min: 0, max: 2, step: 0.0001, mode: "box" } } },
           ] : []),
           ...(d.fields.includes("energy") ? [{ name: "energy_period", selector: { select: { mode: "dropdown", options: [
             { value: "", label: tr(null, "energy") }, ...["day", "week", "month"].map((value) => ({ value, label: tr(null, `energy_${value}`) }))] } } }] : []),
