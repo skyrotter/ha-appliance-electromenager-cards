@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.52.0";
+const VERSION = "1.52.1";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -5882,7 +5882,8 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 @container (max-width: 400px) {
   .top { grid-template-areas: "illus head" "stats stats"; }
   .illus { width: calc(var(--appliance-illustration-size-small, 84px) * var(--illus-scale, 1)); }
-  .stats { grid-template-columns: repeat(auto-fit, minmax(88px, 1fr)); }
+  /* téléphone : 2 tuiles par ligne, sinon les libellés (« Dernier cycle », « Cette semaine »…) sont coupés */
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 /* carte étroite (ex. 2 ou 3 cartes côte à côte) : illustration au-dessus, titre et statut centrés et sur plusieurs lignes.
    Sous 280 px, illustration + bouton ne laissent plus qu'environ 100 px au titre, qui serait tronqué. */
