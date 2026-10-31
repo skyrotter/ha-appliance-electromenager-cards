@@ -284,6 +284,30 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c=card('room-climate',base,[TH('sensor.t',21),HU('sensor.h',50)]); rc(c).click();
  {const d=document.querySelector('appliance-room-climate-dialog'); ok('room climate pop-up opens',!!d&&d.shadowRoot.querySelectorAll('[data-d]').length===3&&d.shadowRoot.querySelector('[data-d="7"]').classList.contains('on')&&d.shadowRoot.querySelector('[data-m="both"]').classList.contains('on'),'no dialog');
   ok('room climate pop-up without recorder',/Aucun historique/.test(d&&d.shadowRoot.getElementById('chart').textContent),d&&d.shadowRoot.getElementById('chart').textContent); d&&d.remove();}
+ // 12 styles : chacun s'affiche, garde les valeurs, l'icône de la pièce et les alertes
+ for(const st of ['standard','gauge','gradient','minimal','lcd','tile','thermometer','gradient_ring','double_ring','dial','neon','bars']){
+  try{c=card('room-climate',{...base,style:st,icon:'mdi:sofa',alert_temp_max:24},[TH('sensor.t',24.5),HU('sensor.h',52)]);
+   ok(`room climate style ${st}`,rc(c).classList.contains(`st-${st}`)&&/alert/.test(rc(c).className)&&c.sr.getElementById('t').textContent==='24,5'&&c.sr.getElementById('ric').getAttribute('icon')==='mdi:sofa'&&!c.sr.getElementById('ric').hidden,rc(c).className);}
+  catch(e){ok(`room climate style ${st}`,false,e.message)}}
+ c=card('room-climate',{...base,style:'thermometer'},[TH('sensor.t',20),HU('sensor.h',50)]); {const y=+c.sr.getElementById('tf').getAttribute('y'); ok('room climate thermometer level (20 °C = 2/3 of -20 → 40)',Math.abs(y-80)<1,y);}
+ c=card('room-climate',{...base,style:'dial'},[TH('sensor.t',20),HU('sensor.h',50)]); ok('room climate dial needles',c.sr.getElementById('nt').style.transform==='rotate(0deg)'&&c.sr.getElementById('nh').style.transform==='rotate(0deg)',c.sr.getElementById('nt').style.transform+' '+c.sr.getElementById('nh').style.transform);
+ c=card('room-climate',{...base,style:'lcd'},[TH('sensor.t',17),HU('sensor.h',50)]); ok('room climate LCD indicator',c.sr.getElementById('ind').textContent==='▼ Frais'&&rc(c).classList.contains('lcd-green'),c.sr.getElementById('ind').textContent);
+ c=card('room-climate',{...base,style:'double_ring'},[TH('sensor.t',21),HU('sensor.h',50)]); ok('room climate double ring default icon',c.sr.getElementById('ric').getAttribute('icon')==='mdi:home-thermometer-outline',c.sr.getElementById('ric').getAttribute('icon'));
+ c=card('room-climate',{...base,style:'nope'},[TH('sensor.t',21),HU('sensor.h',50)]); ok('room climate unknown style falls back to standard',rc(c).classList.contains('st-standard'),rc(c).className);
+ // couleurs personnalisées
+ c=card('room-climate',{...base,color_comfort:[10,20,30],color_alert:'#ff00ff'},[TH('sensor.t',21),HU('sensor.h',50)]);
+ ok('room climate custom colours',c.el.style.getPropertyValue('--appliance-ok-color')==='rgb(10,20,30)'&&c.el.style.getPropertyValue('--appliance-alert-color')==='#ff00ff',c.el.getAttribute('style'));
+ // action au clic
+ c=card('room-climate',{...base,tap_action:'more-info'},[TH('sensor.t',21),HU('sensor.h',50)]); {let got=null; c.el.addEventListener('hass-more-info',(e)=>got=e.detail.entityId); rc(c).click(); ok('room climate tap action more-info',got==='sensor.t'&&!document.querySelector('appliance-room-climate-dialog'),got);}
+ c=card('room-climate',{...base,tap_action:'none'},[TH('sensor.t',21),HU('sensor.h',50)]); rc(c).click(); ok('room climate tap action none',!document.querySelector('appliance-room-climate-dialog'),'dialog opened');
+ // thermostat lié : consigne, chauffe, − / + (appel groupé après le dernier clic)
+ c=card('room-climate',{...base,entity_climate:'climate.c'},[TH('sensor.t',19),HU('sensor.h',50),mk('climate.c','heat',{temperature:20,hvac_action:'heating',target_temp_step:0.5})]);
+ ok('room climate thermostat shown',!c.sr.getElementById('clim').hidden&&c.sr.getElementById('ct').textContent==='20,0°'&&c.sr.getElementById('clim').classList.contains('heating'),c.sr.getElementById('clim').className);
+ c.sr.getElementById('cp').click(); c.sr.getElementById('cp').click(); c.sr.getElementById('cm').click();
+ ok('room climate thermostat pending target',c.sr.getElementById('ct').textContent==='20,5°'&&!c.h.calls.length,c.sr.getElementById('ct').textContent);
+ c.el._climTimer&&clearTimeout(c.el._climTimer); c.el._pending=null;
+ c=card('room-climate',{...base,entity_climate:'climate.c'},[TH('sensor.t',19),HU('sensor.h',50),mk('climate.c','off',{temperature:20})]); ok('room climate thermostat off',c.sr.getElementById('cp').disabled&&/éteint/.test(c.sr.getElementById('cl').textContent),c.sr.getElementById('cl').textContent);
+ c=card('room-climate',base,[TH('sensor.t',19),HU('sensor.h',50)]); ok('room climate no thermostat without entity',c.sr.getElementById('clim').hidden,'shown');
  document.querySelectorAll('appliance-room-climate-card').forEach((e)=>e.remove());
 }
 c=card('vmc',{entity:'fan.v',animations:true},[mk('fan.v','on')]); ok('animations: true forces animations (reduced motion)',has(c,'force-anim'),c.wrap.className);

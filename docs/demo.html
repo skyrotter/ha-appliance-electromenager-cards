@@ -554,8 +554,16 @@ const SCEN = [
     } },
   { kind: 'room-climate', title: 'Climat de la pièce', lang: true,
     cfg: { name: 'Salon', entity_temperature: 'sensor.room_temp', entity_humidity: 'sensor.room_humidity', entity_outdoor_temperature: 'sensor.outdoor_temp',
-      entity_outdoor_humidity: 'sensor.outdoor_humidity', entity_window: 'binary_sensor.room_window', entity_battery: 'sensor.room_sensor_battery', alert_temp_max: 28 },
+      entity_outdoor_humidity: 'sensor.outdoor_humidity', entity_window: 'binary_sensor.room_window', entity_battery: 'sensor.room_sensor_battery', entity_climate: 'climate.room',
+      alert_temp_max: 28, icon: 'mdi:sofa', style: 'standard' },
     build(ctl) {
+      // option de la carte (pas un état) : on reconfigure la carte
+      const ST = [['standard', 'Standard'], ['gauge', 'Jauge / Gauge'], ['gradient', 'Dégradé / Gradient'], ['minimal', 'Minimal'], ['lcd', 'Station météo / Weather station'], ['tile', 'Tuile mini / Mini tile'],
+        ['thermometer', 'Grand thermomètre / Thermometer'], ['gradient_ring', 'Anneau dégradé / Gradient ring'], ['double_ring', 'Double anneau / Double ring'], ['dial', 'Cadran / Needle dial'], ['neon', 'Néon / Neon'], ['bars', 'Barres / Bars']];
+      select(ctl, 'Style', 'input_select.demo_rc_style', ST, this.cfg.style, (v) => {
+        this.cfg.style = v; const el = cards.find((e) => e._scen === this); if (el) { el.setConfig(scenCfg(this)); refresh(); }
+      });
+      set('climate.room', 'heat', { temperature: 20, hvac_action: 'heating', target_temp_step: 0.5, min_temp: 7, max_temp: 30 });
       range(ctl, 'Température', 'sensor.room_temp', 10, 32, 0.1, 21.4, '°C', T);
       range(ctl, 'Humidité', 'sensor.room_humidity', 20, 95, 1, 48, '%', { unit_of_measurement: '%', device_class: 'humidity' });
       range(ctl, 'Temp. extérieure', 'sensor.outdoor_temp', -10, 38, 0.5, 8, '°C', T);
