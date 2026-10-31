@@ -845,7 +845,8 @@
 "color_humidity": "Farge: fuktighet",
 "color_dry": "Farge: tørt",
 "color_alert": "Farge: varsel",
-"show_trend": "Vis trend (1 t)"
+"show_trend": "Vis trend (1 t)",
+"variant": "Stil"
 },
 "light": {
 "light_bulb": "Lyspære",

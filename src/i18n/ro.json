@@ -845,7 +845,8 @@
     "color_humidity": "Culoare: umiditate",
     "color_dry": "Culoare: uscat",
     "color_alert": "Culoare: alertă",
-    "show_trend": "Afișează tendința (1 h)"
+    "show_trend": "Afișează tendința (1 h)",
+    "variant": "Stil"
   },
   "light": {
     "light_bulb": "Bec",

@@ -2,9 +2,9 @@
 
 `custom:appliance-room-climate-card`: a compact card for one room's temperature and humidity. The thermometer's mercury rises to the temperature, water ripples in the drop up to the humidity level, a coloured halo breathes with the comfort state and the last 24 hours are drawn under the values. **Click the card** to open the history pop-up.
 
-**12 styles** (`style`, chosen in the editor), all animated, with the same features and the same pop-up:
+**12 styles** (`variant`, chosen in the editor; the older name `style` still works, except inside a `picture-elements` card where `style` is the element's CSS), all animated, with the same features and the same pop-up:
 
-| `style` | Look |
+| `variant` | Look |
 |---|---|
 | `standard` (default) | rising thermometer, rippling drop, breathing halo, 24 h graph |
 | `gauge` | temperature ring and inner humidity arc that fill up |
@@ -47,7 +47,7 @@
 | `battery_low` | low battery below this % (20) |
 | `history_days` | pop-up period when it opens: `1`, `7` (default) or `30` |
 | `history_mode` | pop-up graph when it opens: `both` (default), `temperature`, `humidity` |
-| `style` | one of the 12 styles above (`standard`) |
+| `variant` | one of the 12 styles above (`standard`). `style` is accepted too, but use `variant` inside `picture-elements` |
 | `icon` | room icon (`mdi:sofa`, `mdi:bed`…) |
 | `lcd_color` | screen colour of the `lcd` style: `auto`, `green`, `blue`, `amber` |
 | `tap_action` | `history` (pop-up, default), `more-info`, `navigate` (with `navigation_path`), `none` |
@@ -58,7 +58,7 @@
 ```yaml
 type: custom:appliance-room-climate-card
 name: Living room
-style: dial
+variant: dial
 icon: mdi:sofa
 entity_temperature: sensor.living_room_temperature
 entity_humidity: sensor.living_room_humidity
