@@ -38,6 +38,8 @@ const SEL = {
   speed: { entity: { domain: ["sensor", "number", "input_number", "select"] } },
   target_humidity: { entity: { domain: ["sensor", "number", "input_number", "humidifier"] } },
   tank_full: { entity: { domain: ["binary_sensor", "input_boolean", "sensor"] } },
+  clean_water: { entity: { domain: ["sensor", "binary_sensor", "number", "input_number"] } },
+  dirty_water: { entity: { domain: ["sensor", "binary_sensor", "number", "input_number"] } },
   fan_speed: { entity: { domain: ["select", "input_select", "sensor", "number", "input_number", "fan"] } },
 };
 function buildForm(kind) {
@@ -152,6 +154,10 @@ function buildForm(kind) {
           ...(kind === "toaster" ? [
             { name: "ready_minutes", selector: { number: { min: 0, max: 30, step: 1, mode: "box", unit_of_measurement: "min" } } },
           ] : []),
+          ...(kind === "wet_vacuum" ? [
+            { name: "selfclean_threshold", selector: { number: { min: 5, max: 1000, step: 1, mode: "box", unit_of_measurement: "W" } } },
+            { name: "battery_low", selector: { number: { min: 0, max: 100, step: 1, mode: "box", unit_of_measurement: "%" } } },
+          ] : []),
           ...(kind === "dehumidifier" ? [
             { name: "humidity_max", selector: { number: { min: 40, max: 100, step: 1, mode: "box", unit_of_measurement: "%" } } },
           ] : []),
@@ -216,7 +222,18 @@ function stubFor(kind, hass) {
     if (tank) cfg.tank_full = tank;
     if (temp) cfg.temperature = temp;
   }
-  const batt = kind === "tool_charger" ? pick((i, st) => i.startsWith("sensor.") && dc(st) === "battery") : null;
+  if (kind === "wet_vacuum") {
+    // statut (vacuum ou capteur texte), réservoirs et mode
+    const st = pick((i) => i.startsWith("vacuum.")) || pick((i) => /^(sensor|select)\./.test(i) && /(status|statut|etat|state|mode_de_travail|work)/.test(i));
+    const cl = pick((i) => /^(sensor|binary_sensor)\./.test(i) && /(clean_water|eau_propre|clear_water|fresh_water|clean_tank)/.test(i));
+    const dt = pick((i) => /^(sensor|binary_sensor)\./.test(i) && /(dirty|sale|sewage|waste_water|dirty_tank)/.test(i));
+    const md = pick((i) => /^(select|sensor)\./.test(i) && /(mode|suction|aspiration|power_mode)/.test(i) && !/(status|statut)/.test(i));
+    if (st) cfg.entity = st;
+    if (cl) cfg.clean_water = cl;
+    if (dt) cfg.dirty_water = dt;
+    if (md) cfg.mode = md;
+  }
+  const batt = ["tool_charger", "wet_vacuum"].includes(kind) ? pick((i, st) => i.startsWith("sensor.") && dc(st) === "battery") : null;
   if (batt) cfg.battery_level = batt;
   if (!cfg.entity && !cfg.power && !cfg.switch && !cfg.temperature) cfg.power = "sensor.example_power";
   return cfg;

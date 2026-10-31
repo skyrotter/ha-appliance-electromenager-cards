@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.44.0";
+const VERSION = "1.45.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -268,7 +268,22 @@ const STRINGS = {
     "cycle_cost": "Cycle cost",
     "yesterday": "yesterday",
     "f_last_cycle": "Show the last cycle (start, end, duration, energy, cost)",
-    "f_price_per_kwh": "Price per kWh (last cycle cost)"
+    "f_price_per_kwh": "Price per kWh (last cycle cost)",
+    "wet_vacuum": "Wet & dry vacuum",
+    "wv_cleaning": "Cleaning",
+    "wv_selfclean": "Self-cleaning",
+    "wv_drying": "Drying",
+    "clean_water_empty": "Clean water tank empty",
+    "dirty_water_full": "Dirty water tank full",
+    "battery_low": "Low battery",
+    "error": "Error",
+    "clean_water": "Clean water",
+    "dirty_water": "Dirty water",
+    "tank_empty_short": "Empty",
+    "f_clean_water": "Clean water tank (% or binary sensor)",
+    "f_dirty_water": "Dirty water tank (% or binary sensor)",
+    "f_selfclean_threshold": "Self-cleaning above (W, dock plug)",
+    "f_battery_low": "Low battery below (%)"
   },
   "de": {
     "washer": "Waschmaschine",
@@ -524,7 +539,22 @@ const STRINGS = {
     "cycle_cost": "Zykluskosten",
     "yesterday": "gestern",
     "f_last_cycle": "Letzten Zyklus anzeigen (Start, Ende, Dauer, Verbrauch, Kosten)",
-    "f_price_per_kwh": "Preis pro kWh (Kosten des letzten Zyklus)"
+    "f_price_per_kwh": "Preis pro kWh (Kosten des letzten Zyklus)",
+    "wet_vacuum": "Nass-Trockensauger",
+    "wv_cleaning": "Reinigung",
+    "wv_selfclean": "Selbstreinigung",
+    "wv_drying": "Trocknung",
+    "clean_water_empty": "Frischwassertank leer",
+    "dirty_water_full": "Schmutzwassertank voll",
+    "battery_low": "Akku schwach",
+    "error": "Fehler",
+    "clean_water": "Frischwasser",
+    "dirty_water": "Schmutzwasser",
+    "tank_empty_short": "Leer",
+    "f_clean_water": "Frischwassertank (% oder Binärsensor)",
+    "f_dirty_water": "Schmutzwassertank (% oder Binärsensor)",
+    "f_selfclean_threshold": "Selbstreinigung über (W, Steckdose der Station)",
+    "f_battery_low": "Akku schwach unter (%)"
   },
   "fr": {
     "washer": "Lave-linge",
@@ -780,7 +810,22 @@ const STRINGS = {
     "cycle_cost": "Coût du cycle",
     "yesterday": "hier",
     "f_last_cycle": "Afficher le dernier cycle (début, fin, durée, conso, coût)",
-    "f_price_per_kwh": "Prix du kWh (coût du dernier cycle)"
+    "f_price_per_kwh": "Prix du kWh (coût du dernier cycle)",
+    "wet_vacuum": "Aspirateur laveur",
+    "wv_cleaning": "Lavage",
+    "wv_selfclean": "Auto-nettoyage",
+    "wv_drying": "Séchage",
+    "clean_water_empty": "Réservoir d'eau propre vide",
+    "dirty_water_full": "Bac d'eau sale plein",
+    "battery_low": "Batterie faible",
+    "error": "Erreur",
+    "clean_water": "Eau propre",
+    "dirty_water": "Eau sale",
+    "tank_empty_short": "Vide",
+    "f_clean_water": "Réservoir d'eau propre (% ou capteur binaire)",
+    "f_dirty_water": "Bac d'eau sale (% ou capteur binaire)",
+    "f_selfclean_threshold": "Auto-nettoyage au-dessus de (W, prise de la base)",
+    "f_battery_low": "Batterie faible sous (%)"
   },
   "nb": {
     "f_illustration_size": "Størrelse på illustrasjonen",
@@ -1036,7 +1081,22 @@ const STRINGS = {
     "cycle_cost": "Sykluskostnad",
     "yesterday": "i går",
     "f_last_cycle": "Vis siste syklus (start, slutt, varighet, forbruk, kostnad)",
-    "f_price_per_kwh": "Pris per kWh (kostnad for siste syklus)"
+    "f_price_per_kwh": "Pris per kWh (kostnad for siste syklus)",
+    "wet_vacuum": "Våt- og tørrstøvsuger",
+    "wv_cleaning": "Vasker",
+    "wv_selfclean": "Selvrens",
+    "wv_drying": "Tørker",
+    "clean_water_empty": "Rentvannstank tom",
+    "dirty_water_full": "Skittentvannstank full",
+    "battery_low": "Lavt batteri",
+    "error": "Feil",
+    "clean_water": "Rent vann",
+    "dirty_water": "Skittent vann",
+    "tank_empty_short": "Tom",
+    "f_clean_water": "Rentvannstank (% eller binærsensor)",
+    "f_dirty_water": "Skittentvannstank (% eller binærsensor)",
+    "f_selfclean_threshold": "Selvrens over (W, stasjonens kontakt)",
+    "f_battery_low": "Lavt batteri under (%)"
   },
   "nl": {
     "washer": "Wasmachine",
@@ -1292,7 +1352,22 @@ const STRINGS = {
     "cycle_cost": "Cycluskosten",
     "yesterday": "gisteren",
     "f_last_cycle": "Laatste cyclus tonen (start, einde, duur, verbruik, kosten)",
-    "f_price_per_kwh": "Prijs per kWh (kosten laatste cyclus)"
+    "f_price_per_kwh": "Prijs per kWh (kosten laatste cyclus)",
+    "wet_vacuum": "Nat-droogstofzuiger",
+    "wv_cleaning": "Reinigen",
+    "wv_selfclean": "Zelfreiniging",
+    "wv_drying": "Drogen",
+    "clean_water_empty": "Schoonwatertank leeg",
+    "dirty_water_full": "Vuilwatertank vol",
+    "battery_low": "Batterij bijna leeg",
+    "error": "Fout",
+    "clean_water": "Schoon water",
+    "dirty_water": "Vuil water",
+    "tank_empty_short": "Leeg",
+    "f_clean_water": "Schoonwatertank (% of binaire sensor)",
+    "f_dirty_water": "Vuilwatertank (% of binaire sensor)",
+    "f_selfclean_threshold": "Zelfreiniging boven (W, stekker van het station)",
+    "f_battery_low": "Batterij bijna leeg onder (%)"
   },
   "ro": {
     "washer": "Mașină de spălat rufe",
@@ -1548,7 +1623,22 @@ const STRINGS = {
     "cycle_cost": "Costul ciclului",
     "yesterday": "ieri",
     "f_last_cycle": "Afișează ultimul ciclu (început, sfârșit, durată, consum, cost)",
-    "f_price_per_kwh": "Preț pe kWh (costul ultimului ciclu)"
+    "f_price_per_kwh": "Preț pe kWh (costul ultimului ciclu)",
+    "wet_vacuum": "Aspirator de spălat",
+    "wv_cleaning": "Spălare",
+    "wv_selfclean": "Autocurățare",
+    "wv_drying": "Uscare",
+    "clean_water_empty": "Rezervor apă curată gol",
+    "dirty_water_full": "Rezervor apă murdară plin",
+    "battery_low": "Baterie descărcată",
+    "error": "Eroare",
+    "clean_water": "Apă curată",
+    "dirty_water": "Apă murdară",
+    "tank_empty_short": "Gol",
+    "f_clean_water": "Rezervor apă curată (% sau senzor binar)",
+    "f_dirty_water": "Rezervor apă murdară (% sau senzor binar)",
+    "f_selfclean_threshold": "Autocurățare peste (W, priza stației)",
+    "f_battery_low": "Baterie descărcată sub (%)"
   },
   "ru": {
     "washer": "Стиральная машина",
@@ -1804,7 +1894,22 @@ const STRINGS = {
     "cycle_cost": "Стоимость цикла",
     "yesterday": "вчера",
     "f_last_cycle": "Показывать последний цикл (начало, конец, длительность, расход, стоимость)",
-    "f_price_per_kwh": "Цена за кВт·ч (стоимость последнего цикла)"
+    "f_price_per_kwh": "Цена за кВт·ч (стоимость последнего цикла)",
+    "wet_vacuum": "Моющий пылесос",
+    "wv_cleaning": "Уборка",
+    "wv_selfclean": "Самоочистка",
+    "wv_drying": "Сушка",
+    "clean_water_empty": "Бак чистой воды пуст",
+    "dirty_water_full": "Бак грязной воды полон",
+    "battery_low": "Низкий заряд",
+    "error": "Ошибка",
+    "clean_water": "Чистая вода",
+    "dirty_water": "Грязная вода",
+    "tank_empty_short": "Пусто",
+    "f_clean_water": "Бак чистой воды (% или бинарный датчик)",
+    "f_dirty_water": "Бак грязной воды (% или бинарный датчик)",
+    "f_selfclean_threshold": "Самоочистка выше (Вт, розетка станции)",
+    "f_battery_low": "Низкий заряд ниже (%)"
   }
 };
 const lang = (hass) => {
@@ -3640,6 +3745,63 @@ SVG.water_heater = () => `
 <path d="M36 40q4-6 6-1" stroke="#fff" stroke-opacity=".9" stroke-width="2" fill="none" stroke-linecap="round"/>
 <rect x="34" y="34" width="5" height="70" rx="2.5" fill="#fff" opacity=".35"/>`;
 
+/* aspirateur laveur (balai laveur sans fil) : manche, écran rond, réservoir d'eau propre à l'arrière, bac d'eau sale transparent,
+   tête avec rouleau ; posé sur sa base (auto-nettoyage, séchage, charge) ou en train de laver le sol */
+SVG.wet_vacuum = () => `
+<defs>${DEFS}
+<linearGradient id="ID-wvbody" x1="0" x2="1"><stop offset="0" stop-color="#d9dee3"/><stop offset=".45" stop-color="#ffffff"/><stop offset="1" stop-color="#bfc6cd"/></linearGradient>
+<linearGradient id="ID-wvhead" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a525b"/><stop offset="1" stop-color="#1f252b"/></linearGradient>
+<linearGradient id="ID-wvclean" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fd8ff"/><stop offset="1" stop-color="#2b8fe0"/></linearGradient>
+<linearGradient id="ID-wvdirty" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a99a7c"/><stop offset="1" stop-color="#6d6250"/></linearGradient>
+<linearGradient id="ID-wvdock" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2f4f6"/><stop offset="1" stop-color="#c3c9cf"/></linearGradient>
+<clipPath id="ID-wvcl"><rect x="65" y="46" width="11" height="30" rx="2.5"/></clipPath>
+<clipPath id="ID-wvdt"><rect x="50.5" y="84" width="19" height="20" rx="3"/></clipPath>
+<clipPath id="ID-wvroll"><rect x="33" y="119" width="54" height="8" rx="4"/></clipPath></defs>
+<ellipse cx="60" cy="133.5" rx="44" ry="3.5" fill="url(#ID-shadow)"/>
+<path class="wv-wet" d="M14 130.5h92" stroke="#7cc7ff" stroke-width="2.4" stroke-linecap="round"/>
+<g class="wv-dock">
+  <rect x="74" y="86" width="13" height="40" rx="3" fill="url(#ID-wvdock)" stroke="#9aa3ac" stroke-width=".5"/>
+  <circle cx="80.5" cy="92" r="1.6" fill="#3a424b"/>
+  <path class="wv-bolt" d="M81.5 97l-3 5h2.4l-1.4 4.6l3.6-5.6h-2.4z"/>
+  <path d="M22 122h76l-3 9h-70z" fill="url(#ID-wvdock)" stroke="#9aa3ac" stroke-width=".5"/>
+  <rect x="28" y="123" width="64" height="3.6" rx="1.4" fill="#25303a"/>
+  <rect class="wv-tray" x="29" y="123.8" width="62" height="2.2" rx="1" fill="#5fb6f0"/>
+  <g class="wv-bub" fill="none" stroke="#bfe6ff" stroke-width=".6"><circle cx="38" cy="122" r="1.2"/><circle cx="50" cy="122" r=".9"/><circle cx="62" cy="122" r="1.3"/><circle cx="73" cy="122" r="1"/><circle cx="84" cy="122" r="1.1"/></g>
+</g>
+<g class="wv-air" fill="none" stroke="#ffb35c" stroke-width="1.3" stroke-linecap="round">
+  <path d="M30 116q-3-5 0-10t0-10"/><path d="M90 116q3-5 0-10t0-10"/><path d="M24 118q-3-5 0-10t0-10"/><path d="M96 118q3-5 0-10t0-10"/></g>
+<g class="wv-unit">
+  <!-- manche et poignée -->
+  <path d="M53 4h14a3 3 0 0 1 3 3v6a3 3 0 0 1 -3 3h-3.5v26h-7v-26h-3.5a3 3 0 0 1 -3-3v-6a3 3 0 0 1 3-3z" fill="#2f363d"/>
+  <rect x="55" y="7" width="10" height="6" rx="2" fill="#0f1317"/>
+  <circle class="wv-btn" cx="60" cy="19" r="1.3"/>
+  <path d="M58 20v20" stroke="#5a636d" stroke-width=".7" stroke-linecap="round"/>
+  <!-- réservoir d'eau propre (arrière) -->
+  <rect class="wv-cl-frame" x="64" y="45" width="13" height="32" rx="3" fill="#dceefa" fill-opacity=".55" stroke="#8fb8d8" stroke-width=".6"/>
+  <g clip-path="url(#ID-wvcl)"><rect class="wv-clean" x="64" y="46" width="13" height="30" fill="url(#ID-wvclean)"/></g>
+  <path d="M74 49v24" stroke="#fff" stroke-opacity=".6" stroke-width=".8" stroke-linecap="round"/>
+  <!-- corps -->
+  <path d="M51 40h18a3 3 0 0 1 3 3v39h-24v-39a3 3 0 0 1 3-3z" fill="url(#ID-wvbody)" stroke="#949da6" stroke-width=".6"/>
+  <circle cx="60" cy="52" r="8.6" fill="#11171d" stroke="#6b737c" stroke-width=".6"/>
+  <circle cx="60" cy="52" r="6.4" fill="none" stroke="#26303a" stroke-width="1.6"/>
+  <circle class="wv-ring" cx="60" cy="52" r="6.4" fill="none" stroke-width="1.6" stroke-linecap="round" pathLength="100" transform="rotate(-90 60 52)"/>
+  <text class="lcd" x="60" y="52.4" text-anchor="middle">--</text>
+  <path d="M53 66h14M53 70h14" stroke="#b4bcc4" stroke-width=".7" stroke-linecap="round"/>
+  <!-- bac d'eau sale transparent -->
+  <rect x="49" y="82" width="22" height="24" rx="4" fill="#e6edf2" fill-opacity=".5" stroke="#8f99a3" stroke-width=".6"/>
+  <g clip-path="url(#ID-wvdt)"><g class="wv-dirty-g"><rect class="wv-dirty" x="49" y="84" width="22" height="20" fill="url(#ID-wvdirty)"/>
+    <path class="wv-swirl" d="M44 92q3-1.6 6 0t6 0t6 0t6 0t6 0t6 0" fill="none" stroke="#cbbf9f" stroke-width=".9" opacity=".8"/></g></g>
+  <path d="M52 85v18" stroke="#fff" stroke-opacity=".55" stroke-width=".8" stroke-linecap="round"/>
+  <!-- articulation et tête -->
+  <circle cx="60" cy="108.5" r="4.6" fill="#2f363d"/>
+  <path d="M30 116a6 6 0 0 1 6-6h48a6 6 0 0 1 6 6v3h-60z" fill="url(#ID-wvhead)"/>
+  <path class="wv-led" d="M36 113.6h48" stroke-width="1.1" stroke-linecap="round"/>
+  <rect x="33" y="119" width="54" height="8" rx="4" fill="#e3e8ec" stroke="#8f99a3" stroke-width=".5"/>
+  <g clip-path="url(#ID-wvroll)"><g class="wv-roll" stroke="#9fb0bf" stroke-width="1.1">
+    <path d="M26 128l6-10M31 128l6-10M36 128l6-10M41 128l6-10M46 128l6-10M51 128l6-10M56 128l6-10M61 128l6-10M66 128l6-10M71 128l6-10M76 128l6-10M81 128l6-10M86 128l6-10M91 128l6-10"/></g></g>
+  <g class="wv-drops" fill="#6ec3ff"><path d="M40 128q-.8 1.1-.8 1.6a.8 .8 0 0 0 1.6 0q0-.5-.8-1.6z"/><path d="M56 128q-.8 1.1-.8 1.6a.8 .8 0 0 0 1.6 0q0-.5-.8-1.6z"/><path d="M72 128q-.8 1.1-.8 1.6a.8 .8 0 0 0 1.6 0q0-.5-.8-1.6z"/></g>
+</g>`;
+
 /* cave à vin ; avec zone2_temperature : bi-zone (rouges en haut, blancs en bas), deux afficheurs */
 SVG.wine_cooler = (c) => {
   const dual = !!(c && c.zone2_temperature);
@@ -3744,6 +3906,9 @@ const DEF = {
   dehumidifier: { accent: "cold", threshold: 50,
     fields: ["entity", "power", "energy", "cost", "humidity", "target_humidity", "temperature", "tank_full", "fan_speed", "mode", "switch"],
     keys: ["deshumidificateur", "deshumidifier", "dehumidifier", "dehumidificateur", "absorbeur", "midea_dehum", "dehum"] },
+  wet_vacuum: { accent: "cold", threshold: 3,
+    fields: ["entity", "power", "energy", "cost", "battery_level", "clean_water", "dirty_water", "mode", "switch"],
+    keys: ["aspirateur_laveur", "aspirateur_lavant", "nettoyeur_sol", "wet_vacuum", "wet_dry", "floor_washer", "floor_one", "tineco", "laveur"] },
   generic: { accent: "active", threshold: 5,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: [] },
@@ -4009,7 +4174,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "power_level", "pellet_level", "runtime", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed"].map((k) => c[k]).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "power_level", "pellet_level", "runtime", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water"].map((k) => c[k]).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -4119,7 +4284,7 @@ class ApplianceCardBase extends HTMLElement {
       ftemp: S(c.freezer_temperature), fdoor: S(c.freezer_door), flex: S(c.flex_temperature),
       level: num(S(c.power_level)), pellets: num(S(c.pellet_level)),
       runtime: parseRemaining(S(c.runtime)), speed: S(c.speed), bedTemp: num(S(c.bed_temperature)), humidity: num(S(c.humidity)), mode: S(c.mode), window: S(c.window), light: S(c.light), keg: num(S(c.keg_level)), pouring: S(c.pouring), batt: num(S(c.battery_level)), zone2: num(S(c.zone2_temperature)), zone2Ent: S(c.zone2_temperature),
-      tank: S(c.tank_full), fanSpeed: S(c.fan_speed), targetHum: S(c.target_humidity),
+      tank: S(c.tank_full), fanSpeed: S(c.fan_speed), targetHum: S(c.target_humidity), cleanW: S(c.clean_water), dirtyW: S(c.dirty_water),
       status: "idle", phase: null, alerts: [],
     };
     if (main && ["water_heater", "climate"].includes(domainOf(c.entity))) {
@@ -4436,6 +4601,41 @@ class ApplianceCardBase extends HTMLElement {
       m.glColor = Array.isArray(a.rgb_color) ? `rgb(${a.rgb_color.join(",")})` : null;
       m.glBri = a.brightness != null ? Math.max(.25, Number(a.brightness) / 255) : 1;
       m.glEffect = a.effect && !/^(none|off|aucun)$/i.test(a.effect) ? String(a.effect) : null;
+    } else if (kind === "wet_vacuum") {
+      // statut de l'intégration (vacuum ou texte) d'abord, sinon la prise de la base : au-dessus de selfclean_threshold
+      // = auto-nettoyage, au-dessus du seuil = charge, sinon chargé (batterie pleine) ou appareil hors de la base
+      const raw = main ? `${main.state} ${main.attributes.status || ""}`.toLowerCase() : "";
+      const full = m.batt != null && m.batt >= (c.full_level ?? 100);
+      let st = null;
+      if (/self.?clean|auto.?nett|autonett|selbstrein|zelfrein|rin[cç]|rinse|brush_clean|cleaning_roller/.test(raw)) st = "wv_selfclean";
+      else if (/dry|s[eé]ch|trock|droog/.test(raw)) st = "wv_drying";
+      else if (/charged|charg[eé]e\b|fully|complet|geladen/.test(raw)) st = "charged";
+      else if (/charg|laden|docked/.test(raw)) st = full ? "charged" : "charging";
+      else if (/clean|nettoy|wash|lav|mop|vacuum|aspir|working|running|in_use|reinig|schoonm/.test(raw)) st = "wv_cleaning";
+      if (/error|erreur|fault|d[eé]faut|stuck|bloqu|fehler/.test(raw)) m.alerts.push("error");
+      if (st) m.status = st;
+      else if (base === "off" || base === "unavailable") m.status = base;
+      else if (watts !== null) m.status = watts > (c.selfclean_threshold ?? 60) ? "wv_selfclean" : powered && !full ? "charging" : full || powered ? "charged" : "idle";
+      else m.status = base === "running" ? "wv_cleaning" : full ? "charged" : "idle";
+      // réservoirs : pourcentage, ou capteur binaire (on = vide pour l'eau propre, plein pour l'eau sale)
+      const lvl = (st0) => {
+        if (!st0 || BAD.includes(String(st0.state).toLowerCase())) return null;
+        const n = num(st0);
+        if (n != null && !["binary_sensor", "input_boolean"].includes(domainOf(st0.entity_id))) return Math.max(0, Math.min(100, n));
+        const s = String(st0.state).toLowerCase();
+        return { on: true, off: false, empty: true, vide: true, low: true, full: true, plein: true, ok: false, normal: false }[s] ?? null;
+      };
+      const cl = lvl(m.cleanW), dt = lvl(m.dirtyW);
+      m.cleanPct = typeof cl === "number" ? cl : null;
+      m.dirtyPct = typeof dt === "number" ? dt : null;
+      m.cleanEmpty = typeof cl === "number" ? cl <= (c.clean_water_low ?? 10) : cl === true;
+      m.dirtyFull = typeof dt === "number" ? dt >= (c.dirty_water_full ?? 90) : dt === true;
+      m.battLow = m.batt != null && m.batt <= (c.battery_low ?? 20) && m.status !== "charging";
+      if (m.status !== "unavailable") {
+        if (m.cleanEmpty) m.alerts.push("clean_water_empty");
+        if (m.dirtyFull) m.alerts.push("dirty_water_full");
+        if (m.battLow) m.alerts.push("battery_low");
+      }
     } else if (kind === "tool_charger" || kind === "phone_charger") {
       // > seuil : en charge ; petite conso résiduelle : batterie chargée (maintien) ; sinon socle vide / veille
       const full = m.batt != null && m.batt >= (c.full_level ?? 100);
@@ -4549,7 +4749,7 @@ class ApplianceCardBase extends HTMLElement {
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
     const hass = this._hass, kind = this._kind;
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
@@ -4605,6 +4805,11 @@ class ApplianceCardBase extends HTMLElement {
       if (active) return m.remaining ? lcdDuration(m.remaining) : "ON";
       return fmtClock(hass, new Date());
     }
+    if (kind === "wet_vacuum") {
+      if (m.status === "unavailable" || m.status === "off") return "--";
+      if (m.dirtyFull) return "FULL";
+      return m.batt != null ? `${Math.round(m.batt)}` : m.status === "wv_drying" ? "DRY" : "ON";
+    }
     if (kind === "dehumidifier") {
       if (m.status === "off") return "OFF";
       if (m.status === "tank_full") return "FULL";
@@ -4651,7 +4856,7 @@ class ApplianceCardBase extends HTMLElement {
   _render(m) {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying"].includes(m.status);
     this._fetchCycle(active);
     $("wrap").className = [
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
@@ -4729,6 +4934,17 @@ class ApplianceCardBase extends HTMLElement {
       const img = sr.querySelector(".gn-img");
       if (img && img.tagName.toLowerCase() === "image" && img.getAttribute("href") !== String(src).trim()) img.setAttribute("href", String(src).trim());
     }
+    if (kind === "wet_vacuum") {
+      // niveaux des réservoirs (capteur %, sinon plein / vide selon l'alerte), anneau de l'écran = batterie
+      const w = $("wrap");
+      w.style.setProperty("--clean", String(m.cleanPct != null ? Math.max(.04, m.cleanPct / 100) : m.cleanEmpty ? .06 : .7));
+      w.style.setProperty("--dirty", String(m.dirtyPct != null ? m.dirtyPct / 100 : m.dirtyFull ? .95 : m.status === "wv_cleaning" || m.status === "wv_selfclean" ? .35 : .15));
+      w.classList.toggle("wv-empty", !!m.cleanEmpty);
+      w.classList.toggle("wv-full", !!m.dirtyFull);
+      w.classList.toggle("wv-low", !!m.battLow);
+      const ring = sr.querySelector(".wv-ring");
+      if (ring) ring.style.strokeDasharray = m.status === "wv_selfclean" ? "" : `${m.batt != null ? Math.max(2, Math.min(100, m.batt)) : 100} 100`;
+    }
     if (kind === "dehumidifier") {
       // bac : plein si capteur, sinon un tiers
       $("wrap").style.setProperty("--lvl", m.tankFull ? "0.95" : "0.35");
@@ -4792,7 +5008,7 @@ class ApplianceCardBase extends HTMLElement {
     let statusTxt = m.phase ? tr(hass, `ph_${m.phase}`) : tr(hass, m.status);
     if (kind === "monitor" && m.status === "screen_on") statusTxt = tr(hass, mnCount(c) > 1 ? "monitors_on" : "monitor_on");
     if (m.main && ["sensor", "input_select", "select"].includes(domainOf(c.entity)) &&
-        active && !["fridge", "water_heater", "printer_3d", "pool_pump"].includes(kind)) {
+        active && !["fridge", "water_heater", "printer_3d", "pool_pump", "wet_vacuum"].includes(kind)) {
       const raw = String(m.main.state).toLowerCase();
       if (![...OFF_STATES, ...DONE_STATES, "on", "running", "run"].includes(raw)) statusTxt = stateText(hass, m.main);
     }
@@ -4871,7 +5087,7 @@ class ApplianceCardBase extends HTMLElement {
     // progress bar
     let pct = null;
     if (active && m.progress != null) pct = m.progress;
-    else if ((kind === "tool_charger" || kind === "phone_charger") && m.status === "charging" && m.batt != null) pct = m.batt;
+    else if (["tool_charger", "phone_charger", "wet_vacuum"].includes(kind) && m.status === "charging" && m.batt != null) pct = m.batt;
     else if (kind === "kettle" && m.status === "boiling" && m.tempVal != null) pct = ((m.tempVal - 15) / 85) * 100;
     else if ((kind === "oven" && m.status === "preheating") || (kind === "water_heater" && m.status !== "off")) {
       if (m.tempVal != null && m.targetVal) {
@@ -4956,6 +5172,12 @@ class ApplianceCardBase extends HTMLElement {
       if (m.tank) tile(m.tankFull ? "mdi:cup-water" : "mdi:cup-outline", tr(hass, m.tankFull ? "tank_full_short" : "tank_ok"), lb("tank"), c.tank_full, m.tankFull ? "warn" : "");
       if (m.fanSpeed && !BAD.includes(String(m.fanSpeed.state).toLowerCase())) tile("mdi:fan", domainOf(c.fan_speed) === "fan" ? `${fmtNum(hass, Number(m.fanSpeed.attributes.percentage) || 0, 0)} %` : stateText(hass, m.fanSpeed), lb("fan_speed"), c.fan_speed);
       if (m.dhMode) tile("mdi:tune-variant", m.dhMode, lb("mode"), c.mode || c.entity);
+    } else if (kind === "wet_vacuum") {
+      if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0)} %`, lb("battery"), c.battery_level, m.battLow ? "warn" : "");
+      const tank = (pct, alert, okKey, badKey) => (pct != null ? `${fmtNum(hass, pct, 0)} %` : tr(hass, alert ? badKey : okKey));
+      if (m.cleanW) tile("mdi:water", tank(m.cleanPct, m.cleanEmpty, "tank_ok", "tank_empty_short"), lb("clean_water"), c.clean_water, m.cleanEmpty ? "warn" : "");
+      if (m.dirtyW) tile("mdi:water-opacity", tank(m.dirtyPct, m.dirtyFull, "tank_ok", "tank_full_short"), lb("dirty_water"), c.dirty_water, m.dirtyFull ? "warn" : "");
+      if (m.mode && !BAD.includes(String(m.mode.state).toLowerCase())) tile("mdi:tune-variant", stateText(hass, m.mode), lb("mode"), c.mode);
     } else if (kind === "hob") {
       /* no extra tile */
     } else if (kind === "vmc") {
@@ -5071,6 +5293,8 @@ const SEL = {
   speed: { entity: { domain: ["sensor", "number", "input_number", "select"] } },
   target_humidity: { entity: { domain: ["sensor", "number", "input_number", "humidifier"] } },
   tank_full: { entity: { domain: ["binary_sensor", "input_boolean", "sensor"] } },
+  clean_water: { entity: { domain: ["sensor", "binary_sensor", "number", "input_number"] } },
+  dirty_water: { entity: { domain: ["sensor", "binary_sensor", "number", "input_number"] } },
   fan_speed: { entity: { domain: ["select", "input_select", "sensor", "number", "input_number", "fan"] } },
 };
 function buildForm(kind) {
@@ -5185,6 +5409,10 @@ function buildForm(kind) {
           ...(kind === "toaster" ? [
             { name: "ready_minutes", selector: { number: { min: 0, max: 30, step: 1, mode: "box", unit_of_measurement: "min" } } },
           ] : []),
+          ...(kind === "wet_vacuum" ? [
+            { name: "selfclean_threshold", selector: { number: { min: 5, max: 1000, step: 1, mode: "box", unit_of_measurement: "W" } } },
+            { name: "battery_low", selector: { number: { min: 0, max: 100, step: 1, mode: "box", unit_of_measurement: "%" } } },
+          ] : []),
           ...(kind === "dehumidifier" ? [
             { name: "humidity_max", selector: { number: { min: 40, max: 100, step: 1, mode: "box", unit_of_measurement: "%" } } },
           ] : []),
@@ -5249,7 +5477,18 @@ function stubFor(kind, hass) {
     if (tank) cfg.tank_full = tank;
     if (temp) cfg.temperature = temp;
   }
-  const batt = kind === "tool_charger" ? pick((i, st) => i.startsWith("sensor.") && dc(st) === "battery") : null;
+  if (kind === "wet_vacuum") {
+    // statut (vacuum ou capteur texte), réservoirs et mode
+    const st = pick((i) => i.startsWith("vacuum.")) || pick((i) => /^(sensor|select)\./.test(i) && /(status|statut|etat|state|mode_de_travail|work)/.test(i));
+    const cl = pick((i) => /^(sensor|binary_sensor)\./.test(i) && /(clean_water|eau_propre|clear_water|fresh_water|clean_tank)/.test(i));
+    const dt = pick((i) => /^(sensor|binary_sensor)\./.test(i) && /(dirty|sale|sewage|waste_water|dirty_tank)/.test(i));
+    const md = pick((i) => /^(select|sensor)\./.test(i) && /(mode|suction|aspiration|power_mode)/.test(i) && !/(status|statut)/.test(i));
+    if (st) cfg.entity = st;
+    if (cl) cfg.clean_water = cl;
+    if (dt) cfg.dirty_water = dt;
+    if (md) cfg.mode = md;
+  }
+  const batt = ["tool_charger", "wet_vacuum"].includes(kind) ? pick((i, st) => i.startsWith("sensor.") && dc(st) === "battery") : null;
   if (batt) cfg.battery_level = batt;
   if (!cfg.entity && !cfg.power && !cfg.switch && !cfg.temperature) cfg.power = "sensor.example_power";
   return cfg;
@@ -6411,6 +6650,69 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-power_strip .modes { grid-template-columns: repeat(auto-fit, minmax(48px, 1fr)); }
 .outlet-btn { font-weight: 600; }
 .outlet-btn:disabled { opacity: .45; cursor: default; }
+
+/* ---------- wet & dry vacuum (aspirateur laveur) ---------- */
+.k-wet_vacuum svg { overflow: visible; }
+.k-wet_vacuum .lcd { font-size: 5px; }
+/* niveaux : --clean et --dirty (0 à 1), posés par la carte */
+.wv-clean { transform: translateY(calc((1 - var(--clean, .7)) * 30px)); transition: transform .8s ease; }
+.wv-dirty-g { transform: translateY(calc((1 - var(--dirty, .2)) * 20px)); transition: transform .8s ease; }
+.wv-ring { stroke: #3ddc84; transition: stroke .3s, stroke-dasharray .6s; }
+.wv-btn { fill: #3a424b; }
+.wv-led { stroke: #3a424b; }
+.wv-bolt { fill: #6b737c; }
+.wv-tray { opacity: .25; }
+.wv-wet, .wv-drops, .wv-air, .wv-bub { opacity: 0; }
+.wv-dock { transition: opacity .6s; }
+.wv-unit { transform-box: view-box; transform-origin: 60px 127px; }
+
+/* lavage : la base disparaît, l'appareil va et vient, le rouleau tourne et mouille le sol */
+.k-wet_vacuum.st-wv_cleaning .wv-dock { opacity: 0; }
+.k-wet_vacuum.st-wv_cleaning .wv-unit { animation: wv-mop 3.2s ease-in-out infinite; }
+.k-wet_vacuum.st-wv_cleaning .wv-roll { animation: wv-roll .35s linear infinite; }
+.k-wet_vacuum.st-wv_cleaning .wv-led { stroke: #7fd0ff; filter: drop-shadow(0 0 1.6px #38a8ff); }
+.k-wet_vacuum.st-wv_cleaning .wv-btn { fill: #38a8ff; }
+.k-wet_vacuum.st-wv_cleaning .wv-wet { opacity: .55; animation: wv-wet 3.2s ease-in-out infinite; }
+.k-wet_vacuum.st-wv_cleaning .wv-drops { animation: wv-drop 1s ease-in infinite; }
+.k-wet_vacuum.st-wv_cleaning .wv-swirl, .k-wet_vacuum.st-wv_selfclean .wv-swirl { animation: wv-swirl 1.4s linear infinite; }
+.k-wet_vacuum.st-wv_cleaning .wv-ring { stroke: #38a8ff; }
+
+/* auto-nettoyage sur la base : rouleau rapide, eau et bulles dans le bac */
+.k-wet_vacuum.st-wv_selfclean .wv-roll { animation: wv-roll .2s linear infinite; }
+.k-wet_vacuum.st-wv_selfclean .wv-tray { opacity: .9; animation: ac-pulse 1.2s ease-in-out infinite; }
+.k-wet_vacuum.st-wv_selfclean .wv-bub { opacity: 1; }
+.k-wet_vacuum.st-wv_selfclean .wv-bub circle { animation: wv-bub 1.6s ease-out infinite; }
+.wv-bub circle:nth-child(2) { animation-delay: -.4s !important; } .wv-bub circle:nth-child(3) { animation-delay: -.9s !important; }
+.wv-bub circle:nth-child(4) { animation-delay: -1.2s !important; } .wv-bub circle:nth-child(5) { animation-delay: -.6s !important; }
+.k-wet_vacuum.st-wv_selfclean .wv-ring { stroke: #38d9ff; animation: wv-spin 1.2s linear infinite; }
+
+/* séchage à air chaud : ondes orange autour de la tête, rouleau lent */
+.k-wet_vacuum.st-wv_drying .wv-roll { animation: wv-roll 2.4s linear infinite; }
+.k-wet_vacuum.st-wv_drying .wv-air { opacity: 1; }
+.k-wet_vacuum.st-wv_drying .wv-air path { animation: wv-air 1.8s ease-in infinite; }
+.wv-air path:nth-child(2) { animation-delay: -.6s !important; } .wv-air path:nth-child(3) { animation-delay: -1.1s !important; } .wv-air path:nth-child(4) { animation-delay: -1.5s !important; }
+.k-wet_vacuum.st-wv_drying .wv-ring { stroke: #ff9f43; }
+
+/* charge : éclair et anneau vert qui pulse */
+.k-wet_vacuum.st-charging .wv-bolt { fill: #43e08a; filter: drop-shadow(0 0 1.4px #43e08a); animation: ac-pulse 1.2s ease-in-out infinite; }
+.k-wet_vacuum.st-charging .wv-ring { stroke: #43e08a; animation: ac-pulse 1.6s ease-in-out infinite; }
+.k-wet_vacuum.st-charged .wv-bolt { fill: #43e08a; }
+.k-wet_vacuum.st-off .lcd, .k-wet_vacuum.st-unavailable .lcd { fill: #24404f !important; }
+
+/* alertes : réservoir propre vide, bac sale plein, batterie faible */
+.k-wet_vacuum.wv-empty .wv-clean { fill: var(--ac-alert, #ff5252); }
+.k-wet_vacuum.wv-empty .wv-cl-frame, .k-wet_vacuum.wv-full .wv-ring, .k-wet_vacuum.wv-low .wv-ring { stroke: var(--ac-alert, #ff5252); }
+.k-wet_vacuum.wv-full .wv-dirty { fill: #7a5b3c; }
+.k-wet_vacuum.wv-full .lcd, .k-wet_vacuum.wv-low .lcd { fill: var(--ac-alert, #ff5252) !important; }
+
+@keyframes wv-mop { 0%, 100% { transform: translateX(-9px) rotate(-2deg); } 50% { transform: translateX(9px) rotate(2deg); } }
+@keyframes wv-roll { to { transform: translateX(5px); } }
+@keyframes wv-wet { 0%, 100% { opacity: .25; } 50% { opacity: .6; } }
+@keyframes wv-drop { 0% { opacity: 0; transform: translateY(-2px); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(3px); } }
+@keyframes wv-swirl { to { transform: translateX(-6px); } }
+@keyframes wv-bub { 0% { opacity: 0; transform: translateY(2px); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(-9px); } }
+@keyframes wv-spin { 0% { stroke-dasharray: 20 80; stroke-dashoffset: 0; } 100% { stroke-dasharray: 20 80; stroke-dashoffset: -100; } }
+@keyframes wv-air { 0% { opacity: 0; transform: translateY(4px); } 30% { opacity: .9; } 100% { opacity: 0; transform: translateY(-10px); } }
 `;
 
 /* ------------------------------------------------------------------ */

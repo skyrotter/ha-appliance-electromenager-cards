@@ -16,7 +16,7 @@ function card(kind,cfg,states,lang){const el=document.createElement(`appliance-$
 const has=(c,cls)=>c.wrap.classList.contains(cls);
 
 // registration
-const tags=['washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','fan','generic','tool-charger','ceiling-fan','dehumidifier','monitor','kettle','toaster','power-strip','phone-charger','piano','garland'];
+const tags=['washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','fan','generic','tool-charger','ceiling-fan','dehumidifier','monitor','kettle','toaster','power-strip','phone-charger','piano','garland','wet-vacuum'];
 tags.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 // card picker: every core card and every self-contained card listed exactly once
 const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','water-meter'];
@@ -225,7 +225,7 @@ c.el.hass=hassOf([mk('sensor.p',0,W)]); ok('toaster ready after toasting',has(c,
 c=card('toaster',{power:'sensor.p'},[mk('sensor.p',1,W)]); ok('toaster off',has(c,'st-off'),c.wrap.className);
 // multiprise / chargeur de téléphone / piano / guirlande
 c=card('power-strip',{switch:'switch.m',outlets:['switch.a','switch.b','switch.c']},[mk('switch.m','on'),mk('switch.a','on'),mk('switch.b','off'),mk('switch.c','on')]);
-ok('strip powered, 3 sockets, 2 on',has(c,'st-powered')&&c.sr.querySelectorAll('.ms-s').length===3&&c.sr.querySelectorAll('.ms-s.on').length===2&&/2 \/ 3/.test(c.sr.getElementById('stats').textContent),c.wrap.className+' '+c.sr.getElementById('stats').textContent);
+ok('strip powered, 3 sockets, 2 on',has(c,'st-powered')&&c.sr.querySelectorAll('.ms-s').length===3&&c.sr.querySelectorAll('.ms-s.on').length===2&&c.sr.querySelectorAll('.outlet-btn').length===3&&c.sr.querySelectorAll('.outlet-btn.on').length===2,c.wrap.className);
 c=card('power-strip',{power:'sensor.p'},[mk('sensor.p',0,W)]); ok('strip off, 4 sockets',has(c,'st-off')&&c.sr.querySelectorAll('.ms-s').length===4&&c.sr.querySelectorAll('.ms-s.plug').length===3,c.wrap.className);
 c=card('power-strip',{power:'sensor.p',sockets:6},[mk('sensor.p',40,W)]); ok('strip 6 sockets lit',has(c,'st-powered')&&c.sr.querySelectorAll('.ms-s.on').length===5,c.sr.querySelectorAll('.ms-s.on').length);
 c=card('phone-charger',{power:'sensor.p',battery_level:'sensor.b'},[mk('sensor.p',7.5,W),mk('sensor.b',68,{unit_of_measurement:'%'})]);
@@ -272,6 +272,14 @@ c=card('dehumidifier',{power:'sensor.p',fan_speed:'number.f'},[mk('sensor.p',220
 c=card('dehumidifier',{power:'sensor.p',humidity:'sensor.h',humidity_max:65},[mk('sensor.p',220,W),mk('sensor.h',80,{unit_of_measurement:'%',device_class:'humidity'})]); ok('dehumidifier humidity alert',has(c,'humid')&&/Humidité élevée/.test(c.txt()),c.wrap.className+' '+c.txt());
 c=card('dehumidifier',{switch:'switch.s',humidity:'sensor.h',target_humidity:'number.t'},[mk('switch.s','on'),mk('sensor.h',45,{unit_of_measurement:'%',device_class:'humidity'}),mk('number.t',50)]); ok('dehumidifier no power, humidity reached',has(c,'st-at_target'),c.wrap.className);
 // tool battery charger
+c=card('wet-vacuum',{entity:'sensor.s',battery_level:'sensor.b'},[mk('sensor.s','cleaning'),mk('sensor.b',72,{unit_of_measurement:'%'})]); ok('wet vacuum cleaning + lcd battery',has(c,'st-wv_cleaning')&&has(c,'active')&&c.lcd()==='72'&&/Lavage/.test(c.txt()),c.wrap.className+' '+c.lcd()+' '+c.txt());
+c=card('wet-vacuum',{entity:'sensor.s'},[mk('sensor.s','self_cleaning')]); ok('wet vacuum self-cleaning',has(c,'st-wv_selfclean')&&/Auto-nettoyage/.test(c.txt()),c.wrap.className);
+c=card('wet-vacuum',{entity:'sensor.s'},[mk('sensor.s','Séchage')]); ok('wet vacuum drying (French state)',has(c,'st-wv_drying'),c.wrap.className);
+c=card('wet-vacuum',{power:'sensor.p',battery_level:'sensor.b'},[mk('sensor.p',25,W),mk('sensor.b',40,{unit_of_measurement:'%'})]); ok('wet vacuum plug: charging',has(c,'st-charging'),c.wrap.className);
+c=card('wet-vacuum',{power:'sensor.p'},[mk('sensor.p',150,W)]); ok('wet vacuum plug: self-cleaning above 60 W',has(c,'st-wv_selfclean'),c.wrap.className);
+c=card('wet-vacuum',{power:'sensor.p',battery_level:'sensor.b'},[mk('sensor.p',1,W),mk('sensor.b',100,{unit_of_measurement:'%'})]); ok('wet vacuum plug: charged',has(c,'st-charged'),c.wrap.className);
+c=card('wet-vacuum',{entity:'vacuum.v',battery_level:'sensor.b'},[mk('vacuum.v','docked'),mk('sensor.b',60,{unit_of_measurement:'%'})]); ok('wet vacuum docked -> charging',has(c,'st-charging'),c.wrap.className);
+c=card('wet-vacuum',{entity:'sensor.s',clean_water:'binary_sensor.c',dirty_water:'sensor.d',battery_level:'sensor.b'},[mk('sensor.s','idle'),mk('binary_sensor.c','on'),mk('sensor.d',95,{unit_of_measurement:'%'}),mk('sensor.b',10,{unit_of_measurement:'%'})]); ok('wet vacuum alerts: clean empty, dirty full, low battery',has(c,'wv-empty')&&has(c,'wv-full')&&has(c,'wv-low')&&/propre vide/.test(c.txt())&&/sale plein/.test(c.txt())&&/Batterie faible/.test(c.txt())&&c.lcd()==='FULL',c.txt());
 c=card('tool-charger',{power:'sensor.p'},[mk('sensor.p',45,W)]); ok('charger charging + gauge loop',has(c,'st-charging')&&has(c,'seq')&&/En charge/.test(c.txt()),c.wrap.className+' '+c.txt());
 c=card('tool-charger',{power:'sensor.p'},[mk('sensor.p',1.8,W)]); ok('charger charged (maintenance)',has(c,'st-charged')&&c.sr.querySelectorAll('.tc-g.on').length===4,c.wrap.className);
 c=card('tool-charger',{power:'sensor.p'},[mk('sensor.p',0.3,W)]); ok('charger standby',has(c,'st-standby'),c.wrap.className);

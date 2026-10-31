@@ -253,7 +253,22 @@
     "cycle_cost": "Costul ciclului",
     "yesterday": "ieri",
     "f_last_cycle": "Afișează ultimul ciclu (început, sfârșit, durată, consum, cost)",
-    "f_price_per_kwh": "Preț pe kWh (costul ultimului ciclu)"
+    "f_price_per_kwh": "Preț pe kWh (costul ultimului ciclu)",
+    "wet_vacuum": "Aspirator de spălat",
+    "wv_cleaning": "Spălare",
+    "wv_selfclean": "Autocurățare",
+    "wv_drying": "Uscare",
+    "clean_water_empty": "Rezervor apă curată gol",
+    "dirty_water_full": "Rezervor apă murdară plin",
+    "battery_low": "Baterie descărcată",
+    "error": "Eroare",
+    "clean_water": "Apă curată",
+    "dirty_water": "Apă murdară",
+    "tank_empty_short": "Gol",
+    "f_clean_water": "Rezervor apă curată (% sau senzor binar)",
+    "f_dirty_water": "Rezervor apă murdară (% sau senzor binar)",
+    "f_selfclean_threshold": "Autocurățare peste (W, priza stației)",
+    "f_battery_low": "Baterie descărcată sub (%)"
   },
   "aquarium": {
     "power": "Putere",
