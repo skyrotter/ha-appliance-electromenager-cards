@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.53.1";
+const VERSION = "1.53.2";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -307,7 +307,8 @@ const STRINGS = {
     "f_battery_low": "Low battery below (%)",
     "f_hide_when_inactive": "Hide when inactive (no cycle, no alert)",
     "f_hide_delay": "Keep visible after the end (min)",
-    "f_cycle_gap": "Pause kept in the same cycle (min)"
+    "f_cycle_gap": "Pause kept in the same cycle (min)",
+    "f_hide_zero_power": "Hide power when it is 0"
   },
   "de": {
     "washer": "Waschmaschine",
@@ -602,7 +603,8 @@ const STRINGS = {
     "f_battery_low": "Akku schwach unter (%)",
     "f_hide_when_inactive": "Ausblenden, wenn inaktiv (kein Zyklus, kein Alarm)",
     "f_hide_delay": "Nach dem Ende sichtbar lassen (min)",
-    "f_cycle_gap": "Pause innerhalb eines Zyklus (min)"
+    "f_cycle_gap": "Pause innerhalb eines Zyklus (min)",
+    "f_hide_zero_power": "Leistung bei 0 ausblenden"
   },
   "fr": {
     "washer": "Lave-linge",
@@ -897,7 +899,8 @@ const STRINGS = {
     "f_battery_low": "Batterie faible sous (%)",
     "f_hide_when_inactive": "Masquer quand l'appareil est inactif (ni cycle, ni alerte)",
     "f_hide_delay": "Garder visible après la fin (min)",
-    "f_cycle_gap": "Pause tolérée dans un même cycle (min)"
+    "f_cycle_gap": "Pause tolérée dans un même cycle (min)",
+    "f_hide_zero_power": "Masquer la puissance quand elle est à 0"
   },
   "nb": {
     "f_illustration_size": "Størrelse på illustrasjonen",
@@ -1192,7 +1195,8 @@ const STRINGS = {
     "f_battery_low": "Lavt batteri under (%)",
     "f_hide_when_inactive": "Skjul når inaktiv (ingen syklus, ingen varsel)",
     "f_hide_delay": "Behold synlig etter slutt (min)",
-    "f_cycle_gap": "Pause innen samme syklus (min)"
+    "f_cycle_gap": "Pause innen samme syklus (min)",
+    "f_hide_zero_power": "Skjul effekt når den er 0"
   },
   "nl": {
     "washer": "Wasmachine",
@@ -1487,7 +1491,8 @@ const STRINGS = {
     "f_battery_low": "Batterij bijna leeg onder (%)",
     "f_hide_when_inactive": "Verbergen als inactief (geen cyclus, geen alarm)",
     "f_hide_delay": "Zichtbaar houden na het einde (min)",
-    "f_cycle_gap": "Pauze binnen dezelfde cyclus (min)"
+    "f_cycle_gap": "Pauze binnen dezelfde cyclus (min)",
+    "f_hide_zero_power": "Vermogen verbergen als het 0 is"
   },
   "ro": {
     "washer": "Mașină de spălat rufe",
@@ -1782,7 +1787,8 @@ const STRINGS = {
     "f_battery_low": "Baterie descărcată sub (%)",
     "f_hide_when_inactive": "Ascunde când este inactiv (niciun ciclu, nicio alertă)",
     "f_hide_delay": "Păstrează vizibil după terminare (min)",
-    "f_cycle_gap": "Pauză tolerată în același ciclu (min)"
+    "f_cycle_gap": "Pauză tolerată în același ciclu (min)",
+    "f_hide_zero_power": "Ascunde puterea când este 0"
   },
   "ru": {
     "washer": "Стиральная машина",
@@ -2077,7 +2083,8 @@ const STRINGS = {
     "f_battery_low": "Низкий заряд ниже (%)",
     "f_hide_when_inactive": "Скрывать в простое (нет цикла и тревог)",
     "f_hide_delay": "Показывать после окончания (мин)",
-    "f_cycle_gap": "Пауза внутри одного цикла (мин)"
+    "f_cycle_gap": "Пауза внутри одного цикла (мин)",
+    "f_hide_zero_power": "Скрывать мощность, когда она равна 0"
   }
 };
 const lang = (hass) => {
@@ -5578,8 +5585,10 @@ class ApplianceCardBase extends HTMLElement {
     else if (m.soon && active) tile("mdi:timer-sand-complete", tr(hass, "almost_done"), lb("remaining"), c.power);
     const solar = kind === "solar";
     const dual = kind === "water_heater" && (m.pwS || m.energyS);
-    if (m.pw && c.show_power !== false) tile(solar ? "mdi:solar-power" : "mdi:flash", fmtPower(hass, m.pw) ?? "—", lb(solar ? "production" : dual ? "grid" : "power"), c.power);
-    if (m.pwS) tile("mdi:solar-power", fmtPower(hass, m.pwS) ?? "—", lb("solar_surplus"), c.power_solar);
+    // hide_zero_power (activé par défaut) : tuiles de puissance masquées quand elles valent 0 (moins de 1 W), ex. chauffe-eau au repos
+    const zero = (st) => c.hide_zero_power !== false && Math.abs(powerW(st) ?? 0) < 1;
+    if (m.pw && c.show_power !== false && !zero(m.pw)) tile(solar ? "mdi:solar-power" : "mdi:flash", fmtPower(hass, m.pw) ?? "—", lb(solar ? "production" : dual ? "grid" : "power"), c.power);
+    if (m.pwS && !zero(m.pwS)) tile("mdi:solar-power", fmtPower(hass, m.pwS) ?? "—", lb("solar_surplus"), c.power_solar);
     // display : "energy" (kWh seuls), "cost" (€ seuls, si price_per_kwh est valide), sinon les deux
     const pr = typeof c.price_per_kwh === "string" ? num(hass.states[c.price_per_kwh]) : Number(c.price_per_kwh);
     const hasPr = c.price_per_kwh != null && c.price_per_kwh !== "" && Number.isFinite(pr);
@@ -5773,6 +5782,7 @@ function buildForm(kind) {
             { name: "warm_threshold", selector: { number: { min: 0, max: 300, step: 1, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
           { name: "show_power", selector: { boolean: {} }, default: true },
+          { name: "hide_zero_power", selector: { boolean: {} }, default: true },
           ...(["radiator", "towel_dryer"].includes(kind) ? [{ name: "show_modes", selector: { boolean: {} }, default: true }] : []),
           ...(kind === "server_rack" ? [
             { name: "max_power", selector: { number: { min: 50, max: 3000, step: 10, mode: "box", unit_of_measurement: "W" } } },

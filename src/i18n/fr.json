@@ -292,7 +292,8 @@
     "f_battery_low": "Batterie faible sous (%)",
     "f_hide_when_inactive": "Masquer quand l'appareil est inactif (ni cycle, ni alerte)",
     "f_hide_delay": "Garder visible après la fin (min)",
-    "f_cycle_gap": "Pause tolérée dans un même cycle (min)"
+    "f_cycle_gap": "Pause tolérée dans un même cycle (min)",
+    "f_hide_zero_power": "Masquer la puissance quand elle est à 0"
   },
   "aquarium": {
     "power": "Puissance",

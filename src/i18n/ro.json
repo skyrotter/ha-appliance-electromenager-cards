@@ -292,7 +292,8 @@
     "f_battery_low": "Baterie descărcată sub (%)",
     "f_hide_when_inactive": "Ascunde când este inactiv (niciun ciclu, nicio alertă)",
     "f_hide_delay": "Păstrează vizibil după terminare (min)",
-    "f_cycle_gap": "Pauză tolerată în același ciclu (min)"
+    "f_cycle_gap": "Pauză tolerată în același ciclu (min)",
+    "f_hide_zero_power": "Ascunde puterea când este 0"
   },
   "aquarium": {
     "power": "Putere",

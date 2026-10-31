@@ -292,7 +292,8 @@
 "f_battery_low": "Lavt batteri under (%)",
 "f_hide_when_inactive": "Skjul når inaktiv (ingen syklus, ingen varsel)",
 "f_hide_delay": "Behold synlig etter slutt (min)",
-"f_cycle_gap": "Pause innen samme syklus (min)"
+"f_cycle_gap": "Pause innen samme syklus (min)",
+"f_hide_zero_power": "Skjul effekt når den er 0"
 },
 "aquarium": {
 "power": "Effekt",
