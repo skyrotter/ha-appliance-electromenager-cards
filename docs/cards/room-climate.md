@@ -53,7 +53,7 @@
 | `tap_action` | `history` (pop-up, default), `more-info`, `navigate` (with `navigation_path`), `none` |
 | `color_comfort`, `color_cool`, `color_warm`, `color_humidity`, `color_dry`, `color_alert` | custom colours (colour picker or CSS colour) |
 | `temperature_unit` | `C` or `F` (default: Home Assistant's unit); thresholds are in this unit |
-| `show_status`, `show_outdoor`, `show_dew_point`, `show_advice`, `show_graph`, `animations`, `labels`, `language`, `illustration_size`, `transparent` | |
+| `show_status`, `show_outdoor`, `show_dew_point`, `show_advice`, `show_graph`, `show_trend` (▲ / ▼ / = stable), `animations`, `labels`, `language`, `illustration_size`, `transparent` | |
 
 ```yaml
 type: custom:appliance-room-climate-card

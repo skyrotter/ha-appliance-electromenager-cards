@@ -844,7 +844,8 @@
     "color_warm": "Colour: warm",
     "color_humidity": "Colour: humidity",
     "color_dry": "Colour: dry",
-    "color_alert": "Colour: alert"
+    "color_alert": "Colour: alert",
+    "show_trend": "Show the trend (1 h)"
   },
   "light": {
     "light_bulb": "Bulb",

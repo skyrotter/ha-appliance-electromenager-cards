@@ -286,6 +286,10 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c=card('room-climate',base,[TH('sensor.t',21),HU('sensor.h',50)]); rc(c).click();
  {const d=document.querySelector('appliance-room-climate-dialog'); ok('room climate pop-up opens',!!d&&d.shadowRoot.querySelectorAll('[data-d]').length===3&&d.shadowRoot.querySelector('[data-d="7"]').classList.contains('on')&&d.shadowRoot.querySelector('[data-m="both"]').classList.contains('on'),'no dialog');
   ok('room climate pop-up without recorder',/Aucun historique/.test(d&&d.shadowRoot.getElementById('chart').textContent),d&&d.shadowRoot.getElementById('chart').textContent); d&&d.remove();}
+ // show_trend: false masque « = stable », transparent masque le halo coloré
+ c=card('room-climate',{...base,style:'gauge',show_trend:false,transparent:true},[TH('sensor.t',19),HU('sensor.h',51)]);
+ ok('room climate show_trend false hides the trend',c.sr.getElementById('trend').hidden,'shown');
+ ok('room climate transparent hides the halo',getComputedStyle(c.sr.querySelector('.halo')).display==='none',getComputedStyle(c.sr.querySelector('.halo')).display);
  // 12 styles : chacun s'affiche, garde les valeurs, l'icône de la pièce et les alertes
  for(const st of ['standard','gauge','gradient','minimal','lcd','tile','thermometer','gradient_ring','double_ring','dial','neon','bars']){
   try{c=card('room-climate',{...base,style:st,icon:'mdi:sofa',alert_temp_max:24},[TH('sensor.t',24.5),HU('sensor.h',52)]);

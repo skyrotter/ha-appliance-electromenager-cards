@@ -844,7 +844,8 @@
     "color_warm": "Couleur : chaud",
     "color_humidity": "Couleur : humidité",
     "color_dry": "Couleur : sec",
-    "color_alert": "Couleur : alerte"
+    "color_alert": "Couleur : alerte",
+    "show_trend": "Afficher la tendance (1 h)"
   },
   "light": {
     "light_bulb": "Ampoule",

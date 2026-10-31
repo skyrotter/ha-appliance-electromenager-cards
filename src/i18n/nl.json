@@ -844,7 +844,8 @@
     "color_warm": "Kleur: warm",
     "color_humidity": "Kleur: luchtvochtigheid",
     "color_dry": "Kleur: droog",
-    "color_alert": "Kleur: alarm"
+    "color_alert": "Kleur: alarm",
+    "show_trend": "Trend tonen (1 u)"
   },
   "light": {
     "light_bulb": "Lamp",
