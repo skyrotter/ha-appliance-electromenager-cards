@@ -85,6 +85,18 @@ const log = (msg) => { const d = document.createElement('div'); d.textContent = 
 
 const hass = () => ({
   states: { ...states }, language: lang, locale: { language: lang }, config: {},
+  // historique simulé (pop-up « Climat de la pièce ») : variation jour / nuit autour de la valeur actuelle
+  callWS(msg) {
+    const s0 = Date.parse(msg.start_time), e0 = Date.parse(msg.end_time), out = {};
+    const sim = (id, step) => { const cur = parseFloat(states[id]?.state), hum = /humid/.test(id), pts = [];
+      if (!Number.isFinite(cur)) return pts;
+      for (let t = s0, k = 0; t < e0; t += step, k++) { const dl = Math.sin(((new Date(t).getHours() - 9) / 24) * 2 * Math.PI);
+        pts.push({ t, v: hum ? cur - dl * 5 + Math.sin(k * 0.7) * 2 : cur + dl * 1.3 + Math.sin(k / 40) * 0.6 }); }
+      return pts; };
+    if (msg.type === 'recorder/statistics_during_period') msg.statistic_ids.forEach((id) => { out[id] = sim(id, 3600e3).map((p) => ({ start: p.t, mean: p.v, min: p.v - 0.4, max: p.v + 0.4 })); });
+    else if (msg.type === 'history/history_during_period') msg.entity_ids.forEach((id) => { out[id] = sim(id, 600e3).map((p) => ({ s: p.v.toFixed(1), lu: p.t / 1000 })); });
+    return Promise.resolve(out);
+  },
   callService(domain, service, data) {
     log(`callService ${domain}.${service} ${data.entity_id}`);
     const cur = states[data.entity_id];
@@ -539,6 +551,17 @@ const SCEN = [
       set('sensor.water_today', 212, { unit_of_measurement: 'L' });
       set('valve.water_main', 'open');
       checks(ctl, [['Fuite', 'binary_sensor.water_leak', false]]);
+    } },
+  { kind: 'room-climate', title: 'Climat de la pièce', lang: true,
+    cfg: { name: 'Salon', entity_temperature: 'sensor.room_temp', entity_humidity: 'sensor.room_humidity', entity_outdoor_temperature: 'sensor.outdoor_temp',
+      entity_outdoor_humidity: 'sensor.outdoor_humidity', entity_window: 'binary_sensor.room_window', entity_battery: 'sensor.room_sensor_battery', alert_temp_max: 28 },
+    build(ctl) {
+      range(ctl, 'Température', 'sensor.room_temp', 10, 32, 0.1, 21.4, '°C', T);
+      range(ctl, 'Humidité', 'sensor.room_humidity', 20, 95, 1, 48, '%', { unit_of_measurement: '%', device_class: 'humidity' });
+      range(ctl, 'Temp. extérieure', 'sensor.outdoor_temp', -10, 38, 0.5, 8, '°C', T);
+      range(ctl, 'Humidité extérieure', 'sensor.outdoor_humidity', 20, 100, 1, 80, '%', { unit_of_measurement: '%', device_class: 'humidity' });
+      range(ctl, 'Batterie capteur', 'sensor.room_sensor_battery', 0, 100, 1, 80, '%', { unit_of_measurement: '%', device_class: 'battery' });
+      checks(ctl, [['Fenêtre ouverte', 'binary_sensor.room_window', false]]);
     } },
   { kind: 'linky', title: 'Compteur Linky', lang: true,
     cfg: { entity_power: 'sensor.linky_sinsts', entity_hp: 'sensor.linky_hp', entity_hc: 'sensor.linky_hc', entity_cost: 'sensor.linky_cost', subscribed_power: 9, hc_ranges: '01:00-07:00,12:30-14:30' },
