@@ -910,6 +910,16 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
   ok('energy_period: failure falls back to the counter',/1.235 kWh/.test(txt(c3))&&/Énergie/.test(txt(c3)),txt(c3));
   ok('no energy_period: counter',/1.235 kWh/.test(txt(c4))&&calls.length===3,txt(c4)+' '+calls.length);
  },300);}
+// display: energy / cost — period cost replaces the kWh tile in cost mode, kWh kept without a valid price
+{const mkd=(display,price)=>{const c=card('dishwasher',{power:'sensor.p',energy:'sensor.e',energy_period:'day',price_per_kwh:price,display},[mk('sensor.p',600,W),mk('sensor.e',1234.5,{unit_of_measurement:'kWh',state_class:'total_increasing'})]);c.h.callWS=()=>Promise.resolve({change:2});c.el.hass={...c.h,states:{...c.h.states}};return c;};
+ const d1=mkd('cost',0.25), d2=mkd('energy',0.25), d3=mkd('cost',undefined), d4=mkd(undefined,0.25);
+ setTimeout(()=>{
+  const txt=(c)=>c.sr.getElementById('stats').textContent.replace(/\s+/g,' ');
+  ok('display cost: period cost, no kWh',/0,50/.test(txt(d1))&&/Coût du jour/.test(txt(d1))&&!/ 2 kWh/.test(txt(d1)),txt(d1));
+  ok('display energy: kWh, no cost',/ 2 kWh/.test(txt(d2))&&!/Coût/.test(txt(d2)),txt(d2));
+  ok('display cost without price: kWh kept',/ 2 kWh/.test(txt(d3)),txt(d3));
+  ok('default display: unchanged',/ 2 kWh/.test(txt(d4))&&!/Coût du jour/.test(txt(d4)),txt(d4));
+ },300);}
 // climate / water_heater entity used as temperature or setpoint (state is a mode, values in attributes) — issue #94
 {const D=mk('climate.daikin','off',{current_temperature:20,temperature:25});
  const txt=(c)=>c.sr.getElementById('stats').textContent.replace(/\s+/g,' ');

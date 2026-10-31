@@ -1082,9 +1082,21 @@ class ApplianceCardBase extends HTMLElement {
     const dual = kind === "water_heater" && (m.pwS || m.energyS);
     if (m.pw && c.show_power !== false) tile(solar ? "mdi:solar-power" : "mdi:flash", fmtPower(hass, m.pw) ?? "—", lb(solar ? "production" : dual ? "grid" : "power"), c.power);
     if (m.pwS) tile("mdi:solar-power", fmtPower(hass, m.pwS) ?? "—", lb("solar_surplus"), c.power_solar);
+    // display : "energy" (kWh seuls), "cost" (€ seuls, si price_per_kwh est valide), sinon les deux
+    const pr = typeof c.price_per_kwh === "string" ? num(hass.states[c.price_per_kwh]) : Number(c.price_per_kwh);
+    const hasPr = c.price_per_kwh != null && c.price_per_kwh !== "" && Number.isFinite(pr);
+    const prEnt = typeof c.price_per_kwh === "string" ? c.price_per_kwh : null;
+    const showKwh = !(c.display === "cost" && hasPr), showCost = hasPr && c.display !== "energy";
+    const money = (x) => {
+      const cur = (hass.config && hass.config.currency) || "EUR";
+      try { return new Intl.NumberFormat(loc(hass), { style: "currency", currency: cur, minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x); }
+      catch (e) { return `${fmtNum(hass, x, 2, 2)} ${cur}`; }
+    };
     const per = ["day", "week", "month"].includes(c.energy_period) && this._perKwh != null ? c.energy_period : null;
     if (m.energy && per && !dual && !solar) {
-      tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.energy);
+      if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.energy);
+      // coût de la période (mode € ou les deux) : conso de la période × prix du kWh actuel
+      if (showCost && c.display === "cost") tile("mdi:cash", money(this._perKwh * pr), tr(hass, `cost_${per}`), prEnt || c.energy);
     } else if (m.energy) {
       const eVal = fmtEnergy(hass, m.energy) ?? "—";
       const yp = m.energy.attributes && m.energy.attributes.last_period;
@@ -1107,16 +1119,9 @@ class ApplianceCardBase extends HTMLElement {
       else if (ago > 1) { try { day = ` · ${s0.toLocaleDateString(loc(hass), { day: "numeric", month: "short" })}`; } catch (e) { day = ` · ${s0.getDate()}/${s0.getMonth() + 1}`; } }
       tile("mdi:history", `${fmtClock(hass, s0)} → ${fmtClock(hass, s1)}`, `${lb("last_cycle")}${day}`, c.power);
       tile("mdi:timer-outline", fmtDuration((cy.end - cy.start) / 60000), lb("cycle_duration"), c.power);
-      tile("mdi:lightning-bolt", `${fmtNum(hass, cy.kwh, 2)} kWh`, lb("cycle_energy"), c.energy || c.power);
+      if (showKwh) tile("mdi:lightning-bolt", `${fmtNum(hass, cy.kwh, 2)} kWh`, lb("cycle_energy"), c.energy || c.power);
       // prix du kWh : nombre, ou entité (tarif) ; devise de Home Assistant
-      const pr = typeof c.price_per_kwh === "string" ? num(hass.states[c.price_per_kwh]) : Number(c.price_per_kwh);
-      if (c.price_per_kwh != null && c.price_per_kwh !== "" && Number.isFinite(pr)) {
-        const cur = (hass.config && hass.config.currency) || "EUR";
-        let v;
-        try { v = new Intl.NumberFormat(loc(hass), { style: "currency", currency: cur, minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(cy.kwh * pr); }
-        catch (e) { v = `${fmtNum(hass, cy.kwh * pr, 2, 2)} ${cur}`; }
-        tile("mdi:cash", v, lb("cycle_cost"), typeof c.price_per_kwh === "string" ? c.price_per_kwh : c.energy || c.power);
-      }
+      if (showCost) tile("mdi:cash", money(cy.kwh * pr), lb("cycle_cost"), prEnt || c.energy || c.power);
     }
     if (solar && m.status !== "night" && m.frac != null && m.pw && !BAD.includes(String(m.pw.state).toLowerCase())) tile("mdi:white-balance-sunny", `${Math.round(m.frac * 100)} %`, lb("of_peak"), c.power);
     $("stats").innerHTML = tiles.join("");

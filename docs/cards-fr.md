@@ -99,6 +99,8 @@ energy_period: day
 
 **Dernier cycle** (lave-linge, sèche-linge, lave-vaisselle) : `last_cycle: true` affiche entre deux cycles les tuiles du **dernier cycle** : heure de début → fin (avec « hier » ou la date si ce n'était pas aujourd'hui), durée, conso et, avec `price_per_kwh`, son coût. La carte les calcule à partir de l'historique de `power` (4 derniers jours) : pas de helper, d'automatisation ni de capteur template. Un creux sous `threshold` plus court que `cycle_gap` (**15 min** par défaut) reste dans le même cycle (trempage, séchage). La conso est l'écart du compteur `energy` sur le cycle, sinon l'intégrale de la puissance. `price_per_kwh` accepte un nombre ou une entité de tarif ; le coût est dans la devise de Home Assistant.
 
+**kWh ou €** : `display: energy` n'affiche que les kWh (pas de coût du cycle) ; `display: cost` n'affiche que les coûts : la conso du cycle disparaît et, avec `energy_period`, la tuile de la période devient « Coût du jour / de la semaine / du mois » (conso × `price_per_kwh`). Sans prix valide, les kWh restent affichés. Par défaut, les deux.
+
 ```yaml
 type: custom:appliance-dishwasher-card
 power: sensor.prise_lave_vaisselle_puissance
