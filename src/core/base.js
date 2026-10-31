@@ -1205,8 +1205,8 @@ class ApplianceCardBase extends HTMLElement {
     else if (m.soon && active) tile("mdi:timer-sand-complete", tr(hass, "almost_done"), lb("remaining"), c.power);
     const solar = kind === "solar";
     const dual = kind === "water_heater" && (m.pwS || m.energyS);
-    // hide_zero_power : tuiles de puissance masquées quand elles valent 0 (moins de 1 W), ex. chauffe-eau au repos
-    const zero = (st) => c.hide_zero_power && Math.abs(powerW(st) ?? 0) < 1;
+    // hide_zero_power (activé par défaut) : tuiles de puissance masquées quand elles valent 0 (moins de 1 W), ex. chauffe-eau au repos
+    const zero = (st) => c.hide_zero_power !== false && Math.abs(powerW(st) ?? 0) < 1;
     if (m.pw && c.show_power !== false && !zero(m.pw)) tile(solar ? "mdi:solar-power" : "mdi:flash", fmtPower(hass, m.pw) ?? "—", lb(solar ? "production" : dual ? "grid" : "power"), c.power);
     if (m.pwS && !zero(m.pwS)) tile("mdi:solar-power", fmtPower(hass, m.pwS) ?? "—", lb("solar_surplus"), c.power_solar);
     // display : "energy" (kWh seuls), "cost" (€ seuls, si price_per_kwh est valide), sinon les deux

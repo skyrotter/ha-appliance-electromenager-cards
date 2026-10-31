@@ -108,7 +108,9 @@ c=card('tv',{entity:'media_player.tv'},[mk('media_player.tv','playing',{app_name
 c=card('tv',{entity:'media_player.tv'},[mk('media_player.tv','off')]); ok('tv media_player off',has(c,'st-off'),c.wrap.className);
 // water heater: grid power + solar router power
 c=card('water-heater',{power:'sensor.g',power_solar:'sensor.s',energy:'sensor.eg',energy_solar:'sensor.es'},[mk('sensor.g',0,W),mk('sensor.s',1200,W),mk('sensor.eg',2,{unit_of_measurement:'kWh'}),mk('sensor.es',3,{unit_of_measurement:'kWh'})]); ok('water heater solar only -> heating + solar-heat',has(c,'st-heating')&&has(c,'solar-heat')&&/Surplus solaire/.test(c.txt()),c.wrap.className+' '+c.txt());
-ok('water heater dual tiles',/Réseau/.test(c.sr.getElementById('stats').textContent)&&/Énergie solaire/.test(c.sr.getElementById('stats').textContent),c.sr.getElementById('stats').textContent);
+ok('water heater dual tiles (grid power at 0 W hidden by default)',!/^\s*0 W/m.test(c.sr.getElementById('stats').textContent)&&/Énergie réseau/.test(c.sr.getElementById('stats').textContent)&&/Énergie solaire/.test(c.sr.getElementById('stats').textContent),c.sr.getElementById('stats').textContent);
+c=card('water-heater',{power:'sensor.g',power_solar:'sensor.s',energy:'sensor.eg',energy_solar:'sensor.es'},[mk('sensor.g',800,W),mk('sensor.s',1200,W),mk('sensor.eg',2,{unit_of_measurement:'kWh'}),mk('sensor.es',3,{unit_of_measurement:'kWh'})]);
+ok('water heater dual tiles: grid power shown when it draws',/Réseau/.test(c.sr.getElementById('stats').textContent)&&/Surplus solaire/.test(c.sr.getElementById('stats').textContent),c.sr.getElementById('stats').textContent);
 // energy tiles always in kWh (Wh / MWh converted, no decimals from 1000 kWh)
 const stx=(c)=>c.sr.getElementById('stats').textContent.replace(/\s/g,'');
 c=card('water-heater',{power:'sensor.g',energy:'sensor.eg',energy_solar:'sensor.es'},[mk('sensor.g',0,W),mk('sensor.eg',2055340.88,{unit_of_measurement:'Wh',device_class:'energy'}),mk('sensor.es',12.724874,{unit_of_measurement:'MWh',device_class:'energy'})]);
@@ -353,9 +355,9 @@ for(const t of ['aquarium','battery','ev-charger','linky','pellet-boiler','robot
  g=clicks('linky',{entity_power:'sensor.lp',entity_hp:'sensor.hp',entity_hc:'sensor.hc'},[mk('sensor.lp',2300,{unit_of_measurement:'VA'}),mk('sensor.hp',12000,{unit_of_measurement:'kWh'}),mk('sensor.hc',8000,{unit_of_measurement:'kWh'})],'.lcd, #gaugebox svg'); ok('Linky screen and gauge open more-info',g==='sensor.lp,sensor.lp',g);
  const S=customElements.get('appliance-robot-vacuum-solo-card').getStubConfig(hassOf([mk('vacuum.roborock','docked')])); ok('robot vacuum stub picks a vacuum',S.entity==='vacuum.roborock',JSON.stringify(S));}
 // hide_zero_power : tuile puissance masquée à 0 W, affichée dès que l'appareil consomme
-c=card('water-heater',{power:'sensor.p',hide_zero_power:true},[mk('sensor.p',0,W)]); ok('hide_zero_power: no power tile at 0 W',!/Puissance/.test(c.sr.getElementById('stats').textContent),c.sr.getElementById('stats').textContent);
+c=card('water-heater',{power:'sensor.p'},[mk('sensor.p',0,W)]); ok('hide_zero_power (default): no power tile at 0 W',!/Puissance/.test(c.sr.getElementById('stats').textContent),c.sr.getElementById('stats').textContent);
 c=card('water-heater',{power:'sensor.p',hide_zero_power:true},[mk('sensor.p',2000,W)]); ok('hide_zero_power: power tile while heating',/Puissance/.test(c.sr.getElementById('stats').textContent),c.sr.getElementById('stats').textContent);
-c=card('water-heater',{power:'sensor.p'},[mk('sensor.p',0,W)]); ok('without hide_zero_power the 0 W tile stays',/Puissance/.test(c.sr.getElementById('stats').textContent),c.sr.getElementById('stats').textContent);
+c=card('water-heater',{power:'sensor.p',hide_zero_power:false},[mk('sensor.p',0,W)]); ok('hide_zero_power: false keeps the 0 W tile',/Puissance/.test(c.sr.getElementById('stats').textContent),c.sr.getElementById('stats').textContent);
 c=card('vmc',{entity:'fan.v',animations:true},[mk('fan.v','on')]); ok('animations: true forces animations (reduced motion)',has(c,'force-anim'),c.wrap.className);
 c=card('vmc',{entity:'fan.v'},[mk('fan.v','on')]); ok('animations unset follows the system setting',!has(c,'force-anim'),c.wrap.className);
 // déshumidificateur
@@ -1058,7 +1060,7 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
  const il=(c)=>c.sr.querySelector('.illus');
  let c=card('washer',{entity:'input_boolean.run',power:'sensor.p',switch:'switch.s'},[mk('input_boolean.run','off'),mk('sensor.p',0,W),mk('switch.s','on')]); let e=ev(c); il(c).click();
  ok('tap default: more-info of entity',e.length===1&&e[0][0]==='hass-more-info'&&e[0][1].entityId==='input_boolean.run'&&!c.h.calls.length,JSON.stringify(e));
- c=card('washer',{power:'sensor.p',switch:'switch.s',tap_action:{action:'toggle'}},[mk('sensor.p',0,W),mk('switch.s','on')]); e=ev(c); il(c).click();
+ c=card('washer',{power:'sensor.p',switch:'switch.s',tap_action:{action:'toggle'},hide_zero_power:false},[mk('sensor.p',0,W),mk('switch.s','on')]); e=ev(c); il(c).click();
  ok('tap toggle: switch toggled, no more-info',JSON.stringify(c.h.calls[0])==='["switch","toggle",{"entity_id":"switch.s"}]'&&!e.length,JSON.stringify(c.h.calls)+JSON.stringify(e));
  c=card('washer',{power:'sensor.p',switch:'switch.s',tap_action:{action:'toggle'}},[mk('sensor.p',600,W),mk('switch.s','on')]); il(c).click();
  {const armed=!c.h.calls.length&&/Cycle en cours/.test(c.sr.getElementById('actions').textContent); il(c).click(); ok('tap toggle mid-cycle: needs confirmation',armed&&c.h.calls.length===1,JSON.stringify(c.h.calls));}
@@ -1068,7 +1070,7 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
  ok('tap navigate: hass-action',e.length===1&&e[0][0]==='hass-action'&&e[0][1].config.tap_action.navigation_path==='/lovelace/1',JSON.stringify(e));
  c=card('washer',{power:'sensor.p',tap_action:{action:'none'}},[mk('sensor.p',0,W)]); e=ev(c); il(c).click();
  ok('tap none: nothing',!e.length,JSON.stringify(e));
- c=card('washer',{power:'sensor.p',switch:'switch.s',tap_action:{action:'toggle'}},[mk('sensor.p',0,W),mk('switch.s','on')]); e=ev(c); c.sr.querySelector('.stats .tile,[data-entity]')?.click();
+ c=card('washer',{power:'sensor.p',switch:'switch.s',tap_action:{action:'toggle'},hide_zero_power:false},[mk('sensor.p',0,W),mk('switch.s','on')]); e=ev(c); c.sr.querySelector('.stats .tile,[data-entity]')?.click();
  ok('stat tile keeps more-info',e.length===1&&e[0][0]==='hass-more-info'&&!c.h.calls.length,JSON.stringify(e));
  const ch=card('washer',{power:'sensor.p',switch:'switch.s',hold_action:{action:'more-info'},tap_action:{action:'toggle'}},[mk('sensor.p',0,W),mk('switch.s','on')]); const eh=ev(ch);
  il(ch).dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,button:0}));
