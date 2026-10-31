@@ -78,6 +78,10 @@ function buildForm(kind) {
             { name: "last_cycle", selector: { boolean: {} } },
             { name: "estimate", selector: { boolean: {} } },
           ] : []),
+          ...(kind === "water_heater" ? [{ name: "last_cycle", selector: { boolean: {} } }] : []),
+          ...(["washer", "dryer", "dishwasher", "water_heater"].includes(kind) ? [
+            { name: "cycle_gap", selector: { number: { min: 0, max: 240, step: 1, mode: "box", unit_of_measurement: "min" } } },
+          ] : []),
           ...(d.fields.includes("energy") ? [{ name: "energy_period", selector: { select: { mode: "dropdown", options: [
             { value: "", label: tr(null, "energy") }, ...PERIODS.map((value) => ({ value, label: tr(null, `energy_${value}`) }))] } } }] : []),
           ...(d.fields.includes("energy") || ["washer", "dryer", "dishwasher"].includes(kind) ? [
@@ -88,6 +92,8 @@ function buildForm(kind) {
           { name: "illustration_size", selector: { number: { min: 30, max: 300, step: 5, mode: "slider", unit_of_measurement: "%" } } },
           { name: "transparent", selector: { boolean: {} } },
           { name: "animations", selector: { boolean: {} }, default: true },
+          { name: "hide_when_inactive", selector: { boolean: {} } },
+          { name: "hide_delay", selector: { number: { min: 0, max: 1440, step: 1, mode: "box", unit_of_measurement: "min" } } },
           ...(kind === "generic" ? [{ name: "image", selector: { text: {} } }, { name: "images", selector: { object: {} } }] : []),
           ...(kind === "printer_3d" ? [
             { name: "nozzle_temperatures", selector: { entity: { multiple: true, domain: "sensor" } } },

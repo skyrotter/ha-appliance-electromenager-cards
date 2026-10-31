@@ -53,6 +53,8 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .bar { height: 6px; border-radius: 3px; overflow: hidden; background: rgba(127,127,127,.18); }
 .bar-fill { height: 100%; width: 0; border-radius: 3px; background: var(--c); transition: width .6s ease; }
 .stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+/* hide_when_inactive en mode édition : la carte serait masquée, elle reste visible en transparence */
+.wrap.would-hide { opacity: .45; }
 .tile { display: flex; flex-direction: column; padding: 6px 9px; border-radius: 10px; min-width: 0; background: rgba(127,127,127,.09); }
 .tile:hover { background: rgba(127,127,127,.16); }
 .val { font-size: 14px; font-weight: 600; color: var(--primary-text-color); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

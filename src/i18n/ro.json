@@ -289,7 +289,10 @@
     "f_clean_water": "Rezervor apă curată (% sau senzor binar)",
     "f_dirty_water": "Rezervor apă murdară (% sau senzor binar)",
     "f_selfclean_threshold": "Autocurățare peste (W, priza stației)",
-    "f_battery_low": "Baterie descărcată sub (%)"
+    "f_battery_low": "Baterie descărcată sub (%)",
+    "f_hide_when_inactive": "Ascunde când este inactiv (niciun ciclu, nicio alertă)",
+    "f_hide_delay": "Păstrează vizibil după terminare (min)",
+    "f_cycle_gap": "Pauză tolerată în același ciclu (min)"
   },
   "aquarium": {
     "power": "Putere",

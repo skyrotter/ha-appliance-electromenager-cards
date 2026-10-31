@@ -87,6 +87,18 @@ function fmtDuration(min) {
 /* Dernier cycle terminé d'après l'historique de la puissance.
    pw : [{ t (ms), w (W) }] trié ; un cycle = puissance > seuil, les creux plus courts que gapMin (trempage, séchage) restent dans le cycle.
    en : [{ t, v (kWh) }] compteur d'énergie, facultatif. Renvoie { start, end, kwh } ou null (aucun cycle, ou cycle en cours). */
+// somme de séries « en escalier » [{ t, v }] : à chaque instant, dernière valeur connue de chacune (0 avant son premier point)
+function sumSeries(list) {
+  const S = list.filter((s) => s.length);
+  if (S.length <= 1) return S[0] || [];
+  const ts = [...new Set(S.flatMap((s) => s.map((p) => p.t)))].sort((a, b) => a - b), idx = S.map(() => -1);
+  return ts.map((t) => {
+    let v = 0;
+    S.forEach((s, k) => { while (idx[k] + 1 < s.length && s[idx[k] + 1].t <= t) idx[k]++; if (idx[k] >= 0) v += s[idx[k]].v; });
+    return { t, v };
+  });
+}
+
 function lastCycle(pw, threshold, gapMin = 15, en = []) {
   const gap = gapMin * 60000;
   let start = null, lastOn = null, cyc = null;

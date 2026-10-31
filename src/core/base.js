@@ -38,6 +38,34 @@ class ApplianceCardBase extends HTMLElement {
   disconnectedCallback() { clearInterval(this._tick); clearTimeout(this._cycTimer); this._cycBusy = false; }
 
   getCardSize() { return 4; }
+
+  // HA passe preview = true dans l'éditeur de carte et en mode édition du tableau de bord : la carte reste alors visible
+  set preview(v) { this._preview = !!v; if (this._hass && this._config) this._update(true); }
+  get preview() { return !!this._preview; }
+  set editMode(v) { this._editMode = !!v; if (this._hass && this._config) this._update(true); }
+  get editMode() { return !!this._editMode; }
+
+  /* hide_when_inactive : carte masquée quand l'appareil ne fonctionne pas (ni cycle, ni alerte),
+   * hide_delay minutes après la fin d'activité (pour voir « Terminé »). Renvoie true quand la carte serait masquée
+   * mais reste visible parce qu'on édite (affichée en transparence). */
+  _applyHide(active, alert) {
+    const c = this._config, now = Date.now();
+    if (active || alert) this._lastActive = now;
+    let hide = false;
+    if (c.hide_when_inactive) {
+      const delay = Math.max(0, Number(c.hide_delay) || 0) * 60000;
+      hide = !(active || alert || (this._lastActive && now - this._lastActive < delay));
+    }
+    const editing = this._preview || this._editMode;
+    const hidden = hide && !editing;
+    if (hidden !== !!this._hiddenNow) {
+      this._hiddenNow = hidden;
+      this.style.display = hidden ? "none" : "";
+      // prévient le tableau de bord (sections) que la carte apparaît / disparaît
+      this.dispatchEvent(new CustomEvent("card-visibility-changed", { detail: { value: !hidden }, bubbles: true, composed: true }));
+    }
+    return hide && editing;
+  }
   getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
   // liste des capteurs de buse (imprimante multi-buses) ; une simple chaîne est acceptée
@@ -160,30 +188,33 @@ class ApplianceCardBase extends HTMLElement {
   // Relu au chargement puis 20 s après chaque fin de cycle (le temps que l'enregistreur écrive les derniers points).
   // estimate : même lecture sur 10 jours, relue aussi au chargement en plein cycle, pour la durée de référence
   // (médiane des 7 derniers cycles) et le début du cycle en cours.
+  // Chauffe-eau : last_cycle seulement (pas d'estimate), puissance réseau + solaire (power + power_solar), énergie idem.
   _fetchCycle(active) {
-    const c = this._config, hass = this._hass;
-    if (!(c.last_cycle || c.estimate) || !c.power || !["washer", "dryer", "dishwasher"].includes(this._kind) || !hass || typeof hass.callWS !== "function") return;
+    const c = this._config, hass = this._hass, wash = ["washer", "dryer", "dishwasher"].includes(this._kind), wh = this._kind === "water_heater";
+    const est = !!c.estimate && wash;
+    if (!(c.last_cycle || est) || !(wash || wh) || !c.power || !hass || typeof hass.callWS !== "function") return;
     const was = this._cycActive, gap = (c.cycle_gap ?? 15) * 60000;
     this._cycActive = active;
     // départ vu en direct ; une reprise après un creux plus court que cycle_gap reste dans le même cycle
     if (active && was === false && !(this._runStart && this._offAt && Date.now() - this._offAt < gap)) this._runStart = Date.now();
     if (!active && was === true) this._offAt = Date.now();
     const first = !this._cycAt, ended = was === true && !active;
-    if (this._cycBusy || !(first || ended) || (first && active && !c.estimate)) return;
+    if (this._cycBusy || !(first || ended) || (first && active && !est)) return;
     this._cycBusy = true; this._cycAt = Date.now();
     clearTimeout(this._cycTimer);
     this._cycTimer = setTimeout(() => {
-      const now = Date.now(), ids = [c.power].concat(c.energy ? [c.energy] : []);
+      const now = Date.now(), pIds = [c.power].concat(wh && c.power_solar ? [c.power_solar] : []), eIds = [c.energy].concat(wh && c.energy_solar ? [c.energy_solar] : []).filter(Boolean);
+      const ids = pIds.concat(eIds);
       const unit = (i, f) => f[(hass.states[i] && hass.states[i].attributes.unit_of_measurement) || ""] ?? 1;
-      const pf = unit(c.power, { kW: 1000 }), ef = c.energy ? unit(c.energy, { Wh: 1e-3, MWh: 1e3 }) : 1;
-      hass.callWS({ type: "history/history_during_period", start_time: new Date(now - (c.estimate ? 10 : 4) * 86400000).toISOString(), end_time: new Date(now).toISOString(),
+      hass.callWS({ type: "history/history_during_period", start_time: new Date(now - (est ? 10 : 4) * 86400000).toISOString(), end_time: new Date(now).toISOString(),
         entity_ids: ids, minimal_response: true, no_attributes: true, significant_changes_only: false })
         .then((r) => {
           const pts = (i, f) => ((r && r[i]) || []).map((p) => ({ t: (p.lu ?? p.lc) * 1000, v: parseFloat(p.s) * f })).filter((p) => Number.isFinite(p.t));
-          const pw = pts(c.power, pf).map((p) => ({ t: p.t, w: Number.isFinite(p.v) ? p.v : 0 }));
-          const en = c.energy ? pts(c.energy, ef).filter((p) => Number.isFinite(p.v)) : [];
+          // plusieurs capteurs : somme des séries (chaque capteur garde sa valeur jusqu'à son point suivant)
+          const pw = sumSeries(pIds.map((i) => pts(i, unit(i, { kW: 1000 })).map((p) => ({ t: p.t, v: Number.isFinite(p.v) ? p.v : 0 })))).map((p) => ({ t: p.t, w: p.v }));
+          const en = eIds.length ? sumSeries(eIds.map((i) => pts(i, unit(i, { Wh: 1e-3, MWh: 1e3 })).filter((p) => Number.isFinite(p.v)))) : [];
           this._cycle = lastCycle(pw, c.threshold ?? this._def.threshold, c.cycle_gap ?? 15, en);
-          if (c.estimate) {
+          if (est) {
             const l = cycleList(pw, c.threshold ?? this._def.threshold, c.cycle_gap ?? 15), done = l.done;
             let cur = l.cur;
             // cycle en pause (creux plus court que cycle_gap) au moment de la lecture : c'est le cycle en cours
@@ -816,11 +847,12 @@ class ApplianceCardBase extends HTMLElement {
     const $ = (i) => this.shadowRoot.getElementById(i);
     const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming"].includes(m.status);
     this._fetchCycle(active);
+    const hideWouldApply = this._applyHide(active, m.alerts.length > 0);
     $("wrap").className = [
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
       active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
       m.alerts.length ? "alert" : "", isOn(m.door) ? "door-open" : "", isOn(m.fdoor) ? "fz-open" : "",
-      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", m.solarHeat ? "solar-heat" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "",
+      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", m.solarHeat ? "solar-heat" : "", hideWouldApply ? "would-hide" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "",
     ].filter(Boolean).join(" ");
 
     // illustration dynamic parts

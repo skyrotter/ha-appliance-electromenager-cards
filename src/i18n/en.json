@@ -289,7 +289,10 @@
     "f_clean_water": "Clean water tank (% or binary sensor)",
     "f_dirty_water": "Dirty water tank (% or binary sensor)",
     "f_selfclean_threshold": "Self-cleaning above (W, dock plug)",
-    "f_battery_low": "Low battery below (%)"
+    "f_battery_low": "Low battery below (%)",
+    "f_hide_when_inactive": "Hide when inactive (no cycle, no alert)",
+    "f_hide_delay": "Keep visible after the end (min)",
+    "f_cycle_gap": "Pause kept in the same cycle (min)"
   },
   "aquarium": {
     "power": "Power",
