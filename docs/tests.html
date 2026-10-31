@@ -920,6 +920,27 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
   ok('display cost without price: kWh kept',/ 2 kWh/.test(txt(d3)),txt(d3));
   ok('default display: unchanged',/ 2 kWh/.test(txt(d4))&&!/Coût du jour/.test(txt(d4)),txt(d4));
  },300);}
+// tap_action / hold_action on the illustration — issue #142
+{const ev=(c)=>{const e=[];['hass-more-info','hass-action'].forEach(t=>c.el.addEventListener(t,x=>e.push([t,x.detail])));return e;};
+ const il=(c)=>c.sr.querySelector('.illus');
+ let c=card('washer',{entity:'input_boolean.run',power:'sensor.p',switch:'switch.s'},[mk('input_boolean.run','off'),mk('sensor.p',0,W),mk('switch.s','on')]); let e=ev(c); il(c).click();
+ ok('tap default: more-info of entity',e.length===1&&e[0][0]==='hass-more-info'&&e[0][1].entityId==='input_boolean.run'&&!c.h.calls.length,JSON.stringify(e));
+ c=card('washer',{power:'sensor.p',switch:'switch.s',tap_action:{action:'toggle'}},[mk('sensor.p',0,W),mk('switch.s','on')]); e=ev(c); il(c).click();
+ ok('tap toggle: switch toggled, no more-info',JSON.stringify(c.h.calls[0])==='["switch","toggle",{"entity_id":"switch.s"}]'&&!e.length,JSON.stringify(c.h.calls)+JSON.stringify(e));
+ c=card('washer',{power:'sensor.p',switch:'switch.s',tap_action:{action:'toggle'}},[mk('sensor.p',600,W),mk('switch.s','on')]); il(c).click();
+ {const armed=!c.h.calls.length&&/Cycle en cours/.test(c.sr.getElementById('actions').textContent); il(c).click(); ok('tap toggle mid-cycle: needs confirmation',armed&&c.h.calls.length===1,JSON.stringify(c.h.calls));}
+ c=card('washer',{power:'sensor.p',switch:'switch.s',show_toggle:false,tap_action:{action:'toggle'}},[mk('sensor.p',600,W),mk('switch.s','on')]); il(c).click();
+ ok('tap toggle, button hidden: confirmation shown',!c.h.calls.length&&!c.sr.querySelector('.toggle')&&/Cycle en cours/.test(c.sr.getElementById('actions').textContent),c.sr.getElementById('actions').innerHTML);
+ c=card('washer',{power:'sensor.p',tap_action:{action:'navigate',navigation_path:'/lovelace/1'}},[mk('sensor.p',0,W)]); e=ev(c); il(c).click();
+ ok('tap navigate: hass-action',e.length===1&&e[0][0]==='hass-action'&&e[0][1].config.tap_action.navigation_path==='/lovelace/1',JSON.stringify(e));
+ c=card('washer',{power:'sensor.p',tap_action:{action:'none'}},[mk('sensor.p',0,W)]); e=ev(c); il(c).click();
+ ok('tap none: nothing',!e.length,JSON.stringify(e));
+ c=card('washer',{power:'sensor.p',switch:'switch.s',tap_action:{action:'toggle'}},[mk('sensor.p',0,W),mk('switch.s','on')]); e=ev(c); c.sr.querySelector('.stats .tile,[data-entity]')?.click();
+ ok('stat tile keeps more-info',e.length===1&&e[0][0]==='hass-more-info'&&!c.h.calls.length,JSON.stringify(e));
+ const ch=card('washer',{power:'sensor.p',switch:'switch.s',hold_action:{action:'more-info'},tap_action:{action:'toggle'}},[mk('sensor.p',0,W),mk('switch.s','on')]); const eh=ev(ch);
+ il(ch).dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,button:0}));
+ setTimeout(()=>{il(ch).dispatchEvent(new PointerEvent('pointerup',{bubbles:true})); il(ch).click();
+  ok('hold: hold_action, then no tap',eh.length===1&&eh[0][0]==='hass-more-info'&&!ch.h.calls.length,JSON.stringify(eh)+JSON.stringify(ch.h.calls));},600);}
 // climate / water_heater entity used as temperature or setpoint (state is a mode, values in attributes) — issue #94
 {const D=mk('climate.daikin','off',{current_temperature:20,temperature:25});
  const txt=(c)=>c.sr.getElementById('stats').textContent.replace(/\s+/g,' ');

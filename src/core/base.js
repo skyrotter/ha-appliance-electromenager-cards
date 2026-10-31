@@ -77,12 +77,63 @@ class ApplianceCardBase extends HTMLElement {
     this.shadowRoot.querySelector("ha-card").addEventListener("click", (ev) => {
       const path = ev.composedPath();
       if (path.some((n) => n.classList && (n.classList.contains("toggle") || n.classList.contains("mode-btn")))) return;
-      const tile = path.find((n) => n.dataset && n.dataset.entity);
       const c = this._config;
+      // illustration : tap_action / hold_action (le clic qui suit un appui long est ignoré)
+      if (path.some((n) => n.classList && n.classList.contains("illus"))) {
+        if (this._held) { this._held = false; return; }
+        if (c.tap_action) { this._action(c.tap_action); return; }
+      }
+      const tile = path.find((n) => n.dataset && n.dataset.entity);
       const eid = tile ? tile.dataset.entity : (c.entity || c.power || c.switch || c.temperature);
-      if (eid) this.dispatchEvent(new CustomEvent("hass-more-info", { detail: { entityId: eid }, bubbles: true, composed: true }));
+      if (eid) this._moreInfo(eid);
     });
+    // appui long sur l'illustration (500 ms), seulement si hold_action est défini
+    const il = this.shadowRoot.querySelector(".illus");
+    const stop = () => clearTimeout(this._holdTimer);
+    il.addEventListener("pointerdown", (ev) => {
+      this._held = false;
+      if (!this._config.hold_action || (ev.button != null && ev.button > 0)) return;
+      stop();
+      this._holdTimer = setTimeout(() => { this._held = true; this._action(this._config.hold_action); }, 500);
+    });
+    ["pointerup", "pointerleave", "pointercancel"].forEach((t) => il.addEventListener(t, stop));
+    il.addEventListener("contextmenu", (ev) => { if (this._config.hold_action) ev.preventDefault(); });
     if (this._config.color) this.style.setProperty("--ac-accent", this._config.color);
+  }
+
+  _moreInfo(eid) {
+    this.dispatchEvent(new CustomEvent("hass-more-info", { detail: { entityId: eid }, bubbles: true, composed: true }));
+  }
+
+  // action standard Home Assistant (tap_action / hold_action) :
+  // toggle → la prise (switch), avec la même confirmation que le bouton ; more-info / none gérés ici ;
+  // le reste (navigate, url, perform-action…) est confié à Home Assistant via l'événement hass-action
+  _action(a) {
+    const c = this._config, hass = this._hass;
+    if (!a || !hass) return;
+    const type = typeof a === "string" ? a : a.action;
+    const dflt = c.entity || c.power || c.switch || c.temperature;
+    if (!type || type === "none") return;
+    if (type === "more-info") { const e = a.entity || dflt; if (e) this._moreInfo(e); return; }
+    if (type === "toggle" && this._sw) { this._toggleSw(); return; }
+    this.dispatchEvent(new CustomEvent("hass-action", { detail: { config: { entity: dflt, tap_action: typeof a === "string" ? { action: a } : a }, action: "tap" }, bubbles: true, composed: true }));
+  }
+
+  // marche / arrêt de la prise ; un arrêt protégé (cycle en cours…) demande un 2e clic dans les 4 s
+  _toggleSw() {
+    const sw = this._sw, hass = this._hass;
+    if (!sw || !hass) return;
+    if (sw.guarded && !(this._confirmUntil && Date.now() < this._confirmUntil)) {
+      this._confirmUntil = Date.now() + 4000;
+      this._render(this._compute());
+      clearTimeout(this._confirmTimer);
+      this._confirmTimer = setTimeout(() => { this._confirmUntil = 0; if (this._hass) this._render(this._compute()); }, 4100);
+      return;
+    }
+    this._confirmUntil = 0;
+    clearTimeout(this._confirmTimer);
+    const dom = domainOf(sw.id);
+    hass.callService(["switch", "input_boolean", "light", "fan", "humidifier"].includes(dom) ? dom : "homeassistant", "toggle", { entity_id: sw.id });
   }
 
   // energy_period (day / week / month) : consommation de la période d'après les statistiques de Home Assistant
@@ -929,30 +980,22 @@ class ApplianceCardBase extends HTMLElement {
 
     const swId = c.switch || (kind === "dehumidifier" && domainOf(c.entity) === "humidifier" ? c.entity : null)
       || (kind === "garland" && domainOf(c.entity) === "light" ? c.entity : null);
-    if (swId && c.show_toggle !== false) {
+    this._sw = null;
+    if (swId) {
       const on = isOn(hass.states[swId]);
       // safety: cutting a washer/dryer/dishwasher mid-cycle needs a second click
       const freezer = ["chest_freezer", "drawer_freezer"].includes(kind);
       // PC fixe / baie serveur : couper la prise d'une machine allumée ou en veille = arrêt brutal
       const computer = ["desktop_pc", "server_rack"].includes(kind) && ["screen_on", "online", "standby"].includes(m.status);
       const guarded = c.confirm_off !== false && on && (freezer || computer || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d"].includes(kind)));
+      this._sw = { id: swId, guarded };
       const arming = guarded && this._confirmUntil && Date.now() < this._confirmUntil;
       const label = arming ? tr(hass, computer ? "confirm_off_pc" : "confirm_off") : tr(hass, "toggle");
-      $("actions").innerHTML = `<button class="toggle ${on ? "on" : ""} ${arming ? "confirm" : ""}" title="${esc(label)}" aria-label="${esc(label)}" aria-pressed="${on}"><ha-icon icon="${arming ? "mdi:alert" : "mdi:power"}"></ha-icon></button>${arming ? `<div class="confirm-tip">${esc(label)}</div>` : ""}`;
-      $("actions").querySelector("button").onclick = (ev) => {
-        ev.stopPropagation();
-        if (guarded && !(this._confirmUntil && Date.now() < this._confirmUntil)) {
-          this._confirmUntil = Date.now() + 4000;
-          this._render(this._compute());
-          clearTimeout(this._confirmTimer);
-          this._confirmTimer = setTimeout(() => { this._confirmUntil = 0; if (this._hass) this._render(this._compute()); }, 4100);
-          return;
-        }
-        this._confirmUntil = 0;
-        clearTimeout(this._confirmTimer);
-        const dom = domainOf(swId);
-        hass.callService(["switch", "input_boolean", "light", "fan", "humidifier"].includes(dom) ? dom : "homeassistant", "toggle", { entity_id: swId });
-      };
+      const tip = arming ? `<div class="confirm-tip">${esc(label)}</div>` : "";
+      if (c.show_toggle !== false) {
+        $("actions").innerHTML = `<button class="toggle ${on ? "on" : ""} ${arming ? "confirm" : ""}" title="${esc(label)}" aria-label="${esc(label)}" aria-pressed="${on}"><ha-icon icon="${arming ? "mdi:alert" : "mdi:power"}"></ha-icon></button>${tip}`;
+        $("actions").querySelector("button").onclick = (ev) => { ev.stopPropagation(); this._toggleSw(); };
+      } else $("actions").innerHTML = tip; // bouton masqué : la confirmation d'un tap sur l'illustration reste visible
     } else $("actions").innerHTML = "";
 
     // progress bar

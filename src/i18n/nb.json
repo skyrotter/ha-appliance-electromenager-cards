@@ -51,6 +51,8 @@
 "cost_week": "Kostnad denne uken",
 "cost_month": "Kostnad denne måneden",
 "f_display": "Forbruk vist som (kWh, kostnad eller begge)",
+"f_tap_action": "Trykkhandling (illustrasjon)",
+"f_hold_action": "Holdhandling (illustrasjon)",
 "f_energy_period": "Vist energi (teller eller periode)",
 "washer": "Vaskemaskin",
 "dryer": "Tørketrommel",

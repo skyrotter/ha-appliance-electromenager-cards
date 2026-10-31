@@ -206,6 +206,8 @@
     "cost_week": "Kosten diese Woche",
     "cost_month": "Kosten diesen Monat",
     "f_display": "Verbrauch anzeigen als (kWh, Kosten oder beides)",
+    "f_tap_action": "Tipp-Aktion (Illustration)",
+    "f_hold_action": "Halte-Aktion (Illustration)",
     "f_energy_period": "Angezeigte Energie (Zähler oder Zeitraum)",
     "flex_temp": "Flex-Zone",
     "f_flex_temperature": "Temperatursensor Flex-Zone",
