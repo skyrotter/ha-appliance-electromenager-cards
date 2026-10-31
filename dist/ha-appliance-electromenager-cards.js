@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.42.1";
+const VERSION = "1.42.2";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -5182,8 +5182,9 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
   .illus { width: calc(var(--appliance-illustration-size-small, 84px) * var(--illus-scale, 1)); }
   .stats { grid-template-columns: repeat(auto-fit, minmax(88px, 1fr)); }
 }
-/* carte très étroite (ex. 3 cartes côte à côte) : illustration au-dessus, titre et statut centrés et sur plusieurs lignes */
-@container (max-width: 230px) {
+/* carte étroite (ex. 2 ou 3 cartes côte à côte) : illustration au-dessus, titre et statut centrés et sur plusieurs lignes.
+   Sous 280 px, illustration + bouton ne laissent plus qu'environ 100 px au titre, qui serait tronqué. */
+@container (max-width: 280px) {
   .top { grid-template-columns: minmax(0, 1fr); grid-template-areas: "illus" "head" "stats"; justify-items: center; }
   .head { flex-direction: column; align-items: center; text-align: center; width: 100%; }
   .info { align-items: center; width: 100%; }
