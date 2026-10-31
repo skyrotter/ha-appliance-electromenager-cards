@@ -1,0 +1,32 @@
+/* ---------- PlayStation 5 ---------- */
+/* bandeaux : gris éteinte, orange qui respire en mode repos, blanc allumée, balayage bleu au démarrage */
+.k-ps5 .ps-led { stroke: #4a525b; stroke-opacity: .55; transition: stroke .5s, stroke-opacity .5s; }
+.k-ps5.st-ps_rest .ps-led { stroke: #ff9d2e; stroke-opacity: 1; filter: drop-shadow(0 0 1.6px #ff9d2e); animation: ac-pulse 3.2s ease-in-out infinite; }
+.k-ps5.st-screen_on .ps-led, .k-ps5.st-ps_gaming .ps-led { stroke: #f2f8ff; stroke-opacity: 1; filter: drop-shadow(0 0 2px #cfe6ff); }
+.k-ps5 .ps-boot .ps-led { stroke: #3b9cff; stroke-dasharray: 100; animation: ps-sweep 1.5s ease-out, ps-boot 2.4s ease-in-out; filter: drop-shadow(0 0 2.4px #3b9cff); }
+.ps-pwr { fill: #3a424b; } .k-ps5.st-ps_rest .ps-pwr { fill: #ff9d2e; } .k-ps5.active .ps-pwr { fill: #f2f8ff; }
+/* air chaud par les ouïes du haut : léger allumée, plus franc en jeu */
+.ps-air { opacity: 0; } .ps-air path { stroke: #9aa7b4; }
+.k-ps5.st-screen_on .ps-air { opacity: .5; } .k-ps5.st-ps_gaming .ps-air { opacity: 1; } .k-ps5.st-ps_gaming .ps-air path { stroke: #ffab70; }
+.k-ps5.active .ps-air path { animation: ac-steam 2.6s ease-out infinite; }
+.ps-air path:nth-child(2) { animation-delay: .8s !important; } .ps-air path:nth-child(3) { animation-delay: 1.6s !important; }
+.k-ps5.st-ps_gaming .ps-air path { animation-duration: 1.6s; }
+/* halo bleu de l'écran en jeu */
+.ps-amb { opacity: 0; transition: opacity .8s; }
+.k-ps5.st-ps_gaming .ps-amb { opacity: 1; animation: ps-amb 5s ease-in-out infinite; }
+/* manette : barre lumineuse, câble de charge en mode repos, prise en main et boutons en jeu */
+.ps-bar { stroke: #c3c9cf; transition: stroke .4s; }
+.k-ps5.st-ps_rest .ps-bar { stroke: #ff9d2e; animation: ac-pulse 2.4s ease-in-out infinite; }
+.k-ps5.active .ps-bar { stroke: #3b9cff; filter: drop-shadow(0 0 1.6px #3b9cff); }
+.k-ps5.st-ps_gaming .ps-bar { animation: ac-glow 1.6s ease-in-out infinite; }
+.ps-cable { opacity: 0; transition: opacity .5s; } .k-ps5.st-ps_rest .ps-cable { opacity: 1; }
+.ps-pad { transform-box: fill-box; transform-origin: 50% 100%; transition: transform .6s ease; }
+.k-ps5.st-ps_gaming .ps-pad { animation: ps-play 2.8s ease-in-out infinite; }
+.ps-btn circle { fill: #9aa3ac; }
+.k-ps5.st-ps_gaming .ps-btn circle { animation: ps-press 1.2s steps(1) infinite; }
+.ps-btn circle:nth-child(2) { animation-delay: .3s !important; } .ps-btn circle:nth-child(3) { animation-delay: .6s !important; } .ps-btn circle:nth-child(4) { animation-delay: .9s !important; }
+@keyframes ps-sweep { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+@keyframes ps-boot { 0%, 60% { stroke: #3b9cff; } 100% { stroke: #f2f8ff; } }
+@keyframes ps-amb { 0%, 100% { opacity: .65; } 50% { opacity: 1; } }
+@keyframes ps-play { 0%, 100% { transform: translate(0, -7px) rotate(-3deg); } 25% { transform: translate(-1px, -8px) rotate(2deg); } 50% { transform: translate(.6px, -6.4px) rotate(-1deg); } 75% { transform: translate(-.4px, -8px) rotate(3deg); } }
+@keyframes ps-press { 0% { fill: #3b9cff; } 25%, 100% { fill: #9aa3ac; } }

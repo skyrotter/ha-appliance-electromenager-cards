@@ -254,6 +254,15 @@ const SCEN = [
       range(ctl, 'Puissance', 'sensor.tv_power', 0, 200, 0.5, 90, 'W', W);
       set('sensor.tv_energy', 0.35, KWH);
     } },
+  { kind: 'ps5', title: 'PlayStation 5',
+    cfg: { entity: 'media_player.ps5', switch: 'switch.ps5', power: 'sensor.ps5_power', energy: 'sensor.ps5_energy' },
+    build(ctl) {
+      set('switch.ps5', 'on');
+      range(ctl, 'Puissance', 'sensor.ps5_power', 0, 250, 0.5, 60, 'W', W);
+      select(ctl, 'PlayStation Network', 'media_player.ps5', [['playing', 'En jeu / Playing'], ['on', 'En ligne / Online'], ['off', 'Hors ligne / Offline']], 'on');
+      set('media_player.ps5', 'on', { media_title: 'Astro Bot' });
+      set('sensor.ps5_energy', 0.4, KWH);
+    } },
   { kind: 'range-hood', title: 'Hotte aspirante',
     cfg: { power: 'sensor.hood_power', energy: 'sensor.hood_energy' },
     build(ctl) {
