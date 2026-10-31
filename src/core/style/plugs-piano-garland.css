@@ -47,3 +47,7 @@
 .k-garland.st-lit.gl-multi .gl-b, .k-garland.st-lit.gl-multi .gl-h { animation: gl-rgb 2.4s linear infinite; animation-delay: var(--d, 0s); }
 .k-garland.st-lit:not(.gl-multi) .gl-b, .k-garland.st-lit:not(.gl-multi) .gl-h { fill: var(--glc, #ffcf6a); }
 @keyframes gl-rgb { 0% { fill: #ff3b5c; } 25% { fill: #ffd23b; } 50% { fill: #3bff8a; } 75% { fill: #3bb8ff; } 100% { fill: #ff3b5c; } }
+/* un bouton par prise commandée (option outlets) */
+.k-power_strip .modes { grid-template-columns: repeat(auto-fit, minmax(48px, 1fr)); }
+.outlet-btn { font-weight: 600; }
+.outlet-btn:disabled { opacity: .45; cursor: default; }
