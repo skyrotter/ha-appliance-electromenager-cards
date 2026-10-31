@@ -31,6 +31,22 @@ price_per_kwh: 0.2516                   # or a tariff entity: sensor.electricity
 - Energy is the difference of the `energy` counter over the cycle, otherwise the power history integrated over time.
 - The cost uses the Home Assistant currency.
 
+## Estimated remaining time and progress, without a sensor
+
+With only a smart plug, `estimate: true` estimates the remaining time and the progress during a cycle. The card reads the history of `power` (last 10 days), takes the **median duration of the last 7 cycles** as the reference, and finds when the current cycle started:
+
+- remaining ≈ reference − time elapsed, shown as "≈ 1 h 30" and "Estimated end 12:19";
+- progress = time elapsed ÷ reference (progress bar);
+- past the reference: "Almost done", with the bar held at 99 %.
+
+```yaml
+type: custom:appliance-dishwasher-card
+power: sensor.dishwasher_plug_power
+estimate: true
+```
+
+It works best when you mostly use the same program. A `remaining` or `progress` sensor, when set, wins over the estimate. Cycles are split like `last_cycle` (`threshold`, `cycle_gap`); at least one complete cycle in the history is needed.
+
 The rest of this page is only needed if the card flickers during a cycle.
 
 ## Cycle detection (stops the flicker)

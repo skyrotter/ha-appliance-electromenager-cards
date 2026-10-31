@@ -114,6 +114,25 @@ function lastCycle(pw, threshold, gapMin = 15, en = []) {
   }
   return { ...cyc, kwh };
 }
+// estimate : cycles terminés ({ start, end }, 5 min au moins) et début du cycle en cours (cur), même découpage que lastCycle
+function cycleList(pw, threshold, gapMin = 15) {
+  const gap = gapMin * 60000, out = [];
+  let start = null, lastOn = null;
+  for (let i = 0; i < pw.length; i++) {
+    const p = pw[i], next = pw[i + 1];
+    if (!(p.w > threshold)) continue;
+    const offAt = next ? next.t : null;
+    if (start === null || p.t - lastOn > gap) { if (start !== null) out.push({ start, end: lastOn }); start = p.t; }
+    lastOn = offAt;
+    if (offAt === null) break;
+  }
+  const cur = start !== null && lastOn === null ? start : null;
+  if (start !== null && lastOn !== null) out.push({ start, end: lastOn });
+  // le premier cycle peut être tronqué par le début de l'historique
+  const t0 = pw.length ? pw[0].t : 0;
+  return { done: out.filter((x) => x.start > t0 && x.end - x.start >= 300000), cur };
+}
+const median = (a) => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y), h = s.length >> 1; return s.length % 2 ? s[h] : (s[h - 1] + s[h]) / 2; };
 // H:MM like a real washer/oven display; M:SS for short countdowns (microwave)
 const lcdDuration = (min, short = false) => {
   if (short) { const s = Math.round(min * 60); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; }

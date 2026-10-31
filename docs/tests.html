@@ -930,6 +930,18 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
   ok('display cost without price: kWh kept',/ 2 kWh/.test(txt(d3)),txt(d3));
   ok('default display: unchanged',/ 2 kWh/.test(txt(d4))&&!/Coût du jour/.test(txt(d4)),txt(d4));
  },300);}
+// estimate: remaining / progress from the median duration of past cycles (history), "Fin estimée à", "Bientôt fini"
+{const H=3600000, now=Date.now();
+ const hist=(curAgoMin)=>{const pts=[{s:'0',lu:(now-9*24*H)/1000}];[6,4,2].forEach((d,i)=>{const st=now-d*24*H;pts.push({s:'1800',lu:st/1000},{s:'0',lu:(st+(i===1?150:120)*60000)/1000});});pts.push({s:'1900',lu:(now-curAgoMin*60000)/1000});return {'sensor.p':pts};};
+ const mke=(ago,extra={},states=[])=>{const c=card('dishwasher',{power:'sensor.p',estimate:true,...extra},[mk('sensor.p',1900,W),...states]);c.h.callWS=()=>Promise.resolve(hist(ago));c.el.hass={...c.h,states:{...c.h.states}};c.el._update(true);return c;};
+ const e1=mke(30), e2=mke(130), e3=mke(30,{remaining:'sensor.r'},[mk('sensor.r',10,{unit_of_measurement:'min'})]);
+ setTimeout(()=>{
+  const all=(c)=>c.sr.getElementById('wrap').textContent.replace(/\s+/g,' ');
+  ok('estimate: remaining from median (120 min) - 30',/≈ 1 h 30/.test(all(e1))&&/Fin estimée à/.test(all(e1)),all(e1));
+  ok('estimate: progress bar',Math.abs(parseFloat(e1.sr.getElementById('barfill').style.width)-25)<1,e1.sr.getElementById('barfill').style.width);
+  ok('estimate: over the median -> almost done',/Bientôt fini/.test(all(e2))&&!/≈/.test(all(e2)),all(e2));
+  ok('estimate: remaining sensor wins',!/≈/.test(all(e3))&&/Fin à/.test(all(e3)),all(e3));
+ },300);}
 // PlayStation 5: plug decides off / rest / on / gaming, PSN media_player adds the game
 {const ps=(w,ms,extra={})=>card('ps5',{entity:'media_player.ps5',power:'sensor.p',switch:'switch.s',...extra},[mk('sensor.p',w,W),mk('switch.s','on'),mk('media_player.ps5',ms,{media_title:'Astro Bot'})]);
  let c=ps(0.2,'off'); ok('ps5 off',has(c,'st-off'),c.wrap.className);
