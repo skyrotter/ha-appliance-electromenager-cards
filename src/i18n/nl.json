@@ -289,7 +289,10 @@
     "f_clean_water": "Schoonwatertank (% of binaire sensor)",
     "f_dirty_water": "Vuilwatertank (% of binaire sensor)",
     "f_selfclean_threshold": "Zelfreiniging boven (W, stekker van het station)",
-    "f_battery_low": "Batterij bijna leeg onder (%)"
+    "f_battery_low": "Batterij bijna leeg onder (%)",
+    "f_hide_when_inactive": "Verbergen als inactief (geen cyclus, geen alarm)",
+    "f_hide_delay": "Zichtbaar houden na het einde (min)",
+    "f_cycle_gap": "Pauze binnen dezelfde cyclus (min)"
   },
   "aquarium": {
     "power": "Vermogen",

@@ -310,6 +310,24 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c=card('room-climate',base,[TH('sensor.t',19),HU('sensor.h',50)]); ok('room climate no thermostat without entity',c.sr.getElementById('clim').hidden,'shown');
  document.querySelectorAll('appliance-room-climate-card').forEach((e)=>e.remove());
 }
+// hide_when_inactive : masquée à l'arrêt, visible pendant un cycle ou en édition, hide_delay après la fin
+c=card('dishwasher',{power:'sensor.p',hide_when_inactive:true},[mk('sensor.p',0,W)]); ok('hide_when_inactive: idle -> hidden',c.el.style.display==='none',c.el.style.display);
+c.el.hass=hassOf([mk('sensor.p',1500,W)]); ok('hide_when_inactive: running -> shown',c.el.style.display==='',c.el.style.display);
+c=card('dishwasher',{entity:'input_boolean.d',hide_when_inactive:true},[mk('input_boolean.d','on')]); c.el._lastActive=Date.now()-5*60000; c.el.hass=hassOf([mk('input_boolean.d','off')]); ok('hide_when_inactive: hidden again after the end',c.el.style.display==='none',c.el.style.display);
+c=card('dishwasher',{power:'sensor.p',hide_when_inactive:true,hide_delay:30},[mk('sensor.p',1500,W)]); c.el._lastActive=Date.now()-5*60000; c.el.hass=hassOf([mk('sensor.p',0,W)]);
+ok('hide_delay keeps the card 30 min after the end',c.el.style.display==='',c.el.style.display);
+c=card('dishwasher',{power:'sensor.p',hide_when_inactive:true},[mk('sensor.p',0,W)]); c.el.preview=true; ok('hide_when_inactive: visible and faded in edit mode',c.el.style.display===''&&has(c,'would-hide'),c.wrap.className);
+c=card('fridge',{power:'sensor.p',temperature:'sensor.t',max_temperature:8,hide_when_inactive:true},[mk('sensor.p',0,W),mk('sensor.t',12,T)]); ok('hide_when_inactive: an alert keeps the card visible',c.el.style.display==='',c.el.style.display);
+c=card('dishwasher',{power:'sensor.p'},[mk('sensor.p',0,W)]); ok('without hide_when_inactive the card stays visible',c.el.style.display==='',c.el.style.display);
+// chauffe-eau : dernier cycle lu dans l'historique de power + power_solar (somme), énergie energy + energy_solar
+{const now=Date.now(),H=3600e3,el=document.createElement('appliance-water-heater-card');
+ el.setConfig({power:'sensor.p',power_solar:'sensor.ps',energy:'sensor.e',last_cycle:true,price_per_kwh:0.2});document.getElementById('g').appendChild(el);
+ const h=hassOf([mk('sensor.p',0,W),mk('sensor.ps',0,W),mk('sensor.e',12.5,{unit_of_measurement:'kWh'})]);let asked=null;
+ // réseau 2 kW de -5 h à -4 h, puis solaire 1 kW de -4 h à -3 h : un seul cycle de 2 h
+ h.callWS=(m)=>{asked=m;return Promise.resolve({'sensor.p':[{s:'0',lu:(now-6*H)/1e3},{s:'2000',lu:(now-5*H)/1e3},{s:'0',lu:(now-4*H)/1e3}],'sensor.ps':[{s:'0',lu:(now-6*H)/1e3},{s:'1000',lu:(now-4*H)/1e3},{s:'0',lu:(now-3*H)/1e3}],'sensor.e':[{s:'10',lu:(now-6*H)/1e3},{s:'12',lu:(now-4*H)/1e3},{s:'12.5',lu:(now-3*H+30000)/1e3}]})};
+ el.hass=h;
+ setTimeout(()=>{const st=el.shadowRoot.getElementById('stats').textContent;
+  ok('water heater last cycle: grid + solar summed',asked&&asked.entity_ids.join()==='sensor.p,sensor.ps,sensor.e'&&/2 h/.test(st)&&/2,5 kWh/.test(st)&&/Dernier cycle/.test(st),st);el.remove();},300);}
 c=card('vmc',{entity:'fan.v',animations:true},[mk('fan.v','on')]); ok('animations: true forces animations (reduced motion)',has(c,'force-anim'),c.wrap.className);
 c=card('vmc',{entity:'fan.v'},[mk('fan.v','on')]); ok('animations unset follows the system setting',!has(c,'force-anim'),c.wrap.className);
 // déshumidificateur

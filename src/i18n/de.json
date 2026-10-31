@@ -289,7 +289,10 @@
     "f_clean_water": "Frischwassertank (% oder Binärsensor)",
     "f_dirty_water": "Schmutzwassertank (% oder Binärsensor)",
     "f_selfclean_threshold": "Selbstreinigung über (W, Steckdose der Station)",
-    "f_battery_low": "Akku schwach unter (%)"
+    "f_battery_low": "Akku schwach unter (%)",
+    "f_hide_when_inactive": "Ausblenden, wenn inaktiv (kein Zyklus, kein Alarm)",
+    "f_hide_delay": "Nach dem Ende sichtbar lassen (min)",
+    "f_cycle_gap": "Pause innerhalb eines Zyklus (min)"
   },
   "aquarium": {
     "power": "Leistung",

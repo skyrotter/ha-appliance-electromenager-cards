@@ -12,7 +12,7 @@ All cards have a visual editor. When added from the card picker, entities are de
 | `energy` | Energy sensor (Wh, kWh or MWh, shown in kWh) — e.g. today's consumption |
 | `cost` | Cost sensor (any currency) |
 | `energy_period` | `day`, `week` or `month` (calendar: since midnight, Monday, the 1st), or `24h`, `7d`, `30d` (rolling: last 24 hours, 7 days, 30 days): show the energy used in that period instead of the raw counter, computed by Home Assistant from the long-term statistics of `energy` (like the Energy dashboard), so a cumulative smart-plug counter works without a Utility Meter. Needs a sensor with statistics (`state_class: total_increasing`); otherwise the counter is shown |
-| `last_cycle` | Washer, dryer, dishwasher: `true` shows, between cycles, the last cycle start → end, duration, energy and cost, read from the history of `power` (last 4 days). `cycle_gap` (min, default 15): drops below `threshold` shorter than this stay in the same cycle |
+| `last_cycle` | Washer, dryer, dishwasher, water heater: `true` shows, between cycles, the last cycle start → end, duration, energy and cost, read from the history of `power` (last 4 days; water heater: `power` + `power_solar`, and `energy` + `energy_solar` for the energy). `cycle_gap` (min, default 15): drops below `threshold` shorter than this stay in the same cycle |
 | `estimate` | Washer, dryer, dishwasher: `true` estimates the remaining time and progress during a cycle from the median duration of the last 7 cycles (history of `power`, 10 days): "≈ 1 h 30", "Estimated end", then "Almost done". A `remaining` / `progress` sensor wins |
 | `price_per_kwh` | Price of a kWh (number or tariff entity) for the last cycle cost and, with `display: cost`, the period cost |
 | `display` | How consumption is shown when `price_per_kwh` is set: `energy` (kWh only, hides the cycle cost), `cost` (money only: hides the cycle energy and, with `energy_period`, shows the cost of the period instead of its kWh). Default: both |
@@ -26,6 +26,8 @@ All cards have a visual editor. When added from the card picker, entities are de
 | `show_toggle` | `false` to hide the power button |
 | `tap_action` / `hold_action` | Core cards: standard Home Assistant action when tapping / holding (0.5 s) the illustration: `more-info`, `toggle`, `navigate`, `url`, `perform-action`, `none`. `toggle` switches the `switch` plug, with the same safety confirmation as the power button (`confirm_off`). Default: tap opens more-info, hold does nothing. The tiles keep opening the more-info of their own entity |
 | `show_power` | `false` to hide the power chip (e.g. when `power` is an estimated sensor used only to detect the running state) |
+| `hide_when_inactive` | `true` hides the card while the appliance is not working (off, idle, standby, finished) and has no alert: it appears when a cycle starts, like a `conditional` card but using the card's own state. In the card editor and in dashboard edit mode the card stays visible, faded |
+| `hide_delay` | with `hide_when_inactive`: minutes the card stays visible after the activity ends, e.g. `30` to still see "Finished" (default `0`) |
 | `animations` | `false` to disable animations. By default the cards follow the "reduce animations" setting of the device (Windows: Accessibility → Visual effects → Animation effects; Android: Remove animations; iOS / macOS: Reduce motion); `true` keeps the core cards animated even when it is on |
 | `illustration_size` | Size of the drawing in % (30–300, default 100), on every card. In a sections dashboard, every card can also be resized with the mouse, from 3 columns wide and in height |
 | `transparent` | `true` removes the card background, shadow and border, so the dashboard background shows through, on every card |
@@ -47,7 +49,7 @@ labels:
 
 | Card | Tile keys |
 |---|---|
-| Washer, dryer, fridge, oven… (all appliance cards) | `power`, `energy`, `cost`, `remaining`, `temperature`, `target`, `fridge_temp`, `freezer_temp`, `zone_top`, `zone_bottom`, `humidity`, `level`, `pellets`, `keg`, `battery`, `water`, `today`, `speed`, `progress`, `nozzle`, `bed`; water heater: `grid`, `energy_grid`, `solar_surplus`, `energy_solar`; washer, dryer, dishwasher: `last_cycle`, `cycle_duration`, `cycle_energy`, `cycle_cost`; wet & dry vacuum: `clean_water`, `dirty_water`; solar: `production`, `today`, `savings`, `of_peak` |
+| Washer, dryer, fridge, oven… (all appliance cards) | `power`, `energy`, `cost`, `remaining`, `temperature`, `target`, `fridge_temp`, `freezer_temp`, `zone_top`, `zone_bottom`, `humidity`, `level`, `pellets`, `keg`, `battery`, `water`, `today`, `speed`, `progress`, `nozzle`, `bed`; water heater: `grid`, `energy_grid`, `solar_surplus`, `energy_solar`; washer, dryer, dishwasher, water heater: `last_cycle`, `cycle_duration`, `cycle_energy`, `cycle_cost`; wet & dry vacuum: `clean_water`, `dirty_water`; solar: `production`, `today`, `savings`, `of_peak` |
 | Aquarium | `power`, `energy`, `temp`, `cost` |
 | Linky | `power`, `active`, `hp`, `hc`, `injection`, `injection_power`, `tariff`, `cost` |
 | Battery | `power`, `energy`, `temp` |

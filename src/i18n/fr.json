@@ -289,7 +289,10 @@
     "f_clean_water": "Réservoir d'eau propre (% ou capteur binaire)",
     "f_dirty_water": "Bac d'eau sale (% ou capteur binaire)",
     "f_selfclean_threshold": "Auto-nettoyage au-dessus de (W, prise de la base)",
-    "f_battery_low": "Batterie faible sous (%)"
+    "f_battery_low": "Batterie faible sous (%)",
+    "f_hide_when_inactive": "Masquer quand l'appareil est inactif (ni cycle, ni alerte)",
+    "f_hide_delay": "Garder visible après la fin (min)",
+    "f_cycle_gap": "Pause tolérée dans un même cycle (min)"
   },
   "aquarium": {
     "power": "Puissance",
