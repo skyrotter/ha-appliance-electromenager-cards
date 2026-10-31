@@ -328,6 +328,16 @@ c=card('dishwasher',{power:'sensor.p'},[mk('sensor.p',0,W)]); ok('without hide_w
  el.hass=h;
  setTimeout(()=>{const st=el.shadowRoot.getElementById('stats').textContent;
   ok('water heater last cycle: grid + solar summed',asked&&asked.entity_ids.join()==='sensor.p,sensor.ps,sensor.e'&&/2 h/.test(st)&&/2,5 kWh/.test(st)&&/Dernier cycle/.test(st),st);el.remove();},300);}
+// aquarium : tuiles et bac cliquables (fiche de l'entité), aperçu dans le sélecteur de cartes
+{const el=document.createElement('appliance-aquarium-card');el.setConfig({entity_power:'sensor.ap',entity_temperature:'sensor.at',entity_light:'light.al'});document.getElementById('g').appendChild(el);
+ el.hass=hassOf([mk('sensor.ap',12,W),mk('sensor.at',25,T),mk('light.al','on')]);const got=[];el.addEventListener('hass-more-info',(e)=>got.push(e.detail.entityId));
+ el.shadowRoot.querySelector('.stat.t').click();el.shadowRoot.querySelector('.stat.p').click();el.shadowRoot.querySelector('svg').dispatchEvent(new MouseEvent('click',{bubbles:true}));
+ ok('aquarium tiles and tank open more-info',got.join()==='sensor.at,sensor.ap,light.al',got.join());
+ ok('aquarium tile without entity is not clickable',!el.shadowRoot.querySelector('.stat.e').dataset.e,'clickable');
+ ok('aquarium shown with a preview in the card picker',window.customCards.find((x)=>x.type==='appliance-aquarium-card').preview===true,'preview false');
+ const stub=customElements.get('appliance-aquarium-card').getStubConfig(hassOf([mk('sensor.aquarium_power',10,W),mk('sensor.aquarium_temp',25,T),mk('light.aquarium','on')]));
+ ok('aquarium stub finds aquarium entities',stub.entity_power==='sensor.aquarium_power'&&stub.entity_temperature==='sensor.aquarium_temp'&&stub.entity_light==='light.aquarium',JSON.stringify(stub));
+ el.remove();}
 c=card('vmc',{entity:'fan.v',animations:true},[mk('fan.v','on')]); ok('animations: true forces animations (reduced motion)',has(c,'force-anim'),c.wrap.className);
 c=card('vmc',{entity:'fan.v'},[mk('fan.v','on')]); ok('animations unset follows the system setting',!has(c,'force-anim'),c.wrap.className);
 // déshumidificateur

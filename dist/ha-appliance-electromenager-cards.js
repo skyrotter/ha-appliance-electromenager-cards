@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.53.0";
+const VERSION = "1.53.1";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -8950,7 +8950,12 @@ const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || do
 class ApplianceAquariumCard extends HTMLElement {
   static getStubConfig(hass) {
     const tc = window.applianceTemp(hass);
-    return { entity_power: '', entity_energy: '', entity_temperature: '', entity_light: '', temp_min: tc.c(24), temp_max: tc.c(27), price_per_kwh: 0.2 };
+    // entités dont le nom évoque un aquarium (aperçu du sélecteur de cartes), sinon vide
+    const S = (hass && hass.states) || {}, ids = Object.keys(S).filter((i) => /aqua/i.test(i));
+    const dc = (i) => (S[i].attributes || {}).device_class;
+    const find = (dom, d) => ids.find((i) => i.startsWith(dom) && (!d || dc(i) === d)) || '';
+    return { entity_power: find('sensor.', 'power'), entity_energy: find('sensor.', 'energy'), entity_temperature: find('sensor.', 'temperature'),
+      entity_light: find('light.') || find('switch.'), temp_min: tc.c(24), temp_max: tc.c(27), price_per_kwh: 0.2 };
   }
 
   // Éditeur visuel HA
@@ -9059,6 +9064,8 @@ class ApplianceAquariumCard extends HTMLElement {
       .tail { transform-origin:2px 0; animation:wag calc(.5s / var(--speed,1)) ease-in-out infinite alternate; }
       .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(70px,1fr)); gap:8px; margin-top:10px; }
       .stat { text-align:center; background:var(--secondary-background-color, rgba(127,127,127,.12)); border-radius:10px; padding:6px 4px; }
+      .stat.link { cursor:pointer; } .stat.link:hover { background:rgba(127,127,127,.2); }
+      svg { cursor:pointer; }
       .stat .v { font-weight:700; font-size:1.05em; } .stat .l { font-size:.7em; opacity:.65; text-transform:uppercase; letter-spacing:.04em; }
       .alert .stat.t .v { color:#e53935; animation:blink 1s infinite; }
       @keyframes rise { from { transform:translateY(0); opacity:.9 } to { transform:translateY(-105px); opacity:0 } }
@@ -9110,8 +9117,15 @@ class ApplianceAquariumCard extends HTMLElement {
       </svg>
       <div class="stats" id="stats"></div>
     </ha-card>`;
+    const root = this.shadowRoot;
+    root.getElementById('stats').addEventListener('click', (e) => { const t = e.target.closest('[data-e]'); if (t) this._more(t.dataset.e); });
+    root.getElementById('stats').addEventListener('keydown', (e) => { const t = e.target.closest('[data-e]'); if (t && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); this._more(t.dataset.e); } });
+    root.querySelector('svg').addEventListener('click', () => { const c2 = this._config; this._more(c2.entity_light || c2.entity_temperature || c2.entity_power); });
     this._built = true;
   }
+
+  // fiche de l'entité (more-info de Home Assistant)
+  _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
 
   _num(id) {
     if (!id || !this._hass) return null;
@@ -9154,18 +9168,18 @@ class ApplianceAquariumCard extends HTMLElement {
 
     const fmt = (v, d, u) => v === null ? '—' : `${v.toFixed(d)} ${u}`;
     const items = [];
-    if (c.show_power) items.push(['p', this._l('power'), fmt(power, 0, 'W')]);
-    if (c.show_energy) items.push(['e', this._l('energy'), fmt(energy, 2, 'kWh')]);
-    if (c.show_temperature) items.push(['t', this._l('temp'), fmt(temp, 1, tc.unit)]);
-    if (c.show_cost) items.push(['c', this._l('cost'), fmt(cost, 2, '€')]);
-    root.getElementById('stats').innerHTML = items.map(([k, l, v]) =>
-      `<div class="stat ${k}"><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
+    if (c.show_power) items.push(['p', this._l('power'), fmt(power, 0, 'W'), c.entity_power]);
+    if (c.show_energy) items.push(['e', this._l('energy'), fmt(energy, 2, 'kWh'), c.entity_energy]);
+    if (c.show_temperature) items.push(['t', this._l('temp'), fmt(temp, 1, tc.unit), c.entity_temperature]);
+    if (c.show_cost) items.push(['c', this._l('cost'), fmt(cost, 2, '€'), c.entity_cost || c.entity_energy]);
+    root.getElementById('stats').innerHTML = items.map(([k, l, v, id]) =>
+      `<div class="stat ${k}${id ? ' link' : ''}"${id ? ` data-e="${esc(id)}" role="button" tabindex="0"` : ''}><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
   }
 }
 
 define('appliance-aquarium-card', ApplianceAquariumCard);
 window.customCards = window.customCards || [];
-window.customCards.push({ type: 'appliance-aquarium-card', name: 'Appliance – Aquarium', description: 'Aquarium animé : puissance, kWh, température, coût', preview: false });
+window.customCards.push({ type: 'appliance-aquarium-card', name: 'Appliance – Aquarium', description: 'Aquarium animé : puissance, kWh, température, coût', preview: true });
 })();
 
 /* ================================================================== */
