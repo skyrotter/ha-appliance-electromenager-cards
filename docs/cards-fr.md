@@ -100,7 +100,7 @@ hold_action:
 
 **Plusieurs appareils du même type** : chaque carte est indépendante (ses propres entités, son état, ses minuteries). Deux lave-linge ou plusieurs frigos peuvent cohabiter, il suffit de donner à chaque carte ses entités (et un `name`).
 
-**Consommation du jour** : avec un compteur d'énergie cumulé (la plupart des prises connectées), `energy_period: day` (ou `week`, `month`) affiche ce qui a été consommé depuis minuit au lieu du compteur total. Home Assistant le calcule à partir des statistiques longue durée, comme le tableau de bord Énergie : plus besoin de créer un Utility Meter par appareil. Il faut un capteur avec statistiques (`state_class: total_increasing`), sinon la carte affiche le compteur.
+**Consommation du jour** : avec un compteur d'énergie cumulé (la plupart des prises connectées), `energy_period: day` (ou `week`, `month`) affiche ce qui a été consommé depuis minuit (depuis lundi, depuis le 1er) au lieu du compteur total. En glissant : `24h`, `7d` ou `30d` affichent les 24 dernières heures, les 7 ou les 30 derniers jours. Home Assistant le calcule à partir des statistiques longue durée, comme le tableau de bord Énergie : plus besoin de créer un Utility Meter par appareil. Il faut un capteur avec statistiques (`state_class: total_increasing`), sinon la carte affiche le compteur.
 
 ```yaml
 type: custom:appliance-washer-card
@@ -111,7 +111,7 @@ energy_period: day
 
 **Dernier cycle** (lave-linge, sèche-linge, lave-vaisselle) : `last_cycle: true` affiche entre deux cycles les tuiles du **dernier cycle** : heure de début → fin (avec « hier » ou la date si ce n'était pas aujourd'hui), durée, conso et, avec `price_per_kwh`, son coût. La carte les calcule à partir de l'historique de `power` (4 derniers jours) : pas de helper, d'automatisation ni de capteur template. Un creux sous `threshold` plus court que `cycle_gap` (**15 min** par défaut) reste dans le même cycle (trempage, séchage). La conso est l'écart du compteur `energy` sur le cycle, sinon l'intégrale de la puissance. `price_per_kwh` accepte un nombre ou une entité de tarif ; le coût est dans la devise de Home Assistant.
 
-**kWh ou €** : `display: energy` n'affiche que les kWh (pas de coût du cycle) ; `display: cost` n'affiche que les coûts : la conso du cycle disparaît et, avec `energy_period`, la tuile de la période devient « Coût du jour / de la semaine / du mois » (conso × `price_per_kwh`). Sans prix valide, les kWh restent affichés. Par défaut, les deux.
+**kWh ou €** : `display: energy` n'affiche que les kWh (pas de coût du cycle) ; `display: cost` n'affiche que les coûts : la conso du cycle disparaît et, avec `energy_period`, la tuile de la période devient son coût (« Coût du jour », « Coût sur 7 jours »…) (conso × `price_per_kwh`). Sans prix valide, les kWh restent affichés. Par défaut, les deux.
 
 ```yaml
 type: custom:appliance-dishwasher-card

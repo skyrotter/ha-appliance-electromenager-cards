@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.47.0";
+const VERSION = "1.48.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -220,6 +220,12 @@ const STRINGS = {
     "cost_day": "Cost today",
     "cost_week": "Cost this week",
     "cost_month": "Cost this month",
+    "energy_24h": "Last 24 hours",
+    "energy_7d": "Last 7 days",
+    "energy_30d": "Last 30 days",
+    "cost_24h": "Cost last 24 h",
+    "cost_7d": "Cost last 7 days",
+    "cost_30d": "Cost last 30 days",
     "f_display": "Consumption shown as (kWh, cost or both)",
     "f_tap_action": "Tap action (illustration)",
     "f_hold_action": "Hold action (illustration)",
@@ -497,6 +503,12 @@ const STRINGS = {
     "cost_day": "Kosten heute",
     "cost_week": "Kosten diese Woche",
     "cost_month": "Kosten diesen Monat",
+    "energy_24h": "Letzte 24 Stunden",
+    "energy_7d": "Letzte 7 Tage",
+    "energy_30d": "Letzte 30 Tage",
+    "cost_24h": "Kosten letzte 24 h",
+    "cost_7d": "Kosten letzte 7 Tage",
+    "cost_30d": "Kosten letzte 30 Tage",
     "f_display": "Verbrauch anzeigen als (kWh, Kosten oder beides)",
     "f_tap_action": "Tipp-Aktion (Illustration)",
     "f_hold_action": "Halte-Aktion (Illustration)",
@@ -774,6 +786,12 @@ const STRINGS = {
     "cost_day": "Coût du jour",
     "cost_week": "Coût de la semaine",
     "cost_month": "Coût du mois",
+    "energy_24h": "24 dernières heures",
+    "energy_7d": "7 derniers jours",
+    "energy_30d": "30 derniers jours",
+    "cost_24h": "Coût sur 24 h",
+    "cost_7d": "Coût sur 7 jours",
+    "cost_30d": "Coût sur 30 jours",
     "f_display": "Affichage de la conso (kWh, € ou les deux)",
     "f_tap_action": "Action au clic sur l'illustration",
     "f_hold_action": "Action à l'appui long sur l'illustration",
@@ -896,6 +914,12 @@ const STRINGS = {
     "cost_day": "Kostnad i dag",
     "cost_week": "Kostnad denne uken",
     "cost_month": "Kostnad denne måneden",
+    "energy_24h": "Siste 24 timer",
+    "energy_7d": "Siste 7 dager",
+    "energy_30d": "Siste 30 dager",
+    "cost_24h": "Kostnad siste 24 t",
+    "cost_7d": "Kostnad siste 7 dager",
+    "cost_30d": "Kostnad siste 30 dager",
     "f_display": "Forbruk vist som (kWh, kostnad eller begge)",
     "f_tap_action": "Trykkhandling (illustrasjon)",
     "f_hold_action": "Holdhandling (illustrasjon)",
@@ -1328,6 +1352,12 @@ const STRINGS = {
     "cost_day": "Kosten vandaag",
     "cost_week": "Kosten deze week",
     "cost_month": "Kosten deze maand",
+    "energy_24h": "Afgelopen 24 uur",
+    "energy_7d": "Afgelopen 7 dagen",
+    "energy_30d": "Afgelopen 30 dagen",
+    "cost_24h": "Kosten afgelopen 24 uur",
+    "cost_7d": "Kosten afgelopen 7 dagen",
+    "cost_30d": "Kosten afgelopen 30 dagen",
     "f_display": "Verbruik tonen als (kWh, kosten of beide)",
     "f_tap_action": "Tikactie (illustratie)",
     "f_hold_action": "Vasthoudactie (illustratie)",
@@ -1605,6 +1635,12 @@ const STRINGS = {
     "cost_day": "Cost azi",
     "cost_week": "Cost săptămâna aceasta",
     "cost_month": "Cost luna aceasta",
+    "energy_24h": "Ultimele 24 de ore",
+    "energy_7d": "Ultimele 7 zile",
+    "energy_30d": "Ultimele 30 de zile",
+    "cost_24h": "Cost ultimele 24 h",
+    "cost_7d": "Cost ultimele 7 zile",
+    "cost_30d": "Cost ultimele 30 de zile",
     "f_display": "Consum afișat ca (kWh, cost sau ambele)",
     "f_tap_action": "Acțiune la atingere (ilustrație)",
     "f_hold_action": "Acțiune la apăsare lungă (ilustrație)",
@@ -1882,6 +1918,12 @@ const STRINGS = {
     "cost_day": "Стоимость сегодня",
     "cost_week": "Стоимость за неделю",
     "cost_month": "Стоимость за месяц",
+    "energy_24h": "За 24 часа",
+    "energy_7d": "За 7 дней",
+    "energy_30d": "За 30 дней",
+    "cost_24h": "Стоимость за 24 ч",
+    "cost_7d": "Стоимость за 7 дней",
+    "cost_30d": "Стоимость за 30 дней",
     "f_display": "Показывать расход как (кВт·ч, стоимость или оба)",
     "f_tap_action": "Действие при нажатии (иллюстрация)",
     "f_hold_action": "Действие при удержании (иллюстрация)",
@@ -4174,6 +4216,10 @@ const isOn = (st) => !!st && String(st.state).toLowerCase() === "on";
 /* ------------------------------------------------------------------ */
 let SEQ = 0;
 
+// energy_period : périodes calendaires, puis glissantes (durée en jours)
+const ROLLING = { "24h": 1, "7d": 7, "30d": 30 };
+const PERIODS = ["day", "week", "month", ...Object.keys(ROLLING)];
+
 class ApplianceCardBase extends HTMLElement {
   static get kind() { return "washer"; }
   static getConfigForm() { return buildForm(this.kind); }
@@ -4307,15 +4353,17 @@ class ApplianceCardBase extends HTMLElement {
     hass.callService(["switch", "input_boolean", "light", "fan", "humidifier"].includes(dom) ? dom : "homeassistant", "toggle", { entity_id: sw.id });
   }
 
-  // energy_period (day / week / month) : consommation de la période d'après les statistiques de Home Assistant
-  // (même calcul que le tableau de bord Énergie), relue au plus toutes les 5 min ou quand le compteur bouge
+  // energy_period : consommation de la période d'après les statistiques de Home Assistant,
+  // calendaire (day / week / month, comme le tableau de bord Énergie) ou glissante (24h / 7d / 30d),
+  // relue au plus toutes les 5 min ou quand le compteur bouge
   _fetchPeriod() {
     const c = this._config, hass = this._hass, per = c.energy_period;
-    if (!["day", "week", "month"].includes(per) || !c.energy || !hass || typeof hass.callWS !== "function") return;
+    if (!PERIODS.includes(per) || !c.energy || !hass || typeof hass.callWS !== "function") return;
     const st = hass.states[c.energy], sig = `${per}|${c.energy}|${st ? st.state : ""}`, now = Date.now();
     if (this._perBusy || (sig === this._perSig && now - (this._perAt || 0) < 300000) || (this._perAt && now - this._perAt < 60000)) return;
     this._perBusy = true; this._perSig = sig; this._perAt = now;
-    hass.callWS({ type: "recorder/statistic_during_period", statistic_id: c.energy, calendar: { period: per }, types: ["change"], units: { energy: "kWh" } })
+    const win = ROLLING[per] ? { rolling_window: { duration: { days: ROLLING[per] } } } : { calendar: { period: per } };
+    hass.callWS({ type: "recorder/statistic_during_period", statistic_id: c.energy, ...win, types: ["change"], units: { energy: "kWh" } })
       .then((r) => { this._perKwh = r && Number.isFinite(r.change) ? r.change : null; })
       .catch(() => { this._perKwh = null; })
       .finally(() => { this._perBusy = false; if (this._hass) this._render(this._compute()); });
@@ -5306,7 +5354,7 @@ class ApplianceCardBase extends HTMLElement {
       try { return new Intl.NumberFormat(loc(hass), { style: "currency", currency: cur, minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x); }
       catch (e) { return `${fmtNum(hass, x, 2, 2)} ${cur}`; }
     };
-    const per = ["day", "week", "month"].includes(c.energy_period) && this._perKwh != null ? c.energy_period : null;
+    const per = PERIODS.includes(c.energy_period) && this._perKwh != null ? c.energy_period : null;
     if (m.energy && per && !dual && !solar) {
       if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.energy);
       // coût de la période (mode € ou les deux) : conso de la période × prix du kWh actuel
@@ -5423,7 +5471,7 @@ function buildForm(kind) {
             { name: "last_cycle", selector: { boolean: {} } },
           ] : []),
           ...(d.fields.includes("energy") ? [{ name: "energy_period", selector: { select: { mode: "dropdown", options: [
-            { value: "", label: tr(null, "energy") }, ...["day", "week", "month"].map((value) => ({ value, label: tr(null, `energy_${value}`) }))] } } }] : []),
+            { value: "", label: tr(null, "energy") }, ...PERIODS.map((value) => ({ value, label: tr(null, `energy_${value}`) }))] } } }] : []),
           ...(d.fields.includes("energy") || ["washer", "dryer", "dishwasher"].includes(kind) ? [
             { name: "price_per_kwh", selector: { number: { min: 0, max: 2, step: 0.0001, mode: "box" } } },
             { name: "display", selector: { select: { mode: "dropdown", options: [

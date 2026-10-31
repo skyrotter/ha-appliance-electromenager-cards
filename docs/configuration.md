@@ -11,10 +11,10 @@ All cards have a visual editor. When added from the card picker, entities are de
 | `power` | Power sensor (W or kW) |
 | `energy` | Energy sensor (Wh, kWh or MWh, shown in kWh) — e.g. today's consumption |
 | `cost` | Cost sensor (any currency) |
-| `energy_period` | `day`, `week` or `month`: show the energy used in the current period instead of the raw counter, computed by Home Assistant from the long-term statistics of `energy` (like the Energy dashboard), so a cumulative smart-plug counter works without a Utility Meter. Needs a sensor with statistics (`state_class: total_increasing`); otherwise the counter is shown |
+| `energy_period` | `day`, `week` or `month` (calendar: since midnight, Monday, the 1st), or `24h`, `7d`, `30d` (rolling: last 24 hours, 7 days, 30 days): show the energy used in that period instead of the raw counter, computed by Home Assistant from the long-term statistics of `energy` (like the Energy dashboard), so a cumulative smart-plug counter works without a Utility Meter. Needs a sensor with statistics (`state_class: total_increasing`); otherwise the counter is shown |
 | `last_cycle` | Washer, dryer, dishwasher: `true` shows, between cycles, the last cycle start → end, duration, energy and cost, read from the history of `power` (last 4 days). `cycle_gap` (min, default 15): drops below `threshold` shorter than this stay in the same cycle |
 | `price_per_kwh` | Price of a kWh (number or tariff entity) for the last cycle cost and, with `display: cost`, the period cost |
-| `display` | How consumption is shown when `price_per_kwh` is set: `energy` (kWh only, hides the cycle cost), `cost` (money only: hides the cycle energy and, with `energy_period`, shows the cost of the day / week / month instead of its kWh). Default: both |
+| `display` | How consumption is shown when `price_per_kwh` is set: `energy` (kWh only, hides the cycle cost), `cost` (money only: hides the cycle energy and, with `energy_period`, shows the cost of the period instead of its kWh). Default: both |
 | `switch` | Switch controlled by the power button (button hidden if unset) |
 | `threshold` | Power above which the appliance is considered running (W). Defaults: 10 (washer/dryer/dishwasher), 20 (fridge), 50 (others) |
 | `heating_power` | Washer and dishwasher: power draw threshold (W) above which the cycle phase is inferred as `heat` (default: `1000`) |

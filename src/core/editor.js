@@ -78,7 +78,7 @@ function buildForm(kind) {
             { name: "last_cycle", selector: { boolean: {} } },
           ] : []),
           ...(d.fields.includes("energy") ? [{ name: "energy_period", selector: { select: { mode: "dropdown", options: [
-            { value: "", label: tr(null, "energy") }, ...["day", "week", "month"].map((value) => ({ value, label: tr(null, `energy_${value}`) }))] } } }] : []),
+            { value: "", label: tr(null, "energy") }, ...PERIODS.map((value) => ({ value, label: tr(null, `energy_${value}`) }))] } } }] : []),
           ...(d.fields.includes("energy") || ["washer", "dryer", "dishwasher"].includes(kind) ? [
             { name: "price_per_kwh", selector: { number: { min: 0, max: 2, step: 0.0001, mode: "box" } } },
             { name: "display", selector: { select: { mode: "dropdown", options: [
