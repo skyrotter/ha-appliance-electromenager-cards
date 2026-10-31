@@ -44,7 +44,7 @@ labels:
 
 | Card | Tile keys |
 |---|---|
-| Washer, dryer, fridge, oven… (all appliance cards) | `power`, `energy`, `cost`, `remaining`, `temperature`, `target`, `fridge_temp`, `freezer_temp`, `zone_top`, `zone_bottom`, `humidity`, `level`, `pellets`, `keg`, `battery`, `water`, `today`, `speed`, `progress`, `nozzle`, `bed`; water heater: `grid`, `energy_grid`, `solar_surplus`, `energy_solar`; washer, dryer, dishwasher: `last_cycle`, `cycle_duration`, `cycle_energy`, `cycle_cost`; solar: `production`, `today`, `savings`, `of_peak` |
+| Washer, dryer, fridge, oven… (all appliance cards) | `power`, `energy`, `cost`, `remaining`, `temperature`, `target`, `fridge_temp`, `freezer_temp`, `zone_top`, `zone_bottom`, `humidity`, `level`, `pellets`, `keg`, `battery`, `water`, `today`, `speed`, `progress`, `nozzle`, `bed`; water heater: `grid`, `energy_grid`, `solar_surplus`, `energy_solar`; washer, dryer, dishwasher: `last_cycle`, `cycle_duration`, `cycle_energy`, `cycle_cost`; wet & dry vacuum: `clean_water`, `dirty_water`; solar: `production`, `today`, `savings`, `of_peak` |
 | Aquarium | `power`, `energy`, `temp`, `cost` |
 | Linky | `power`, `active`, `hp`, `hc`, `injection`, `injection_power`, `tariff`, `cost` |
 | Battery | `power`, `energy`, `temp` |

@@ -378,6 +378,16 @@ const SCEN = [
       checks(ctl, [['Allumée', 'light.demo_garland', true]]);
       range(ctl, 'Puissance', 'sensor.garland_power', 0, 30, 0.5, 9, 'W', W);
     } },
+  { kind: 'wet-vacuum', title: 'Aspirateur laveur',
+    cfg: { entity: 'sensor.wv_status', battery_level: 'sensor.wv_battery', clean_water: 'sensor.wv_clean', dirty_water: 'sensor.wv_dirty', mode: 'select.wv_mode', power: 'sensor.wv_dock_power' },
+    build(ctl) {
+      select(ctl, 'État', 'sensor.wv_status', [['cleaning', 'Lavage / Cleaning'], ['self_cleaning', 'Auto-nettoyage / Self-cleaning'], ['drying', 'Séchage / Drying'], ['charging', 'En charge / Charging'], ['charged', 'Chargé / Charged'], ['error', 'Erreur / Error'], ['unavailable', 'Indisponible']], 'cleaning');
+      range(ctl, 'Batterie', 'sensor.wv_battery', 0, 100, 1, 72, '%', { unit_of_measurement: '%', device_class: 'battery' });
+      range(ctl, 'Eau propre', 'sensor.wv_clean', 0, 100, 1, 60, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Eau sale', 'sensor.wv_dirty', 0, 100, 1, 30, '%', { unit_of_measurement: '%' });
+      set('select.wv_mode', 'Auto', { options: ['Auto', 'Max', 'Aspiration'] });
+      set('sensor.wv_dock_power', 0, W);
+    } },
   { kind: 'dehumidifier', title: 'Déshumidificateur',
     cfg: { power: 'sensor.dehum_power', humidity: 'sensor.dehum_humidity', target_humidity: 'input_number.dehum_target', temperature: 'sensor.dehum_temp', tank_full: 'binary_sensor.dehum_tank', fan_speed: 'select.dehum_fan', mode: 'select.dehum_mode', energy: 'sensor.dehum_energy' },
     build(ctl) {

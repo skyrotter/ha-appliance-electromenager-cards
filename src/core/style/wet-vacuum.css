@@ -1,0 +1,62 @@
+/* ---------- wet & dry vacuum (aspirateur laveur) ---------- */
+.k-wet_vacuum svg { overflow: visible; }
+.k-wet_vacuum .lcd { font-size: 5px; }
+/* niveaux : --clean et --dirty (0 à 1), posés par la carte */
+.wv-clean { transform: translateY(calc((1 - var(--clean, .7)) * 30px)); transition: transform .8s ease; }
+.wv-dirty-g { transform: translateY(calc((1 - var(--dirty, .2)) * 20px)); transition: transform .8s ease; }
+.wv-ring { stroke: #3ddc84; transition: stroke .3s, stroke-dasharray .6s; }
+.wv-btn { fill: #3a424b; }
+.wv-led { stroke: #3a424b; }
+.wv-bolt { fill: #6b737c; }
+.wv-tray { opacity: .25; }
+.wv-wet, .wv-drops, .wv-air, .wv-bub { opacity: 0; }
+.wv-dock { transition: opacity .6s; }
+.wv-unit { transform-box: view-box; transform-origin: 60px 127px; }
+
+/* lavage : la base disparaît, l'appareil va et vient, le rouleau tourne et mouille le sol */
+.k-wet_vacuum.st-wv_cleaning .wv-dock { opacity: 0; }
+.k-wet_vacuum.st-wv_cleaning .wv-unit { animation: wv-mop 3.2s ease-in-out infinite; }
+.k-wet_vacuum.st-wv_cleaning .wv-roll { animation: wv-roll .35s linear infinite; }
+.k-wet_vacuum.st-wv_cleaning .wv-led { stroke: #7fd0ff; filter: drop-shadow(0 0 1.6px #38a8ff); }
+.k-wet_vacuum.st-wv_cleaning .wv-btn { fill: #38a8ff; }
+.k-wet_vacuum.st-wv_cleaning .wv-wet { opacity: .55; animation: wv-wet 3.2s ease-in-out infinite; }
+.k-wet_vacuum.st-wv_cleaning .wv-drops { animation: wv-drop 1s ease-in infinite; }
+.k-wet_vacuum.st-wv_cleaning .wv-swirl, .k-wet_vacuum.st-wv_selfclean .wv-swirl { animation: wv-swirl 1.4s linear infinite; }
+.k-wet_vacuum.st-wv_cleaning .wv-ring { stroke: #38a8ff; }
+
+/* auto-nettoyage sur la base : rouleau rapide, eau et bulles dans le bac */
+.k-wet_vacuum.st-wv_selfclean .wv-roll { animation: wv-roll .2s linear infinite; }
+.k-wet_vacuum.st-wv_selfclean .wv-tray { opacity: .9; animation: ac-pulse 1.2s ease-in-out infinite; }
+.k-wet_vacuum.st-wv_selfclean .wv-bub { opacity: 1; }
+.k-wet_vacuum.st-wv_selfclean .wv-bub circle { animation: wv-bub 1.6s ease-out infinite; }
+.wv-bub circle:nth-child(2) { animation-delay: -.4s !important; } .wv-bub circle:nth-child(3) { animation-delay: -.9s !important; }
+.wv-bub circle:nth-child(4) { animation-delay: -1.2s !important; } .wv-bub circle:nth-child(5) { animation-delay: -.6s !important; }
+.k-wet_vacuum.st-wv_selfclean .wv-ring { stroke: #38d9ff; animation: wv-spin 1.2s linear infinite; }
+
+/* séchage à air chaud : ondes orange autour de la tête, rouleau lent */
+.k-wet_vacuum.st-wv_drying .wv-roll { animation: wv-roll 2.4s linear infinite; }
+.k-wet_vacuum.st-wv_drying .wv-air { opacity: 1; }
+.k-wet_vacuum.st-wv_drying .wv-air path { animation: wv-air 1.8s ease-in infinite; }
+.wv-air path:nth-child(2) { animation-delay: -.6s !important; } .wv-air path:nth-child(3) { animation-delay: -1.1s !important; } .wv-air path:nth-child(4) { animation-delay: -1.5s !important; }
+.k-wet_vacuum.st-wv_drying .wv-ring { stroke: #ff9f43; }
+
+/* charge : éclair et anneau vert qui pulse */
+.k-wet_vacuum.st-charging .wv-bolt { fill: #43e08a; filter: drop-shadow(0 0 1.4px #43e08a); animation: ac-pulse 1.2s ease-in-out infinite; }
+.k-wet_vacuum.st-charging .wv-ring { stroke: #43e08a; animation: ac-pulse 1.6s ease-in-out infinite; }
+.k-wet_vacuum.st-charged .wv-bolt { fill: #43e08a; }
+.k-wet_vacuum.st-off .lcd, .k-wet_vacuum.st-unavailable .lcd { fill: #24404f !important; }
+
+/* alertes : réservoir propre vide, bac sale plein, batterie faible */
+.k-wet_vacuum.wv-empty .wv-clean { fill: var(--ac-alert, #ff5252); }
+.k-wet_vacuum.wv-empty .wv-cl-frame, .k-wet_vacuum.wv-full .wv-ring, .k-wet_vacuum.wv-low .wv-ring { stroke: var(--ac-alert, #ff5252); }
+.k-wet_vacuum.wv-full .wv-dirty { fill: #7a5b3c; }
+.k-wet_vacuum.wv-full .lcd, .k-wet_vacuum.wv-low .lcd { fill: var(--ac-alert, #ff5252) !important; }
+
+@keyframes wv-mop { 0%, 100% { transform: translateX(-9px) rotate(-2deg); } 50% { transform: translateX(9px) rotate(2deg); } }
+@keyframes wv-roll { to { transform: translateX(5px); } }
+@keyframes wv-wet { 0%, 100% { opacity: .25; } 50% { opacity: .6; } }
+@keyframes wv-drop { 0% { opacity: 0; transform: translateY(-2px); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(3px); } }
+@keyframes wv-swirl { to { transform: translateX(-6px); } }
+@keyframes wv-bub { 0% { opacity: 0; transform: translateY(2px); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(-9px); } }
+@keyframes wv-spin { 0% { stroke-dasharray: 20 80; stroke-dashoffset: 0; } 100% { stroke-dasharray: 20 80; stroke-dashoffset: -100; } }
+@keyframes wv-air { 0% { opacity: 0; transform: translateY(4px); } 30% { opacity: .9; } 100% { opacity: 0; transform: translateY(-10px); } }

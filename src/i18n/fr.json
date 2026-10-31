@@ -253,7 +253,22 @@
     "cycle_cost": "Coût du cycle",
     "yesterday": "hier",
     "f_last_cycle": "Afficher le dernier cycle (début, fin, durée, conso, coût)",
-    "f_price_per_kwh": "Prix du kWh (coût du dernier cycle)"
+    "f_price_per_kwh": "Prix du kWh (coût du dernier cycle)",
+    "wet_vacuum": "Aspirateur laveur",
+    "wv_cleaning": "Lavage",
+    "wv_selfclean": "Auto-nettoyage",
+    "wv_drying": "Séchage",
+    "clean_water_empty": "Réservoir d'eau propre vide",
+    "dirty_water_full": "Bac d'eau sale plein",
+    "battery_low": "Batterie faible",
+    "error": "Erreur",
+    "clean_water": "Eau propre",
+    "dirty_water": "Eau sale",
+    "tank_empty_short": "Vide",
+    "f_clean_water": "Réservoir d'eau propre (% ou capteur binaire)",
+    "f_dirty_water": "Bac d'eau sale (% ou capteur binaire)",
+    "f_selfclean_threshold": "Auto-nettoyage au-dessus de (W, prise de la base)",
+    "f_battery_low": "Batterie faible sous (%)"
   },
   "aquarium": {
     "power": "Puissance",

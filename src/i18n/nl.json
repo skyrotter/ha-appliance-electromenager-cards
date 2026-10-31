@@ -253,7 +253,22 @@
     "cycle_cost": "Cycluskosten",
     "yesterday": "gisteren",
     "f_last_cycle": "Laatste cyclus tonen (start, einde, duur, verbruik, kosten)",
-    "f_price_per_kwh": "Prijs per kWh (kosten laatste cyclus)"
+    "f_price_per_kwh": "Prijs per kWh (kosten laatste cyclus)",
+    "wet_vacuum": "Nat-droogstofzuiger",
+    "wv_cleaning": "Reinigen",
+    "wv_selfclean": "Zelfreiniging",
+    "wv_drying": "Drogen",
+    "clean_water_empty": "Schoonwatertank leeg",
+    "dirty_water_full": "Vuilwatertank vol",
+    "battery_low": "Batterij bijna leeg",
+    "error": "Fout",
+    "clean_water": "Schoon water",
+    "dirty_water": "Vuil water",
+    "tank_empty_short": "Leeg",
+    "f_clean_water": "Schoonwatertank (% of binaire sensor)",
+    "f_dirty_water": "Vuilwatertank (% of binaire sensor)",
+    "f_selfclean_threshold": "Zelfreiniging boven (W, stekker van het station)",
+    "f_battery_low": "Batterij bijna leeg onder (%)"
   },
   "aquarium": {
     "power": "Vermogen",

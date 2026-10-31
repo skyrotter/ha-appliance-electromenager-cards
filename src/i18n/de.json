@@ -253,7 +253,22 @@
     "cycle_cost": "Zykluskosten",
     "yesterday": "gestern",
     "f_last_cycle": "Letzten Zyklus anzeigen (Start, Ende, Dauer, Verbrauch, Kosten)",
-    "f_price_per_kwh": "Preis pro kWh (Kosten des letzten Zyklus)"
+    "f_price_per_kwh": "Preis pro kWh (Kosten des letzten Zyklus)",
+    "wet_vacuum": "Nass-Trockensauger",
+    "wv_cleaning": "Reinigung",
+    "wv_selfclean": "Selbstreinigung",
+    "wv_drying": "Trocknung",
+    "clean_water_empty": "Frischwassertank leer",
+    "dirty_water_full": "Schmutzwassertank voll",
+    "battery_low": "Akku schwach",
+    "error": "Fehler",
+    "clean_water": "Frischwasser",
+    "dirty_water": "Schmutzwasser",
+    "tank_empty_short": "Leer",
+    "f_clean_water": "Frischwassertank (% oder Binärsensor)",
+    "f_dirty_water": "Schmutzwassertank (% oder Binärsensor)",
+    "f_selfclean_threshold": "Selbstreinigung über (W, Steckdose der Station)",
+    "f_battery_low": "Akku schwach unter (%)"
   },
   "aquarium": {
     "power": "Leistung",

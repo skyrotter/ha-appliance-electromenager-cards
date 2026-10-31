@@ -253,7 +253,22 @@
 "cycle_cost": "Sykluskostnad",
 "yesterday": "i går",
 "f_last_cycle": "Vis siste syklus (start, slutt, varighet, forbruk, kostnad)",
-"f_price_per_kwh": "Pris per kWh (kostnad for siste syklus)"
+"f_price_per_kwh": "Pris per kWh (kostnad for siste syklus)",
+"wet_vacuum": "Våt- og tørrstøvsuger",
+"wv_cleaning": "Vasker",
+"wv_selfclean": "Selvrens",
+"wv_drying": "Tørker",
+"clean_water_empty": "Rentvannstank tom",
+"dirty_water_full": "Skittentvannstank full",
+"battery_low": "Lavt batteri",
+"error": "Feil",
+"clean_water": "Rent vann",
+"dirty_water": "Skittent vann",
+"tank_empty_short": "Tom",
+"f_clean_water": "Rentvannstank (% eller binærsensor)",
+"f_dirty_water": "Skittentvannstank (% eller binærsensor)",
+"f_selfclean_threshold": "Selvrens over (W, stasjonens kontakt)",
+"f_battery_low": "Lavt batteri under (%)"
 },
 "aquarium": {
 "power": "Effekt",
