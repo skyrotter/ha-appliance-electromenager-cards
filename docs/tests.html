@@ -141,6 +141,8 @@ c=card('wine-cooler',{power:'sensor.p',door:'binary_sensor.d'},[mk('sensor.p',70
 c=card('towel-dryer',{power:'sensor.p'},[mk('sensor.p',500,W)]); ok('towel dryer heating',has(c,'st-heating')&&has(c,'active'),c.wrap.className);
 c=card('towel-dryer',{switch:'switch.t',power:'sensor.p'},[mk('switch.t','on'),mk('sensor.p',1,W)]); ok('towel dryer at target',has(c,'st-at_target'),c.wrap.className);
 c=card('towel-dryer',{switch:'switch.t',power:'sensor.p'},[mk('switch.t','off'),mk('sensor.p',0,W)]); ok('towel dryer off',has(c,'st-off'),c.wrap.className);
+c=card('towel-dryer',{entity:'climate.t'},[mk('climate.t','heat',{hvac_action:'heating',current_temperature:21.4,temperature:22.5})]);
+{const st=c.sr.getElementById('stats').textContent; ok('towel dryer temperature and target to one decimal, like the radiator (#157)',/21,4/.test(st)&&/22,5/.test(st)&&c.lcd()==='23°',st+' '+c.lcd());}
 c=card('towel-dryer',{power:'sensor.p',target_temperature:'sensor.tg'},[mk('sensor.p',500,W),mk('sensor.tg',22,T)]); ok('towel dryer lcd target',c.lcd()==='22°',c.lcd());
 c=card('server-rack',{power:'sensor.p',max_power:200},[mk('sensor.p',100,W)]); ok('rack online + lcd + load',has(c,'st-online')&&c.lcd()==='100W'&&c.wrap.style.getPropertyValue('--load')==='0.50',c.wrap.className+' '+c.lcd());
 c=card('server-rack',{power:'sensor.p'},[mk('sensor.p',10,W)]); ok('rack standby',has(c,'st-standby'),c.wrap.className);
