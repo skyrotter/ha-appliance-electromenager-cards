@@ -10,9 +10,23 @@ window.customCards = window.customCards || [];
  * type: custom:appliance-battery-card
  */
 const I18N_BAT = /*@i18n battery*/{};
-// Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
-const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
+// Home Assistant language, used when `language` option is not explicitly set
+const lang = (h) => { 
+  const fullLang = (h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en';
+  
+  // 1. Check if the exact full language tag exists in the translations object
+  if (I18N_BAT[fullLang]) return fullLang;
+  
+  // 2. Normalize and check for variations (e.g., 'sr-latn' or 'sr_latn')
+  const formatted = fullLang.replace('_', '-');
+  const normalizedLatn = formatted.toLowerCase() === 'sr-latn' ? 'sr-Latn' : formatted;
+  if (I18N_BAT[normalizedLatn]) return normalizedLatn;
 
+  // 3. Fallback to 2-letter code
+  let l = fullLang.toLowerCase().slice(0, 2);
+  if (l === 'no' || l === 'nn') l = 'nb'; // Norwegian: no / nn → nb (bokmål)
+  return l;
+};
 class ApplianceBatteryCard extends HTMLElement {
   static getStubConfig(hass) {
     // batterie domestique : niveau (device_class battery) et puissance dont le nom évoque une batterie
