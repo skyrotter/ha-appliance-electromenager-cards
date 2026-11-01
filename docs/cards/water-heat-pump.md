@@ -2,7 +2,7 @@
 
 `custom:appliance-water-heat-pump-card`
 
-**Water heat pump** (water-to-water or ground source: borehole, ground loop, well): no fan and no air, unlike the outdoor unit of the *Heat pump* card. The compressor vibrates between the evaporator (source loop, going down into the ground on the left) and the condenser (heating loop to a radiator on the right). The flow/return pipes turn from blue (20 °C) to red (55 °C) and the water flows while the flow rate is above zero (or while the compressor runs, without `entity_flow_rate`). The COP comes from `entity_cop`, or is computed from a heat meter (`entity_heat_power`) and an electricity meter (`entity_power`). Without a status entity, the compressor runs above `threshold`.
+**Water heat pump** (water-to-water or ground source: borehole, ground loop, well): no fan and no air, unlike the outdoor unit of the *Heat pump* card. The compressor vibrates between the evaporator (source loop, going down into the ground on the left) and the condenser (heating loop to a radiator on the right). The flow/return pipes turn from blue (20 °C) to red (55 °C) and the water flows while the flow rate is above `flow_threshold` (zero by default; or while the compressor runs, without `entity_flow_rate`). The COP comes from `entity_cop`, or is computed from a heat meter (`entity_heat_power`) and an electricity meter (`entity_power`). Without a status entity, the compressor runs above `threshold`.
 
 ## Options
 
@@ -17,6 +17,7 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `entity_source_in_temp`
 - `entity_source_out_temp` (ground loop / well, optional)
 - `entity_flow_rate` (l/h or m³/h)
+- `flow_threshold` (flow at or below this counts as zero, in the unit of `entity_flow_rate`, default 0: heat meters often read a few l/h while the heat pump is idle)
 - `entity_energy`
 - `entity_heat_energy` (Wh, kWh or MWh, shown in kWh)
 - `entity_scop`
@@ -27,7 +28,7 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `buffer_tank` (true: the heat pump charges a buffer tank and the circulation pump feeds the emitters from it, even when the compressor is off; the flow rate, if set, is the heat pump side)
 - `entity_buffer_temp` (tank temperature)
 - `entity_compressor` and `entity_source_pump` (optional relays: binary_sensor, switch or a numeric sensor, running above 0; they replace the power steps)
-- `heating_delay` (s, power must stay above `threshold` this long before showing heating, default 0: ignores short pump runs during standby)
+- `heating_delay` (s, power must stay above `threshold` this long before showing heating, default 0: ignores short pump runs during standby; when the card opens during a run, the recorder history of `entity_power` tells how long it has already been above)
 - `show_status`
 - `show_power`
 - `show_heat`

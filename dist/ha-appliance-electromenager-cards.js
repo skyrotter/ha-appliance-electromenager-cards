@@ -12362,6 +12362,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
             { name: 'source_threshold', selector: { number: { min: 0, max: 5000, step: 5, mode: 'box', unit_of_measurement: 'W' } } },
             { name: 'compressor_threshold', selector: { number: { min: 0, max: 5000, step: 5, mode: 'box', unit_of_measurement: 'W' } } },
             { name: 'heating_delay', selector: { number: { min: 0, max: 600, step: 1, mode: 'box', unit_of_measurement: 's' } } },
+            { name: 'flow_threshold', selector: { number: { min: 0, max: 10000, step: 1, mode: 'box' } } },
           ] },
           { type: 'grid', name: '', schema: SHOW.map((name) => ({ name, selector: { boolean: {} }, default: true })) },
           window.applianceTempField,
@@ -12384,14 +12385,37 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
     // (ex. pompes de puits et du primaire qui tournent ~20 s par jour pendant la veille).
     _sustained(above) {
       const d = (+this._c.heating_delay || 0) * 1000;
-      if (!above) { this._since = null; clearTimeout(this._dt); this._dt = null; return false; }
+      if (!above) { this._since = null; this._sinceQ = (this._sinceQ || 0) + 1; clearTimeout(this._dt); this._dt = null; return false; }
       if (!d) return true;
       const now = Date.now();
-      if (this._since == null) this._since = Math.min(now, Date.parse((this._st(this._c.entity_power) || {}).last_changed) || now);
+      if (this._since == null) {
+        this._since = Math.min(now, Date.parse((this._st(this._c.entity_power) || {}).last_changed) || now);
+        if (this._since + d > now) this._sinceFromHistory(d);
+      }
       const left = this._since + d - now;
       if (left <= 0) return true;
       if (!this._dt) this._dt = setTimeout(() => { this._dt = null; if (this._hass) this._render(); }, left + 50);
       return false;
+    }
+    // Carte ouverte ou recréée pendant la chauffe : last_changed d'un capteur rafraîchi souvent (toutes les 15 s…)
+    // ne dit pas depuis quand la puissance dépasse le seuil ; l'historique de la fenêtre heating_delay le dit.
+    _sinceFromHistory(d) {
+      const h = this._hass, id = this._c.entity_power, q = this._sinceQ = (this._sinceQ || 0) + 1;
+      if (!h || typeof h.callWS !== 'function' || !id) return;
+      const now = Date.now(), u = ((this._st(id) || {}).attributes || {}).unit_of_measurement || '';
+      const k = /^kw$/i.test(u) ? 1000 : /^mw$/i.test(u) ? 1e6 : 1;
+      h.callWS({ type: 'history/history_during_period', start_time: new Date(now - d).toISOString(), end_time: new Date(now).toISOString(),
+        entity_ids: [id], minimal_response: true, no_attributes: true, significant_changes_only: false })
+        .then((r) => {
+          if (q !== this._sinceQ || this._since == null) return;
+          const pts = ((r && r[id]) || []).map((p) => ({ t: (p.lu ?? p.lc) * 1000, v: parseFloat(p.s) * k })).filter((p) => Number.isFinite(p.t));
+          if (!pts.length) return;
+          // début de la fenêtre si tout est au-dessus du seuil, sinon le point qui suit le dernier passage dessous
+          let since = Math.min(pts[0].t, now - d);
+          pts.forEach((p, i) => { if (!(p.v > this._c.threshold)) since = i + 1 < pts.length ? pts[i + 1].t : now; });
+          if (since < this._since) { this._since = since; clearTimeout(this._dt); this._dt = null; if (this._hass) this._render(); }
+        })
+        .catch(() => {});
     }
     getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
@@ -12468,13 +12492,15 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       const src = c.entity_source_pump ? this._on(c.entity_source_pump)
         : c.source_threshold != null && !isNaN(pw) ? pw > c.source_threshold || run : run;
       const rate = this._num(c.entity_flow_rate);
+      // débit au-dessus de flow_threshold (unité du capteur) : un compteur de chaleur lit souvent quelques l/h à l'arrêt
+      const flowing = rate > (+c.flow_threshold || 0);
       // ballon tampon : la PAC charge le ballon (compresseur, ou débit côté PAC s'il est mesuré)
       // et le circulateur distribue l'eau du ballon vers les émetteurs, compresseur arrêté ou non
       if (c.buffer_tank) {
-        const chg = c.entity_flow_rate ? rate > 0 : run;
+        const chg = c.entity_flow_rate ? flowing : run;
         return { st, run, src, chg, circ: pump, pw, heat, rate };
       }
-      const circ = c.entity_flow_rate ? rate > 0 : pump || heat > 0;
+      const circ = c.entity_flow_rate ? flowing : pump || heat > 0;
       return { st, run, src, chg: false, circ, pw, heat, rate };
     }
 
