@@ -577,6 +577,17 @@ const SCEN = [
       range(ctl, 'Puissance apparente', 'sensor.linky_sinsts', 0, 9500, 50, 2300, 'VA', { unit_of_measurement: 'VA', device_class: 'apparent_power' });
       set('sensor.linky_hp', 12543, KWH); set('sensor.linky_hc', 8321, KWH); set('sensor.linky_cost', 2.47, EUR);
     } },
+  { kind: 'linky', title: 'Compteur Linky monophasé HP/HC + injection solaire', lang: true,
+    cfg: { entity_power: 'sensor.linkym_sinsts', entity_hp: 'sensor.linkym_easf02', entity_hc: 'sensor.linkym_easf01', entity_tariff: 'sensor.linkym_ltarf',
+      entity_power_injection: 'sensor.linkym_sinsti', entity_injection: 'sensor.linkym_eait', subscribed_power: 9 },
+    build(ctl) {
+      const VA = { unit_of_measurement: 'VA', device_class: 'apparent_power' }, WH = { unit_of_measurement: 'Wh', device_class: 'energy' };
+      range(ctl, 'Puissance apparente', 'sensor.linkym_sinsts', 0, 9500, 50, 0, 'VA', VA);
+      range(ctl, 'Puissance injectée', 'sensor.linkym_sinsti', 0, 6000, 50, 1450, 'VA', VA);
+      select(ctl, 'Tarif (LTARF)', 'sensor.linkym_ltarf', [['HEURE PLEINE', 'Heures pleines'], ['HEURE CREUSE', 'Heures creuses']], 'HEURE PLEINE');
+      // index en Wh, comme les remontent la plupart des modules TIC : la carte les affiche en kWh
+      set('sensor.linkym_easf02', 8412337, WH); set('sensor.linkym_easf01', 5120884, WH); set('sensor.linkym_eait', 4310562, WH);
+    } },
   { kind: 'linky', title: 'Compteur Linky triphasé (15 kVA)', lang: true,
     cfg: { entity_power_l1: 'sensor.linky_sinsts1', entity_power_l2: 'sensor.linky_sinsts2', entity_power_l3: 'sensor.linky_sinsts3', entity_active_power: 'sensor.linky_active_power',
       entity_hp: 'sensor.linky3_hp', entity_hc: 'sensor.linky3_hc', subscribed_power: 15, hc_ranges: '01:00-07:00,12:30-14:30' },
