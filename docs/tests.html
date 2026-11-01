@@ -917,7 +917,14 @@ ok('card size / grid',typeof c.el.getCardSize()==='number'&&c.el.getGridOptions(
  c=card('christmas-tree',{entity:'light.l',multicolor:false,color:[0,0,255]},[mk('light.l','on')]);
  ok('tree single colour',[...c.sr.querySelectorAll('.xb')].every((e)=>e.style.fill==='rgb(0, 0, 255)'),c.sr.querySelector('.xb').style.fill);
  c=card('garden-spotlight',{entity_power:'sensor.p'},[mk('sensor.p',12,W)]);
- ok('power only -> on',cls(c)==='on',cls(c));}
+ ok('power only -> on',cls(c)==='on',cls(c));
+ c=card('garden-spotlight',{entity:'automation.a'},[mk('automation.a','on')]);
+ {let got=null; c.el.addEventListener('hass-more-info',(e)=>got=e.detail.entityId); c.sr.querySelector('.stage').click(); ok('light tap default -> more-info',got==='automation.a',got);}
+ c=card('garden-spotlight',{entity:'automation.a',tap_action:{action:'perform-action',perform_action:'automation.trigger',target:{entity_id:'automation.a'}}},[mk('automation.a','on')]);
+ {let mi=null,act=null; c.el.addEventListener('hass-more-info',(e)=>mi=e.detail.entityId); c.el.addEventListener('hass-action',(e)=>act=e.detail); c.sr.querySelector('.stage').click();
+  ok('light tap_action -> hass-action, no more-info',!mi&&act&&act.action==='tap'&&act.config.tap_action.perform_action==='automation.trigger',JSON.stringify(act));}
+ c=card('light-bulb',{entity:'light.l',tap_action:{action:'toggle'}},[mk('light.l','off')]);
+ c.sr.querySelector('.stage').click(); ok('light tap_action toggle -> light.toggle',JSON.stringify(c.h.calls[0])==='["light","toggle",{"entity_id":"light.l"}]',JSON.stringify(c.h.calls));}
 ok('no page errors',__errors.length===0,__errors.join('; '));
 // labels: custom tile names override translations, empty values fall back
 {const lbls=(c)=>[...c.sr.querySelectorAll('.lbl,.tile .l,.stat .l')].map(e=>e.textContent.trim());
