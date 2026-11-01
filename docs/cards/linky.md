@@ -14,7 +14,7 @@
         name: Bleu HP
     ```
   - **Export (solar)**: `entity_injection` (`EAIT`) and `entity_power_injection` (`SINSTI`) add their LCD pages and a "prod" LED, lit while power flows to the grid (`show_injection: false` hides them).
-  - **Three-phase**: the Linky cuts off phase by phase, at a third of the subscribed power (5 kVA per phase for 15 kVA). With `entity_power_l1`…`l3` (`SINSTS1`…`3`, in VA), each phase is compared to `subscribed_power / 3` and three bars show each phase (`show_phases: false` hides them). `phase_gauge` sets the gauge: `needles` (default) one coloured needle per phase, `cycle` L1 → L2 → L3 every 3 s, `max` the most loaded phase. In every mode, the overload alert follows the most loaded phase. Otherwise the gauge compares the total to the subscribed power.
+  - **Three-phase**: the Linky cuts off phase by phase, at a third of the subscribed power (5 kVA per phase for 15 kVA). With `entity_power_l1`…`l3` (`SINSTS1`…`3`, in VA), each phase is compared to `subscribed_power / 3` and three bars show each phase (`show_phases: false` hides them). `phase_gauge` sets the gauge: `needles` (default) one coloured needle per phase, `cycle` L1 → L2 → L3 every 3 s, `max` the most loaded phase. In every mode, the overload alert follows the most loaded phase. These entities are for three-phase meters only (at least two of them); a single-phase meter uses `entity_power`. A lone `entity_power_l1` is a misconfiguration: the card treats it as single-phase (whole subscribed power, used as `entity_power` when that is empty) rather than cutting off at a third. Otherwise the gauge compares the total to the subscribed power.
   - **Active power**: the Linky's TIC only gives apparent power (VA), which is what the cut-off limit uses, so the gauge stays in VA. For the actual consumption in W, set `entity_active_power`, e.g. a [Derivative](https://www.home-assistant.io/integrations/derivative/) helper (time unit: hours, so kWh gives kW; time window ~2 min) on a template sensor adding `entity_hp` + `entity_hc`. It is shown under the gauge and as an LCD page.
 
 ## Options
@@ -25,7 +25,7 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `entity_active_power` (W, optional)
 - `entity_power_l1`
 - `entity_power_l2`
-- `entity_power_l3` (VA per phase, three-phase)
+- `entity_power_l3` (VA per phase, three-phase meters only; single-phase: use `entity_power`)
 - `phase_gauge` (`needles` default, `cycle` or `max`)
 - `entity_hp`
 - `entity_hc` (indexes, kWh, Wh or MWh)
