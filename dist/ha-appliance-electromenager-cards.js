@@ -221,6 +221,7 @@ const STRINGS = {
     "f_heating_power": "Heating phase threshold (W)",
     "f_spin_power": "Spinning phase threshold (W)",
     "f_images": "Images by state (list: image + above / below / state)",
+    "energy_none": "None",
     "energy_day": "Today",
     "energy_week": "This week",
     "energy_month": "This month",
@@ -522,6 +523,7 @@ const STRINGS = {
     "f_heating_power": "Schwellenwert für Heizphase (W)",
     "f_spin_power": "Schwellenwert für Schleuderphase (W)",
     "f_images": "Bilder nach Zustand (Liste: image + above / below / state)",
+    "energy_none": "Keine",
     "energy_day": "Heute",
     "energy_week": "Diese Woche",
     "energy_month": "Dieser Monat",
@@ -823,6 +825,7 @@ const STRINGS = {
     "f_heating_power": "Seuil de phase de chauffe (W)",
     "f_spin_power": "Seuil de phase d'essorage (W)",
     "f_images": "Images selon l'état (liste : image + above / below / state)",
+    "energy_none": "Aucune",
     "energy_day": "Aujourd'hui",
     "energy_week": "Cette semaine",
     "energy_month": "Ce mois",
@@ -962,6 +965,7 @@ const STRINGS = {
     "flex_temp": "Fleksisone",
     "f_flex_temperature": "Temperatursensor fleksisone",
     "f_flex_max_temperature": "Varsle fleksisone over (°C)",
+    "energy_none": "Ingen",
     "energy_day": "I dag",
     "energy_week": "Denne uken",
     "energy_month": "Denne måneden",
@@ -1425,6 +1429,7 @@ const STRINGS = {
     "f_heating_power": "Drempelwaarde verwarmingsfase (W)",
     "f_spin_power": "Drempelwaarde centrifugeerfase (W)",
     "f_images": "Afbeeldingen per toestand (lijst: image + above / below / state)",
+    "energy_none": "Geen",
     "energy_day": "Vandaag",
     "energy_week": "Deze week",
     "energy_month": "Deze maand",
@@ -1726,6 +1731,7 @@ const STRINGS = {
     "f_heating_power": "Prag de putere pentru încălzire (W)",
     "f_spin_power": "Prag de putere pentru centrifugare (W)",
     "f_images": "Imagini după stare (listă: image + above / below / state)",
+    "energy_none": "Niciuna",
     "energy_day": "Azi",
     "energy_week": "Săptămâna aceasta",
     "energy_month": "Luna aceasta",
@@ -2027,6 +2033,7 @@ const STRINGS = {
     "f_heating_power": "Порог фазы нагрева (Вт)",
     "f_spin_power": "Порог фазы отжима (Вт)",
     "f_images": "Изображения по состоянию (список: image + above / below / state)",
+    "energy_none": "Не показывать",
     "energy_day": "Сегодня",
     "energy_week": "На этой неделе",
     "energy_month": "В этом месяце",
@@ -2328,6 +2335,7 @@ const STRINGS = {
     "f_heating_power": "Праг фазе грејања (W)",
     "f_spin_power": "Праг фазе центрифуге (W)",
     "f_images": "Слике по статусу (листа: слика + изнад / испод / статус)",
+    "energy_none": "Ниједна",
     "energy_day": "Данас",
     "energy_week": "Ове недеље",
     "energy_month": "Овог месеца",
@@ -2629,6 +2637,7 @@ const STRINGS = {
     "f_heating_power": "Prag faze grejanja (W)",
     "f_spin_power": "Prag faze centrifuge (W)",
     "f_images": "Slike po statusu (lista: slika + iznad / ispod / status)",
+    "energy_none": "Nijedna",
     "energy_day": "Danas",
     "energy_week": "Ove nedelje",
     "energy_month": "Ovog meseca",
@@ -6303,7 +6312,9 @@ class ApplianceCardBase extends HTMLElement {
       catch (e) { return `${fmtNum(hass, x, 2, 2)} ${cur}`; }
     };
     const per = PERIODS.includes(c.energy_period) && this._perKwh != null ? c.energy_period : null;
-    if (m.energy && per && !dual && !solar) {
+    // energy_period: none → aucune tuile énergie (le compteur sert encore au dernier cycle)
+    const noEnergy = c.energy_period === "none";
+    if (noEnergy) { /* tuile masquée */ } else if (m.energy && per && !dual && !solar) {
       if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.energy);
       // coût de la période (mode € ou les deux) : conso de la période × prix du kWh actuel
       if (showCost && c.display === "cost") tile("mdi:cash", money(this._perKwh * pr), tr(hass, `cost_${per}`), prEnt || c.energy);
@@ -6431,7 +6442,8 @@ function buildForm(kind) {
             { name: "cycle_gap", selector: { number: { min: 0, max: 240, step: 1, mode: "box", unit_of_measurement: "min" } } },
           ] : []),
           ...(d.fields.includes("energy") ? [{ name: "energy_period", selector: { select: { mode: "dropdown", options: [
-            { value: "", label: tr(null, "energy") }, ...PERIODS.map((value) => ({ value, label: tr(null, `energy_${value}`) }))] } } }] : []),
+            { value: "", label: tr(null, "energy") }, ...PERIODS.map((value) => ({ value, label: tr(null, `energy_${value}`) })),
+            { value: "none", label: tr(null, "energy_none") }] } } }] : []), // none : pas de tuile énergie
           ...(d.fields.includes("energy") || ["washer", "dryer", "dishwasher"].includes(kind) ? [
             { name: "price_per_kwh", selector: { number: { min: 0, max: 2, step: 0.0001, mode: "box" } } },
             { name: "display", selector: { select: { mode: "dropdown", options: [

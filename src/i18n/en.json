@@ -206,6 +206,7 @@
     "f_heating_power": "Heating phase threshold (W)",
     "f_spin_power": "Spinning phase threshold (W)",
     "f_images": "Images by state (list: image + above / below / state)",
+    "energy_none": "None",
     "energy_day": "Today",
     "energy_week": "This week",
     "energy_month": "This month",

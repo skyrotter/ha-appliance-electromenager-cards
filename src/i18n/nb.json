@@ -44,6 +44,7 @@
 "flex_temp": "Fleksisone",
 "f_flex_temperature": "Temperatursensor fleksisone",
 "f_flex_max_temperature": "Varsle fleksisone over (°C)",
+"energy_none": "Ingen",
 "energy_day": "I dag",
 "energy_week": "Denne uken",
 "energy_month": "Denne måneden",

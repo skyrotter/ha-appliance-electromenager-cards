@@ -206,6 +206,7 @@
     "f_heating_power": "Schwellenwert für Heizphase (W)",
     "f_spin_power": "Schwellenwert für Schleuderphase (W)",
     "f_images": "Bilder nach Zustand (Liste: image + above / below / state)",
+    "energy_none": "Keine",
     "energy_day": "Heute",
     "energy_week": "Diese Woche",
     "energy_month": "Dieser Monat",

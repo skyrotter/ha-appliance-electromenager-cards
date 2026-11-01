@@ -206,6 +206,7 @@
     "f_heating_power": "Порог фазы нагрева (Вт)",
     "f_spin_power": "Порог фазы отжима (Вт)",
     "f_images": "Изображения по состоянию (список: image + above / below / state)",
+    "energy_none": "Не показывать",
     "energy_day": "Сегодня",
     "energy_week": "На этой неделе",
     "energy_month": "В этом месяце",
