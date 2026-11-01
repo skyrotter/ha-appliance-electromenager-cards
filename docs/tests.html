@@ -607,6 +607,10 @@ ok('linky 3-phase alert on one phase while total is low',byId(c,'meter').classLi
 c=lk([...ph(1.2,0.5,0.25).map((s)=>({...s,attributes:{unit_of_measurement:'kVA'}}))],{...L3,entity_power:''});
 ok('linky 3-phase kVA converted, total from phases',byId(c,'phv1').textContent==='1200 VA'&&byId(c,'val').textContent==='1950 VA',byId(c,'phv1').textContent+' '+byId(c,'val').textContent);
 c=lk([...ph(250,500,700)],{...L3,show_phases:false}); ok('linky show_phases:false hides the bars',byId(c,'phases').style.display==='none'&&gt(c)==='L3 · 700 VA',byId(c,'phases').style.display);
+// linky: a single phase entity is a misconfiguration (#158): rejected, single-phase meters use entity_power
+{const cfgErr=(cfg)=>{try{document.createElement('appliance-linky-card').setConfig(cfg);return '';}catch(e){return e.message;}};
+ ok('linky only entity_power_l1: config error',/three-phase/.test(cfgErr({entity_power_l1:'sensor.l1'}))&&/entity_power/.test(cfgErr({entity_power:'sensor.p',entity_power_l3:'sensor.l3'})),cfgErr({entity_power_l1:'sensor.l1'}));
+ ok('linky two or three phases, or none: accepted',!cfgErr({entity_power_l1:'sensor.l1',entity_power_l2:'sensor.l2'})&&!cfgErr(L3)&&!cfgErr({entity_power:'sensor.p'}),cfgErr(L3));}
 // linky phase_gauge: needles (default) / cycle / max
 const ndeg=(c,i)=>parseFloat(byId(c,`n${i}`).style.transform.slice(7)), vis=(c,id)=>byId(c,id).style.display!=='none';
 c=lk([...ph(1250,2500,3750)],L3);

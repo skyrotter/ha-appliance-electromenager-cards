@@ -9421,6 +9421,11 @@ class ApplianceLinkyCard extends HTMLElement {
 
   setConfig(config) {
     if (window.applianceSize) window.applianceSize(this, config);
+    // entity_power_l1…l3 : compteur triphasé seulement (une seule phase couperait à 1/3 de la souscription) ;
+    // un compteur monophasé se configure avec entity_power
+    const c = config || {};
+    if ([c.entity_power_l1, c.entity_power_l2, c.entity_power_l3].filter(Boolean).length === 1)
+      throw new Error('entity_power_l1…l3 are for three-phase meters: set at least two phases, or use entity_power for a single-phase meter');
     this._config = {
       show_gauge: true, show_phases: true, show_index: true, show_injection: true, show_tariff: true, show_cost: true,
       phase_gauge: 'needles', subscribed_power: 9, hc_ranges: '', ...config,
