@@ -237,6 +237,14 @@ c=card('toaster',{power:'sensor.p'},[mk('sensor.p',1,W)]); ok('toaster off',has(
 // multiprise / chargeur de téléphone / piano / guirlande
 c=card('power-strip',{switch:'switch.m',outlets:['switch.a','switch.b','switch.c']},[mk('switch.m','on'),mk('switch.a','on'),mk('switch.b','off'),mk('switch.c','on')]);
 ok('strip powered, 3 sockets, 2 on',has(c,'st-powered')&&c.sr.querySelectorAll('.ms-s').length===3&&c.sr.querySelectorAll('.ms-s.on').length===2&&c.sr.querySelectorAll('.outlet-btn').length===3&&c.sr.querySelectorAll('.outlet-btn.on').length===2,c.wrap.className);
+// multiprise sans entité globale (Lidl TS011F : un switch par prise) : outlets seuls, bouton global sur toutes les prises
+{let e=null; try{c=card('power-strip',{outlets:['switch.a','switch.b','switch.c']},[mk('switch.a','off'),mk('switch.b','on'),mk('switch.c','off')]);}catch(x){e=x;}
+ ok('strip outlets only: accepted, powered',!e&&has(c,'st-powered')&&c.sr.querySelectorAll('.ms-s.on').length===1,e?e.message:c.wrap.className);
+ c.sr.querySelector('.toggle').click(); ok('strip global button, one on -> turn_off all',JSON.stringify(c.h.calls[0])==='["homeassistant","turn_off",{"entity_id":["switch.a","switch.b","switch.c"]}]',JSON.stringify(c.h.calls));
+ c=card('power-strip',{outlets:['switch.a','switch.b','switch.c']},[mk('switch.a','off'),mk('switch.b','off'),mk('switch.c','off')]);
+ ok('strip outlets only, all off',has(c,'st-off'),c.wrap.className);
+ c.sr.querySelector('.toggle').click(); ok('strip global button, all off -> turn_on all',JSON.stringify(c.h.calls[0])==='["homeassistant","turn_on",{"entity_id":["switch.a","switch.b","switch.c"]}]',JSON.stringify(c.h.calls));
+ let ok2=false; try{document.createElement('appliance-power-strip-card').setConfig({});}catch(x){ok2=true;} ok('strip without any entity still rejected',ok2);}
 c=card('power-strip',{power:'sensor.p'},[mk('sensor.p',0,W)]); ok('strip off, 4 sockets',has(c,'st-off')&&c.sr.querySelectorAll('.ms-s').length===4&&c.sr.querySelectorAll('.ms-s.plug').length===3,c.wrap.className);
 c=card('power-strip',{power:'sensor.p',sockets:6},[mk('sensor.p',40,W)]); ok('strip 6 sockets lit',has(c,'st-powered')&&c.sr.querySelectorAll('.ms-s.on').length===5,c.sr.querySelectorAll('.ms-s.on').length);
 c=card('phone-charger',{power:'sensor.p',battery_level:'sensor.b'},[mk('sensor.p',7.5,W),mk('sensor.b',68,{unit_of_measurement:'%'})]);

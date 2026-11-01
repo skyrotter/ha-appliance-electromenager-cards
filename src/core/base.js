@@ -18,7 +18,8 @@ class ApplianceCardBase extends HTMLElement {
   setConfig(config) {
     if (!config) throw new Error("Invalid configuration");
     if (window.applianceSize) window.applianceSize(this, config);
-    if (!["entity", "power", "power_solar", "switch", "temperature", "zone_1"].some((f) => config[f])) {
+    // multiprise : les prises commandées (outlets) suffisent, sans entité globale (ex. Lidl TS011F, un switch par prise)
+    if (!["entity", "power", "power_solar", "switch", "temperature", "zone_1"].some((f) => config[f]) && !(Array.isArray(config.outlets) && config.outlets.some((i) => typeof i === "string" && i))) {
       throw new Error(tr(undefined, "err_need_entity"));
     }
     this._config = { ...config };
@@ -119,7 +120,7 @@ class ApplianceCardBase extends HTMLElement {
         if (c.tap_action) { this._action(c.tap_action); return; }
       }
       const tile = path.find((n) => n.dataset && n.dataset.entity);
-      const eid = tile ? tile.dataset.entity : (c.entity || c.power || c.switch || c.temperature);
+      const eid = tile ? tile.dataset.entity : (c.entity || c.power || c.switch || c.temperature || (Array.isArray(c.outlets) && c.outlets[0]));
       if (eid) this._moreInfo(eid);
     });
     // appui long sur l'illustration (500 ms), seulement si hold_action est défini
@@ -147,7 +148,7 @@ class ApplianceCardBase extends HTMLElement {
     const c = this._config, hass = this._hass;
     if (!a || !hass) return;
     const type = typeof a === "string" ? a : a.action;
-    const dflt = c.entity || c.power || c.switch || c.temperature;
+    const dflt = c.entity || c.power || c.switch || c.temperature || (Array.isArray(c.outlets) && c.outlets[0]);
     if (!type || type === "none") return;
     if (type === "more-info") { const e = a.entity || dflt; if (e) this._moreInfo(e); return; }
     if (type === "toggle" && this._sw) { this._toggleSw(); return; }
@@ -158,6 +159,7 @@ class ApplianceCardBase extends HTMLElement {
   _toggleSw() {
     const sw = this._sw, hass = this._hass;
     if (!sw || !hass) return;
+    if (sw.outlets) { hass.callService("homeassistant", sw.on ? "turn_off" : "turn_on", { entity_id: sw.outlets }); return; }
     if (sw.guarded && !(this._confirmUntil && Date.now() < this._confirmUntil)) {
       this._confirmUntil = Date.now() + 4000;
       this._render(this._compute());
@@ -319,7 +321,8 @@ class ApplianceCardBase extends HTMLElement {
     }
 
     const ref = main || sw;
-    const mainIds = ["entity", "power", "power_solar", "switch", "temperature", "zone_1", "zone_2", "zone_3", "zone_4"].map((k) => c[k]).filter(Boolean);
+    const mainIds = ["entity", "power", "power_solar", "switch", "temperature", "zone_1", "zone_2", "zone_3", "zone_4"].map((k) => c[k]).filter(Boolean)
+      .concat(kind === "power_strip" && Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : []); // multiprise : les prises comptent
     const usable = mainIds.some((i) => hass.states[i] && !BAD.includes(String(hass.states[i].state).toLowerCase()));
     if (!usable) { m.status = "unavailable"; return m; }
     let base = null;
@@ -1093,7 +1096,17 @@ class ApplianceCardBase extends HTMLElement {
     const swId = c.switch || (kind === "dehumidifier" && domainOf(c.entity) === "humidifier" ? c.entity : null)
       || (kind === "garland" && domainOf(c.entity) === "light" ? c.entity : null);
     this._sw = null;
-    if (swId) {
+    // multiprise sans switch global : le bouton marche / arrêt pilote toutes les prises (une allumée → tout couper, sinon tout allumer)
+    const outIds = kind === "power_strip" && !swId && Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i && hass.states[i]) : [];
+    if (outIds.length) {
+      const on = outIds.some((i) => isOn(hass.states[i]));
+      this._sw = { id: null, outlets: outIds, on, guarded: false };
+      const label = tr(hass, "toggle");
+      if (c.show_toggle !== false) {
+        $("actions").innerHTML = `<button class="toggle ${on ? "on" : ""}" title="${esc(label)}" aria-label="${esc(label)}" aria-pressed="${on}"><ha-icon icon="mdi:power"></ha-icon></button>`;
+        $("actions").querySelector("button").onclick = (ev) => { ev.stopPropagation(); this._toggleSw(); };
+      } else $("actions").innerHTML = "";
+    } else if (swId) {
       const on = isOn(hass.states[swId]);
       // safety: cutting a washer/dryer/dishwasher mid-cycle needs a second click
       const freezer = ["chest_freezer", "drawer_freezer"].includes(kind);
