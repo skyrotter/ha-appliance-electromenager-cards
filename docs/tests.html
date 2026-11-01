@@ -130,6 +130,13 @@ c=card('radiator',{power:'sensor.p',mode:'select.mode'},[mk('sensor.p',900,W),SE
 c.sr.querySelector('.mode-btn[data-mode=off]').click(); ok('radiator click off -> select_option Arrêt',c.h.calls.some(x=>x[2]&&x[2].option==='Arrêt'),JSON.stringify(c.h.calls));
 c=card('radiator',{entity:'climate.r'},[mk('climate.r','heat',{preset_modes:['comfort','eco','away'],hvac_modes:['off','heat'],preset_mode:'eco'})]); ok('radiator climate buttons from presets',c.sr.querySelectorAll('.mode-btn').length===4&&c.sr.querySelector('.mode-btn.on')?.dataset.mode==='eco',c.sr.getElementById('modes').innerHTML.slice(0,200));
 c.sr.querySelector('.mode-btn[data-mode=comfort]').click(); ok('climate click comfort -> set_preset_mode',c.h.calls.some(x=>x[1]==='set_preset_mode'&&x[2].preset_mode==='comfort'),JSON.stringify(c.h.calls));
+{const S6=(v)=>mk('select.mode',v,{options:['Confort','Confort -1','Confort -2','Eco','Hors-gel','Arrêt']});
+ c=card('radiator',{power:'sensor.p',mode:'select.mode'},[mk('sensor.p',900,W),S6('Confort -1')]);
+ ok('radiator 6 pilot-wire orders, comfort -1 active',[...c.sr.querySelectorAll('.mode-btn')].map(b=>b.dataset.mode).join()==='comfort,comfort_1,comfort_2,eco,frost,off'&&c.sr.querySelector('.mode-btn.on')?.dataset.mode==='comfort_1'&&has(c,'mode-comfort'),c.sr.getElementById('modes').innerHTML.slice(0,300));
+ c.sr.querySelector('.mode-btn[data-mode=comfort_2]').click(); ok('click comfort -2 -> select_option Confort -2',c.h.calls.some(x=>x[2]&&x[2].option==='Confort -2'),JSON.stringify(c.h.calls));
+ c.sr.querySelector('.mode-btn[data-mode=comfort]').click(); ok('click comfort -> Confort (not Confort -1)',c.h.calls.some(x=>x[2]&&x[2].option==='Confort'),JSON.stringify(c.h.calls));
+ c=card('radiator',{entity:'climate.r'},[mk('climate.r','heat',{preset_modes:['comfort','comfort-1','comfort-2','eco','away'],hvac_modes:['off','heat'],preset_mode:'comfort-2'})]);
+ ok('climate comfort-2 preset',c.sr.querySelectorAll('.mode-btn').length===6&&c.sr.querySelector('.mode-btn.on')?.dataset.mode==='comfort_2',c.sr.getElementById('modes').innerHTML.slice(0,300));}
 c=card('radiator',{power:'sensor.p',mode:'select.mode',show_modes:false},[mk('sensor.p',900,W),SELM('Confort')]); ok('show_modes:false hides buttons',c.sr.querySelectorAll('.mode-btn').length===0);
 // wine cooler
 c=card('wine-cooler',{power:'sensor.p',temperature:'sensor.t'},[mk('sensor.p',70,W),mk('sensor.t',12,T)]); ok('wine cooler cooling + lcd',has(c,'st-cooling')&&c.lcd()==='12°',c.wrap.className+' '+c.lcd());
@@ -230,6 +237,14 @@ c=card('toaster',{power:'sensor.p'},[mk('sensor.p',1,W)]); ok('toaster off',has(
 // multiprise / chargeur de téléphone / piano / guirlande
 c=card('power-strip',{switch:'switch.m',outlets:['switch.a','switch.b','switch.c']},[mk('switch.m','on'),mk('switch.a','on'),mk('switch.b','off'),mk('switch.c','on')]);
 ok('strip powered, 3 sockets, 2 on',has(c,'st-powered')&&c.sr.querySelectorAll('.ms-s').length===3&&c.sr.querySelectorAll('.ms-s.on').length===2&&c.sr.querySelectorAll('.outlet-btn').length===3&&c.sr.querySelectorAll('.outlet-btn.on').length===2,c.wrap.className);
+// multiprise sans entité globale (Lidl TS011F : un switch par prise) : outlets seuls, bouton global sur toutes les prises
+{let e=null; try{c=card('power-strip',{outlets:['switch.a','switch.b','switch.c']},[mk('switch.a','off'),mk('switch.b','on'),mk('switch.c','off')]);}catch(x){e=x;}
+ ok('strip outlets only: accepted, powered',!e&&has(c,'st-powered')&&c.sr.querySelectorAll('.ms-s.on').length===1,e?e.message:c.wrap.className);
+ c.sr.querySelector('.toggle').click(); ok('strip global button, one on -> turn_off all',JSON.stringify(c.h.calls[0])==='["homeassistant","turn_off",{"entity_id":["switch.a","switch.b","switch.c"]}]',JSON.stringify(c.h.calls));
+ c=card('power-strip',{outlets:['switch.a','switch.b','switch.c']},[mk('switch.a','off'),mk('switch.b','off'),mk('switch.c','off')]);
+ ok('strip outlets only, all off',has(c,'st-off'),c.wrap.className);
+ c.sr.querySelector('.toggle').click(); ok('strip global button, all off -> turn_on all',JSON.stringify(c.h.calls[0])==='["homeassistant","turn_on",{"entity_id":["switch.a","switch.b","switch.c"]}]',JSON.stringify(c.h.calls));
+ let ok2=false; try{document.createElement('appliance-power-strip-card').setConfig({});}catch(x){ok2=true;} ok('strip without any entity still rejected',ok2);}
 c=card('power-strip',{power:'sensor.p'},[mk('sensor.p',0,W)]); ok('strip off, 4 sockets',has(c,'st-off')&&c.sr.querySelectorAll('.ms-s').length===4&&c.sr.querySelectorAll('.ms-s.plug').length===3,c.wrap.className);
 c=card('power-strip',{power:'sensor.p',sockets:6},[mk('sensor.p',40,W)]); ok('strip 6 sockets lit',has(c,'st-powered')&&c.sr.querySelectorAll('.ms-s.on').length===5,c.sr.querySelectorAll('.ms-s.on').length);
 c=card('phone-charger',{power:'sensor.p',battery_level:'sensor.b'},[mk('sensor.p',7.5,W),mk('sensor.b',68,{unit_of_measurement:'%'})]);
@@ -917,7 +932,14 @@ ok('card size / grid',typeof c.el.getCardSize()==='number'&&c.el.getGridOptions(
  c=card('christmas-tree',{entity:'light.l',multicolor:false,color:[0,0,255]},[mk('light.l','on')]);
  ok('tree single colour',[...c.sr.querySelectorAll('.xb')].every((e)=>e.style.fill==='rgb(0, 0, 255)'),c.sr.querySelector('.xb').style.fill);
  c=card('garden-spotlight',{entity_power:'sensor.p'},[mk('sensor.p',12,W)]);
- ok('power only -> on',cls(c)==='on',cls(c));}
+ ok('power only -> on',cls(c)==='on',cls(c));
+ c=card('garden-spotlight',{entity:'automation.a'},[mk('automation.a','on')]);
+ {let got=null; c.el.addEventListener('hass-more-info',(e)=>got=e.detail.entityId); c.sr.querySelector('.stage').click(); ok('light tap default -> more-info',got==='automation.a',got);}
+ c=card('garden-spotlight',{entity:'automation.a',tap_action:{action:'perform-action',perform_action:'automation.trigger',target:{entity_id:'automation.a'}}},[mk('automation.a','on')]);
+ {let mi=null,act=null; c.el.addEventListener('hass-more-info',(e)=>mi=e.detail.entityId); c.el.addEventListener('hass-action',(e)=>act=e.detail); c.sr.querySelector('.stage').click();
+  ok('light tap_action -> hass-action, no more-info',!mi&&act&&act.action==='tap'&&act.config.tap_action.perform_action==='automation.trigger',JSON.stringify(act));}
+ c=card('light-bulb',{entity:'light.l',tap_action:{action:'toggle'}},[mk('light.l','off')]);
+ c.sr.querySelector('.stage').click(); ok('light tap_action toggle -> light.toggle',JSON.stringify(c.h.calls[0])==='["light","toggle",{"entity_id":"light.l"}]',JSON.stringify(c.h.calls));}
 ok('no page errors',__errors.length===0,__errors.join('; '));
 // labels: custom tile names override translations, empty values fall back
 {const lbls=(c)=>[...c.sr.querySelectorAll('.lbl,.tile .l,.stat .l')].map(e=>e.textContent.trim());
@@ -1132,6 +1154,27 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
   const g=c.el.getGridOptions?c.el.getGridOptions():null;
   ok(`size ${t}: illustration_size 150 -> --illus-scale 1.5, min 3 columns`,c.el.style.getPropertyValue('--illus-scale')==='1.5'&&g&&g.min_columns===3&&g.min_rows===1,c.el.style.getPropertyValue('--illus-scale')+' '+JSON.stringify(g));}
  const c=card('washer',{power:'sensor.p',illustration_size:9999},[mk('sensor.p',10,W)]); ok('size: clamped to 300 %',c.el.style.getPropertyValue('--illus-scale')==='3');}
+// durée d'utilisation du jour (écrans) : capteur usage_time, sinon historique depuis minuit ; show_usage_time:false masque
+{const t0=new Date();t0.setHours(0,0,0,0);const T0=t0.getTime(),el=Date.now()-T0,calls=[];
+ const fmt=(min)=>{const m=Math.round(min);if(m<60)return `${m} min`;const h=Math.floor(m/60),r=m%60;return r?`${h} h ${String(r).padStart(2,'0')}`:`${h} h`;};
+ const stats=(c)=>c.sr.getElementById('stats').textContent.replace(/\s+/g,' ');
+ const ws=(c,res)=>{c.h.callWS=(m)=>{calls.push(m);return Promise.resolve(res);};c.el.hass={...c.h,states:{...c.h.states}};};
+ let c=card('tv',{entity:'switch.tv',power:'sensor.p',usage_time:'sensor.u'},[mk('switch.tv','on'),mk('sensor.p',85,W),mk('sensor.u','2.5',{unit_of_measurement:'h'})]);
+ ok('usage_time sensor -> tile 2 h 30',/2 h 30/.test(stats(c))&&/Utilisation du jour/.test(stats(c)),stats(c));
+ c=card('tv',{entity:'switch.tv',power:'sensor.p',usage_time:'sensor.u',show_usage_time:false},[mk('switch.tv','on'),mk('sensor.p',85,W),mk('sensor.u','2.5',{unit_of_measurement:'h'})]);
+ ok('show_usage_time:false hides the tile',!/Utilisation du jour/.test(stats(c)),stats(c));
+ const c1=card('tv',{entity:'switch.tv',power:'sensor.p'},[mk('switch.tv','on'),mk('sensor.p',0.5,W)]);
+ ws(c1,{'sensor.p':[{s:'0.5',lu:(T0-3600000)/1e3},{s:'90',lu:(T0+el*0.25)/1e3},{s:'0.5',lu:(T0+el*0.75)/1e3}]});
+ const c2=card('monitor',{entity:'switch.m'},[mk('switch.m','off')]);
+ ws(c2,{'switch.m':[{s:'off',lu:(T0-3600000)/1e3},{s:'on',lu:(T0+el*0.5)/1e3},{s:'off',lu:(T0+el*0.75)/1e3}]});
+ const c3=card('tv',{entity:'switch.tv',power:'sensor.p',show_usage_time:false},[mk('switch.tv','on'),mk('sensor.p',0.5,W)]);
+ const n3=calls.length; ws(c3,{'sensor.p':[]}); const n3b=calls.length;
+ setTimeout(()=>{
+  ok('usage from power history since midnight',stats(c1).includes(fmt(el/2/60000))&&/Utilisation du jour/.test(stats(c1)),stats(c1)+' / '+fmt(el/2/60000));
+  ok('usage history request starts at midnight',calls.some(m=>m.type==='history/history_during_period'&&m.entity_ids[0]==='sensor.p'&&new Date(m.start_time).getTime()===T0),JSON.stringify(calls[0]));
+  ok('usage from entity history (no power)',stats(c2).includes(fmt(el/4/60000)),stats(c2)+' / '+fmt(el/4/60000));
+  ok('show_usage_time:false: no history request',n3b===n3&&!/Utilisation du jour/.test(stats(c3)),n3+' '+n3b);
+ },300);}
 window.RESULTS=R;
 const fails=R.filter(r=>!r.pass).length;
 document.getElementById('sum').innerHTML=`<b class="${fails?'f':'p'}">${R.length-fails} / ${R.length} tests réussis</b> — fichier testé : <code>dist/ha-appliance-electromenager-cards.js</code>`;

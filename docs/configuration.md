@@ -25,6 +25,7 @@ All cards have a visual editor. When added from the card picker, entities are de
 | `color` | Accent color (any CSS color) |
 | `show_toggle` | `false` to hide the power button |
 | `tap_action` / `hold_action` | Core cards: standard Home Assistant action when tapping / holding (0.5 s) the illustration: `more-info`, `toggle`, `navigate`, `url`, `perform-action`, `none`. `toggle` switches the `switch` plug, with the same safety confirmation as the power button (`confirm_off`). Default: tap opens more-info, hold does nothing. The tiles keep opening the more-info of their own entity |
+| `usage_time`, `show_usage_time` | TV, monitor, PS5, desktop PC, laptop: **Usage today** tile (time switched on since midnight). Read from `usage_time` (a sensor such as `history_stats`, in h, min or `h:mm`) if set; otherwise computed by the card from the Home Assistant history since midnight — `power` above `threshold`, or the `entity` on / playing / idle. `show_usage_time: false` hides it. Shown by default |
 | `show_power` | `false` to hide the power chip (e.g. when `power` is an estimated sensor used only to detect the running state) |
 | `hide_zero_power` | power tiles are hidden while they read 0 (under 1 W) and appear when the appliance draws power (water heater: grid and solar surplus tiles too). On by default; `false` always shows them |
 | `hide_when_inactive` | `true` hides the card while the appliance is not working (off, idle, standby, finished) and has no alert: it appears when a cycle starts, like a `conditional` card but using the card's own state. In the card editor and in dashboard edit mode the card stays visible, faded |
@@ -88,7 +89,7 @@ labels:
 | `power` (production), `energy` (today), `cost` (savings), `max_power` (peak Wp, default 3000), `sun_entity` (default `sun.sun`) | solar panels |
 | `speed` (select/sensor: text, level or %), `humidity`, `high_threshold` (default 35 W), `humidity_max` (default 70 %) | extractor fan (VMC) |
 | `zone_1`…`zone_4` (level 0–9, W or %), `zone_power` (default 1500 W), `residual_minutes` (default 10) | cooktop |
-| `mode` (pilot wire / select: comfort, eco, frost, off), `window`, `temperature`, `target_temperature`, `humidity`, `max_power` (default 1500 W) | electric radiator (`humidity` also on the heated towel rail; otherwise `current_humidity` of a `climate` entity) |
+| `mode` (pilot wire / select: comfort, comfort -1, comfort -2, eco, frost, off), `window`, `temperature`, `target_temperature`, `humidity`, `max_power` (default 1500 W) | electric radiator (`humidity` also on the heated towel rail; otherwise `current_humidity` of a `climate` entity) |
 | `max_temperature` (default 8), `freezer_max_temperature` (default −12) | fridge alerts |
 | `style`: `top` (default), `bottom`, `bottom_door`, `french`, `four_door`, `american` | fridge layout |
 | `zone2_temperature`, `max_temperature_2` (default = `max_temperature`) | dual-zone wine cooler |
@@ -112,7 +113,7 @@ Each card is independent: it only reads the entities in its own configuration an
 
 ## Modes (radiator and heated towel rail)
 
-With a `mode` entity (`select`, `input_select`, or a `climate` entity used as `entity`), the radiator and the heated towel rail show four buttons — **Comfort, Eco, Frost protection, Off** — to switch mode, and the active mode is highlighted. Options are matched by name (Confort, Eco/Nuit, Hors-gel, Arrêt/Off…); a button is only shown if a matching option exists. Hide them with `show_modes: false`.
+With a `mode` entity (`select`, `input_select`, or a `climate` entity used as `entity`), the radiator and the heated towel rail show up to six buttons — **Comfort, Comfort -1, Comfort -2, Eco, Frost protection, Off** (the six pilot-wire orders) — to switch mode, and the active mode is highlighted. Options are matched by name (Confort, Confort -1 / comfort-1, Confort -2 / comfort-2, Eco/Nuit, Hors-gel, Arrêt/Off…); a button is only shown if a matching option exists. Hide them with `show_modes: false`.
 
 ```yaml
 type: custom:appliance-towel-dryer-card

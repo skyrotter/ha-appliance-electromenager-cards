@@ -281,12 +281,40 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         <div class="tiles">${[['brightness', 'mdi:brightness-6'], ['power', 'mdi:flash'], ['energy', 'mdi:lightning-bolt-circle']].map(([k, ic]) =>
           `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
-      root.querySelector('.stage').addEventListener('click', () => this._more(this._c.entity));
+      // illustration : tap_action / hold_action (appui long 0,5 s) ; par défaut, la fiche de l'entité
+      const stage = root.querySelector('.stage'), stop = () => clearTimeout(this._holdTimer);
+      stage.addEventListener('click', () => {
+        if (this._held) { this._held = false; return; } // clic qui suit un appui long : ignoré
+        if (this._c.tap_action) this._run(this._c.tap_action); else this._more(this._c.entity);
+      });
+      stage.addEventListener('pointerdown', (ev) => {
+        this._held = false;
+        if (!this._c.hold_action || (ev.button != null && ev.button > 0)) return;
+        stop();
+        this._holdTimer = setTimeout(() => { this._held = true; this._run(this._c.hold_action); }, 500);
+      });
+      ['pointerup', 'pointerleave', 'pointercancel'].forEach((t) => stage.addEventListener(t, stop));
+      stage.addEventListener('contextmenu', (ev) => { if (this._c.hold_action) ev.preventDefault(); });
       root.querySelectorAll('.ctl button').forEach((b) => b.addEventListener('click', () => this._action(b.dataset.a)));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
         const k = el.dataset.k; this._more(k === 'brightness' ? this._c.entity : this._c[`entity_${k}`]);
       }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
+    }
+
+    // action standard Home Assistant : more-info / toggle / none gérés ici,
+    // le reste (navigate, url, perform-action…) confié à Home Assistant via l'événement hass-action
+    _run(a) {
+      const c = this._c;
+      const type = typeof a === 'string' ? a : a && a.action;
+      if (!type || type === 'none' || !this._hass) return;
+      if (type === 'more-info') { this._more((a && a.entity) || c.entity); return; }
+      if (type === 'toggle' && c.entity) {
+        const d = c.entity.split('.')[0];
+        this._hass.callService(['light', 'switch', 'input_boolean', 'fan'].includes(d) ? d : 'homeassistant', 'toggle', { entity_id: c.entity });
+        return;
+      }
+      this.dispatchEvent(new CustomEvent('hass-action', { detail: { config: { entity: c.entity, tap_action: typeof a === 'string' ? { action: a } : a }, action: 'tap' }, bubbles: true, composed: true }));
     }
 
     _action(a) {
@@ -388,6 +416,8 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ent('entity'), ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'),
+        { name: 'tap_action', selector: { ui_action: { actions: ['more-info', 'toggle', 'navigate', 'url', 'perform-action', 'none'] } } },
+        { name: 'hold_action', selector: { ui_action: { actions: ['more-info', 'toggle', 'navigate', 'url', 'perform-action', 'none'] } } },
         { name: 'color', selector: { color_rgb: {} } },
         { type: 'grid', name: '', schema: [
           bool('follow_light_color'),
