@@ -206,6 +206,7 @@
     "f_heating_power": "Prag faze grejanja (W)",
     "f_spin_power": "Prag faze centrifuge (W)",
     "f_images": "Slike po statusu (lista: slika + iznad / ispod / status)",
+    "energy_none": "Nijedna",
     "energy_day": "Danas",
     "energy_week": "Ove nedelje",
     "energy_month": "Ovog meseca",

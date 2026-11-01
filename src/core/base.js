@@ -1268,7 +1268,9 @@ class ApplianceCardBase extends HTMLElement {
       catch (e) { return `${fmtNum(hass, x, 2, 2)} ${cur}`; }
     };
     const per = PERIODS.includes(c.energy_period) && this._perKwh != null ? c.energy_period : null;
-    if (m.energy && per && !dual && !solar) {
+    // energy_period: none → aucune tuile énergie (le compteur sert encore au dernier cycle)
+    const noEnergy = c.energy_period === "none";
+    if (noEnergy) { /* tuile masquée */ } else if (m.energy && per && !dual && !solar) {
       if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.energy);
       // coût de la période (mode € ou les deux) : conso de la période × prix du kWh actuel
       if (showCost && c.display === "cost") tile("mdi:cash", money(this._perKwh * pr), tr(hass, `cost_${per}`), prEnt || c.energy);

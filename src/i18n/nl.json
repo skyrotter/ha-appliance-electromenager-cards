@@ -206,6 +206,7 @@
     "f_heating_power": "Drempelwaarde verwarmingsfase (W)",
     "f_spin_power": "Drempelwaarde centrifugeerfase (W)",
     "f_images": "Afbeeldingen per toestand (lijst: image + above / below / state)",
+    "energy_none": "Geen",
     "energy_day": "Vandaag",
     "energy_week": "Deze week",
     "energy_month": "Deze maand",

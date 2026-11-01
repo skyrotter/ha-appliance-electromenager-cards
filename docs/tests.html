@@ -1175,6 +1175,11 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
   ok('usage from entity history (no power)',stats(c2).includes(fmt(el/4/60000)),stats(c2)+' / '+fmt(el/4/60000));
   ok('show_usage_time:false: no history request',n3b===n3&&!/Utilisation du jour/.test(stats(c3)),n3+' '+n3b);
  },300);}
+// energy_period: none masque la tuile énergie, sans requête de statistiques ; le coût du capteur cost reste
+{const c=card('washer',{power:'sensor.p',energy:'sensor.e',cost:'sensor.c',energy_period:'none'},[mk('sensor.p',0,W),mk('sensor.e',1234.5,{unit_of_measurement:'kWh',state_class:'total_increasing'}),mk('sensor.c',3.2,{unit_of_measurement:'€'})]);
+ let asked=false; c.h.callWS=()=>{asked=true;return Promise.resolve({change:1});}; c.el.hass={...c.h,states:{...c.h.states}};
+ const st=c.sr.getElementById('stats').textContent.replace(/\s+/g,' ');
+ ok('energy_period none hides the energy tile',!/kWh/.test(st)&&!/Énergie/.test(st)&&/3,20/.test(st)&&!asked,st);}
 window.RESULTS=R;
 const fails=R.filter(r=>!r.pass).length;
 document.getElementById('sum').innerHTML=`<b class="${fails?'f':'p'}">${R.length-fails} / ${R.length} tests réussis</b> — fichier testé : <code>dist/ha-appliance-electromenager-cards.js</code>`;

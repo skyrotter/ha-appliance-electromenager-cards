@@ -206,6 +206,7 @@
     "f_heating_power": "Prag de putere pentru încălzire (W)",
     "f_spin_power": "Prag de putere pentru centrifugare (W)",
     "f_images": "Imagini după stare (listă: image + above / below / state)",
+    "energy_none": "Niciuna",
     "energy_day": "Azi",
     "energy_week": "Săptămâna aceasta",
     "energy_month": "Luna aceasta",

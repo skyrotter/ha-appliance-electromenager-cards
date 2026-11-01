@@ -84,7 +84,8 @@ function buildForm(kind) {
             { name: "cycle_gap", selector: { number: { min: 0, max: 240, step: 1, mode: "box", unit_of_measurement: "min" } } },
           ] : []),
           ...(d.fields.includes("energy") ? [{ name: "energy_period", selector: { select: { mode: "dropdown", options: [
-            { value: "", label: tr(null, "energy") }, ...PERIODS.map((value) => ({ value, label: tr(null, `energy_${value}`) }))] } } }] : []),
+            { value: "", label: tr(null, "energy") }, ...PERIODS.map((value) => ({ value, label: tr(null, `energy_${value}`) })),
+            { value: "none", label: tr(null, "energy_none") }] } } }] : []), // none : pas de tuile énergie
           ...(d.fields.includes("energy") || ["washer", "dryer", "dishwasher"].includes(kind) ? [
             { name: "price_per_kwh", selector: { number: { min: 0, max: 2, step: 0.0001, mode: "box" } } },
             { name: "display", selector: { select: { mode: "dropdown", options: [

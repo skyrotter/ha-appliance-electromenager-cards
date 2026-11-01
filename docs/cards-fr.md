@@ -106,7 +106,7 @@ hold_action:
 
 **Plusieurs appareils du même type** : chaque carte est indépendante (ses propres entités, son état, ses minuteries). Deux lave-linge ou plusieurs frigos peuvent cohabiter, il suffit de donner à chaque carte ses entités (et un `name`).
 
-**Consommation du jour** : avec un compteur d'énergie cumulé (la plupart des prises connectées), `energy_period: day` (ou `week`, `month`) affiche ce qui a été consommé depuis minuit (depuis lundi, depuis le 1er) au lieu du compteur total. En glissant : `24h`, `7d` ou `30d` affichent les 24 dernières heures, les 7 ou les 30 derniers jours. Home Assistant le calcule à partir des statistiques longue durée, comme le tableau de bord Énergie : plus besoin de créer un Utility Meter par appareil. Il faut un capteur avec statistiques (`state_class: total_increasing`), sinon la carte affiche le compteur.
+**Consommation du jour** : avec un compteur d'énergie cumulé (la plupart des prises connectées), `energy_period: day` (ou `week`, `month`) affiche ce qui a été consommé depuis minuit (depuis lundi, depuis le 1er) au lieu du compteur total. En glissant : `24h`, `7d` ou `30d` affichent les 24 dernières heures, les 7 ou les 30 derniers jours. Home Assistant le calcule à partir des statistiques longue durée, comme le tableau de bord Énergie : plus besoin de créer un Utility Meter par appareil. Il faut un capteur avec statistiques (`state_class: total_increasing`), sinon la carte affiche le compteur. `energy_period: none` (« Aucune » dans l'éditeur) masque la tuile énergie ; le compteur sert encore au dernier cycle.
 
 ```yaml
 type: custom:appliance-washer-card
