@@ -35,7 +35,7 @@ With a `light` entity the card shows **On / Off** (and **Colour** on the colour 
 - `threshold` (W, without an entity)
 - `tap_action` / `hold_action` (tap / hold 0.5 s on the illustration): `more-info`, `toggle`, `navigate`, `url`, `perform-action`, `none`. Default: tap opens the more-info of `entity`
 - `animations`, `show_status`, `show_controls`, `show_brightness`, `show_power`, `show_energy`
-- `language: fr|en|de|nb|nl|ro`
+- `language: fr|en|de|it|nb|nl|ro|ru|sr|sr-Latn`
 
 ## Example
 
