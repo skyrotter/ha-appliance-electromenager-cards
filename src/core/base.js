@@ -955,7 +955,9 @@ class ApplianceCardBase extends HTMLElement {
     if (kind === "solar") $("wrap").style.setProperty("--sun", (m.frac || 0).toFixed(2));
     if (kind === "radiator" || kind === "towel_dryer") {
       $("wrap").style.setProperty("--heat", (m.heat || 0).toFixed(2));
-      ["comfort", "eco", "frost"].forEach((k) => $("wrap").classList.toggle(`mode-${k}`, m.radMode === k || (k === "comfort" && !m.radMode && m.status !== "off")));
+      // confort -1 / -2 : même illustration que confort
+      const rm = /^comfort_/.test(m.radMode || "") ? "comfort" : m.radMode;
+      ["comfort", "eco", "frost"].forEach((k) => $("wrap").classList.toggle(`mode-${k}`, rm === k || (k === "comfort" && !rm && m.status !== "off")));
       if (kind === "radiator") $("wrap").classList.toggle("win-open", isOn(m.window));
     }
     if (kind === "hob" && m.zones) {
@@ -1095,7 +1097,7 @@ class ApplianceCardBase extends HTMLElement {
       $("barfill").style.width = `${Math.max(0, Math.min(100, pct))}%`;
     } else $("bar").style.display = "none";
 
-    // boutons de mode (confort / éco / hors-gel / arrêt)
+    // boutons de mode (confort / confort -1 / confort -2 / éco / hors-gel / arrêt)
     const modesEl = $("modes");
     const mEnt = c.mode || (domainOf(c.entity) === "climate" ? c.entity : null);
     if ((kind === "radiator" || kind === "towel_dryer") && mEnt && c.show_modes !== false && hass.states[mEnt]) {

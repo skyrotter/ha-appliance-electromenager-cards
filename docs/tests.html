@@ -130,6 +130,13 @@ c=card('radiator',{power:'sensor.p',mode:'select.mode'},[mk('sensor.p',900,W),SE
 c.sr.querySelector('.mode-btn[data-mode=off]').click(); ok('radiator click off -> select_option Arrêt',c.h.calls.some(x=>x[2]&&x[2].option==='Arrêt'),JSON.stringify(c.h.calls));
 c=card('radiator',{entity:'climate.r'},[mk('climate.r','heat',{preset_modes:['comfort','eco','away'],hvac_modes:['off','heat'],preset_mode:'eco'})]); ok('radiator climate buttons from presets',c.sr.querySelectorAll('.mode-btn').length===4&&c.sr.querySelector('.mode-btn.on')?.dataset.mode==='eco',c.sr.getElementById('modes').innerHTML.slice(0,200));
 c.sr.querySelector('.mode-btn[data-mode=comfort]').click(); ok('climate click comfort -> set_preset_mode',c.h.calls.some(x=>x[1]==='set_preset_mode'&&x[2].preset_mode==='comfort'),JSON.stringify(c.h.calls));
+{const S6=(v)=>mk('select.mode',v,{options:['Confort','Confort -1','Confort -2','Eco','Hors-gel','Arrêt']});
+ c=card('radiator',{power:'sensor.p',mode:'select.mode'},[mk('sensor.p',900,W),S6('Confort -1')]);
+ ok('radiator 6 pilot-wire orders, comfort -1 active',[...c.sr.querySelectorAll('.mode-btn')].map(b=>b.dataset.mode).join()==='comfort,comfort_1,comfort_2,eco,frost,off'&&c.sr.querySelector('.mode-btn.on')?.dataset.mode==='comfort_1'&&has(c,'mode-comfort'),c.sr.getElementById('modes').innerHTML.slice(0,300));
+ c.sr.querySelector('.mode-btn[data-mode=comfort_2]').click(); ok('click comfort -2 -> select_option Confort -2',c.h.calls.some(x=>x[2]&&x[2].option==='Confort -2'),JSON.stringify(c.h.calls));
+ c.sr.querySelector('.mode-btn[data-mode=comfort]').click(); ok('click comfort -> Confort (not Confort -1)',c.h.calls.some(x=>x[2]&&x[2].option==='Confort'),JSON.stringify(c.h.calls));
+ c=card('radiator',{entity:'climate.r'},[mk('climate.r','heat',{preset_modes:['comfort','comfort-1','comfort-2','eco','away'],hvac_modes:['off','heat'],preset_mode:'comfort-2'})]);
+ ok('climate comfort-2 preset',c.sr.querySelectorAll('.mode-btn').length===6&&c.sr.querySelector('.mode-btn.on')?.dataset.mode==='comfort_2',c.sr.getElementById('modes').innerHTML.slice(0,300));}
 c=card('radiator',{power:'sensor.p',mode:'select.mode',show_modes:false},[mk('sensor.p',900,W),SELM('Confort')]); ok('show_modes:false hides buttons',c.sr.querySelectorAll('.mode-btn').length===0);
 // wine cooler
 c=card('wine-cooler',{power:'sensor.p',temperature:'sensor.t'},[mk('sensor.p',70,W),mk('sensor.t',12,T)]); ok('wine cooler cooling + lcd',has(c,'st-cooling')&&c.lcd()==='12°',c.wrap.className+' '+c.lcd());

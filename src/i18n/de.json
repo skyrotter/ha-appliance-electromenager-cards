@@ -69,6 +69,8 @@
     "hob": "Kochfeld",
     "radiator": "Elektroheizkörper",
     "comfort": "Komfort",
+    "comfort_1": "Komfort -1",
+    "comfort_2": "Komfort -2",
     "eco": "Eco",
     "frost": "Frostschutz",
     "window_open": "Fenster offen",

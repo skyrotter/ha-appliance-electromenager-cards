@@ -88,7 +88,7 @@ labels:
 | `power` (production), `energy` (today), `cost` (savings), `max_power` (peak Wp, default 3000), `sun_entity` (default `sun.sun`) | solar panels |
 | `speed` (select/sensor: text, level or %), `humidity`, `high_threshold` (default 35 W), `humidity_max` (default 70 %) | extractor fan (VMC) |
 | `zone_1`…`zone_4` (level 0–9, W or %), `zone_power` (default 1500 W), `residual_minutes` (default 10) | cooktop |
-| `mode` (pilot wire / select: comfort, eco, frost, off), `window`, `temperature`, `target_temperature`, `humidity`, `max_power` (default 1500 W) | electric radiator (`humidity` also on the heated towel rail; otherwise `current_humidity` of a `climate` entity) |
+| `mode` (pilot wire / select: comfort, comfort -1, comfort -2, eco, frost, off), `window`, `temperature`, `target_temperature`, `humidity`, `max_power` (default 1500 W) | electric radiator (`humidity` also on the heated towel rail; otherwise `current_humidity` of a `climate` entity) |
 | `max_temperature` (default 8), `freezer_max_temperature` (default −12) | fridge alerts |
 | `style`: `top` (default), `bottom`, `bottom_door`, `french`, `four_door`, `american` | fridge layout |
 | `zone2_temperature`, `max_temperature_2` (default = `max_temperature`) | dual-zone wine cooler |
@@ -112,7 +112,7 @@ Each card is independent: it only reads the entities in its own configuration an
 
 ## Modes (radiator and heated towel rail)
 
-With a `mode` entity (`select`, `input_select`, or a `climate` entity used as `entity`), the radiator and the heated towel rail show four buttons — **Comfort, Eco, Frost protection, Off** — to switch mode, and the active mode is highlighted. Options are matched by name (Confort, Eco/Nuit, Hors-gel, Arrêt/Off…); a button is only shown if a matching option exists. Hide them with `show_modes: false`.
+With a `mode` entity (`select`, `input_select`, or a `climate` entity used as `entity`), the radiator and the heated towel rail show up to six buttons — **Comfort, Comfort -1, Comfort -2, Eco, Frost protection, Off** (the six pilot-wire orders) — to switch mode, and the active mode is highlighted. Options are matched by name (Confort, Confort -1 / comfort-1, Confort -2 / comfort-2, Eco/Nuit, Hors-gel, Arrêt/Off…); a button is only shown if a matching option exists. Hide them with `show_modes: false`.
 
 ```yaml
 type: custom:appliance-towel-dryer-card

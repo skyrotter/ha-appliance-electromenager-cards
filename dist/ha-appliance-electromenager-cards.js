@@ -84,6 +84,8 @@ const STRINGS = {
     "hob": "Cooktop",
     "radiator": "Electric radiator",
     "comfort": "Comfort",
+    "comfort_1": "Comfort -1",
+    "comfort_2": "Comfort -2",
     "eco": "Eco",
     "frost": "Frost protection",
     "window_open": "Window open",
@@ -380,6 +382,8 @@ const STRINGS = {
     "hob": "Kochfeld",
     "radiator": "Elektroheizkörper",
     "comfort": "Komfort",
+    "comfort_1": "Komfort -1",
+    "comfort_2": "Komfort -2",
     "eco": "Eco",
     "frost": "Frostschutz",
     "window_open": "Fenster offen",
@@ -676,6 +680,8 @@ const STRINGS = {
     "hob": "Plaques de cuisson",
     "radiator": "Radiateur",
     "comfort": "Confort",
+    "comfort_1": "Confort -1",
+    "comfort_2": "Confort -2",
     "eco": "Éco",
     "frost": "Hors-gel",
     "window_open": "Fenêtre ouverte",
@@ -1038,6 +1044,8 @@ const STRINGS = {
     "hob": "Koketopp",
     "radiator": "Panelovn",
     "comfort": "Komfort",
+    "comfort_1": "Komfort -1",
+    "comfort_2": "Komfort -2",
     "eco": "Øko",
     "frost": "Frostsikring",
     "window_open": "Vindu åpent",
@@ -1268,6 +1276,8 @@ const STRINGS = {
     "hob": "Kookplaat",
     "radiator": "Elektrische radiator",
     "comfort": "Comfort",
+    "comfort_1": "Comfort -1",
+    "comfort_2": "Comfort -2",
     "eco": "Eco",
     "frost": "Vorstbeveiliging",
     "window_open": "Raam open",
@@ -1564,6 +1574,8 @@ const STRINGS = {
     "hob": "Plită",
     "radiator": "Radiator electric",
     "comfort": "Confort",
+    "comfort_1": "Confort -1",
+    "comfort_2": "Confort -2",
     "eco": "Eco",
     "frost": "Protecție la îngheț",
     "window_open": "Fereastră deschisă",
@@ -1860,6 +1872,8 @@ const STRINGS = {
     "hob": "Варочная панель",
     "radiator": "Электрический радиатор",
     "comfort": "Комфорт",
+    "comfort_1": "Комфорт -1",
+    "comfort_2": "Комфорт -2",
     "eco": "Эко",
     "frost": "Защита от заморозки",
     "window_open": "Окно открыто",
@@ -2156,6 +2170,8 @@ const STRINGS = {
     "hob": "Плоча за кување",
     "radiator": "Електрични радијатор",
     "comfort": "Комфор",
+    "comfort_1": "Комфор -1",
+    "comfort_2": "Комфор -2",
     "eco": "Еко",
     "frost": "Заштита од смрзавања",
     "window_open": "Прозор је отворен",
@@ -2452,6 +2468,8 @@ const STRINGS = {
     "hob": "Ploča za kuvanje",
     "radiator": "Električni radijator",
     "comfort": "Komfor",
+    "comfort_1": "Komfor -1",
+    "comfort_2": "Komfor -2",
     "eco": "Eko",
     "frost": "Zaštita od smrzavanja",
     "window_open": "Prozor je otvoren",
@@ -4831,10 +4849,19 @@ const num = (st) => {
   return Number.isFinite(n) ? n : null;
 };
 const domainOf = (id) => (id || "").split(".")[0];
-// modes radiateur / sèche-serviettes : confort, éco, hors-gel, arrêt
-const MODE_RX = { comfort: /confort|comfort/, eco: /eco|nuit|night|sleep|economy|reduit|réduit/, frost: /hors|frost|gel|away|absent/, off: /^(off|arret|arrêt|stop)$/ };
-const MODE_ORDER = ["comfort", "eco", "frost", "off"];
-const MODE_ICON = { comfort: "mdi:fire", eco: "mdi:leaf", frost: "mdi:snowflake", off: "mdi:power" };
+// modes radiateur / sèche-serviettes : les 6 ordres du fil pilote
+// (confort, confort -1, confort -2, éco, hors-gel, arrêt)
+const C1 = /(confort|comfort)[\s_-]*(moins|minus)?[\s_-]*1(?![\d.,])/, C2 = /(confort|comfort)[\s_-]*(moins|minus)?[\s_-]*2(?![\d.,])/;
+const MODE_RX = { comfort: /confort|comfort/, comfort_1: C1, comfort_2: C2, eco: /eco|nuit|night|sleep|economy|reduit|réduit/, frost: /hors|frost|gel|away|absent/, off: /^(off|arret|arrêt|stop)$/ };
+const MODE_ORDER = ["comfort", "comfort_1", "comfort_2", "eco", "frost", "off"];
+const MODE_ICON = { comfort: "mdi:fire", comfort_1: "mdi:thermometer-minus", comfort_2: "mdi:thermometer-minus", eco: "mdi:leaf", frost: "mdi:snowflake", off: "mdi:power" };
+// texte de mode (en minuscules) → clé ; un texte inconnu non vide compte comme confort
+const modeKey = (raw) => /hors|frost|gel|away|absent/.test(raw) ? "frost"
+  : /eco|nuit|night|sleep|economy|reduit|réduit/.test(raw) ? "eco"
+  : /^(off|arret|arrêt|stop)$/.test(raw) ? "off"
+  : C2.test(raw) ? "comfort_2"
+  : C1.test(raw) ? "comfort_1"
+  : raw ? "comfort" : null;
 const modeOptions = (st) => {
   if (!st) return [];
   const d = domainOf(st.entity_id);
@@ -4842,16 +4869,14 @@ const modeOptions = (st) => {
   if (d === "climate") return [...(st.attributes.preset_modes || []), ...(st.attributes.hvac_modes || [])];
   return [];
 };
-const pickMode = (opts, key) => opts.find((o) => MODE_RX[key].test(String(o).toLowerCase()));
+// option correspondant à la clé (« confort » ne prend pas « confort -1 »)
+const pickMode = (opts, key) => opts.find((o) => { const r = String(o).toLowerCase(); return MODE_RX[key].test(r) && modeKey(r) === key; });
 function modeOf(m, main, c) {
   const isClimate = main && domainOf(c.entity) === "climate";
   const raw = isClimate && main.state === "off" ? "off"
     : String(m.mode && !BAD.includes(String(m.mode.state).toLowerCase()) ? m.mode.state
       : isClimate ? (main.attributes.preset_mode || main.state) : "").toLowerCase();
-  return /hors|frost|gel|away|absent/.test(raw) ? "frost"
-    : /eco|nuit|night|sleep|economy|reduit|réduit/.test(raw) ? "eco"
-    : /^(off|arret|arrêt|stop)$/.test(raw) ? "off"
-    : raw ? "comfort" : null;
+  return modeKey(raw);
 }
 const loc = (hass) => hass?.locale?.language || hass?.language || undefined;
 
@@ -5938,7 +5963,9 @@ class ApplianceCardBase extends HTMLElement {
     if (kind === "solar") $("wrap").style.setProperty("--sun", (m.frac || 0).toFixed(2));
     if (kind === "radiator" || kind === "towel_dryer") {
       $("wrap").style.setProperty("--heat", (m.heat || 0).toFixed(2));
-      ["comfort", "eco", "frost"].forEach((k) => $("wrap").classList.toggle(`mode-${k}`, m.radMode === k || (k === "comfort" && !m.radMode && m.status !== "off")));
+      // confort -1 / -2 : même illustration que confort
+      const rm = /^comfort_/.test(m.radMode || "") ? "comfort" : m.radMode;
+      ["comfort", "eco", "frost"].forEach((k) => $("wrap").classList.toggle(`mode-${k}`, rm === k || (k === "comfort" && !rm && m.status !== "off")));
       if (kind === "radiator") $("wrap").classList.toggle("win-open", isOn(m.window));
     }
     if (kind === "hob" && m.zones) {
@@ -6078,7 +6105,7 @@ class ApplianceCardBase extends HTMLElement {
       $("barfill").style.width = `${Math.max(0, Math.min(100, pct))}%`;
     } else $("bar").style.display = "none";
 
-    // boutons de mode (confort / éco / hors-gel / arrêt)
+    // boutons de mode (confort / confort -1 / confort -2 / éco / hors-gel / arrêt)
     const modesEl = $("modes");
     const mEnt = c.mode || (domainOf(c.entity) === "climate" ? c.entity : null);
     if ((kind === "radiator" || kind === "towel_dryer") && mEnt && c.show_modes !== false && hass.states[mEnt]) {

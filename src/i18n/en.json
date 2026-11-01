@@ -69,6 +69,8 @@
     "hob": "Cooktop",
     "radiator": "Electric radiator",
     "comfort": "Comfort",
+    "comfort_1": "Comfort -1",
+    "comfort_2": "Comfort -2",
     "eco": "Eco",
     "frost": "Frost protection",
     "window_open": "Window open",
