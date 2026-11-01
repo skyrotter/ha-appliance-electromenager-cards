@@ -700,6 +700,8 @@ const BT={entity_power:'sensor.p',threshold:25,compressor_threshold:800,buffer_t
 c=wp([mk('sensor.p',36,W)],BT); ok('water heat pump buffer: compressor off, emitters fed from the tank',on(c,'buffer')&&on(c,'circ')&&!on(c,'chg')&&!on(c,'run'),hc(c));
 c=wp([mk('sensor.p',2600,W)],BT); ok('water heat pump buffer: compressor on, tank charging',on(c,'chg')&&on(c,'run')&&on(c,'circ'),hc(c));
 c=wp([mk('sensor.p',2600,W),mk('sensor.rate',0,{unit_of_measurement:'m³/h'})],{...BT,entity_flow_rate:'sensor.rate'}); ok('water heat pump buffer: charging follows the heat pump flow rate',!on(c,'chg')&&on(c,'circ'),hc(c));
+c=wp([mk('sensor.p',36,W),mk('sensor.rate',4,{unit_of_measurement:'l/h'})],{...BT,entity_flow_rate:'sensor.rate',flow_threshold:100}); ok('water heat pump buffer: residual flow at or below flow_threshold -> not charging',!on(c,'chg')&&on(c,'circ'),hc(c));
+c=wp([mk('sensor.p',4900,W),mk('sensor.rate',1728,{unit_of_measurement:'l/h'})],{...BT,entity_flow_rate:'sensor.rate',flow_threshold:100}); ok('water heat pump buffer: flow above flow_threshold -> charging',on(c,'chg')&&on(c,'run'),hc(c));
 c=wp([mk('sensor.p',36,W),mk('sensor.buf',42.5,T)],{...BT,entity_buffer_temp:'sensor.buf'}); ok('water heat pump buffer temperature tile',shown(c,'buffer')&&tv(c,'buffer')==='42,5°C'&&c.el.shadowRoot.querySelector('ha-card').style.getPropertyValue('--wp-tankc').includes('color-mix'),tv(c,'buffer'));
 c=wp([mk('sensor.p',36,W)],{entity_power:'sensor.p',threshold:25}); ok('water heat pump without buffer_tank: direct circuit, no buffer tile',!on(c,'buffer')&&!shown(c,'buffer'),hc(c));
 }
@@ -714,6 +716,14 @@ c=wp([mk('sensor.p',900,W)],{entity_power:'sensor.p',heating_delay:60}); ok('wat
 c.el._since-=61000; c.el.hass=c.h; ok('water heat pump heating_delay: sustained power -> heating',/\bheating\b/.test(hc(c))&&/\brun\b/.test(hc(c)),hc(c));
 c.el.hass=hassOf([mk('sensor.p',0.4,W)]); c.el.hass=hassOf([mk('sensor.p',900,W)]); ok('water heat pump heating_delay: restarts after dropping below',/\bstandby\b/.test(hc(c)),hc(c));
 c=wp([{...mk('sensor.p',900,W),last_changed:new Date(Date.now()-120000).toISOString()}],{entity_power:'sensor.p',heating_delay:60}); ok('water heat pump heating_delay: power steady for 2 min at load -> heating',/\bheating\b/.test(hc(c)),hc(c));
+// heating_delay : carte ouverte pendant une chauffe, capteur rafraîchi toutes les 15 s (last_changed récent) : l'historique dit depuis quand
+{const t0=Date.now(), ago=(s)=>(t0-s*1000)/1e3;
+ const run=(pts,cb)=>{const el=document.createElement('appliance-water-heat-pump-card');el.setConfig({entity_power:'sensor.p',threshold:10,heating_delay:60});document.getElementById('g').appendChild(el);
+  const h=hassOf([mk('sensor.p',38,W)]),asked=[];h.callWS=(m)=>{asked.push(m);return Promise.resolve({'sensor.p':pts});};el.hass=h;
+  setTimeout(()=>{cb(el.shadowRoot.querySelector('ha-card').className,asked);el.remove();},50);};
+ run([{s:'38',lu:ago(60)},{s:'30',lu:ago(45)},{s:'5000',lu:ago(30)},{s:'38',lu:ago(15)}],(cls,asked)=>ok('water heat pump heating_delay: opened mid-run, history above threshold -> heating',/\bheating\b/.test(cls)&&asked.length===1&&asked[0].type==='history/history_during_period'&&asked[0].entity_ids.join()==='sensor.p',cls+' '+JSON.stringify(asked)));
+ run([{s:'3',lu:ago(60)},{s:'38',lu:ago(20)}],(cls)=>ok('water heat pump heating_delay: history shows a recent start -> standby',/\bstandby\b/.test(cls),cls));
+}
 c=wp([mk('sensor.p',1500,W),mk('sensor.h',5.25,KW)],P); ok('water heat pump COP computed (heat / electric)',tv(c,'cop')==='3,5'&&tv(c,'heat')==='5,25kW',tv(c,'cop')+' '+tv(c,'heat'));
 c=wp([mk('sensor.p',1500,W),mk('sensor.h',5.25,KW),mk('sensor.cop',4.2)],{...P,entity_cop:'sensor.cop'}); ok('water heat pump COP sensor wins',tv(c,'cop')==='4,2',tv(c,'cop'));
 c=wp([mk('sensor.p',1500,W)],{entity_power:'sensor.p'}); ok('water heat pump: no COP tile without heat power',!shown(c,'cop')&&!shown(c,'src_in')&&shown(c,'power'));
