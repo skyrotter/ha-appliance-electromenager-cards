@@ -1146,6 +1146,27 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
   const g=c.el.getGridOptions?c.el.getGridOptions():null;
   ok(`size ${t}: illustration_size 150 -> --illus-scale 1.5, min 3 columns`,c.el.style.getPropertyValue('--illus-scale')==='1.5'&&g&&g.min_columns===3&&g.min_rows===1,c.el.style.getPropertyValue('--illus-scale')+' '+JSON.stringify(g));}
  const c=card('washer',{power:'sensor.p',illustration_size:9999},[mk('sensor.p',10,W)]); ok('size: clamped to 300 %',c.el.style.getPropertyValue('--illus-scale')==='3');}
+// durée d'utilisation du jour (écrans) : capteur usage_time, sinon historique depuis minuit ; show_usage_time:false masque
+{const t0=new Date();t0.setHours(0,0,0,0);const T0=t0.getTime(),el=Date.now()-T0,calls=[];
+ const fmt=(min)=>{const m=Math.round(min);if(m<60)return `${m} min`;const h=Math.floor(m/60),r=m%60;return r?`${h} h ${String(r).padStart(2,'0')}`:`${h} h`;};
+ const stats=(c)=>c.sr.getElementById('stats').textContent.replace(/\s+/g,' ');
+ const ws=(c,res)=>{c.h.callWS=(m)=>{calls.push(m);return Promise.resolve(res);};c.el.hass={...c.h,states:{...c.h.states}};};
+ let c=card('tv',{entity:'switch.tv',power:'sensor.p',usage_time:'sensor.u'},[mk('switch.tv','on'),mk('sensor.p',85,W),mk('sensor.u','2.5',{unit_of_measurement:'h'})]);
+ ok('usage_time sensor -> tile 2 h 30',/2 h 30/.test(stats(c))&&/Utilisation du jour/.test(stats(c)),stats(c));
+ c=card('tv',{entity:'switch.tv',power:'sensor.p',usage_time:'sensor.u',show_usage_time:false},[mk('switch.tv','on'),mk('sensor.p',85,W),mk('sensor.u','2.5',{unit_of_measurement:'h'})]);
+ ok('show_usage_time:false hides the tile',!/Utilisation du jour/.test(stats(c)),stats(c));
+ const c1=card('tv',{entity:'switch.tv',power:'sensor.p'},[mk('switch.tv','on'),mk('sensor.p',0.5,W)]);
+ ws(c1,{'sensor.p':[{s:'0.5',lu:(T0-3600000)/1e3},{s:'90',lu:(T0+el*0.25)/1e3},{s:'0.5',lu:(T0+el*0.75)/1e3}]});
+ const c2=card('monitor',{entity:'switch.m'},[mk('switch.m','off')]);
+ ws(c2,{'switch.m':[{s:'off',lu:(T0-3600000)/1e3},{s:'on',lu:(T0+el*0.5)/1e3},{s:'off',lu:(T0+el*0.75)/1e3}]});
+ const c3=card('tv',{entity:'switch.tv',power:'sensor.p',show_usage_time:false},[mk('switch.tv','on'),mk('sensor.p',0.5,W)]);
+ const n3=calls.length; ws(c3,{'sensor.p':[]}); const n3b=calls.length;
+ setTimeout(()=>{
+  ok('usage from power history since midnight',stats(c1).includes(fmt(el/2/60000))&&/Utilisation du jour/.test(stats(c1)),stats(c1)+' / '+fmt(el/2/60000));
+  ok('usage history request starts at midnight',calls.some(m=>m.type==='history/history_during_period'&&m.entity_ids[0]==='sensor.p'&&new Date(m.start_time).getTime()===T0),JSON.stringify(calls[0]));
+  ok('usage from entity history (no power)',stats(c2).includes(fmt(el/4/60000)),stats(c2)+' / '+fmt(el/4/60000));
+  ok('show_usage_time:false: no history request',n3b===n3&&!/Utilisation du jour/.test(stats(c3)),n3+' '+n3b);
+ },300);}
 window.RESULTS=R;
 const fails=R.filter(r=>!r.pass).length;
 document.getElementById('sum').innerHTML=`<b class="${fails?'f':'p'}">${R.length-fails} / ${R.length} tests réussis</b> — fichier testé : <code>dist/ha-appliance-electromenager-cards.js</code>`;

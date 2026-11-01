@@ -55,6 +55,9 @@ const STRINGS = {
     "f_max_temperature_2": "Lower zone alert above (°C)",
     "f_show_modes": "Show mode buttons",
     "f_show_power": "Show power",
+    "f_usage_time": "Usage time today sensor (optional)",
+    "f_show_usage_time": "Show usage time today",
+    "usage_today": "Usage today",
     "grid": "Grid",
     "energy_grid": "Grid energy",
     "energy_solar": "Solar energy",
@@ -353,6 +356,9 @@ const STRINGS = {
     "f_max_temperature_2": "Alarm untere Zone über (°C)",
     "f_show_modes": "Modus-Tasten anzeigen",
     "f_show_power": "Leistung anzeigen",
+    "f_usage_time": "Sensor Nutzungsdauer heute (optional)",
+    "f_show_usage_time": "Nutzungsdauer heute anzeigen",
+    "usage_today": "Nutzung heute",
     "grid": "Netz",
     "energy_grid": "Netzenergie",
     "energy_solar": "Solarenergie",
@@ -651,6 +657,9 @@ const STRINGS = {
     "f_max_temperature_2": "Alerte zone basse au-dessus de (°C)",
     "f_show_modes": "Afficher les boutons de mode",
     "f_show_power": "Afficher la puissance",
+    "f_usage_time": "Capteur de durée d'utilisation du jour (facultatif)",
+    "f_show_usage_time": "Afficher la durée d'utilisation du jour",
+    "usage_today": "Utilisation du jour",
     "grid": "Réseau",
     "energy_grid": "Énergie réseau",
     "energy_solar": "Énergie solaire",
@@ -1015,6 +1024,9 @@ const STRINGS = {
     "f_max_temperature_2": "Varsel nedre sone over (°C)",
     "f_show_modes": "Vis modusknapper",
     "f_show_power": "Vis effekt",
+    "f_usage_time": "Sensor for brukstid i dag (valgfri)",
+    "f_show_usage_time": "Vis brukstid i dag",
+    "usage_today": "Bruk i dag",
     "grid": "Strømnett",
     "energy_grid": "Energi fra nettet",
     "energy_solar": "Solenergi",
@@ -1247,6 +1259,9 @@ const STRINGS = {
     "f_max_temperature_2": "Alarm onderste zone boven (°C)",
     "f_show_modes": "Modusknoppen tonen",
     "f_show_power": "Vermogen tonen",
+    "f_usage_time": "Sensor gebruiksduur vandaag (optioneel)",
+    "f_show_usage_time": "Gebruiksduur vandaag tonen",
+    "usage_today": "Gebruik vandaag",
     "grid": "Net",
     "energy_grid": "Energie van het net",
     "energy_solar": "Zonne-energie",
@@ -1545,6 +1560,9 @@ const STRINGS = {
     "f_max_temperature_2": "Alertă zona de jos peste (°C)",
     "f_show_modes": "Afișează butoanele de mod",
     "f_show_power": "Afișează puterea",
+    "f_usage_time": "Senzor durată de utilizare azi (opțional)",
+    "f_show_usage_time": "Afișează durata de utilizare de azi",
+    "usage_today": "Utilizare azi",
     "grid": "Rețea",
     "energy_grid": "Energie din rețea",
     "energy_solar": "Energie solară",
@@ -1843,6 +1861,9 @@ const STRINGS = {
     "f_max_temperature_2": "Оповещать для нижней зоны выше (°C)",
     "f_show_modes": "Показывать кнопки режимов",
     "f_show_power": "Показывать мощность",
+    "f_usage_time": "Датчик времени использования за день (необязательно)",
+    "f_show_usage_time": "Показывать время использования за день",
+    "usage_today": "Использование сегодня",
     "grid": "Сеть",
     "energy_grid": "Энергия из сети",
     "energy_solar": "Солнечная энергия",
@@ -2141,6 +2162,9 @@ const STRINGS = {
     "f_max_temperature_2": "Обавештење за доњу зону изнад (°C)",
     "f_show_modes": "Прикажи дугмад за режим",
     "f_show_power": "Прикажи снагу",
+    "f_usage_time": "Сензор времена коришћења данас (опционо)",
+    "f_show_usage_time": "Прикажи време коришћења данас",
+    "usage_today": "Коришћење данас",
     "grid": "Електрична мрежа",
     "energy_grid": "Енергија из мреже",
     "energy_solar": "Соларна енергија",
@@ -2439,6 +2463,9 @@ const STRINGS = {
     "f_max_temperature_2": "Obaveštenje za donju zonu iznad (°C)",
     "f_show_modes": "Prikaži dugmad za režim",
     "f_show_power": "Prikaži snagu",
+    "f_usage_time": "Senzor vremena korišćenja danas (opciono)",
+    "f_show_usage_time": "Prikaži vreme korišćenja danas",
+    "usage_today": "Korišćenje danas",
     "grid": "Električna mreža",
     "energy_grid": "Energija iz mreže",
     "energy_solar": "Solarna energija",
@@ -4757,7 +4784,7 @@ const DEF = {
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["ampli", "amplificateur", "home_cinema", "homecinema", "avr", "receiver", "denon", "yamaha", "onkyo", "marantz", "pioneer"] },
   tv: { accent: "active", threshold: 25,
-    fields: ["entity", "power", "energy", "cost", "switch"],
+    fields: ["entity", "power", "energy", "cost", "usage_time", "switch"],
     keys: ["tv", "tele", "television", "televiseur", "bravia", "webos", "android_tv", "tizen", "salon_tv"] },
   range_hood: { accent: "active", threshold: 40,
     fields: ["entity", "power", "energy", "cost", "speed", "light", "switch"],
@@ -4769,10 +4796,10 @@ const DEF = {
     fields: ["entity", "power", "energy", "cost", "temperature", "switch"],
     keys: ["baie", "rack", "homelab", "home_lab", "serveur", "server", "proxmox", "unraid", "nas"] },
   ps5: { accent: "active", threshold: 25,
-    fields: ["entity", "power", "energy", "cost", "switch"],
+    fields: ["entity", "power", "energy", "cost", "usage_time", "switch"],
     keys: ["ps5", "playstation", "play_station"] },
   desktop_pc: { accent: "active", threshold: 40,
-    fields: ["entity", "power", "energy", "cost", "switch"],
+    fields: ["entity", "power", "energy", "cost", "usage_time", "switch"],
     keys: ["pc_fixe", "pcfixe", "desktop", "ordinateur", "gaming", "workstation", "pc_bureau", "unite_centrale", "tour_pc"] },
   kettle: { accent: "heat", threshold: 500,
     fields: ["entity", "power", "energy", "cost", "temperature", "switch"],
@@ -4793,10 +4820,10 @@ const DEF = {
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["guirlande", "garland", "string_light", "fairy", "guinguette", "lichterkette"] },
   monitor: { accent: "active", threshold: 10,
-    fields: ["entity", "power", "energy", "cost", "switch"],
+    fields: ["entity", "power", "energy", "cost", "usage_time", "switch"],
     keys: ["ecran", "moniteur", "monitor", "screens", "display"] },
   laptop: { accent: "active", threshold: 15,
-    fields: ["entity", "power", "energy", "cost", "switch"],
+    fields: ["entity", "power", "energy", "cost", "usage_time", "switch"],
     keys: ["pc_portable", "portable", "laptop", "macbook", "notebook", "thinkpad", "chromebook"] },
   coffee_maker: { accent: "heat", threshold: 300,
     fields: ["entity", "power", "energy", "cost", "switch"],
@@ -5014,6 +5041,9 @@ let SEQ = 0;
 // energy_period : périodes calendaires, puis glissantes (durée en jours)
 const ROLLING = { "24h": 1, "7d": 7, "30d": 30 };
 const PERIODS = ["day", "week", "month", ...Object.keys(ROLLING)];
+// cartes avec la tuile « durée d'utilisation du jour » (capteur usage_time, sinon calcul depuis l'historique)
+const USAGE_KINDS = ["tv", "monitor", "ps5", "desktop_pc", "laptop"];
+const USAGE_ON = ["on", "playing", "paused", "idle", "buffering", "home"];
 
 class ApplianceCardBase extends HTMLElement {
   static get kind() { return "washer"; }
@@ -5085,7 +5115,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "power_level", "pellet_level", "runtime", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water"].map((k) => c[k]).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "power_level", "pellet_level", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water"].map((k) => c[k]).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -5236,9 +5266,37 @@ class ApplianceCardBase extends HTMLElement {
     }, was === true ? 20000 : 0);
   }
 
+  // durée d'utilisation du jour, sans capteur usage_time : historique depuis minuit de la puissance
+  // (allumé = au-dessus du seuil), sinon de l'entité principale (on / playing / idle…).
+  // Relu au plus toutes les 5 min et au changement de jour ; entre deux lectures, le temps court tant que l'appareil est allumé.
+  _fetchUsage() {
+    const c = this._config, hass = this._hass;
+    if (!USAGE_KINDS.includes(this._kind) || c.show_usage_time === false || c.usage_time || !hass || typeof hass.callWS !== "function") return;
+    const id = c.power || c.entity;
+    if (!id || !hass.states[id]) return;
+    const day = new Date().toDateString(), now = Date.now();
+    if (this._useBusy || (this._useDay === day && now - (this._useAt || 0) < 300000)) return;
+    this._useBusy = true; this._useAt = now; this._useDay = day;
+    const start = new Date(); start.setHours(0, 0, 0, 0);
+    const t0 = start.getTime(), byPower = !!c.power, thr = c.threshold ?? this._def.threshold;
+    const f = byPower && hass.states[id].attributes.unit_of_measurement === "kW" ? 1000 : 1;
+    const on = (s) => byPower ? parseFloat(s) * f > thr : USAGE_ON.includes(String(s).toLowerCase());
+    hass.callWS({ type: "history/history_during_period", start_time: start.toISOString(), end_time: new Date(now).toISOString(),
+      entity_ids: [id], minimal_response: true, no_attributes: true, significant_changes_only: false })
+      .then((r) => {
+        const pts = ((r && r[id]) || []).map((p) => ({ t: Math.max(t0, (p.lu ?? p.lc) * 1000), s: p.s })).filter((p) => Number.isFinite(p.t)).sort((a, b) => a.t - b.t);
+        let ms = 0;
+        pts.forEach((p, i) => { if (on(p.s)) ms += (i + 1 < pts.length ? pts[i + 1].t : now) - p.t; });
+        this._use = { min: ms / 60000, at: now, on: pts.length ? on(pts[pts.length - 1].s) : false };
+      })
+      .catch(() => { this._use = null; })
+      .finally(() => { this._useBusy = false; if (this._hass) this._render(this._compute()); });
+  }
+
   _update(force) {
     const hass = this._hass;
     this._fetchPeriod();
+    this._fetchUsage();
     const key = this._ids().map((i) => {
       const s = hass.states[i];
       return s ? `${s.state}|${s.attributes.temperature ?? ""}|${s.attributes.current_temperature ?? ""}|${s.attributes.current_humidity ?? ""}|${s.attributes.humidity ?? ""}|${s.attributes.action ?? ""}|${s.attributes.mode ?? ""}|${s.attributes.percentage ?? ""}` : "x";
@@ -5264,7 +5322,7 @@ class ApplianceCardBase extends HTMLElement {
       temp: S(c.temperature), target: S(c.target_temperature),
       ftemp: S(c.freezer_temperature), fdoor: S(c.freezer_door), flex: S(c.flex_temperature),
       level: num(S(c.power_level)), pellets: num(S(c.pellet_level)),
-      runtime: parseRemaining(S(c.runtime)), speed: S(c.speed), bedTemp: num(S(c.bed_temperature)), humidity: num(S(c.humidity)), mode: S(c.mode), window: S(c.window), light: S(c.light), keg: num(S(c.keg_level)), pouring: S(c.pouring), batt: num(S(c.battery_level)), zone2: num(S(c.zone2_temperature)), zone2Ent: S(c.zone2_temperature),
+      runtime: parseRemaining(S(c.runtime)), usage: parseRemaining(S(c.usage_time)), speed: S(c.speed), bedTemp: num(S(c.bed_temperature)), humidity: num(S(c.humidity)), mode: S(c.mode), window: S(c.window), light: S(c.light), keg: num(S(c.keg_level)), pouring: S(c.pouring), batt: num(S(c.battery_level)), zone2: num(S(c.zone2_temperature)), zone2Ent: S(c.zone2_temperature),
       tank: S(c.tank_full), fanSpeed: S(c.fan_speed), targetHum: S(c.target_humidity), cleanW: S(c.clean_water), dirtyW: S(c.dirty_water),
       status: "idle", phase: null, alerts: [],
     };
@@ -6248,6 +6306,12 @@ class ApplianceCardBase extends HTMLElement {
     }
     if (m.energyS) tile("mdi:solar-power-variant", fmtEnergy(hass, m.energyS) ?? "—", lb("energy_solar"), c.energy_solar);
     if (m.cost) tile(solar ? "mdi:piggy-bank-outline" : "mdi:cash", fmtUnit(hass, m.cost, 2, 2) ?? "—", lb(solar ? "savings" : "cost"), c.cost);
+    // durée d'utilisation du jour (écrans, consoles, PC) : capteur usage_time, sinon historique (+ temps écoulé depuis la lecture si toujours allumé)
+    if (USAGE_KINDS.includes(kind) && c.show_usage_time !== false) {
+      const u = this._use, today = u && this._useDay === new Date().toDateString();
+      const min = m.usage != null ? m.usage : today ? u.min + (u.on && active ? (Date.now() - u.at) / 60000 : 0) : null;
+      if (min != null) tile("mdi:timer-outline", fmtDuration(min), lb("usage_today"), c.usage_time || c.power || c.entity);
+    }
     // dernier cycle (option last_cycle), affiché hors cycle
     const cy = c.last_cycle && !active ? this._cycle : null;
     if (cy) {
@@ -6292,6 +6356,7 @@ const SEL = {
   power_level: { entity: { domain: ["sensor", "number", "input_number", "select", "input_select"] } },
   pellet_level: { entity: { domain: ["sensor", "number", "input_number"] } },
   runtime: { entity: { domain: ["sensor"] } },
+  usage_time: { entity: { domain: ["sensor"] } },
   light: { entity: { domain: ["light", "switch", "binary_sensor", "input_boolean"] } },
   zone2_temperature: { entity: { domain: ["sensor", "input_number"], device_class: "temperature" } },
   battery_level: { entity: { domain: ["sensor", "number", "input_number"] } },
@@ -6416,6 +6481,7 @@ function buildForm(kind) {
           { name: "show_power", selector: { boolean: {} }, default: true },
           { name: "hide_zero_power", selector: { boolean: {} }, default: true },
           ...(["radiator", "towel_dryer"].includes(kind) ? [{ name: "show_modes", selector: { boolean: {} }, default: true }] : []),
+          ...(USAGE_KINDS.includes(kind) ? [{ name: "show_usage_time", selector: { boolean: {} }, default: true }] : []),
           ...(kind === "server_rack" ? [
             { name: "max_power", selector: { number: { min: 50, max: 3000, step: 10, mode: "box", unit_of_measurement: "W" } } },
           ] : []),

@@ -22,6 +22,7 @@ const SEL = {
   power_level: { entity: { domain: ["sensor", "number", "input_number", "select", "input_select"] } },
   pellet_level: { entity: { domain: ["sensor", "number", "input_number"] } },
   runtime: { entity: { domain: ["sensor"] } },
+  usage_time: { entity: { domain: ["sensor"] } },
   light: { entity: { domain: ["light", "switch", "binary_sensor", "input_boolean"] } },
   zone2_temperature: { entity: { domain: ["sensor", "input_number"], device_class: "temperature" } },
   battery_level: { entity: { domain: ["sensor", "number", "input_number"] } },
@@ -146,6 +147,7 @@ function buildForm(kind) {
           { name: "show_power", selector: { boolean: {} }, default: true },
           { name: "hide_zero_power", selector: { boolean: {} }, default: true },
           ...(["radiator", "towel_dryer"].includes(kind) ? [{ name: "show_modes", selector: { boolean: {} }, default: true }] : []),
+          ...(USAGE_KINDS.includes(kind) ? [{ name: "show_usage_time", selector: { boolean: {} }, default: true }] : []),
           ...(kind === "server_rack" ? [
             { name: "max_power", selector: { number: { min: 50, max: 3000, step: 10, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
