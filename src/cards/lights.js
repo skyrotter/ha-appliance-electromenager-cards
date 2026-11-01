@@ -394,7 +394,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
           ...(this.kind === 'color_bulb' ? [bool('color_cycle', false)] : []),
           ...(this.kind === 'christmas_tree' ? [bool('multicolor')] : []),
         ] },
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_controls'), bool('show_brightness'), bool('show_power'), bool('show_energy'), bool('animations'),
         ] },
