@@ -9419,6 +9419,11 @@ class ApplianceLinkyCard extends HTMLElement {
 
   setConfig(config) {
     if (window.applianceSize) window.applianceSize(this, config);
+    // entity_power_l1…l3 : compteur triphasé seulement (une seule phase couperait à 1/3 de la souscription) ;
+    // un compteur monophasé se configure avec entity_power
+    const c = config || {};
+    if ([c.entity_power_l1, c.entity_power_l2, c.entity_power_l3].filter(Boolean).length === 1)
+      throw new Error('entity_power_l1…l3 are for three-phase meters: set at least two phases, or use entity_power for a single-phase meter');
     this._config = {
       show_gauge: true, show_phases: true, show_index: true, show_injection: true, show_tariff: true, show_cost: true,
       phase_gauge: 'needles', subscribed_power: 9, hc_ranges: '', ...config,
@@ -9637,13 +9642,9 @@ class ApplianceLinkyCard extends HTMLElement {
     // En triphasé, il coupe phase par phase à 1/3 de la souscription. Selon phase_gauge :
     // « needles » une aiguille par phase, « cycle » L1 → L2 → L3 toutes les 3 s,
     // « max » la phase la plus chargée. L'alerte suit toujours la phase la plus chargée.
-    // Triphasé seulement avec au moins deux phases configurées. Un compteur monophasé se configure avec
-    // entity_power ; entity_power_l1 seul (erreur de config) reste monophasé et remplace entity_power s'il est vide.
     const max = c.subscribed_power * 1000, phaseMax = max / 3;
-    const phaseIds = [c.entity_power_l1, c.entity_power_l2, c.entity_power_l3];
-    const phases = phaseIds.map((id) => this._power(id)), nPhases = phaseIds.filter(Boolean).length;
-    const tri = nPhases >= 2 && phases.some(Boolean), mode = ['cycle', 'max'].includes(c.phase_gauge) ? c.phase_gauge : 'needles';
-    if (nPhases === 1 && power === null) { const one = phases.find(Boolean); if (one) { power = one.v; unit = one.unit; } }
+    const phases = [c.entity_power_l1, c.entity_power_l2, c.entity_power_l3].map((id) => this._power(id));
+    const tri = phases.some(Boolean), mode = ['cycle', 'max'].includes(c.phase_gauge) ? c.phase_gauge : 'needles';
     const pr = (p) => (p ? Math.min(p.v / phaseMax, 1) : 0);
     this._tri = tri;
     let ratio, alertRatio, gtxt, shown = -1;

@@ -605,11 +605,10 @@ ok('linky 3-phase alert on one phase while total is low',byId(c,'meter').classLi
 c=lk([...ph(1.2,0.5,0.25).map((s)=>({...s,attributes:{unit_of_measurement:'kVA'}}))],{...L3,entity_power:''});
 ok('linky 3-phase kVA converted, total from phases',byId(c,'phv1').textContent==='1200 VA'&&byId(c,'val').textContent==='1950 VA',byId(c,'phv1').textContent+' '+byId(c,'val').textContent);
 c=lk([...ph(250,500,700)],{...L3,show_phases:false}); ok('linky show_phases:false hides the bars',byId(c,'phases').style.display==='none'&&gt(c)==='L3 · 700 VA',byId(c,'phases').style.display);
-// linky single-phase with only entity_power_l1 (#158): whole subscription, no bars, phase 1 used as the power
-c=lk([mk('sensor.l1',3000,VA)],{entity_power:'',entity_power_l1:'sensor.l1',subscribed_power:6});
-ok('linky only L1 configured: single-phase on the full subscription',gt(c)==='3000 VA'&&Math.abs(deg(c))<0.01&&byId(c,'phases').style.display==='none'&&byId(c,'val').textContent==='3000 VA'&&!/par phase/.test(byId(c,'gsub').textContent),gt(c)+' '+needle(c)+' '+byId(c,'val').textContent+' '+byId(c,'gsub').textContent);
-c=lk([mk('sensor.p',1500,VA),mk('sensor.l1',1500,VA)],{entity_power_l1:'sensor.l1',subscribed_power:6});
-ok('linky entity_power + only L1: single-phase, gauge on entity_power',gt(c)==='1500 VA'&&Math.abs(deg(c)+45)<0.01&&byId(c,'needle').style.display!=='none'&&byId(c,'n1').style.display==='none',gt(c)+' '+needle(c));
+// linky: a single phase entity is a misconfiguration (#158): rejected, single-phase meters use entity_power
+{const cfgErr=(cfg)=>{try{document.createElement('appliance-linky-card').setConfig(cfg);return '';}catch(e){return e.message;}};
+ ok('linky only entity_power_l1: config error',/three-phase/.test(cfgErr({entity_power_l1:'sensor.l1'}))&&/entity_power/.test(cfgErr({entity_power:'sensor.p',entity_power_l3:'sensor.l3'})),cfgErr({entity_power_l1:'sensor.l1'}));
+ ok('linky two or three phases, or none: accepted',!cfgErr({entity_power_l1:'sensor.l1',entity_power_l2:'sensor.l2'})&&!cfgErr(L3)&&!cfgErr({entity_power:'sensor.p'}),cfgErr(L3));}
 // linky phase_gauge: needles (default) / cycle / max
 const ndeg=(c,i)=>parseFloat(byId(c,`n${i}`).style.transform.slice(7)), vis=(c,id)=>byId(c,id).style.display!=='none';
 c=lk([...ph(1250,2500,3750)],L3);
