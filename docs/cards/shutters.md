@@ -64,7 +64,7 @@ entity_rain: binary_sensor.velux_rain_sensor
 - `invert` (`true` for a cover that reports its position upside down, 0 = open and 100 = closed, as some Tuya shutters do: the drawing, badge, tiles and slider are flipped; the Open / Close buttons are unchanged)
 - `animations`, `show_status`, `show_controls`, `show_slider`, `show_position`, `show_tilt`, `show_power`, `show_since`
 - `labels` (tile keys: `position`, `tilt`, `power`, `since`)
-- `language: fr|en|de|nb|nl|ro|ru`
+- `language: fr|en|de|it|nb|nl|ro|ru|sr|sr-Latn`
 
 ## Example
 
