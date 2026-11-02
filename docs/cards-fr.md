@@ -186,6 +186,25 @@ entity_parcel: binary_sensor.boite_colis
 entity_reset: input_boolean.courrier
 ```
 
+**Détecteur de fumée** (`custom:appliance-smoke-detector-card`) : détecteur fixé au plafond, en deux modèles (`model`) : `cylinder` (cylindre compact, bouton-LED carré, bande grillagée, par défaut) ou `round` (rond plat classique). Alarme : la fumée monte, la LED rouge clignote, des ondes sonores partent du détecteur, la carte s'entoure de rouge. CO (`entity_co`, `binary_sensor` ou capteur en ppm comparé à `co_threshold`, 50 ppm) : nappe de gaz et ondes orange. Test (`entity_test`) : le bouton s'enfonce, ondes bleues. Défaut (`entity_fault`) et pile faible (`entity_battery` en % sous `battery_low`, ou `binary_sensor` battery) : LED orange et pictogramme. Boutons **Tester** (`entity_test_button`) et **Couper l'alarme** (`entity_silence`, visible pendant une alarme). `entity_smoke` accepte un `binary_sensor` ou un texte (« smoke », « alarm », « fumée »…). Options : voir [smoke-detector.md](cards/smoke-detector.md).
+
+```yaml
+type: custom:appliance-smoke-detector-card
+name: Couloir
+model: cylinder        # ou round
+entity_smoke: binary_sensor.detecteur_couloir_fumee
+entity_battery: sensor.detecteur_couloir_batterie
+```
+
+**Détecteur de fuite d'eau** (`custom:appliance-leak-detector-card`) : palet détecteur posé au sol sous un tuyau. Fuite : la flaque s'étend avec des ondulations, des gouttes tombent du raccord, la LED passe au rouge. `entity_leak` accepte une sonde ou une liste de sondes : l'alerte nomme celles qui sont mouillées et une tuile compte les sondes en fuite. Facultatifs : `entity_valve` (bouton **Fermer / Ouvrir la vanne**, gouttes arrêtées vanne fermée), `entity_siren` (bouton **Couper la sirène**), `entity_battery` (une ou plusieurs, la plus basse est affichée), `entity_temperature` (alerte gel sous `freeze_temp`, 3 °C, givre sur le tuyau), `entity_humidity`. Options : voir [leak-detector.md](cards/leak-detector.md).
+
+```yaml
+type: custom:appliance-leak-detector-card
+name: Sous l'évier
+entity_leak: binary_sensor.fuite_evier
+entity_valve: valve.arrivee_eau
+```
+
 **Sauna** : `custom:appliance-sauna-card`, cabine en lames de bois vue de face avec porte vitrée teintée (banquettes, poêle et pierres visibles), thermomètre mural, panneau de commande et conduit de ventilation. États : arrêt, chauffe, prêt (à `ready_margin` = 3 °C de la consigne), refroidissement (éteint mais au-dessus de 40 °C) et défaut. La lueur du poêle et les braises suivent la température, les ondes de chaleur montent au-dessus des pierres, la vapeur sort du conduit, le thermomètre se remplit ; alerte au-dessus de `temp_max` (110 °C). Avec une entité `climate`, la température et la consigne viennent de ses attributs et les boutons **− / Allumer-Éteindre / +** pilotent le thermostat. Tuiles : température, consigne, humidité, puissance du poêle, énergie, coût. Options : voir [sauna.md](cards/sauna.md).
 
 ```yaml
