@@ -196,6 +196,8 @@ function buildForm(kind) {
             { name: "pellet_alert", selector: { number: { min: 0, max: 50, step: 1, mode: "box", unit_of_measurement: "%" } } },
           ] : []),
           ...(["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "chest_freezer", "drawer_freezer", "desktop_pc", "server_rack", "ps5"].includes(kind) ? [{ name: "confirm_off", selector: { boolean: {} }, default: true }] : []),
+          // case à cocher : 2e clic obligatoire dès que la prise est allumée, quel que soit l'appareil
+          ...(d.fields.includes("switch") || kind === "power_strip" ? [{ name: "confirm_always", selector: { boolean: {} } }] : []),
           { name: "tap_action", selector: { ui_action: { actions: ["more-info", "toggle", "navigate", "url", "perform-action", "none"] } } },
           { name: "hold_action", selector: { ui_action: { actions: ["more-info", "toggle", "navigate", "url", "perform-action", "none"] } } },
           { name: "color", selector: { text: {} } },

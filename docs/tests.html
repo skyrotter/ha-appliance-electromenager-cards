@@ -466,6 +466,21 @@ c=card('dishwasher',{entity:'switch.dp',power:'sensor.p',switch:'switch.dp'},[mk
 c.sr.querySelector('.toggle').click(); ok('dishwasher mid-cycle also guarded',c.h.calls.length===0);
 c=card('washer',{entity:'switch.wp',power:'sensor.p',switch:'switch.wp'},[mk('switch.wp','off'),mk('sensor.p',0,W)]);
 c.sr.querySelector('.toggle').click(); ok('turning ON is never guarded',c.h.calls.length===1);
+// confirm_off: always → 2e clic dès que la prise est allumée, même hors cycle et sur un appareil sans cycle
+c=card('washer',{entity:'switch.wp',power:'sensor.p',switch:'switch.wp',confirm_off:'always'},[mk('switch.wp','on'),mk('sensor.p',1,W)]);
+c.sr.querySelector('.toggle').click(); ok('always: idle washer 1st click guarded',c.h.calls.length===0&&!!c.sr.querySelector('.toggle.confirm'),JSON.stringify(c.h.calls));
+c.sr.querySelector('.toggle').click(); ok('always: 2nd click cuts power',c.h.calls.length===1,JSON.stringify(c.h.calls));
+c=card('monitor',{power:'sensor.p',switch:'switch.s',confirm_always:true},[mk('sensor.p',30,W),mk('switch.s','on')]);
+c.sr.querySelector('.toggle').click(); ok('always: monitor guarded + generic message',c.h.calls.length===0&&/cliquer encore pour couper/i.test(c.sr.getElementById('actions').textContent),c.sr.getElementById('actions').textContent);
+c=card('monitor',{power:'sensor.p',switch:'switch.s',confirm_off:'always'},[mk('sensor.p',0,W),mk('switch.s','off')]);
+c.sr.querySelector('.toggle').click(); ok('always: turning ON still one click',c.h.calls.length===1);
+c=card('monitor',{power:'sensor.p',switch:'switch.s'},[mk('sensor.p',30,W),mk('switch.s','on')]);
+c.sr.querySelector('.toggle').click(); ok('monitor without option: one click',c.h.calls.length===1);
+c=card('washer',{entity:'switch.wp',power:'sensor.p',switch:'switch.wp',confirm_off:'off'},[mk('switch.wp','on'),mk('sensor.p',1800,W)]);
+c.sr.querySelector('.toggle').click(); ok('confirm_off:"off" toggles on 1st click',c.h.calls.length===1,JSON.stringify(c.h.calls));
+c=card('power-strip',{outlets:['switch.a','switch.b'],confirm_off:'always'},[mk('switch.a','on'),mk('switch.b','off')]);
+c.sr.querySelector('.toggle').click(); ok('always: strip outlets 1st click guarded',c.h.calls.length===0);
+c.sr.querySelector('.toggle').click(); ok('always: strip outlets 2nd click turn_off all',c.h.calls.length===1&&c.h.calls[0][1]==='turn_off',JSON.stringify(c.h.calls));
 // pellet stove
 const stove=(cfg,st,lang)=>card('pellet-stove',cfg,st,lang);
 c=stove({power:'sensor.p'},[mk('sensor.p',0,W)]); ok('stove plug 0 W -> off',has(c,'st-off'),c.wrap.className);

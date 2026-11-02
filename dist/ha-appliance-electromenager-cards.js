@@ -197,7 +197,7 @@ const STRINGS = {
     "f_freezer_max_temperature": "Freezer alert above (°C)",
     "f_color": "Accent color (CSS)",
     "f_animations": "Animations",
-    "f_confirm_off": "Confirm before cutting power during a cycle",
+    "f_confirm_off": "Confirm before cutting power",
     "err_need_entity": "Set at least one of `entity`, `power`, `switch` or `temperature`.",
     "of_peak": "of peak",
     "lcd_night": "NIGHT",
@@ -241,6 +241,8 @@ const STRINGS = {
     "ps_rest": "Rest mode",
     "ps_gaming": "Gaming",
     "confirm_off_console": "Console on – click again to cut power",
+    "confirm_off_always": "Click again to cut power",
+    "f_confirm_always": "Always confirm before cutting power (plug on)",
     "f_standby_threshold_ps5": "Rest mode above (W)",
     "f_gaming_threshold": "Gaming above (W)",
     "f_energy_period": "Energy shown (counter or period)",
@@ -499,7 +501,7 @@ const STRINGS = {
     "f_freezer_max_temperature": "Gefrierfachalarm über (°C)",
     "f_color": "Akzentfarbe (CSS)",
     "f_animations": "Animationen",
-    "f_confirm_off": "Abschalten während eines Zyklus bestätigen",
+    "f_confirm_off": "Vor dem Abschalten bestätigen",
     "err_need_entity": "Mindestens eines von `entity`, `power`, `switch` oder `temperature` angeben.",
     "of_peak": "der Spitzenleistung",
     "lcd_night": "NACHT",
@@ -543,6 +545,8 @@ const STRINGS = {
     "ps_rest": "Ruhemodus",
     "ps_gaming": "Im Spiel",
     "confirm_off_console": "Konsole an – erneut klicken zum Ausschalten",
+    "confirm_off_always": "Erneut klicken zum Abschalten",
+    "f_confirm_always": "Vor dem Abschalten immer bestätigen (Steckdose an)",
     "f_standby_threshold_ps5": "Ruhemodus über (W)",
     "f_gaming_threshold": "Im Spiel über (W)",
     "f_energy_period": "Angezeigte Energie (Zähler oder Zeitraum)",
@@ -801,7 +805,7 @@ const STRINGS = {
     "f_freezer_max_temperature": "Alerte congélateur au-dessus de (°C)",
     "f_color": "Couleur d'accent (CSS)",
     "f_animations": "Animations",
-    "f_confirm_off": "Confirmer avant de couper pendant un cycle",
+    "f_confirm_off": "Confirmer avant de couper",
     "err_need_entity": "Indique au moins `entity`, `power`, `switch` ou `temperature`.",
     "of_peak": "de la crête",
     "lcd_night": "NUIT",
@@ -845,6 +849,8 @@ const STRINGS = {
     "ps_rest": "Mode repos",
     "ps_gaming": "En jeu",
     "confirm_off_console": "Console allumée – cliquer encore pour couper",
+    "confirm_off_always": "Cliquer encore pour couper",
+    "f_confirm_always": "Toujours confirmer avant de couper (prise allumée)",
     "f_standby_threshold_ps5": "Mode repos au-dessus de (W)",
     "f_gaming_threshold": "En jeu au-dessus de (W)",
     "f_energy_period": "Énergie affichée (compteur ou période)",
@@ -1103,7 +1109,7 @@ const STRINGS = {
     "f_freezer_max_temperature": "Avviso congelatore sopra (°C)",
     "f_color": "Colore accento (CSS)",
     "f_animations": "Animazioni",
-    "f_confirm_off": "Conferma prima di interrompere l'alimentazione durante un ciclo",
+    "f_confirm_off": "Conferma prima di togliere corrente",
     "err_need_entity": "Imposta almeno uno tra `entity`, `power`, `switch` o `temperature`.",
     "of_peak": "del picco",
     "lcd_night": "NOTTE",
@@ -1147,6 +1153,8 @@ const STRINGS = {
     "ps_rest": "Modalità riposo",
     "ps_gaming": "In gioco",
     "confirm_off_console": "Console accesa – clicca di nuovo per togliere corrente",
+    "confirm_off_always": "Clicca di nuovo per togliere corrente",
+    "f_confirm_always": "Conferma sempre prima di togliere corrente (presa accesa)",
     "f_standby_threshold_ps5": "Modalità riposo sopra (W)",
     "f_gaming_threshold": "In gioco sopra (W)",
     "f_energy_period": "Energia mostrata (contatore o periodo)",
@@ -1287,6 +1295,8 @@ const STRINGS = {
     "ps_rest": "Hvilemodus",
     "ps_gaming": "Spiller",
     "confirm_off_console": "Konsollen er på – klikk igjen for å kutte strømmen",
+    "confirm_off_always": "Klikk igjen for å kutte strømmen",
+    "f_confirm_always": "Bekreft alltid før strømmen brytes (kontakt på)",
     "f_standby_threshold_ps5": "Hvilemodus over (W)",
     "f_gaming_threshold": "Spiller over (W)",
     "f_energy_period": "Vist energi (teller eller periode)",
@@ -1473,7 +1483,7 @@ const STRINGS = {
     "f_freezer_max_temperature": "Varsel fryser over (°C)",
     "f_color": "Aksentfarge (CSS)",
     "f_animations": "Animasjoner",
-    "f_confirm_off": "Bekreft før strømmen brytes under en syklus",
+    "f_confirm_off": "Bekreft før strømmen brytes",
     "err_need_entity": "Angi minst én av `entity`, `power`, `switch` eller `temperature`.",
     "of_peak": "av topp",
     "lcd_night": "NATT",
@@ -1707,7 +1717,7 @@ const STRINGS = {
     "f_freezer_max_temperature": "Alarm diepvries boven (°C)",
     "f_color": "Accentkleur (CSS)",
     "f_animations": "Animaties",
-    "f_confirm_off": "Bevestigen voor de stroom tijdens een cyclus wordt onderbroken",
+    "f_confirm_off": "Bevestigen voor de stroom wordt onderbroken",
     "err_need_entity": "Stel minstens één van `entity`, `power`, `switch` of `temperature` in.",
     "of_peak": "van piek",
     "lcd_night": "NACHT",
@@ -1751,6 +1761,8 @@ const STRINGS = {
     "ps_rest": "Rustmodus",
     "ps_gaming": "Aan het gamen",
     "confirm_off_console": "Console aan – klik nogmaals om uit te schakelen",
+    "confirm_off_always": "Klik nogmaals om de stroom te onderbreken",
+    "f_confirm_always": "Altijd bevestigen voor de stroom wordt onderbroken (stekker aan)",
     "f_standby_threshold_ps5": "Rustmodus boven (W)",
     "f_gaming_threshold": "Gamen boven (W)",
     "f_energy_period": "Getoonde energie (teller of periode)",
@@ -2009,7 +2021,7 @@ const STRINGS = {
     "f_freezer_max_temperature": "Alertă congelator peste (°C)",
     "f_color": "Culoare de accent (CSS)",
     "f_animations": "Animații",
-    "f_confirm_off": "Confirmă înainte de a tăia alimentarea în timpul unui ciclu",
+    "f_confirm_off": "Confirmă înainte de a tăia alimentarea",
     "err_need_entity": "Setează cel puțin una dintre `entity`, `power`, `switch` sau `temperature`.",
     "of_peak": "din vârf",
     "lcd_night": "NOAPTE",
@@ -2053,6 +2065,8 @@ const STRINGS = {
     "ps_rest": "Mod repaus",
     "ps_gaming": "În joc",
     "confirm_off_console": "Consola pornită – apasă din nou pentru a opri",
+    "confirm_off_always": "Apasă din nou pentru a tăia alimentarea",
+    "f_confirm_always": "Confirmă întotdeauna înainte de a tăia alimentarea (priză pornită)",
     "f_standby_threshold_ps5": "Mod repaus peste (W)",
     "f_gaming_threshold": "În joc peste (W)",
     "f_energy_period": "Energie afișată (contor sau perioadă)",
@@ -2311,7 +2325,7 @@ const STRINGS = {
     "f_freezer_max_temperature": "Оповещать для морозильника выше (°C)",
     "f_color": "Акцентный цвет (CSS)",
     "f_animations": "Анимации",
-    "f_confirm_off": "Подтверждать перед отключением питания во время цикла",
+    "f_confirm_off": "Подтверждать перед отключением питания",
     "err_need_entity": "Задайте хотя бы одно из `entity`, `power`, `switch` или `temperature`.",
     "of_peak": "от пика",
     "lcd_night": "НОЧЬ",
@@ -2355,6 +2369,8 @@ const STRINGS = {
     "ps_rest": "Режим покоя",
     "ps_gaming": "Игра",
     "confirm_off_console": "Консоль включена – нажмите ещё раз, чтобы отключить",
+    "confirm_off_always": "Нажмите ещё раз, чтобы отключить питание",
+    "f_confirm_always": "Всегда подтверждать отключение питания (розетка включена)",
     "f_standby_threshold_ps5": "Режим покоя выше (Вт)",
     "f_gaming_threshold": "Игра выше (Вт)",
     "f_energy_period": "Отображаемая энергия (счётчик или период)",
@@ -2613,7 +2629,7 @@ const STRINGS = {
     "f_freezer_max_temperature": "Обавештење за замрзивач изнад (°C)",
     "f_color": "Боја акцента (CSS)",
     "f_animations": "Анимације",
-    "f_confirm_off": "Потврда пре искључења струје током циклуса",
+    "f_confirm_off": "Потврда пре искључења струје",
     "err_need_entity": "Поставите барем једну од опција: `entity`, `power`, `switch` или `temperature`.",
     "of_peak": "ван шпица",
     "lcd_night": "НОЋ",
@@ -2657,6 +2673,8 @@ const STRINGS = {
     "ps_rest": "Режим мировања",
     "ps_gaming": "Игре",
     "confirm_off_console": "Конзола је укључена – кликните поново за искључење струје",
+    "confirm_off_always": "Кликните поново за искључење струје",
+    "f_confirm_always": "Увек потврди пре искључења струје (утичница укључена)",
     "f_standby_threshold_ps5": "Режим мировања изнад (W)",
     "f_gaming_threshold": "Игре изнад (W)",
     "f_energy_period": "Приказана енергија (бројач или период)",
@@ -2915,7 +2933,7 @@ const STRINGS = {
     "f_freezer_max_temperature": "Obaveštenje za zamrzivač iznad (°C)",
     "f_color": "Boja akcenta (CSS)",
     "f_animations": "Animacije",
-    "f_confirm_off": "Potvrda pre isključenja struje tokom ciklusa",
+    "f_confirm_off": "Potvrda pre isključenja struje",
     "err_need_entity": "Postavite barem jednu od opcija: `entity`, `power`, `switch` ili `temperature`.",
     "of_peak": "van špica",
     "lcd_night": "NOĆ",
@@ -2959,6 +2977,8 @@ const STRINGS = {
     "ps_rest": "Režim mirovanja",
     "ps_gaming": "Igre",
     "confirm_off_console": "Konzola je uključena – kliknite ponovo za isključenje struje",
+    "confirm_off_always": "Kliknite ponovo za isključenje struje",
+    "f_confirm_always": "Uvek potvrdi pre isključenja struje (utičnica uključena)",
     "f_standby_threshold_ps5": "Režim mirovanja iznad (W)",
     "f_gaming_threshold": "Igre iznad (W)",
     "f_energy_period": "Prikazana energija (brojač ili period)",
@@ -5505,7 +5525,6 @@ class ApplianceCardBase extends HTMLElement {
   _toggleSw() {
     const sw = this._sw, hass = this._hass;
     if (!sw || !hass) return;
-    if (sw.outlets) { hass.callService("homeassistant", sw.on ? "turn_off" : "turn_on", { entity_id: sw.outlets }); return; }
     if (sw.guarded && !(this._confirmUntil && Date.now() < this._confirmUntil)) {
       this._confirmUntil = Date.now() + 4000;
       this._render(this._compute());
@@ -5515,6 +5534,7 @@ class ApplianceCardBase extends HTMLElement {
     }
     this._confirmUntil = 0;
     clearTimeout(this._confirmTimer);
+    if (sw.outlets) { hass.callService("homeassistant", sw.on ? "turn_off" : "turn_on", { entity_id: sw.outlets }); return; }
     const dom = domainOf(sw.id);
     hass.callService(["switch", "input_boolean", "light", "fan", "humidifier"].includes(dom) ? dom : "homeassistant", "toggle", { entity_id: sw.id });
   }
@@ -6446,12 +6466,14 @@ class ApplianceCardBase extends HTMLElement {
     const outIds = kind === "power_strip" && !swId && Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i && hass.states[i]) : [];
     if (outIds.length) {
       const on = outIds.some((i) => isOn(hass.states[i]));
-      this._sw = { id: null, outlets: outIds, on, guarded: false };
-      const label = tr(hass, "toggle");
+      this._sw = { id: null, outlets: outIds, on, guarded: (c.confirm_always === true || c.confirm_off === "always") && on };
+      const arming = this._sw.guarded && this._confirmUntil && Date.now() < this._confirmUntil;
+      const label = tr(hass, arming ? "confirm_off_always" : "toggle");
+      const tip = arming ? `<div class="confirm-tip">${esc(label)}</div>` : "";
       if (c.show_toggle !== false) {
-        $("actions").innerHTML = `<button class="toggle ${on ? "on" : ""}" title="${esc(label)}" aria-label="${esc(label)}" aria-pressed="${on}"><ha-icon icon="mdi:power"></ha-icon></button>`;
+        $("actions").innerHTML = `<button class="toggle ${on ? "on" : ""} ${arming ? "confirm" : ""}" title="${esc(label)}" aria-label="${esc(label)}" aria-pressed="${on}"><ha-icon icon="${arming ? "mdi:alert" : "mdi:power"}"></ha-icon></button>${tip}`;
         $("actions").querySelector("button").onclick = (ev) => { ev.stopPropagation(); this._toggleSw(); };
-      } else $("actions").innerHTML = "";
+      } else $("actions").innerHTML = tip;
     } else if (swId) {
       const on = isOn(hass.states[swId]);
       // safety: cutting a washer/dryer/dishwasher mid-cycle needs a second click
@@ -6460,10 +6482,15 @@ class ApplianceCardBase extends HTMLElement {
       const computer = ["desktop_pc", "server_rack"].includes(kind) && ["screen_on", "online", "standby"].includes(m.status);
       // PS5 : couper la prise allumée ou en mode repos (téléchargements, mises à jour) peut abîmer les données
       const console_ = kind === "ps5" && ["screen_on", "ps_gaming", "ps_rest"].includes(m.status);
-      const guarded = c.confirm_off !== false && on && (freezer || computer || console_ || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d"].includes(kind)));
+      // confirm_always: true (ou confirm_off: always) : 2e clic dès que la prise est allumée ;
+      // sinon confirm_off : true (défaut, protection selon l'appareil) / false (jamais)
+      const always = c.confirm_always === true || c.confirm_off === "always";
+      const cOff = always ? "always" : c.confirm_off === false || c.confirm_off === "off" ? "off" : "auto";
+      const autoGuard = freezer || computer || console_ || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d"].includes(kind));
+      const guarded = cOff !== "off" && on && (cOff === "always" || autoGuard);
       this._sw = { id: swId, guarded };
       const arming = guarded && this._confirmUntil && Date.now() < this._confirmUntil;
-      const label = arming ? tr(hass, computer ? "confirm_off_pc" : console_ ? "confirm_off_console" : "confirm_off") : tr(hass, "toggle");
+      const label = arming ? tr(hass, computer ? "confirm_off_pc" : console_ ? "confirm_off_console" : autoGuard ? "confirm_off" : "confirm_off_always") : tr(hass, "toggle");
       const tip = arming ? `<div class="confirm-tip">${esc(label)}</div>` : "";
       if (c.show_toggle !== false) {
         $("actions").innerHTML = `<button class="toggle ${on ? "on" : ""} ${arming ? "confirm" : ""}" title="${esc(label)}" aria-label="${esc(label)}" aria-pressed="${on}"><ha-icon icon="${arming ? "mdi:alert" : "mdi:power"}"></ha-icon></button>${tip}`;
@@ -6856,6 +6883,8 @@ function buildForm(kind) {
             { name: "pellet_alert", selector: { number: { min: 0, max: 50, step: 1, mode: "box", unit_of_measurement: "%" } } },
           ] : []),
           ...(["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "chest_freezer", "drawer_freezer", "desktop_pc", "server_rack", "ps5"].includes(kind) ? [{ name: "confirm_off", selector: { boolean: {} }, default: true }] : []),
+          // case à cocher : 2e clic obligatoire dès que la prise est allumée, quel que soit l'appareil
+          ...(d.fields.includes("switch") || kind === "power_strip" ? [{ name: "confirm_always", selector: { boolean: {} } }] : []),
           { name: "tap_action", selector: { ui_action: { actions: ["more-info", "toggle", "navigate", "url", "perform-action", "none"] } } },
           { name: "hold_action", selector: { ui_action: { actions: ["more-info", "toggle", "navigate", "url", "perform-action", "none"] } } },
           { name: "color", selector: { text: {} } },

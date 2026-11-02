@@ -159,7 +159,6 @@ class ApplianceCardBase extends HTMLElement {
   _toggleSw() {
     const sw = this._sw, hass = this._hass;
     if (!sw || !hass) return;
-    if (sw.outlets) { hass.callService("homeassistant", sw.on ? "turn_off" : "turn_on", { entity_id: sw.outlets }); return; }
     if (sw.guarded && !(this._confirmUntil && Date.now() < this._confirmUntil)) {
       this._confirmUntil = Date.now() + 4000;
       this._render(this._compute());
@@ -169,6 +168,7 @@ class ApplianceCardBase extends HTMLElement {
     }
     this._confirmUntil = 0;
     clearTimeout(this._confirmTimer);
+    if (sw.outlets) { hass.callService("homeassistant", sw.on ? "turn_off" : "turn_on", { entity_id: sw.outlets }); return; }
     const dom = domainOf(sw.id);
     hass.callService(["switch", "input_boolean", "light", "fan", "humidifier"].includes(dom) ? dom : "homeassistant", "toggle", { entity_id: sw.id });
   }
@@ -1100,12 +1100,14 @@ class ApplianceCardBase extends HTMLElement {
     const outIds = kind === "power_strip" && !swId && Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i && hass.states[i]) : [];
     if (outIds.length) {
       const on = outIds.some((i) => isOn(hass.states[i]));
-      this._sw = { id: null, outlets: outIds, on, guarded: false };
-      const label = tr(hass, "toggle");
+      this._sw = { id: null, outlets: outIds, on, guarded: (c.confirm_always === true || c.confirm_off === "always") && on };
+      const arming = this._sw.guarded && this._confirmUntil && Date.now() < this._confirmUntil;
+      const label = tr(hass, arming ? "confirm_off_always" : "toggle");
+      const tip = arming ? `<div class="confirm-tip">${esc(label)}</div>` : "";
       if (c.show_toggle !== false) {
-        $("actions").innerHTML = `<button class="toggle ${on ? "on" : ""}" title="${esc(label)}" aria-label="${esc(label)}" aria-pressed="${on}"><ha-icon icon="mdi:power"></ha-icon></button>`;
+        $("actions").innerHTML = `<button class="toggle ${on ? "on" : ""} ${arming ? "confirm" : ""}" title="${esc(label)}" aria-label="${esc(label)}" aria-pressed="${on}"><ha-icon icon="${arming ? "mdi:alert" : "mdi:power"}"></ha-icon></button>${tip}`;
         $("actions").querySelector("button").onclick = (ev) => { ev.stopPropagation(); this._toggleSw(); };
-      } else $("actions").innerHTML = "";
+      } else $("actions").innerHTML = tip;
     } else if (swId) {
       const on = isOn(hass.states[swId]);
       // safety: cutting a washer/dryer/dishwasher mid-cycle needs a second click
@@ -1114,10 +1116,15 @@ class ApplianceCardBase extends HTMLElement {
       const computer = ["desktop_pc", "server_rack"].includes(kind) && ["screen_on", "online", "standby"].includes(m.status);
       // PS5 : couper la prise allumée ou en mode repos (téléchargements, mises à jour) peut abîmer les données
       const console_ = kind === "ps5" && ["screen_on", "ps_gaming", "ps_rest"].includes(m.status);
-      const guarded = c.confirm_off !== false && on && (freezer || computer || console_ || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d"].includes(kind)));
+      // confirm_always: true (ou confirm_off: always) : 2e clic dès que la prise est allumée ;
+      // sinon confirm_off : true (défaut, protection selon l'appareil) / false (jamais)
+      const always = c.confirm_always === true || c.confirm_off === "always";
+      const cOff = always ? "always" : c.confirm_off === false || c.confirm_off === "off" ? "off" : "auto";
+      const autoGuard = freezer || computer || console_ || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d"].includes(kind));
+      const guarded = cOff !== "off" && on && (cOff === "always" || autoGuard);
       this._sw = { id: swId, guarded };
       const arming = guarded && this._confirmUntil && Date.now() < this._confirmUntil;
-      const label = arming ? tr(hass, computer ? "confirm_off_pc" : console_ ? "confirm_off_console" : "confirm_off") : tr(hass, "toggle");
+      const label = arming ? tr(hass, computer ? "confirm_off_pc" : console_ ? "confirm_off_console" : autoGuard ? "confirm_off" : "confirm_off_always") : tr(hass, "toggle");
       const tip = arming ? `<div class="confirm-tip">${esc(label)}</div>` : "";
       if (c.show_toggle !== false) {
         $("actions").innerHTML = `<button class="toggle ${on ? "on" : ""} ${arming ? "confirm" : ""}" title="${esc(label)}" aria-label="${esc(label)}" aria-pressed="${on}"><ha-icon icon="${arming ? "mdi:alert" : "mdi:power"}"></ha-icon></button>${tip}`;

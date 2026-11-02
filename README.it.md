@@ -84,6 +84,7 @@ Ogni card dispone di un editor visuale. Quando aggiungi una card dal selettore, 
 | `show_toggle` | Imposta `false` per nascondere il pulsante di accensione |
 | `animations` | Imposta `false` per disattivare le animazioni |
 | `confirm_off` | Per alcune card, imposta `false` per disattivare la conferma prima di interrompere l'alimentazione durante un ciclo |
+| `confirm_always` | `true` per chiedere sempre un secondo clic prima di togliere corrente quando la presa è accesa (qualsiasi card con `switch`) |
 
 ### Esempio YAML
 
