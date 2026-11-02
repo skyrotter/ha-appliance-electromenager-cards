@@ -28,9 +28,9 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
 .scene>svg{display:block;width:100%;height:auto}
 .scene.pg{max-width:calc(360px * var(--illus-scale,1))}
 .scene.pg>svg{border-radius:10px}
-.ctl{display:flex;justify-content:center;gap:6px;margin-top:6px}
+.ctl{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:6px}
 .ctl.hide,.ctl button.hide{display:none}
-.ctl button{flex:1 1 0;max-width:110px;display:flex;align-items:center;justify-content:center;gap:4px;border:0;border-radius:10px;padding:6px 4px;cursor:pointer;
+.ctl button{flex:1 1 64px;max-width:110px;display:flex;align-items:center;justify-content:center;gap:4px;border:0;border-radius:10px;padding:6px 4px;cursor:pointer;
   background:var(--secondary-background-color);color:var(--primary-text-color);font:500 12px/16px var(--paper-font-body1_-_font-family,Roboto,sans-serif)}
 .ctl button ha-icon{--mdc-icon-size:16px}
 .ctl button:hover{filter:brightness(1.12)}
@@ -360,6 +360,8 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { show_status: true, show_controls: true, show_slider: true, show_position: true, show_tilt: true, show_power: true, show_since: true,
         show_rain: true, show_wind: true, show_blind: true, sun_entity: 'sun.sun', ...c };
+      // volet extérieur = la fenêtre elle-même : sans objet, on l'ignore (sinon bouton et tuile « Volet » en double)
+      if (this._c.entity_blind && this._c.entity_blind === this._c.entity) delete this._c.entity_blind;
       this._built = false;
       if (this._hass) this._render();
     }
