@@ -26,7 +26,7 @@
 /* modèles en photo (model: neptune4pro / kobrax) */
 .p3 .object { transform-box: fill-box; transform-origin: 50% 100%; }
 .k-printer_3d.indeterminate .p3-neptune4pro .objclip { y: 95.7px; height: 14px; }
-.k-printer_3d.indeterminate .p3-kobrax .objclip { y: 95.4px; height: 14px; }
+.k-printer_3d.indeterminate .p3-kobrax .objclip { y: 102.6px; height: 14px; }
 .k-printer_3d { --p3-tip: #ffd27a; }
 .k-printer_3d.st-heating { --p3-tip: #ff4a1f; }
 .p3-tip { opacity: 0; mix-blend-mode: screen; transition: opacity .4s; }

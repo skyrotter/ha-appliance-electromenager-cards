@@ -643,6 +643,14 @@ const pr=(cfg,st,lang)=>card('printer-3d',cfg,st,lang);
 c=pr({entity:'sensor.s',progress:'sensor.pg'},[mk('sensor.s','running'),mk('sensor.pg',40,{unit_of_measurement:'%'})]);
 ok('printer running (Bambu)',has(c,'st-printing')&&c.lcd()==='40%'&&/Impression/.test(c.txt()),c.wrap.className+' '+c.lcd()+' '+c.txt());
 ok('printer object height follows progress',Math.abs(parseFloat(c.wrap.style.getPropertyValue('--h'))-15.2)<0.01&&parseFloat(c.sr.querySelector('.objclip').getAttribute('height'))===15.2,c.wrap.style.getPropertyValue('--h'));
+// imprimante en photo (model) : Neptune 4 Pro / Kobra X, objet qui monte avec la progression
+{const P=(model,st,pg)=>pr({entity:'sensor.ps',progress:'sensor.pg',model},[mk('sensor.ps',st),mk('sensor.pg',pg,{unit_of_measurement:'%'})]);
+ let c=P('neptune4pro','printing',50); const cl=c.sr.querySelector('.objclip');
+ ok('printer photo neptune4pro',!!c.sr.querySelector('.p3-neptune4pro image')&&!c.sr.querySelector('.gantry')&&has(c,'st-printing'));
+ ok('printer photo: object follows progress',Math.abs(parseFloat(cl.getAttribute('height'))-7)<0.01&&Math.abs(parseFloat(cl.getAttribute('y'))-(parseFloat(cl.dataset.b)-7))<0.01,cl.getAttribute('y')+' '+cl.getAttribute('height'));
+ c=P('kobrax','heating',0); ok('printer photo kobrax + heating',!!c.sr.querySelector('.p3-kobrax image')&&has(c,'st-heating'));
+ c=P('Kobra X','finished',null); ok('printer photo: model name tolerant, finished = full object',!!c.sr.querySelector('.p3-kobrax')&&parseFloat(c.sr.querySelector('.objclip').getAttribute('height'))===14);
+ c=P('','printing',30); ok('printer without model keeps the drawing',!!c.sr.querySelector('.gantry')&&!c.sr.querySelector('.p3'));}
 ok('printer head moves while printing',getComputedStyle(c.sr.querySelector('.head')).animationName==='ac-printx',getComputedStyle(c.sr.querySelector('.head')).animationName);
 ok('printer progress bar',c.sr.getElementById('bar').style.display!=='none'&&c.sr.getElementById('barfill').style.width==='40%');
 c=pr({entity:'sensor.s',temperature:'sensor.n'},[mk('sensor.s','prepare'),mk('sensor.n',185,T)]); ok('printer prepare -> heating, LCD nozzle temp',has(c,'st-heating')&&c.lcd()==='185°'&&!has(c,'indeterminate'),c.wrap.className+' '+c.lcd());
