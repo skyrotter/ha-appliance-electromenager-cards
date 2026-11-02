@@ -854,7 +854,16 @@
     "color_dry": "Culoare: uscat",
     "color_alert": "Culoare: alertă",
     "show_trend": "Afișează tendința (1 h)",
-    "variant": "Stil"
+    "variant": "Stil",
+    "entity_mail": "Senzor corespondență (on, număr sau text)",
+    "entity_parcel": "Senzor colete",
+    "entity_door": "Senzor ușă",
+    "entity_count": "Contor scrisori",
+    "entity_reset": "Marchează ca ridicată (buton, helper, contor, script…)",
+    "mail_states": "Alte stări „corespondență” (separate prin virgulă)",
+    "parcel_states": "Alte stări „colet” (separate prin virgulă)",
+    "box_color": "Culoarea cutiei",
+    "show_count": "Afișează numărul"
   },
   "light": {
     "light_bulb": "Bec",
@@ -998,5 +1007,27 @@
     "compare": "Compară",
     "yesterday": "Ieri",
     "previous": "Perioada anterioară"
+  },
+  "mailbox": {
+    "name": "Cutie poștală",
+    "empty": "Goală",
+    "mail": "Corespondență",
+    "parcel": "Colet",
+    "both": "Corespondență + colet",
+    "open": "Ușă deschisă",
+    "unavailable": "Indisponibil",
+    "collect": "Marchează ca ridicată",
+    "last": "Livrat",
+    "count": "Scrisori",
+    "battery": "Baterie",
+    "color_anthracite": "Antracit",
+    "color_black": "Negru",
+    "color_grey": "Gri",
+    "color_white": "Alb",
+    "color_green": "Verde",
+    "color_red": "Roșu",
+    "color_blue": "Albastru",
+    "color_yellow": "Galben",
+    "color_brown": "Maro"
   }
 }

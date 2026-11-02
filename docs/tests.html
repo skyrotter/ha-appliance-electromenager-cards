@@ -19,7 +19,7 @@ const has=(c,cls)=>c.wrap.classList.contains(cls);
 const tags=['washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','fan','generic','tool-charger','ceiling-fan','dehumidifier','monitor','kettle','toaster','power-strip','phone-charger','piano','garland','wet-vacuum','ps5'];
 tags.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 // card picker: every core card and every self-contained card listed exactly once
-const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','water-meter','room-climate'];
+const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','water-meter','room-climate','mailbox'];
 solo.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 const picked=window.customCards.map(c=>c.type), wanted=[...tags,...solo].map(t=>`appliance-${t}-card`);
 ok(`customCards = ${wanted.length}`,picked.length===wanted.length&&wanted.every(t=>picked.filter(p=>p===t).length===1),
@@ -274,6 +274,32 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c=card('water-meter',{entity_index:'sensor.i'},[mk('sensor.i',100,L('m³'))]); c.el._lastAt=Date.now()-60000; c.el.hass=hassOf([mk('sensor.i',100.006,L('m³'))]);
  ok('water flow derived from index',/flowing/.test(wm(c).className)&&/^6/.test(wb(c)),wm(c).className+' '+wb(c));
  document.querySelectorAll('appliance-water-meter-card').forEach((e)=>e.remove()); // keep the SVG id check about the core cards
+}
+// boîte aux lettres : un capteur par type, capteur texte, nombre, porte, relevé
+{const mb=(c)=>c.sr.querySelector('ha-card'), bd=(c)=>c.sr.getElementById('mbbadge').textContent, cls=(c)=>mb(c).className;
+ let c=card('mailbox',{entity_mail:'binary_sensor.m'},[mk('binary_sensor.m','off')]);
+ ok('mailbox empty',/^empty/.test(cls(c))&&bd(c)==='Vide',cls(c)+' '+bd(c));
+ c=card('mailbox',{entity_mail:'binary_sensor.m',entity_parcel:'binary_sensor.p'},[mk('binary_sensor.m','on'),mk('binary_sensor.p','off')]);
+ ok('mailbox mail (binary)',/^mail/.test(cls(c))&&bd(c)==='Courrier',cls(c));
+ c=card('mailbox',{entity_mail:'binary_sensor.m',entity_parcel:'binary_sensor.p'},[mk('binary_sensor.m','on'),mk('binary_sensor.p','on')]);
+ ok('mailbox mail + parcel',/^both/.test(cls(c))&&bd(c)==='Courrier + colis',cls(c));
+ c=card('mailbox',{entity_mail:'sensor.s'},[mk('sensor.s','Colis')]); ok('mailbox text sensor: Colis',/^parcel/.test(cls(c)),cls(c));
+ c=card('mailbox',{entity_mail:'sensor.s'},[mk('sensor.s','courrier et colis')]); ok('mailbox text sensor: both',/^both/.test(cls(c)),cls(c));
+ c=card('mailbox',{entity_mail:'sensor.s'},[mk('sensor.s','vide')]); ok('mailbox text sensor: vide',/^empty/.test(cls(c)),cls(c));
+ c=card('mailbox',{entity_mail:'sensor.s',parcel_states:'amazon, dhl'},[mk('sensor.s','DHL')]); ok('mailbox parcel_states',/^parcel/.test(cls(c)),cls(c));
+ c=card('mailbox',{entity_mail:'counter.n'},[mk('counter.n',3)]);
+ ok('mailbox numeric state -> mail + count',/^mail/.test(cls(c))&&c.sr.getElementById('mbcount').textContent==='3'&&c.sr.getElementById('mbcount').classList.contains('on'),cls(c));
+ c=card('mailbox',{entity_mail:'counter.n'},[mk('counter.n',0)]); ok('mailbox count 0 -> empty',/^empty/.test(cls(c)),cls(c));
+ c=card('mailbox',{entity_mail:'binary_sensor.m',entity_door:'binary_sensor.d'},[mk('binary_sensor.m','off'),mk('binary_sensor.d','on')]);
+ ok('mailbox door open',/opened/.test(cls(c))&&bd(c)==='Porte ouverte',cls(c));
+ c=card('mailbox',{entity_mail:'binary_sensor.m'},[mk('binary_sensor.m','unavailable')]); ok('mailbox unavailable',/^unavailable/.test(cls(c)),cls(c));
+ c=card('mailbox',{entity_mail:'binary_sensor.m',entity_reset:'input_boolean.r'},[mk('binary_sensor.m','on'),mk('input_boolean.r','on')]);
+ c.sr.querySelector('#mbctl button').click(); ok('mailbox collect: input_boolean off',JSON.stringify(c.h.calls[0])==='["input_boolean","turn_off",{"entity_id":"input_boolean.r"}]',JSON.stringify(c.h.calls));
+ c=card('mailbox',{entity_mail:'binary_sensor.m',entity_reset:'counter.r'},[mk('binary_sensor.m','on'),mk('counter.r',2)]);
+ c.sr.querySelector('#mbctl button').click(); ok('mailbox collect: counter reset',JSON.stringify(c.h.calls[0])==='["counter","reset",{"entity_id":"counter.r"}]',JSON.stringify(c.h.calls));
+ c=card('mailbox',{entity_mail:'binary_sensor.m',box_color:'#336699'},[mk('binary_sensor.m','on')],'en');
+ ok('mailbox english + hex colour',bd(c)==='Mail'&&mb(c).style.getPropertyValue('--mb-c1')==='#336699',bd(c));
+ document.querySelectorAll('appliance-mailbox-card').forEach((e)=>e.remove());
 }
 // climat de la pièce : confort, alertes, risques, aération, fenêtre, batterie, pop-up
 {const TH=(id,v,a={})=>mk(id,v,{unit_of_measurement:'°C',device_class:'temperature',...a}), HU=(id,v)=>mk(id,v,{unit_of_measurement:'%',device_class:'humidity'});

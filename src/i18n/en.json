@@ -854,7 +854,16 @@
     "color_dry": "Colour: dry",
     "color_alert": "Colour: alert",
     "show_trend": "Show the trend (1 h)",
-    "variant": "Style"
+    "variant": "Style",
+    "entity_mail": "Mail sensor (on, number or text)",
+    "entity_parcel": "Parcel sensor",
+    "entity_door": "Door sensor",
+    "entity_count": "Letter counter",
+    "entity_reset": "Mark as collected (button, helper, counter, script…)",
+    "mail_states": "Extra mail states (comma separated)",
+    "parcel_states": "Extra parcel states (comma separated)",
+    "box_color": "Mailbox colour",
+    "show_count": "Show count"
   },
   "light": {
     "light_bulb": "Bulb",
@@ -998,5 +1007,27 @@
     "compare": "Compare",
     "yesterday": "Yesterday",
     "previous": "Previous period"
+  },
+  "mailbox": {
+    "name": "Mailbox",
+    "empty": "Empty",
+    "mail": "Mail",
+    "parcel": "Parcel",
+    "both": "Mail + parcel",
+    "open": "Door open",
+    "unavailable": "Unavailable",
+    "collect": "Mark as collected",
+    "last": "Delivered",
+    "count": "Letters",
+    "battery": "Battery",
+    "color_anthracite": "Anthracite",
+    "color_black": "Black",
+    "color_grey": "Grey",
+    "color_white": "White",
+    "color_green": "Green",
+    "color_red": "Red",
+    "color_blue": "Blue",
+    "color_yellow": "Yellow",
+    "color_brown": "Brown"
   }
 }

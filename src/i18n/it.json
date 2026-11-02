@@ -854,7 +854,16 @@
     "color_dry": "Colore: secco",
     "color_alert": "Colore: avviso",
     "show_trend": "Mostra la tendenza (1 h)",
-    "variant": "Stile"
+    "variant": "Stile",
+    "entity_mail": "Sensore posta (on, numero o testo)",
+    "entity_parcel": "Sensore pacchi",
+    "entity_door": "Sensore sportello",
+    "entity_count": "Contatore lettere",
+    "entity_reset": "Segna come ritirata (pulsante, helper, contatore, script…)",
+    "mail_states": "Altri stati «posta» (separati da virgole)",
+    "parcel_states": "Altri stati «pacco» (separati da virgole)",
+    "box_color": "Colore della cassetta",
+    "show_count": "Mostra il numero"
   },
   "light": {
     "light_bulb": "Lampadina",
@@ -998,5 +1007,27 @@
     "compare": "Confronta",
     "yesterday": "Ieri",
     "previous": "Periodo precedente"
+  },
+  "mailbox": {
+    "name": "Cassetta postale",
+    "empty": "Vuota",
+    "mail": "Posta",
+    "parcel": "Pacco",
+    "both": "Posta + pacco",
+    "open": "Sportello aperto",
+    "unavailable": "Non disponibile",
+    "collect": "Segna come ritirata",
+    "last": "Consegna",
+    "count": "Lettere",
+    "battery": "Batteria",
+    "color_anthracite": "Antracite",
+    "color_black": "Nero",
+    "color_grey": "Grigio",
+    "color_white": "Bianco",
+    "color_green": "Verde",
+    "color_red": "Rosso",
+    "color_blue": "Blu",
+    "color_yellow": "Giallo",
+    "color_brown": "Marrone"
   }
 }

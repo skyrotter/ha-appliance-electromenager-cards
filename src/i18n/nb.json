@@ -854,7 +854,16 @@
 "color_dry": "Farge: tørt",
 "color_alert": "Farge: varsel",
 "show_trend": "Vis trend (1 t)",
-"variant": "Stil"
+"variant": "Stil",
+"entity_mail": "Postsensor (on, tall eller tekst)",
+"entity_parcel": "Pakkesensor",
+"entity_door": "Lukesensor",
+"entity_count": "Brevteller",
+"entity_reset": "Merk som tømt (knapp, hjelper, teller, skript…)",
+"mail_states": "Flere post-tilstander (kommaseparert)",
+"parcel_states": "Flere pakke-tilstander (kommaseparert)",
+"box_color": "Farge på postkassen",
+"show_count": "Vis antall"
 },
 "light": {
 "light_bulb": "Lyspære",
@@ -998,5 +1007,27 @@
 "compare": "Sammenlign",
 "yesterday": "I går",
 "previous": "Forrige periode"
+},
+"mailbox": {
+"name": "Postkasse",
+"empty": "Tom",
+"mail": "Post",
+"parcel": "Pakke",
+"both": "Post + pakke",
+"open": "Luken er åpen",
+"unavailable": "Utilgjengelig",
+"collect": "Merk som tømt",
+"last": "Levert",
+"count": "Brev",
+"battery": "Batteri",
+"color_anthracite": "Antrasitt",
+"color_black": "Svart",
+"color_grey": "Grå",
+"color_white": "Hvit",
+"color_green": "Grønn",
+"color_red": "Rød",
+"color_blue": "Blå",
+"color_yellow": "Gul",
+"color_brown": "Brun"
 }
 }

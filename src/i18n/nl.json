@@ -854,7 +854,16 @@
     "color_dry": "Kleur: droog",
     "color_alert": "Kleur: alarm",
     "show_trend": "Trend tonen (1 u)",
-    "variant": "Stijl"
+    "variant": "Stijl",
+    "entity_mail": "Postsensor (on, getal of tekst)",
+    "entity_parcel": "Pakketsensor",
+    "entity_door": "Kleppensensor",
+    "entity_count": "Brieventeller",
+    "entity_reset": "Markeren als geleegd (knop, helper, teller, script…)",
+    "mail_states": "Extra post-statussen (kommagescheiden)",
+    "parcel_states": "Extra pakket-statussen (kommagescheiden)",
+    "box_color": "Kleur van de brievenbus",
+    "show_count": "Aantal tonen"
   },
   "light": {
     "light_bulb": "Lamp",
@@ -998,5 +1007,27 @@
     "compare": "Vergelijken",
     "yesterday": "Gisteren",
     "previous": "Vorige periode"
+  },
+  "mailbox": {
+    "name": "Brievenbus",
+    "empty": "Leeg",
+    "mail": "Post",
+    "parcel": "Pakket",
+    "both": "Post + pakket",
+    "open": "Klep open",
+    "unavailable": "Niet beschikbaar",
+    "collect": "Markeren als geleegd",
+    "last": "Bezorgd",
+    "count": "Brieven",
+    "battery": "Batterij",
+    "color_anthracite": "Antraciet",
+    "color_black": "Zwart",
+    "color_grey": "Grijs",
+    "color_white": "Wit",
+    "color_green": "Groen",
+    "color_red": "Rood",
+    "color_blue": "Blauw",
+    "color_yellow": "Geel",
+    "color_brown": "Bruin"
   }
 }
