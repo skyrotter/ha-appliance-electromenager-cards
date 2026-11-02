@@ -854,7 +854,16 @@
     "color_dry": "Боја: суво",
     "color_alert": "Боја: аларм",
     "show_trend": "Прикажи тренд (1 ч)",
-    "variant": "Стил"
+    "variant": "Стил",
+    "entity_mail": "Сензор поште (on, број или текст)",
+    "entity_parcel": "Сензор пакета",
+    "entity_door": "Сензор врата",
+    "entity_count": "Бројач писама",
+    "entity_reset": "Означи као преузето (дугме, помоћник, бројач, скрипта…)",
+    "mail_states": "Додатна стања „пошта” (одвојена зарезом)",
+    "parcel_states": "Додатна стања „пакет” (одвојена зарезом)",
+    "box_color": "Боја сандучета",
+    "show_count": "Прикажи број"
   },
   "light": {
     "light_bulb": "Сијалица",
@@ -998,5 +1007,27 @@
     "compare": "Упореди",
     "yesterday": "Јуче",
     "previous": "Претходни период"
+  },
+  "mailbox": {
+    "name": "Поштанско сандуче",
+    "empty": "Празно",
+    "mail": "Пошта",
+    "parcel": "Пакет",
+    "both": "Пошта + пакет",
+    "open": "Врата отворена",
+    "unavailable": "Недоступно",
+    "collect": "Означи као преузето",
+    "last": "Достављено",
+    "count": "Писма",
+    "battery": "Батерија",
+    "color_anthracite": "Антрацит",
+    "color_black": "Црна",
+    "color_grey": "Сива",
+    "color_white": "Бела",
+    "color_green": "Зелена",
+    "color_red": "Црвена",
+    "color_blue": "Плава",
+    "color_yellow": "Жута",
+    "color_brown": "Браон"
   }
 }

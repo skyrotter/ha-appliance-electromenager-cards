@@ -746,6 +746,14 @@ const SCEN = [
       range(ctl, 'Puissance moteur', 'sensor.garage_power', 0, 500, 1, 5, 'W', W);
       set('sensor.garage_energy', 2.4, KWH);
     } },
+  { kind: 'mailbox', title: 'Boîte aux lettres', lang: true,
+    cfg: { entity_mail: 'binary_sensor.mailbox_mail', entity_parcel: 'binary_sensor.mailbox_parcel', entity_door: 'binary_sensor.mailbox_door', entity_count: 'counter.mailbox_letters', entity_reset: 'input_boolean.mailbox_reset', entity_battery: 'sensor.mailbox_battery' },
+    build(ctl) {
+      checks(ctl, [['Courrier', 'binary_sensor.mailbox_mail', true], ['Colis', 'binary_sensor.mailbox_parcel', false], ['Porte ouverte', 'binary_sensor.mailbox_door', false]]);
+      range(ctl, 'Lettres', 'counter.mailbox_letters', 0, 12, 1, 2, '');
+      set('input_boolean.mailbox_reset', 'on');
+      set('sensor.mailbox_battery', 86, { unit_of_measurement: '%', device_class: 'battery' });
+    } },
   { kind: 'sauna', title: 'Sauna', lang: true,
     cfg: { entity: 'climate.sauna', entity_temp: 'sensor.sauna_temp', entity_humidity: 'sensor.sauna_humidity', entity_power: 'sensor.sauna_power', entity_energy: 'sensor.sauna_energy', price_per_kwh: 0.2 },
     build(ctl) {

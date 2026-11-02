@@ -854,7 +854,16 @@
     "color_dry": "Couleur : sec",
     "color_alert": "Couleur : alerte",
     "show_trend": "Afficher la tendance (1 h)",
-    "variant": "Style"
+    "variant": "Style",
+    "entity_mail": "Capteur courrier (on, nombre ou texte)",
+    "entity_parcel": "Capteur colis",
+    "entity_door": "Capteur de porte",
+    "entity_count": "Compteur de lettres",
+    "entity_reset": "Relevé du courrier (bouton, entrée, compteur, script…)",
+    "mail_states": "États « courrier » en plus (séparés par des virgules)",
+    "parcel_states": "États « colis » en plus (séparés par des virgules)",
+    "box_color": "Couleur de la boîte",
+    "show_count": "Afficher le nombre"
   },
   "light": {
     "light_bulb": "Ampoule",
@@ -998,5 +1007,27 @@
     "compare": "Comparer",
     "yesterday": "Hier",
     "previous": "Période précédente"
+  },
+  "mailbox": {
+    "name": "Boîte aux lettres",
+    "empty": "Vide",
+    "mail": "Courrier",
+    "parcel": "Colis",
+    "both": "Courrier + colis",
+    "open": "Porte ouverte",
+    "unavailable": "Indisponible",
+    "collect": "Courrier relevé",
+    "last": "Dépôt",
+    "count": "Lettres",
+    "battery": "Batterie",
+    "color_anthracite": "Anthracite",
+    "color_black": "Noir",
+    "color_grey": "Gris",
+    "color_white": "Blanc",
+    "color_green": "Vert",
+    "color_red": "Rouge",
+    "color_blue": "Bleu",
+    "color_yellow": "Jaune",
+    "color_brown": "Marron"
   }
 }

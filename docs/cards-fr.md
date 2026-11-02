@@ -177,6 +177,15 @@ price_per_kwh: 0.2516
 travel_time: 14
 ```
 
+**Boîte aux lettres** (`custom:appliance-mailbox-card`) : boîte aux lettres vue de trois quarts. Courrier : une lettre tombe par la fente et le volet claque, une pastille affiche le nombre de lettres. Colis : un carton rebondit au pied de la boîte. Porte ouverte : la porte pivote et laisse voir le courrier. Générique : un capteur par type (`entity_mail`, `entity_parcel`), ou un seul capteur dont l'état est `on`, un nombre de lettres ou un texte (« lettre », « colis », « courrier et colis », « vide »… ; `mail_states` / `parcel_states` pour vos propres valeurs). Facultatifs : `entity_door`, `entity_count`, `entity_battery`, et `entity_reset` pour le bouton **Courrier relevé** (`button`, `input_boolean`, `counter`, `script`…). Couleur : `box_color` (anthracite, blanc, vert… ou `#hex`). Options : voir [mailbox.md](cards/mailbox.md).
+
+```yaml
+type: custom:appliance-mailbox-card
+entity_mail: binary_sensor.boite_courrier
+entity_parcel: binary_sensor.boite_colis
+entity_reset: input_boolean.courrier
+```
+
 **Sauna** : `custom:appliance-sauna-card`, cabine en lames de bois vue de face avec porte vitrée teintée (banquettes, poêle et pierres visibles), thermomètre mural, panneau de commande et conduit de ventilation. États : arrêt, chauffe, prêt (à `ready_margin` = 3 °C de la consigne), refroidissement (éteint mais au-dessus de 40 °C) et défaut. La lueur du poêle et les braises suivent la température, les ondes de chaleur montent au-dessus des pierres, la vapeur sort du conduit, le thermomètre se remplit ; alerte au-dessus de `temp_max` (110 °C). Avec une entité `climate`, la température et la consigne viennent de ses attributs et les boutons **− / Allumer-Éteindre / +** pilotent le thermostat. Tuiles : température, consigne, humidité, puissance du poêle, énergie, coût. Options : voir [sauna.md](cards/sauna.md).
 
 ```yaml

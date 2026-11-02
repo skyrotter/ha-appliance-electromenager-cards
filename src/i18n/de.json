@@ -854,7 +854,16 @@
     "color_dry": "Farbe: trocken",
     "color_alert": "Farbe: Alarm",
     "show_trend": "Tendenz anzeigen (1 h)",
-    "variant": "Stil"
+    "variant": "Stil",
+    "entity_mail": "Post-Sensor (on, Zahl oder Text)",
+    "entity_parcel": "Paket-Sensor",
+    "entity_door": "Türsensor",
+    "entity_count": "Briefzähler",
+    "entity_reset": "Als geleert markieren (Taste, Helfer, Zähler, Skript…)",
+    "mail_states": "Weitere Post-Zustände (durch Komma getrennt)",
+    "parcel_states": "Weitere Paket-Zustände (durch Komma getrennt)",
+    "box_color": "Farbe des Briefkastens",
+    "show_count": "Anzahl anzeigen"
   },
   "light": {
     "light_bulb": "Glühbirne",
@@ -998,5 +1007,27 @@
     "compare": "Vergleichen",
     "yesterday": "Gestern",
     "previous": "Vorheriger Zeitraum"
+  },
+  "mailbox": {
+    "name": "Briefkasten",
+    "empty": "Leer",
+    "mail": "Post",
+    "parcel": "Paket",
+    "both": "Post + Paket",
+    "open": "Tür offen",
+    "unavailable": "Nicht verfügbar",
+    "collect": "Als geleert markieren",
+    "last": "Zugestellt",
+    "count": "Briefe",
+    "battery": "Batterie",
+    "color_anthracite": "Anthrazit",
+    "color_black": "Schwarz",
+    "color_grey": "Grau",
+    "color_white": "Weiß",
+    "color_green": "Grün",
+    "color_red": "Rot",
+    "color_blue": "Blau",
+    "color_yellow": "Gelb",
+    "color_brown": "Braun"
   }
 }
