@@ -38,5 +38,5 @@
 .p3-scr { opacity: 0; transition: opacity .6s; }
 .k-printer_3d.st-off .p3-scr { opacity: .95; }
 .k-printer_3d.st-off .p3-photo { filter: brightness(.8) saturate(.6); }
-.k-printer_3d.st-failed .p3-scr { opacity: .55; fill: var(--ac-alert); animation: ac-pulse 1s steps(2) infinite; }
+.k-printer_3d.st-failed .p3-scr { opacity: .7; fill: var(--ac-alert); mix-blend-mode: screen; animation: ac-pulse 1.2s ease-in-out infinite; }
 @keyframes p3-sweep { from { transform: translate(-5px, calc(var(--h-obj, 0) * -1px)); } to { transform: translate(5px, calc(var(--h-obj, 0) * -1px)); } }
