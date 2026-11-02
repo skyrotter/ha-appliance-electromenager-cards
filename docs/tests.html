@@ -335,6 +335,12 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c.el._climTimer&&clearTimeout(c.el._climTimer); c.el._pending=null;
  c=card('room-climate',{...base,entity_climate:'climate.c'},[TH('sensor.t',19),HU('sensor.h',50),mk('climate.c','off',{temperature:20})]); ok('room climate thermostat off',c.sr.getElementById('cp').disabled&&/éteint/.test(c.sr.getElementById('cl').textContent),c.sr.getElementById('cl').textContent);
  c=card('room-climate',base,[TH('sensor.t',19),HU('sensor.h',50)]); ok('room climate no thermostat without entity',c.sr.getElementById('clim').hidden,'shown');
+ // hass renvoyé sans changement des entités de la carte : pas de redessin (les icônes d'alerte ne sont pas recréées, la page ne saute pas sur iPhone)
+ c=card('room-climate',base,[TH('sensor.t',30),HU('sensor.h',80)]);
+ {const n0=c.sr.querySelector('#notes ha-icon'); const h2={...c.h,states:{...c.h.states,'sensor.autre':mk('sensor.autre','1')}}; c.el.hass=h2;
+  ok('room climate: unrelated update keeps DOM',!!n0&&c.sr.querySelector('#notes ha-icon')===n0);
+  c.el.hass={...h2,states:{...h2.states,'sensor.t':TH('sensor.t',30)}}; ok('room climate: same notes after own update keep icons',c.sr.querySelector('#notes ha-icon')===n0);
+  c.el.hass={...h2,states:{...h2.states,'sensor.t':TH('sensor.t',22.5),'sensor.h':HU('sensor.h',50)}}; ok('room climate: own entity change re-renders',c.sr.getElementById('t').textContent==='22,5',c.sr.getElementById('t').textContent);}
  document.querySelectorAll('appliance-room-climate-card').forEach((e)=>e.remove());
 }
 // hide_when_inactive : masquée à l'arrêt, visible pendant un cycle ou en édition, hide_delay après la fin
