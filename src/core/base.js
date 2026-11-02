@@ -1037,7 +1037,10 @@ class ApplianceCardBase extends HTMLElement {
       const h = (frac ?? 0) * H;
       wrap.style.setProperty("--h", h.toFixed(2));
       const clip = sr.querySelector(".objclip");
-      clip.setAttribute("y", (104 - h).toFixed(2)); clip.setAttribute("height", h.toFixed(2));
+      // modèles en photo : bas et hauteur de l'objet dans data-b / data-h (le dessin : 104 / 38, H)
+      const cb = Number(clip.dataset.b) || 104, ch = Number(clip.dataset.h) || H, hh = (frac ?? 0) * ch;
+      clip.setAttribute("y", (cb - hh).toFixed(2)); clip.setAttribute("height", hh.toFixed(2));
+      wrap.style.setProperty("--h-obj", hh.toFixed(2));
       wrap.style.setProperty("--fil", c.filament_color || "#ff8a1f");
     }
     if (kind === "pool_pump") {

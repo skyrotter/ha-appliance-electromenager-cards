@@ -23,3 +23,20 @@
 @keyframes ac-printx { from { transform: translateX(-11px); } to { transform: translateX(11px); } }
 @keyframes ac-zrise { from { transform: translateY(0); } to { transform: translateY(-38px); } }
 @keyframes ac-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+/* modèles en photo (model: neptune4pro / kobrax) */
+.p3 .object { transform-box: fill-box; transform-origin: 50% 100%; }
+.k-printer_3d.indeterminate .p3-neptune4pro .objclip { y: 95.7px; height: 14px; }
+.k-printer_3d.indeterminate .p3-kobrax .objclip { y: 95.4px; height: 14px; }
+.k-printer_3d { --p3-tip: #ffd27a; }
+.k-printer_3d.st-heating { --p3-tip: #ff4a1f; }
+.p3-tip { opacity: 0; mix-blend-mode: screen; transition: opacity .4s; }
+.k-printer_3d.st-printing .p3-tip { opacity: 1; animation: ac-pulse 1.4s ease-in-out infinite; }
+.k-printer_3d.st-heating .p3-tip { opacity: 1; animation: ac-pulse .9s ease-in-out infinite; }
+/* tête lumineuse qui balaie le haut de l'objet pendant l'impression */
+.p3-spark { fill: #fff3c4; opacity: 0; filter: drop-shadow(0 0 1.5px #ffb347); transform: translateY(calc(var(--h-obj, 0) * -1px)); }
+.k-printer_3d.st-printing .p3-spark { opacity: 1; animation: p3-sweep 1.1s ease-in-out infinite alternate; }
+.p3-scr { opacity: 0; transition: opacity .6s; }
+.k-printer_3d.st-off .p3-scr { opacity: .95; }
+.k-printer_3d.st-off .p3-photo { filter: brightness(.8) saturate(.6); }
+.k-printer_3d.st-failed .p3-scr { opacity: .55; fill: var(--ac-alert); animation: ac-pulse 1s steps(2) infinite; }
+@keyframes p3-sweep { from { transform: translate(-5px, calc(var(--h-obj, 0) * -1px)); } to { transform: translate(5px, calc(var(--h-obj, 0) * -1px)); } }
