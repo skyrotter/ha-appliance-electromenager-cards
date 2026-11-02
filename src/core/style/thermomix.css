@@ -1,0 +1,23 @@
+/* ---------- Thermomix (photo + calques) ---------- */
+.k-thermomix { --tmx-led1: #7dff5a; --tmx-led2: #2fd600; }
+.k-thermomix.st-heating, .k-thermomix.st-cooking { --tmx-led1: #ffb35a; --tmx-led2: #ff7a00; }
+/* éteint : filtre « sans vert » sur la photo (attribut du <g>), désactivé dans les autres états */
+.k-thermomix:not(.st-off) .tmx-photo { filter: none; }
+.tmx-scr { opacity: 0; transition: opacity .6s; }
+.k-thermomix.st-off .tmx-scr { opacity: 1; }
+.tmx-leds { opacity: 0; mix-blend-mode: screen; transition: opacity .4s; }
+.k-thermomix.st-standby .tmx-leds, .k-thermomix.active .tmx-leds { opacity: 1; animation: ac-pulse 2.4s ease-in-out infinite; }
+.m-tm6 .tmx-led { filter: blur(.6px); } .m-tm7 .tmx-led { filter: blur(1px); }
+/* vapeur : chauffe (et un peu en turbo) */
+.tmx-steam circle { opacity: 0; transform-box: fill-box; transform-origin: 50% 50%; filter: blur(1.4px); }
+.k-thermomix.st-heating .tmx-steam circle, .k-thermomix.st-cooking .tmx-steam circle, .k-thermomix.st-turbo .tmx-steam circle { animation: tmx-rise 2.4s ease-out infinite; }
+.k-thermomix.st-turbo .tmx-steam { opacity: .6; }
+.tmx-steam circle:nth-child(2) { animation-delay: .8s !important; } .tmx-steam circle:nth-child(3) { animation-delay: 1.6s !important; }
+/* mixage : vibration légère ; turbo : forte */
+.tmx-body { transform-box: fill-box; transform-origin: 50% 100%; }
+.k-thermomix.st-mixing .tmx-body { animation: ac-shake .18s linear infinite; }
+/* cuisson : vapeur + brassage lent (vibration douce) */
+.k-thermomix.st-cooking .tmx-body { animation: ac-shake .3s linear infinite; }
+.k-thermomix.st-turbo .tmx-body { animation: tmx-turbo .09s linear infinite; }
+@keyframes tmx-rise { 0% { opacity: 0; transform: translateY(0) scale(.6); } 20% { opacity: .9; } 100% { opacity: 0; transform: translateY(-16px) scale(1.7); } }
+@keyframes tmx-turbo { 0%,100% { transform: translate(0,0) rotate(0); } 20% { transform: translate(-.7px,.35px) rotate(-.5deg); } 40% { transform: translate(.6px,-.4px) rotate(.4deg); } 60% { transform: translate(-.5px,-.25px) rotate(-.3deg); } 80% { transform: translate(.7px,.25px) rotate(.5deg); } }

@@ -93,6 +93,10 @@ const DEF = {
   laptop: { accent: "active", threshold: 15,
     fields: ["entity", "power", "energy", "cost", "usage_time", "switch"],
     keys: ["pc_portable", "portable", "laptop", "macbook", "notebook", "thinkpad", "chromebook"] },
+  // Thermomix : prise connectée (W) ; veille sous threshold, mixage, turbo au-dessus de turbo_threshold, chauffe au-dessus de heat_threshold
+  thermomix: { accent: "heat", threshold: 15,
+    fields: ["entity", "power", "energy", "cost", "switch"],
+    keys: ["thermomix", "tm6", "tm7", "tm5", "vorwerk", "robot_cuiseur", "robot_culinaire", "cookidoo"] },
   coffee_maker: { accent: "heat", threshold: 300,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["cafetiere", "coffee", "senseo", "nespresso", "dolce_gusto", "tassimo", "expresso", "espresso", "cafe"] },

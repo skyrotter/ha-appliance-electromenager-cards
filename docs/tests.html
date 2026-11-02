@@ -16,7 +16,7 @@ function card(kind,cfg,states,lang){const el=document.createElement(`appliance-$
 const has=(c,cls)=>c.wrap.classList.contains(cls);
 
 // registration
-const tags=['washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','fan','generic','tool-charger','ceiling-fan','dehumidifier','monitor','kettle','toaster','power-strip','phone-charger','piano','garland','wet-vacuum','ps5'];
+const tags=['thermomix','washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','fan','generic','tool-charger','ceiling-fan','dehumidifier','monitor','kettle','toaster','power-strip','phone-charger','piano','garland','wet-vacuum','ps5'];
 tags.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 // card picker: every core card and every self-contained card listed exactly once
 const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','water-meter','room-climate','mailbox','smoke-detector','leak-detector'];
@@ -99,6 +99,29 @@ c=card('coffee-maker',{entity:'switch.cf',power:'sensor.p'},[mk('switch.cf','on'
 c=card('coffee-maker',{entity:'switch.cf',power:'sensor.p',style:'dosette'},[mk('switch.cf','on'),mk('sensor.p',70,W)]); ok('coffee pod ready',has(c,'st-ready')&&c.sr.querySelector('.s-dosette'),c.wrap.className);
 c=card('coffee-maker',{power:'sensor.p',style:'espresso'},[mk('sensor.p',1,W)]); ok('coffee espresso idle + svg',has(c,'st-idle')&&c.sr.querySelector('.s-expresso'),c.wrap.className);
 c=card('coffee-maker',{entity:'switch.cf',power:'sensor.p'},[mk('switch.cf','off'),mk('sensor.p',0,W)]); ok('coffee off',has(c,'st-off')&&c.lcd()==='OFF',c.wrap.className+' '+c.lcd());
+// Thermomix : états depuis la prise, modèle TM6 / TM7, chauffe / cuisson, bouton marche/arrêt, cases énergie / coût
+{const tm=(w,cfg={},sw='on')=>card('thermomix',{power:'sensor.p',switch:'switch.t',energy:'sensor.e',cost:'sensor.c',...cfg},[mk('sensor.p',w,W),mk('switch.t',sw),mk('sensor.e',0.4,{unit_of_measurement:'kWh',device_class:'energy'}),mk('sensor.c',0.1,{unit_of_measurement:'€'})]);
+ let c=tm(0,{},'off'); ok('thermomix off (plug off)',has(c,'st-off')&&/Éteint/.test(c.txt()),c.wrap.className);
+ c=tm(0.2); ok('thermomix off below standby_threshold',has(c,'st-off'),c.wrap.className);
+ c=tm(3); ok('thermomix standby',has(c,'st-standby')&&!has(c,'active'),c.wrap.className);
+ c=tm(60); ok('thermomix mixing',has(c,'st-mixing')&&has(c,'active')&&/Mixage/.test(c.txt()),c.wrap.className);
+ c=tm(400); ok('thermomix turbo',has(c,'st-turbo')&&/Turbo/.test(c.txt()),c.wrap.className);
+ c=tm(900); ok('thermomix heating',has(c,'st-heating')&&/chauffe/i.test(c.txt()),c.wrap.className);
+ // cuisson : la résistance se coupe (puissance du moteur seul) juste après avoir chauffé, puis se rallume
+ const S=(w)=>{const h={...c.h,states:{...c.h.states,'sensor.p':mk('sensor.p',w,W)}};c.el.hass=h;};
+ S(60); ok('thermomix cooking (element off after heating)',has(c,'st-cooking')&&/Cuisson/.test(c.txt()),c.wrap.className);
+ S(950); ok('thermomix cooking (element back on)',has(c,'st-cooking'),c.wrap.className);
+ S(3); ok('thermomix back to standby',has(c,'st-standby'),c.wrap.className);
+ S(60); ok('thermomix mixing after standby (no cooking)',has(c,'st-mixing'),c.wrap.className);
+ c=tm(60,{threshold:100}); ok('thermomix threshold option',has(c,'st-standby'),c.wrap.className);
+ c=tm(700,{heat_threshold:800}); ok('thermomix heat_threshold option',has(c,'st-turbo'),c.wrap.className);
+ c=tm(3); ok('thermomix tm6 by default',!!c.sr.querySelector('.tmx.m-tm6 image'));
+ c=tm(3,{model:'tm7'}); ok('thermomix tm7 model',!!c.sr.querySelector('.tmx.m-tm7 image'));
+ c=tm(3); ok('thermomix tiles power/energy/cost + toggle',c.sr.querySelectorAll('#stats .tile').length>=3&&!!c.sr.querySelector('.toggle'),c.sr.querySelectorAll('#stats .tile').length);
+ c=tm(3,{show_energy:false,show_cost:false,show_power:false,show_toggle:false}); ok('thermomix checkboxes hide tiles + toggle',c.sr.querySelectorAll('#stats .tile').length===0&&!c.sr.querySelector('.toggle'),c.sr.querySelectorAll('#stats .tile').length);
+ c=tm(900); c.sr.querySelector('.toggle').click(); ok('thermomix: cut while heating needs 2 clicks',c.h.calls.length===0);
+ c.sr.querySelector('.toggle').click(); ok('thermomix: 2nd click cuts',c.h.calls.length===1,JSON.stringify(c.h.calls));
+ c=tm(3); c.sr.querySelector('.toggle').click(); ok('thermomix: standby cut in one click',c.h.calls.length===1);}
 
 // tv
 c=card('tv',{entity:'switch.tv',power:'sensor.p'},[mk('switch.tv','on'),mk('sensor.p',85,W)]); ok('tv on',has(c,'st-screen_on')&&/Allumée/.test(c.txt()),c.wrap.className+' '+c.txt());
