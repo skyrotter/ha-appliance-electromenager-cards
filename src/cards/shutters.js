@@ -556,6 +556,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       const sf = Number(s && s.attributes && s.attributes.supported_features);
       const has = (bit) => !isFinite(sf) || sf <= 0 || !!(sf & bit);
       const assumed = !!(s && s.attributes && s.attributes.assumed_state === true);
+      const posKnown = this._blindOnly ? blA.current_position != null && isFinite(Number(blA.current_position)) : known;
       const ctl = r.getElementById('shctl');
       ctl.classList.toggle('hide', c.show_controls === false || !isCover);
       ctl.querySelectorAll('button').forEach((b) => {
@@ -564,8 +565,9 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         b.classList.toggle('hide', (a === 'stop' && !has(8)) || (a === 'light' && !c.entity_light) || (a === 'blind' && (!c.entity_blind || this._blindOnly)));
         if (a === 'blind') { b.classList.toggle('on', this._blindDown > 0); b.disabled = !blS; return; }
         if (a === 'light') { b.classList.toggle('on', leds); b.disabled = !lightS; return; }
-        // assumed_state (RFXCOM, Somfy RTS…) : l'état est supposé, pas mesuré, donc on laisse tout cliquable comme la carte HA
-        b.disabled = st === 'unavailable' || (!assumed && ((a === 'open' && (bst === 'open' || bst === 'opening')) || (a === 'close' && (bst === 'closed' || bst === 'closing'))));
+        // assumed_state (RFXCOM, Somfy RTS…) : l'état est supposé, pas mesuré, donc on laisse tout cliquable comme la carte HA,
+        // sauf si la cover remonte une position (current_position) : on s'y fie et on grise Ouvrir à 100 %, Fermer à 0 %
+        b.disabled = st === 'unavailable' || ((!assumed || posKnown) && ((a === 'open' && (bst === 'open' || bst === 'opening')) || (a === 'close' && (bst === 'closed' || bst === 'closing'))));
       });
       const rng = (id, show, label, val) => {
         const el = r.getElementById(id), inp = el.querySelector('input');
