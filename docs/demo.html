@@ -754,6 +754,26 @@ const SCEN = [
       set('input_boolean.mailbox_reset', 'on');
       set('sensor.mailbox_battery', 86, { unit_of_measurement: '%', device_class: 'battery' });
     } },
+  { kind: 'smoke-detector', title: 'Détecteur de fumée', lang: true,
+    cfg: { name: 'Couloir', model: 'cylinder', entity_smoke: 'binary_sensor.smoke', entity_co: 'sensor.smoke_co', entity_test_button: 'button.smoke_test', entity_silence: 'siren.smoke', entity_battery: 'sensor.smoke_battery', entity_temperature: 'sensor.smoke_temp' },
+    build(ctl) {
+      select(ctl, 'Modèle', 'input_select.demo_sd_model', [['cylinder', 'Cylindre compact'], ['round', 'Rond']], this.cfg.model, (v) => {
+        this.cfg.model = v; const el = cards.find((e) => e._scen === this); if (el) { el.setConfig(scenCfg(this)); refresh(); }
+      });
+      checks(ctl, [['Fumée', 'binary_sensor.smoke', false]]);
+      range(ctl, 'CO', 'sensor.smoke_co', 0, 200, 1, 5, 'ppm', { unit_of_measurement: 'ppm' });
+      range(ctl, 'Batterie', 'sensor.smoke_battery', 0, 100, 1, 92, '%', { unit_of_measurement: '%', device_class: 'battery' });
+      set('sensor.smoke_temp', 20.5, T); set('button.smoke_test', 'unknown'); set('siren.smoke', 'off');
+    } },
+  { kind: 'leak-detector', title: "Détecteur de fuite d'eau", lang: true,
+    cfg: { name: "Sous l'évier", entity_leak: 'binary_sensor.leak_sink', entity_valve: 'valve.water_main_leak', entity_siren: 'siren.leak', entity_battery: 'sensor.leak_battery', entity_temperature: 'sensor.leak_temp' },
+    build(ctl) {
+      checks(ctl, [['Fuite', 'binary_sensor.leak_sink', false]]);
+      select(ctl, 'Vanne', 'valve.water_main_leak', [['open', 'Ouverte / Open'], ['closed', 'Fermée / Closed']], 'open');
+      range(ctl, 'Température', 'sensor.leak_temp', -5, 30, 0.5, 18, '°C', T);
+      range(ctl, 'Batterie', 'sensor.leak_battery', 0, 100, 1, 88, '%', { unit_of_measurement: '%', device_class: 'battery' });
+      set('siren.leak', 'off');
+    } },
   { kind: 'sauna', title: 'Sauna', lang: true,
     cfg: { entity: 'climate.sauna', entity_temp: 'sensor.sauna_temp', entity_humidity: 'sensor.sauna_humidity', entity_power: 'sensor.sauna_power', entity_energy: 'sensor.sauna_energy', price_per_kwh: 0.2 },
     build(ctl) {
