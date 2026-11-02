@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.55.0";
+const VERSION = "1.56.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -22908,7 +22908,23 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       this._built = false; this._hist = null; this._histAt = 0;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); if (this._dlg) this._dlg.hass = h; }
+    // Home Assistant renvoie hass à chaque changement d'état de toute l'installation : on ne redessine que si
+    // une entité de la carte (ou la langue / les unités) a changé. Moins de travail, et plus de petits sauts
+    // de mise en page qui font remonter la page toute seule sur iPhone (Safari)
+    set hass(h) {
+      const old = this._hass;
+      this._hass = h;
+      if (this._dlg) this._dlg.hass = h;
+      if (!this._c) return;
+      if (this._built && old && !this._changed(old, h)) return;
+      this._render();
+    }
+    _changed(o, h) {
+      const c = this._c;
+      if (o.locale !== h.locale || o.language !== h.language || o.config !== h.config) return true;
+      return ['entity_temperature', 'entity_humidity', 'entity_outdoor_temperature', 'entity_outdoor_humidity', 'entity_window', 'entity_battery', 'entity_climate']
+        .some((k) => c[k] && o.states[c[k]] !== h.states[c[k]]);
+    }
     get hass() { return this._hass; }
     connectedCallback() { this._tick = setInterval(() => { if (this._hass && this._c) this._render(); }, 60000); }
     disconnectedCallback() { clearInterval(this._tick); }
@@ -23074,7 +23090,9 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       if (!this._built) this._build();
       this._loadHist();
       const c = this._c, r = this._root, s = this._compute(), tmp = s.tmp, st = this._style();
-      const $ = (id) => r.getElementById(id), txt = (id, v) => { const e = $(id); if (e) e.textContent = v; };
+      const $ = (id) => r.getElementById(id), txt = (id, v) => { const e = $(id); if (e && e.textContent !== v) e.textContent = v; };
+      const html = (id, v) => { const e = $(id); if (e && e._html !== v) { e.innerHTML = v; e._html = v; } };
+      const icon_ = (e, v) => { if (e && e.getAttribute('icon') !== v) e.setAttribute('icon', v); };
       this._card.className = `st-${st} ${s.cls}${c.animations === false ? ' noanim' : ''}${c.transparent ? ' transparent' : ''}`;
       this._card.style.setProperty('--tc', s.tcol);
       // couleurs personnalisées (éditeur) : variables --appliance-*, lues aussi par le pop-up
@@ -23082,7 +23100,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       this._renderClimate(tmp);
       txt('name', c.name || this._t('name'));
       const ric = $('ric'), icon = c.icon || DEF_ICON[st];
-      if (ric) { ric.hidden = !icon; if (icon) ric.setAttribute('icon', icon); }
+      if (ric) { ric.hidden = !icon; if (icon) icon_(ric, icon); }
       const chip = $('chip');
       if (chip) { chip.textContent = this._l(s.chip); chip.classList.toggle('hide', c.show_status === false); }
       txt('t', fin(s.t) ? this._fmt(s.t) : fin(s.h) ? `${this._fmt(s.h, 0)}` : '--');
@@ -23100,11 +23118,11 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       const meta = [];
       if (c.show_outdoor !== false && (fin(s.tOut) || fin(s.hOut))) meta.push(`${this._l('outdoor')} ${[fin(s.tOut) ? `${this._fmt(s.tOut)}°` : '', fin(s.hOut) ? `${this._fmt(s.hOut, 0)} %` : ''].filter(Boolean).join(' · ')}`);
       if (c.show_dew_point !== false && fin(s.dp)) meta.push(`${this._l('dew_point')} ${this._fmt(s.dp)}°`);
-      if ($('meta')) $('meta').innerHTML = meta.map((m) => `<span>${esc(m)}</span>`).join('');
+      html('meta', meta.map((m) => `<span>${esc(m)}</span>`).join(''));
       // icônes : fenêtre ouverte, batterie faible
       const win = $('win'), bat = $('bat');
       win.hidden = !(s.winOpen || s.winGuess);
-      win.setAttribute('icon', s.winOpen ? 'mdi:window-open-variant' : 'mdi:window-open');
+      icon_(win, s.winOpen ? 'mdi:window-open-variant' : 'mdi:window-open');
       win.title = this._t(s.winOpen ? 'window_open' : 'window_guess');
       bat.hidden = !s.batLow;
       bat.title = `${this._t('battery_low')}${fin(s.bat) ? ` (${Math.round(s.bat)} %)` : ''}`;
@@ -23118,7 +23136,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
         if (s.air) notes.push(['n-air', 'mdi:weather-windy', `${this._l('ventilate')} : ${this._t(s.air)}`]);
       }
       const maxN = st === 'minimal' ? 1 : 2;
-      if ($('notes')) $('notes').innerHTML = notes.slice(0, maxN).map(([k, ic, tx]) => `<div class="note ${k}"><ha-icon icon="${ic}"></ha-icon><span title="${esc(tx)}">${esc(tx)}</span></div>`).join('');
+      html('notes', notes.slice(0, maxN).map(([k, ic, tx]) => `<div class="note ${k}"><ha-icon icon="${ic}"></ha-icon><span title="${esc(tx)}">${esc(tx)}</span></div>`).join(''));
       this._card.title = notes.map((n) => n[2]).join('\n');
       // courbe 24 h (standard, néon)
       const sp = $('spark');
@@ -23236,7 +23254,8 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       const off = /^(off|unavailable|unknown)$/i.test(String(k.cs.state)), act = String(k.a.hvac_action || '');
       const heating = act === 'heating' || act === 'preheating', cooling = act === 'cooling';
       el.className = `clim${heating ? ' heating' : cooling ? ' cooling' : ''}`;
-      r.getElementById('cico').setAttribute('icon', off ? 'mdi:power' : heating ? 'mdi:fire' : cooling ? 'mdi:snowflake' : act === 'drying' ? 'mdi:water-percent' : 'mdi:thermostat');
+      const cico = r.getElementById('cico'), ci = off ? 'mdi:power' : heating ? 'mdi:fire' : cooling ? 'mdi:snowflake' : act === 'drying' ? 'mdi:water-percent' : 'mdi:thermostat';
+      if (cico.getAttribute('icon') !== ci) cico.setAttribute('icon', ci);
       const cl = r.getElementById('cl');
       cl.textContent = off ? this._l('thermostat_off') : this._l('target');
       el.title = `${cl.textContent}${heating ? ` · ${this._t('heating')}` : cooling ? ` · ${this._t('cooling')}` : ''}`;
