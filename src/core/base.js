@@ -667,6 +667,26 @@ class ApplianceCardBase extends HTMLElement {
       else m.status = base === "running" ? "brewing" : "idle";
     } else if (kind === "air_fryer") {
       m.status = base === "running" ? "cooking" : base === "standby" ? "idle" : base;
+    } else if (kind === "thermomix") {
+      // prise : éteint sous standby_threshold, veille (écran allumé) jusqu'à threshold, puis mixage / turbo / chauffe selon la puissance
+      // (la résistance tire 600 à 1000 W, le moteur 20 à 80 W aux vitesses 1-4 et jusqu'à 500 W en turbo / vitesse 10)
+      if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
+      else if (base === "unavailable") m.status = "unavailable";
+      else if (watts !== null) {
+        // chauffe = forte puissance continue (montée en température) ; cuisson = la résistance se coupe et se rallume
+        // pour maintenir la température (forte / faible en alternance sur 90 s) ; mixage / turbo = moteur seul
+        const heatW = c.heat_threshold ?? 650, win = 90000, now = Date.now();
+        if (watts > heatW) {
+          m.status = this._tmxLow && now - this._tmxLow < win ? "cooking" : "heating";
+          this._tmxHeat = now;
+        } else if (watts > threshold && this._tmxHeat && now - this._tmxHeat < win) {
+          m.status = "cooking"; this._tmxLow = now;
+        } else {
+          m.status = watts > (c.turbo_threshold ?? 250) ? "turbo" : watts > threshold ? "mixing" : watts >= (c.standby_threshold ?? 0.5) ? "standby" : "off";
+          if (m.status !== "turbo" && m.status !== "mixing") this._tmxHeat = this._tmxLow = 0;
+        }
+      }
+      else m.status = base === "running" ? "mixing" : base === "off" ? "off" : "standby";
     } else if (kind === "kettle" || kind === "toaster") {
       // en marche au-dessus du seuil ; après la coupure : « eau chaude » / « toasts prêts » pendant quelques minutes
       const on = powered || (watts === null && base === "running"), now = Date.now();
@@ -772,7 +792,7 @@ class ApplianceCardBase extends HTMLElement {
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
     const hass = this._hass, kind = this._kind;
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
@@ -879,7 +899,7 @@ class ApplianceCardBase extends HTMLElement {
   _render(m) {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
     this._fetchCycle(active);
     const hideWouldApply = this._applyHide(active, m.alerts.length > 0);
     $("wrap").className = [
@@ -1120,7 +1140,7 @@ class ApplianceCardBase extends HTMLElement {
       // sinon confirm_off : true (défaut, protection selon l'appareil) / false (jamais)
       const always = c.confirm_always === true || c.confirm_off === "always";
       const cOff = always ? "always" : c.confirm_off === false || c.confirm_off === "off" ? "off" : "auto";
-      const autoGuard = freezer || computer || console_ || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d"].includes(kind));
+      const autoGuard = freezer || computer || console_ || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "thermomix"].includes(kind));
       const guarded = cOff !== "off" && on && (cOff === "always" || autoGuard);
       this._sw = { id: swId, guarded };
       const arming = guarded && this._confirmUntil && Date.now() < this._confirmUntil;
@@ -1276,11 +1296,12 @@ class ApplianceCardBase extends HTMLElement {
     };
     const per = PERIODS.includes(c.energy_period) && this._perKwh != null ? c.energy_period : null;
     // energy_period: none → aucune tuile énergie (le compteur sert encore au dernier cycle)
-    const noEnergy = c.energy_period === "none";
+    // show_energy / show_cost (cases de l'éditeur, cochées par défaut) : masquent les tuiles énergie / coût
+    const noEnergy = c.energy_period === "none" || c.show_energy === false;
     if (noEnergy) { /* tuile masquée */ } else if (m.energy && per && !dual && !solar) {
       if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.energy);
       // coût de la période (mode € ou les deux) : conso de la période × prix du kWh actuel
-      if (showCost && c.display === "cost") tile("mdi:cash", money(this._perKwh * pr), tr(hass, `cost_${per}`), prEnt || c.energy);
+      if (showCost && c.display === "cost" && c.show_cost !== false) tile("mdi:cash", money(this._perKwh * pr), tr(hass, `cost_${per}`), prEnt || c.energy);
     } else if (m.energy) {
       const eVal = fmtEnergy(hass, m.energy) ?? "—";
       const yp = m.energy.attributes && m.energy.attributes.last_period;
@@ -1292,7 +1313,7 @@ class ApplianceCardBase extends HTMLElement {
       }
     }
     if (m.energyS) tile("mdi:solar-power-variant", fmtEnergy(hass, m.energyS) ?? "—", lb("energy_solar"), c.energy_solar);
-    if (m.cost) tile(solar ? "mdi:piggy-bank-outline" : "mdi:cash", fmtUnit(hass, m.cost, 2, 2) ?? "—", lb(solar ? "savings" : "cost"), c.cost);
+    if (m.cost && c.show_cost !== false) tile(solar ? "mdi:piggy-bank-outline" : "mdi:cash", fmtUnit(hass, m.cost, 2, 2) ?? "—", lb(solar ? "savings" : "cost"), c.cost);
     // durée d'utilisation du jour (écrans, consoles, PC) : capteur usage_time, sinon historique (+ temps écoulé depuis la lecture si toujours allumé)
     if (USAGE_KINDS.includes(kind) && c.show_usage_time !== false) {
       const u = this._use, today = u && this._useDay === new Date().toDateString();

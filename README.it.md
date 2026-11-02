@@ -2,7 +2,7 @@
 
 [![HACS](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://hacs.xyz)
 
-**Versione italiana della documentazione.** Il progetto offre 85 card Lovelace per gli elettrodomestici e l'energia domestica, con illustrazioni animate, stato in tempo reale e visualizzazione di potenza, energia e costo. Le card seguono il tema chiaro/scuro di Home Assistant e parlano italiano, inglese, francese, tedesco, norvegese, olandese, rumeno, russo e serbo.
+**Versione italiana della documentazione.** Il progetto offre 86 card Lovelace per gli elettrodomestici e l'energia domestica, con illustrazioni animate, stato in tempo reale e visualizzazione di potenza, energia e costo. Le card seguono il tema chiaro/scuro di Home Assistant e parlano italiano, inglese, francese, tedesco, norvegese, olandese, rumeno, russo e serbo.
 
 [Demo interattiva](https://skyrotter.github.io/ha-appliance-electromenager-cards/docs/demo.html) · [Test automatici](https://skyrotter.github.io/ha-appliance-electromenager-cards/docs/tests.html) · [README originale in inglese/francese](README.md)
 
@@ -30,6 +30,7 @@ Alcuni esempi (elenco completo con anteprime nel [README in inglese](README.md#t
 | Radiatore elettrico | `custom:appliance-radiator-card` |
 | Friggitrice ad aria | `custom:appliance-air-fryer-card` |
 | Macchina del caffè | `custom:appliance-coffee-maker-card` |
+| Bimby / Thermomix (TM6 / TM7) | `custom:appliance-thermomix-card` |
 | Televisore | `custom:appliance-tv-card` |
 | Cappa aspirante | `custom:appliance-range-hood-card` |
 | Climatizzatore interno | `custom:appliance-ac-split-card` |
