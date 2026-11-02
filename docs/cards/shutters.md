@@ -42,7 +42,9 @@ travel_time: 25
 
 `custom:appliance-roof-window-card`: a centre-pivot roof window (Velux, Fakro…) on a tiled roof. The sash pivots with `current_position` and shows the room inside (lit at night). Same states, buttons and options as the shutters; badge **Open 60 %** / **Closing… 20 %**. Extra options:
 
-- `entity_blind` (cover of the exterior roller blind): the blind rolls down over the glass, **Blind** button (raise / lower) and tile, "Blind down" in the badge
+- `entity` is the **window opening** (the sash). When it opens, the room inside shows through: a dark ceiling with a hanging lamp.
+- `entity_blind` (cover of the exterior roller blind): grey slats roll down over the glass, **Blind** button (raise / lower) and tile, "Blind down" in the badge. If it is the same cover as `entity`, it is ignored.
+- **Blind only** (a Velux with a motorised roller blind but a manual window): set `entity_blind` without `entity`. The window stays closed, the badge, buttons and slider control the blind.
 - `entity_rain` (binary_sensor `on`, or a sensor above 0): grey sky and rain, **Rain** tile
 - `show_blind`, `show_rain`
 
@@ -52,6 +54,14 @@ name: Bedroom Velux
 entity: cover.velux_bedroom
 entity_blind: cover.velux_bedroom_blind
 entity_rain: binary_sensor.velux_rain_sensor
+```
+
+Blind only:
+
+```yaml
+type: custom:appliance-roof-window-card
+name: Bedroom Velux
+entity_blind: cover.velux_bedroom_blind
 ```
 
 ## Options
