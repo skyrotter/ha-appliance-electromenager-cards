@@ -355,6 +355,13 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c=rw('closed',0); ok('roof window blind only: down -> close disabled',!dis(c,'open')&&dis(c,'close')&&/Volet baissé/.test(c.sr.getElementById('shbadge').textContent));
  document.querySelectorAll('appliance-roof-window-card').forEach((e)=>e.remove());
 }
+// volet roulant, assumed_state : boutons grisés en butée si la cover remonte sa position, sinon tout reste actif
+{const rs=(st,a)=>card('roller-shutter',{entity:'cover.v'},[mk('cover.v',st,Object.assign({supported_features:15,assumed_state:true},a))]), dis=(c,a)=>c.sr.querySelector(`[data-a=${a}]`).disabled;
+ let c=rs('open',{current_position:100}); ok('roller shutter assumed: 100 % -> open disabled',dis(c,'open')&&!dis(c,'close'));
+ c=rs('closed',{current_position:0}); ok('roller shutter assumed: 0 % -> close disabled',!dis(c,'open')&&dis(c,'close'));
+ c=rs('open',{}); ok('roller shutter assumed, no position -> all active',!dis(c,'open')&&!dis(c,'close'));
+ document.querySelectorAll('appliance-roller-shutter-card').forEach((e)=>e.remove());
+}
 // climat de la pièce : confort, alertes, risques, aération, fenêtre, batterie, pop-up
 {const TH=(id,v,a={})=>mk(id,v,{unit_of_measurement:'°C',device_class:'temperature',...a}), HU=(id,v)=>mk(id,v,{unit_of_measurement:'%',device_class:'humidity'});
  const rc=(c)=>c.sr.querySelector('ha-card'), chip=(c)=>c.sr.getElementById('chip').textContent, notes=(c)=>c.sr.getElementById('notes').textContent, base={entity_temperature:'sensor.t',entity_humidity:'sensor.h'};

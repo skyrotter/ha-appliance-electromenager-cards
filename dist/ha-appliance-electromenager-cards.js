@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.58.3";
+const VERSION = "1.58.4";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
