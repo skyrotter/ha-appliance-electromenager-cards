@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.58.2";
+const VERSION = "1.58.3";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -21480,7 +21480,9 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       badge.textContent = st === 'partial' ? `${this._t('partial')} ${Math.round(pos)} %` : moving && known ? `${this._t(st)}… ${Math.round(pos)} %` : this._t(st);
       if (this.kind === 'roof_window' && this._blindDown >= 100 && !moving && !this._blindOnly) badge.textContent += ` · ${this._t('blind_down')}`;
       // volet seul : le badge donne l'état du volet (libellés sans le préfixe rw_ de la fenêtre)
-      const bst = this._blindOnly && blS ? String(blS.state).toLowerCase() : st;
+      // état du volet en mode « volet seul » ; ouvert à moins de 100 % = partiel, comme pour la fenêtre (Ouvrir et Fermer restent actifs)
+      let bst = this._blindOnly && blS ? String(blS.state).toLowerCase() : st;
+      if (this._blindOnly && bst === 'open' && blPos < 100) bst = blPos > 0 ? 'partial' : 'closed';
       if (this._blindOnly && st !== 'unavailable') {
         const g = (k) => (T[this._lang()] || T.en)[k] ?? T.en[k] ?? k;
         badge.textContent = this._blindDown >= 100 ? g('blind_down') : this._blindDown <= 0 && !/ing$/.test(bst) ? `${g('blind')} · ${g('open')}`

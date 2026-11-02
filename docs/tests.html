@@ -347,6 +347,14 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c=card('leak-detector',{entity_leak:'binary_sensor.l'},[mk('binary_sensor.l','unavailable')]); ok('leak unavailable',/^unavailable/.test(hc(c)),hc(c));
  document.querySelectorAll('appliance-leak-detector-card').forEach((e)=>e.remove());
 }
+// fenêtre de toit, volet seul : boutons actifs selon la position du volet, commandes envoyées au volet
+{const rw=(st,p)=>card('roof-window',{entity_blind:'cover.b'},[mk('cover.b',st,{current_position:p,supported_features:15})]), dis=(c,a)=>c.sr.querySelector(`[data-a=${a}]`).disabled;
+ let c=rw('open',41); ok('roof window blind only: partly open -> open and close active',!dis(c,'open')&&!dis(c,'close')&&/41/.test(c.sr.getElementById('shbadge').textContent),c.sr.getElementById('shbadge').textContent);
+ c.sr.querySelector('[data-a=open]').click(); ok('roof window blind only: open goes to the blind',JSON.stringify(c.h.calls[0])==='["cover","open_cover",{"entity_id":"cover.b"}]',JSON.stringify(c.h.calls));
+ c=rw('open',100); ok('roof window blind only: fully open -> open disabled',dis(c,'open')&&!dis(c,'close'));
+ c=rw('closed',0); ok('roof window blind only: down -> close disabled',!dis(c,'open')&&dis(c,'close')&&/Volet baissé/.test(c.sr.getElementById('shbadge').textContent));
+ document.querySelectorAll('appliance-roof-window-card').forEach((e)=>e.remove());
+}
 // climat de la pièce : confort, alertes, risques, aération, fenêtre, batterie, pop-up
 {const TH=(id,v,a={})=>mk(id,v,{unit_of_measurement:'°C',device_class:'temperature',...a}), HU=(id,v)=>mk(id,v,{unit_of_measurement:'%',device_class:'humidity'});
  const rc=(c)=>c.sr.querySelector('ha-card'), chip=(c)=>c.sr.getElementById('chip').textContent, notes=(c)=>c.sr.getElementById('notes').textContent, base={entity_temperature:'sensor.t',entity_humidity:'sensor.h'};
