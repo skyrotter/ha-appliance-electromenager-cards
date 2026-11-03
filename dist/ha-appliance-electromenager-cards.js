@@ -8613,6 +8613,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_area": "Show area",
       "show_battery": "Show battery",
       "show_blade": "Show blade",
+      "show_button_labels": "Show button labels",
       "show_buttons": "Show buttons",
       "show_charge": "Show battery charge",
       "show_consumables": "Show consumables",
@@ -8870,6 +8871,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_area": "Fläche anzeigen",
       "show_battery": "Akku anzeigen",
       "show_blade": "Messer anzeigen",
+      "show_button_labels": "Tastenbeschriftung anzeigen",
       "show_buttons": "Tasten anzeigen",
       "show_charge": "Akkuladung anzeigen",
       "show_consumables": "Verbrauchsmaterial anzeigen",
@@ -9127,6 +9129,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_area": "Afficher la surface",
       "show_battery": "Afficher la batterie",
       "show_blade": "Afficher la lame",
+      "show_button_labels": "Afficher les libellés des boutons",
       "show_buttons": "Afficher les boutons",
       "show_charge": "Afficher la charge de la batterie",
       "show_consumables": "Afficher les consommables",
@@ -9384,6 +9387,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_area": "Mostra la superficie",
       "show_battery": "Mostra la batteria",
       "show_blade": "Mostra la lama",
+      "show_button_labels": "Mostra le etichette dei pulsanti",
       "show_buttons": "Mostra i pulsanti",
       "show_charge": "Mostra la carica della batteria",
       "show_consumables": "Mostra i materiali di consumo",
@@ -9649,6 +9653,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_area": "Vis areal",
       "show_battery": "Vis batteri",
       "show_blade": "Vis kniv",
+      "show_button_labels": "Vis knappetekster",
       "show_buttons": "Vis knapper",
       "show_charge": "Vis batterinivå",
       "show_consumables": "Vis forbruksdeler",
@@ -9898,6 +9903,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_area": "Oppervlak tonen",
       "show_battery": "Batterij tonen",
       "show_blade": "Mes tonen",
+      "show_button_labels": "Knoplabels tonen",
       "show_buttons": "Knoppen tonen",
       "show_charge": "Batterijlading tonen",
       "show_consumables": "Verbruiksartikelen tonen",
@@ -10155,6 +10161,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_area": "Afișează suprafața",
       "show_battery": "Afișează bateria",
       "show_blade": "Afișează lama",
+      "show_button_labels": "Afișează etichetele butoanelor",
       "show_buttons": "Afișează butoanele",
       "show_charge": "Afișează încărcarea bateriei",
       "show_consumables": "Afișează consumabilele",
@@ -10412,6 +10419,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_area": "Показывать площадь",
       "show_battery": "Показывать батарею",
       "show_blade": "Показывать нож",
+      "show_button_labels": "Показывать подписи кнопок",
       "show_buttons": "Показывать кнопки",
       "show_charge": "Показывать заряд батареи",
       "show_consumables": "Показывать расходники",
@@ -10669,6 +10677,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_area": "Прикажи површину",
       "show_battery": "Прикажи батерију",
       "show_blade": "Прикажи нож",
+      "show_button_labels": "Прикажи натписе дугмади",
       "show_buttons": "Прикажи дугмад",
       "show_charge": "Прикажи напуњеност батерије",
       "show_consumables": "Прикажи потрошне материјале",
@@ -10926,6 +10935,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_area": "Prikaži površinu",
       "show_battery": "Prikaži bateriju",
       "show_blade": "Prikaži nož",
+      "show_button_labels": "Prikaži natpise dugmadi",
       "show_buttons": "Prikaži dugmad",
       "show_charge": "Prikaži napunjenost baterije",
       "show_consumables": "Prikaži potrošne materijale",
@@ -20409,6 +20419,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
   background:var(--secondary-background-color);color:var(--primary-text-color);font:500 12px/16px var(--paper-font-body1_-_font-family,Roboto,sans-serif);transition:background .3s,color .3s}
 .ctl button.sel{background:var(--lt-ok);color:#2a2112}
 .ctl button ha-icon{--mdc-icon-size:16px}
+.ctl button.ico ha-icon{--mdc-icon-size:22px}
 .ctl button:hover{filter:brightness(1.12)}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:6px;margin-top:6px}
 .tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
@@ -20626,7 +20637,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { show_status: true, show_controls: true, show_brightness: true, show_power: true, show_energy: true, follow_light_color: true, ...c };
+      this._c = { show_status: true, show_controls: true, show_brightness: true, show_power: true, show_energy: true, show_button_labels: true, follow_light_color: true, ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -20755,7 +20766,15 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       ctl.classList.toggle('hide', c.show_controls === false || !['light', 'switch', 'input_boolean'].includes(d));
       ctl.querySelectorAll('button').forEach((b) => {
         const k = b.dataset.a;
-        b.querySelector('span').textContent = this._t(k === 'on' ? 'turn_on' : k === 'off' ? 'turn_off' : 'color');
+        const txt = this._l(k === 'on' ? 'turn_on' : k === 'off' ? 'turn_off' : 'color');
+        const span = b.querySelector('span');
+        span.textContent = txt;
+        // icônes seules : libellé masqué, conservé en tooltip / accessibilité
+        const icoOnly = c.show_button_labels === false;
+        span.style.display = icoOnly ? 'none' : '';
+        b.classList.toggle('ico', icoOnly);
+        b.title = icoOnly ? txt : '';
+        if (icoOnly) b.setAttribute('aria-label', txt); else b.removeAttribute('aria-label');
         b.classList.toggle('sel', k === 'on' ? st === 'on' && !cycle : k === 'off' ? st !== 'on' : cycle);
         if (k === 'color') b.classList.toggle('hide', d !== 'light');
       });
@@ -20809,7 +20828,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         ] },
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
-          bool('show_status'), bool('show_controls'), bool('show_brightness'), bool('show_power'), bool('show_energy'), bool('animations'),
+          bool('show_status'), bool('show_controls'), bool('show_button_labels'), bool('show_brightness'), bool('show_power'), bool('show_energy'), bool('animations'),
         ] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
