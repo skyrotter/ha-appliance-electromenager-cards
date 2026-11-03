@@ -399,6 +399,10 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
   };
 
   class ApplianceRoomClimateCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
     static getStubConfig(hass) {
       const S = (hass && hass.states) || {}, ids = Object.keys(S), dc = (i, d) => i.startsWith('sensor.') && (S[i].attributes || {}).device_class === d;

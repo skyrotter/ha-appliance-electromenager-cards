@@ -141,6 +141,10 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
   ];
 
   class ApplianceSaunaCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
     static getStubConfig(hass) {
       const ids = Object.keys((hass && hass.states) || {});

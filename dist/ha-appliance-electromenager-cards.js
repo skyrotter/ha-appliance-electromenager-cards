@@ -8613,6 +8613,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_area": "Show area",
       "show_battery": "Show battery",
       "show_blade": "Show blade",
+      "compact": "Compact layout",
       "show_button_labels": "Show button labels",
       "show_buttons": "Show buttons",
       "show_charge": "Show battery charge",
@@ -8871,6 +8872,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_area": "Fläche anzeigen",
       "show_battery": "Akku anzeigen",
       "show_blade": "Messer anzeigen",
+      "compact": "Kompakte Darstellung",
       "show_button_labels": "Tastenbeschriftung anzeigen",
       "show_buttons": "Tasten anzeigen",
       "show_charge": "Akkuladung anzeigen",
@@ -9129,6 +9131,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_area": "Afficher la surface",
       "show_battery": "Afficher la batterie",
       "show_blade": "Afficher la lame",
+      "compact": "Disposition compacte",
       "show_button_labels": "Afficher les libellés des boutons",
       "show_buttons": "Afficher les boutons",
       "show_charge": "Afficher la charge de la batterie",
@@ -9387,6 +9390,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_area": "Mostra la superficie",
       "show_battery": "Mostra la batteria",
       "show_blade": "Mostra la lama",
+      "compact": "Layout compatto",
       "show_button_labels": "Mostra le etichette dei pulsanti",
       "show_buttons": "Mostra i pulsanti",
       "show_charge": "Mostra la carica della batteria",
@@ -9653,6 +9657,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_area": "Vis areal",
       "show_battery": "Vis batteri",
       "show_blade": "Vis kniv",
+      "compact": "Kompakt oppsett",
       "show_button_labels": "Vis knappetekster",
       "show_buttons": "Vis knapper",
       "show_charge": "Vis batterinivå",
@@ -9903,6 +9908,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_area": "Oppervlak tonen",
       "show_battery": "Batterij tonen",
       "show_blade": "Mes tonen",
+      "compact": "Compacte weergave",
       "show_button_labels": "Knoplabels tonen",
       "show_buttons": "Knoppen tonen",
       "show_charge": "Batterijlading tonen",
@@ -10161,6 +10167,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_area": "Afișează suprafața",
       "show_battery": "Afișează bateria",
       "show_blade": "Afișează lama",
+      "compact": "Aspect compact",
       "show_button_labels": "Afișează etichetele butoanelor",
       "show_buttons": "Afișează butoanele",
       "show_charge": "Afișează încărcarea bateriei",
@@ -10419,6 +10426,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_area": "Показывать площадь",
       "show_battery": "Показывать батарею",
       "show_blade": "Показывать нож",
+      "compact": "Компактный вид",
       "show_button_labels": "Показывать подписи кнопок",
       "show_buttons": "Показывать кнопки",
       "show_charge": "Показывать заряд батареи",
@@ -10677,6 +10685,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_area": "Прикажи површину",
       "show_battery": "Прикажи батерију",
       "show_blade": "Прикажи нож",
+      "compact": "Компактан приказ",
       "show_button_labels": "Прикажи натписе дугмади",
       "show_buttons": "Прикажи дугмад",
       "show_charge": "Прикажи напуњеност батерије",
@@ -10935,6 +10944,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_area": "Prikaži površinu",
       "show_battery": "Prikaži bateriju",
       "show_blade": "Prikaži nož",
+      "compact": "Kompaktan prikaz",
       "show_button_labels": "Prikaži natpise dugmadi",
       "show_buttons": "Prikaži dugmad",
       "show_charge": "Prikaži napunjenost baterije",
@@ -14482,6 +14492,10 @@ svg{display:block;width:100%;max-width:calc(170px * var(--illus-scale,1));height
   ];
 
   class ApplianceGasBoilerCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
     static getStubConfig(hass) {
       const ids = Object.keys((hass && hass.states) || {});
@@ -15058,6 +15072,10 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
   const SHOW = ['show_status', 'show_power', 'show_heat', 'show_cop', 'show_temps', 'show_source', 'show_flow_rate', 'show_energy', 'show_scop', 'animations'];
 
   class ApplianceWaterHeatPumpCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     static getStubConfig(hass) {
       const ids = Object.keys((hass && hass.states) || {});
       const f = (re, dom) => ids.find((i) => (!dom || i.startsWith(dom + '.')) && re.test(i)) || '';
@@ -15646,6 +15664,10 @@ svg{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));height
   ];
 
   class ApplianceDieselHeaterCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
     static getStubConfig(hass) {
       const ids = Object.keys((hass && hass.states) || {});
@@ -16176,6 +16198,10 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
   ];
 
   class ApplianceJacuzziCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
     static getStubConfig(hass) {
       const ids = Object.keys((hass && hass.states) || {});
@@ -16884,6 +16910,10 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
   ];
 
   class ApplianceAccessCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
@@ -17437,6 +17467,10 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
   ];
 
   class ApplianceSaunaCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
     static getStubConfig(hass) {
       const ids = Object.keys((hass && hass.states) || {});
@@ -18272,6 +18306,10 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
   ];
 
   class AppliancePumpCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
@@ -18917,6 +18955,10 @@ svg{display:block;width:100%;max-width:calc(280px * var(--illus-scale,1));height
   ];
 
   class AppliancePoolRobotCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
     static getStubConfig(hass) {
       const ids = Object.keys((hass && hass.states) || {});
@@ -19473,6 +19515,10 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
   ];
 
   class ApplianceUpsCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
     static getStubConfig(hass) {
       const ids = Object.keys((hass && hass.states) || {});
@@ -19966,6 +20012,10 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
   ];
 
   class ApplianceUnderfloorHeatingCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
     static getStubConfig(hass) {
       const ids = Object.keys((hass && hass.states) || {});
@@ -20430,6 +20480,21 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 .tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
 .tile.hide{display:none}
 
+/* ---- compact : petits emplacements fixes (ex. 120 × 130 px) ; l'illustration prend la hauteur restante ---- */
+ha-card.compact{display:flex;flex-direction:column;padding:6px}
+.compact .head{flex:none;gap:4px}
+.compact .title{font-size:12px;line-height:16px}
+.compact .badge{font-size:10px;padding:0 6px}
+.compact .stage{flex:1 1 auto;min-height:0;width:100%;max-width:none;margin-top:3px;border-radius:10px}
+.compact svg{width:100%;height:100%}
+.compact .ctl{flex:none;gap:4px;margin-top:4px}
+.compact .ctl button{padding:3px;border-radius:8px;font-size:11px;line-height:14px}
+.compact .ctl button ha-icon{--mdc-icon-size:14px}
+.compact .ctl button.ico ha-icon{--mdc-icon-size:18px}
+.compact .tiles{flex:none;gap:4px;margin-top:4px}
+.compact .tile{padding:2px 5px;border-radius:8px}
+.compact .tile .v{font-size:12px;line-height:15px;margin-top:0}
+
 /* ---- commun : tout ce qui éclaire ne se voit qu'allumé, à proportion de la luminosité ---- */
 .lit{opacity:0;transition:opacity .8s}
 .on .lit{opacity:calc(var(--b) * var(--k,1))}
@@ -20634,6 +20699,10 @@ svg{display:block;width:100%;height:auto;overflow:visible}
     typeof v === 'string' && /^[#a-z0-9(),.\s%]+$/i.test(v.trim()) ? v.trim() : '');
 
   class ApplianceLightCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
@@ -20750,7 +20819,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       col = col || cfgColor(c.color) || K.color;
       const bri = isFinite(Number(a.brightness)) ? Math.max(0.15, Number(a.brightness) / 255) : 1;
       const cycle = this.kind === 'color_bulb' && st === 'on' && (c.color_cycle === true || /loop|rainbow|cycle|colou?r/i.test(String(a.effect || '')));
-      card.className = `${st}${cycle ? ' cycle' : ''} ${c.animations === false ? 'noanim' : ''}`;
+      card.className = `${st}${cycle ? ' cycle' : ''} ${c.animations === false ? 'noanim' : ''}${c.compact === true ? ' compact' : ''}`;
       card.style.setProperty('--lc', col);
       card.style.setProperty('--b', (st === 'on' ? bri : 0).toFixed(3));
       // sapin : guirlande d'une seule couleur si multicolor: false
@@ -20828,7 +20897,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         ] },
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
-          bool('show_status'), bool('show_controls'), bool('show_button_labels'), bool('show_brightness'), bool('show_power'), bool('show_energy'), bool('animations'),
+          bool('show_status'), bool('compact', false), bool('show_controls'), bool('show_button_labels'), bool('show_brightness'), bool('show_power'), bool('show_energy'), bool('animations'),
         ] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
@@ -21576,6 +21645,10 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
     ['power', 'mdi:flash', 'show_power'], ['blind', 'mdi:window-shutter', 'show_blind'], ['rain', 'mdi:weather-pouring', 'show_rain'], ['wind', 'mdi:weather-windy', 'show_wind'], ['since', 'mdi:history', 'show_since']];
 
   class ApplianceShutterCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
@@ -22123,6 +22196,10 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
   const TILES = [['flow', 'mdi:water-pump', 'show_flow'], ['today', 'mdi:water', 'show_today'], ['index', 'mdi:counter', 'show_index'], ['cost', 'mdi:cash', 'show_cost']];
 
   class ApplianceWaterMeterCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
     static getStubConfig(hass) {
       const ids = Object.keys((hass && hass.states) || {}), st = (i) => hass.states[i].attributes || {};
@@ -23398,6 +23475,10 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
   };
 
   class ApplianceRoomClimateCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
     static getStubConfig(hass) {
       const S = (hass && hass.states) || {}, ids = Object.keys(S), dc = (i, d) => i.startsWith('sensor.') && (S[i].attributes || {}).device_class === d;
@@ -24499,6 +24580,10 @@ svg{display:block;width:100%;height:auto;overflow:visible}
   const TILES = [['last', 'mdi:clock-outline', 'show_since'], ['count', 'mdi:email-multiple-outline', 'show_count'], ['battery', 'mdi:battery', 'show_battery']];
 
   class ApplianceMailboxCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
     static getStubConfig(hass) {
       const ids = Object.keys((hass && hass.states) || {});
@@ -25062,6 +25147,10 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
   const TILES = [['since', 'mdi:clock-outline', 'show_since'], ['co_level', 'mdi:molecule-co', 'show_co'], ['battery', 'mdi:battery', 'show_battery'], ['temperature', 'mdi:thermometer', 'show_temperature']];
 
   class ApplianceSmokeDetectorCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
     static getStubConfig(hass) {
       const ids = Object.keys((hass && hass.states) || {}), dc = (i) => (hass.states[i].attributes || {}).device_class;
@@ -25600,6 +25689,10 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
     ['temperature', 'mdi:thermometer', 'show_temperature'], ['humidity', 'mdi:water-percent', 'show_humidity']];
 
   class ApplianceLeakDetectorCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
     static getStubConfig(hass) {
       const ids = Object.keys((hass && hass.states) || {}), dc = (i) => (hass.states[i].attributes || {}).device_class;

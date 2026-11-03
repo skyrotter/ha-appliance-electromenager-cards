@@ -151,6 +151,10 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
   const SHOW = ['show_status', 'show_power', 'show_heat', 'show_cop', 'show_temps', 'show_source', 'show_flow_rate', 'show_energy', 'show_scop', 'animations'];
 
   class ApplianceWaterHeatPumpCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     static getStubConfig(hass) {
       const ids = Object.keys((hass && hass.states) || {});
       const f = (re, dom) => ids.find((i) => (!dom || i.startsWith(dom + '.')) && re.test(i)) || '';

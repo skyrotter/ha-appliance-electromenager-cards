@@ -83,6 +83,10 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
   const TILES = [['flow', 'mdi:water-pump', 'show_flow'], ['today', 'mdi:water', 'show_today'], ['index', 'mdi:counter', 'show_index'], ['cost', 'mdi:cash', 'show_cost']];
 
   class ApplianceWaterMeterCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
     static getStubConfig(hass) {
       const ids = Object.keys((hass && hass.states) || {}), st = (i) => hass.states[i].attributes || {};

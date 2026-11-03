@@ -37,6 +37,21 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 .tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
 .tile.hide{display:none}
 
+/* ---- compact : petits emplacements fixes (ex. 120 × 130 px) ; l'illustration prend la hauteur restante ---- */
+ha-card.compact{display:flex;flex-direction:column;padding:6px}
+.compact .head{flex:none;gap:4px}
+.compact .title{font-size:12px;line-height:16px}
+.compact .badge{font-size:10px;padding:0 6px}
+.compact .stage{flex:1 1 auto;min-height:0;width:100%;max-width:none;margin-top:3px;border-radius:10px}
+.compact svg{width:100%;height:100%}
+.compact .ctl{flex:none;gap:4px;margin-top:4px}
+.compact .ctl button{padding:3px;border-radius:8px;font-size:11px;line-height:14px}
+.compact .ctl button ha-icon{--mdc-icon-size:14px}
+.compact .ctl button.ico ha-icon{--mdc-icon-size:18px}
+.compact .tiles{flex:none;gap:4px;margin-top:4px}
+.compact .tile{padding:2px 5px;border-radius:8px}
+.compact .tile .v{font-size:12px;line-height:15px;margin-top:0}
+
 /* ---- commun : tout ce qui éclaire ne se voit qu'allumé, à proportion de la luminosité ---- */
 .lit{opacity:0;transition:opacity .8s}
 .on .lit{opacity:calc(var(--b) * var(--k,1))}
@@ -241,6 +256,10 @@ svg{display:block;width:100%;height:auto;overflow:visible}
     typeof v === 'string' && /^[#a-z0-9(),.\s%]+$/i.test(v.trim()) ? v.trim() : '');
 
   class ApplianceLightCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
@@ -357,7 +376,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       col = col || cfgColor(c.color) || K.color;
       const bri = isFinite(Number(a.brightness)) ? Math.max(0.15, Number(a.brightness) / 255) : 1;
       const cycle = this.kind === 'color_bulb' && st === 'on' && (c.color_cycle === true || /loop|rainbow|cycle|colou?r/i.test(String(a.effect || '')));
-      card.className = `${st}${cycle ? ' cycle' : ''} ${c.animations === false ? 'noanim' : ''}`;
+      card.className = `${st}${cycle ? ' cycle' : ''} ${c.animations === false ? 'noanim' : ''}${c.compact === true ? ' compact' : ''}`;
       card.style.setProperty('--lc', col);
       card.style.setProperty('--b', (st === 'on' ? bri : 0).toFixed(3));
       // sapin : guirlande d'une seule couleur si multicolor: false
@@ -435,7 +454,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         ] },
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
-          bool('show_status'), bool('show_controls'), bool('show_button_labels'), bool('show_brightness'), bool('show_power'), bool('show_energy'), bool('animations'),
+          bool('show_status'), bool('compact', false), bool('show_controls'), bool('show_button_labels'), bool('show_brightness'), bool('show_power'), bool('show_energy'), bool('animations'),
         ] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);

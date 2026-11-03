@@ -109,6 +109,10 @@ svg{display:block;width:100%;height:auto;overflow:visible}
   const TILES = [['last', 'mdi:clock-outline', 'show_since'], ['count', 'mdi:email-multiple-outline', 'show_count'], ['battery', 'mdi:battery', 'show_battery']];
 
   class ApplianceMailboxCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
     static getStubConfig(hass) {
       const ids = Object.keys((hass && hass.states) || {});
