@@ -168,3 +168,21 @@ appliance-alert-color: "#db4437"
 appliance-ok-color: "#43a047"
 appliance-illustration-size: 116px
 ```
+
+## Sélecteur de cartes : une seule entrée
+
+La carte `custom:appliance-card` apparaît dans le sélecteur de Home Assistant et permet de choisir le type d'appareil dans l'éditeur. L'aperçu live des cartes individuelles est désactivé (onglet « Par carte » plus fluide).
+
+Pour ne garder **que** cette entrée dans le sélecteur (le YAML existant reste valide), exécute une fois dans la console du navigateur, puis recharge :
+
+```js
+localStorage.setItem('applianceCardsSinglePicker', '1');
+```
+
+(ou `window.applianceCardsSinglePicker = true` avant le chargement du module ; retire la clé pour revenir à l'état par défaut.)
+
+```yaml
+type: custom:appliance-card
+appliance: appliance-washer-card
+entity: sensor.lave_linge
+```
