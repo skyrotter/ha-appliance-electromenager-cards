@@ -26,6 +26,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
   background:var(--secondary-background-color);color:var(--primary-text-color);font:500 12px/16px var(--paper-font-body1_-_font-family,Roboto,sans-serif);transition:background .3s,color .3s}
 .ctl button.sel{background:var(--lt-ok);color:#2a2112}
 .ctl button ha-icon{--mdc-icon-size:16px}
+.ctl button.ico ha-icon{--mdc-icon-size:22px}
 .ctl button:hover{filter:brightness(1.12)}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:6px;margin-top:6px}
 .tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
@@ -243,7 +244,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { show_status: true, show_controls: true, show_brightness: true, show_power: true, show_energy: true, follow_light_color: true, ...c };
+      this._c = { show_status: true, show_controls: true, show_brightness: true, show_power: true, show_energy: true, show_button_labels: true, follow_light_color: true, ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -372,7 +373,15 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       ctl.classList.toggle('hide', c.show_controls === false || !['light', 'switch', 'input_boolean'].includes(d));
       ctl.querySelectorAll('button').forEach((b) => {
         const k = b.dataset.a;
-        b.querySelector('span').textContent = this._t(k === 'on' ? 'turn_on' : k === 'off' ? 'turn_off' : 'color');
+        const txt = this._l(k === 'on' ? 'turn_on' : k === 'off' ? 'turn_off' : 'color');
+        const span = b.querySelector('span');
+        span.textContent = txt;
+        // icônes seules : libellé masqué, conservé en tooltip / accessibilité
+        const icoOnly = c.show_button_labels === false;
+        span.style.display = icoOnly ? 'none' : '';
+        b.classList.toggle('ico', icoOnly);
+        b.title = icoOnly ? txt : '';
+        if (icoOnly) b.setAttribute('aria-label', txt); else b.removeAttribute('aria-label');
         b.classList.toggle('sel', k === 'on' ? st === 'on' && !cycle : k === 'off' ? st !== 'on' : cycle);
         if (k === 'color') b.classList.toggle('hide', d !== 'light');
       });
@@ -426,7 +435,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         ] },
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
-          bool('show_status'), bool('show_controls'), bool('show_brightness'), bool('show_power'), bool('show_energy'), bool('animations'),
+          bool('show_status'), bool('show_controls'), bool('show_button_labels'), bool('show_brightness'), bool('show_power'), bool('show_energy'), bool('animations'),
         ] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
