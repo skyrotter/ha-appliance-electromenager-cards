@@ -335,6 +335,10 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
   ];
 
   class AppliancePumpCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');

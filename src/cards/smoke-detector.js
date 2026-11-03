@@ -122,6 +122,10 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
   const TILES = [['since', 'mdi:clock-outline', 'show_since'], ['co_level', 'mdi:molecule-co', 'show_co'], ['battery', 'mdi:battery', 'show_battery'], ['temperature', 'mdi:thermometer', 'show_temperature']];
 
   class ApplianceSmokeDetectorCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
     static getStubConfig(hass) {
       const ids = Object.keys((hass && hass.states) || {}), dc = (i) => (hass.states[i].attributes || {}).device_class;
