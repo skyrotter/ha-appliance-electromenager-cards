@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.66.1";
+const VERSION = "1.67.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -237,6 +237,9 @@ const STRINGS = {
     "keg": "Keg",
     "keg_low": "Keg almost empty",
     "f_keg_level": "Keg level sensor (%)",
+    "f_hot_water_level": "Remaining hot water (%)",
+    "f_hot_water_volume": "Remaining hot water (L)",
+    "f_tank_volume": "Tank capacity (L)",
     "f_pouring": "Pouring sensor (optional)",
     "fan_1": "Speed 1",
     "fan_2": "Speed 2",
@@ -564,6 +567,9 @@ const STRINGS = {
     "keg": "Fass",
     "keg_low": "Fass fast leer",
     "f_keg_level": "Fassfüllstand-Sensor (%)",
+    "f_hot_water_level": "Verbleibendes Warmwasser (%)",
+    "f_hot_water_volume": "Verbleibendes Warmwasser (L)",
+    "f_tank_volume": "Speichervolumen (L)",
     "f_pouring": "Zapf-Sensor (optional)",
     "fan_1": "Stufe 1",
     "fan_2": "Stufe 2",
@@ -894,6 +900,9 @@ const STRINGS = {
     "keg": "Fût",
     "keg_low": "Fût presque vide",
     "f_keg_level": "Capteur de niveau du fût (%)",
+    "f_hot_water_level": "Eau chaude restante (%)",
+    "f_hot_water_volume": "Eau chaude restante (L)",
+    "f_tank_volume": "Capacité du ballon (L)",
     "f_pouring": "Capteur de service (optionnel)",
     "fan_1": "Vitesse 1",
     "fan_2": "Vitesse 2",
@@ -1221,6 +1230,9 @@ const STRINGS = {
     "keg": "Fusto",
     "keg_low": "Fusto quasi vuoto",
     "f_keg_level": "Sensore livello fusto (%)",
+    "f_hot_water_level": "Acqua calda residua (%)",
+    "f_hot_water_volume": "Acqua calda residua (L)",
+    "f_tank_volume": "Capacità del serbatoio (L)",
     "f_pouring": "Sensore spillatura (opzionale)",
     "fan_1": "Velocità 1",
     "fan_2": "Velocità 2",
@@ -1618,6 +1630,9 @@ const STRINGS = {
     "keg": "Fat",
     "keg_low": "Fatet er nesten tomt",
     "f_keg_level": "Fatnivå-sensor (%)",
+    "f_hot_water_level": "Gjenværende varmtvann (%)",
+    "f_hot_water_volume": "Gjenværende varmtvann (L)",
+    "f_tank_volume": "Tankvolum (L)",
     "f_pouring": "Tappesensor (valgfri)",
     "fan_1": "Hastighet 1",
     "fan_2": "Hastighet 2",
@@ -1875,6 +1890,9 @@ const STRINGS = {
     "keg": "Vat",
     "keg_low": "Vat bijna leeg",
     "f_keg_level": "Sensor vatniveau (%)",
+    "f_hot_water_level": "Resterend warm water (%)",
+    "f_hot_water_volume": "Resterend warm water (L)",
+    "f_tank_volume": "Boilerinhoud (L)",
     "f_pouring": "Tapsensor (optioneel)",
     "fan_1": "Stand 1",
     "fan_2": "Stand 2",
@@ -2202,6 +2220,9 @@ const STRINGS = {
     "keg": "Butoi",
     "keg_low": "Butoi aproape gol",
     "f_keg_level": "Senzor nivel butoi (%)",
+    "f_hot_water_level": "Apă caldă rămasă (%)",
+    "f_hot_water_volume": "Apă caldă rămasă (L)",
+    "f_tank_volume": "Capacitate boiler (L)",
     "f_pouring": "Senzor de turnare (opțional)",
     "fan_1": "Viteză 1",
     "fan_2": "Viteză 2",
@@ -2529,6 +2550,9 @@ const STRINGS = {
     "keg": "Кега",
     "keg_low": "Кега почти пуста",
     "f_keg_level": "Датчик уровня кеги (%)",
+    "f_hot_water_level": "Оставшаяся горячая вода (%)",
+    "f_hot_water_volume": "Оставшаяся горячая вода (л)",
+    "f_tank_volume": "Объём бака (л)",
     "f_pouring": "Датчик налива (необязательно)",
     "fan_1": "Скорость 1",
     "fan_2": "Скорость 2",
@@ -2856,6 +2880,9 @@ const STRINGS = {
     "keg": "Буре (Кег)",
     "keg_low": "Буре је скоро празно",
     "f_keg_level": "Сензор нивоа бурета (%)",
+    "f_hot_water_level": "Преостала топла вода (%)",
+    "f_hot_water_volume": "Преостала топла вода (L)",
+    "f_tank_volume": "Запремина бојлера (L)",
     "f_pouring": "Сензор точења (опционо)",
     "fan_1": "Брзина 1",
     "fan_2": "Брзина 2",
@@ -3183,6 +3210,9 @@ const STRINGS = {
     "keg": "Bure (Keg)",
     "keg_low": "Bure je skoro prazno",
     "f_keg_level": "Senzor nivoa bureta (%)",
+    "f_hot_water_level": "Preostala topla voda (%)",
+    "f_hot_water_volume": "Preostala topla voda (L)",
+    "f_tank_volume": "Zapremina bojlera (L)",
     "f_pouring": "Senzor točenja (opciono)",
     "fan_1": "Brzina 1",
     "fan_2": "Brzina 2",
@@ -5337,10 +5367,12 @@ SVG.washer = () => `
   <rect x="22" y="117" width="76" height="6" rx="2" fill="#000" opacity=".05"/>
 </g>`;
 
-SVG.water_heater = () => `
+SVG.water_heater = (c = {}) => `
 <defs>${DEFS}
 <linearGradient id="ID-cyl" x1="0" x2="1"><stop offset="0" stop-color="#c3c9cf"/><stop offset=".3" stop-color="#ffffff"/><stop offset=".6" stop-color="#eef0f2"/><stop offset="1" stop-color="#aeb5bc"/></linearGradient>
 <linearGradient id="ID-copper" x1="0" x2="1"><stop offset="0" stop-color="#a0603a"/><stop offset=".45" stop-color="#e2a477"/><stop offset="1" stop-color="#8a4f2e"/></linearGradient>
+<linearGradient id="ID-hot" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e5484d"/><stop offset="1" stop-color="#ff8a3d"/></linearGradient>
+<clipPath id="ID-tank"><path d="M30 26q0-14 30-14t30 14v80q0 12-30 12t-30-12z"/></clipPath>
 <linearGradient id="ID-arc" x1="0" x2="1"><stop offset="0" stop-color="#3e8ed0"/><stop offset=".5" stop-color="#f2c94c"/><stop offset="1" stop-color="#e5484d"/></linearGradient></defs>
 <g class="hw-waves">
   <path d="M46 12q-3-4 0-8t0-8"/><path d="M60 10q-3-4 0-8t0-8"/><path d="M74 12q-3-4 0-8t0-8"/>
@@ -5354,6 +5386,7 @@ SVG.water_heater = () => `
 <path d="M30 26q0-14 30-14t30 14v80q0 12-30 12t-30-12z" fill="url(#ID-cyl)" stroke="#a7aeb5" stroke-width=".8"/>
 <path d="M30 26q0 9 30 9t30-9" fill="none" stroke="#b7bec5" stroke-width=".8"/>
 <path d="M30 104q0 9 30 9t30-9" fill="none" stroke="#b7bec5" stroke-width=".8"/>
+${c.hot_water_level || c.hot_water_volume ? `<g class="hw-level" clip-path="url(#ID-tank)"><rect x="30" y="12" width="60" height="106" fill="#3e8ed0" opacity=".22"/><rect class="hw-hot" x="30" y="12" width="60" height="106" fill="url(#ID-hot)" opacity=".5"/></g>` : ""}
 <rect x="38" y="58" width="44" height="40" rx="5" fill="#f4f6f8" stroke="#b5bcc3" stroke-width=".7"/>
 <circle cx="60" cy="76" r="13" fill="url(#ID-chrome)"/>
 <circle cx="60" cy="76" r="11" fill="#fcfcfd"/>
@@ -5499,7 +5532,7 @@ const DEF = {
   dishwasher: { accent: "active", threshold: 10, heating_power: 1000, fields: CYCLE_FIELDS,
     keys: ["lave_vaisselle", "lavevaisselle", "dishwasher"] },
   water_heater: { accent: "heat", threshold: 50,
-    fields: ["entity", "power", "power_solar", "energy", "energy_solar", "cost", "temperature", "target_temperature", "switch"],
+    fields: ["entity", "power", "power_solar", "energy", "energy_solar", "cost", "temperature", "target_temperature", "hot_water_level", "hot_water_volume", "switch"],
     keys: ["ballon_eau_chaude", "ballon", "chauffe_eau", "water_heater", "boiler", "cumulus"] },
   oven: { accent: "heat", threshold: 50,
     fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "remaining", "program", "door", "switch"],
@@ -5886,7 +5919,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "power_level", "pellet_level", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water"].map((k) => c[k]).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "power_level", "pellet_level", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -6159,6 +6192,13 @@ class ApplianceCardBase extends HTMLElement {
 
     m.solarHeat = kind === "water_heater" && wSolar !== null && wSolar > threshold;
     if (kind === "water_heater") {
+      // eau chaude restante : hot_water_level (%) ou hot_water_volume (L) ; tank_volume (L, nombre ou entité) fait le lien entre les deux
+      const lvl = num(S(c.hot_water_level)), vol = num(S(c.hot_water_volume));
+      const cap = typeof c.tank_volume === "string" ? num(S(c.tank_volume)) : Number(c.tank_volume);
+      const capOk = Number.isFinite(cap) && cap > 0;
+      const pct = lvl != null ? lvl : vol != null && capOk ? (vol / cap) * 100 : null;
+      m.hotPct = pct == null ? null : Math.max(0, Math.min(100, pct));
+      m.hotL = vol != null ? vol : lvl != null && capOk ? (lvl * cap) / 100 : null;
       if (base === "off" || base === "unavailable") m.status = base;
       else if (powered || (watts === null && base === "running")) m.status = "heating";
       else m.status = "ready";
@@ -6897,6 +6937,9 @@ class ApplianceCardBase extends HTMLElement {
       const ang = t == null ? -135 : -135 + Math.max(0, Math.min(1, (t - 10) / 70)) * 270;
       sr.querySelector(".needle").setAttribute("transform", `rotate(${ang.toFixed(1)} 60 76)`);
       sr.querySelector(".gauge-txt").textContent = t == null ? "--°" : `${Math.round(t)}°`;
+      // niveau d'eau chaude : l'eau chaude occupe le haut du ballon, l'eau froide (bleue) le bas
+      const hot = sr.querySelector(".hw-hot");
+      if (hot) hot.style.transform = `scaleY(${((m.hotPct ?? 0) / 100).toFixed(3)})`;
     }
 
     // name + status
@@ -7138,6 +7181,9 @@ class ApplianceCardBase extends HTMLElement {
       const td = kind === "towel_dryer" ? 1 : 0;
       if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, td)} ${m.tempUnit}`, lb("temperature"), tEntity);
       if (m.targetVal != null) tile("mdi:target", `${fmtNum(hass, m.targetVal, td)} ${m.tempUnit}`, lb("target"), c.target_temperature || tEntity);
+      // eau chaude restante : % (tuile « Eau chaude ») et litres (tuile « Volume ») — deux tuiles, sinon le texte est tronqué
+      if (kind === "water_heater" && m.hotPct != null) tile("mdi:water-thermometer", `${fmtNum(hass, m.hotPct, 0)} %`, lb("hot_water"), c.hot_water_level || c.hot_water_volume);
+      if (kind === "water_heater" && m.hotL != null) tile("mdi:water", `${fmtNum(hass, m.hotL, 0)} L`, lb("volume"), c.hot_water_volume || c.hot_water_level);
       if (kind === "towel_dryer" && m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0)} %`, lb("humidity"), c.humidity || c.entity);
     }
     if (m.remaining != null && m.remaining > 0 && active && kind !== "water_heater") tile("mdi:timer-sand", `${m.estimated ? "≈ " : ""}${fmtDuration(m.remaining)}`, lb("remaining"), c.remaining);
@@ -7233,6 +7279,9 @@ const SEL = {
   zone2_temperature: { entity: { domain: ["sensor", "input_number"], device_class: "temperature" } },
   battery_level: { entity: { domain: ["sensor", "number", "input_number"] } },
   keg_level: { entity: { domain: ["sensor", "number", "input_number"] } },
+  // chauffe-eau : eau chaude restante, en % ou en litres (avec tank_volume)
+  hot_water_level: { entity: { domain: ["sensor", "number", "input_number"] } },
+  hot_water_volume: { entity: { domain: ["sensor", "number", "input_number"] } },
   pouring: { entity: { domain: ["binary_sensor", "input_boolean", "switch"] } },
   bed_temperature: { entity: { domain: ["sensor"], device_class: "temperature" } },
   humidity: { entity: { domain: ["sensor"], device_class: "humidity" } },
@@ -7285,7 +7334,8 @@ function buildForm(kind) {
             { name: "last_cycle", selector: { boolean: {} } },
             { name: "estimate", selector: { boolean: {} } },
           ] : []),
-          ...(kind === "water_heater" ? [{ name: "last_cycle", selector: { boolean: {} } }] : []),
+          ...(kind === "water_heater" ? [{ name: "last_cycle", selector: { boolean: {} } },
+            { name: "tank_volume", selector: { number: { min: 0, max: 1000, step: 1, mode: "box", unit_of_measurement: "L" } } }] : []),
           ...(["washer", "dryer", "dishwasher", "water_heater"].includes(kind) ? [
             { name: "cycle_gap", selector: { number: { min: 0, max: 240, step: 1, mode: "box", unit_of_measurement: "min" } } },
           ] : []),
@@ -7800,6 +7850,7 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 /* ---------- water heater ---------- */
 .needle { transition: transform 1s ease; }
 .gauge-txt { font: 700 5px system-ui, sans-serif; fill: #4b545e; }
+.hw-hot { transform-box: fill-box; transform-origin: 50% 0; transition: transform 1s ease; }
 .hw-led { fill: #9aa2ab; transition: fill .3s; }
 .k-water_heater.st-ready .hw-led { fill: #3ddc84; }
 .k-water_heater.st-heating .hw-led { fill: #ff8a3d; animation: ac-pulse 1.4s ease-in-out infinite; }

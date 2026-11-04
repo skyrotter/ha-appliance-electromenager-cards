@@ -81,7 +81,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "power_level", "pellet_level", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water"].map((k) => c[k]).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "power_level", "pellet_level", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -354,6 +354,13 @@ class ApplianceCardBase extends HTMLElement {
 
     m.solarHeat = kind === "water_heater" && wSolar !== null && wSolar > threshold;
     if (kind === "water_heater") {
+      // eau chaude restante : hot_water_level (%) ou hot_water_volume (L) ; tank_volume (L, nombre ou entité) fait le lien entre les deux
+      const lvl = num(S(c.hot_water_level)), vol = num(S(c.hot_water_volume));
+      const cap = typeof c.tank_volume === "string" ? num(S(c.tank_volume)) : Number(c.tank_volume);
+      const capOk = Number.isFinite(cap) && cap > 0;
+      const pct = lvl != null ? lvl : vol != null && capOk ? (vol / cap) * 100 : null;
+      m.hotPct = pct == null ? null : Math.max(0, Math.min(100, pct));
+      m.hotL = vol != null ? vol : lvl != null && capOk ? (lvl * cap) / 100 : null;
       if (base === "off" || base === "unavailable") m.status = base;
       else if (powered || (watts === null && base === "running")) m.status = "heating";
       else m.status = "ready";
@@ -1092,6 +1099,9 @@ class ApplianceCardBase extends HTMLElement {
       const ang = t == null ? -135 : -135 + Math.max(0, Math.min(1, (t - 10) / 70)) * 270;
       sr.querySelector(".needle").setAttribute("transform", `rotate(${ang.toFixed(1)} 60 76)`);
       sr.querySelector(".gauge-txt").textContent = t == null ? "--°" : `${Math.round(t)}°`;
+      // niveau d'eau chaude : l'eau chaude occupe le haut du ballon, l'eau froide (bleue) le bas
+      const hot = sr.querySelector(".hw-hot");
+      if (hot) hot.style.transform = `scaleY(${((m.hotPct ?? 0) / 100).toFixed(3)})`;
     }
 
     // name + status
@@ -1333,6 +1343,9 @@ class ApplianceCardBase extends HTMLElement {
       const td = kind === "towel_dryer" ? 1 : 0;
       if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, td)} ${m.tempUnit}`, lb("temperature"), tEntity);
       if (m.targetVal != null) tile("mdi:target", `${fmtNum(hass, m.targetVal, td)} ${m.tempUnit}`, lb("target"), c.target_temperature || tEntity);
+      // eau chaude restante : % (tuile « Eau chaude ») et litres (tuile « Volume ») — deux tuiles, sinon le texte est tronqué
+      if (kind === "water_heater" && m.hotPct != null) tile("mdi:water-thermometer", `${fmtNum(hass, m.hotPct, 0)} %`, lb("hot_water"), c.hot_water_level || c.hot_water_volume);
+      if (kind === "water_heater" && m.hotL != null) tile("mdi:water", `${fmtNum(hass, m.hotL, 0)} L`, lb("volume"), c.hot_water_volume || c.hot_water_level);
       if (kind === "towel_dryer" && m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0)} %`, lb("humidity"), c.humidity || c.entity);
     }
     if (m.remaining != null && m.remaining > 0 && active && kind !== "water_heater") tile("mdi:timer-sand", `${m.estimated ? "≈ " : ""}${fmtDuration(m.remaining)}`, lb("remaining"), c.remaining);

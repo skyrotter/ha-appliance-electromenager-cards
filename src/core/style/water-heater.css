@@ -1,6 +1,7 @@
 /* ---------- water heater ---------- */
 .needle { transition: transform 1s ease; }
 .gauge-txt { font: 700 5px system-ui, sans-serif; fill: #4b545e; }
+.hw-hot { transform-box: fill-box; transform-origin: 50% 0; transition: transform 1s ease; }
 .hw-led { fill: #9aa2ab; transition: fill .3s; }
 .k-water_heater.st-ready .hw-led { fill: #3ddc84; }
 .k-water_heater.st-heating .hw-led { fill: #ff8a3d; animation: ac-pulse 1.4s ease-in-out infinite; }
