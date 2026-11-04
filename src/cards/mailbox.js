@@ -55,7 +55,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 .tile .l ha-icon{--mdc-icon-size:13px;flex:none}
 .tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
-.tile.hide{display:none}.tile.bad .v{color:var(--mb-alert)}
+.tiles.hide,.tile.hide{display:none}.tile.bad .v{color:var(--mb-alert)}
 /* ---- illustration ---- */
 .mb-c0{fill:var(--mb-c0)}.mb-c1{fill:var(--mb-c1)}.mb-c2{fill:var(--mb-c2)}
 .mb-door{transform-box:view-box;transform-origin:18px 105px;transition:transform .7s cubic-bezier(.3,1.3,.5,1)}
@@ -107,7 +107,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
   </svg>`;
 
   const TILES = [['last', 'mdi:clock-outline', 'show_since'], ['count', 'mdi:email-multiple-outline', 'show_count'], ['battery', 'mdi:battery', 'show_battery'],
-    ['door_front', 'mdi:door', 'show_doors'], ['door_back', 'mdi:door-open', 'show_doors']];
+    ['door_front', 'mdi:door', 'show_doors'], ['door_back', 'mdi:door', 'show_doors']]; // les 3 premières : 1re ligne, les portes : 2e ligne
 
   class ApplianceMailboxCard extends HTMLElement {
 
@@ -206,7 +206,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         <div class="head"><div class="title" id="mbtitle"></div><div class="badge" id="mbbadge"></div></div>
         <div class="scene">${SVG(this._c.name || this._t('name'))}<div class="count" id="mbcount"></div></div>
         <div class="ctl" id="mbctl"><button><ha-icon icon="mdi:email-check-outline"></ha-icon><span></span></button></div>
-        <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
+        ${[TILES.slice(0, 3), TILES.slice(3)].map((row, i) => `<div class="tiles" id="mbrow${i}">${row.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>`).join('')}
       </ha-card>`;
       root.querySelector('.scene').addEventListener('click', () => this._more(this._c.entity_mail || this._c.entity_parcel || this._c.entity_door));
       root.querySelector('#mbctl button').addEventListener('click', () => this._collect());
@@ -258,7 +258,14 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         el.querySelector('.lbl').textContent = this._l(k);
         const small = document.createElement('small'); small.textContent = unit ?? '';
         el.querySelector('.v').replaceChildren(String(val ?? ''), small);
+        // icône des portes selon l'état : porte ouverte / porte fermée
+        if (k === 'door_front' || k === 'door_back') {
+          const o = k === 'door_front' ? opened : openedBack;
+          el.querySelector('ha-icon').setAttribute('icon', !this._ok(this._st(show)) ? 'mdi:door' : o ? 'mdi:door-open' : 'mdi:door-closed');
+        }
       });
+      // 2 lignes : dépôt / lettres / batterie, puis porte avant / porte arrière ; une ligne vide est masquée
+      [0, 1].forEach((i) => { const row = r.getElementById('mbrow' + i); row.classList.toggle('hide', !row.querySelector('.tile:not(.hide)')); });
     }
   }
   customElements.define(TAG, ApplianceMailboxCard);
