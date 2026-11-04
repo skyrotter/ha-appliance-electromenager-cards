@@ -1,0 +1,51 @@
+/* ---------- Enceinte connectée (photo + calques) ---------- */
+.k-smart_speaker svg { overflow: visible; }
+.spk { --sp-wave: #2bb6f9; --sp-led: #1aa7ff; }
+.spk-nest { --sp-wave: #8ab4f8; }
+.spk-sonos { --sp-wave: #e8e8e8; }
+/* photo : grisée éteinte / en veille, atténuée en pause */
+.sp-photo { transition: filter .5s; }
+.k-smart_speaker.st-off .sp-photo, .k-smart_speaker.st-standby .sp-photo, .k-smart_speaker.st-unavailable .sp-photo { filter: grayscale(1) brightness(.6); }
+.k-smart_speaker.st-paused .sp-photo, .k-smart_speaker.st-idle .sp-photo { filter: brightness(.88); }
+/* ondes sonores : seulement en lecture, plus rapides et plus visibles quand le volume (--amp) monte */
+.sp-waves circle, .sp-waves ellipse { fill: none; stroke: var(--sp-wave); stroke-width: 1.2; opacity: 0; transform-box: fill-box; transform-origin: 50% 50%; }
+.k-smart_speaker.st-playing .sp-waves circle, .k-smart_speaker.st-playing .sp-waves ellipse { animation: sp-wave calc(2.6s - var(--amp, .5) * 1.2s) ease-out infinite; }
+@keyframes sp-wave { 0% { opacity: calc(.25 + var(--amp, .5) * .55); transform: scale(.82); } 100% { opacity: 0; transform: scale(1.5); } }
+/* anneau / arc bleu (Echo Pop, Dot) : respire en lecture, faible en pause */
+.sp-led { opacity: 0; mix-blend-mode: screen; filter: blur(4px); transition: opacity .4s; }
+.k-smart_speaker.st-playing .sp-led { animation: sp-led 1.6s ease-in-out infinite; }
+.k-smart_speaker.st-paused .sp-led, .k-smart_speaker.st-idle .sp-led, .k-smart_speaker.st-muted .sp-led { opacity: .25; }
+@keyframes sp-led { 0%, 100% { opacity: .4; } 50% { opacity: 1; } }
+/* écran : reflet qui balaie, lueur et égaliseur en lecture ; vitre sombre éteint / en veille */
+.sp-glow { fill: #4aa8ff; opacity: 0; }
+.k-smart_speaker.st-playing .sp-glow { animation: sp-glow 2.4s ease-in-out infinite; }
+@keyframes sp-glow { 0%, 100% { opacity: .03; } 50% { opacity: .2; } }
+.sp-sweep { opacity: 0; transform-box: fill-box; transform: translateX(-100%); }
+.k-smart_speaker.st-playing .sp-sweep { opacity: 1; animation: sp-sweep 3.6s ease-in-out infinite; }
+@keyframes sp-sweep { 0% { transform: translateX(-100%); } 60%, 100% { transform: translateX(100%); } }
+.sp-eq rect { fill: #fff; opacity: 0; transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(.3); }
+.k-smart_speaker.st-playing .sp-eq rect { opacity: .92; animation: sp-eq .9s ease-in-out infinite alternate; }
+.sp-eq rect:nth-child(2) { animation-delay: -.3s !important; } .sp-eq rect:nth-child(3) { animation-delay: -.6s !important; }
+.sp-eq rect:nth-child(4) { animation-delay: -.15s !important; } .sp-eq rect:nth-child(5) { animation-delay: -.45s !important; }
+@keyframes sp-eq { from { transform: scaleY(.3); } to { transform: scaleY(1); } }
+.sp-glass { fill: #0b0d10; opacity: 0; transition: opacity .6s; }
+.k-smart_speaker.st-off .sp-glass, .k-smart_speaker.st-standby .sp-glass, .k-smart_speaker.st-unavailable .sp-glass { opacity: .88; }
+/* Google Nest Mini / Audio : les 4 points s'allument en vague */
+.sp-dots circle { fill: #fff; opacity: 0; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 5px #8ab4f8); transform-box: fill-box; transform-origin: 50% 50%; }
+.k-smart_speaker.st-playing .sp-dots circle { animation: sp-dot 1.4s ease-in-out infinite; }
+.k-smart_speaker.st-paused .sp-dots circle, .k-smart_speaker.st-idle .sp-dots circle, .k-smart_speaker.st-muted .sp-dots circle { opacity: .35; }
+@keyframes sp-dot { 0%, 100% { opacity: .25; transform: scale(.8); } 40% { opacity: 1; transform: scale(1.3); } }
+/* Sonos : voyant blanc qui respire, enceinte qui « pompe » sur les basses (plus fort pour les caissons) */
+.sp-sled { fill: #fff; opacity: 0; filter: drop-shadow(0 0 3px #fff); }
+.k-smart_speaker.st-playing .sp-sled, .k-smart_speaker.st-muted .sp-sled { opacity: 1; animation: sp-sled 2.4s ease-in-out infinite; }
+.k-smart_speaker.st-paused .sp-sled, .k-smart_speaker.st-idle .sp-sled { opacity: .6; }
+@keyframes sp-sled { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
+.sp-bass .sp-pump { transform-box: fill-box; transform-origin: 50% 100%; }
+.k-smart_speaker.st-playing .sp-bass .sp-pump { animation: sp-bass calc(.9s - var(--amp, .5) * .3s) ease-in-out infinite; }
+.k-smart_speaker.st-playing .sp-sub .sp-pump { animation-name: sp-sub; }
+@keyframes sp-bass { 0%, 100% { transform: scale(1); } 15% { transform: scale(calc(1.012 + var(--amp, .5) * .012)); } }
+@keyframes sp-sub { 0%, 100% { transform: scale(1); } 12% { transform: scale(calc(1.03 + var(--amp, .5) * .03)); } }
+/* boutons de lecture : 5 petits boutons sur une ligne */
+.k-smart_speaker .modes { grid-template-columns: repeat(auto-fit, minmax(42px, 1fr)); }
+.sp-btn ha-icon { --mdc-icon-size: 18px; }
+.sp-btn:disabled { opacity: .4; cursor: default; }

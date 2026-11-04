@@ -16,7 +16,7 @@ function card(kind,cfg,states,lang){const el=document.createElement(`appliance-$
 const has=(c,cls)=>c.wrap.classList.contains(cls);
 
 // registration
-const tags=['thermomix','washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','fan','generic','tool-charger','ceiling-fan','dehumidifier','monitor','kettle','toaster','power-strip','phone-charger','piano','garland','wet-vacuum','ps5'];
+const tags=['thermomix','washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','smart-speaker','fan','generic','tool-charger','ceiling-fan','dehumidifier','monitor','kettle','toaster','power-strip','phone-charger','piano','garland','wet-vacuum','ps5'];
 tags.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 // card picker: every core card and every self-contained card listed exactly once
 const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','water-meter','room-climate','mailbox','smoke-detector','leak-detector'];
@@ -228,6 +228,38 @@ c=card('avr'==='x'?'':'av-receiver',{entity:'media_player.avr'},[mk('media_playe
 c=card('av-receiver',{entity:'media_player.avr'},[mk('media_player.avr','standby')]); ok('avr standby',has(c,'st-standby'),c.wrap.className);
 c=card('av-receiver',{power:'sensor.p'},[mk('sensor.p',120,W)]); ok('avr plug playing',has(c,'st-playing')&&/En lecture/.test(c.txt()),c.txt());
 c=card('av-receiver',{power:'sensor.p'},[mk('sensor.p',0,W)]); ok('avr off',has(c,'st-off'),c.wrap.className);
+// enceinte connectée : état media_player, morceau, tuiles, boutons de lecture, modèle
+{const SP=(st,a={},cfg={})=>card('smart-speaker',{entity:'media_player.sp',...cfg},[mk('media_player.sp',st,{volume_level:0.45,app_name:'Spotify',media_artist:'Daft Punk',media_title:'Get Lucky',supported_features:1|4|8|128|256|1024|16384,...a})]);
+ const btn=(c,k)=>c.sr.querySelector(`.sp-btn[data-sp="${k}"]`), st=(c)=>c.sr.getElementById('stats').textContent.replace(/\s+/g,' ');
+ let c=SP('playing');
+ ok('speaker playing',has(c,'st-playing')&&has(c,'active')&&/Spotify/.test(c.txt())&&/Daft Punk · Get Lucky/.test(c.txt()),c.txt());
+ ok('speaker volume + source tiles',/45 %/.test(st(c))&&/Volume/.test(st(c))&&/Source/.test(st(c)),st(c));
+ ok('speaker 5 buttons, play/pause on',c.sr.querySelectorAll('.sp-btn').length===5&&btn(c,'play_pause').classList.contains('on'),c.sr.querySelectorAll('.sp-btn').length);
+ ok('speaker echo dot by default (ring)',!!c.sr.querySelector('.spk.m-echo_dot .sp-led')&&!!c.sr.querySelector('.sp-photo'));
+ ok('speaker --amp from volume',c.wrap.style.getPropertyValue('--amp')==='0.45',c.wrap.style.getPropertyValue('--amp'));
+ btn(c,'vol_up').click(); ok('speaker volume + : volume_set 0.5',JSON.stringify(c.h.calls.at(-1))===JSON.stringify(['media_player','volume_set',{entity_id:'media_player.sp',volume_level:0.5}]),JSON.stringify(c.h.calls.at(-1)));
+ btn(c,'vol_down').click(); ok('speaker volume − : volume_set 0.4',c.h.calls.at(-1)[2].volume_level===0.4,JSON.stringify(c.h.calls.at(-1)));
+ btn(c,'mute').click(); ok('speaker mute',c.h.calls.at(-1)[1]==='volume_mute'&&c.h.calls.at(-1)[2].is_volume_muted===true,JSON.stringify(c.h.calls.at(-1)));
+ btn(c,'play_pause').click(); ok('speaker play/pause',c.h.calls.at(-1)[1]==='media_play_pause');
+ btn(c,'power').click(); ok('speaker power off',c.h.calls.at(-1)[1]==='turn_off');
+ c=SP('playing',{},{volume_step:0.1}); btn(c,'vol_up').click(); ok('speaker volume_step option',Math.abs(c.h.calls.at(-1)[2].volume_level-0.55)<1e-9,JSON.stringify(c.h.calls.at(-1)));
+ c=SP('playing',{supported_features:1|1024|16384,volume_level:undefined}); btn(c,'vol_up').click();
+ ok('speaker volume_up without volume_set',c.h.calls.at(-1)[1]==='volume_up'&&!btn(c,'mute')&&!btn(c,'power'),JSON.stringify(c.h.calls.at(-1)));
+ c=SP('playing',{is_volume_muted:true}); ok('speaker muted',has(c,'st-muted')&&btn(c,'mute').classList.contains('on'),c.wrap.className);
+ c=SP('paused'); ok('speaker paused',has(c,'st-paused')&&!has(c,'active')&&!btn(c,'play_pause').classList.contains('on'),c.wrap.className);
+ c=SP('idle',{app_name:undefined,media_title:undefined,media_artist:undefined}); ok('speaker idle, no track',has(c,'st-idle')&&!/Daft/.test(c.txt()),c.txt());
+ c=SP('off'); ok('speaker off: only power enabled',has(c,'st-off')&&!btn(c,'power').disabled&&btn(c,'vol_up').disabled&&!/45 %/.test(st(c)),c.wrap.className);
+ btn(c,'power').click(); ok('speaker power on',c.h.calls.at(-1)[1]==='turn_on');
+ c=SP('standby'); ok('speaker standby',has(c,'st-standby'));
+ c=SP('playing',{},{show_controls:false,show_media:false}); ok('speaker show_controls / show_media false',!c.sr.querySelector('.sp-btn')&&!/Daft/.test(c.txt()),c.txt());
+ c=SP('playing',{},{model:'nest_hub_max'}); ok('speaker nest hub max: screen + eq',!!c.sr.querySelector('.spk-nest.m-nest_hub_max .sp-eq rect')&&!!c.sr.querySelector('.sp-glass'));
+ c=SP('playing',{},{model:'nest_mini'}); ok('speaker nest mini: 4 dots',c.sr.querySelectorAll('.sp-dots circle').length===4);
+ c=SP('playing',{},{model:'sonos_sub'}); ok('speaker sonos sub: bass pump',!!c.sr.querySelector('.spk-sonos.sp-sub .sp-pump'));
+ c=SP('playing',{},{style:'show-8'}); ok('speaker style alias show-8',!!c.sr.querySelector('.m-echo_show_8'));
+ c=card('smart-speaker',{entity:'media_player.sonos_salon'},[mk('media_player.sonos_salon','playing')]); ok('speaker model guessed from entity (sonos)',!!c.sr.querySelector('.m-sonos_one'));
+ c=card('smart-speaker',{entity:'media_player.nest_cuisine'},[mk('media_player.nest_cuisine','idle')]); ok('speaker model guessed from entity (nest)',!!c.sr.querySelector('.m-nest_mini'));
+ c=card('smart-speaker',{power:'sensor.p'},[mk('sensor.p',6,W)]); ok('speaker plug only playing',has(c,'st-playing')&&!c.sr.querySelector('.sp-btn'),c.wrap.className);
+ c=card('smart-speaker',{power:'sensor.p'},[mk('sensor.p',1.5,W)]); ok('speaker plug only idle',has(c,'st-idle'),c.wrap.className);}
 
 // fan
 c=card('fan',{power:'sensor.p'},[mk('sensor.p',22,W)]); ok('fan speed 1 + osc',has(c,'st-fan_1')&&has(c,'osc')&&/Vitesse 1/.test(c.txt()),c.wrap.className+' '+c.txt());
