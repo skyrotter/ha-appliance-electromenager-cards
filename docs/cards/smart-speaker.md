@@ -2,18 +2,20 @@
 
 ![Smart speaker cards](../smart-speaker.png)
 
-`custom:appliance-smart-speaker-card`: a smart speaker drawn from a **real product photo**, picked with `model` in the visual editor. 20 models:
+`custom:appliance-smart-speaker-card`: a smart speaker drawn from a **real product photo**, picked with `model` in the visual editor. 27 models:
 
 | Brand | `model` |
 |---|---|
 | Amazon Echo | `echo_pop`, `echo_dot` (5th gen), `echo_show_5`, `echo_show_8`, `echo_show_10`, `echo_show_11`, `echo_show_15`, `echo_spot` |
 | Google Nest | `nest_mini`, `nest_audio`, `nest_hub` (7"), `nest_hub_2` (2nd gen), `nest_hub_max` |
 | Sonos | `sonos_one`, `sonos_one_sl`, `sonos_era_100`, `sonos_era_300`, `sonos_beam` (Beam / Arc), `sonos_sub_mini`, `sonos_sub` |
+| Devialet | `devialet_phantom` (1st gen), `devialet_phantom_reactor`, `devialet_phantom_i`, `devialet_phantom_ii`, `devialet_phantom_ultimate`: `finish` `white` (default) or `black` |
+| Apple | `homepod` (2nd gen): `finish` `midnight` (default) or `white`; `homepod_mini` (mini 2): `white` (default), `pink`, `green`, `blue` or `midnight` |
 
-Without `model`, the card guesses from the entity id: `sonos` → Sonos One, `nest` / `google` → Nest Mini, otherwise Echo Dot. `style` is accepted as an alias of `model`.
+Without `model`, the card guesses from the entity id: `sonos` → Sonos One, `homepod` → HomePod (or HomePod mini), `devialet` / `phantom` → Phantom II, `nest` / `google` → Nest Mini, otherwise Echo Dot. `style` is accepted as an alias of `model`.
 
 States and animations:
-- **Playing**: sound waves come out of the speaker, faster and brighter as the volume goes up. Echo Pop / Dot: the blue light ring breathes. Echo Show, Echo Spot and Nest Hub: a light sweep, a glow and an equalizer on the screen. Nest Mini / Audio: the 4 white dots light up in a wave. Sonos: the speaker pumps with the bass (more on the subs), the white status light breathes.
+- **Playing**: sound waves come out of the speaker, faster and brighter as the volume goes up. Echo Pop / Dot: the blue light ring breathes. Echo Show, Echo Spot and Nest Hub: a light sweep, a glow and an equalizer on the screen. Nest Mini / Audio: the 4 white dots light up in a wave. Sonos: the speaker pumps with the bass (more on the subs), the white status light breathes. Devialet Phantom: the speaker pumps with the bass. HomePod: the Siri glow on top swirls and breathes.
 - **Muted**: no waves, dimmed lights; the mute button is lit and the volume tile is highlighted.
 - **Paused / idle**: dimmed, no waves.
 - **Standby / off / unavailable**: greyed out, black screen.
@@ -32,6 +34,7 @@ energy: sensor.speaker_plug_energy   # optional
 |---|---|
 | `entity` | The `media_player`: state, volume, mute, source app, artist and title. |
 | `model` | The speaker photo (see the table above). |
+| `finish` | Colour of the Devialet and HomePod models (see the table above). |
 | `show_controls` | Buttons: power, volume −, play/pause, volume +, mute. On by default; only the features the entity supports are shown. |
 | `show_media` | The "artist · title" line under the state. On by default. |
 | `volume_step` | Volume − / + step, from 0 to 1. Default 0.05 (5 %). |
@@ -42,4 +45,4 @@ Tiles: volume (%), source app, then power, energy and cost.
 
 Common options (`energy`, `cost`, `energy_period`, `price_per_kwh`, `display`, `tap_action`, `hold_action`, `labels`…): see [configuration.md](../configuration.md).
 
-Product photos belong to their respective brands (Amazon, Google, Sonos); they are only used to illustrate the device in the card.
+Product photos belong to their respective brands (Amazon, Google, Sonos, Devialet, Apple); they are only used to illustrate the device in the card.

@@ -85,6 +85,7 @@
 "f_thermomix_model": "Modell",
 "smart_speaker": "Smarthøyttaler",
 "f_speaker_model": "Høyttalermodell",
+"f_speaker_finish": "Høyttalerfarge (Devialet, HomePod)",
 "f_show_controls": "Vis avspillingsknapper",
 "f_show_media": "Vis sporet som spilles",
 "f_volume_step": "Volumtrinn (0,05 = 5 %)",

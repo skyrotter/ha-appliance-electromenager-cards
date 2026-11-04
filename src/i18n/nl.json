@@ -16,6 +16,7 @@
     "f_thermomix_model": "Model",
     "smart_speaker": "Slimme speaker",
     "f_speaker_model": "Speakermodel",
+    "f_speaker_finish": "Kleur van de speaker (Devialet, HomePod)",
     "f_show_controls": "Afspeelknoppen tonen",
     "f_show_media": "Huidig nummer tonen",
     "f_volume_step": "Volumestap (0,05 = 5 %)",

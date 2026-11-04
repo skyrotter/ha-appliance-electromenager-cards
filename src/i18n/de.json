@@ -16,6 +16,7 @@
     "f_thermomix_model": "Modell",
     "smart_speaker": "Smart Speaker",
     "f_speaker_model": "Lautsprechermodell",
+    "f_speaker_finish": "Lautsprecherfarbe (Devialet, HomePod)",
     "f_show_controls": "Wiedergabetasten anzeigen",
     "f_show_media": "Aktuellen Titel anzeigen",
     "f_volume_step": "Lautstärkeschritt (0,05 = 5 %)",

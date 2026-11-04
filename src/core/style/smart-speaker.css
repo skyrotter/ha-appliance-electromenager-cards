@@ -3,6 +3,8 @@
 .spk { --sp-wave: #2bb6f9; --sp-led: #1aa7ff; }
 .spk-nest { --sp-wave: #8ab4f8; }
 .spk-sonos { --sp-wave: #e8e8e8; }
+.spk-devialet { --sp-wave: #e6dcc8; }
+.spk-apple { --sp-wave: #c58af9; }
 /* photo : grisée éteinte / en veille, atténuée en pause */
 .sp-photo { transition: filter .5s; }
 .k-smart_speaker.st-off .sp-photo, .k-smart_speaker.st-standby .sp-photo, .k-smart_speaker.st-unavailable .sp-photo { filter: grayscale(1) brightness(.6); }
@@ -49,3 +51,8 @@
 .k-smart_speaker .modes { grid-template-columns: repeat(auto-fit, minmax(42px, 1fr)); }
 .sp-btn ha-icon { --mdc-icon-size: 18px; }
 .sp-btn:disabled { opacity: .4; cursor: default; }
+/* HomePod : halo Siri qui tourne et respire en lecture, discret en pause */
+.sp-siri { opacity: 0; mix-blend-mode: screen; filter: blur(1.5px); transform-box: fill-box; transform-origin: 50% 50%; }
+.k-smart_speaker.st-playing .sp-siri { animation: sp-siri 3s ease-in-out infinite; }
+.k-smart_speaker.st-paused .sp-siri, .k-smart_speaker.st-idle .sp-siri, .k-smart_speaker.st-muted .sp-siri { opacity: .3; }
+@keyframes sp-siri { 0%, 100% { opacity: .55; transform: scaleX(.9); filter: blur(1.5px) hue-rotate(0deg); } 50% { opacity: 1; transform: scaleX(1.05); filter: blur(1.5px) hue-rotate(90deg); } }
