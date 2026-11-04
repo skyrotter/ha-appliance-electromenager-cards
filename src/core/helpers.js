@@ -14,13 +14,19 @@ const domainOf = (id) => (id || "").split(".")[0];
 // modes radiateur / sèche-serviettes : les 6 ordres du fil pilote
 // (confort, confort -1, confort -2, éco, hors-gel, arrêt)
 const C1 = /(confort|comfort)[\s_-]*(moins|minus)?[\s_-]*1(?![\d.,])/, C2 = /(confort|comfort)[\s_-]*(moins|minus)?[\s_-]*2(?![\d.,])/;
-const MODE_RX = { comfort: /confort|comfort/, comfort_1: C1, comfort_2: C2, eco: /eco|nuit|night|sleep|economy|reduit|réduit/, frost: /hors|frost|gel|away|absent/, off: /^(off|arret|arrêt|stop)$/ };
-const MODE_ORDER = ["comfort", "comfort_1", "comfort_2", "eco", "frost", "off"];
-const MODE_ICON = { comfort: "mdi:fire", comfort_1: "mdi:thermometer-minus", comfort_2: "mdi:thermometer-minus", eco: "mdi:leaf", frost: "mdi:snowflake", off: "mdi:power" };
+const MODE_RX = { comfort: /confort|comfort/, comfort_1: C1, comfort_2: C2, eco: /eco|nuit|night|sleep|economy|reduit|réduit/, frost: /hors|frost|gel|away|absent/, off: /^(off|arret|arrêt|stop)$/,
+  // modes des sèche-serviettes : séchage, boost, programme, aucun
+  drying: /s[eé]chage|dry/, boost: /boost/, program: /programme?|schedule/, none: /^(aucun|aucune|none|manuel|manual)$/ };
+const MODE_ORDER = ["comfort", "comfort_1", "comfort_2", "eco", "frost", "drying", "boost", "program", "none", "off"];
+const MODE_ICON = { comfort: "mdi:fire", comfort_1: "mdi:thermometer-minus", comfort_2: "mdi:thermometer-minus", eco: "mdi:leaf", frost: "mdi:snowflake", drying: "mdi:tumble-dryer", boost: "mdi:rocket-launch", program: "mdi:calendar-clock", none: "mdi:cancel", off: "mdi:power" };
 // texte de mode (en minuscules) → clé ; un texte inconnu non vide compte comme confort
 const modeKey = (raw) => /hors|frost|gel|away|absent/.test(raw) ? "frost"
   : /eco|nuit|night|sleep|economy|reduit|réduit/.test(raw) ? "eco"
   : /^(off|arret|arrêt|stop)$/.test(raw) ? "off"
+  : MODE_RX.none.test(raw) ? "none"
+  : MODE_RX.drying.test(raw) ? "drying"
+  : MODE_RX.boost.test(raw) ? "boost"
+  : MODE_RX.program.test(raw) ? "program"
   : C2.test(raw) ? "comfort_2"
   : C1.test(raw) ? "comfort_1"
   : raw ? "comfort" : null;

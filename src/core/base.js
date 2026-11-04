@@ -1071,7 +1071,7 @@ class ApplianceCardBase extends HTMLElement {
       const raw = String(m.main.state).toLowerCase();
       if (![...OFF_STATES, ...DONE_STATES, "on", "running", "run"].includes(raw)) statusTxt = stateText(hass, m.main);
     }
-    if ((kind === "radiator" || kind === "towel_dryer") && m.radMode && m.radMode !== "off" && m.status !== "off" && m.status !== "unavailable") statusTxt += ` · ${tr(hass, m.radMode)}`;
+    if ((kind === "radiator" || kind === "towel_dryer") && m.radMode && m.radMode !== "off" && m.status !== "off" && m.status !== "unavailable") statusTxt += ` · ${tr(hass, m.radMode === "none" ? "mode_none" : m.radMode)}`;
     if ((kind === "fan" || kind === "ceiling_fan") && m.pct != null && /^fan_/.test(m.status)) statusTxt += ` · ${Math.round(m.pct)} %`;
     if (kind === "av_receiver" && m.vol != null && ["playing", "paused"].includes(m.status)) statusTxt += ` · Vol ${Math.round(m.vol * 100)} %`;
     if (kind === "av_receiver" && m.source && ["playing", "paused", "muted"].includes(m.status)) statusTxt += ` · ${m.source}`;
@@ -1178,7 +1178,7 @@ class ApplianceCardBase extends HTMLElement {
       const opts = modeOptions(hass.states[mEnt]);
       const cur = m.radMode ?? (m.status !== "off" ? "comfort" : "off");
       modesEl.innerHTML = MODE_ORDER.filter((k) => pickMode(opts, k)).map((k) =>
-        `<button class="mode-btn ${cur === k ? "on" : ""}" data-mode="${k}" aria-pressed="${cur === k}"><ha-icon icon="${MODE_ICON[k]}"></ha-icon>${esc(tr(hass, k === "off" ? "mode_off" : k))}</button>`).join("");
+        `<button class="mode-btn ${cur === k ? "on" : ""}" data-mode="${k}" aria-pressed="${cur === k}"><ha-icon icon="${MODE_ICON[k]}"></ha-icon>${esc(tr(hass, k === "off" ? "mode_off" : k === "none" ? "mode_none" : k))}</button>`).join("");
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._setMode(b.dataset.mode); }; });
     } else if (kind === "power_strip" && Array.isArray(c.outlets) && c.outlets.length) {
       // multiprise : un bouton par prise commandée (numéro, nom de l'entité en infobulle), clic = bascule

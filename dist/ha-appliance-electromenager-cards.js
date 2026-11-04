@@ -102,6 +102,10 @@ const STRINGS = {
     "comfort_2": "Comfort -2",
     "eco": "Eco",
     "frost": "Frost protection",
+    "drying": "Drying",
+    "boost": "Boost",
+    "program": "Program",
+    "mode_none": "None",
     "window_open": "Window open",
     "f_mode": "Mode entity (pilot wire, select…)",
     "f_window": "Window sensor",
@@ -177,7 +181,6 @@ const STRINGS = {
     "energy": "Energy",
     "cost": "Cost",
     "remaining": "Remaining",
-    "program": "Program",
     "temperature": "Temperature",
     "target": "Target",
     "fridge_temp": "Fridge",
@@ -290,7 +293,6 @@ const STRINGS = {
     "f_sockets": "Number of sockets",
     "f_multicolor": "Multicolour (rainbow)",
     "dehumidifier": "Dehumidifier",
-    "drying": "Drying",
     "tank_full": "Tank full",
     "empty_tank": "Empty the tank",
     "tank": "Tank",
@@ -732,6 +734,10 @@ const STRINGS = {
     "comfort_2": "Confort -2",
     "eco": "Éco",
     "frost": "Hors-gel",
+    "drying": "Déshumidification",
+    "boost": "Boost",
+    "program": "Programme",
+    "mode_none": "Aucun",
     "window_open": "Fenêtre ouverte",
     "f_mode": "Entité de mode (fil pilote, liste…)",
     "f_window": "Capteur de fenêtre",
@@ -807,7 +813,6 @@ const STRINGS = {
     "energy": "Énergie",
     "cost": "Coût",
     "remaining": "Restant",
-    "program": "Programme",
     "temperature": "Température",
     "target": "Consigne",
     "fridge_temp": "Frigo",
@@ -920,7 +925,6 @@ const STRINGS = {
     "f_sockets": "Nombre de prises",
     "f_multicolor": "Multicolore (arc-en-ciel)",
     "dehumidifier": "Déshumidificateur",
-    "drying": "Déshumidification",
     "tank_full": "Bac plein",
     "empty_tank": "Videz le bac",
     "tank": "Bac",
@@ -5392,13 +5396,19 @@ const domainOf = (id) => (id || "").split(".")[0];
 // modes radiateur / sèche-serviettes : les 6 ordres du fil pilote
 // (confort, confort -1, confort -2, éco, hors-gel, arrêt)
 const C1 = /(confort|comfort)[\s_-]*(moins|minus)?[\s_-]*1(?![\d.,])/, C2 = /(confort|comfort)[\s_-]*(moins|minus)?[\s_-]*2(?![\d.,])/;
-const MODE_RX = { comfort: /confort|comfort/, comfort_1: C1, comfort_2: C2, eco: /eco|nuit|night|sleep|economy|reduit|réduit/, frost: /hors|frost|gel|away|absent/, off: /^(off|arret|arrêt|stop)$/ };
-const MODE_ORDER = ["comfort", "comfort_1", "comfort_2", "eco", "frost", "off"];
-const MODE_ICON = { comfort: "mdi:fire", comfort_1: "mdi:thermometer-minus", comfort_2: "mdi:thermometer-minus", eco: "mdi:leaf", frost: "mdi:snowflake", off: "mdi:power" };
+const MODE_RX = { comfort: /confort|comfort/, comfort_1: C1, comfort_2: C2, eco: /eco|nuit|night|sleep|economy|reduit|réduit/, frost: /hors|frost|gel|away|absent/, off: /^(off|arret|arrêt|stop)$/,
+  // modes des sèche-serviettes : séchage, boost, programme, aucun
+  drying: /s[eé]chage|dry/, boost: /boost/, program: /programme?|schedule/, none: /^(aucun|aucune|none|manuel|manual)$/ };
+const MODE_ORDER = ["comfort", "comfort_1", "comfort_2", "eco", "frost", "drying", "boost", "program", "none", "off"];
+const MODE_ICON = { comfort: "mdi:fire", comfort_1: "mdi:thermometer-minus", comfort_2: "mdi:thermometer-minus", eco: "mdi:leaf", frost: "mdi:snowflake", drying: "mdi:tumble-dryer", boost: "mdi:rocket-launch", program: "mdi:calendar-clock", none: "mdi:cancel", off: "mdi:power" };
 // texte de mode (en minuscules) → clé ; un texte inconnu non vide compte comme confort
 const modeKey = (raw) => /hors|frost|gel|away|absent/.test(raw) ? "frost"
   : /eco|nuit|night|sleep|economy|reduit|réduit/.test(raw) ? "eco"
   : /^(off|arret|arrêt|stop)$/.test(raw) ? "off"
+  : MODE_RX.none.test(raw) ? "none"
+  : MODE_RX.drying.test(raw) ? "drying"
+  : MODE_RX.boost.test(raw) ? "boost"
+  : MODE_RX.program.test(raw) ? "program"
   : C2.test(raw) ? "comfort_2"
   : C1.test(raw) ? "comfort_1"
   : raw ? "comfort" : null;
@@ -6619,7 +6629,7 @@ class ApplianceCardBase extends HTMLElement {
       const raw = String(m.main.state).toLowerCase();
       if (![...OFF_STATES, ...DONE_STATES, "on", "running", "run"].includes(raw)) statusTxt = stateText(hass, m.main);
     }
-    if ((kind === "radiator" || kind === "towel_dryer") && m.radMode && m.radMode !== "off" && m.status !== "off" && m.status !== "unavailable") statusTxt += ` · ${tr(hass, m.radMode)}`;
+    if ((kind === "radiator" || kind === "towel_dryer") && m.radMode && m.radMode !== "off" && m.status !== "off" && m.status !== "unavailable") statusTxt += ` · ${tr(hass, m.radMode === "none" ? "mode_none" : m.radMode)}`;
     if ((kind === "fan" || kind === "ceiling_fan") && m.pct != null && /^fan_/.test(m.status)) statusTxt += ` · ${Math.round(m.pct)} %`;
     if (kind === "av_receiver" && m.vol != null && ["playing", "paused"].includes(m.status)) statusTxt += ` · Vol ${Math.round(m.vol * 100)} %`;
     if (kind === "av_receiver" && m.source && ["playing", "paused", "muted"].includes(m.status)) statusTxt += ` · ${m.source}`;
@@ -6726,7 +6736,7 @@ class ApplianceCardBase extends HTMLElement {
       const opts = modeOptions(hass.states[mEnt]);
       const cur = m.radMode ?? (m.status !== "off" ? "comfort" : "off");
       modesEl.innerHTML = MODE_ORDER.filter((k) => pickMode(opts, k)).map((k) =>
-        `<button class="mode-btn ${cur === k ? "on" : ""}" data-mode="${k}" aria-pressed="${cur === k}"><ha-icon icon="${MODE_ICON[k]}"></ha-icon>${esc(tr(hass, k === "off" ? "mode_off" : k))}</button>`).join("");
+        `<button class="mode-btn ${cur === k ? "on" : ""}" data-mode="${k}" aria-pressed="${cur === k}"><ha-icon icon="${MODE_ICON[k]}"></ha-icon>${esc(tr(hass, k === "off" ? "mode_off" : k === "none" ? "mode_none" : k))}</button>`).join("");
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._setMode(b.dataset.mode); }; });
     } else if (kind === "power_strip" && Array.isArray(c.outlets) && c.outlets.length) {
       // multiprise : un bouton par prise commandée (numéro, nom de l'entité en infobulle), clic = bascule
