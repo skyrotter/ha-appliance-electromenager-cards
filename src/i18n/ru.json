@@ -16,6 +16,7 @@
     "f_thermomix_model": "Модель",
     "smart_speaker": "Умная колонка",
     "f_speaker_model": "Модель колонки",
+    "f_speaker_finish": "Цвет колонки (Devialet, HomePod)",
     "f_show_controls": "Показывать кнопки воспроизведения",
     "f_show_media": "Показывать текущий трек",
     "f_volume_step": "Шаг громкости (0,05 = 5 %)",

@@ -16,6 +16,7 @@
     "f_thermomix_model": "Модел",
     "smart_speaker": "Паметни звучник",
     "f_speaker_model": "Модел звучника",
+    "f_speaker_finish": "Боја звучника (Devialet, HomePod)",
     "f_show_controls": "Прикажи дугмад за репродукцију",
     "f_show_media": "Прикажи нумеру која се пушта",
     "f_volume_step": "Корак јачине (0,05 = 5 %)",

@@ -16,6 +16,7 @@
     "f_thermomix_model": "Model",
     "smart_speaker": "Boxă inteligentă",
     "f_speaker_model": "Model de boxă",
+    "f_speaker_finish": "Culoarea boxei (Devialet, HomePod)",
     "f_show_controls": "Afișează butoanele de redare",
     "f_show_media": "Afișează piesa curentă",
     "f_volume_step": "Pas volum (0,05 = 5 %)",

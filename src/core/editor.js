@@ -139,7 +139,15 @@ function buildForm(kind) {
               { value: "nest_hub_max", label: "Google Nest Hub Max" },
               { value: "sonos_one", label: "Sonos One" }, { value: "sonos_one_sl", label: "Sonos One SL" },
               { value: "sonos_era_100", label: "Sonos Era 100" }, { value: "sonos_era_300", label: "Sonos Era 300" },
-              { value: "sonos_beam", label: "Sonos Beam / Arc" }, { value: "sonos_sub_mini", label: "Sonos Sub Mini" }, { value: "sonos_sub", label: "Sonos Sub" }] } } },
+              { value: "sonos_beam", label: "Sonos Beam / Arc" }, { value: "sonos_sub_mini", label: "Sonos Sub Mini" }, { value: "sonos_sub", label: "Sonos Sub" },
+              { value: "devialet_phantom", label: "Devialet Phantom (1re gén. / 1st gen)" }, { value: "devialet_phantom_reactor", label: "Devialet Phantom Reactor" },
+              { value: "devialet_phantom_i", label: "Devialet Phantom I" }, { value: "devialet_phantom_ii", label: "Devialet Phantom II" },
+              { value: "devialet_phantom_ultimate", label: "Devialet Phantom Ultimate" },
+              { value: "homepod", label: "Apple HomePod (2e gén. / 2nd gen)" }, { value: "homepod_mini", label: "Apple HomePod mini 2" }] } } },
+            // finish : couleur de l'enceinte (Devialet : blanc / noir ; HomePod : minuit / blanc ; HomePod mini : 5 couleurs)
+            { name: "finish", selector: { select: { mode: "dropdown", options: [
+              { value: "white", label: "Blanc / White" }, { value: "black", label: "Noir / Black" }, { value: "midnight", label: "Minuit / Midnight" },
+              { value: "pink", label: "Rose / Pink" }, { value: "green", label: "Vert / Green" }, { value: "blue", label: "Bleu / Blue" }] } } },
             { name: "show_controls", selector: { boolean: {} }, default: true },
             { name: "show_media", selector: { boolean: {} }, default: true },
             { name: "volume_step", selector: { number: { min: 0.01, max: 0.2, step: 0.01, mode: "box" } } },
@@ -237,7 +245,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
   };
 }
 

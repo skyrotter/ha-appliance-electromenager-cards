@@ -16,6 +16,7 @@
     "f_thermomix_model": "Modèle",
     "smart_speaker": "Enceinte connectée",
     "f_speaker_model": "Modèle d'enceinte",
+    "f_speaker_finish": "Couleur de l'enceinte (Devialet, HomePod)",
     "f_show_controls": "Afficher les boutons de lecture",
     "f_show_media": "Afficher le morceau en cours",
     "f_volume_step": "Pas du volume (0,05 = 5 %)",

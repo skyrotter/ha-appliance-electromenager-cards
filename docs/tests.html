@@ -258,6 +258,12 @@ c=card('av-receiver',{power:'sensor.p'},[mk('sensor.p',0,W)]); ok('avr off',has(
  c=SP('playing',{},{style:'show-8'}); ok('speaker style alias show-8',!!c.sr.querySelector('.m-echo_show_8'));
  c=card('smart-speaker',{entity:'media_player.sonos_salon'},[mk('media_player.sonos_salon','playing')]); ok('speaker model guessed from entity (sonos)',!!c.sr.querySelector('.m-sonos_one'));
  c=card('smart-speaker',{entity:'media_player.nest_cuisine'},[mk('media_player.nest_cuisine','idle')]); ok('speaker model guessed from entity (nest)',!!c.sr.querySelector('.m-nest_mini'));
+ c=SP('playing',{},{model:'devialet_phantom_ii',finish:'black'}); ok('speaker devialet phantom II black',!!c.sr.querySelector('.spk-devialet.m-devialet_phantom_ii.f-black.sp-bass .sp-pump'));
+ c=SP('playing',{},{model:'devialet_phantom_ultimate'}); ok('speaker devialet default finish white',!!c.sr.querySelector('.m-devialet_phantom_ultimate.f-white'));
+ c=SP('playing',{},{model:'homepod_mini',finish:'green'}); ok('speaker homepod mini green: siri glow',!!c.sr.querySelector('.spk-apple.m-homepod_mini.f-green .sp-siri'));
+ c=SP('playing',{},{model:'homepod',finish:'pink'}); ok('speaker homepod unknown finish -> midnight',!!c.sr.querySelector('.m-homepod.f-midnight'));
+ c=card('smart-speaker',{entity:'media_player.homepod_mini_cuisine'},[mk('media_player.homepod_mini_cuisine','idle')]); ok('speaker model guessed from entity (homepod mini)',!!c.sr.querySelector('.m-homepod_mini'));
+ c=card('smart-speaker',{entity:'media_player.devialet_salon'},[mk('media_player.devialet_salon','idle')]); ok('speaker model guessed from entity (devialet)',!!c.sr.querySelector('.m-devialet_phantom_ii'));
  c=card('smart-speaker',{power:'sensor.p'},[mk('sensor.p',6,W)]); ok('speaker plug only playing',has(c,'st-playing')&&!c.sr.querySelector('.sp-btn'),c.wrap.className);
  c=card('smart-speaker',{power:'sensor.p'},[mk('sensor.p',1.5,W)]); ok('speaker plug only idle',has(c,'st-idle'),c.wrap.className);}
 

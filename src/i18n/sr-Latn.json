@@ -16,6 +16,7 @@
     "f_thermomix_model": "Model",
     "smart_speaker": "Pametni zvučnik",
     "f_speaker_model": "Model zvučnika",
+    "f_speaker_finish": "Boja zvučnika (Devialet, HomePod)",
     "f_show_controls": "Prikaži dugmad za reprodukciju",
     "f_show_media": "Prikaži numeru koja se pušta",
     "f_volume_step": "Korak jačine (0,05 = 5 %)",
