@@ -8747,6 +8747,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_mail": "Mail sensor (on, number or text)",
       "entity_parcel": "Parcel sensor",
       "entity_door": "Door sensor",
+      "entity_door_back": "Rear door sensor (double-door)",
+      "show_doors": "Show door states",
       "entity_count": "Letter counter",
       "entity_reset": "Mark as collected (button, helper, counter, script…)",
       "mail_states": "Extra mail states (comma separated)",
@@ -9006,6 +9008,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_mail": "Post-Sensor (on, Zahl oder Text)",
       "entity_parcel": "Paket-Sensor",
       "entity_door": "Türsensor",
+      "entity_door_back": "Sensor hintere Tür (Doppeltür)",
+      "show_doors": "Türstatus anzeigen",
       "entity_count": "Briefzähler",
       "entity_reset": "Als geleert markieren (Taste, Helfer, Zähler, Skript…)",
       "mail_states": "Weitere Post-Zustände (durch Komma getrennt)",
@@ -9265,6 +9269,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_mail": "Capteur courrier (on, nombre ou texte)",
       "entity_parcel": "Capteur colis",
       "entity_door": "Capteur de porte",
+      "entity_door_back": "Capteur de porte arrière (double porte)",
+      "show_doors": "Afficher l’état des portes",
       "entity_count": "Compteur de lettres",
       "entity_reset": "Relevé du courrier (bouton, entrée, compteur, script…)",
       "mail_states": "États « courrier » en plus (séparés par des virgules)",
@@ -9524,6 +9530,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_mail": "Sensore posta (on, numero o testo)",
       "entity_parcel": "Sensore pacchi",
       "entity_door": "Sensore sportello",
+      "entity_door_back": "Sensore sportello posteriore (doppio sportello)",
+      "show_doors": "Mostra stato sportelli",
       "entity_count": "Contatore lettere",
       "entity_reset": "Segna come ritirata (pulsante, helper, contatore, script…)",
       "mail_states": "Altri stati «posta» (separati da virgole)",
@@ -9783,6 +9791,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_mail": "Postsensor (on, tall eller tekst)",
       "entity_parcel": "Pakkesensor",
       "entity_door": "Lukesensor",
+      "entity_door_back": "Sensor bakre luke (dobbel luke)",
+      "show_doors": "Vis lukestatus",
       "entity_count": "Brevteller",
       "entity_reset": "Merk som tømt (knapp, hjelper, teller, skript…)",
       "mail_states": "Flere post-tilstander (kommaseparert)",
@@ -10042,6 +10052,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_mail": "Postsensor (on, getal of tekst)",
       "entity_parcel": "Pakketsensor",
       "entity_door": "Kleppensensor",
+      "entity_door_back": "Sensor achterklep (dubbele klep)",
+      "show_doors": "Klepstatus tonen",
       "entity_count": "Brieventeller",
       "entity_reset": "Markeren als geleegd (knop, helper, teller, script…)",
       "mail_states": "Extra post-statussen (kommagescheiden)",
@@ -10301,6 +10313,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_mail": "Senzor corespondență (on, număr sau text)",
       "entity_parcel": "Senzor colete",
       "entity_door": "Senzor ușă",
+      "entity_door_back": "Senzor ușă spate (ușă dublă)",
+      "show_doors": "Afișează starea ușilor",
       "entity_count": "Contor scrisori",
       "entity_reset": "Marchează ca ridicată (buton, helper, contor, script…)",
       "mail_states": "Alte stări „corespondență” (separate prin virgulă)",
@@ -10560,6 +10574,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_mail": "Датчик писем (on, число или текст)",
       "entity_parcel": "Датчик посылок",
       "entity_door": "Датчик дверцы",
+      "entity_door_back": "Датчик задней дверцы (две дверцы)",
+      "show_doors": "Показывать состояние дверец",
       "entity_count": "Счётчик писем",
       "entity_reset": "Отметить как забранную (кнопка, помощник, счётчик, скрипт…)",
       "mail_states": "Доп. состояния «письма» (через запятую)",
@@ -10819,6 +10835,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_mail": "Сензор поште (on, број или текст)",
       "entity_parcel": "Сензор пакета",
       "entity_door": "Сензор врата",
+      "entity_door_back": "Сензор задњих врата (двострука врата)",
+      "show_doors": "Прикажи стање врата",
       "entity_count": "Бројач писама",
       "entity_reset": "Означи као преузето (дугме, помоћник, бројач, скрипта…)",
       "mail_states": "Додатна стања „пошта” (одвојена зарезом)",
@@ -11078,6 +11096,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_mail": "Senzor pošte (on, broj ili tekst)",
       "entity_parcel": "Senzor paketa",
       "entity_door": "Senzor vrata",
+      "entity_door_back": "Senzor zadnjih vrata (dvostruka vrata)",
+      "show_doors": "Prikaži stanje vrata",
       "entity_count": "Brojač pisama",
       "entity_reset": "Označi kao preuzeto (dugme, pomoćnik, brojač, skripta…)",
       "mail_states": "Dodatna stanja „pošta” (odvojena zarezom)",
@@ -16442,6 +16462,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "garage_door": "Garage door",
       "open": "Open",
       "closed": "Closed",
+      "open_short": "Open",
       "opening": "Opening",
       "closing": "Closing",
       "partial": "Partly open",
@@ -16463,6 +16484,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "garage_door": "Garagentor",
       "open": "Offen",
       "closed": "Geschlossen",
+      "open_short": "Offen",
       "opening": "Öffnet",
       "closing": "Schließt",
       "partial": "Teilweise offen",
@@ -16484,6 +16506,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "garage_door": "Porte de garage",
       "open": "Ouvert",
       "closed": "Fermé",
+      "open_short": "Ouverte",
       "opening": "Ouverture",
       "closing": "Fermeture",
       "partial": "Entrouvert",
@@ -16505,6 +16528,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "garage_door": "Porta del garage",
       "open": "Aperto",
       "closed": "Chiuso",
+      "open_short": "Aperta",
       "opening": "In apertura",
       "closing": "In chiusura",
       "partial": "Socchiuso",
@@ -16526,6 +16550,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "garage_door": "Garasjeport",
       "open": "Åpen",
       "closed": "Lukket",
+      "open_short": "Åpen",
       "opening": "Åpner",
       "closing": "Lukker",
       "partial": "Delvis åpen",
@@ -16547,6 +16572,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "garage_door": "Garagedeur",
       "open": "Open",
       "closed": "Gesloten",
+      "open_short": "Open",
       "opening": "Gaat open",
       "closing": "Gaat dicht",
       "partial": "Half open",
@@ -16568,6 +16594,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "garage_door": "Ușă de garaj",
       "open": "Deschis",
       "closed": "Închis",
+      "open_short": "Deschisă",
       "opening": "Se deschide",
       "closing": "Se închide",
       "partial": "Parțial deschis",
@@ -16589,6 +16616,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "garage_door": "Гаражные ворота",
       "open": "Открыто",
       "closed": "Закрыто",
+      "open_short": "Открыта",
       "opening": "Открывание",
       "closing": "Закрывание",
       "partial": "Частично открыто",
@@ -16610,6 +16638,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "garage_door": "Гаражна врата",
       "open": "Отворено",
       "closed": "Затворено",
+      "open_short": "Отворено",
       "opening": "Отварање",
       "closing": "Затварање",
       "partial": "Делимично отворено",
@@ -16631,6 +16660,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "garage_door": "Garažna vrata",
       "open": "Otvoreno",
       "closed": "Zatvoreno",
+      "open_short": "Otvoreno",
       "opening": "Otvaranje",
       "closing": "Zatvaranje",
       "partial": "Delimično otvoreno",
@@ -24265,7 +24295,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
  * colis : un carton rebondit au pied de la boîte ; porte ouverte : la porte pivote sur sa charnière.
  * Générique : fonctionne avec un capteur par type (entity_mail / entity_parcel), ou un seul capteur dont l'état
  * est un texte (« lettre », « colis », « vide »…) ou un nombre (lettres reçues). Tous les autres capteurs sont optionnels :
- * porte (entity_door), compteur (entity_count), batterie, et une entité pour marquer le courrier comme relevé (entity_reset).
+ * porte avant (entity_door) et porte arrière (entity_door_back, boîtes à double porte), compteur (entity_count), batterie, et une entité pour marquer le courrier comme relevé (entity_reset).
  */
 (() => {
   const TAG = 'appliance-mailbox-card';
@@ -24279,6 +24309,12 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "parcel": "Parcel",
       "both": "Mail + parcel",
       "open": "Door open",
+      "door_front": "Front",
+      "door_back": "Rear",
+      "open_front": "Front door open",
+      "open_back": "Rear door open",
+      "open_both": "Doors open",
+      "closed": "Closed",
       "unavailable": "Unavailable",
       "collect": "Mark as collected",
       "last": "Delivered",
@@ -24301,6 +24337,12 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "parcel": "Paket",
       "both": "Post + Paket",
       "open": "Tür offen",
+      "door_front": "Vorne",
+      "door_back": "Hinten",
+      "open_front": "Vordere Tür offen",
+      "open_back": "Hintere Tür offen",
+      "open_both": "Türen offen",
+      "closed": "Geschlossen",
       "unavailable": "Nicht verfügbar",
       "collect": "Als geleert markieren",
       "last": "Zugestellt",
@@ -24323,6 +24365,12 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "parcel": "Colis",
       "both": "Courrier + colis",
       "open": "Porte ouverte",
+      "door_front": "Avant",
+      "door_back": "Arrière",
+      "open_front": "Porte avant ouverte",
+      "open_back": "Porte arrière ouverte",
+      "open_both": "Portes ouvertes",
+      "closed": "Fermée",
       "unavailable": "Indisponible",
       "collect": "Courrier relevé",
       "last": "Dépôt",
@@ -24345,6 +24393,12 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "parcel": "Pacco",
       "both": "Posta + pacco",
       "open": "Sportello aperto",
+      "door_front": "Anteriore",
+      "door_back": "Posteriore",
+      "open_front": "Sportello anteriore aperto",
+      "open_back": "Sportello posteriore aperto",
+      "open_both": "Sportelli aperti",
+      "closed": "Chiuso",
       "unavailable": "Non disponibile",
       "collect": "Segna come ritirata",
       "last": "Consegna",
@@ -24367,6 +24421,12 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "parcel": "Pakke",
       "both": "Post + pakke",
       "open": "Luken er åpen",
+      "door_front": "Foran",
+      "door_back": "Bak",
+      "open_front": "Fremre luke åpen",
+      "open_back": "Bakre luke åpen",
+      "open_both": "Lukene er åpne",
+      "closed": "Lukket",
       "unavailable": "Utilgjengelig",
       "collect": "Merk som tømt",
       "last": "Levert",
@@ -24389,6 +24449,12 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "parcel": "Pakket",
       "both": "Post + pakket",
       "open": "Klep open",
+      "door_front": "Voor",
+      "door_back": "Achter",
+      "open_front": "Voorklep open",
+      "open_back": "Achterklep open",
+      "open_both": "Kleppen open",
+      "closed": "Gesloten",
       "unavailable": "Niet beschikbaar",
       "collect": "Markeren als geleegd",
       "last": "Bezorgd",
@@ -24411,6 +24477,12 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "parcel": "Colet",
       "both": "Corespondență + colet",
       "open": "Ușă deschisă",
+      "door_front": "Față",
+      "door_back": "Spate",
+      "open_front": "Ușa din față deschisă",
+      "open_back": "Ușa din spate deschisă",
+      "open_both": "Uși deschise",
+      "closed": "Închis",
       "unavailable": "Indisponibil",
       "collect": "Marchează ca ridicată",
       "last": "Livrat",
@@ -24433,6 +24505,12 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "parcel": "Посылка",
       "both": "Письма + посылка",
       "open": "Дверца открыта",
+      "door_front": "Передняя",
+      "door_back": "Задняя",
+      "open_front": "Передняя дверца открыта",
+      "open_back": "Задняя дверца открыта",
+      "open_both": "Дверцы открыты",
+      "closed": "Закрыта",
       "unavailable": "Недоступно",
       "collect": "Отметить как забранную",
       "last": "Доставлено",
@@ -24455,6 +24533,12 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "parcel": "Пакет",
       "both": "Пошта + пакет",
       "open": "Врата отворена",
+      "door_front": "Предња",
+      "door_back": "Задња",
+      "open_front": "Предња врата отворена",
+      "open_back": "Задња врата отворена",
+      "open_both": "Врата отворена",
+      "closed": "Затворено",
       "unavailable": "Недоступно",
       "collect": "Означи као преузето",
       "last": "Достављено",
@@ -24477,6 +24561,12 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "parcel": "Paket",
       "both": "Pošta + paket",
       "open": "Vrata otvorena",
+      "door_front": "Prednja",
+      "door_back": "Zadnja",
+      "open_front": "Prednja vrata otvorena",
+      "open_back": "Zadnja vrata otvorena",
+      "open_both": "Vrata otvorena",
+      "closed": "Zatvoreno",
       "unavailable": "Nedostupno",
       "collect": "Označi kao preuzeto",
       "last": "Dostavljeno",
@@ -24589,7 +24679,8 @@ svg{display:block;width:100%;height:auto;overflow:visible}
     </g></g>
   </svg>`;
 
-  const TILES = [['last', 'mdi:clock-outline', 'show_since'], ['count', 'mdi:email-multiple-outline', 'show_count'], ['battery', 'mdi:battery', 'show_battery']];
+  const TILES = [['last', 'mdi:clock-outline', 'show_since'], ['count', 'mdi:email-multiple-outline', 'show_count'], ['battery', 'mdi:battery', 'show_battery'],
+    ['door_front', 'mdi:door', 'show_doors'], ['door_back', 'mdi:door-open', 'show_doors']];
 
   class ApplianceMailboxCard extends HTMLElement {
 
@@ -24608,7 +24699,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { show_status: true, show_since: true, show_count: true, show_battery: true, show_buttons: true, box_color: 'anthracite', ...c };
+      this._c = { show_status: true, show_since: true, show_count: true, show_battery: true, show_buttons: true, show_doors: true, box_color: 'anthracite', ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -24647,7 +24738,9 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       const c = this._c;
       const m = this._read(c.entity_mail, 'mail'), p = this._read(c.entity_parcel, 'parcel');
       const mail = !!(m && m.mail || p && p.mail), parcel = !!(m && m.parcel || p && p.parcel);
-      const door = this._st(c.entity_door), opened = this._ok(door) && ON_RE.test(String(door.state));
+      // porte avant (entity_door) et porte arrière (entity_door_back, double porte) : « ouverte » = on / open / unlocked…
+      const isOpen = (id) => { const d = this._st(id); return this._ok(d) && (ON_RE.test(String(d.state)) || String(d.state).toLowerCase() === 'unlocked'); };
+      const opened = isOpen(c.entity_door), openedBack = isOpen(c.entity_door_back);
       // nombre de lettres : entity_count, sinon l'état numérique de entity_mail
       const cs = this._st(c.entity_count);
       let count = this._ok(cs) ? parseFloat(String(cs.state).replace(',', '.')) : m ? m.n : NaN;
@@ -24657,8 +24750,10 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       // dernier dépôt : changement le plus récent des entités qui annoncent du courrier
       const full = [[c.entity_mail, m], [c.entity_parcel, p]].filter(([, r]) => r && (r.mail || r.parcel)).map(([i]) => this._st(i));
       const last = full.reduce((a, s) => Math.max(a, Date.parse(s.last_changed) || 0), 0);
-      return { st, mail, parcel, opened, count, last };
+      return { st, mail, parcel, opened, openedBack, count, last };
     }
+
+    _doorTxt(id, open) { return !this._ok(this._st(id)) ? '--' : open ? this._t('open_short') : this._t('closed'); }
 
     _when(t) {
       if (!t) return '--';
@@ -24689,7 +24784,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       root.querySelector('.scene').addEventListener('click', () => this._more(this._c.entity_mail || this._c.entity_parcel || this._c.entity_door));
       root.querySelector('#mbctl button').addEventListener('click', () => this._collect());
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
-        const c = this._c; this._more({ last: c.entity_mail || c.entity_parcel, count: c.entity_count || c.entity_mail, battery: c.entity_battery }[el.dataset.k]);
+        const c = this._c; this._more({ last: c.entity_mail || c.entity_parcel, count: c.entity_count || c.entity_mail, battery: c.entity_battery, door_front: c.entity_door, door_back: c.entity_door_back }[el.dataset.k]);
       }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
@@ -24697,8 +24792,8 @@ svg{display:block;width:100%;height:auto;overflow:visible}
     _render() {
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card;
-      const { st, opened, count, last } = this._compute();
-      card.className = `${st}${opened ? ' opened door_open' : ''}${c.animations === false ? ' noanim' : ''}`;
+      const { st, opened, openedBack, count, last } = this._compute();
+      card.className = `${st}${opened ? ' opened' : ''}${opened || openedBack ? ' door_open' : ''}${c.animations === false ? ' noanim' : ''}`;
       // couleur : nom connu ou #hex (nuances dérivées par color-mix)
       const col = COLORS[String(c.box_color || '').toLowerCase()];
       const hex = !col && /^#[0-9a-f]{3,8}$/i.test(String(c.box_color)) ? c.box_color : null;
@@ -24707,7 +24802,9 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 
       r.getElementById('mbtitle').textContent = c.name || this._t('name');
       const badge = r.getElementById('mbbadge');
-      badge.textContent = opened ? this._t('open') : this._t(st);
+      // avec une 2e porte, le badge dit laquelle est ouverte
+      const dbl = !!c.entity_door_back;
+      badge.textContent = opened && openedBack ? this._t('open_both') : opened ? this._t(dbl ? 'open_front' : 'open') : openedBack ? this._t('open_back') : this._t(st);
       badge.style.display = c.show_status === false ? 'none' : '';
       const cnt = r.getElementById('mbcount'), showN = !isNaN(count) && count > 0;
       cnt.textContent = showN ? String(Math.round(count)) : '';
@@ -24723,11 +24820,14 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         last: [c.entity_mail || c.entity_parcel, st === 'empty' || st === 'unavailable' ? '--' : this._when(last), ''],
         count: [c.entity_count, isNaN(count) ? '--' : String(Math.round(count)), ''],
         battery: [c.entity_battery, isNaN(batV) ? '--' : String(Math.round(batV)), '%'],
+        // tuiles des portes : seulement si une porte arrière est configurée
+        door_front: [dbl && c.entity_door, this._doorTxt(c.entity_door, opened), ''],
+        door_back: [c.entity_door_back, this._doorTxt(c.entity_door_back, openedBack), ''],
       };
       TILES.forEach(([k, , opt]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`); const [show, val, unit] = V[k];
         el.classList.toggle('hide', !show || c[opt] === false);
-        el.classList.toggle('bad', k === 'battery' && batV < 20);
+        el.classList.toggle('bad', k === 'battery' && batV < 20 || k === 'door_front' && opened || k === 'door_back' && openedBack);
         el.querySelector('.lbl').textContent = this._l(k);
         const small = document.createElement('small'); small.textContent = unit ?? '';
         el.querySelector('.v').replaceChildren(String(val ?? ''), small);
@@ -24763,13 +24863,14 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         ent('entity_mail', ['binary_sensor', 'input_boolean', 'sensor', 'switch', 'counter', 'input_number', 'input_select', 'input_text', 'event']),
         ent('entity_parcel', ['binary_sensor', 'input_boolean', 'sensor', 'switch', 'counter', 'input_number']),
         ent('entity_door', ['binary_sensor', 'input_boolean', 'cover', 'lock']),
+        ent('entity_door_back', ['binary_sensor', 'input_boolean', 'cover', 'lock']),
         ent('entity_count', ['sensor', 'counter', 'input_number']),
         ent('entity_reset', ['button', 'input_button', 'input_boolean', 'switch', 'counter', 'script', 'automation', 'scene', 'input_number']),
         ent('entity_battery', 'sensor'),
         { type: 'grid', name: '', schema: [{ name: 'mail_states', selector: { text: {} } }, { name: 'parcel_states', selector: { text: {} } }] },
         { name: 'box_color', selector: { select: { mode: 'dropdown', custom_value: true, options: Object.keys(COLORS).map((value) => ({ value, label: tr['color_' + value] || value })) } } },
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
-        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_since'), bool('show_count'), bool('show_battery'), bool('show_buttons'), bool('animations')] },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_since'), bool('show_count'), bool('show_battery'), bool('show_buttons'), bool('show_doors'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }

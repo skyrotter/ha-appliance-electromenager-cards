@@ -3,7 +3,7 @@
  * colis : un carton rebondit au pied de la boîte ; porte ouverte : la porte pivote sur sa charnière.
  * Générique : fonctionne avec un capteur par type (entity_mail / entity_parcel), ou un seul capteur dont l'état
  * est un texte (« lettre », « colis », « vide »…) ou un nombre (lettres reçues). Tous les autres capteurs sont optionnels :
- * porte (entity_door), compteur (entity_count), batterie, et une entité pour marquer le courrier comme relevé (entity_reset).
+ * porte avant (entity_door) et porte arrière (entity_door_back, boîtes à double porte), compteur (entity_count), batterie, et une entité pour marquer le courrier comme relevé (entity_reset).
  */
 (() => {
   const TAG = 'appliance-mailbox-card';
@@ -106,7 +106,8 @@ svg{display:block;width:100%;height:auto;overflow:visible}
     </g></g>
   </svg>`;
 
-  const TILES = [['last', 'mdi:clock-outline', 'show_since'], ['count', 'mdi:email-multiple-outline', 'show_count'], ['battery', 'mdi:battery', 'show_battery']];
+  const TILES = [['last', 'mdi:clock-outline', 'show_since'], ['count', 'mdi:email-multiple-outline', 'show_count'], ['battery', 'mdi:battery', 'show_battery'],
+    ['door_front', 'mdi:door', 'show_doors'], ['door_back', 'mdi:door-open', 'show_doors']];
 
   class ApplianceMailboxCard extends HTMLElement {
 
@@ -125,7 +126,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { show_status: true, show_since: true, show_count: true, show_battery: true, show_buttons: true, box_color: 'anthracite', ...c };
+      this._c = { show_status: true, show_since: true, show_count: true, show_battery: true, show_buttons: true, show_doors: true, box_color: 'anthracite', ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -164,7 +165,9 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       const c = this._c;
       const m = this._read(c.entity_mail, 'mail'), p = this._read(c.entity_parcel, 'parcel');
       const mail = !!(m && m.mail || p && p.mail), parcel = !!(m && m.parcel || p && p.parcel);
-      const door = this._st(c.entity_door), opened = this._ok(door) && ON_RE.test(String(door.state));
+      // porte avant (entity_door) et porte arrière (entity_door_back, double porte) : « ouverte » = on / open / unlocked…
+      const isOpen = (id) => { const d = this._st(id); return this._ok(d) && (ON_RE.test(String(d.state)) || String(d.state).toLowerCase() === 'unlocked'); };
+      const opened = isOpen(c.entity_door), openedBack = isOpen(c.entity_door_back);
       // nombre de lettres : entity_count, sinon l'état numérique de entity_mail
       const cs = this._st(c.entity_count);
       let count = this._ok(cs) ? parseFloat(String(cs.state).replace(',', '.')) : m ? m.n : NaN;
@@ -174,8 +177,10 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       // dernier dépôt : changement le plus récent des entités qui annoncent du courrier
       const full = [[c.entity_mail, m], [c.entity_parcel, p]].filter(([, r]) => r && (r.mail || r.parcel)).map(([i]) => this._st(i));
       const last = full.reduce((a, s) => Math.max(a, Date.parse(s.last_changed) || 0), 0);
-      return { st, mail, parcel, opened, count, last };
+      return { st, mail, parcel, opened, openedBack, count, last };
     }
+
+    _doorTxt(id, open) { return !this._ok(this._st(id)) ? '--' : open ? this._t('open_short') : this._t('closed'); }
 
     _when(t) {
       if (!t) return '--';
@@ -206,7 +211,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       root.querySelector('.scene').addEventListener('click', () => this._more(this._c.entity_mail || this._c.entity_parcel || this._c.entity_door));
       root.querySelector('#mbctl button').addEventListener('click', () => this._collect());
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
-        const c = this._c; this._more({ last: c.entity_mail || c.entity_parcel, count: c.entity_count || c.entity_mail, battery: c.entity_battery }[el.dataset.k]);
+        const c = this._c; this._more({ last: c.entity_mail || c.entity_parcel, count: c.entity_count || c.entity_mail, battery: c.entity_battery, door_front: c.entity_door, door_back: c.entity_door_back }[el.dataset.k]);
       }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
@@ -214,8 +219,8 @@ svg{display:block;width:100%;height:auto;overflow:visible}
     _render() {
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card;
-      const { st, opened, count, last } = this._compute();
-      card.className = `${st}${opened ? ' opened door_open' : ''}${c.animations === false ? ' noanim' : ''}`;
+      const { st, opened, openedBack, count, last } = this._compute();
+      card.className = `${st}${opened ? ' opened' : ''}${opened || openedBack ? ' door_open' : ''}${c.animations === false ? ' noanim' : ''}`;
       // couleur : nom connu ou #hex (nuances dérivées par color-mix)
       const col = COLORS[String(c.box_color || '').toLowerCase()];
       const hex = !col && /^#[0-9a-f]{3,8}$/i.test(String(c.box_color)) ? c.box_color : null;
@@ -224,7 +229,9 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 
       r.getElementById('mbtitle').textContent = c.name || this._t('name');
       const badge = r.getElementById('mbbadge');
-      badge.textContent = opened ? this._t('open') : this._t(st);
+      // avec une 2e porte, le badge dit laquelle est ouverte
+      const dbl = !!c.entity_door_back;
+      badge.textContent = opened && openedBack ? this._t('open_both') : opened ? this._t(dbl ? 'open_front' : 'open') : openedBack ? this._t('open_back') : this._t(st);
       badge.style.display = c.show_status === false ? 'none' : '';
       const cnt = r.getElementById('mbcount'), showN = !isNaN(count) && count > 0;
       cnt.textContent = showN ? String(Math.round(count)) : '';
@@ -240,11 +247,14 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         last: [c.entity_mail || c.entity_parcel, st === 'empty' || st === 'unavailable' ? '--' : this._when(last), ''],
         count: [c.entity_count, isNaN(count) ? '--' : String(Math.round(count)), ''],
         battery: [c.entity_battery, isNaN(batV) ? '--' : String(Math.round(batV)), '%'],
+        // tuiles des portes : seulement si une porte arrière est configurée
+        door_front: [dbl && c.entity_door, this._doorTxt(c.entity_door, opened), ''],
+        door_back: [c.entity_door_back, this._doorTxt(c.entity_door_back, openedBack), ''],
       };
       TILES.forEach(([k, , opt]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`); const [show, val, unit] = V[k];
         el.classList.toggle('hide', !show || c[opt] === false);
-        el.classList.toggle('bad', k === 'battery' && batV < 20);
+        el.classList.toggle('bad', k === 'battery' && batV < 20 || k === 'door_front' && opened || k === 'door_back' && openedBack);
         el.querySelector('.lbl').textContent = this._l(k);
         const small = document.createElement('small'); small.textContent = unit ?? '';
         el.querySelector('.v').replaceChildren(String(val ?? ''), small);
@@ -280,13 +290,14 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         ent('entity_mail', ['binary_sensor', 'input_boolean', 'sensor', 'switch', 'counter', 'input_number', 'input_select', 'input_text', 'event']),
         ent('entity_parcel', ['binary_sensor', 'input_boolean', 'sensor', 'switch', 'counter', 'input_number']),
         ent('entity_door', ['binary_sensor', 'input_boolean', 'cover', 'lock']),
+        ent('entity_door_back', ['binary_sensor', 'input_boolean', 'cover', 'lock']),
         ent('entity_count', ['sensor', 'counter', 'input_number']),
         ent('entity_reset', ['button', 'input_button', 'input_boolean', 'switch', 'counter', 'script', 'automation', 'scene', 'input_number']),
         ent('entity_battery', 'sensor'),
         { type: 'grid', name: '', schema: [{ name: 'mail_states', selector: { text: {} } }, { name: 'parcel_states', selector: { text: {} } }] },
         { name: 'box_color', selector: { select: { mode: 'dropdown', custom_value: true, options: Object.keys(COLORS).map((value) => ({ value, label: tr['color_' + value] || value })) } } },
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
-        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_since'), bool('show_count'), bool('show_battery'), bool('show_buttons'), bool('animations')] },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_since'), bool('show_count'), bool('show_battery'), bool('show_buttons'), bool('show_doors'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
