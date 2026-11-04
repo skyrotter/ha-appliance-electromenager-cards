@@ -266,7 +266,7 @@ class ApplianceCardBase extends HTMLElement {
     this._fetchUsage();
     const key = this._ids().map((i) => {
       const s = hass.states[i];
-      return s ? `${s.state}|${s.attributes.temperature ?? ""}|${s.attributes.current_temperature ?? ""}|${s.attributes.current_humidity ?? ""}|${s.attributes.humidity ?? ""}|${s.attributes.action ?? ""}|${s.attributes.mode ?? ""}|${s.attributes.percentage ?? ""}` : "x";
+      return s ? `${s.state}|${s.attributes.temperature ?? ""}|${s.attributes.current_temperature ?? ""}|${s.attributes.current_humidity ?? ""}|${s.attributes.humidity ?? ""}|${s.attributes.action ?? ""}|${s.attributes.mode ?? ""}|${s.attributes.percentage ?? ""}|${s.attributes.volume_level ?? ""}|${s.attributes.is_volume_muted ?? ""}|${s.attributes.media_title ?? ""}` : "x";
     }).join(";") + "|" + lang(hass) + "|" + Math.floor(Date.now() / 30000);
     if (!force && key === this._lastKey) return;
     this._lastKey = key;
@@ -523,6 +523,21 @@ class ApplianceCardBase extends HTMLElement {
       m.source = a.source || null;
       const maxP = c.max_power ?? 250;
       m.amp = m.vol != null ? m.vol : (watts !== null ? Math.max(.25, Math.min(1, watts / maxP)) : .6);
+    } else if (kind === "smart_speaker") {
+      // media_player : lecture / pause / inactif / veille / éteint, sourdine ; sans media_player, la prise (puissance) fait foi
+      const isMp = main && domainOf(c.entity) === "media_player", ms = isMp ? String(main.state).toLowerCase() : "";
+      const a = isMp ? (main.attributes || {}) : {};
+      if (isMp && !BAD.includes(ms)) m.status = ["playing", "buffering"].includes(ms) ? "playing" : ms === "paused" ? "paused" : ["idle", "on"].includes(ms) ? "idle" : ms === "standby" ? "standby" : "off";
+      else if (["off", "unavailable"].includes(base)) m.status = base;
+      else if (watts !== null) m.status = watts > threshold ? "playing" : watts >= (c.standby_threshold ?? 0.5) ? "idle" : "off";
+      else m.status = base === "running" ? "playing" : "idle";
+      if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
+      m.muted = !!a.is_volume_muted;
+      if (m.status === "playing" && m.muted) m.status = "muted";
+      m.vol = a.volume_level != null && Number.isFinite(Number(a.volume_level)) ? Number(a.volume_level) : null;
+      m.app = a.app_name || a.source || null;
+      m.track = [a.media_artist, a.media_title].filter(Boolean).join(" · ") || null;
+      m.amp = m.vol != null ? m.vol : 0.5;
     } else if (kind === "tv") {
       const dom = main ? domainOf(c.entity) : null, ms = main ? String(main.state).toLowerCase() : "";
       if (dom === "media_player" && !BAD.includes(ms)) {
@@ -789,6 +804,22 @@ class ApplianceCardBase extends HTMLElement {
     }
   }
 
+  // boutons de l'enceinte : services media_player (volume par pas de volume_step, 5 % par défaut, si volume_set est disponible)
+  _spkCmd(key) {
+    const hass = this._hass, id = this._config.entity, st = id && hass.states[id];
+    if (!st) return;
+    const a = st.attributes || {}, sf = Number(a.supported_features), step = Number(this._config.volume_step) || 0.05;
+    const call = (svc, data = {}) => hass.callService("media_player", svc, { entity_id: id, ...data });
+    if (key === "power") call(["off", "standby"].includes(String(st.state).toLowerCase()) ? "turn_on" : "turn_off");
+    else if (key === "play_pause") call("media_play_pause");
+    else if (key === "mute") call("volume_mute", { is_volume_muted: !a.is_volume_muted });
+    else {
+      const v = Number(a.volume_level), up = key === "vol_up";
+      if (a.volume_level != null && Number.isFinite(v) && (!Number.isFinite(sf) || (sf & 4))) call("volume_set", { volume_level: Math.round(Math.max(0, Math.min(1, v + (up ? step : -step))) * 100) / 100 });
+      else call(up ? "volume_up" : "volume_down");
+    }
+  }
+
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
     const hass = this._hass, kind = this._kind;
@@ -911,6 +942,7 @@ class ApplianceCardBase extends HTMLElement {
 
     // illustration dynamic parts
     if (kind === "av_receiver") $("wrap").style.setProperty("--amp", (m.amp ?? .6).toFixed(2));
+    if (kind === "smart_speaker") $("wrap").style.setProperty("--amp", (m.amp ?? .5).toFixed(2));
     if (kind === "beer_tap") $("wrap").style.setProperty("--keg", ((m.keg ?? 70) / 100).toFixed(2));
     if (kind === "power_strip") {
       // fiche branchée : prises commandées (outlets), sinon toutes sauf la dernière ; LED allumée si la prise est active
@@ -1080,12 +1112,15 @@ class ApplianceCardBase extends HTMLElement {
       if (what) statusTxt += ` · ${what}`;
     }
     if (kind === "ps5" && m.game) statusTxt += ` · ${m.game}`;
+    const spOn = kind === "smart_speaker" && ["playing", "paused", "muted"].includes(m.status);
+    if (spOn && m.app) statusTxt += ` · ${m.app}`;
     if (m.solarHeat && active) statusTxt += ` · ${tr(hass, "solar_surplus")}`;
     const prog = m.program && active && !BAD.includes(String(m.program.state).toLowerCase()) ? stateText(hass, m.program) : "";
     let sub = "";
     if (active && m.remaining != null && m.remaining > 0) {
       sub = `${tr(hass, m.estimated ? "ends_at_est" : "ends_at")} ${fmtClock(hass, new Date(Date.now() + m.remaining * 60000))}`;
     } else if (active && m.soon) sub = tr(hass, "almost_done");
+    if (spOn && !sub && m.track && c.show_media !== false) sub = m.track;
     const alertTxt = m.alerts.map((a) => tr(hass, a)).join(" · ");
     let frPill = "";
     if (kind === "fridge" && m.tempVal != null) {
@@ -1180,6 +1215,24 @@ class ApplianceCardBase extends HTMLElement {
       modesEl.innerHTML = MODE_ORDER.filter((k) => pickMode(opts, k)).map((k) =>
         `<button class="mode-btn ${cur === k ? "on" : ""}" data-mode="${k}" aria-pressed="${cur === k}"><ha-icon icon="${MODE_ICON[k]}"></ha-icon>${esc(tr(hass, k === "off" ? "mode_off" : k === "none" ? "mode_none" : k === "drying" ? "mode_drying" : k))}</button>`).join("");
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._setMode(b.dataset.mode); }; });
+    } else if (kind === "smart_speaker" && c.show_controls !== false && domainOf(c.entity) === "media_player" && hass.states[c.entity]) {
+      // enceinte : marche / arrêt, volume −, lecture / pause, volume +, sourdine (selon les fonctions annoncées par l'entité)
+      const sf = Number(hass.states[c.entity].attributes.supported_features);
+      // MediaPlayerEntityFeature : PAUSE 1, VOLUME_SET 4, VOLUME_MUTE 8, TURN_ON 128, TURN_OFF 256, VOLUME_STEP 1024, PLAY 16384
+      const has = (bit) => !Number.isFinite(sf) || (sf & bit) !== 0;
+      const off = ["off", "standby", "unavailable"].includes(m.status), play = ["playing", "muted"].includes(m.status), vol = has(4) || has(1024);
+      const btns = [
+        has(128) || has(256) ? ["power", "mdi:power", "toggle", !off] : null,
+        vol ? ["vol_down", "mdi:volume-minus", "volume_down", null] : null,
+        has(1) || has(16384) ? ["play_pause", play ? "mdi:pause" : "mdi:play", play ? "pause" : "play", play] : null,
+        vol ? ["vol_up", "mdi:volume-plus", "volume_up", null] : null,
+        has(8) ? ["mute", m.muted ? "mdi:volume-off" : "mdi:volume-high", "mute", m.muted] : null,
+      ].filter(Boolean);
+      modesEl.innerHTML = btns.map(([k, icon, lbl, on]) => {
+        const dis = m.status === "unavailable" || (off && k !== "power");
+        return `<button class="mode-btn sp-btn ${on ? "on" : ""}" data-sp="${k}" title="${esc(tr(hass, lbl))}" aria-label="${esc(tr(hass, lbl))}"${on != null ? ` aria-pressed="${on}"` : ""}${dis ? " disabled" : ""}><ha-icon icon="${icon}"></ha-icon></button>`;
+      }).join("");
+      modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._spkCmd(b.dataset.sp); }; });
     } else if (kind === "power_strip" && Array.isArray(c.outlets) && c.outlets.length) {
       // multiprise : un bouton par prise commandée (numéro, nom de l'entité en infobulle), clic = bascule
       modesEl.innerHTML = c.outlets.map((id, i) => {
@@ -1263,6 +1316,9 @@ class ApplianceCardBase extends HTMLElement {
         });
       } else if (m.tempVal != null) tile("mdi:printer-3d-nozzle-heat", `${fmtNum(hass, m.tempVal, 0)} ${m.tempUnit}`, lb("nozzle"), tEntity);
       if (m.bedTemp != null) tile("mdi:heat-wave", `${fmtNum(hass, m.bedTemp, 0)} ${m.tempUnit}`, lb("bed"), c.bed_temperature);
+    } else if (kind === "smart_speaker") {
+      if (m.vol != null && !["off", "standby", "unavailable"].includes(m.status)) tile(m.muted ? "mdi:volume-off" : "mdi:volume-high", `${Math.round(m.vol * 100)} %`, lb("volume"), c.entity, m.muted ? "warn" : "");
+      if (spOn && m.app) tile("mdi:music-box-outline", m.app, lb("source"), c.entity);
     } else if (kind === "pool_pump") {
       if (m.tempVal != null) tile("mdi:thermometer-water", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("water"), tEntity);
       if (m.runtime != null) tile("mdi:timer-outline", fmtDuration(m.runtime), lb("today"), c.runtime);

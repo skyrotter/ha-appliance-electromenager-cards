@@ -123,6 +123,23 @@ function buildForm(kind) {
           ...(kind === "av_receiver" ? [
             { name: "max_power", selector: { number: { min: 50, max: 2000, step: 10, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
+          ...(kind === "smart_speaker" ? [
+            // model : photo de l'enceinte (vide = devinée depuis l'entité : Sonos, Google Nest, sinon Echo Dot)
+            { name: "model", selector: { select: { mode: "dropdown", options: [
+              { value: "echo_pop", label: "Amazon Echo Pop" }, { value: "echo_dot", label: "Amazon Echo Dot (5e gén. / 5th gen)" },
+              { value: "echo_show_5", label: "Amazon Echo Show 5" }, { value: "echo_show_8", label: "Amazon Echo Show 8" },
+              { value: "echo_show_10", label: "Amazon Echo Show 10" }, { value: "echo_show_11", label: "Amazon Echo Show 11" },
+              { value: "echo_show_15", label: "Amazon Echo Show 15" }, { value: "echo_spot", label: "Amazon Echo Spot" },
+              { value: "nest_mini", label: "Google Nest Mini" }, { value: "nest_audio", label: "Google Nest Audio" },
+              { value: "nest_hub", label: "Google Nest Hub (7\")" }, { value: "nest_hub_2", label: "Google Nest Hub (2e gén. / 2nd gen)" },
+              { value: "nest_hub_max", label: "Google Nest Hub Max" },
+              { value: "sonos_one", label: "Sonos One" }, { value: "sonos_one_sl", label: "Sonos One SL" },
+              { value: "sonos_era_100", label: "Sonos Era 100" }, { value: "sonos_era_300", label: "Sonos Era 300" },
+              { value: "sonos_beam", label: "Sonos Beam / Arc" }, { value: "sonos_sub_mini", label: "Sonos Sub Mini" }, { value: "sonos_sub", label: "Sonos Sub" }] } } },
+            { name: "show_controls", selector: { boolean: {} }, default: true },
+            { name: "show_media", selector: { boolean: {} }, default: true },
+            { name: "volume_step", selector: { number: { min: 0.01, max: 0.2, step: 0.01, mode: "box" } } },
+          ] : []),
           ...(kind === "tv" ? [
             { name: "style", selector: { select: { mode: "dropdown", options: [
               { value: "wall", label: "Murale / Wall-mounted" }, { value: "stand", label: "Pied central / Center stand" }, { value: "feet", label: "Deux pieds / Two feet" }] } } },
@@ -216,7 +233,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
   };
 }
 
@@ -236,7 +253,7 @@ function stubFor(kind, hass) {
   const cost = pick((i) => i.startsWith("sensor.") && /(cout|cost|prix)/.test(i) && /(jour|daily|today|day)/.test(i))
     || pick((i, st) => i.startsWith("sensor.") && dc(st) === "monetary");
   const sw = pick((i) => i.startsWith("switch.") && !/(child_lock|lock|led|indicator)/.test(i));
-  const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : ["tv", "av_receiver", "ps5"].includes(kind) ? pick((i) => i.startsWith("media_player.")) : ["fan", "ceiling_fan"].includes(kind) ? pick((i) => i.startsWith("fan.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : kind === "dehumidifier" ? pick((i) => i.startsWith("humidifier.")) : null;
+  const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : ["tv", "av_receiver", "ps5", "smart_speaker"].includes(kind) ? pick((i) => i.startsWith("media_player.")) : ["fan", "ceiling_fan"].includes(kind) ? pick((i) => i.startsWith("fan.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : kind === "dehumidifier" ? pick((i) => i.startsWith("humidifier.")) : null;
   const temp = pick((i, st) => i.startsWith("sensor.") && dc(st) === "temperature");
   const flag = ["washer", "dryer", "dishwasher", "microwave"].includes(kind)
     ? pick((i) => /^(input_boolean|binary_sensor)\./.test(i) && /(running|en_cours|marche|cycle)/.test(i)) : null;
