@@ -16832,7 +16832,6 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "garage_door": "Garage door",
       "open": "Open",
       "closed": "Closed",
-      "open_short": "Open",
       "opening": "Opening",
       "closing": "Closing",
       "partial": "Partly open",
@@ -16854,7 +16853,6 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "garage_door": "Garagentor",
       "open": "Offen",
       "closed": "Geschlossen",
-      "open_short": "Offen",
       "opening": "Öffnet",
       "closing": "Schließt",
       "partial": "Teilweise offen",
@@ -16876,7 +16874,6 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "garage_door": "Porte de garage",
       "open": "Ouvert",
       "closed": "Fermé",
-      "open_short": "Ouverte",
       "opening": "Ouverture",
       "closing": "Fermeture",
       "partial": "Entrouvert",
@@ -16898,7 +16895,6 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "garage_door": "Porta del garage",
       "open": "Aperto",
       "closed": "Chiuso",
-      "open_short": "Aperta",
       "opening": "In apertura",
       "closing": "In chiusura",
       "partial": "Socchiuso",
@@ -16920,7 +16916,6 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "garage_door": "Garasjeport",
       "open": "Åpen",
       "closed": "Lukket",
-      "open_short": "Åpen",
       "opening": "Åpner",
       "closing": "Lukker",
       "partial": "Delvis åpen",
@@ -16942,7 +16937,6 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "garage_door": "Garagedeur",
       "open": "Open",
       "closed": "Gesloten",
-      "open_short": "Open",
       "opening": "Gaat open",
       "closing": "Gaat dicht",
       "partial": "Half open",
@@ -16964,7 +16958,6 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "garage_door": "Ușă de garaj",
       "open": "Deschis",
       "closed": "Închis",
-      "open_short": "Deschisă",
       "opening": "Se deschide",
       "closing": "Se închide",
       "partial": "Parțial deschis",
@@ -16986,7 +16979,6 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "garage_door": "Гаражные ворота",
       "open": "Открыто",
       "closed": "Закрыто",
-      "open_short": "Открыта",
       "opening": "Открывание",
       "closing": "Закрывание",
       "partial": "Частично открыто",
@@ -17008,7 +17000,6 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "garage_door": "Гаражна врата",
       "open": "Отворено",
       "closed": "Затворено",
-      "open_short": "Отворено",
       "opening": "Отварање",
       "closing": "Затварање",
       "partial": "Делимично отворено",
@@ -17030,7 +17021,6 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "garage_door": "Garažna vrata",
       "open": "Otvoreno",
       "closed": "Zatvoreno",
-      "open_short": "Otvoreno",
       "opening": "Otvaranje",
       "closing": "Zatvaranje",
       "partial": "Delimično otvoreno",
@@ -24685,6 +24675,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "open_back": "Rear door open",
       "open_both": "Doors open",
       "closed": "Closed",
+      "open_short": "Open",
       "unavailable": "Unavailable",
       "collect": "Mark as collected",
       "last": "Delivered",
@@ -24713,6 +24704,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "open_back": "Hintere Tür offen",
       "open_both": "Türen offen",
       "closed": "Geschlossen",
+      "open_short": "Offen",
       "unavailable": "Nicht verfügbar",
       "collect": "Als geleert markieren",
       "last": "Zugestellt",
@@ -24741,6 +24733,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "open_back": "Porte arrière ouverte",
       "open_both": "Portes ouvertes",
       "closed": "Fermée",
+      "open_short": "Ouverte",
       "unavailable": "Indisponible",
       "collect": "Courrier relevé",
       "last": "Dépôt",
@@ -24769,6 +24762,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "open_back": "Sportello posteriore aperto",
       "open_both": "Sportelli aperti",
       "closed": "Chiuso",
+      "open_short": "Aperta",
       "unavailable": "Non disponibile",
       "collect": "Segna come ritirata",
       "last": "Consegna",
@@ -24797,6 +24791,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "open_back": "Bakre luke åpen",
       "open_both": "Lukene er åpne",
       "closed": "Lukket",
+      "open_short": "Åpen",
       "unavailable": "Utilgjengelig",
       "collect": "Merk som tømt",
       "last": "Levert",
@@ -24825,6 +24820,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "open_back": "Achterklep open",
       "open_both": "Kleppen open",
       "closed": "Gesloten",
+      "open_short": "Open",
       "unavailable": "Niet beschikbaar",
       "collect": "Markeren als geleegd",
       "last": "Bezorgd",
@@ -24853,6 +24849,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "open_back": "Ușa din spate deschisă",
       "open_both": "Uși deschise",
       "closed": "Închis",
+      "open_short": "Deschisă",
       "unavailable": "Indisponibil",
       "collect": "Marchează ca ridicată",
       "last": "Livrat",
@@ -24881,6 +24878,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "open_back": "Задняя дверца открыта",
       "open_both": "Дверцы открыты",
       "closed": "Закрыта",
+      "open_short": "Открыта",
       "unavailable": "Недоступно",
       "collect": "Отметить как забранную",
       "last": "Доставлено",
@@ -24909,6 +24907,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "open_back": "Задња врата отворена",
       "open_both": "Врата отворена",
       "closed": "Затворено",
+      "open_short": "Отворено",
       "unavailable": "Недоступно",
       "collect": "Означи као преузето",
       "last": "Достављено",
@@ -24937,6 +24936,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "open_back": "Zadnja vrata otvorena",
       "open_both": "Vrata otvorena",
       "closed": "Zatvoreno",
+      "open_short": "Otvoreno",
       "unavailable": "Nedostupno",
       "collect": "Označi kao preuzeto",
       "last": "Dostavljeno",
@@ -24998,7 +24998,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 .tile .l ha-icon{--mdc-icon-size:13px;flex:none}
 .tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
-.tile.hide{display:none}.tile.bad .v{color:var(--mb-alert)}
+.tiles.hide,.tile.hide{display:none}.tile.bad .v{color:var(--mb-alert)}
 /* ---- illustration ---- */
 .mb-c0{fill:var(--mb-c0)}.mb-c1{fill:var(--mb-c1)}.mb-c2{fill:var(--mb-c2)}
 .mb-door{transform-box:view-box;transform-origin:18px 105px;transition:transform .7s cubic-bezier(.3,1.3,.5,1)}
@@ -25050,7 +25050,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
   </svg>`;
 
   const TILES = [['last', 'mdi:clock-outline', 'show_since'], ['count', 'mdi:email-multiple-outline', 'show_count'], ['battery', 'mdi:battery', 'show_battery'],
-    ['door_front', 'mdi:door', 'show_doors'], ['door_back', 'mdi:door-open', 'show_doors']];
+    ['door_front', 'mdi:door', 'show_doors'], ['door_back', 'mdi:door', 'show_doors']]; // les 3 premières : 1re ligne, les portes : 2e ligne
 
   class ApplianceMailboxCard extends HTMLElement {
 
@@ -25149,7 +25149,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         <div class="head"><div class="title" id="mbtitle"></div><div class="badge" id="mbbadge"></div></div>
         <div class="scene">${SVG(this._c.name || this._t('name'))}<div class="count" id="mbcount"></div></div>
         <div class="ctl" id="mbctl"><button><ha-icon icon="mdi:email-check-outline"></ha-icon><span></span></button></div>
-        <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
+        ${[TILES.slice(0, 3), TILES.slice(3)].map((row, i) => `<div class="tiles" id="mbrow${i}">${row.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>`).join('')}
       </ha-card>`;
       root.querySelector('.scene').addEventListener('click', () => this._more(this._c.entity_mail || this._c.entity_parcel || this._c.entity_door));
       root.querySelector('#mbctl button').addEventListener('click', () => this._collect());
@@ -25201,7 +25201,14 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         el.querySelector('.lbl').textContent = this._l(k);
         const small = document.createElement('small'); small.textContent = unit ?? '';
         el.querySelector('.v').replaceChildren(String(val ?? ''), small);
+        // icône des portes selon l'état : porte ouverte / porte fermée
+        if (k === 'door_front' || k === 'door_back') {
+          const o = k === 'door_front' ? opened : openedBack;
+          el.querySelector('ha-icon').setAttribute('icon', !this._ok(this._st(show)) ? 'mdi:door' : o ? 'mdi:door-open' : 'mdi:door-closed');
+        }
       });
+      // 2 lignes : dépôt / lettres / batterie, puis porte avant / porte arrière ; une ligne vide est masquée
+      [0, 1].forEach((i) => { const row = r.getElementById('mbrow' + i); row.classList.toggle('hide', !row.querySelector('.tile:not(.hide)')); });
     }
   }
   customElements.define(TAG, ApplianceMailboxCard);
