@@ -102,7 +102,7 @@ const STRINGS = {
     "comfort_2": "Comfort -2",
     "eco": "Eco",
     "frost": "Frost protection",
-    "drying": "Drying",
+    "mode_drying": "Drying",
     "boost": "Boost",
     "program": "Program",
     "mode_none": "None",
@@ -293,6 +293,7 @@ const STRINGS = {
     "f_sockets": "Number of sockets",
     "f_multicolor": "Multicolour (rainbow)",
     "dehumidifier": "Dehumidifier",
+    "drying": "Drying",
     "tank_full": "Tank full",
     "empty_tank": "Empty the tank",
     "tank": "Tank",
@@ -734,7 +735,7 @@ const STRINGS = {
     "comfort_2": "Confort -2",
     "eco": "Éco",
     "frost": "Hors-gel",
-    "drying": "Déshumidification",
+    "mode_drying": "Séchage",
     "boost": "Boost",
     "program": "Programme",
     "mode_none": "Aucun",
@@ -925,6 +926,7 @@ const STRINGS = {
     "f_sockets": "Nombre de prises",
     "f_multicolor": "Multicolore (arc-en-ciel)",
     "dehumidifier": "Déshumidificateur",
+    "drying": "Déshumidification",
     "tank_full": "Bac plein",
     "empty_tank": "Videz le bac",
     "tank": "Bac",
@@ -6736,7 +6738,7 @@ class ApplianceCardBase extends HTMLElement {
       const opts = modeOptions(hass.states[mEnt]);
       const cur = m.radMode ?? (m.status !== "off" ? "comfort" : "off");
       modesEl.innerHTML = MODE_ORDER.filter((k) => pickMode(opts, k)).map((k) =>
-        `<button class="mode-btn ${cur === k ? "on" : ""}" data-mode="${k}" aria-pressed="${cur === k}"><ha-icon icon="${MODE_ICON[k]}"></ha-icon>${esc(tr(hass, k === "off" ? "mode_off" : k === "none" ? "mode_none" : k))}</button>`).join("");
+        `<button class="mode-btn ${cur === k ? "on" : ""}" data-mode="${k}" aria-pressed="${cur === k}"><ha-icon icon="${MODE_ICON[k]}"></ha-icon>${esc(tr(hass, k === "off" ? "mode_off" : k === "none" ? "mode_none" : k === "drying" ? "mode_drying" : k))}</button>`).join("");
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._setMode(b.dataset.mode); }; });
     } else if (kind === "power_strip" && Array.isArray(c.outlets) && c.outlets.length) {
       // multiprise : un bouton par prise commandée (numéro, nom de l'entité en infobulle), clic = bascule
