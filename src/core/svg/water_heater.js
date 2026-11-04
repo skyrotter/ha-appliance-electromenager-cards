@@ -1,7 +1,9 @@
-SVG.water_heater = () => `
+SVG.water_heater = (c = {}) => `
 <defs>${DEFS}
 <linearGradient id="ID-cyl" x1="0" x2="1"><stop offset="0" stop-color="#c3c9cf"/><stop offset=".3" stop-color="#ffffff"/><stop offset=".6" stop-color="#eef0f2"/><stop offset="1" stop-color="#aeb5bc"/></linearGradient>
 <linearGradient id="ID-copper" x1="0" x2="1"><stop offset="0" stop-color="#a0603a"/><stop offset=".45" stop-color="#e2a477"/><stop offset="1" stop-color="#8a4f2e"/></linearGradient>
+<linearGradient id="ID-hot" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e5484d"/><stop offset="1" stop-color="#ff8a3d"/></linearGradient>
+<clipPath id="ID-tank"><path d="M30 26q0-14 30-14t30 14v80q0 12-30 12t-30-12z"/></clipPath>
 <linearGradient id="ID-arc" x1="0" x2="1"><stop offset="0" stop-color="#3e8ed0"/><stop offset=".5" stop-color="#f2c94c"/><stop offset="1" stop-color="#e5484d"/></linearGradient></defs>
 <g class="hw-waves">
   <path d="M46 12q-3-4 0-8t0-8"/><path d="M60 10q-3-4 0-8t0-8"/><path d="M74 12q-3-4 0-8t0-8"/>
@@ -15,6 +17,7 @@ SVG.water_heater = () => `
 <path d="M30 26q0-14 30-14t30 14v80q0 12-30 12t-30-12z" fill="url(#ID-cyl)" stroke="#a7aeb5" stroke-width=".8"/>
 <path d="M30 26q0 9 30 9t30-9" fill="none" stroke="#b7bec5" stroke-width=".8"/>
 <path d="M30 104q0 9 30 9t30-9" fill="none" stroke="#b7bec5" stroke-width=".8"/>
+${c.hot_water_level || c.hot_water_volume ? `<g class="hw-level" clip-path="url(#ID-tank)"><rect x="30" y="12" width="60" height="106" fill="#3e8ed0" opacity=".22"/><rect class="hw-hot" x="30" y="12" width="60" height="106" fill="url(#ID-hot)" opacity=".5"/></g>` : ""}
 <rect x="38" y="58" width="44" height="40" rx="5" fill="#f4f6f8" stroke="#b5bcc3" stroke-width=".7"/>
 <circle cx="60" cy="76" r="13" fill="url(#ID-chrome)"/>
 <circle cx="60" cy="76" r="11" fill="#fcfcfd"/>
