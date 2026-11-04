@@ -129,6 +129,22 @@ c=card('tv',{entity:'switch.tv',power:'sensor.p'},[mk('switch.tv','on'),mk('sens
 c=card('tv',{entity:'switch.tv',power:'sensor.p'},[mk('switch.tv','off'),mk('sensor.p',0,W)]); ok('tv off',has(c,'st-off'),c.wrap.className);
 c=card('tv',{entity:'media_player.tv'},[mk('media_player.tv','playing',{app_name:'Netflix'})]); ok('tv media_player playing + app',has(c,'st-screen_on')&&/Netflix/.test(c.txt()),c.txt());
 c=card('tv',{entity:'media_player.tv'},[mk('media_player.tv','off')]); ok('tv media_player off',has(c,'st-off'),c.wrap.className);
+// vidéoprojecteurs (model)
+{const PJ=(st,cfg={},a={},more=[])=>card('tv',{entity:'media_player.pj',model:'projector',...cfg},[mk('media_player.pj',st,{source:'HDMI 1',source_list:['HDMI 1','HDMI 2'],volume_level:0.4,supported_features:1|4|8|128|256|1024|2048|16384,...a}),...more]);
+ let c=PJ('on'); ok('projector photo + beam',!!c.sr.querySelector('.pj image.pj-photo')&&!!c.sr.querySelector('.pj-beam')&&!c.sr.querySelector('.tv-content'));
+ ok('projector on',has(c,'st-screen_on'),c.wrap.className);
+ ok('projector buttons (power, source, vol, play, mute)',c.sr.querySelectorAll('#modes .sp-btn').length===6,c.sr.querySelectorAll('#modes .sp-btn').length);
+ ok('projector source + volume chips',/HDMI 1/.test(c.sr.getElementById('stats').textContent)&&/40 %/.test(c.sr.getElementById('stats').textContent),c.sr.getElementById('stats').textContent);
+ c=PJ('on',{show_controls:false,show_source:false,show_volume:false}); ok('projector toggles off',!c.sr.querySelector('#modes .sp-btn')&&!/HDMI/.test(c.sr.getElementById('stats').textContent));
+ c=PJ('on',{lamp_hours:'sensor.l',picture_mode:'select.pm',temperature:'sensor.t'},{},[mk('sensor.l',2340,{unit_of_measurement:'h'}),mk('select.pm','Cinéma'),mk('sensor.t',41,T)]);
+ const tx=c.sr.getElementById('stats').textContent; ok('projector lamp / picture / temp chips',/2[\s ]?340 h/.test(tx)&&/Cinéma/.test(tx)&&/41/.test(tx),tx);
+ c=PJ('on',{lamp_hours:'sensor.l',show_lamp:false},{},[mk('sensor.l',2340,{unit_of_measurement:'h'})]); ok('projector show_lamp false',!/2[\s ]?340/.test(c.sr.getElementById('stats').textContent));
+ c=PJ('standby'); ok('projector standby',has(c,'st-standby'),c.wrap.className);
+ const calls=[]; c=PJ('on'); c.h.callService=(d,s,data)=>calls.push([d,s,data]); c.el.hass={...c.h}; c.sr.querySelector('[data-sp="source"]').click();
+ ok('projector next source',calls.some(([d,s,x])=>d==='media_player'&&s==='select_source'&&x.source==='HDMI 2'),JSON.stringify(calls));
+ c=card('tv',{entity:'media_player.pj',model:'projector_compact'},[mk('media_player.pj','off')]); ok('compact projector off',has(c,'st-off')&&!!c.sr.querySelector('.pj-photo'));
+ c=card('tv',{entity:'media_player.tv'},[mk('media_player.tv','on',{source:'HDMI 1',supported_features:128|256|2048,source_list:['a','b']})]); ok('plain tv: no buttons by default',!c.sr.querySelector('#modes .sp-btn')&&!/HDMI/.test(c.sr.getElementById('stats').textContent));
+}
 // water heater: grid power + solar router power
 c=card('water-heater',{power:'sensor.g',power_solar:'sensor.s',energy:'sensor.eg',energy_solar:'sensor.es'},[mk('sensor.g',0,W),mk('sensor.s',1200,W),mk('sensor.eg',2,{unit_of_measurement:'kWh'}),mk('sensor.es',3,{unit_of_measurement:'kWh'})]); ok('water heater solar only -> heating + solar-heat',has(c,'st-heating')&&has(c,'solar-heat')&&/Surplus solaire/.test(c.txt()),c.wrap.className+' '+c.txt());
 ok('water heater dual tiles (grid power at 0 W hidden by default)',!/^\s*0 W/m.test(c.sr.getElementById('stats').textContent)&&/Énergie réseau/.test(c.sr.getElementById('stats').textContent)&&/Énergie solaire/.test(c.sr.getElementById('stats').textContent),c.sr.getElementById('stats').textContent);

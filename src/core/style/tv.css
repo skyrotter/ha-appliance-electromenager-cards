@@ -28,3 +28,21 @@
 @keyframes tv-logo { 0%, 36% { opacity: 0; transform: scale(.3); } 50% { opacity: 1; transform: scale(1.12); } 58% { transform: scale(1); } 80% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(2.6); } }
 @keyframes tv-reveal { 0%, 84% { opacity: 0; } 100% { opacity: 1; } }
 @keyframes tv-shut { 0% { opacity: .85; transform: scale(1, 1); } 45% { opacity: 1; transform: scale(1, .015); } 75% { opacity: 1; transform: scale(.03, .015); } 100% { opacity: 0; transform: scale(0, 0); } }
+
+/* ---------- Vidéoprojecteurs (model: projector / projector_compact) ---------- */
+.k-tv .pj-photo { transition: filter .5s; }
+.k-tv.st-off .pj-photo, .k-tv.st-unavailable .pj-photo { filter: brightness(.82) saturate(.7); }
+.pj-beam, .pj-glow { opacity: 0; transition: opacity .8s; mix-blend-mode: screen; transform-box: fill-box; }
+.pj-beam { transform-origin: 50% 0; }
+.pj-glow { transform-origin: 50% 50%; }
+.k-tv.st-screen_on .pj-beam { opacity: 1; animation: pj-flick 3s ease-in-out infinite; }
+.k-tv.st-screen_on .pj-glow { opacity: 1; animation: pj-pulse 3s ease-in-out infinite; }
+/* démarrage : la lampe monte en puissance (3 s) */
+.tv-boot .pj-beam { animation: pj-warm 3.2s ease-out both, pj-flick 3s 3.2s ease-in-out infinite; }
+.tv-boot .pj-glow { animation: pj-warm 3.2s ease-out both, pj-pulse 3s 3.2s ease-in-out infinite; }
+.pj-led { fill: #2b2020; transition: fill .4s; }
+.k-tv.st-standby .pj-led { fill: #ff3b30; filter: drop-shadow(0 0 1.6px #ff3b30); }
+.k-tv.st-screen_on .pj-led { fill: #34e27a; filter: drop-shadow(0 0 1.6px #34e27a); }
+@keyframes pj-flick { 50% { opacity: .78; } }
+@keyframes pj-pulse { 50% { transform: scale(1.22); } }
+@keyframes pj-warm { 0% { opacity: 0; } 35% { opacity: .25; } 100% { opacity: 1; } }

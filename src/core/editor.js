@@ -23,6 +23,9 @@ const SEL = {
   pellet_level: { entity: { domain: ["sensor", "number", "input_number"] } },
   runtime: { entity: { domain: ["sensor"] } },
   usage_time: { entity: { domain: ["sensor"] } },
+  // vidéoprojecteur : heures de lampe / laser et mode d'image
+  lamp_hours: { entity: { domain: ["sensor", "number", "input_number"] } },
+  picture_mode: { entity: { domain: ["select", "input_select", "sensor"] } },
   light: { entity: { domain: ["light", "switch", "binary_sensor", "input_boolean"] } },
   zone2_temperature: { entity: { domain: ["sensor", "input_number"], device_class: "temperature" } },
   battery_level: { entity: { domain: ["sensor", "number", "input_number"] } },
@@ -153,8 +156,22 @@ function buildForm(kind) {
             { name: "volume_step", selector: { number: { min: 0.01, max: 0.2, step: 0.01, mode: "box" } } },
           ] : []),
           ...(kind === "tv" ? [
+            // model : vidéoprojecteur en photo (vide = télé dessinée)
+            { name: "model", selector: { select: { mode: "dropdown", options: [
+              { value: "", label: "Télé (dessin) / TV (drawing)" },
+              { value: "projector", label: "Vidéoprojecteur classique / Projector (short throw)" },
+              { value: "projector_compact", label: "Vidéoprojecteur compact laser / Compact laser projector" }] } } },
             { name: "style", selector: { select: { mode: "dropdown", options: [
               { value: "wall", label: "Murale / Wall-mounted" }, { value: "stand", label: "Pied central / Center stand" }, { value: "feet", label: "Deux pieds / Two feet" }] } } },
+            // fonctions à afficher (cases à cocher) : boutons de commande, source, volume, lampe, mode d'image, température
+            { name: "show_controls", selector: { boolean: {} } },
+            { name: "show_source", selector: { boolean: {} } },
+            { name: "show_volume", selector: { boolean: {} } },
+            { name: "show_media", selector: { boolean: {} }, default: true },
+            { name: "show_lamp", selector: { boolean: {} }, default: true },
+            { name: "show_picture_mode", selector: { boolean: {} }, default: true },
+            { name: "show_temperature", selector: { boolean: {} }, default: true },
+            { name: "volume_step", selector: { number: { min: 0.01, max: 0.2, step: 0.01, mode: "box" } } },
           ] : []),
           ...(kind === "ps5" ? [
             { name: "standby_threshold", selector: { number: { min: 0, max: 20, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
@@ -245,7 +262,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
   };
 }
 
