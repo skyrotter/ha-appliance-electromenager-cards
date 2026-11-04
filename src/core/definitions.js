@@ -10,7 +10,7 @@ const DEF = {
   dishwasher: { accent: "active", threshold: 10, heating_power: 1000, fields: CYCLE_FIELDS,
     keys: ["lave_vaisselle", "lavevaisselle", "dishwasher"] },
   water_heater: { accent: "heat", threshold: 50,
-    fields: ["entity", "power", "power_solar", "energy", "energy_solar", "cost", "temperature", "target_temperature", "switch"],
+    fields: ["entity", "power", "power_solar", "energy", "energy_solar", "cost", "temperature", "target_temperature", "hot_water_level", "hot_water_volume", "switch"],
     keys: ["ballon_eau_chaude", "ballon", "chauffe_eau", "water_heater", "boiler", "cumulus"] },
   oven: { accent: "heat", threshold: 50,
     fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "remaining", "program", "door", "switch"],

@@ -27,6 +27,9 @@ const SEL = {
   zone2_temperature: { entity: { domain: ["sensor", "input_number"], device_class: "temperature" } },
   battery_level: { entity: { domain: ["sensor", "number", "input_number"] } },
   keg_level: { entity: { domain: ["sensor", "number", "input_number"] } },
+  // chauffe-eau : eau chaude restante, en % ou en litres (avec tank_volume)
+  hot_water_level: { entity: { domain: ["sensor", "number", "input_number"] } },
+  hot_water_volume: { entity: { domain: ["sensor", "number", "input_number"] } },
   pouring: { entity: { domain: ["binary_sensor", "input_boolean", "switch"] } },
   bed_temperature: { entity: { domain: ["sensor"], device_class: "temperature" } },
   humidity: { entity: { domain: ["sensor"], device_class: "humidity" } },
@@ -79,7 +82,8 @@ function buildForm(kind) {
             { name: "last_cycle", selector: { boolean: {} } },
             { name: "estimate", selector: { boolean: {} } },
           ] : []),
-          ...(kind === "water_heater" ? [{ name: "last_cycle", selector: { boolean: {} } }] : []),
+          ...(kind === "water_heater" ? [{ name: "last_cycle", selector: { boolean: {} } },
+            { name: "tank_volume", selector: { number: { min: 0, max: 1000, step: 1, mode: "box", unit_of_measurement: "L" } } }] : []),
           ...(["washer", "dryer", "dishwasher", "water_heater"].includes(kind) ? [
             { name: "cycle_gap", selector: { number: { min: 0, max: 240, step: 1, mode: "box", unit_of_measurement: "min" } } },
           ] : []),
