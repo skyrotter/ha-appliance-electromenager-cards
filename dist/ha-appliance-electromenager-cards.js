@@ -7347,8 +7347,7 @@ class ApplianceCardBase extends HTMLElement {
     else if (m.soon && active) tile("mdi:timer-sand-complete", tr(hass, "almost_done"), lb("remaining"), c.power);
     const solar = kind === "solar";
     const dual = kind === "water_heater" && (m.pwS || m.energyS);
-    // enceinte connectée : cases puissance / énergie / coût décochées par défaut (cochées pour les autres cartes)
-    const showOpt = (k) => (kind === "smart_speaker" ? c[k] === true : c[k] !== false);
+    const showOpt = (k) => c[k] !== false;
     // hide_zero_power (activé par défaut) : tuiles de puissance masquées quand elles valent 0 (moins de 1 W), ex. chauffe-eau au repos
     const zero = (st) => c.hide_zero_power !== false && Math.abs(powerW(st) ?? 0) < 1;
     if (m.pw && showOpt("show_power") && !zero(m.pw)) tile(solar ? "mdi:solar-power" : "mdi:flash", fmtPower(hass, m.pw) ?? "—", lb(solar ? "production" : dual ? "grid" : "power"), c.power);
@@ -7611,9 +7610,9 @@ function buildForm(kind) {
             { name: "turbo_threshold", selector: { number: { min: 50, max: 900, step: 10, mode: "box", unit_of_measurement: "W" } } },
             { name: "heat_threshold", selector: { number: { min: 200, max: 1500, step: 10, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
-          { name: "show_power", selector: { boolean: {} }, default: kind !== "smart_speaker" },
-          ...(d.fields.includes("energy") ? [{ name: "show_energy", selector: { boolean: {} }, default: kind !== "smart_speaker" }] : []),
-          ...(d.fields.includes("cost") || d.fields.includes("energy") ? [{ name: "show_cost", selector: { boolean: {} }, default: kind !== "smart_speaker" }] : []),
+          { name: "show_power", selector: { boolean: {} }, default: true },
+          ...(d.fields.includes("energy") ? [{ name: "show_energy", selector: { boolean: {} }, default: true }] : []),
+          ...(d.fields.includes("cost") || d.fields.includes("energy") ? [{ name: "show_cost", selector: { boolean: {} }, default: true }] : []),
           ...(d.fields.includes("switch") ? [{ name: "show_toggle", selector: { boolean: {} }, default: true }] : []),
           { name: "hide_zero_power", selector: { boolean: {} }, default: true },
           ...(["radiator", "towel_dryer"].includes(kind) ? [{ name: "show_modes", selector: { boolean: {} }, default: true }] : []),
@@ -7727,6 +7726,8 @@ function stubFor(kind, hass) {
   }
   const batt = ["tool_charger", "wet_vacuum"].includes(kind) ? pick((i, st) => i.startsWith("sensor.") && dc(st) === "battery") : null;
   if (batt) cfg.battery_level = batt;
+  // enceinte connectée : nouvelles cartes sans tuiles puissance / énergie / coût (cases décochées) ; les cartes existantes ne changent pas
+  if (kind === "smart_speaker") Object.assign(cfg, { show_power: false, show_energy: false, show_cost: false });
   if (!cfg.entity && !cfg.power && !cfg.switch && !cfg.temperature) cfg.power = "sensor.example_power";
   return cfg;
 }

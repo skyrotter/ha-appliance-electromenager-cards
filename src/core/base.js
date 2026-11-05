@@ -1388,8 +1388,7 @@ class ApplianceCardBase extends HTMLElement {
     else if (m.soon && active) tile("mdi:timer-sand-complete", tr(hass, "almost_done"), lb("remaining"), c.power);
     const solar = kind === "solar";
     const dual = kind === "water_heater" && (m.pwS || m.energyS);
-    // enceinte connectée : cases puissance / énergie / coût décochées par défaut (cochées pour les autres cartes)
-    const showOpt = (k) => (kind === "smart_speaker" ? c[k] === true : c[k] !== false);
+    const showOpt = (k) => c[k] !== false;
     // hide_zero_power (activé par défaut) : tuiles de puissance masquées quand elles valent 0 (moins de 1 W), ex. chauffe-eau au repos
     const zero = (st) => c.hide_zero_power !== false && Math.abs(powerW(st) ?? 0) < 1;
     if (m.pw && showOpt("show_power") && !zero(m.pw)) tile(solar ? "mdi:solar-power" : "mdi:flash", fmtPower(hass, m.pw) ?? "—", lb(solar ? "production" : dual ? "grid" : "power"), c.power);

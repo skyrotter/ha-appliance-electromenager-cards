@@ -200,9 +200,9 @@ function buildForm(kind) {
             { name: "turbo_threshold", selector: { number: { min: 50, max: 900, step: 10, mode: "box", unit_of_measurement: "W" } } },
             { name: "heat_threshold", selector: { number: { min: 200, max: 1500, step: 10, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
-          { name: "show_power", selector: { boolean: {} }, default: kind !== "smart_speaker" },
-          ...(d.fields.includes("energy") ? [{ name: "show_energy", selector: { boolean: {} }, default: kind !== "smart_speaker" }] : []),
-          ...(d.fields.includes("cost") || d.fields.includes("energy") ? [{ name: "show_cost", selector: { boolean: {} }, default: kind !== "smart_speaker" }] : []),
+          { name: "show_power", selector: { boolean: {} }, default: true },
+          ...(d.fields.includes("energy") ? [{ name: "show_energy", selector: { boolean: {} }, default: true }] : []),
+          ...(d.fields.includes("cost") || d.fields.includes("energy") ? [{ name: "show_cost", selector: { boolean: {} }, default: true }] : []),
           ...(d.fields.includes("switch") ? [{ name: "show_toggle", selector: { boolean: {} }, default: true }] : []),
           { name: "hide_zero_power", selector: { boolean: {} }, default: true },
           ...(["radiator", "towel_dryer"].includes(kind) ? [{ name: "show_modes", selector: { boolean: {} }, default: true }] : []),
@@ -316,6 +316,8 @@ function stubFor(kind, hass) {
   }
   const batt = ["tool_charger", "wet_vacuum"].includes(kind) ? pick((i, st) => i.startsWith("sensor.") && dc(st) === "battery") : null;
   if (batt) cfg.battery_level = batt;
+  // enceinte connectée : nouvelles cartes sans tuiles puissance / énergie / coût (cases décochées) ; les cartes existantes ne changent pas
+  if (kind === "smart_speaker") Object.assign(cfg, { show_power: false, show_energy: false, show_cost: false });
   if (!cfg.entity && !cfg.power && !cfg.switch && !cfg.temperature) cfg.power = "sensor.example_power";
   return cfg;
 }
