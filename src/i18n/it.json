@@ -914,7 +914,10 @@
     "show_last_open": "Mostra ultima apertura",
     "show_hvac_modes": "Pulsanti modalità del termostato",
     "show_fan_modes": "Elenco ventilazione del termostato",
-    "show_preset_modes": "Elenco preimpostazioni del termostato"
+    "show_preset_modes": "Elenco preimpostazioni del termostato",
+    "entity_valve_position": "Apertura valvola (%)",
+    "show_valve": "Mostra apertura valvola",
+    "show_window": "Mostra finestra"
   },
   "light": {
     "light_bulb": "Lampadina",
@@ -1025,6 +1028,27 @@
     "l1": "L1",
     "l2": "L2",
     "l3": "L3"
+  },
+  "trv": {
+    "name": "Valvola termostatica",
+    "idle": "Temperatura raggiunta",
+    "heating": "In riscaldamento",
+    "off": "Spenta",
+    "window": "Finestra aperta",
+    "unavailable": "Non disponibile",
+    "window_alert": "Finestra aperta: riscaldamento in pausa",
+    "target": "Temperatura impostata",
+    "temperature": "Temperatura",
+    "valve": "Valvola",
+    "battery": "Batteria",
+    "open": "Aperta",
+    "closed": "Chiusa",
+    "model": "Modello",
+    "model_trv": "Valvola termostatica (Tado X)",
+    "model_netatmo": "Termostato Netatmo",
+    "model_nest": "Termostato Google Nest",
+    "model_tado": "Termostato a parete Tado X",
+    "model_t6": "Termostato Honeywell Home T6"
   },
   "room_climate": {
     "name": "Clima della stanza",

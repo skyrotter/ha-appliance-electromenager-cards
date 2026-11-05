@@ -574,6 +574,40 @@ const SCEN = [
       set('sensor.em_tariff', 'HC');
       set('sensor.em_l1', 500, W); set('sensor.em_l2', 500, W); set('sensor.em_l3', 500, W);
     } },
+  { kind: 'trv', title: 'Tête thermostatique', lang: true,
+    cfg: { entity: 'climate.demo_trv', entity_window: 'binary_sensor.demo_trv_window' },
+    build(ctl) {
+      const upd = () => {
+        const t = states['input_number.demo_trv_temp'] ? Number(states['input_number.demo_trv_temp'].state) : 19.5;
+        const sp = states['input_number.demo_trv_target'] ? Number(states['input_number.demo_trv_target'].state) : 20.5;
+        set('climate.demo_trv', 'heat', { friendly_name: 'Chambre', hvac_modes: ['off', 'heat', 'auto'], current_temperature: t, temperature: sp, target_temp_step: 0.5,
+          min_temp: 5, max_temp: 30, hvac_action: t < sp ? 'heating' : 'idle', battery: 78, pi_heating_demand: t < sp ? Math.min(100, Math.round((sp - t) * 40)) : 0 });
+      };
+      // le libellé du curseur recalcule l'entité climate (température, consigne, chauffe) avant le rafraîchissement
+      const lbl = (v) => { upd(); return `${v} °C`; };
+      range(ctl, 'Température', 'input_number.demo_trv_temp', 15, 25, 0.1, 19.5, '°C', {}, lbl);
+      range(ctl, 'Consigne', 'input_number.demo_trv_target', 5, 30, 0.5, 20.5, '°C', {}, lbl);
+      checks(ctl, [['Fenêtre ouverte', 'binary_sensor.demo_trv_window', false]]);
+      upd();
+    } },
+  { kind: 'trv', title: 'Thermostat connecté', lang: true,
+    cfg: { entity: 'climate.demo_trv', model: 'nest' },
+    build(ctl) {
+      const upd = () => {
+        const t = states['input_number.demo_trv_temp'] ? Number(states['input_number.demo_trv_temp'].state) : 19.5;
+        const sp = states['input_number.demo_trv_target'] ? Number(states['input_number.demo_trv_target'].state) : 20.5;
+        set('climate.demo_trv', 'heat', { friendly_name: 'Chambre', hvac_modes: ['off', 'heat', 'auto'], current_temperature: t, temperature: sp, target_temp_step: 0.5,
+          min_temp: 5, max_temp: 30, hvac_action: t < sp ? 'heating' : 'idle', battery: 78, pi_heating_demand: t < sp ? Math.min(100, Math.round((sp - t) * 40)) : 0 });
+      };
+      // le libellé du curseur recalcule l'entité climate (température, consigne, chauffe) avant le rafraîchissement
+      const lbl = (v) => { upd(); return `${v} °C`; };
+      range(ctl, 'Température', 'input_number.demo_trv_temp', 15, 25, 0.1, 19.5, '°C', {}, lbl);
+      range(ctl, 'Consigne', 'input_number.demo_trv_target', 5, 30, 0.5, 20.5, '°C', {}, lbl);
+      select(ctl, 'Modèle', 'input_select.demo_thermo_model', [['nest', 'Google Nest'], ['netatmo', 'Netatmo'], ['tado', 'Tado X mural'], ['t6', 'Honeywell Home T6']], this.cfg.model, (v) => {
+        this.cfg.model = v; const el = cards.find((e) => e._scen === this); if (el) { el.setConfig(scenCfg(this)); refresh(); }
+      });
+      upd();
+    } },
   { kind: 'room-climate', title: 'Climat de la pièce', lang: true,
     cfg: { name: 'Salon', entity_temperature: 'sensor.room_temp', entity_humidity: 'sensor.room_humidity', entity_outdoor_temperature: 'sensor.outdoor_temp',
       entity_outdoor_humidity: 'sensor.outdoor_humidity', entity_window: 'binary_sensor.room_window', entity_battery: 'sensor.room_sensor_battery', entity_climate: 'climate.room',

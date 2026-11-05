@@ -931,7 +931,10 @@
     "show_last_open": "Show last opening",
     "show_hvac_modes": "Thermostat mode buttons",
     "show_fan_modes": "Thermostat fan mode list",
-    "show_preset_modes": "Thermostat preset list"
+    "show_preset_modes": "Thermostat preset list",
+    "entity_valve_position": "Valve opening (%)",
+    "show_valve": "Show valve opening",
+    "show_window": "Show window"
   },
   "light": {
     "light_bulb": "Bulb",
@@ -1042,6 +1045,27 @@
     "l1": "L1",
     "l2": "L2",
     "l3": "L3"
+  },
+  "trv": {
+    "name": "Radiator valve",
+    "idle": "At target",
+    "heating": "Heating",
+    "off": "Off",
+    "window": "Window open",
+    "unavailable": "Unavailable",
+    "window_alert": "Window open: heating paused",
+    "target": "Target",
+    "temperature": "Temperature",
+    "valve": "Valve",
+    "battery": "Battery",
+    "open": "Open",
+    "closed": "Closed",
+    "model": "Model",
+    "model_trv": "Radiator valve (Tado X)",
+    "model_netatmo": "Netatmo thermostat",
+    "model_nest": "Google Nest thermostat",
+    "model_tado": "Tado X wall thermostat",
+    "model_t6": "Honeywell Home T6 thermostat"
   },
   "room_climate": {
     "name": "Room climate",

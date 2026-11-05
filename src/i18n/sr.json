@@ -914,7 +914,10 @@
     "show_last_open": "Прикажи последње отварање",
     "show_hvac_modes": "Дугмад режима термостата",
     "show_fan_modes": "Листа вентилације термостата",
-    "show_preset_modes": "Листа предподешавања термостата"
+    "show_preset_modes": "Листа предподешавања термостата",
+    "entity_valve_position": "Отвореност вентила (%)",
+    "show_valve": "Прикажи отвореност вентила",
+    "show_window": "Прикажи прозор"
   },
   "light": {
     "light_bulb": "Сијалица",
@@ -1025,6 +1028,27 @@
     "l1": "L1",
     "l2": "L2",
     "l3": "L3"
+  },
+  "trv": {
+    "name": "Термостатска глава",
+    "idle": "Задата температура достигнута",
+    "heating": "Греје",
+    "off": "Искључена",
+    "window": "Прозор отворен",
+    "unavailable": "Недоступно",
+    "window_alert": "Прозор отворен: грејање паузирано",
+    "target": "Задата",
+    "temperature": "Температура",
+    "valve": "Вентил",
+    "battery": "Батерија",
+    "open": "Отворен",
+    "closed": "Затворен",
+    "model": "Модел",
+    "model_trv": "Термостатска глава (Tado X)",
+    "model_netatmo": "Netatmo термостат",
+    "model_nest": "Google Nest термостат",
+    "model_tado": "Tado X зидни термостат",
+    "model_t6": "Honeywell Home T6 термостат"
   },
   "room_climate": {
     "name": "Клима у соби",

@@ -914,7 +914,10 @@
     "show_last_open": "Prikaži poslednje otvaranje",
     "show_hvac_modes": "Dugmad režima termostata",
     "show_fan_modes": "Lista ventilacije termostata",
-    "show_preset_modes": "Lista predpodešavanja termostata"
+    "show_preset_modes": "Lista predpodešavanja termostata",
+    "entity_valve_position": "Otvorenost ventila (%)",
+    "show_valve": "Prikaži otvorenost ventila",
+    "show_window": "Prikaži prozor"
   },
   "light": {
     "light_bulb": "Sijalica",
@@ -1025,6 +1028,27 @@
     "l1": "L1",
     "l2": "L2",
     "l3": "L3"
+  },
+  "trv": {
+    "name": "Termostatska glava",
+    "idle": "Zadata temperatura dostignuta",
+    "heating": "Greje",
+    "off": "Isključena",
+    "window": "Prozor otvoren",
+    "unavailable": "Nedostupno",
+    "window_alert": "Prozor otvoren: grejanje pauzirano",
+    "target": "Zadata",
+    "temperature": "Temperatura",
+    "valve": "Ventil",
+    "battery": "Baterija",
+    "open": "Otvoren",
+    "closed": "Zatvoren",
+    "model": "Model",
+    "model_trv": "Termostatska glava (Tado X)",
+    "model_netatmo": "Netatmo termostat",
+    "model_nest": "Google Nest termostat",
+    "model_tado": "Tado X zidni termostat",
+    "model_t6": "Honeywell Home T6 termostat"
   },
   "room_climate": {
     "name": "Klima u sobi",
