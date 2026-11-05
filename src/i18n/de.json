@@ -1107,6 +1107,7 @@
     "st_double_ring": "Doppelring",
     "st_dial": "Zeigerinstrument",
     "st_neon": "Neon",
+    "st_netatmo": "Netatmo",
     "st_bars": "Balken",
     "lcd_auto": "Automatisch (tagsüber grün, dunkel blau)",
     "lcd_green": "Grün",

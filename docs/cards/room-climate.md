@@ -17,6 +17,7 @@
 | `double_ring` | temperature and humidity rings around the room icon, min / avg / max with their time, 24 h graphs in the background |
 | `dial` | brass thermo-hygrometer with two springy needles and green comfort zones |
 | `neon` | glowing neon numbers on black, colour of the comfort state |
+| `netatmo` | Netatmo thermostat illustration (same as `appliance-trv-card`), live e-ink screen, glow and flame while heating (needs `entity_climate`) |
 | `bars` | two columns filling up (temperature and humidity) with the comfort zone marked |
 
 **Card**
