@@ -216,8 +216,10 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
 
     _compute() {
       const c = this._c, cs = this._st(c.entity), a = (cs && cs.attributes) || {};
-      const dead = !cs || /^(unavailable|unknown)$/i.test(String(cs.state));
       const cur = this._num(a.current_temperature), target = this._num(a.temperature);
+      // état « unknown » : certains thermostats (Tuya BHT6000…) ne remontent pas leur mode mais bien la température
+      // et la consigne ; la carte reste alors pilotable. Indisponible seulement si rien n'est lisible.
+      const dead = !cs || /^unavailable$/i.test(String(cs.state)) || (/^unknown$/i.test(String(cs.state)) && !fin(cur) && !fin(target));
       const act = String(a.hvac_action || ''), off = !dead && String(cs.state) === 'off';
       // fenêtre : capteur dédié, sinon l'attribut de la tête (window_open / window_detection)
       const ws = this._st(c.entity_window);
@@ -225,7 +227,9 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       const bs = this._st(c.entity_battery), bat = bs ? (/^(on|low)$/i.test(String(bs.state)) ? 5 : /^off$/i.test(String(bs.state)) ? 100 : this._num(bs.state)) : this._num(a.battery ?? a.battery_level);
       const vs = this._st(c.entity_valve_position), valve = vs ? this._num(vs.state) : this._num(a.pi_heating_demand ?? a.valve_position ?? a.position);
       // en chauffe : hvac_action, sinon vanne ouverte
-      const heating = !off && (act === 'heating' || act === 'preheating' || (!act && fin(valve) && valve > 0));
+      // en chauffe : hvac_action, sinon vanne ouverte, sinon (ni l'un ni l'autre) température sous la consigne
+      const heating = !off && (act === 'heating' || act === 'preheating' || (!act && fin(valve) && valve > 0)
+        || (!act && !fin(valve) && fin(cur) && fin(target) && cur <= target - 0.5));
       const st = dead ? 'unavailable' : win ? 'window' : off ? 'off' : heating ? 'heating' : 'idle';
       return { cs, a, cur, target, st, win, bat, valve, off, dead };
     }
