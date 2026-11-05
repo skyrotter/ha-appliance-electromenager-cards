@@ -26740,7 +26740,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       if (this._subTag !== tag) {
         this._subTag = tag;
         if (this._sub) this._sub.remove();
-        this._sub = null;
+        this._sub = null; this._subForm = null;
         const C = tag && customElements.get(tag);
         if (C && C.getConfigElement) {
           this._sub = C.getConfigElement();
@@ -26749,9 +26749,25 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
             this._fire(wrap(this._config.appliance, e.detail.config));
           });
           this.appendChild(this._sub);
+        } else if (C && C.getConfigForm) {
+          // cartes « de base » : pas d'éditeur dédié, seulement un schéma ha-form (entité, capteurs, options…)
+          const f = C.getConfigForm();
+          this._sub = document.createElement('ha-form');
+          this._subForm = f;
+          this._sub.schema = f.schema;
+          this._sub.computeLabel = f.computeLabel;
+          this._sub.addEventListener('value-changed', (e) => {
+            e.stopPropagation();
+            this._fire(wrap(this._config.appliance, e.detail.value));
+          });
+          this.appendChild(this._sub);
         }
       }
-      if (this._sub) { this._sub.hass = this._hass; this._sub.setConfig(inner(this._config)); }
+      if (this._sub) {
+        this._sub.hass = this._hass;
+        if (this._subForm) this._sub.data = inner(this._config);
+        else this._sub.setConfig(inner(this._config));
+      }
     }
     _fire(config) {
       this._config = config;
