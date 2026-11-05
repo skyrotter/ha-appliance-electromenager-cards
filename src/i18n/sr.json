@@ -1051,7 +1051,8 @@
     "model_netatmo": "Netatmo термостат",
     "model_nest": "Google Nest термостат",
     "model_tado": "Tado X зидни термостат",
-    "model_t6": "Honeywell Home T6 термостат"
+    "model_t6": "Honeywell Home T6 термостат",
+    "model_bht6000": "Tuya BHT6000 термостат (округли, црни екран)"
   },
   "room_climate": {
     "name": "Клима у соби",

@@ -1068,7 +1068,8 @@
     "model_netatmo": "Netatmo thermostat",
     "model_nest": "Google Nest thermostat",
     "model_tado": "Tado X wall thermostat",
-    "model_t6": "Honeywell Home T6 thermostat"
+    "model_t6": "Honeywell Home T6 thermostat",
+    "model_bht6000": "Tuya BHT6000 thermostat (round, black screen)"
   },
   "room_climate": {
     "name": "Room climate",

@@ -7,7 +7,7 @@ It works with the `climate` entity of any smart radiator valve (Zigbee2MQTT, ZHA
 | Option | What it does |
 |---|---|
 | `entity` | the `climate` entity of the valve: current temperature, target, `hvac_action`, `hvac_modes` |
-| `model` | `trv` (default, Tado X radiator valve) or a wall thermostat: `netatmo`, `nest` (Google Nest), `tado` (Tado X wall thermostat), `t6` (Honeywell Home T6). The screen of each photo is drawn live |
+| `model` | `trv` (default, Tado X radiator valve) or a wall thermostat: `netatmo`, `nest` (Google Nest), `tado` (Tado X wall thermostat), `t6` (Honeywell Home T6), `bht6000` (Tuya BHT6000 and similar round black-screen thermostats, drawn). The screen is drawn live |
 | `entity_window` | window sensor (`binary_sensor`). Without it, the `window_open` attribute of the valve is used when it has one |
 | `entity_battery` | battery (`sensor` %, or a low-battery `binary_sensor`). Without it, the `battery` attribute of the valve is used |
 | `entity_valve_position` | valve opening in % (`sensor` / `number`). Without it, the `pi_heating_demand` / `valve_position` attribute is used |
@@ -26,6 +26,9 @@ With `model`, the same card shows a wall thermostat, with its screen drawn live 
 - **Google Nest**: black round screen with the target arc; the screen turns orange and shows **HEATING** while heating.
 - **Tado X wall thermostat**: dot-matrix digits, orange heat waves while heating.
 - **Honeywell Home T6**: blue LCD, measured temperature, `Target: …` line, flame while heating.
+- **Tuya BHT6000** (`bht6000`): drawn round thermostat with a black screen, measured temperature, `SET` target, clock and touch keys; heat waves while heating.
+
+Some thermostats (e.g. Tuya BHT6000) report the temperature and target but no HVAC mode: their state stays `unknown`. The card still shows the values and the **− / +** buttons work; without `hvac_action`, heating is assumed when the temperature is at least 0.5 °C below the target.
 
 While you tap **− / +**, the new target is shown in large digits on every model.
 

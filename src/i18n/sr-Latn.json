@@ -1051,7 +1051,8 @@
     "model_netatmo": "Netatmo termostat",
     "model_nest": "Google Nest termostat",
     "model_tado": "Tado X zidni termostat",
-    "model_t6": "Honeywell Home T6 termostat"
+    "model_t6": "Honeywell Home T6 termostat",
+    "model_bht6000": "Tuya BHT6000 termostat (okrugli, crni ekran)"
   },
   "room_climate": {
     "name": "Klima u sobi",
