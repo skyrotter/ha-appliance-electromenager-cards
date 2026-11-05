@@ -489,6 +489,21 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c=rs('open',{}); ok('roller shutter assumed, no position -> all active',!dis(c,'open')&&!dis(c,'close'));
  document.querySelectorAll('appliance-roller-shutter-card').forEach((e)=>e.remove());
 }
+// climat de la pièce : commandes du thermostat (modes, ventilation, préréglage), désactivées par défaut
+{const TH=(id,v)=>mk(id,v,{unit_of_measurement:'°C',device_class:'temperature'}), CL=(st)=>mk('climate.c',st,{hvac_modes:['heat','off','cool'],fan_modes:['auto','low'],fan_mode:'low',preset_modes:['eco','comfort'],preset_mode:'eco',temperature:20,target_temp_step:0.5});
+ const base={entity_temperature:'sensor.t',entity_climate:'climate.c'};
+ let c=card('room-climate',base,[TH('sensor.t',20),CL('heat')]);
+ ok('room climate: thermostat controls hidden by default',c.sr.getElementById('cmodes').hidden&&c.sr.getElementById('csel').hidden);
+ c=card('room-climate',{...base,show_hvac_modes:true,show_fan_modes:true,show_preset_modes:true},[TH('sensor.t',20),CL('heat')]);
+ const bs=[...c.sr.querySelectorAll('#cmodes button')];
+ ok('room climate: mode buttons in HA order, active mode',bs.map((b)=>b.dataset.m).join()==='off,cool,heat'&&bs[2].classList.contains('on')&&!bs[0].classList.contains('on'),bs.map((b)=>b.dataset.m).join());
+ ok('room climate: fan and preset lists',c.sr.getElementById('sfan').value==='low'&&c.sr.getElementById('spre').value==='eco'&&!c.sr.getElementById('csel').hidden);
+ bs[1].click(); const f=c.sr.getElementById('sfan'); f.value='auto'; f.dispatchEvent(new Event('change')); const pr=c.sr.getElementById('spre'); pr.value='comfort'; pr.dispatchEvent(new Event('change'));
+ ok('room climate: mode / fan / preset calls',JSON.stringify(c.h.calls)==='[["climate","set_hvac_mode",{"entity_id":"climate.c","hvac_mode":"cool"}],["climate","set_fan_mode",{"entity_id":"climate.c","fan_mode":"auto"}],["climate","set_preset_mode",{"entity_id":"climate.c","preset_mode":"comfort"}]]',JSON.stringify(c.h.calls));
+ c=card('room-climate',{...base,show_hvac_modes:true,show_fan_modes:true},[TH('sensor.t',20),mk('climate.c','heat',{hvac_modes:['heat','off'],temperature:20})]);
+ ok('room climate: no fan list without fan_modes',c.sr.getElementById('csel').hidden&&!c.sr.getElementById('cmodes').hidden);
+ document.querySelectorAll('appliance-room-climate-card').forEach((e)=>e.remove());
+}
 // climat de la pièce : confort, alertes, risques, aération, fenêtre, batterie, pop-up
 {const TH=(id,v,a={})=>mk(id,v,{unit_of_measurement:'°C',device_class:'temperature',...a}), HU=(id,v)=>mk(id,v,{unit_of_measurement:'%',device_class:'humidity'});
  const rc=(c)=>c.sr.querySelector('ha-card'), chip=(c)=>c.sr.getElementById('chip').textContent, notes=(c)=>c.sr.getElementById('notes').textContent, base={entity_temperature:'sensor.t',entity_humidity:'sensor.h'};

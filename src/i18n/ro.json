@@ -911,7 +911,10 @@
     "entity_open": "Deschiderea ușii (buton, încuietoare…)",
     "entity_last_open": "Ultima deschidere (una sau mai multe date)",
     "entity_battery_low": "Baterie descărcată",
-    "show_last_open": "Afișează ultima deschidere"
+    "show_last_open": "Afișează ultima deschidere",
+    "show_hvac_modes": "Butoane de mod ale termostatului",
+    "show_fan_modes": "Listă ventilație termostat",
+    "show_preset_modes": "Listă presetări termostat"
   },
   "light": {
     "light_bulb": "Bec",
@@ -1091,7 +1094,9 @@
     "cooling": "răcește",
     "compare": "Compară",
     "yesterday": "Ieri",
-    "previous": "Perioada anterioară"
+    "previous": "Perioada anterioară",
+    "fan_mode": "Ventilație",
+    "preset_mode": "Presetare"
   },
   "mailbox": {
     "name": "Cutie poștală",

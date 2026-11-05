@@ -911,7 +911,10 @@
     "entity_open": "Otvaranje vrata (dugme, brava…)",
     "entity_last_open": "Poslednje otvaranje (jedan ili više datuma)",
     "entity_battery_low": "Slaba baterija",
-    "show_last_open": "Prikaži poslednje otvaranje"
+    "show_last_open": "Prikaži poslednje otvaranje",
+    "show_hvac_modes": "Dugmad režima termostata",
+    "show_fan_modes": "Lista ventilacije termostata",
+    "show_preset_modes": "Lista predpodešavanja termostata"
   },
   "light": {
     "light_bulb": "Sijalica",
@@ -1091,7 +1094,9 @@
     "cooling": "hlađenje",
     "compare": "Uporedi",
     "yesterday": "Juče",
-    "previous": "Prethodni period"
+    "previous": "Prethodni period",
+    "fan_mode": "Ventilacija",
+    "preset_mode": "Predpodešavanje"
   },
   "mailbox": {
     "name": "Poštansko sanduče",

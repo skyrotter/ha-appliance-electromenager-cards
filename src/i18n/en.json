@@ -928,7 +928,10 @@
     "entity_open": "Door opening (button, lock…)",
     "entity_last_open": "Last opening (one or more timestamps)",
     "entity_battery_low": "Battery low",
-    "show_last_open": "Show last opening"
+    "show_last_open": "Show last opening",
+    "show_hvac_modes": "Thermostat mode buttons",
+    "show_fan_modes": "Thermostat fan mode list",
+    "show_preset_modes": "Thermostat preset list"
   },
   "light": {
     "light_bulb": "Bulb",
@@ -1108,7 +1111,9 @@
     "cooling": "cooling",
     "compare": "Compare",
     "yesterday": "Yesterday",
-    "previous": "Previous period"
+    "previous": "Previous period",
+    "fan_mode": "Fan mode",
+    "preset_mode": "Preset"
   },
   "mailbox": {
     "name": "Mailbox",

@@ -911,7 +911,10 @@
     "entity_open": "Apertura porta (pulsante, serratura…)",
     "entity_last_open": "Ultima apertura (una o più date)",
     "entity_battery_low": "Batteria scarica",
-    "show_last_open": "Mostra ultima apertura"
+    "show_last_open": "Mostra ultima apertura",
+    "show_hvac_modes": "Pulsanti modalità del termostato",
+    "show_fan_modes": "Elenco ventilazione del termostato",
+    "show_preset_modes": "Elenco preimpostazioni del termostato"
   },
   "light": {
     "light_bulb": "Lampadina",
@@ -1091,7 +1094,9 @@
     "cooling": "raffresca",
     "compare": "Confronta",
     "yesterday": "Ieri",
-    "previous": "Periodo precedente"
+    "previous": "Periodo precedente",
+    "fan_mode": "Ventilazione",
+    "preset_mode": "Preimpostazione"
   },
   "mailbox": {
     "name": "Cassetta postale",
