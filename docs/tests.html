@@ -1239,6 +1239,9 @@ ok('card size / grid',typeof c.el.getCardSize()==='number'&&c.el.getGridOptions(
  c=card('ceiling-spot',{entity:'light.l',spot_count:4},[mk('light.l','on',{brightness:128,supported_color_modes:['brightness']})]);
  ok('ceiling spot: 4 spots, on, brightness, cascade',c.sr.querySelectorAll('.spot').length===4&&cls(c)==='on'&&Math.abs(parseFloat(getComputedStyle(c.sr.querySelector('ha-card')).getPropertyValue('--b'))-0.5)<0.02&&c.sr.querySelectorAll('.spot')[3].style.getPropertyValue('--d')==='0.45s',cls(c));
  c=card('ceiling-spot',{entity:'light.l',spot_count:9},[mk('light.l','on')]); ok('ceiling spot: count capped at 4',c.sr.querySelectorAll('.spot').length===4);
+ {const w=(cfg)=>{const c=card('ceiling-spot',{entity:'light.l',compact:true,...cfg},[mk('light.l','on')]); Object.assign(c.el.style,{display:'block',width:'240px',height:'200px'}); return c.sr.querySelector('.stage svg').getBoundingClientRect().width;};
+  const full=w({}), half=w({illustration_size:55});
+  ok('compact: illustration_size shrinks the illustration',full>150&&Math.abs(half/full-0.55)<0.05,full+' / '+half);}
  {const BR={supported_color_modes:['brightness']}, tile=(c)=>c.sr.querySelector('.tile[data-k="brightness"]'), bs=(c)=>c.sr.getElementById('ltbs');
   c=card('ceiling-spot',{entity:'light.l'},[mk('light.l','on',{...BR,brightness:191})]);
   ok('ceiling spot: brightness slider by default',tile(c).classList.contains('slide')&&!tile(c).classList.contains('hide')&&bs(c).value==='75',bs(c).value);
