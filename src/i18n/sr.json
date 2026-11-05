@@ -1042,7 +1042,13 @@
     "valve": "Вентил",
     "battery": "Батерија",
     "open": "Отворен",
-    "closed": "Затворен"
+    "closed": "Затворен",
+    "model": "Модел",
+    "model_trv": "Термостатска глава (Tado X)",
+    "model_netatmo": "Netatmo термостат",
+    "model_nest": "Google Nest термостат",
+    "model_tado": "Tado X зидни термостат",
+    "model_t6": "Honeywell Home T6 термостат"
   },
   "room_climate": {
     "name": "Клима у соби",

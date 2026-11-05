@@ -1059,7 +1059,13 @@
     "valve": "Valve",
     "battery": "Battery",
     "open": "Open",
-    "closed": "Closed"
+    "closed": "Closed",
+    "model": "Model",
+    "model_trv": "Radiator valve (Tado X)",
+    "model_netatmo": "Netatmo thermostat",
+    "model_nest": "Google Nest thermostat",
+    "model_tado": "Tado X wall thermostat",
+    "model_t6": "Honeywell Home T6 thermostat"
   },
   "room_climate": {
     "name": "Room climate",

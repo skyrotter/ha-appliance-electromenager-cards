@@ -1042,7 +1042,13 @@
 "valve": "Ventil",
 "battery": "Batteri",
 "open": "Åpent",
-"closed": "Lukket"
+"closed": "Lukket",
+"model": "Modell",
+"model_trv": "Radiatortermostat (Tado X)",
+"model_netatmo": "Netatmo-termostat",
+"model_nest": "Google Nest-termostat",
+"model_tado": "Tado X veggtermostat",
+"model_t6": "Honeywell Home T6-termostat"
 },
 "room_climate": {
 "name": "Romklima",

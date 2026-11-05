@@ -1042,7 +1042,13 @@
     "valve": "Valvola",
     "battery": "Batteria",
     "open": "Aperta",
-    "closed": "Chiusa"
+    "closed": "Chiusa",
+    "model": "Modello",
+    "model_trv": "Valvola termostatica (Tado X)",
+    "model_netatmo": "Termostato Netatmo",
+    "model_nest": "Termostato Google Nest",
+    "model_tado": "Termostato a parete Tado X",
+    "model_t6": "Termostato Honeywell Home T6"
   },
   "room_climate": {
     "name": "Clima della stanza",

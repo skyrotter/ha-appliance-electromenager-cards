@@ -401,16 +401,24 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
 {const tv=(c)=>c.sr.querySelector('ha-card'), bd=(c)=>c.sr.getElementById('tvbadge').textContent;
  const CL=(state,act,a={})=>mk('climate.t',state,{hvac_modes:['off','heat','auto'],current_temperature:19.5,temperature:20.5,target_temp_step:0.5,min_temp:5,max_temp:30,hvac_action:act,battery:80,...a});
  let c=card('trv',{entity:'climate.t'},[CL('heat','heating',{pi_heating_demand:40})]);
- ok('trv heating: screen and badge',/heating/.test(tv(c).className)&&bd(c)==='En chauffe'&&c.sr.getElementById('tvset').textContent==='20,5°'&&c.sr.getElementById('tvcurt').textContent==='19,5°'&&getComputedStyle(c.sr.querySelector('.tv-glow')).animationName==='tvbreathe',tv(c).className+' '+c.sr.getElementById('tvset').textContent);
+ ok('trv heating: screen and badge',/heating/.test(tv(c).className)&&bd(c)==='En chauffe'&&c.sr.getElementById('tvbig').textContent==='20,5°'&&c.sr.getElementById('tvsmall').textContent==='19,5°'&&getComputedStyle(c.sr.querySelector('.tv-glow')).animationName==='tvbreathe',tv(c).className+' '+c.sr.getElementById('tvbig').textContent);
  ok('trv tiles: temperature, valve, battery',/19,5/.test(c.sr.querySelector('.tile[data-k="temperature"]').textContent)&&/40/.test(c.sr.querySelector('.tile[data-k="valve"]').textContent)&&/80/.test(c.sr.querySelector('.tile[data-k="battery"]').textContent));
  c=card('trv',{entity:'climate.t'},[CL('heat','idle')]); ok('trv at target',/idle/.test(tv(c).className)&&bd(c)==='Consigne atteinte',tv(c).className);
- c=card('trv',{entity:'climate.t'},[CL('off','off')]); ok('trv off: OFF on screen, − / + disabled',/off/.test(tv(c).className)&&c.sr.getElementById('tvset').textContent==='OFF'&&c.sr.getElementById('tvp').disabled,tv(c).className);
+ c=card('trv',{entity:'climate.t'},[CL('off','off')]); ok('trv off: OFF on screen, − / + disabled',/off/.test(tv(c).className)&&c.sr.getElementById('tvbig').textContent==='OFF'&&c.sr.getElementById('tvp').disabled,tv(c).className);
  c=card('trv',{entity:'climate.t',entity_window:'binary_sensor.w'},[CL('heat','idle'),mk('binary_sensor.w','on')]); ok('trv window open',/window/.test(tv(c).className)&&/chauffage en pause/.test(c.sr.getElementById('tvalert').textContent),tv(c).className);
  c=card('trv',{entity:'climate.t'},[CL('heat','idle',{window_open:true})]); ok('trv window from attribute',/window/.test(tv(c).className),tv(c).className);
  c=card('trv',{entity:'climate.t'},[CL('heat','idle')]);
  [...c.sr.querySelectorAll('#tvmodes button')].find((b)=>b.dataset.m==='off').click();
  ok('trv mode button',JSON.stringify(c.h.calls[0])==='["climate","set_hvac_mode",{"entity_id":"climate.t","hvac_mode":"off"}]',JSON.stringify(c.h.calls));
- c.sr.getElementById('tvp').click(); ok('trv + shows the new target at once',c.sr.getElementById('tvset').textContent==='21°',c.sr.getElementById('tvset').textContent);
+ c.sr.getElementById('tvp').click(); ok('trv + shows the new target at once',c.sr.getElementById('tvbig').textContent==='21°',c.sr.getElementById('tvbig').textContent);
+ c=card('trv',{entity:'climate.t',model:'nest'},[CL('heat','heating')]);
+ ok('thermostat nest: target big, current small, arc, heating label',c.sr.getElementById('tvbig').textContent==='20,5°'&&c.sr.getElementById('tvsmall').textContent==='19,5°'&&c.sr.getElementById('tvarc').getAttribute('stroke-dasharray').startsWith('62')&&c.sr.getElementById('tvmode').textContent==='EN CHAUFFE',c.sr.getElementById('tvarc').getAttribute('stroke-dasharray'));
+ c=card('trv',{entity:'climate.t',model:'netatmo'},[CL('heat','idle')]);
+ ok('thermostat netatmo: current big, target small',c.sr.getElementById('tvbig').textContent==='19,5°'&&c.sr.getElementById('tvsmall').textContent==='20,5°');
+ c.sr.getElementById('tvp').click(); ok('thermostat netatmo: target shown big while adjusting',c.sr.getElementById('tvbig').textContent==='21°');
+ c=card('trv',{entity:'climate.t',model:'t6'},[CL('heat','idle')]); ok('thermostat t6: Consigne line',c.sr.getElementById('tvsmall').textContent==='Consigne : 20,5°',c.sr.getElementById('tvsmall').textContent);
+ c=card('trv',{entity:'climate.t',model:'tado'},[CL('heat','idle')]); ok('thermostat tado wall: photo and live screen',!!c.sr.querySelector('svg image')&&c.sr.getElementById('tvbig').textContent==='19,5°');
+ c=card('trv',{entity:'climate.t',model:'unknown'},[CL('heat','idle')]); ok('unknown model falls back to the valve',c.sr.getElementById('tvbig').textContent==='20,5°');
  c=card('trv',{entity:'climate.t'},[mk('climate.t','unavailable')]); ok('trv unavailable',/unavailable/.test(tv(c).className),tv(c).className);
  document.querySelectorAll('appliance-trv-card').forEach((e)=>e.remove());
 }

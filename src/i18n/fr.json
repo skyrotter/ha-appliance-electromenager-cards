@@ -1059,7 +1059,13 @@
     "valve": "Vanne",
     "battery": "Batterie",
     "open": "Ouverte",
-    "closed": "Fermée"
+    "closed": "Fermée",
+    "model": "Modèle",
+    "model_trv": "Tête thermostatique (Tado X)",
+    "model_netatmo": "Thermostat Netatmo",
+    "model_nest": "Thermostat Google Nest",
+    "model_tado": "Thermostat mural Tado X",
+    "model_t6": "Thermostat Honeywell Home T6"
   },
   "room_climate": {
     "name": "Climat pièce",
