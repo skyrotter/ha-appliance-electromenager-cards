@@ -223,6 +223,10 @@ const CL=(st,act,extra={})=>mk('climate.c',st,Object.assign({hvac_action:act,cur
 c=card('ac-split',{entity:'climate.c'},[CL('cool','cooling')]); ok('split cooling + lcd target',has(c,'st-cooling')&&c.lcd()==='22°'&&has(c,'mode-cool'),c.wrap.className+' '+c.lcd());
 c=card('ac-split',{entity:'climate.c'},[CL('heat','heating')]); ok('split heating',has(c,'st-heating')&&/En chauffe/.test(c.txt()),c.wrap.className);
 c=card('ac-split',{entity:'climate.c'},[CL('cool','idle')]); ok('split at target',has(c,'st-at_target')&&/Consigne atteinte/.test(c.txt()),c.txt());
+c=card('ac-split',{entity:'climate.c'},[mk('climate.c','off',{current_temperature:18.2,temperature:16.5,hvac_modes:['off','cool']})]);
+ ok('split: temperature and target to one decimal',/18,2\s?°C/.test(c.sr.textContent)&&/16,5\s?°C/.test(c.sr.textContent),c.sr.textContent.replace(/\s+/g,' ').slice(0,300));
+c=card('ac-split',{entity:'climate.c'},[mk('climate.c','off',{current_temperature:18,temperature:17,hvac_modes:['off','cool']})]);
+ ok('split: whole degrees stay without decimal',/18\s?°C/.test(c.sr.textContent)&&!/18,0/.test(c.sr.textContent));
 c=card('ac-split',{entity:'climate.c'},[CL('dry','drying')]); ok('split dry',has(c,'st-ac_dry'),c.wrap.className);
 c=card('ac-split',{entity:'climate.c'},[CL('fan_only','fan')]); ok('split fan',has(c,'st-ac_fan')&&/Ventilation/.test(c.txt()),c.txt());
 c=card('ac-split',{entity:'climate.c'},[CL('off','off')]); ok('split off',has(c,'st-off')&&c.lcd()==='',c.wrap.className);

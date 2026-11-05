@@ -7334,8 +7334,8 @@ class ApplianceCardBase extends HTMLElement {
       if (m.level != null) tile("mdi:fire", `P${fmtNum(hass, m.level, 0)}`, lb("level"), c.power_level);
       if (m.pellets != null) tile("mdi:grain", `${fmtNum(hass, m.pellets, 0)} %`, lb("pellets"), c.pellet_level, m.alerts.includes("pellets_low") ? "warn" : "");
     } else if (["water_heater", "oven", "air_fryer", "ac_split", "heat_pump", "towel_dryer", "server_rack"].includes(kind)) {
-      // sèche-serviette : température de pièce et consigne au dixième, comme le radiateur
-      const td = kind === "towel_dryer" ? 1 : 0;
+      // température et consigne au dixième (18,2 / 16,5 ; un entier reste sans décimale), sauf four et friteuse (200 °C)
+      const td = ["oven", "air_fryer"].includes(kind) ? 0 : 1;
       if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, td)} ${m.tempUnit}`, lb("temperature"), tEntity);
       if (m.targetVal != null) tile("mdi:target", `${fmtNum(hass, m.targetVal, td)} ${m.tempUnit}`, lb("target"), c.target_temperature || tEntity);
       // eau chaude restante : % (tuile « Eau chaude ») et litres (tuile « Volume ») — deux tuiles, sinon le texte est tronqué
@@ -14895,7 +14895,9 @@ class AppliancePelletBoilerCard extends HTMLElement {
     const it = [];
     if (c.show_status) it.push([this._l('status'), this._t(st), c.entity_status || c.entity_power]);
     if (c.show_power) it.push([this._l('power'), w === null ? '—' : w >= 1000 ? `${(w / 1000).toFixed(1)} kW` : `${Math.round(w)} W`, c.entity_power]);
-    if (c.show_temps) { it.push([this._l('flow'), f(dep, 0, tc.unit), c.entity_flow_temp]); it.push([this._l('ret'), f(ret, 0, tc.unit), c.entity_return_temp]); }
+    // départ / retour au dixième (un entier reste sans décimale), séparateur décimal de la langue
+    const ft = (v) => (v === null ? '—' : `${v.toLocaleString(this._config.language || lang(this._hass), { maximumFractionDigits: 1 })} ${tc.unit}`);
+    if (c.show_temps) { it.push([this._l('flow'), ft(dep), c.entity_flow_temp]); it.push([this._l('ret'), ft(ret), c.entity_return_temp]); }
     if (c.show_pellets) it.push([this._l('pellets'), f(lvl, 0, '%'), c.entity_pellet_level]);
     if (c.show_energy) it.push([this._l('energy'), f(e, 1, 'kWh'), c.entity_energy]);
     if (c.show_cost && cost !== null) it.push([this._l('cost'), f(cost, 2, '€'), c.entity_cost || c.entity_energy]);
