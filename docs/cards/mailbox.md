@@ -36,4 +36,34 @@ entity_reset: input_boolean.mailbox_mail      # optional: "Mark as collected"
 box_color: anthracite
 ```
 
+## BOKS parcel box
+
+`box_model: boks` replaces the drawing with a photo of the [BOKS](https://www.boks.fr/) connected parcel box (BLE, for example through [skob-ha](https://github.com/kamahat/skob-ha)). The door swings open, a letter drops into the slot, the parcel pictogram lights up when a parcel is announced, the keypad turns green while the door is open and a red battery light blinks when the batteries are low.
+
+| Option | What it does |
+|---|---|
+| `box_model` | `standard` (default, drawing) or `boks` (photo) |
+| `entity_door` | the BOKS **Door** sensor |
+| `entity_open` | **Open the door** button: `button` / `input_button` (press), `lock` (unlock), `script`, `switch`, `input_boolean` (turn on) |
+| `entity_last_open` | one or more timestamp sensors (**Last VIGIK / badge / code opening**): the **Last opened** tile shows the most recent |
+| `entity_battery` | **Battery** (%) |
+| `entity_battery_low` | **Battery low** (`binary_sensor`): battery tile in red and blinking light on the box |
+| `show_last_open` | show the **Last opened** tile (default `true`) |
+
+`entity_mail` / `entity_parcel` stay optional: without them the BOKS shows **Closed** / **Door open**. `box_color` does not apply to the photo.
+
+```yaml
+type: custom:appliance-mailbox-card
+name: BOKS
+box_model: boks
+entity_door: binary_sensor.boks_door
+entity_open: button.boks_open
+entity_battery: sensor.boks_battery
+entity_battery_low: binary_sensor.boks_battery_low
+entity_last_open:
+  - sensor.boks_last_code_opening
+  - sensor.boks_last_badge_opening
+  - sensor.boks_last_vigik_opening
+```
+
 [← All cards](../../README.md#the-cards)

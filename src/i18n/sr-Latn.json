@@ -906,7 +906,12 @@
     "show_co": "Prikaži CO",
     "entity_siren": "Sirena",
     "freeze_temp": "Upozorenje na mraz ispod",
-    "show_probes": "Prikaži sonde"
+    "show_probes": "Prikaži sonde",
+    "box_model": "Model sandučeta",
+    "entity_open": "Otvaranje vrata (dugme, brava…)",
+    "entity_last_open": "Poslednje otvaranje (jedan ili više datuma)",
+    "entity_battery_low": "Slaba baterija",
+    "show_last_open": "Prikaži poslednje otvaranje"
   },
   "light": {
     "light_bulb": "Sijalica",
@@ -1115,7 +1120,11 @@
     "color_red": "Crvena",
     "color_blue": "Plava",
     "color_yellow": "Žuta",
-    "color_brown": "Braon"
+    "color_brown": "Braon",
+    "open_door": "Otvori vrata",
+    "last_open": "Poslednje otvaranje",
+    "model_standard": "Obično poštansko sanduče",
+    "model_boks": "BOKS (kutija za pakete)"
   },
   "smoke_detector": {
     "name": "Detektor dima",

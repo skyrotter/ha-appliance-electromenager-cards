@@ -435,6 +435,24 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c=card('smoke-detector',{entity_smoke:'binary_sensor.s',model:'round'},[mk('binary_sensor.s','off')],'en'); ok('smoke round model + english',!c.sr.querySelector('#sdmesh')&&!!c.sr.querySelector('#sdbody')&&bd(c)==='OK',bd(c));
  document.querySelectorAll('appliance-smoke-detector-card').forEach((e)=>e.remove());
 }
+// boîte aux lettres BOKS (box_model: boks) : photo, porte, bouton d'ouverture, dernière ouverture, pile faible
+{const cls=(c)=>c.sr.querySelector('ha-card').className, bd=(c)=>c.sr.getElementById('mbbadge').textContent, ago=(m)=>new Date(Date.now()-m*60000).toISOString();
+ let c=card('mailbox',{box_model:'boks',entity_door:'binary_sensor.d',entity_open:'button.o'},[mk('binary_sensor.d','off'),mk('button.o','unknown')]);
+ ok('boks: photo, closed without mail sensor',/^shut/.test(cls(c))&&bd(c)==='Fermée'&&!!c.sr.querySelector('.bk-door image')&&!c.sr.querySelector('.mb-door'),cls(c)+' '+bd(c));
+ ok('boks: open button enabled while the button was never pressed',!c.sr.getElementById('mbopen').disabled&&!c.sr.getElementById('mbopen').classList.contains('hide')&&c.sr.getElementById('mbcollect').classList.contains('hide'));
+ c.sr.getElementById('mbopen').click(); ok('boks: open button presses',JSON.stringify(c.h.calls[0])==='["button","press",{"entity_id":"button.o"}]',JSON.stringify(c.h.calls));
+ c=card('mailbox',{box_model:'boks',entity_door:'binary_sensor.d'},[mk('binary_sensor.d','on')]);
+ ok('boks: door open swings the photo door',/opened/.test(cls(c))&&bd(c)==='Porte ouverte'&&getComputedStyle(c.sr.querySelector('.bk-door')).transform!=='none',cls(c));
+ c=card('mailbox',{box_model:'boks',entity_door:'binary_sensor.d',entity_last_open:['sensor.v','sensor.c']},[mk('binary_sensor.d','off'),mk('sensor.v','2026-01-01T08:00:00Z'),mk('sensor.c',ago(5))]);
+ ok('boks: last opening = most recent timestamp',/^\d{2}:\d{2}$/.test(c.sr.querySelector('.tile[data-k="last_open"] .v').firstChild.textContent)&&!c.sr.querySelector('.tile[data-k="last_open"]').classList.contains('hide'));
+ c=card('mailbox',{box_model:'boks',entity_door:'binary_sensor.d',entity_battery:'sensor.b',entity_battery_low:'binary_sensor.bl'},[mk('binary_sensor.d','off'),mk('sensor.b',60),mk('binary_sensor.bl','on')]);
+ ok('boks: battery low',/batlow/.test(cls(c))&&c.sr.querySelector('.tile[data-k="battery"]').classList.contains('bad'),cls(c));
+ c=card('mailbox',{box_model:'boks',entity_door:'binary_sensor.d',entity_parcel:'binary_sensor.p'},[mk('binary_sensor.d','off'),mk('binary_sensor.p','on')]);
+ ok('boks: parcel lights the pictogram',/^parcel/.test(cls(c))&&getComputedStyle(c.sr.querySelector('.bk-glow')).animationName==='bkglow',cls(c));
+ c=card('mailbox',{entity_mail:'binary_sensor.m',entity_door:'binary_sensor.d'},[mk('binary_sensor.m','off'),mk('binary_sensor.d','off')]);
+ ok('mailbox without box_model keeps the drawing',!!c.sr.querySelector('.mb-door')&&!c.sr.querySelector('.bk-door')&&/^empty/.test(cls(c)),cls(c));
+ document.querySelectorAll('appliance-mailbox-card').forEach((e)=>e.remove());
+}
 // détecteur de fuite : une ou plusieurs sondes, vanne, sirène, gel, batterie
 {const hc=(c)=>c.sr.querySelector('ha-card').className, bd=(c)=>c.sr.getElementById('lkbadge').textContent, al=(c)=>c.sr.getElementById('lkalert').textContent;
  let c=card('leak-detector',{entity_leak:'binary_sensor.l'},[mk('binary_sensor.l','off')]); ok('leak dry',/^dry/.test(hc(c))&&bd(c)==='Sec',hc(c));

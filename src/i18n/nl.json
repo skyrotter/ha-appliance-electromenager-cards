@@ -906,7 +906,12 @@
     "show_co": "CO tonen",
     "entity_siren": "Sirene",
     "freeze_temp": "Vorstwaarschuwing onder",
-    "show_probes": "Sensoren tonen"
+    "show_probes": "Sensoren tonen",
+    "box_model": "Model brievenbus",
+    "entity_open": "Deur openen (knop, slot…)",
+    "entity_last_open": "Laatste opening (een of meer tijdstempels)",
+    "entity_battery_low": "Batterij bijna leeg",
+    "show_last_open": "Laatste opening tonen"
   },
   "light": {
     "light_bulb": "Lamp",
@@ -1115,7 +1120,11 @@
     "color_red": "Rood",
     "color_blue": "Blauw",
     "color_yellow": "Geel",
-    "color_brown": "Bruin"
+    "color_brown": "Bruin",
+    "open_door": "Deur openen",
+    "last_open": "Laatst geopend",
+    "model_standard": "Gewone brievenbus",
+    "model_boks": "BOKS (pakketbox)"
   },
   "smoke_detector": {
     "name": "Rookmelder",

@@ -776,6 +776,16 @@ const SCEN = [
       set('input_boolean.mailbox_reset', 'on');
       set('sensor.mailbox_battery', 86, { unit_of_measurement: '%', device_class: 'battery' });
     } },
+  { kind: 'mailbox', title: 'Boîte à colis BOKS', lang: true,
+    cfg: { name: 'BOKS', box_model: 'boks', entity_door: 'binary_sensor.boks_door', entity_parcel: 'input_boolean.boks_parcel', entity_open: 'button.boks_open',
+      entity_battery: 'sensor.boks_battery', entity_battery_low: 'binary_sensor.boks_battery_low', entity_last_open: ['sensor.boks_last_code', 'sensor.boks_last_badge'] },
+    build(ctl) {
+      checks(ctl, [['Porte ouverte', 'binary_sensor.boks_door', false], ['Colis', 'input_boolean.boks_parcel', true], ['Pile faible', 'binary_sensor.boks_battery_low', false]]);
+      set('button.boks_open', 'unknown');
+      set('sensor.boks_battery', 78, { unit_of_measurement: '%', device_class: 'battery' });
+      set('sensor.boks_last_code', new Date(Date.now() - 3 * 3600000).toISOString(), { device_class: 'timestamp' });
+      set('sensor.boks_last_badge', new Date(Date.now() - 26 * 3600000).toISOString(), { device_class: 'timestamp' });
+    } },
   { kind: 'smoke-detector', title: 'Détecteur de fumée', lang: true,
     cfg: { name: 'Couloir', model: 'cylinder', entity_smoke: 'binary_sensor.smoke', entity_co: 'sensor.smoke_co', entity_test_button: 'button.smoke_test', entity_silence: 'siren.smoke', entity_battery: 'sensor.smoke_battery', entity_temperature: 'sensor.smoke_temp' },
     build(ctl) {

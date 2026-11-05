@@ -906,7 +906,12 @@
     "show_co": "Прикажи CO",
     "entity_siren": "Сирена",
     "freeze_temp": "Упозорење на мраз испод",
-    "show_probes": "Прикажи сонде"
+    "show_probes": "Прикажи сонде",
+    "box_model": "Модел сандучета",
+    "entity_open": "Отварање врата (дугме, брава…)",
+    "entity_last_open": "Последње отварање (један или више датума)",
+    "entity_battery_low": "Слаба батерија",
+    "show_last_open": "Прикажи последње отварање"
   },
   "light": {
     "light_bulb": "Сијалица",
@@ -1115,7 +1120,11 @@
     "color_red": "Црвена",
     "color_blue": "Плава",
     "color_yellow": "Жута",
-    "color_brown": "Браон"
+    "color_brown": "Браон",
+    "open_door": "Отвори врата",
+    "last_open": "Последње отварање",
+    "model_standard": "Обично поштанско сандуче",
+    "model_boks": "BOKS (кутија за пакете)"
   },
   "smoke_detector": {
     "name": "Детектор дима",

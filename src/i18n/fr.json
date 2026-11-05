@@ -923,7 +923,12 @@
     "show_co": "Afficher le CO",
     "entity_siren": "Sirène",
     "freeze_temp": "Alerte gel en dessous de",
-    "show_probes": "Afficher les sondes"
+    "show_probes": "Afficher les sondes",
+    "box_model": "Modèle de boîte",
+    "entity_open": "Ouverture de la porte (bouton, serrure…)",
+    "entity_last_open": "Dernière ouverture (une ou plusieurs dates)",
+    "entity_battery_low": "Pile faible",
+    "show_last_open": "Afficher la dernière ouverture"
   },
   "light": {
     "light_bulb": "Ampoule",
@@ -1132,7 +1137,11 @@
     "color_red": "Rouge",
     "color_blue": "Bleu",
     "color_yellow": "Jaune",
-    "color_brown": "Marron"
+    "color_brown": "Marron",
+    "open_door": "Ouvrir la porte",
+    "last_open": "Dernière ouverture",
+    "model_standard": "Boîte aux lettres classique",
+    "model_boks": "BOKS (boîte à colis)"
   },
   "smoke_detector": {
     "name": "Détecteur de fumée",

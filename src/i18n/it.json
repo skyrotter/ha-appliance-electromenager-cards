@@ -906,7 +906,12 @@
     "show_co": "Mostra CO",
     "entity_siren": "Sirena",
     "freeze_temp": "Allerta gelo sotto",
-    "show_probes": "Mostra sonde"
+    "show_probes": "Mostra sonde",
+    "box_model": "Modello di cassetta",
+    "entity_open": "Apertura porta (pulsante, serratura…)",
+    "entity_last_open": "Ultima apertura (una o più date)",
+    "entity_battery_low": "Batteria scarica",
+    "show_last_open": "Mostra ultima apertura"
   },
   "light": {
     "light_bulb": "Lampadina",
@@ -1115,7 +1120,11 @@
     "color_red": "Rosso",
     "color_blue": "Blu",
     "color_yellow": "Giallo",
-    "color_brown": "Marrone"
+    "color_brown": "Marrone",
+    "open_door": "Apri la porta",
+    "last_open": "Ultima apertura",
+    "model_standard": "Cassetta classica",
+    "model_boks": "BOKS (cassetta pacchi)"
   },
   "smoke_detector": {
     "name": "Rilevatore di fumo",
