@@ -934,7 +934,8 @@
     "show_preset_modes": "Thermostat preset list",
     "entity_valve_position": "Valve opening (%)",
     "show_valve": "Show valve opening",
-    "show_window": "Show window"
+    "show_window": "Show window",
+    "spot_count": "Number of spotlights"
   },
   "light": {
     "light_bulb": "Bulb",
@@ -955,7 +956,8 @@
     "color": "Colour",
     "brightness": "Brightness",
     "power": "Power",
-    "energy": "Energy"
+    "energy": "Energy",
+    "ceiling_spot": "Recessed spotlights"
   },
   "shutter": {
     "roller_shutter": "Roller shutter",

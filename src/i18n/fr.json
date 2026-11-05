@@ -934,7 +934,8 @@
     "show_preset_modes": "Liste préréglages du thermostat",
     "entity_valve_position": "Ouverture de la vanne (%)",
     "show_valve": "Afficher l'ouverture de la vanne",
-    "show_window": "Afficher la fenêtre"
+    "show_window": "Afficher la fenêtre",
+    "spot_count": "Nombre de spots"
   },
   "light": {
     "light_bulb": "Ampoule",
@@ -955,7 +956,8 @@
     "color": "Couleur",
     "brightness": "Luminosité",
     "power": "Puissance",
-    "energy": "Énergie"
+    "energy": "Énergie",
+    "ceiling_spot": "Spots encastrés"
   },
   "shutter": {
     "roller_shutter": "Volet roulant",

@@ -917,7 +917,8 @@
     "show_preset_modes": "Voreinstellungsliste des Thermostats",
     "entity_valve_position": "Ventilöffnung (%)",
     "show_valve": "Ventilöffnung anzeigen",
-    "show_window": "Fenster anzeigen"
+    "show_window": "Fenster anzeigen",
+    "spot_count": "Anzahl der Strahler"
   },
   "light": {
     "light_bulb": "Glühbirne",
@@ -938,7 +939,8 @@
     "color": "Farbe",
     "brightness": "Helligkeit",
     "power": "Leistung",
-    "energy": "Energie"
+    "energy": "Energie",
+    "ceiling_spot": "Einbaustrahler"
   },
   "shutter": {
     "roller_shutter": "Rollladen",

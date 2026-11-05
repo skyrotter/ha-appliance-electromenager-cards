@@ -917,7 +917,8 @@
 "show_preset_modes": "Forhåndsinnstillinger for termostaten",
 "entity_valve_position": "Ventilåpning (%)",
 "show_valve": "Vis ventilåpning",
-"show_window": "Vis vindu"
+"show_window": "Vis vindu",
+"spot_count": "Antall spotter"
 },
 "light": {
 "light_bulb": "Lyspære",
@@ -938,7 +939,8 @@
 "color": "Farge",
 "brightness": "Lysstyrke",
 "power": "Effekt",
-"energy": "Energi"
+"energy": "Energi",
+"ceiling_spot": "Innfelte spotter"
 },
 "shutter": {
 "roller_shutter": "Rullegardin",

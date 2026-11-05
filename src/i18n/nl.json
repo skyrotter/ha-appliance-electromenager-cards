@@ -917,7 +917,8 @@
     "show_preset_modes": "Voorinstellingenlijst van de thermostaat",
     "entity_valve_position": "Klepopening (%)",
     "show_valve": "Klepopening tonen",
-    "show_window": "Raam tonen"
+    "show_window": "Raam tonen",
+    "spot_count": "Aantal spots"
   },
   "light": {
     "light_bulb": "Lamp",
@@ -938,7 +939,8 @@
     "color": "Kleur",
     "brightness": "Helderheid",
     "power": "Vermogen",
-    "energy": "Energie"
+    "energy": "Energie",
+    "ceiling_spot": "Inbouwspots"
   },
   "shutter": {
     "roller_shutter": "Rolluik",

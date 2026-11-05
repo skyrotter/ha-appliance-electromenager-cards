@@ -1,6 +1,7 @@
-/* Cartes « Lumières » — dix luminaires animés qui partagent ce fichier
+/* Cartes « Lumières » — onze luminaires animés qui partagent ce fichier
  * custom:appliance-light-bulb-card, -color-bulb-, -filament-bulb-, -pendant-light-, -pendant-cluster-,
- * -desk-lamp-, -floor-lamp-, -chandelier-, -garden-spotlight-, -christmas-tree-card.
+ * -desk-lamp-, -floor-lamp-, -chandelier-, -garden-spotlight-, -christmas-tree-, -ceiling-spot-card.
+ * Spots encastrés (#213) : 1 à 4 spots (option spot_count) pilotés par la même entité, allumage en cascade.
  * La couleur de la lumière (--lc) vient de l'ampoule dans Home Assistant (rgb_color, sinon température
  * de blanc en kelvins) ou de l'option `color` ; l'intensité de la lueur (--b) suit la luminosité.
  * Entité light (Allumer / Éteindre, et Couleur pour l'ampoule couleur), switch ou input_boolean.
@@ -88,6 +89,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 .star .rays{opacity:0;transform-box:fill-box;transform-origin:center}
 .on .star .rays{opacity:var(--b);animation:ltspin 10s linear infinite}
 @keyframes ltspin{to{transform:rotate(360deg)}}
+.spot .lit{transition-delay:var(--d,0s)}
 .noanim *{animation:none!important}
 `;
 
@@ -101,6 +103,10 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
    <linearGradient id="ltsteel" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6f767e"/><stop offset=".45" stop-color="#e2e6ea"/><stop offset="1" stop-color="#5a6067"/></linearGradient>
    <linearGradient id="ltbrass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8a5f22"/><stop offset=".45" stop-color="#f1cf7a"/><stop offset="1" stop-color="#7b521b"/></linearGradient>
    <linearGradient id="ltcone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--lc)" stop-opacity=".75"/><stop offset="1" stop-color="var(--lc)" stop-opacity="0"/></linearGradient>
+   <radialGradient id="ltspot" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="color-mix(in srgb,var(--lc) 45%,#fff)"/><stop offset="1" stop-color="var(--lc)"/></radialGradient>
+   <radialGradient id="ltceil" cx=".5" cy=".45" r=".75"><stop offset="0" stop-color="#4a5058"/><stop offset="1" stop-color="#2c3137"/></radialGradient>
+   <radialGradient id="ltbezel" cx=".4" cy=".35" r=".75"><stop offset="0" stop-color="#ffffff"/><stop offset=".7" stop-color="#e9ecef"/><stop offset="1" stop-color="#c9ced4"/></radialGradient>
+   <radialGradient id="ltdiff" cx=".45" cy=".4" r=".7"><stop offset="0" stop-color="#f3f4f6"/><stop offset="1" stop-color="#d4d8dd"/></radialGradient>
    <linearGradient id="ltup" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="var(--lc)" stop-opacity=".8"/><stop offset="1" stop-color="var(--lc)" stop-opacity="0"/></linearGradient>
   </defs>`;
   const screw = (x, y, w) => `<g><rect x="${x}" y="${y}" width="${w}" height="22" rx="3" fill="url(#ltsteel)"/>
@@ -211,6 +217,24 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       <ellipse cx="100" cy="68" rx="15" ry="5" fill="#3b4046"/><ellipse cx="100" cy="64" rx="15" ry="5" fill="url(#ltsteel)"/>
       <ellipse cx="100" cy="64" rx="11" ry="3.5" fill="#2a2f35"/><ellipse class="lit" cx="100" cy="64" rx="11" ry="3.5" fill="url(#ltfill)" style="--k:1"/>
       <ellipse class="lit" cx="100" cy="60" rx="22" ry="10" fill="var(--lc)" style="--k:.45" filter="url(#ltsoft)"/>`,
+    // spots encastrés vus de dessous : collerette blanche à plat au plafond, diffuseur en léger retrait qui s'éclaire
+    // uniformément, halo sur le plafond autour ; 1 à 4 spots (spot_count), allumés en cascade
+    ceiling_spot: (c) => {
+      const n = Math.max(1, Math.min(4, Math.round(Number(c && c.spot_count) || 1)));
+      const L = { 1: [[100, 90, 34]], 2: [[60, 90, 28], [140, 90, 28]], 3: [[100, 56, 23], [56, 124, 23], [144, 124, 23]],
+        4: [[58, 56, 23], [142, 56, 23], [58, 124, 23], [142, 124, 23]] }[n];
+      const spot = ([x, y, r], i) => `<g class="spot" style="--d:${(i * 0.15).toFixed(2)}s">
+        <circle class="lit halo lcf" cx="${x}" cy="${y}" r="${r * 2.3}" style="--k:.55" filter="url(#ltblur)"/>
+        <circle cx="${x}" cy="${y + 1.5}" r="${r + 1}" fill="#000" opacity=".35" filter="url(#ltsoft)"/>
+        <circle cx="${x}" cy="${y}" r="${r}" fill="url(#ltbezel)"/>
+        <circle cx="${x}" cy="${y}" r="${r * 0.72}" fill="#b7bcc3"/>
+        <circle cx="${x}" cy="${y}" r="${r * 0.68}" fill="url(#ltdiff)"/>
+        <circle class="lit" cx="${x}" cy="${y}" r="${r * 0.7}" fill="url(#ltspot)" style="--k:1"/>
+        <circle class="lit" cx="${x}" cy="${y}" r="${r * 0.9}" fill="var(--lc)" style="--k:.35" filter="url(#ltsoft)"/></g>`;
+      return `<rect x="0" y="0" width="200" height="180" fill="url(#ltceil)"/>
+        <rect class="lit" x="0" y="0" width="200" height="180" fill="var(--lc)" style="--k:.12"/>
+        ${L.map(spot).join('')}`;
+    },
     // sapin de Noël : guirlande d'ampoules qui clignotent en séquence et étoile qui rayonne
     christmas_tree: () => {
       const bulbs = [[78, 64], [96, 70], [114, 66], [70, 96], [88, 104], [108, 104], [128, 98], [62, 132], [80, 140], [100, 142], [120, 140], [140, 134]];
@@ -238,6 +262,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     chandelier: { color: '#ffb44d', re: /lustre|chandelier/i, icon: 'mdi:chandelier' },
     garden_spotlight: { color: '#fff1c9', re: /jardin|garden|spot|exterieur|outdoor/i, icon: 'mdi:spotlight-beam' },
     christmas_tree: { color: '#ffd54f', re: /sapin|noel|noël|christmas|xmas|guirlande/i, icon: 'mdi:pine-tree' },
+    ceiling_spot: { color: '#ffd9a0', re: /spot|encastr|downlight|recessed|plafond|ceiling/i, icon: 'mdi:light-recessed' },
   };
   // couleurs proposées par le bouton « Couleur » de l'ampoule couleur
   const PRESETS = [[255, 122, 217], [64, 156, 255], [52, 211, 153], [255, 196, 70], [255, 82, 82], [167, 114, 255]];
@@ -292,7 +317,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const color = this.kind === 'color_bulb';
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="lttitle"></div><div class="badge" id="ltbadge"></div></div>
-        <div class="stage"><svg viewBox="0 0 200 180" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${SVGS[this.kind]()}</svg></div>
+        <div class="stage"><svg viewBox="0 0 200 180" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${SVGS[this.kind](this._c)}</svg></div>
         <div class="ctl" id="ltctl">
           <button data-a="on"><ha-icon icon="mdi:lightbulb-on"></ha-icon><span></span></button>
           ${color ? '<button data-a="color"><ha-icon icon="mdi:palette"></ha-icon><span></span></button>' : ''}
@@ -452,6 +477,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
           ...(this.kind === 'color_bulb' ? [bool('color_cycle', false)] : []),
           ...(this.kind === 'christmas_tree' ? [bool('multicolor')] : []),
         ] },
+        // spots encastrés : nombre de spots pilotés par la même entité
+        ...(this.kind === 'ceiling_spot' ? [{ name: 'spot_count', default: 1, selector: { number: { min: 1, max: 4, step: 1, mode: 'slider' } } }] : []),
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('compact', false), bool('show_controls'), bool('show_button_labels'), bool('show_brightness'), bool('show_power'), bool('show_energy'), bool('animations'),
