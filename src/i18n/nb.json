@@ -906,7 +906,12 @@
 "show_co": "Vis CO",
 "entity_siren": "Sirene",
 "freeze_temp": "Frostvarsel under",
-"show_probes": "Vis sensorer"
+"show_probes": "Vis sensorer",
+"box_model": "Postkassemodell",
+"entity_open": "Døråpning (knapp, lås…)",
+"entity_last_open": "Siste åpning (ett eller flere tidsstempler)",
+"entity_battery_low": "Lavt batteri",
+"show_last_open": "Vis siste åpning"
 },
 "light": {
 "light_bulb": "Lyspære",
@@ -1115,7 +1120,11 @@
 "color_red": "Rød",
 "color_blue": "Blå",
 "color_yellow": "Gul",
-"color_brown": "Brun"
+"color_brown": "Brun",
+"open_door": "Åpne døren",
+"last_open": "Sist åpnet",
+"model_standard": "Vanlig postkasse",
+"model_boks": "BOKS (pakkeboks)"
 },
 "smoke_detector": {
 "name": "Røykvarsler",

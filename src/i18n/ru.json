@@ -906,7 +906,12 @@
     "show_co": "Показывать CO",
     "entity_siren": "Сирена",
     "freeze_temp": "Предупреждение о замерзании ниже",
-    "show_probes": "Показывать датчики"
+    "show_probes": "Показывать датчики",
+    "box_model": "Модель ящика",
+    "entity_open": "Открытие дверцы (кнопка, замок…)",
+    "entity_last_open": "Последнее открытие (одна или несколько дат)",
+    "entity_battery_low": "Батарея разряжена",
+    "show_last_open": "Показывать последнее открытие"
   },
   "light": {
     "light_bulb": "Лампа",
@@ -1115,7 +1120,11 @@
     "color_red": "Красный",
     "color_blue": "Синий",
     "color_yellow": "Жёлтый",
-    "color_brown": "Коричневый"
+    "color_brown": "Коричневый",
+    "open_door": "Открыть дверцу",
+    "last_open": "Последнее открытие",
+    "model_standard": "Обычный почтовый ящик",
+    "model_boks": "BOKS (ящик для посылок)"
   },
   "smoke_detector": {
     "name": "Датчик дыма",

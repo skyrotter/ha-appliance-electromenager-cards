@@ -906,7 +906,12 @@
     "show_co": "Afișează CO",
     "entity_siren": "Sirenă",
     "freeze_temp": "Alertă de îngheț sub",
-    "show_probes": "Afișează sondele"
+    "show_probes": "Afișează sondele",
+    "box_model": "Model cutie",
+    "entity_open": "Deschiderea ușii (buton, încuietoare…)",
+    "entity_last_open": "Ultima deschidere (una sau mai multe date)",
+    "entity_battery_low": "Baterie descărcată",
+    "show_last_open": "Afișează ultima deschidere"
   },
   "light": {
     "light_bulb": "Bec",
@@ -1115,7 +1120,11 @@
     "color_red": "Roșu",
     "color_blue": "Albastru",
     "color_yellow": "Galben",
-    "color_brown": "Maro"
+    "color_brown": "Maro",
+    "open_door": "Deschide ușa",
+    "last_open": "Ultima deschidere",
+    "model_standard": "Cutie poștală clasică",
+    "model_boks": "BOKS (cutie pentru colete)"
   },
   "smoke_detector": {
     "name": "Detector de fum",

@@ -906,7 +906,12 @@
     "show_co": "CO anzeigen",
     "entity_siren": "Sirene",
     "freeze_temp": "Frostwarnung unter",
-    "show_probes": "Sonden anzeigen"
+    "show_probes": "Sonden anzeigen",
+    "box_model": "Briefkastenmodell",
+    "entity_open": "Türöffnung (Taste, Schloss…)",
+    "entity_last_open": "Letzte Öffnung (ein oder mehrere Zeitstempel)",
+    "entity_battery_low": "Batterie schwach",
+    "show_last_open": "Letzte Öffnung anzeigen"
   },
   "light": {
     "light_bulb": "Glühbirne",
@@ -1115,7 +1120,11 @@
     "color_red": "Rot",
     "color_blue": "Blau",
     "color_yellow": "Gelb",
-    "color_brown": "Braun"
+    "color_brown": "Braun",
+    "open_door": "Tür öffnen",
+    "last_open": "Zuletzt geöffnet",
+    "model_standard": "Normaler Briefkasten",
+    "model_boks": "BOKS (Paketbox)"
   },
   "smoke_detector": {
     "name": "Rauchmelder",
