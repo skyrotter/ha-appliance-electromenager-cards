@@ -250,6 +250,27 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
 .st-gradient .clim{position:relative}
 .st-tile .clim{display:none!important}
 .st-double_ring .clim{order:1;margin:6px 0 2px}.st-double_ring .bg9{order:2}
+/* commandes du thermostat (show_hvac_modes / show_fan_modes / show_preset_modes) : boutons de mode, listes ventilation et préréglage */
+.cmodes{display:flex;gap:4px;margin-top:6px;padding:4px;border-radius:12px;background:rgba(127,127,127,.09);cursor:default}
+.cmodes button{flex:1;min-width:0;height:34px;border:none;border-radius:9px;background:transparent;color:var(--secondary-text-color);cursor:pointer;display:grid;place-items:center;padding:0;transition:background .2s,color .2s}
+.cmodes button ha-icon{--mdc-icon-size:18px}
+.cmodes button:hover{background:rgba(127,127,127,.12)}
+.cmodes button.on{background:rgba(127,127,127,.28);color:var(--primary-text-color)}
+.cmodes button.on[data-m="heat"]{background:color-mix(in srgb,var(--rc-heat) 22%,transparent);color:var(--rc-heat)}
+.cmodes button.on[data-m="cool"]{background:color-mix(in srgb,var(--rc-cold) 22%,transparent);color:var(--rc-cold)}
+.cmodes button:disabled{opacity:.35;cursor:default}
+.cmodes button:focus-visible,.csel select:focus-visible{outline:2px solid var(--c);outline-offset:1px}
+.csel{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:6px;margin-top:6px;cursor:default}
+.csel label{display:flex;align-items:center;gap:6px;min-width:0;padding:0 8px;height:34px;border-radius:12px;background:rgba(127,127,127,.09);color:var(--secondary-text-color)}
+.csel label[hidden]{display:none}
+.csel ha-icon{--mdc-icon-size:18px;flex:none}
+.csel select{flex:1;min-width:0;border:none;background:transparent;color:var(--primary-text-color);font:500 13px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif);cursor:pointer;padding:0;text-overflow:ellipsis}
+.csel select option{color:#212121}
+.st-gradient .cmodes,.st-lcd .cmodes,.st-neon .cmodes,.st-gradient .csel label,.st-lcd .csel label,.st-neon .csel label{background:rgba(255,255,255,.12);color:#e9edf1}
+.st-gradient .cmodes button.on,.st-lcd .cmodes button.on,.st-neon .cmodes button.on,.st-gradient .csel select,.st-lcd .csel select,.st-neon .csel select{color:#fff}
+.st-tile .cmodes,.st-tile .csel{display:none!important}
+.st-gradient .cmodes,.st-gradient .csel{position:relative}
+.st-double_ring .cmodes,.st-double_ring .csel{order:1}
 .noanim *,.noanim *::before,.noanim *::after{animation:none!important}
 @media (prefers-reduced-motion:reduce){ha-card *,ha-card *::before{animation:none!important}}
 @keyframes rcbreathe{50%{transform:scale(1.15);opacity:.7}}
@@ -293,7 +314,12 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
   const VH = '<div class="vh"><ha-icon icon="mdi:water-percent"></ha-icon><span id="h"></span><span class="trend" id="trend"></span></div>';
   const META = '<div class="meta" id="meta"></div>', NOTES = '<div class="notes" id="notes"></div>';
   const SPARK = '<svg class="spark hide" id="spark" viewBox="0 0 300 30" preserveAspectRatio="none" aria-hidden="true"><path class="a" d=""/><path class="l" d=""/></svg>';
-  const CLIM = '<div class="clim" id="clim" hidden><ha-icon id="cico" icon="mdi:thermostat"></ha-icon><span class="cl" id="cl"></span><button id="cm" type="button">−</button><b id="ct"></b><button id="cp" type="button">+</button></div>';
+  const CLIM = '<div class="clim" id="clim" hidden><ha-icon id="cico" icon="mdi:thermostat"></ha-icon><span class="cl" id="cl"></span><button id="cm" type="button">−</button><b id="ct"></b><button id="cp" type="button">+</button></div>'
+    + '<div class="cmodes" id="cmodes" role="group" hidden></div>'
+    + '<div class="csel" id="csel" hidden><label id="lfan"><ha-icon icon="mdi:fan"></ha-icon><select id="sfan"></select></label><label id="lpre"><ha-icon icon="mdi:tune-variant"></ha-icon><select id="spre"></select></label></div>';
+  // icônes des modes (mêmes icônes que Home Assistant)
+  const HVAC_ICON = { off: 'mdi:power', heat: 'mdi:fire', cool: 'mdi:snowflake', heat_cool: 'mdi:sun-snowflake-variant', auto: 'mdi:thermostat-auto', dry: 'mdi:water-percent', fan_only: 'mdi:fan' };
+  const HVAC_ORDER = ['off', 'fan_only', 'dry', 'cool', 'heat', 'heat_cool', 'auto'];
   const MM = '<div class="mm" id="mm">' + ['min', 'avg', 'max'].map((k) => `<div data-k="${k}"><span></span><b></b><i></i></div>`).join('') + '</div>';
 
   const TPL = {
@@ -480,6 +506,11 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       root.getElementById('cm').addEventListener('click', () => this._setTarget(-1));
       root.getElementById('cp').addEventListener('click', () => this._setTarget(1));
       root.getElementById('cl').addEventListener('click', () => this._more(this._c.entity_climate));
+      // commandes du thermostat : un clic ne déclenche pas l'action de la carte
+      ['cmodes', 'csel'].forEach((i) => { const el = root.getElementById(i); el.addEventListener('click', (e) => e.stopPropagation()); el.addEventListener('keydown', (e) => e.stopPropagation()); });
+      root.getElementById('cmodes').addEventListener('click', (e) => { const b = e.target.closest('button[data-m]'); if (b && !b.disabled) this._climCall('set_hvac_mode', { hvac_mode: b.dataset.m }); });
+      root.getElementById('sfan').addEventListener('change', (e) => this._climCall('set_fan_mode', { fan_mode: e.target.value }));
+      root.getElementById('spre').addEventListener('change', (e) => this._climCall('set_preset_mode', { preset_mode: e.target.value }));
       // icônes : ouvrent la fiche de l'entité concernée
       root.getElementById('win').addEventListener('click', (e) => { if (this._c.entity_window) { e.stopPropagation(); this._more(this._c.entity_window); } });
       root.getElementById('bat').addEventListener('click', (e) => { e.stopPropagation(); this._more(this._c.entity_battery || this._c.entity_temperature || this._c.entity_humidity); });
@@ -762,6 +793,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
     _renderClimate(tmp) {
       const r = this._root, el = r.getElementById('clim'), c = this._c, k = c.entity_climate && this._climTarget(tmp);
       el.hidden = !k;
+      this._renderModes(k);
       if (!k) return;
       const off = /^(off|unavailable|unknown)$/i.test(String(k.cs.state)), act = String(k.a.hvac_action || '');
       const heating = act === 'heating' || act === 'preheating', cooling = act === 'cooling';
@@ -777,6 +809,51 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       ct.classList.toggle('pending', this._pending != null);
       r.getElementById('cm').disabled = r.getElementById('cp').disabled = off || !single;
       r.getElementById('cm').hidden = r.getElementById('cp').hidden = !single;
+    }
+    /* ---- commandes du thermostat : modes (boutons), ventilation et préréglage (listes) ---- */
+    // libellé d'un mode ou d'une valeur d'attribut, traduit par Home Assistant quand il le peut
+    _climLabel(cs, attr, v) {
+      const h = this._hass;
+      try {
+        if (!attr && h.formatEntityState) return h.formatEntityState(cs, v);
+        if (attr && h.formatEntityAttributeValue) return h.formatEntityAttributeValue(cs, attr, v);
+      } catch (e) { /* ancienne version de Home Assistant */ }
+      const t = String(v).replace(/_/g, ' '); return t.charAt(0).toUpperCase() + t.slice(1);
+    }
+    _climCall(service, data) { if (this._hass && this._c.entity_climate) this._hass.callService('climate', service, { entity_id: this._c.entity_climate, ...data }); }
+    _renderModes(k) {
+      const r = this._root, c = this._c, a = (k && k.a) || {}, cs = k && k.cs;
+      const dead = !cs || /^(unavailable|unknown)$/i.test(String(cs.state));
+      // boutons de mode : seulement les modes que propose le thermostat, dans l'ordre de Home Assistant
+      const box = r.getElementById('cmodes');
+      const modes = Array.isArray(a.hvac_modes) ? [...a.hvac_modes].sort((x, y) => (HVAC_ORDER.indexOf(x) + 1 || 99) - (HVAC_ORDER.indexOf(y) + 1 || 99)) : [];
+      box.hidden = !k || c.show_hvac_modes !== true || !modes.length;
+      if (!box.hidden) {
+        const key = modes.join(',');
+        if (box.dataset.k !== key) {
+          box.dataset.k = key;
+          box.innerHTML = modes.map((m) => `<button type="button" data-m="${esc(m)}"><ha-icon icon="${HVAC_ICON[m] || 'mdi:thermostat'}"></ha-icon></button>`).join('');
+        }
+        box.querySelectorAll('button').forEach((b) => {
+          const m = b.dataset.m, on = String(cs.state) === m, lbl = this._climLabel(cs, null, m);
+          b.classList.toggle('on', on); b.disabled = dead;
+          b.title = lbl; b.setAttribute('aria-label', lbl); b.setAttribute('aria-pressed', String(on));
+        });
+      }
+      // listes : ventilation (fan_modes) et préréglage (preset_modes)
+      const fill = (lab, sel, attr, list, cur, show) => {
+        const opts = Array.isArray(list) ? list : [];
+        lab.hidden = !k || !show || !opts.length;
+        if (lab.hidden) return;
+        const key = opts.join(',');
+        if (sel.dataset.k !== key) { sel.dataset.k = key; sel.innerHTML = opts.map((v) => `<option value="${esc(v)}">${esc(this._climLabel(cs, attr, v))}</option>`).join(''); }
+        if (cur != null && opts.includes(cur)) sel.value = cur; else sel.selectedIndex = -1;
+        sel.disabled = dead; sel.title = this._t(attr); sel.setAttribute('aria-label', this._t(attr));
+      };
+      const lfan = r.getElementById('lfan'), lpre = r.getElementById('lpre');
+      fill(lfan, r.getElementById('sfan'), 'fan_mode', a.fan_modes, a.fan_mode, c.show_fan_modes === true);
+      fill(lpre, r.getElementById('spre'), 'preset_mode', a.preset_modes, a.preset_mode, c.show_preset_modes === true);
+      r.getElementById('csel').hidden = lfan.hidden && lpre.hidden;
     }
     // − / + : la consigne change tout de suite à l'écran, l'appel part 0,8 s après le dernier clic
     _setTarget(dir) {
@@ -1143,6 +1220,8 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
         ent('entity_temperature', 'sensor', 'temperature'), ent('entity_humidity', 'sensor', 'humidity'),
         ent('entity_outdoor_temperature', 'sensor', 'temperature'), ent('entity_outdoor_humidity', 'sensor', 'humidity'),
         ent('entity_window', 'binary_sensor'), ent('entity_battery', ['sensor', 'binary_sensor']), ent('entity_climate', 'climate'),
+        // commandes du thermostat : désactivées par défaut, proposées seulement avec un thermostat lié
+        ...(this._c && this._c.entity_climate ? [{ type: 'grid', name: '', schema: ['show_hvac_modes', 'show_fan_modes', 'show_preset_modes'].map((name) => ({ name, selector: { boolean: {} }, default: false })) }] : []),
         { type: 'grid', name: '', schema: [tr('comfort_temp_min', 5, 30, Math.round(tmp.c(19))), tr('comfort_temp_max', 10, 40, Math.round(tmp.c(25))),
           num('humidity_min', 0, 100, 1, '%', 35), num('humidity_max', 0, 100, 1, '%', 65)] },
         { type: 'grid', name: '', schema: [tr('alert_temp_min', -20, 30), tr('alert_temp_max', 10, 50), num('alert_humidity_min', 0, 100, 1, '%'), num('alert_humidity_max', 0, 100, 1, '%')] },

@@ -1375,8 +1375,8 @@ class ApplianceCardBase extends HTMLElement {
       if (m.level != null) tile("mdi:fire", `P${fmtNum(hass, m.level, 0)}`, lb("level"), c.power_level);
       if (m.pellets != null) tile("mdi:grain", `${fmtNum(hass, m.pellets, 0)} %`, lb("pellets"), c.pellet_level, m.alerts.includes("pellets_low") ? "warn" : "");
     } else if (["water_heater", "oven", "air_fryer", "ac_split", "heat_pump", "towel_dryer", "server_rack"].includes(kind)) {
-      // sèche-serviette : température de pièce et consigne au dixième, comme le radiateur
-      const td = kind === "towel_dryer" ? 1 : 0;
+      // température et consigne au dixième (18,2 / 16,5 ; un entier reste sans décimale), sauf four et friteuse (200 °C)
+      const td = ["oven", "air_fryer"].includes(kind) ? 0 : 1;
       if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, td)} ${m.tempUnit}`, lb("temperature"), tEntity);
       if (m.targetVal != null) tile("mdi:target", `${fmtNum(hass, m.targetVal, td)} ${m.tempUnit}`, lb("target"), c.target_temperature || tEntity);
       // eau chaude restante : % (tuile « Eau chaude ») et litres (tuile « Volume ») — deux tuiles, sinon le texte est tronqué

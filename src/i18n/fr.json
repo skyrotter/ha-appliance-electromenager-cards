@@ -928,7 +928,10 @@
     "entity_open": "Ouverture de la porte (bouton, serrure…)",
     "entity_last_open": "Dernière ouverture (une ou plusieurs dates)",
     "entity_battery_low": "Pile faible",
-    "show_last_open": "Afficher la dernière ouverture"
+    "show_last_open": "Afficher la dernière ouverture",
+    "show_hvac_modes": "Boutons de mode du thermostat",
+    "show_fan_modes": "Liste ventilation du thermostat",
+    "show_preset_modes": "Liste préréglages du thermostat"
   },
   "light": {
     "light_bulb": "Ampoule",
@@ -1108,7 +1111,9 @@
     "cooling": "refroidit",
     "compare": "Comparer",
     "yesterday": "Hier",
-    "previous": "Période précédente"
+    "previous": "Période précédente",
+    "fan_mode": "Ventilation",
+    "preset_mode": "Préréglage"
   },
   "mailbox": {
     "name": "Boîte aux lettres",

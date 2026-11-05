@@ -267,7 +267,9 @@ class AppliancePelletBoilerCard extends HTMLElement {
     const it = [];
     if (c.show_status) it.push([this._l('status'), this._t(st), c.entity_status || c.entity_power]);
     if (c.show_power) it.push([this._l('power'), w === null ? '—' : w >= 1000 ? `${(w / 1000).toFixed(1)} kW` : `${Math.round(w)} W`, c.entity_power]);
-    if (c.show_temps) { it.push([this._l('flow'), f(dep, 0, tc.unit), c.entity_flow_temp]); it.push([this._l('ret'), f(ret, 0, tc.unit), c.entity_return_temp]); }
+    // départ / retour au dixième (un entier reste sans décimale), séparateur décimal de la langue
+    const ft = (v) => (v === null ? '—' : `${v.toLocaleString(this._config.language || lang(this._hass), { maximumFractionDigits: 1 })} ${tc.unit}`);
+    if (c.show_temps) { it.push([this._l('flow'), ft(dep), c.entity_flow_temp]); it.push([this._l('ret'), ft(ret), c.entity_return_temp]); }
     if (c.show_pellets) it.push([this._l('pellets'), f(lvl, 0, '%'), c.entity_pellet_level]);
     if (c.show_energy) it.push([this._l('energy'), f(e, 1, 'kWh'), c.entity_energy]);
     if (c.show_cost && cost !== null) it.push([this._l('cost'), f(cost, 2, '€'), c.entity_cost || c.entity_energy]);

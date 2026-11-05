@@ -223,6 +223,10 @@ const CL=(st,act,extra={})=>mk('climate.c',st,Object.assign({hvac_action:act,cur
 c=card('ac-split',{entity:'climate.c'},[CL('cool','cooling')]); ok('split cooling + lcd target',has(c,'st-cooling')&&c.lcd()==='22°'&&has(c,'mode-cool'),c.wrap.className+' '+c.lcd());
 c=card('ac-split',{entity:'climate.c'},[CL('heat','heating')]); ok('split heating',has(c,'st-heating')&&/En chauffe/.test(c.txt()),c.wrap.className);
 c=card('ac-split',{entity:'climate.c'},[CL('cool','idle')]); ok('split at target',has(c,'st-at_target')&&/Consigne atteinte/.test(c.txt()),c.txt());
+c=card('ac-split',{entity:'climate.c'},[mk('climate.c','off',{current_temperature:18.2,temperature:16.5,hvac_modes:['off','cool']})]);
+ ok('split: temperature and target to one decimal',/18,2\s?°C/.test(c.sr.textContent)&&/16,5\s?°C/.test(c.sr.textContent),c.sr.textContent.replace(/\s+/g,' ').slice(0,300));
+c=card('ac-split',{entity:'climate.c'},[mk('climate.c','off',{current_temperature:18,temperature:17,hvac_modes:['off','cool']})]);
+ ok('split: whole degrees stay without decimal',/18\s?°C/.test(c.sr.textContent)&&!/18,0/.test(c.sr.textContent));
 c=card('ac-split',{entity:'climate.c'},[CL('dry','drying')]); ok('split dry',has(c,'st-ac_dry'),c.wrap.className);
 c=card('ac-split',{entity:'climate.c'},[CL('fan_only','fan')]); ok('split fan',has(c,'st-ac_fan')&&/Ventilation/.test(c.txt()),c.txt());
 c=card('ac-split',{entity:'climate.c'},[CL('off','off')]); ok('split off',has(c,'st-off')&&c.lcd()==='',c.wrap.className);
@@ -488,6 +492,21 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c=rs('closed',{current_position:0}); ok('roller shutter assumed: 0 % -> close disabled',!dis(c,'open')&&dis(c,'close'));
  c=rs('open',{}); ok('roller shutter assumed, no position -> all active',!dis(c,'open')&&!dis(c,'close'));
  document.querySelectorAll('appliance-roller-shutter-card').forEach((e)=>e.remove());
+}
+// climat de la pièce : commandes du thermostat (modes, ventilation, préréglage), désactivées par défaut
+{const TH=(id,v)=>mk(id,v,{unit_of_measurement:'°C',device_class:'temperature'}), CL=(st)=>mk('climate.c',st,{hvac_modes:['heat','off','cool'],fan_modes:['auto','low'],fan_mode:'low',preset_modes:['eco','comfort'],preset_mode:'eco',temperature:20,target_temp_step:0.5});
+ const base={entity_temperature:'sensor.t',entity_climate:'climate.c'};
+ let c=card('room-climate',base,[TH('sensor.t',20),CL('heat')]);
+ ok('room climate: thermostat controls hidden by default',c.sr.getElementById('cmodes').hidden&&c.sr.getElementById('csel').hidden);
+ c=card('room-climate',{...base,show_hvac_modes:true,show_fan_modes:true,show_preset_modes:true},[TH('sensor.t',20),CL('heat')]);
+ const bs=[...c.sr.querySelectorAll('#cmodes button')];
+ ok('room climate: mode buttons in HA order, active mode',bs.map((b)=>b.dataset.m).join()==='off,cool,heat'&&bs[2].classList.contains('on')&&!bs[0].classList.contains('on'),bs.map((b)=>b.dataset.m).join());
+ ok('room climate: fan and preset lists',c.sr.getElementById('sfan').value==='low'&&c.sr.getElementById('spre').value==='eco'&&!c.sr.getElementById('csel').hidden);
+ bs[1].click(); const f=c.sr.getElementById('sfan'); f.value='auto'; f.dispatchEvent(new Event('change')); const pr=c.sr.getElementById('spre'); pr.value='comfort'; pr.dispatchEvent(new Event('change'));
+ ok('room climate: mode / fan / preset calls',JSON.stringify(c.h.calls)==='[["climate","set_hvac_mode",{"entity_id":"climate.c","hvac_mode":"cool"}],["climate","set_fan_mode",{"entity_id":"climate.c","fan_mode":"auto"}],["climate","set_preset_mode",{"entity_id":"climate.c","preset_mode":"comfort"}]]',JSON.stringify(c.h.calls));
+ c=card('room-climate',{...base,show_hvac_modes:true,show_fan_modes:true},[TH('sensor.t',20),mk('climate.c','heat',{hvac_modes:['heat','off'],temperature:20})]);
+ ok('room climate: no fan list without fan_modes',c.sr.getElementById('csel').hidden&&!c.sr.getElementById('cmodes').hidden);
+ document.querySelectorAll('appliance-room-climate-card').forEach((e)=>e.remove());
 }
 // climat de la pièce : confort, alertes, risques, aération, fenêtre, batterie, pop-up
 {const TH=(id,v,a={})=>mk(id,v,{unit_of_measurement:'°C',device_class:'temperature',...a}), HU=(id,v)=>mk(id,v,{unit_of_measurement:'%',device_class:'humidity'});

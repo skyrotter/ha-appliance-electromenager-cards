@@ -911,7 +911,10 @@
 "entity_open": "Døråpning (knapp, lås…)",
 "entity_last_open": "Siste åpning (ett eller flere tidsstempler)",
 "entity_battery_low": "Lavt batteri",
-"show_last_open": "Vis siste åpning"
+"show_last_open": "Vis siste åpning",
+"show_hvac_modes": "Modusknapper for termostaten",
+"show_fan_modes": "Viftemodusliste for termostaten",
+"show_preset_modes": "Forhåndsinnstillinger for termostaten"
 },
 "light": {
 "light_bulb": "Lyspære",
@@ -1091,7 +1094,9 @@
 "cooling": "kjøler",
 "compare": "Sammenlign",
 "yesterday": "I går",
-"previous": "Forrige periode"
+"previous": "Forrige periode",
+"fan_mode": "Viftemodus",
+"preset_mode": "Forhåndsinnstilling"
 },
 "mailbox": {
 "name": "Postkasse",

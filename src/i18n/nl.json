@@ -911,7 +911,10 @@
     "entity_open": "Deur openen (knop, slot…)",
     "entity_last_open": "Laatste opening (een of meer tijdstempels)",
     "entity_battery_low": "Batterij bijna leeg",
-    "show_last_open": "Laatste opening tonen"
+    "show_last_open": "Laatste opening tonen",
+    "show_hvac_modes": "Modusknoppen van de thermostaat",
+    "show_fan_modes": "Ventilatorlijst van de thermostaat",
+    "show_preset_modes": "Voorinstellingenlijst van de thermostaat"
   },
   "light": {
     "light_bulb": "Lamp",
@@ -1091,7 +1094,9 @@
     "cooling": "koelt",
     "compare": "Vergelijken",
     "yesterday": "Gisteren",
-    "previous": "Vorige periode"
+    "previous": "Vorige periode",
+    "fan_mode": "Ventilatormodus",
+    "preset_mode": "Voorinstelling"
   },
   "mailbox": {
     "name": "Brievenbus",

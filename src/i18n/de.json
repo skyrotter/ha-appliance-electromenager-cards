@@ -911,7 +911,10 @@
     "entity_open": "Türöffnung (Taste, Schloss…)",
     "entity_last_open": "Letzte Öffnung (ein oder mehrere Zeitstempel)",
     "entity_battery_low": "Batterie schwach",
-    "show_last_open": "Letzte Öffnung anzeigen"
+    "show_last_open": "Letzte Öffnung anzeigen",
+    "show_hvac_modes": "Modustasten des Thermostats",
+    "show_fan_modes": "Lüftermodus-Liste des Thermostats",
+    "show_preset_modes": "Voreinstellungsliste des Thermostats"
   },
   "light": {
     "light_bulb": "Glühbirne",
@@ -1091,7 +1094,9 @@
     "cooling": "kühlt",
     "compare": "Vergleichen",
     "yesterday": "Gestern",
-    "previous": "Vorheriger Zeitraum"
+    "previous": "Vorheriger Zeitraum",
+    "fan_mode": "Lüftermodus",
+    "preset_mode": "Voreinstellung"
   },
   "mailbox": {
     "name": "Briefkasten",
