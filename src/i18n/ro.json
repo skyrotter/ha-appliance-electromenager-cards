@@ -986,6 +986,38 @@
     "freeze_risk": "Risc de îngheț: {t}",
     "leak_detected_by": "Scurgere detectată de: {n}"
   },
+  "gas_meter": {
+    "name": "Contor de gaz",
+    "idle": "Fără consum",
+    "flowing": "Gaz în consum",
+    "leak": "Scurgere de gaz",
+    "valve_closed": "Robinet închis",
+    "unavailable": "Indisponibil",
+    "leak_detected": "Gaz detectat de senzor",
+    "leak_detected_by": "Gaz detectat de: {n}",
+    "open_valve": "Deschide robinetul",
+    "close_valve": "Închide robinetul",
+    "flow": "Debit",
+    "today": "Azi",
+    "index": "Index",
+    "cost": "Cost"
+  },
+  "electric_meter": {
+    "name": "Contor electric",
+    "idle": "Fără consum",
+    "consuming": "Consum în curs",
+    "overload": "Suprasarcină",
+    "unavailable": "Indisponibil",
+    "overload_alert": "Putere peste puterea abonată ({n} kVA)",
+    "power": "Putere",
+    "today": "Azi",
+    "index": "Index",
+    "cost": "Cost",
+    "tariff": "Tarif",
+    "l1": "L1",
+    "l2": "L2",
+    "l3": "L3"
+  },
   "room_climate": {
     "name": "Climat cameră",
     "comfort": "Confortabil",

@@ -1003,6 +1003,38 @@
     "freeze_risk": "Freezing risk: {t}",
     "leak_detected_by": "Leak detected by: {n}"
   },
+  "gas_meter": {
+    "name": "Gas meter",
+    "idle": "No flow",
+    "flowing": "Gas flowing",
+    "leak": "Gas leak",
+    "valve_closed": "Valve closed",
+    "unavailable": "Unavailable",
+    "leak_detected": "Gas detected by the sensor",
+    "leak_detected_by": "Gas detected by: {n}",
+    "open_valve": "Open valve",
+    "close_valve": "Close valve",
+    "flow": "Flow",
+    "today": "Today",
+    "index": "Index",
+    "cost": "Cost"
+  },
+  "electric_meter": {
+    "name": "Electric meter",
+    "idle": "No flow",
+    "consuming": "Consuming",
+    "overload": "Overload",
+    "unavailable": "Unavailable",
+    "overload_alert": "Power above the subscribed power ({n} kVA)",
+    "power": "Power",
+    "today": "Today",
+    "index": "Index",
+    "cost": "Cost",
+    "tariff": "Tariff",
+    "l1": "L1",
+    "l2": "L2",
+    "l3": "L3"
+  },
   "room_climate": {
     "name": "Room climate",
     "comfort": "Comfortable",

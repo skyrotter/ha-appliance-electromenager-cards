@@ -986,6 +986,38 @@
     "freeze_risk": "Vorstgevaar: {t}",
     "leak_detected_by": "Lek gedetecteerd door: {n}"
   },
+  "gas_meter": {
+    "name": "Gasmeter",
+    "idle": "Geen verbruik",
+    "flowing": "Gas stroomt",
+    "leak": "Gaslek",
+    "valve_closed": "Kraan dicht",
+    "unavailable": "Niet beschikbaar",
+    "leak_detected": "Gas gedetecteerd door de sensor",
+    "leak_detected_by": "Gas gedetecteerd door: {n}",
+    "open_valve": "Kraan openen",
+    "close_valve": "Kraan sluiten",
+    "flow": "Debiet",
+    "today": "Vandaag",
+    "index": "Meterstand",
+    "cost": "Kosten"
+  },
+  "electric_meter": {
+    "name": "Elektriciteitsmeter",
+    "idle": "Geen verbruik",
+    "consuming": "Verbruik bezig",
+    "overload": "Overbelasting",
+    "unavailable": "Niet beschikbaar",
+    "overload_alert": "Vermogen boven het gecontracteerde vermogen ({n} kVA)",
+    "power": "Vermogen",
+    "today": "Vandaag",
+    "index": "Meterstand",
+    "cost": "Kosten",
+    "tariff": "Tarief",
+    "l1": "L1",
+    "l2": "L2",
+    "l3": "L3"
+  },
   "room_climate": {
     "name": "Binnenklimaat",
     "comfort": "Comfortabel",

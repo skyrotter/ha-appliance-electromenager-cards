@@ -986,6 +986,38 @@
     "freeze_risk": "Rizik od smrzavanja: {t}",
     "leak_detected_by": "Curenje detektovano senzorom: {n}"
   },
+  "gas_meter": {
+    "name": "Merač gasa",
+    "idle": "Nema protoka",
+    "flowing": "Gas teče",
+    "leak": "Curenje gasa",
+    "valve_closed": "Ventil zatvoren",
+    "unavailable": "Nedostupno",
+    "leak_detected": "Senzor je detektovao gas",
+    "leak_detected_by": "Gas detektovan senzorom: {n}",
+    "open_valve": "Otvori ventil",
+    "close_valve": "Zatvori ventil",
+    "flow": "Protok",
+    "today": "Danas",
+    "index": "Indeks",
+    "cost": "Trošak"
+  },
+  "electric_meter": {
+    "name": "Brojilo struje",
+    "idle": "Nema protoka",
+    "consuming": "Potrošnja u toku",
+    "overload": "Preopterećenje",
+    "unavailable": "Nedostupno",
+    "overload_alert": "Snaga iznad ugovorene snage ({n} kVA)",
+    "power": "Snaga",
+    "today": "Danas",
+    "index": "Indeks",
+    "cost": "Trošak",
+    "tariff": "Tarifa",
+    "l1": "L1",
+    "l2": "L2",
+    "l3": "L3"
+  },
   "room_climate": {
     "name": "Klima u sobi",
     "comfort": "Komforno",

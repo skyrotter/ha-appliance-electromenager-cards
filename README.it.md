@@ -43,6 +43,8 @@ Alcuni esempi (elenco completo con anteprime nel [README in inglese](README.md#t
 | Cantinetta vino | `custom:appliance-wine-cooler-card` |
 | Acquario | `custom:appliance-aquarium-card` |
 | Contatore Linky | `custom:appliance-linky-card` |
+| Contatore del gas | `custom:appliance-gas-meter-card` |
+| Contatore elettrico (generico) | `custom:appliance-electric-meter-card` |
 | Batteria domestica | `custom:appliance-battery-card` |
 | Colonnina di ricarica EV | `custom:appliance-ev-charger-card` |
 | Robot aspirapolvere | `custom:appliance-robot-vacuum-solo-card` |

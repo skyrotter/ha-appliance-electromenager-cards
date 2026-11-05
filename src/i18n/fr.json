@@ -1003,6 +1003,38 @@
     "freeze_risk": "Risque de gel : {t}",
     "leak_detected_by": "Fuite détectée par : {n}"
   },
+  "gas_meter": {
+    "name": "Compteur de gaz",
+    "idle": "Pas de consommation",
+    "flowing": "Gaz en consommation",
+    "leak": "Fuite de gaz",
+    "valve_closed": "Vanne fermée",
+    "unavailable": "Indisponible",
+    "leak_detected": "Gaz détecté par le capteur",
+    "leak_detected_by": "Gaz détecté par : {n}",
+    "open_valve": "Ouvrir la vanne",
+    "close_valve": "Fermer la vanne",
+    "flow": "Débit",
+    "today": "Aujourd'hui",
+    "index": "Index",
+    "cost": "Coût"
+  },
+  "electric_meter": {
+    "name": "Compteur électrique",
+    "idle": "Pas de consommation",
+    "consuming": "Consommation en cours",
+    "overload": "Dépassement",
+    "unavailable": "Indisponible",
+    "overload_alert": "Puissance supérieure à la puissance souscrite ({n} kVA)",
+    "power": "Puissance",
+    "today": "Aujourd'hui",
+    "index": "Index",
+    "cost": "Coût",
+    "tariff": "Tarif",
+    "l1": "L1",
+    "l2": "L2",
+    "l3": "L3"
+  },
   "room_climate": {
     "name": "Climat pièce",
     "comfort": "Confort",
