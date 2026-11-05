@@ -918,7 +918,8 @@
     "entity_valve_position": "Ventilöffnung (%)",
     "show_valve": "Ventilöffnung anzeigen",
     "show_window": "Fenster anzeigen",
-    "spot_count": "Anzahl der Strahler"
+    "spot_count": "Anzahl der Strahler",
+    "brightness_slider": "Helligkeitsregler"
   },
   "light": {
     "light_bulb": "Glühbirne",

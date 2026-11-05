@@ -22,6 +22,8 @@ Eleven animated light fittings. Off, they show the bare fitting; on, they glow i
 
 **Colour**: by default the card follows the bulb in Home Assistant (`rgb_color`, otherwise the white temperature in kelvins). Turn off `follow_light_color` to use the colour picked in the editor (`color`); the On button then also sends this colour to the bulb. **Brightness** drives the glow.
 
+**Brightness slider** (`brightness_slider`): with a dimmable `light`, the **Brightness** tile becomes a full-width slider (sent when released, `0` turns the light off). It stays in place, greyed, while the light is off, so the layout does not move. On by default on the recessed spotlights, off on the other lights.
+
 With a `light` entity the card shows **On / Off** (and **Colour** on the colour bulb); a `switch` or `input_boolean` works too, as does a power sensor alone (above `threshold`, default 1 W = on).
 
 ## Options

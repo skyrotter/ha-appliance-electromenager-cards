@@ -918,7 +918,8 @@
 "entity_valve_position": "Ventilåpning (%)",
 "show_valve": "Vis ventilåpning",
 "show_window": "Vis vindu",
-"spot_count": "Antall spotter"
+"spot_count": "Antall spotter",
+"brightness_slider": "Lysstyrkeglidebryter"
 },
 "light": {
 "light_bulb": "Lyspære",

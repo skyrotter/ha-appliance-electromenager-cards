@@ -1232,6 +1232,19 @@ ok('card size / grid',typeof c.el.getCardSize()==='number'&&c.el.getGridOptions(
  c=card('ceiling-spot',{entity:'light.l',spot_count:4},[mk('light.l','on',{brightness:128,supported_color_modes:['brightness']})]);
  ok('ceiling spot: 4 spots, on, brightness, cascade',c.sr.querySelectorAll('.spot').length===4&&cls(c)==='on'&&Math.abs(parseFloat(getComputedStyle(c.sr.querySelector('ha-card')).getPropertyValue('--b'))-0.5)<0.02&&c.sr.querySelectorAll('.spot')[3].style.getPropertyValue('--d')==='0.45s',cls(c));
  c=card('ceiling-spot',{entity:'light.l',spot_count:9},[mk('light.l','on')]); ok('ceiling spot: count capped at 4',c.sr.querySelectorAll('.spot').length===4);
+ {const BR={supported_color_modes:['brightness']}, tile=(c)=>c.sr.querySelector('.tile[data-k="brightness"]'), bs=(c)=>c.sr.getElementById('ltbs');
+  c=card('ceiling-spot',{entity:'light.l'},[mk('light.l','on',{...BR,brightness:191})]);
+  ok('ceiling spot: brightness slider by default',tile(c).classList.contains('slide')&&!tile(c).classList.contains('hide')&&bs(c).value==='75',bs(c).value);
+  bs(c).value='40'; bs(c).dispatchEvent(new Event('input')); bs(c).dispatchEvent(new Event('change'));
+  ok('slider sets brightness_pct',JSON.stringify(c.h.calls[0])==='["light","turn_on",{"entity_id":"light.l","brightness_pct":40}]',JSON.stringify(c.h.calls));
+  c=card('ceiling-spot',{entity:'light.l'},[mk('light.l','off',BR)]);
+  ok('slider tile kept (greyed) when off',!tile(c).classList.contains('hide')&&tile(c).classList.contains('dim')&&bs(c).value==='0');
+  bs(c).value='0'; bs(c).dispatchEvent(new Event('change')); ok('slider at 0 turns off',JSON.stringify(c.h.calls[0])==='["light","turn_off",{"entity_id":"light.l"}]',JSON.stringify(c.h.calls));
+  c=card('ceiling-spot',{entity:'light.l',brightness_slider:false},[mk('light.l','off',BR)]); ok('brightness_slider: false -> plain tile, hidden when off',tile(c).classList.contains('hide')&&!tile(c).classList.contains('slide'));
+  c=card('light-bulb',{entity:'light.l'},[mk('light.l','off',BR)]); ok('other lights unchanged: no slider by default',tile(c).classList.contains('hide')&&!tile(c).classList.contains('slide'));
+  c=card('light-bulb',{entity:'light.l',brightness_slider:true},[mk('light.l','on',{...BR,brightness:255})]); ok('slider can be turned on for other lights',tile(c).classList.contains('slide')&&bs(c).value==='100');
+  c=card('ceiling-spot',{entity:'switch.s'},[mk('switch.s','on')]); ok('no slider on a switch',!tile(c).classList.contains('slide'));
+ }
  c=card('garden-spotlight',{entity_power:'sensor.p'},[mk('sensor.p',12,W)]);
  ok('power only -> on',cls(c)==='on',cls(c));
  c=card('garden-spotlight',{entity:'automation.a'},[mk('automation.a','on')]);

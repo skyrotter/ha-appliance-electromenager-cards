@@ -918,7 +918,8 @@
     "entity_valve_position": "Otvorenost ventila (%)",
     "show_valve": "Prikaži otvorenost ventila",
     "show_window": "Prikaži prozor",
-    "spot_count": "Broj spotova"
+    "spot_count": "Broj spotova",
+    "brightness_slider": "Klizač osvetljenosti"
   },
   "light": {
     "light_bulb": "Sijalica",

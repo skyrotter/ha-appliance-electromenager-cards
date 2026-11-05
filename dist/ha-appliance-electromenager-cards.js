@@ -9411,7 +9411,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_valve_position": "Valve opening (%)",
       "show_valve": "Show valve opening",
       "show_window": "Show window",
-      "spot_count": "Number of spotlights"
+      "spot_count": "Number of spotlights",
+      "brightness_slider": "Brightness slider"
     },
     "de": {
       "animations": "Animationen",
@@ -9685,7 +9686,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_valve_position": "Ventilöffnung (%)",
       "show_valve": "Ventilöffnung anzeigen",
       "show_window": "Fenster anzeigen",
-      "spot_count": "Anzahl der Strahler"
+      "spot_count": "Anzahl der Strahler",
+      "brightness_slider": "Helligkeitsregler"
     },
     "fr": {
       "animations": "Animations",
@@ -9959,7 +9961,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_valve_position": "Ouverture de la vanne (%)",
       "show_valve": "Afficher l'ouverture de la vanne",
       "show_window": "Afficher la fenêtre",
-      "spot_count": "Nombre de spots"
+      "spot_count": "Nombre de spots",
+      "brightness_slider": "Curseur de luminosité"
     },
     "it": {
       "animations": "Animazioni",
@@ -10233,7 +10236,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_valve_position": "Apertura valvola (%)",
       "show_valve": "Mostra apertura valvola",
       "show_window": "Mostra finestra",
-      "spot_count": "Numero di faretti"
+      "spot_count": "Numero di faretti",
+      "brightness_slider": "Cursore luminosità"
     },
     "nb": {
       "illustration_size": "Størrelse på illustrasjonen",
@@ -10507,7 +10511,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_valve_position": "Ventilåpning (%)",
       "show_valve": "Vis ventilåpning",
       "show_window": "Vis vindu",
-      "spot_count": "Antall spotter"
+      "spot_count": "Antall spotter",
+      "brightness_slider": "Lysstyrkeglidebryter"
     },
     "nl": {
       "animations": "Animaties",
@@ -10781,7 +10786,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_valve_position": "Klepopening (%)",
       "show_valve": "Klepopening tonen",
       "show_window": "Raam tonen",
-      "spot_count": "Aantal spots"
+      "spot_count": "Aantal spots",
+      "brightness_slider": "Helderheidsschuif"
     },
     "ro": {
       "animations": "Animații",
@@ -11055,7 +11061,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_valve_position": "Deschidere supapă (%)",
       "show_valve": "Afișează deschiderea supapei",
       "show_window": "Afișează fereastra",
-      "spot_count": "Număr de spoturi"
+      "spot_count": "Număr de spoturi",
+      "brightness_slider": "Cursor luminozitate"
     },
     "ru": {
       "animations": "Анимации",
@@ -11329,7 +11336,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_valve_position": "Открытие клапана (%)",
       "show_valve": "Показывать открытие клапана",
       "show_window": "Показывать окно",
-      "spot_count": "Количество светильников"
+      "spot_count": "Количество светильников",
+      "brightness_slider": "Ползунок яркости"
     },
     "sr": {
       "animations": "Анимације",
@@ -11603,7 +11611,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_valve_position": "Отвореност вентила (%)",
       "show_valve": "Прикажи отвореност вентила",
       "show_window": "Прикажи прозор",
-      "spot_count": "Број спотова"
+      "spot_count": "Број спотова",
+      "brightness_slider": "Клизач осветљености"
     },
     "sr-Latn": {
       "animations": "Animacije",
@@ -11877,7 +11886,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_valve_position": "Otvorenost ventila (%)",
       "show_valve": "Prikaži otvorenost ventila",
       "show_window": "Prikaži prozor",
-      "spot_count": "Broj spotova"
+      "spot_count": "Broj spotova",
+      "brightness_slider": "Klizač osvetljenosti"
     }
   };
   const lang = (hass) => {
@@ -21269,6 +21279,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--lc:#ffb347;--b:1;
 .title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
 .on .badge{background:color-mix(in srgb,var(--lc) 26%,transparent);color:color-mix(in srgb,var(--lc) 75%,var(--primary-text-color))}
+.stage.ceil{background:radial-gradient(ellipse at 50% 45%,#4a5058,#2c3137 80%)}
 .stage{position:relative;margin:4px auto 0;max-width:calc(240px * var(--illus-scale,1));border-radius:14px;background:radial-gradient(ellipse at 50% 55%,#1d232b,#12161b 75%);overflow:hidden;cursor:pointer}
 svg{display:block;width:100%;height:auto;overflow:visible}
 .ctl{display:flex;justify-content:center;gap:6px;margin-top:8px}
@@ -21287,6 +21298,15 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 .tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap}
 .tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
 .tile.hide{display:none}
+/* curseur de luminosité (brightness_slider) : tuile pleine largeur, gardée grisée quand c'est éteint */
+.tile .bs{display:none}
+.tile.slide{grid-column:1/-1;cursor:default;display:flex;flex-wrap:wrap;align-items:center;gap:2px 8px;text-align:left;padding:6px 10px}
+.tile.slide .l{flex:1 0 auto;justify-content:flex-start;order:1}.tile.slide .v{flex:none;min-width:40px;text-align:right;margin-top:0;order:3}
+.tile.slide .bs{display:block;flex:1 1 90px;min-width:90px;margin:0;accent-color:var(--lt-ok);cursor:pointer;height:22px;order:2}
+.compact .tile.slide .lbl{display:none}.compact .tile.slide .l{flex:0 0 auto}
+.tile.slide.dim .v,.tile.slide.dim .l{opacity:.55}
+.tile.slide.dim .bs{accent-color:#9aa0a6}
+.compact .tile.slide{padding:3px 8px}
 
 /* ---- compact : petits emplacements fixes (ex. 120 × 130 px) ; l'illustration prend la hauteur restante ---- */
 ha-card.compact{display:flex;flex-direction:column;padding:6px}
@@ -21481,8 +21501,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         <circle cx="${x}" cy="${y}" r="${r * 0.68}" fill="url(#ltdiff)"/>
         <circle class="lit" cx="${x}" cy="${y}" r="${r * 0.7}" fill="url(#ltspot)" style="--k:1"/>
         <circle class="lit" cx="${x}" cy="${y}" r="${r * 0.9}" fill="var(--lc)" style="--k:.35" filter="url(#ltsoft)"/></g>`;
-      return `<rect x="0" y="0" width="200" height="180" fill="url(#ltceil)"/>
-        <rect class="lit" x="0" y="0" width="200" height="180" fill="var(--lc)" style="--k:.12"/>
+      // le plafond est le fond de la scène (.stage.ceil), pour remplir aussi les côtés en compact
+      return `        <rect class="lit" x="-300" y="-100" width="800" height="380" fill="var(--lc)" style="--k:.12"/>
         ${L.map(spot).join('')}`;
     },
     // sapin de Noël : guirlande d'ampoules qui clignotent en séquence et étoile qui rayonne
@@ -21567,14 +21587,14 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const color = this.kind === 'color_bulb';
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="lttitle"></div><div class="badge" id="ltbadge"></div></div>
-        <div class="stage"><svg viewBox="0 0 200 180" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${SVGS[this.kind](this._c)}</svg></div>
+        <div class="stage${this.kind === 'ceiling_spot' ? ' ceil' : ''}"><svg viewBox="0 0 200 180" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${SVGS[this.kind](this._c)}</svg></div>
         <div class="ctl" id="ltctl">
           <button data-a="on"><ha-icon icon="mdi:lightbulb-on"></ha-icon><span></span></button>
           ${color ? '<button data-a="color"><ha-icon icon="mdi:palette"></ha-icon><span></span></button>' : ''}
           <button data-a="off"><ha-icon icon="mdi:lightbulb-off-outline"></ha-icon><span></span></button>
         </div>
         <div class="tiles">${[['brightness', 'mdi:brightness-6'], ['power', 'mdi:flash'], ['energy', 'mdi:lightning-bolt-circle']].map(([k, ic]) =>
-          `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
+          `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div>${k === 'brightness' ? '<input class="bs" id="ltbs" type="range" min="0" max="100" step="1">' : ''}<div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
       // illustration : tap_action / hold_action (appui long 0,5 s) ; par défaut, la fiche de l'entité
       const stage = root.querySelector('.stage'), stop = () => clearTimeout(this._holdTimer);
@@ -21592,8 +21612,18 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       stage.addEventListener('contextmenu', (ev) => { if (this._c.hold_action) ev.preventDefault(); });
       root.querySelectorAll('.ctl button').forEach((b) => b.addEventListener('click', () => this._action(b.dataset.a)));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
+        if (el.classList.contains('slide')) return; // tuile curseur : le clic sert au curseur, pas à la fiche
         const k = el.dataset.k; this._more(k === 'brightness' ? this._c.entity : this._c[`entity_${k}`]);
       }));
+      // curseur de luminosité : la valeur suit le doigt, l'appel part au relâchement (0 = éteindre)
+      const bs = root.getElementById('ltbs');
+      bs.addEventListener('input', () => { this._sliding = true; root.querySelector('.tile[data-k="brightness"] .v').firstChild.textContent = bs.value; });
+      bs.addEventListener('change', () => {
+        const v = Number(bs.value), h = this._hass, id = this._c.entity;
+        this._sliding = false;
+        if (!h || !id) return;
+        h.callService('light', v > 0 ? 'turn_on' : 'turn_off', v > 0 ? { entity_id: id, brightness_pct: v } : { entity_id: id });
+      });
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
 
@@ -21681,11 +21711,20 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       });
 
       const energy = this._num(c.entity_energy);
+      // curseur : option brightness_slider (par défaut sur les spots encastrés), entité light réglable en intensité
+      const modes = Array.isArray(a.supported_color_modes) ? a.supported_color_modes : [];
+      const dimmable = d === 'light' && st !== 'unavailable' && (modes.some((m) => m !== 'onoff') || a.brightness != null);
+      const slider = dimmable && (c.brightness_slider ?? this.kind === 'ceiling_spot') !== false;
+      const pct = st === 'on' && isFinite(Number(a.brightness)) ? Math.max(1, Math.round(Number(a.brightness) / 2.55)) : 0;
       const V = {
-        brightness: [st === 'on' && isFinite(Number(a.brightness)), Math.round(bri * 100), '%', 'show_brightness'],
+        brightness: [slider || (st === 'on' && isFinite(Number(a.brightness))), slider ? pct : Math.round(bri * 100), '%', 'show_brightness'],
         power: [c.entity_power, this._fmt(pw, pw < 10 ? 1 : 0), this._unit(c.entity_power, 'W'), 'show_power'],
         energy: [c.entity_energy, this._fmt(energy, 2), this._unit(c.entity_energy, 'kWh'), 'show_energy'],
       };
+      const bt = r.querySelector('.tile[data-k="brightness"]'), bs = r.getElementById('ltbs');
+      bt.classList.toggle('slide', slider); bt.classList.toggle('dim', slider && st !== 'on');
+      if (slider && !this._sliding) bs.value = String(pct);
+      bs.setAttribute('aria-label', this._l('brightness'));
       r.querySelectorAll('.tile').forEach((el) => {
         const [show, val, unit, opt] = V[el.dataset.k];
         el.classList.toggle('hide', !show || c[opt] === false);
@@ -21724,6 +21763,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'color', selector: { color_rgb: {} } },
         { type: 'grid', name: '', schema: [
           bool('follow_light_color'),
+          bool('brightness_slider', this.kind === 'ceiling_spot'),
           ...(this.kind === 'color_bulb' ? [bool('color_cycle', false)] : []),
           ...(this.kind === 'christmas_tree' ? [bool('multicolor')] : []),
         ] },

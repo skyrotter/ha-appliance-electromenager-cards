@@ -918,7 +918,8 @@
     "entity_valve_position": "Отвореност вентила (%)",
     "show_valve": "Прикажи отвореност вентила",
     "show_window": "Прикажи прозор",
-    "spot_count": "Број спотова"
+    "spot_count": "Број спотова",
+    "brightness_slider": "Клизач осветљености"
   },
   "light": {
     "light_bulb": "Сијалица",

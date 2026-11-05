@@ -935,7 +935,8 @@
     "entity_valve_position": "Ouverture de la vanne (%)",
     "show_valve": "Afficher l'ouverture de la vanne",
     "show_window": "Afficher la fenêtre",
-    "spot_count": "Nombre de spots"
+    "spot_count": "Nombre de spots",
+    "brightness_slider": "Curseur de luminosité"
   },
   "light": {
     "light_bulb": "Ampoule",

@@ -918,7 +918,8 @@
     "entity_valve_position": "Apertura valvola (%)",
     "show_valve": "Mostra apertura valvola",
     "show_window": "Mostra finestra",
-    "spot_count": "Numero di faretti"
+    "spot_count": "Numero di faretti",
+    "brightness_slider": "Cursore luminosità"
   },
   "light": {
     "light_bulb": "Lampadina",

@@ -935,7 +935,8 @@
     "entity_valve_position": "Valve opening (%)",
     "show_valve": "Show valve opening",
     "show_window": "Show window",
-    "spot_count": "Number of spotlights"
+    "spot_count": "Number of spotlights",
+    "brightness_slider": "Brightness slider"
   },
   "light": {
     "light_bulb": "Bulb",

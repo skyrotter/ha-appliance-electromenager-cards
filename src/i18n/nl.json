@@ -918,7 +918,8 @@
     "entity_valve_position": "Klepopening (%)",
     "show_valve": "Klepopening tonen",
     "show_window": "Raam tonen",
-    "spot_count": "Aantal spots"
+    "spot_count": "Aantal spots",
+    "brightness_slider": "Helderheidsschuif"
   },
   "light": {
     "light_bulb": "Lamp",

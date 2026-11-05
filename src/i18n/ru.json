@@ -918,7 +918,8 @@
     "entity_valve_position": "Открытие клапана (%)",
     "show_valve": "Показывать открытие клапана",
     "show_window": "Показывать окно",
-    "spot_count": "Количество светильников"
+    "spot_count": "Количество светильников",
+    "brightness_slider": "Ползунок яркости"
   },
   "light": {
     "light_bulb": "Лампа",

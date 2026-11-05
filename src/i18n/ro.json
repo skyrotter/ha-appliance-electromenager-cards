@@ -918,7 +918,8 @@
     "entity_valve_position": "Deschidere supapă (%)",
     "show_valve": "Afișează deschiderea supapei",
     "show_window": "Afișează fereastra",
-    "spot_count": "Număr de spoturi"
+    "spot_count": "Număr de spoturi",
+    "brightness_slider": "Cursor luminozitate"
   },
   "light": {
     "light_bulb": "Bec",
