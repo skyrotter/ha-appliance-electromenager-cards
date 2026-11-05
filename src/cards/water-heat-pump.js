@@ -382,7 +382,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: 'Appliance – PAC eau/eau / Water heat pump',
+    type: TAG, name: 'Appliance – PAC eau/eau / Water heat pump', names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Pompe à chaleur eau/eau ou géothermique animée : compresseur, captage, départ/retour, COP.', preview: true,
   });
 })();

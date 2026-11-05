@@ -342,7 +342,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: 'Appliance – Underfloor heating / Plancher chauffant',
+    type: TAG, name: 'Appliance – Underfloor heating / Plancher chauffant', names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Plancher chauffant animé (hydraulique ou électrique) : serpentin, collecteur, sol qui rougeoit, ondes de chaleur, thermostat.', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
   });

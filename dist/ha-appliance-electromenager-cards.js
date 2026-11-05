@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.74.0";
+const VERSION = "1.75.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -9119,6 +9119,8 @@ for (const kind of Object.keys(DEF)) {
   window.customCards.push({
     type: tag,
     name: `Appliance – ${STRINGS.en[kind]} / ${STRINGS.fr[kind]}`,
+    // nom traduit par langue : la liste de la carte unique s'affiche et se trie dans la langue de Home Assistant
+    names: Object.fromEntries(Object.keys(STRINGS).map((l) => [l, STRINGS[l][kind] || STRINGS.en[kind]])),
     description: `${STRINGS.en[kind]} card with realistic animated illustration, live status, power, energy and cost.`,
     preview: true,
     documentationURL: "https://github.com/skyrotter/ha-appliance-electromenager-cards",
@@ -12255,7 +12257,7 @@ class ApplianceAquariumCard extends HTMLElement {
 
 define('appliance-aquarium-card', ApplianceAquariumCard);
 window.customCards = window.customCards || [];
-window.customCards.push({ type: 'appliance-aquarium-card', name: 'Appliance – Aquarium', description: 'Aquarium animé : puissance, kWh, température, coût', preview: true });
+window.customCards.push({ type: 'appliance-aquarium-card', name: 'Appliance – Aquarium', names: Object.fromEntries(Object.keys(I18N_AQUARIUM).map((l) => [l, I18N_AQUARIUM[l].name])), description: 'Aquarium animé : puissance, kWh, température, coût', preview: true });
 })();
 
 /* ================================================================== */
@@ -12802,7 +12804,7 @@ class ApplianceLinkyCard extends HTMLElement {
 
 define('appliance-linky-card', ApplianceLinkyCard);
 window.customCards = window.customCards || [];
-window.customCards.push({ type: 'appliance-linky-card', name: 'Appliance – Linky', description: 'Compteur Linky animé : LCD, jauge, index HP/HC', preview: true });
+window.customCards.push({ type: 'appliance-linky-card', name: 'Appliance – Linky', names: Object.fromEntries(Object.keys(I18N_LINKY).map((l) => [l, I18N_LINKY[l].name])), description: 'Compteur Linky animé : LCD, jauge, index HP/HC', preview: true });
 })();
 
 /* ================================================================== */
@@ -13161,7 +13163,7 @@ class ApplianceBatteryCard extends HTMLElement {
 }
 define('appliance-battery-card', ApplianceBatteryCard);
 window.customCards = window.customCards || [];
-window.customCards.push({ type: 'appliance-battery-card', name: 'Appliance – Solar battery / Batterie solaire', description: 'Batterie de stockage solaire animée', preview: true });
+window.customCards.push({ type: 'appliance-battery-card', name: 'Appliance – Solar battery / Batterie solaire', names: Object.fromEntries(Object.keys(I18N_BAT).map((l) => [l, I18N_BAT[l].name])), description: 'Batterie de stockage solaire animée', preview: true });
 })();
 
 /* ================================================================== */
@@ -13522,7 +13524,7 @@ class ApplianceEvChargerCard extends HTMLElement {
 }
 define('appliance-ev-charger-card', ApplianceEvChargerCard);
 window.customCards = window.customCards || [];
-window.customCards.push({ type: 'appliance-ev-charger-card', name: 'Appliance – EV charger / Borne de recharge', description: 'Wallbox murale animée avec voiture branchée', preview: true });
+window.customCards.push({ type: 'appliance-ev-charger-card', name: 'Appliance – EV charger / Borne de recharge', names: Object.fromEntries(Object.keys(I18N_EV).map((l) => [l, I18N_EV[l].name])), description: 'Wallbox murale animée avec voiture branchée', preview: true });
 })();
 
 /* ================================================================== */
@@ -14001,7 +14003,7 @@ class ApplianceRobotVacuumSoloCard extends ApplianceRobotVacuumCard {
   }
 }
 define('appliance-robot-vacuum-solo-card', ApplianceRobotVacuumSoloCard);
-window.customCards.push({ type: 'appliance-robot-vacuum-solo-card', name: 'Appliance – Robot vacuum (solo) / Robot aspirateur (seul)', description: 'Robot aspirateur seul (sans fond ni station), animé, avec commandes', preview: true });
+window.customCards.push({ type: 'appliance-robot-vacuum-solo-card', name: 'Appliance – Robot vacuum (solo) / Robot aspirateur (seul)', names: Object.fromEntries(Object.keys(I18N_VAC).map((l) => [l, `${I18N_VAC[l].name} (${l === 'fr' ? 'seul' : 'solo'})`])), description: 'Robot aspirateur seul (sans fond ni station), animé, avec commandes', preview: true });
 })();
 
 /* ================================================================== */
@@ -14462,7 +14464,7 @@ const COMMON_CSS_MOW = `
   .cleaning .uimg, .mowing .uimg, .returning .uimg { opacity:1; }
   .error .uimg { filter:drop-shadow(0 0 4px #e53935); }`;
 define('appliance-robot-mower-solo-card', ApplianceRobotMowerSoloCard);
-window.customCards.push({ type: 'appliance-robot-mower-solo-card', name: 'Appliance – Robot mower (solo) / Robot tondeuse (seul)', description: 'Robot tondeuse seule (sans fond ni station), animée, avec commandes', preview: true });
+window.customCards.push({ type: 'appliance-robot-mower-solo-card', name: 'Appliance – Robot mower (solo) / Robot tondeuse (seul)', names: Object.fromEntries(Object.keys(I18N_MOW).map((l) => [l, `${I18N_MOW[l].name} (${l === 'fr' ? 'seul' : 'solo'})`])), description: 'Robot tondeuse seule (sans fond ni station), animée, avec commandes', preview: true });
 })();
 
 /* ================================================================== */
@@ -14909,7 +14911,7 @@ class AppliancePelletBoilerCard extends HTMLElement {
 }
 define('appliance-pellet-boiler-card', AppliancePelletBoilerCard);
 window.customCards = window.customCards || [];
-window.customCards.push({ type: 'appliance-pellet-boiler-card', name: 'Appliance – Pellet boiler / Chaudière à granulés', description: 'Chaudière à granulés animée (trémie, vis sans fin, flamme, départ/retour)', preview: true });
+window.customCards.push({ type: 'appliance-pellet-boiler-card', name: 'Appliance – Pellet boiler / Chaudière à granulés', names: Object.fromEntries(Object.keys(I18N_PB).map((l) => [l, I18N_PB[l].name])), description: 'Chaudière à granulés animée (trémie, vis sans fin, flamme, départ/retour)', preview: true });
 })();
 
 /* Carte « Chaudière à gaz » — custom:appliance-gas-boiler-card
@@ -15448,7 +15450,7 @@ svg{display:block;width:100%;max-width:calc(170px * var(--illus-scale,1));height
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: 'Appliance – Chaudière gaz / Gas boiler',
+    type: TAG, name: 'Appliance – Chaudière gaz / Gas boiler', names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Chaudière gaz animée : flamme, départ/retour, ECS, pression, conso élec et gaz.', preview: true,
   });
 })();
@@ -16058,7 +16060,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: 'Appliance – PAC eau/eau / Water heat pump',
+    type: TAG, name: 'Appliance – PAC eau/eau / Water heat pump', names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Pompe à chaleur eau/eau ou géothermique animée : compresseur, captage, départ/retour, COP.', preview: true,
   });
 })();
@@ -16615,7 +16617,7 @@ svg{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));height
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: 'Appliance – Chauffage diesel / Diesel heater',
+    type: TAG, name: 'Appliance – Chauffage diesel / Diesel heater', names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Poêle à gazole animé : couronne bleue et flammes, allumage, purge du souffleur, niveau de gazole, conso élec.', preview: true,
   });
 })();
@@ -17160,7 +17162,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: 'Appliance – Jacuzzi / Hot tub',
+    type: TAG, name: 'Appliance – Jacuzzi / Hot tub', names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Spa animé vu du dessus : jets, bulles, vapeur, cascade, éclairage LED, température et alertes pH.', preview: true,
   });
 })();
@@ -17903,7 +17905,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
       }
     });
     customElements.define(tag + '-editor', class extends ApplianceAccessCardEditor { get kind() { return kind; } });
-    window.customCards.push({ type: tag, name: `Appliance – ${T.en[kind]} / ${T.fr[kind]}`, description: DESC[kind], preview: true,
+    window.customCards.push({ type: tag, name: `Appliance – ${T.en[kind]} / ${T.fr[kind]}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l][kind]])), description: DESC[kind], preview: true,
       documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards' });
   }
 })();
@@ -18438,7 +18440,7 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: 'Appliance – Sauna',
+    type: TAG, name: 'Appliance – Sauna', names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Cabine de sauna animée : lueur du poêle selon la température, ondes de chaleur, vapeur, thermomètre, consommation.', preview: true,
   });
 })();
@@ -19295,7 +19297,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       }
     });
     customElements.define(tag + '-editor', class extends AppliancePumpCardEditor { get kind() { return kind; } });
-    window.customCards.push({ type: tag, name: `Appliance – ${T.en[kind]} / ${T.fr[kind]}`, description: DESC[kind], preview: true,
+    window.customCards.push({ type: tag, name: `Appliance – ${T.en[kind]} / ${T.fr[kind]}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l][kind]])), description: DESC[kind], preview: true,
       documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards' });
   }
 })();
@@ -19935,7 +19937,7 @@ svg{display:block;width:100%;max-width:calc(280px * var(--illus-scale,1));height
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: 'Appliance – Pool robot / Robot de piscine',
+    type: TAG, name: 'Appliance – Pool robot / Robot de piscine', names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Robot nettoyeur de piscine animé : allers-retours sur le fond, brosse, bulles, jauge du filtre, niveau d\'eau, commandes.', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
   });
@@ -20448,7 +20450,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: 'Appliance – UPS / Onduleur',
+    type: TAG, name: 'Appliance – UPS / Onduleur', names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Onduleur animé : courant du secteur ou de la batterie, coupure de courant, bips, charge batterie, autonomie et charge connectée (NUT).', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
   });
@@ -20979,7 +20981,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: 'Appliance – Underfloor heating / Plancher chauffant',
+    type: TAG, name: 'Appliance – Underfloor heating / Plancher chauffant', names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Plancher chauffant animé (hydraulique ou électrique) : serpentin, collecteur, sol qui rougeoit, ondes de chaleur, thermostat.', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
   });
@@ -21672,7 +21674,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       }
     });
     customElements.define(tag + '-editor', class extends ApplianceLightCardEditor { get kind() { return kind; } });
-    window.customCards.push({ type: tag, name: `Appliance – ${T.en[kind]} / ${T.fr[kind]}`, preview: true,
+    window.customCards.push({ type: tag, name: `Appliance – ${T.en[kind]} / ${T.fr[kind]}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l][kind]])), preview: true,
       description: `${T.fr[kind]} animé(e) : la lumière suit l'état, la luminosité et la couleur de l'ampoule.`,
       documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards' });
   }
@@ -22699,7 +22701,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       }
     });
     customElements.define(tag + '-editor', class extends ApplianceShutterCardEditor { get kind() { return kind; } });
-    window.customCards.push({ type: tag, name: `Appliance – ${T.en[kind]} / ${T.fr[kind]}`, preview: true,
+    window.customCards.push({ type: tag, name: `Appliance – ${T.en[kind]} / ${T.fr[kind]}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l][kind]])), preview: true,
       description: kind === 'roof_window' ? `${T.fr[kind]} animée : ouvrant à rotation, volet roulant extérieur, pluie et vue jour / nuit.` : kind === 'pergola' ? `${T.fr[kind]} animée : lames orientables, pluie, éclairage LED et vue jour / nuit.` : `${T.fr[kind]} animé : position, inclinaison, mouvement et vue jour / nuit.`,
       documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards' });
   }
@@ -23203,7 +23205,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`,
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: "Compteur d'eau animé : totalisateur, débit, consommation du jour, coût, alerte fuite et vanne d'arrêt.", preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
   });
@@ -23615,7 +23617,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`,
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: "Compteur de gaz animé : totalisateur, débit, consommation du jour, coût, détecteur(s) de gaz et vanne d'arrêt.", preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
   });
@@ -24018,7 +24020,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`,
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Compteur électrique animé : disque rotatif, LED d\'impulsion, totalisateur kWh, puissance, consommation du jour, coût, tarif et phases.', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
   });
@@ -25992,7 +25994,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`,
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Température et humidité d\'une pièce, animées : confort, alertes, point de rosée, conseil d\'aération, fenêtre ouverte, batterie, historique 24 h / 7 j / 30 j.', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
   });
@@ -26722,7 +26724,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`,
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Boîte aux lettres animée : courrier, colis, porte ouverte, compteur, dernier dépôt et bouton « relevé ».', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/mailbox.md',
   });
@@ -27282,7 +27284,7 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`,
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Détecteur de fumée animé (2 modèles) : alarme, CO, test, pile faible, défaut, boutons Tester et Couper l\'alarme.', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/smoke-detector.md',
   });
@@ -27823,7 +27825,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`,
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: "Détecteur de fuite d'eau animé : flaque, gouttes, une ou plusieurs sondes, vanne d'arrêt, sirène, alerte gel.", preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/leak-detector.md',
   });
@@ -27840,7 +27842,21 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
   const isOurs = (c) => c && /^appliance-.+-card$/.test(c.type) && c.type !== TAG;
   const ours = (window.customCards || []).filter(isOurs);
   const label = (c) => String(c.name || c.type).replace(/^Appliance\s*[–-]\s*/, '');
+  // ordre d'origine (noms « anglais / français ») : sert seulement à choisir le type par défaut d'une nouvelle carte
   const OPTIONS = ours.map((c) => ({ value: c.type, label: label(c) })).sort((a, b) => a.label.localeCompare(b.label));
+  // langue de Home Assistant (no / nn → nb, sr-Latn gardé tel quel)
+  const haLang = (hass) => {
+    const full = String((hass && (hass.locale?.language || hass.language)) || navigator.language || 'en');
+    const l = /^sr[-_]latn/i.test(full) ? 'sr-Latn' : full.slice(0, 2).toLowerCase();
+    return l === 'no' || l === 'nn' ? 'nb' : l;
+  };
+  // liste des types d'appareils dans la langue de Home Assistant, triée dans cette langue
+  // names : noms traduits déclarés par chaque carte ; à défaut, le nom « anglais / français » d'origine
+  const optionsFor = (hass) => {
+    const l = haLang(hass);
+    return ours.map((c) => ({ value: c.type, label: (c.names && (c.names[l] || c.names.en)) || label(c) }))
+      .sort((a, b) => a.label.localeCompare(b.label, l, { sensitivity: 'base' }));
+  };
 
   // Aperçu live désactivé sur chaque entrée : c'est lui qui ralentit l'onglet « Par carte »
   for (const c of ours) c.preview = false;
@@ -27918,7 +27934,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       }
       this._form.hass = this._hass;
       this._form.data = { appliance: this._config.appliance || '' };
-      this._form.schema = [{ name: 'appliance', selector: { select: { mode: 'dropdown', options: OPTIONS } } }];
+      this._form.schema = [{ name: 'appliance', selector: { select: { mode: 'dropdown', options: optionsFor(this._hass) } } }];
       this._form.computeLabel = () => tx(this._hass).appliance;
 
       // Options du sélecteur : propres au navigateur, hors config de la carte

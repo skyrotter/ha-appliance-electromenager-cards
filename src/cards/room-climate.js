@@ -1245,7 +1245,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`,
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Température et humidité d\'une pièce, animées : confort, alertes, point de rosée, conseil d\'aération, fenêtre ouverte, batterie, historique 24 h / 7 j / 30 j.', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
   });

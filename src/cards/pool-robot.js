@@ -382,7 +382,7 @@ svg{display:block;width:100%;max-width:calc(280px * var(--illus-scale,1));height
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: 'Appliance – Pool robot / Robot de piscine',
+    type: TAG, name: 'Appliance – Pool robot / Robot de piscine', names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Robot nettoyeur de piscine animé : allers-retours sur le fond, brosse, bulles, jauge du filtre, niveau d\'eau, commandes.', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
   });

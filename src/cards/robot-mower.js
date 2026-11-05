@@ -255,5 +255,5 @@ const COMMON_CSS_MOW = `
   .cleaning .uimg, .mowing .uimg, .returning .uimg { opacity:1; }
   .error .uimg { filter:drop-shadow(0 0 4px #e53935); }`;
 define('appliance-robot-mower-solo-card', ApplianceRobotMowerSoloCard);
-window.customCards.push({ type: 'appliance-robot-mower-solo-card', name: 'Appliance – Robot mower (solo) / Robot tondeuse (seul)', description: 'Robot tondeuse seule (sans fond ni station), animée, avec commandes', preview: true });
+window.customCards.push({ type: 'appliance-robot-mower-solo-card', name: 'Appliance – Robot mower (solo) / Robot tondeuse (seul)', names: Object.fromEntries(Object.keys(I18N_MOW).map((l) => [l, `${I18N_MOW[l].name} (${l === 'fr' ? 'seul' : 'solo'})`])), description: 'Robot tondeuse seule (sans fond ni station), animée, avec commandes', preview: true });
 })();

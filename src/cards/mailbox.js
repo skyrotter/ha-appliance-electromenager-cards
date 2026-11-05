@@ -391,7 +391,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`,
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Boîte aux lettres animée : courrier, colis, porte ouverte, compteur, dernier dépôt et bouton « relevé ».', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/mailbox.md',
   });

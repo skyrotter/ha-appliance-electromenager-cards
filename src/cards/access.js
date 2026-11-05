@@ -525,7 +525,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
       }
     });
     customElements.define(tag + '-editor', class extends ApplianceAccessCardEditor { get kind() { return kind; } });
-    window.customCards.push({ type: tag, name: `Appliance – ${T.en[kind]} / ${T.fr[kind]}`, description: DESC[kind], preview: true,
+    window.customCards.push({ type: tag, name: `Appliance – ${T.en[kind]} / ${T.fr[kind]}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l][kind]])), description: DESC[kind], preview: true,
       documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards' });
   }
 })();
