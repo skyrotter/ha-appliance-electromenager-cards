@@ -1051,7 +1051,8 @@
     "model_netatmo": "Термостат Netatmo",
     "model_nest": "Термостат Google Nest",
     "model_tado": "Настенный термостат Tado X",
-    "model_t6": "Термостат Honeywell Home T6"
+    "model_t6": "Термостат Honeywell Home T6",
+    "model_bht6000": "Термостат Tuya BHT6000 (круглый, чёрный экран)"
   },
   "room_climate": {
     "name": "Климат комнаты",

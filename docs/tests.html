@@ -418,6 +418,8 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c.sr.getElementById('tvp').click(); ok('thermostat netatmo: target shown big while adjusting',c.sr.getElementById('tvbig').textContent==='21°');
  c=card('trv',{entity:'climate.t',model:'t6'},[CL('heat','idle')]); ok('thermostat t6: Consigne line',c.sr.getElementById('tvsmall').textContent==='Consigne : 20,5°',c.sr.getElementById('tvsmall').textContent);
  c=card('trv',{entity:'climate.t',model:'tado'},[CL('heat','idle')]); ok('thermostat tado wall: photo and live screen',!!c.sr.querySelector('svg image')&&c.sr.getElementById('tvbig').textContent==='19,5°');
+ c=card('trv',{entity:'climate.t',model:'bht6000'},[CL('heat','idle')]);
+ ok('thermostat bht6000: drawn (no photo), current big, SET target, clock',!c.sr.querySelector('svg image')&&c.sr.getElementById('tvbig').textContent==='19,5'&&c.sr.getElementById('tvsmall').textContent==='SET 20,5°'&&/\d{2}:\d{2}/.test(c.sr.getElementById('tvclock').textContent),c.sr.getElementById('tvsmall').textContent);
  c=card('trv',{entity:'climate.t',model:'unknown'},[CL('heat','idle')]); ok('unknown model falls back to the valve',c.sr.getElementById('tvbig').textContent==='20,5°');
  c=card('trv',{entity:'climate.t',model:'tado'},[mk('climate.t','unknown',{current_temperature:17,temperature:15,min_temp:5,max_temp:35,target_temp_step:0.5})]);
  ok('thermostat with unknown state but temperatures (Tuya BHT6000) stays usable',!/unavailable/.test(tv(c).className)&&c.sr.getElementById('tvbig').textContent==='17°'&&!c.sr.getElementById('tvp').disabled,tv(c).className+' '+c.sr.getElementById('tvbig').textContent);

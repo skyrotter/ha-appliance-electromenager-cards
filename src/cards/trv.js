@@ -76,6 +76,25 @@
       <g fill="none" stroke="#222" stroke-width="2.2">${[113, 213, 313].map((x) => `<circle cx="${x}" cy="302" r="22"/>`).join('')}
         <path d="M103 302 h20 M303 302 h20 M313 292 v20 M203 294 h20 M203 302 h20 M203 310 h20"/></g>
       ${SNOW(130, 103, 20, '#1e88e5')}` },
+    // Tuya BHT6000 (et thermostats ronds à écran noir du même type) : dessin vectoriel, sans photo.
+    // Plaque carrée, façade ronde blanche, écran rond noir à chiffres blancs, touches tactiles à droite.
+    bht6000: { w: 300, h: 300, big: 'current', glow: [150, 150, 170, 170], svg: () => `
+      <rect x="18" y="18" width="264" height="264" rx="14" fill="url(#tvplate)" stroke="#d3d8dd"/>
+      <circle cx="150" cy="152" r="128" fill="#000" opacity=".12" filter="url(#tvsoft)"/>
+      <circle cx="150" cy="150" r="128" fill="url(#tvbody)" stroke="#aeb4bb" stroke-width="3"/>
+      <circle cx="150" cy="150" r="121" fill="none" stroke="#fff" stroke-width="2" opacity=".8"/>
+      <circle cx="132" cy="150" r="74" fill="url(#tvbht)"/>
+      <path d="M86 110 A74 74 0 0 1 178 92 L120 222 A74 74 0 0 1 86 110Z" fill="#fff" opacity=".05"/>
+      <g fill="none" stroke="#9aa1a8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M224 82 a7 7 0 1 0 6 0 M227 77 v7"/><path d="M220 122 v-11 l7 7 l7 -7 v11"/>
+        <circle cx="227" cy="150" r="7"/><path d="M227 146 v4 l3 2"/><path d="M220 188 l7 -9 l7 9"/><path d="M220 213 l7 9 l7 -9"/></g>
+      <g class="tv-heat tv-waves" fill="none" stroke="#ff9a2e" stroke-width="2.6" stroke-linecap="round">
+        ${[0, 1, 2].map((i) => `<path class="tv-w tv-w${i + 1}" d="M${122 + i * 9} 104 q-4 -5 0 -10 q4 -5 0 -10"/>`).join('')}</g>
+      <text class="tv-txt tv-big" id="tvbig" x="128" y="166" text-anchor="middle" font-size="46" font-weight="500" letter-spacing="-1">--</text>
+      <text class="tv-txt" x="176" y="132" font-size="13" opacity=".9">°C</text>
+      <text class="tv-txt" id="tvsmall" x="132" y="192" text-anchor="middle" font-size="15" opacity=".8">--</text>
+      <text class="tv-txt" id="tvclock" x="132" y="213" text-anchor="middle" font-size="13" opacity=".6" letter-spacing="1"></text>
+      ${SNOW(96, 128, 16, '#7cc4ff')}` },
   };
   // arc du Nest : 270°, de 135° (bas gauche) à 45° (bas droite), rayon 150
   const ARC = (() => { const c = 199, r = 150, a0 = 135 * Math.PI / 180, a1 = 405 * Math.PI / 180, p = (a) => `${(c + r * Math.cos(a)).toFixed(1)} ${(c + r * Math.sin(a)).toFixed(1)}`; return `M${p(a0)} A${r} ${r} 0 1 1 ${p(a1)}`; })();
@@ -149,11 +168,14 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
     <radialGradient id="tvnesth" cx=".5" cy=".42" r=".65"><stop offset="0" stop-color="#ff8a2a"/><stop offset="1" stop-color="#c2410c"/></radialGradient>
     <linearGradient id="tvface" x1="0" x2="1"><stop offset="0" stop-color="#e8e7ec"/><stop offset="1" stop-color="#dedde2"/></linearGradient>
     <linearGradient id="tvlcd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e0e8f1"/><stop offset="1" stop-color="#d0dbea"/></linearGradient>
+    <linearGradient id="tvplate" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6f7f8"/><stop offset="1" stop-color="#dfe3e7"/></linearGradient>
+    <radialGradient id="tvbody" cx=".4" cy=".35" r=".75"><stop offset="0" stop-color="#ffffff"/><stop offset=".75" stop-color="#f1f3f5"/><stop offset="1" stop-color="#dde1e5"/></radialGradient>
+    <radialGradient id="tvbht" cx=".45" cy=".4" r=".7"><stop offset="0" stop-color="#1b1f26"/><stop offset="1" stop-color="#05070a"/></radialGradient>
     <filter id="tvsoft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="5"/></filter>
     <filter id="tvdot"><feDropShadow dx="0" dy="0" stdDeviation="1.2" flood-color="#000" flood-opacity=".45"/></filter>${DOTS}</defs>
     <!-- halo de chauffe derrière l'appareil -->
     <ellipse class="tv-glow" cx="${gx}" cy="${gy}" rx="${grx}" ry="${gry}" fill="url(#tvglowg)"/>
-    <image href="${IMGS[model]}" x="0" y="0" width="${M.w}" height="${M.h}"/>
+    ${IMGS[model] ? `<image href="${IMGS[model]}" x="0" y="0" width="${M.w}" height="${M.h}"/>` : ''}
     ${M.svg()}
   </svg>`; };
 
@@ -176,6 +198,9 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       if (this._hass) this._render();
     }
     set hass(h) { this._hass = h; if (this._c) this._render(); }
+    // horloge de l'écran (BHT6000) : rafraîchie chaque minute
+    connectedCallback() { this._tick = setInterval(() => { if (this._hass && this._c && this._model() === 'bht6000') this._render(); }, 30000); }
+    disconnectedCallback() { clearInterval(this._tick); }
     getCardSize() { return 5; }
     getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
@@ -249,8 +274,12 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       // en grand : la consigne ou la température selon le modèle ; pendant un réglage, la nouvelle consigne
       const model = this._model(), M = MODELS[model], tgt = fin(shown) ? `${this._fmt(shown, 1)}°` : '--', now = fin(k.cur) ? `${this._fmt(k.cur, 1)}°` : '--';
       const bigTarget = M.big === 'target' || this._pending != null;
-      r.getElementById('tvbig').textContent = k.dead ? '--' : k.off && M.big === 'target' ? 'OFF' : bigTarget ? tgt : now;
+      const bigTxt = k.dead ? '--' : k.off && M.big === 'target' ? 'OFF' : bigTarget ? tgt : now;
+      r.getElementById('tvbig').textContent = model === 'bht6000' ? bigTxt.replace(/°$/, '') : bigTxt;
+      const clk = r.getElementById('tvclock');
+      if (clk) clk.textContent = new Date().toLocaleTimeString(this._lang(), { hour: '2-digit', minute: '2-digit' });
       r.getElementById('tvsmall').textContent = k.dead ? '' : model === 't6' ? `${this._l('target')} : ${k.off ? 'OFF' : tgt}`
+        : model === 'bht6000' ? (bigTarget ? now : `SET ${k.off ? 'OFF' : tgt}`)
         : bigTarget ? now : k.off ? 'OFF' : tgt;
       // Nest : arc de consigne (entre min_temp et max_temp) et mention « CHAUFFE »
       const arc = r.getElementById('tvarc');

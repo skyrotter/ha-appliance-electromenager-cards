@@ -1051,7 +1051,8 @@
     "model_netatmo": "Termostato Netatmo",
     "model_nest": "Termostato Google Nest",
     "model_tado": "Termostato a parete Tado X",
-    "model_t6": "Termostato Honeywell Home T6"
+    "model_t6": "Termostato Honeywell Home T6",
+    "model_bht6000": "Termostato Tuya BHT6000 (rotondo, schermo nero)"
   },
   "room_climate": {
     "name": "Clima della stanza",
