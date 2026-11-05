@@ -847,6 +847,7 @@
     "entity_leak": "Lecksensor",
     "entity_valve": "Absperrventil",
     "leak_minutes": "Leckalarm nach (min Dauerfluss)",
+    "freeze_threshold": "Frostschwelle (°C)",
     "flow_threshold": "Durchfluss gilt als null unter",
     "show_today": "Heute anzeigen",
     "entity_blind": "Außenrollladen (cover)",
@@ -978,7 +979,12 @@
     "flow": "Durchfluss",
     "today": "Heute",
     "index": "Zählerstand",
-    "cost": "Kosten"
+    "cost": "Kosten",
+    "temperature": "Temperatur",
+    "pressure": "Druck",
+    "freeze": "Frostgefahr",
+    "freeze_risk": "Frostgefahr: {t}",
+    "leak_detected_by": "Leck erkannt durch: {n}"
   },
   "room_climate": {
     "name": "Raumklima",

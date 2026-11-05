@@ -864,6 +864,7 @@
     "entity_leak": "Leak sensor",
     "entity_valve": "Shut-off valve",
     "leak_minutes": "Leak alert after (min of continuous flow)",
+    "freeze_threshold": "Freeze threshold (°C)",
     "flow_threshold": "Flow considered zero below",
     "show_today": "Show today",
     "entity_blind": "Exterior blind (cover)",
@@ -995,7 +996,12 @@
     "flow": "Flow",
     "today": "Today",
     "index": "Index",
-    "cost": "Cost"
+    "cost": "Cost",
+    "temperature": "Temperature",
+    "pressure": "Pressure",
+    "freeze": "Freezing risk",
+    "freeze_risk": "Freezing risk: {t}",
+    "leak_detected_by": "Leak detected by: {n}"
   },
   "room_climate": {
     "name": "Room climate",

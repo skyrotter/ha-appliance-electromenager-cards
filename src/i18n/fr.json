@@ -864,6 +864,7 @@
     "entity_leak": "Détecteur de fuite",
     "entity_valve": "Vanne d'arrêt",
     "leak_minutes": "Alerte fuite après (min d'écoulement continu)",
+    "freeze_threshold": "Seuil de gel (°C)",
     "flow_threshold": "Débit considéré nul en dessous de",
     "show_today": "Afficher le jour",
     "entity_blind": "Volet roulant extérieur (cover)",
@@ -995,7 +996,12 @@
     "flow": "Débit",
     "today": "Aujourd'hui",
     "index": "Index",
-    "cost": "Coût"
+    "cost": "Coût",
+    "temperature": "Température",
+    "pressure": "Pression",
+    "freeze": "Risque de gel",
+    "freeze_risk": "Risque de gel : {t}",
+    "leak_detected_by": "Fuite détectée par : {n}"
   },
   "room_climate": {
     "name": "Climat pièce",

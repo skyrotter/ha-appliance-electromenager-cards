@@ -2,7 +2,12 @@
  * Compteur laiton à cadran bleu : totalisateur m³ (noir) + litres (rouge), étoile de débit qui tourne
  * selon le débit, eau qui circule dans les tuyaux. Tous les capteurs sont optionnels :
  * index (m³, L, gal, ft³), débit (L/min, L/h, m³/h, gal/min…), consommation du jour, coût,
- * détecteur de fuite, vanne d'arrêt. Sans capteur de débit, le débit est déduit des variations de l'index.
+ * détecteur(s) de fuite, vanne d'arrêt, température et pression de l'eau. Sans capteur de débit, le débit est
+ * déduit des variations de l'index.
+ * entity_leak accepte une entité OU une liste de sondes : le bandeau nomme celles qui sont mouillées.
+ * entity_temperature / entity_pressure : tuiles informatives (pression sans conversion ni seuil) ; sous
+ * freeze_threshold (°C, 3 par défaut, 0 = désactivé) → état « Risque de gel » (le seuil reste en °C même si
+ * le capteur est en °F ou K).
  * Sans détecteur de fuite : « fuite possible » si l'eau coule sans interruption plus de leak_minutes.
  */
 (() => {
@@ -10,6 +15,7 @@
   if (customElements.get(TAG)) return;
 
   const T = /*@i18n water_meter*/{};
+  const asList = (v) => (Array.isArray(v) ? v : v ? [v] : []); // entity_leak : string ou array → array
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
 
   // conversion en litres (volume) et en L/min (débit) selon l'unité du capteur
@@ -25,8 +31,9 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--wm-ok:var(--appli
 .badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
 .flowing .badge{background:color-mix(in srgb,var(--wm-cold) 22%,transparent);color:var(--wm-cold)}
 .leak .badge{background:color-mix(in srgb,var(--wm-alert) 22%,transparent);color:var(--wm-alert)}
+.freeze .badge{background:color-mix(in srgb,var(--wm-cold) 22%,transparent);color:var(--wm-cold)}
 .alert{display:none;margin-top:4px;font-size:11px;color:var(--wm-alert);font-weight:500;text-align:center}
-.alert.on{display:block}
+.alert.on{display:block}.alert.frost{color:var(--wm-cold)}
 svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height:auto;margin:2px auto 0;cursor:pointer}
 .ctl{display:flex;justify-content:center;margin-top:6px}.ctl.hide{display:none}
 .ctl button{display:flex;align-items:center;gap:4px;border:0;border-radius:10px;padding:6px 14px;cursor:pointer;background:var(--secondary-background-color);color:var(--primary-text-color);font:500 12px/16px var(--paper-font-body1_-_font-family,Roboto,sans-serif)}
@@ -39,7 +46,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 .tile .l ha-icon{--mdc-icon-size:13px;flex:none}
 .tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
-.tile.hide{display:none}.tile.bad .v{color:var(--wm-alert)}
+.tile.hide{display:none}.tile.bad .v{color:var(--wm-alert)}.tile.cold .v{color:var(--wm-cold)}
 /* ---- illustration ---- */
 .wm-star{transform-box:fill-box;transform-origin:50% 50%}
 .flowing .wm-star,.leak.moving .wm-star{animation:wmrot var(--spd) linear infinite}
@@ -80,7 +87,8 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     <g class="wm-alert"><circle cx="96" cy="40" r="9" fill="#e53935"/><path d="M96 34v7" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><circle cx="96" cy="45" r="1.3" fill="#fff"/></g>
   </svg>`;
 
-  const TILES = [['flow', 'mdi:water-pump', 'show_flow'], ['today', 'mdi:water', 'show_today'], ['index', 'mdi:counter', 'show_index'], ['cost', 'mdi:cash', 'show_cost']];
+  const TILES = [['flow', 'mdi:water-pump', 'show_flow'], ['today', 'mdi:water', 'show_today'], ['index', 'mdi:counter', 'show_index'], ['cost', 'mdi:cash', 'show_cost'],
+    ['temperature', 'mdi:thermometer', 'show_temperature'], ['pressure', 'mdi:gauge', 'show_pressure']];
 
   class ApplianceWaterMeterCard extends HTMLElement {
 
@@ -99,7 +107,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { show_status: true, show_flow: true, show_today: true, show_index: true, show_cost: true, leak_minutes: 60, flow_threshold: 0.05, ...c };
+      this._c = { show_status: true, show_flow: true, show_today: true, show_index: true, show_cost: true, show_temperature: true, show_pressure: true, leak_minutes: 60, flow_threshold: 0.05, freeze_threshold: 3, ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -120,6 +128,12 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     _lpm(id) { const v = this._num(id); return isNaN(v) ? NaN : v * (FLOW[this._unit(id, 'L/min').toLowerCase().replace('litre', 'l').replace('liter', 'l')] ?? 1); }
     _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _vol(l) { return isNaN(l) ? ['--', 'L'] : l >= 10000 ? [this._fmt(l / 1000, 1), 'm³'] : [this._fmt(l, 0), 'L']; }
+    // température ramenée en °C quel que soit l'unité du capteur (°F, K)
+    _celsius(id) {
+      const v = this._num(id); if (isNaN(v)) return NaN;
+      const u = this._unit(id, '°C').toLowerCase().replace(/[°\s]/g, '');
+      return u === 'f' ? (v - 32) / 1.8 : u === 'k' ? v - 273.15 : v;
+    }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
 
     _build() {
@@ -138,7 +152,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         this._hass.callService(['switch', 'valve', 'input_boolean'].includes(dom) ? dom : 'homeassistant', 'toggle', { entity_id: id });
       });
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
-        const c = this._c; this._more({ flow: c.entity_flow || c.entity_index, today: c.entity_today, index: c.entity_index, cost: c.entity_cost }[el.dataset.k]);
+        const c = this._c; this._more({ flow: c.entity_flow || c.entity_index, today: c.entity_today, index: c.entity_index, cost: c.entity_cost, temperature: c.entity_temperature, pressure: c.entity_pressure }[el.dataset.k]);
       }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
@@ -161,20 +175,25 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       const moving = !isNaN(flow) && flow > thr;
       // écoulement continu : depuis quand l'eau coule sans interruption
       if (moving) { if (!this._flowSince) this._flowSince = now; } else this._flowSince = 0;
-      const leakS = this._st(c.entity_leak);
-      const leakSensor = !!leakS && /^(on|wet|leak|detected|true)$/i.test(String(leakS.state));
+      // sondes de fuite : une ou plusieurs ; « fuite » dès qu'au moins une est mouillée
+      const leakIds = asList(c.entity_leak), leakS = leakIds.some((i) => this._st(i));
+      const wet = leakIds.filter((i) => { const s = this._st(i); return !!s && /^(on|wet|leak|detected|true)$/i.test(String(s.state)); });
+      const leakSensor = wet.length > 0;
+      // alerte gel : seuil en °C, 0 / vide = désactivée
+      const fthr = Number(c.freeze_threshold), temp = this._celsius(c.entity_temperature);
+      const freeze = !!fthr && !isNaN(temp) && temp < fthr;
       const leakLong = moving && this._flowSince && now - this._flowSince > Number(c.leak_minutes) * 60000 && Number(c.leak_minutes) > 0;
       const valveS = this._st(c.entity_valve), valveClosed = !!valveS && /^(off|closed|closing)$/i.test(String(valveS.state));
       const anyId = [c.entity_index, c.entity_flow, c.entity_today].filter(Boolean);
       const usable = anyId.some((i) => { const s = this._st(i); return s && !/^(unavailable|unknown)$/i.test(String(s.state)); });
-      let st = !usable && !leakS ? 'unavailable' : leakSensor || leakLong ? 'leak' : valveClosed ? 'valve_closed' : moving ? 'flowing' : 'idle';
-      return { st, idx, flow, moving, leakSensor, leakLong, valveS, valveClosed };
+      let st = !usable && !leakS ? 'unavailable' : leakSensor || leakLong ? 'leak' : freeze ? 'freeze' : valveClosed ? 'valve_closed' : moving ? 'flowing' : 'idle';
+      return { st, idx, flow, moving, leakSensor, leakLong, valveS, valveClosed, wet, freeze };
     }
 
     _render() {
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card;
-      const { st, idx, flow, moving, leakSensor, leakLong, valveS, valveClosed } = this._compute();
+      const { st, idx, flow, moving, leakSensor, leakLong, valveS, valveClosed, wet, freeze } = this._compute();
       card.className = `${st}${moving ? ' moving' : ''}${c.animations === false ? ' noanim' : ''}`;
       // vitesse de l'étoile : un tour par seconde à 6 L/min, bornée
       card.style.setProperty('--spd', `${Math.max(.15, Math.min(4, 6 / Math.max(.1, flow || 0))).toFixed(2)}s`);
@@ -189,8 +208,14 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       badge.textContent = st === 'flowing' ? `${this._fmt(flow, 1)} L/min` : this._t(st);
       badge.style.display = c.show_status === false ? 'none' : '';
       const al = r.getElementById('wmalert');
-      al.textContent = leakSensor ? this._t('leak_detected') : leakLong ? this._t('leak_continuous').replace('{n}', String(c.leak_minutes)) : '';
+      const tempRaw = this._num(c.entity_temperature), tempTxt = `${this._fmt(tempRaw, 1)} ${this._unit(c.entity_temperature, '°C')}`;
+      const names = wet.map((i) => this._st(i)?.attributes?.friendly_name || i).join(', ');
+      const frostOnly = freeze && !leakSensor && !leakLong;
+      al.textContent = leakSensor ? (names ? this._t('leak_detected_by').replace('{n}', names) : this._t('leak_detected'))
+        : leakLong ? this._t('leak_continuous').replace('{n}', String(c.leak_minutes))
+        : freeze ? this._t('freeze_risk').replace('{t}', tempTxt) : '';
       al.classList.toggle('on', !!al.textContent);
+      al.classList.toggle('frost', frostOnly);
 
       const ctl = r.getElementById('wmctl'), btn = ctl.querySelector('button');
       ctl.classList.toggle('hide', !c.entity_valve);
@@ -200,16 +225,21 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 
       const today = this._liters(c.entity_today, 'L'), cost = this._num(c.entity_cost);
       const [tv, tu] = this._vol(today);
+      // pression : unité du capteur, sans conversion ; 0 décimale pour psi/kPa/hPa/mbar/mmHg/Pa, sinon 2
+      const pU = this._unit(c.entity_pressure, 'bar'), pD = /^(psi|kpa|hpa|mbar|mmhg|pa)$/i.test(pU) ? 0 : 2;
       const V = {
         flow: [c.entity_flow || c.entity_index, isNaN(flow) ? '--' : this._fmt(flow, 1), 'L/min'],
         today: [c.entity_today, tv, tu],
         index: [c.entity_index, this._fmt(idx / 1000, 3), 'm³'],
         cost: [c.entity_cost, this._fmt(cost, 2), this._unit(c.entity_cost, '€')],
+        temperature: [c.entity_temperature, this._fmt(tempRaw, 1), this._unit(c.entity_temperature, '°C')],
+        pressure: [c.entity_pressure, this._fmt(this._num(c.entity_pressure), pD), pU],
       };
       TILES.forEach(([k, , opt]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`); const [show, val, unit] = V[k];
         el.classList.toggle('hide', !show || c[opt] === false);
         el.classList.toggle('bad', k === 'flow' && st === 'leak');
+        el.classList.toggle('cold', k === 'temperature' && freeze);
         el.querySelector('.lbl').textContent = this._l(k);
         const small = document.createElement('small'); small.textContent = unit ?? '';
         el.querySelector('.v').replaceChildren(String(val ?? ''), small);
@@ -231,21 +261,22 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         });
         this.appendChild(this._form);
       }
-      const ent = (name, domain) => ({ name, selector: { entity: domain ? { domain } : {} } });
+      const ent = (name, domain, extra) => ({ name, selector: { entity: { ...(domain ? { domain } : {}), ...(extra || {}) } } });
       const num = (name, min, max, step, def, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
       const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
       this._form.hass = this._hass;
-      this._form.data = this._c;
+      this._form.data = { ...this._c, entity_leak: asList(this._c && this._c.entity_leak) }; // le form attend un array
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ent('entity_index', 'sensor'), ent('entity_flow', 'sensor'), ent('entity_today', 'sensor'), ent('entity_cost', ['sensor', 'input_number']),
-        ent('entity_leak', 'binary_sensor'), ent('entity_valve', ['valve', 'switch', 'input_boolean']),
-        { type: 'grid', name: '', schema: [num('leak_minutes', 0, 1440, 5, 60, 'min'), num('flow_threshold', 0, 5, 0.01, 0.05, 'L/min')] },
+        ent('entity_temperature', 'sensor', { device_class: 'temperature' }), ent('entity_pressure', 'sensor', { device_class: 'pressure' }),
+        ent('entity_leak', ['binary_sensor', 'input_boolean'], { multiple: true }), ent('entity_valve', ['valve', 'switch', 'input_boolean']),
+        { type: 'grid', name: '', schema: [num('leak_minutes', 0, 1440, 5, 60, 'min'), num('flow_threshold', 0, 5, 0.01, 0.05, 'L/min'), num('freeze_threshold', -10, 15, 0.5, 3, '°C')] },
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
-        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_flow'), bool('show_today'), bool('show_index'), bool('show_cost'), bool('animations')] },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_flow'), bool('show_today'), bool('show_index'), bool('show_cost'), bool('show_temperature'), bool('show_pressure'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
