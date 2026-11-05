@@ -39,7 +39,7 @@ energy: sensor.speaker_plug_energy   # optional
 | `show_media` | The "artist · title" line under the state. On by default. |
 | `volume_step` | Volume − / + step, from 0 to 1. Default 0.05 (5 %). |
 | `threshold` / `standby_threshold` | Plug only: playing / idle above these powers (W). |
-| `show_power` / `show_energy` / `show_cost` / `show_toggle` | Checkboxes in the visual editor (all on by default). |
+| `show_power` / `show_energy` / `show_cost` / `show_toggle` | Checkboxes in the visual editor (on by default; unchecked on newly created smart speaker cards). |
 
 Tiles: volume (%), source app, then power, energy and cost.
 

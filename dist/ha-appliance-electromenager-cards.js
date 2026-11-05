@@ -7347,9 +7347,10 @@ class ApplianceCardBase extends HTMLElement {
     else if (m.soon && active) tile("mdi:timer-sand-complete", tr(hass, "almost_done"), lb("remaining"), c.power);
     const solar = kind === "solar";
     const dual = kind === "water_heater" && (m.pwS || m.energyS);
+    const showOpt = (k) => c[k] !== false;
     // hide_zero_power (activé par défaut) : tuiles de puissance masquées quand elles valent 0 (moins de 1 W), ex. chauffe-eau au repos
     const zero = (st) => c.hide_zero_power !== false && Math.abs(powerW(st) ?? 0) < 1;
-    if (m.pw && c.show_power !== false && !zero(m.pw)) tile(solar ? "mdi:solar-power" : "mdi:flash", fmtPower(hass, m.pw) ?? "—", lb(solar ? "production" : dual ? "grid" : "power"), c.power);
+    if (m.pw && showOpt("show_power") && !zero(m.pw)) tile(solar ? "mdi:solar-power" : "mdi:flash", fmtPower(hass, m.pw) ?? "—", lb(solar ? "production" : dual ? "grid" : "power"), c.power);
     if (m.pwS && !zero(m.pwS)) tile("mdi:solar-power", fmtPower(hass, m.pwS) ?? "—", lb("solar_surplus"), c.power_solar);
     // display : "energy" (kWh seuls), "cost" (€ seuls, si price_per_kwh est valide), sinon les deux
     const pr = typeof c.price_per_kwh === "string" ? num(hass.states[c.price_per_kwh]) : Number(c.price_per_kwh);
@@ -7364,11 +7365,11 @@ class ApplianceCardBase extends HTMLElement {
     const per = PERIODS.includes(c.energy_period) && this._perKwh != null ? c.energy_period : null;
     // energy_period: none → aucune tuile énergie (le compteur sert encore au dernier cycle)
     // show_energy / show_cost (cases de l'éditeur, cochées par défaut) : masquent les tuiles énergie / coût
-    const noEnergy = c.energy_period === "none" || c.show_energy === false;
+    const noEnergy = c.energy_period === "none" || !showOpt("show_energy");
     if (noEnergy) { /* tuile masquée */ } else if (m.energy && per && !dual && !solar) {
       if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.energy);
       // coût de la période (mode € ou les deux) : conso de la période × prix du kWh actuel
-      if (showCost && c.display === "cost" && c.show_cost !== false) tile("mdi:cash", money(this._perKwh * pr), tr(hass, `cost_${per}`), prEnt || c.energy);
+      if (showCost && c.display === "cost" && showOpt("show_cost")) tile("mdi:cash", money(this._perKwh * pr), tr(hass, `cost_${per}`), prEnt || c.energy);
     } else if (m.energy) {
       const eVal = fmtEnergy(hass, m.energy) ?? "—";
       const yp = m.energy.attributes && m.energy.attributes.last_period;
@@ -7380,7 +7381,7 @@ class ApplianceCardBase extends HTMLElement {
       }
     }
     if (m.energyS) tile("mdi:solar-power-variant", fmtEnergy(hass, m.energyS) ?? "—", lb("energy_solar"), c.energy_solar);
-    if (m.cost && c.show_cost !== false) tile(solar ? "mdi:piggy-bank-outline" : "mdi:cash", fmtUnit(hass, m.cost, 2, 2) ?? "—", lb(solar ? "savings" : "cost"), c.cost);
+    if (m.cost && showOpt("show_cost")) tile(solar ? "mdi:piggy-bank-outline" : "mdi:cash", fmtUnit(hass, m.cost, 2, 2) ?? "—", lb(solar ? "savings" : "cost"), c.cost);
     // durée d'utilisation du jour (écrans, consoles, PC) : capteur usage_time, sinon historique (+ temps écoulé depuis la lecture si toujours allumé)
     if (USAGE_KINDS.includes(kind) && c.show_usage_time !== false) {
       const u = this._use, today = u && this._useDay === new Date().toDateString();
@@ -7725,6 +7726,8 @@ function stubFor(kind, hass) {
   }
   const batt = ["tool_charger", "wet_vacuum"].includes(kind) ? pick((i, st) => i.startsWith("sensor.") && dc(st) === "battery") : null;
   if (batt) cfg.battery_level = batt;
+  // enceinte connectée : nouvelles cartes sans tuiles puissance / énergie / coût (cases décochées) ; les cartes existantes ne changent pas
+  if (kind === "smart_speaker") Object.assign(cfg, { show_power: false, show_energy: false, show_cost: false });
   if (!cfg.entity && !cfg.power && !cfg.switch && !cfg.temperature) cfg.power = "sensor.example_power";
   return cfg;
 }
@@ -26740,7 +26743,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       if (this._subTag !== tag) {
         this._subTag = tag;
         if (this._sub) this._sub.remove();
-        this._sub = null;
+        this._sub = null; this._subForm = null;
         const C = tag && customElements.get(tag);
         if (C && C.getConfigElement) {
           this._sub = C.getConfigElement();
@@ -26749,9 +26752,25 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
             this._fire(wrap(this._config.appliance, e.detail.config));
           });
           this.appendChild(this._sub);
+        } else if (C && C.getConfigForm) {
+          // cartes « de base » : pas d'éditeur dédié, seulement un schéma ha-form (entité, capteurs, options…)
+          const f = C.getConfigForm();
+          this._sub = document.createElement('ha-form');
+          this._subForm = f;
+          this._sub.schema = f.schema;
+          this._sub.computeLabel = f.computeLabel;
+          this._sub.addEventListener('value-changed', (e) => {
+            e.stopPropagation();
+            this._fire(wrap(this._config.appliance, e.detail.value));
+          });
+          this.appendChild(this._sub);
         }
       }
-      if (this._sub) { this._sub.hass = this._hass; this._sub.setConfig(inner(this._config)); }
+      if (this._sub) {
+        this._sub.hass = this._hass;
+        if (this._subForm) this._sub.data = inner(this._config);
+        else this._sub.setConfig(inner(this._config));
+      }
     }
     _fire(config) {
       this._config = config;

@@ -316,6 +316,8 @@ function stubFor(kind, hass) {
   }
   const batt = ["tool_charger", "wet_vacuum"].includes(kind) ? pick((i, st) => i.startsWith("sensor.") && dc(st) === "battery") : null;
   if (batt) cfg.battery_level = batt;
+  // enceinte connectée : nouvelles cartes sans tuiles puissance / énergie / coût (cases décochées) ; les cartes existantes ne changent pas
+  if (kind === "smart_speaker") Object.assign(cfg, { show_power: false, show_energy: false, show_cost: false });
   if (!cfg.entity && !cfg.power && !cfg.switch && !cfg.temperature) cfg.power = "sensor.example_power";
   return cfg;
 }
