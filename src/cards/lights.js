@@ -53,8 +53,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 .compact .head{flex:none;gap:4px}
 .compact .title{font-size:12px;line-height:16px}
 .compact .badge{font-size:10px;padding:0 6px}
-.compact .stage{flex:1 1 auto;min-height:0;width:100%;max-width:none;margin-top:3px;border-radius:10px}
-.compact svg{width:100%;height:100%}
+.compact .stage{flex:1 1 auto;min-height:0;width:100%;max-width:none;margin-top:3px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+/* illustration_size s'applique aussi en compact : la scène garde sa place, le dessin est réduit et centré */
+.compact svg{width:calc(100% * min(1, var(--illus-scale,1)));height:calc(100% * min(1, var(--illus-scale,1)))}
 .compact .ctl{flex:none;gap:4px;margin-top:4px}
 .compact .ctl button{padding:3px;border-radius:8px;font-size:11px;line-height:14px}
 .compact .ctl button ha-icon{--mdc-icon-size:14px}
