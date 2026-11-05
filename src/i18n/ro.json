@@ -917,7 +917,9 @@
     "show_preset_modes": "Listă presetări termostat",
     "entity_valve_position": "Deschidere supapă (%)",
     "show_valve": "Afișează deschiderea supapei",
-    "show_window": "Afișează fereastra"
+    "show_window": "Afișează fereastra",
+    "spot_count": "Număr de spoturi",
+    "brightness_slider": "Cursor luminozitate"
   },
   "light": {
     "light_bulb": "Bec",
@@ -938,7 +940,8 @@
     "color": "Culoare",
     "brightness": "Luminozitate",
     "power": "Putere",
-    "energy": "Energie"
+    "energy": "Energie",
+    "ceiling_spot": "Spoturi încastrate"
   },
   "shutter": {
     "roller_shutter": "Rulou exterior",

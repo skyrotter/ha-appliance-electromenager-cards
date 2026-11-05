@@ -917,7 +917,9 @@
     "show_preset_modes": "Elenco preimpostazioni del termostato",
     "entity_valve_position": "Apertura valvola (%)",
     "show_valve": "Mostra apertura valvola",
-    "show_window": "Mostra finestra"
+    "show_window": "Mostra finestra",
+    "spot_count": "Numero di faretti",
+    "brightness_slider": "Cursore luminosità"
   },
   "light": {
     "light_bulb": "Lampadina",
@@ -938,7 +940,8 @@
     "color": "Colore",
     "brightness": "Luminosità",
     "power": "Potenza",
-    "energy": "Energia"
+    "energy": "Energia",
+    "ceiling_spot": "Faretti a incasso"
   },
   "shutter": {
     "roller_shutter": "Tapparella",

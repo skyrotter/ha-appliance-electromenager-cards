@@ -917,7 +917,9 @@
     "show_preset_modes": "Листа предподешавања термостата",
     "entity_valve_position": "Отвореност вентила (%)",
     "show_valve": "Прикажи отвореност вентила",
-    "show_window": "Прикажи прозор"
+    "show_window": "Прикажи прозор",
+    "spot_count": "Број спотова",
+    "brightness_slider": "Клизач осветљености"
   },
   "light": {
     "light_bulb": "Сијалица",
@@ -938,7 +940,8 @@
     "color": "Боја",
     "brightness": "Осветљеност",
     "power": "Снага",
-    "energy": "Енергија"
+    "energy": "Енергија",
+    "ceiling_spot": "Уградни спотови"
   },
   "shutter": {
     "roller_shutter": "Ролетна",

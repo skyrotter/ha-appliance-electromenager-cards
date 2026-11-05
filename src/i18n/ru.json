@@ -917,7 +917,9 @@
     "show_preset_modes": "Список предустановок термостата",
     "entity_valve_position": "Открытие клапана (%)",
     "show_valve": "Показывать открытие клапана",
-    "show_window": "Показывать окно"
+    "show_window": "Показывать окно",
+    "spot_count": "Количество светильников",
+    "brightness_slider": "Ползунок яркости"
   },
   "light": {
     "light_bulb": "Лампа",
@@ -938,7 +940,8 @@
     "color": "Цвет",
     "brightness": "Яркость",
     "power": "Мощность",
-    "energy": "Энергия"
+    "energy": "Энергия",
+    "ceiling_spot": "Встраиваемые светильники"
   },
   "shutter": {
     "roller_shutter": "Рольставни",
