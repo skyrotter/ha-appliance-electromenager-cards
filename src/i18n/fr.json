@@ -931,7 +931,10 @@
     "show_last_open": "Afficher la dernière ouverture",
     "show_hvac_modes": "Boutons de mode du thermostat",
     "show_fan_modes": "Liste ventilation du thermostat",
-    "show_preset_modes": "Liste préréglages du thermostat"
+    "show_preset_modes": "Liste préréglages du thermostat",
+    "entity_valve_position": "Ouverture de la vanne (%)",
+    "show_valve": "Afficher l'ouverture de la vanne",
+    "show_window": "Afficher la fenêtre"
   },
   "light": {
     "light_bulb": "Ampoule",
@@ -1042,6 +1045,21 @@
     "l1": "L1",
     "l2": "L2",
     "l3": "L3"
+  },
+  "trv": {
+    "name": "Tête thermostatique",
+    "idle": "Consigne atteinte",
+    "heating": "En chauffe",
+    "off": "Éteinte",
+    "window": "Fenêtre ouverte",
+    "unavailable": "Indisponible",
+    "window_alert": "Fenêtre ouverte : chauffage en pause",
+    "target": "Consigne",
+    "temperature": "Température",
+    "valve": "Vanne",
+    "battery": "Batterie",
+    "open": "Ouverte",
+    "closed": "Fermée"
   },
   "room_climate": {
     "name": "Climat pièce",

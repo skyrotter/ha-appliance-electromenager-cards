@@ -914,7 +914,10 @@
 "show_last_open": "Vis siste åpning",
 "show_hvac_modes": "Modusknapper for termostaten",
 "show_fan_modes": "Viftemodusliste for termostaten",
-"show_preset_modes": "Forhåndsinnstillinger for termostaten"
+"show_preset_modes": "Forhåndsinnstillinger for termostaten",
+"entity_valve_position": "Ventilåpning (%)",
+"show_valve": "Vis ventilåpning",
+"show_window": "Vis vindu"
 },
 "light": {
 "light_bulb": "Lyspære",
@@ -1025,6 +1028,21 @@
 "l1": "L1",
 "l2": "L2",
 "l3": "L3"
+},
+"trv": {
+"name": "Radiatortermostat",
+"idle": "Måltemperatur nådd",
+"heating": "Varmer",
+"off": "Av",
+"window": "Vindu åpent",
+"unavailable": "Utilgjengelig",
+"window_alert": "Vindu åpent: oppvarming på pause",
+"target": "Måltemperatur",
+"temperature": "Temperatur",
+"valve": "Ventil",
+"battery": "Batteri",
+"open": "Åpent",
+"closed": "Lukket"
 },
 "room_climate": {
 "name": "Romklima",

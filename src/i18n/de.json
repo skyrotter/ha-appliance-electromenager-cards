@@ -914,7 +914,10 @@
     "show_last_open": "Letzte Öffnung anzeigen",
     "show_hvac_modes": "Modustasten des Thermostats",
     "show_fan_modes": "Lüftermodus-Liste des Thermostats",
-    "show_preset_modes": "Voreinstellungsliste des Thermostats"
+    "show_preset_modes": "Voreinstellungsliste des Thermostats",
+    "entity_valve_position": "Ventilöffnung (%)",
+    "show_valve": "Ventilöffnung anzeigen",
+    "show_window": "Fenster anzeigen"
   },
   "light": {
     "light_bulb": "Glühbirne",
@@ -1025,6 +1028,21 @@
     "l1": "L1",
     "l2": "L2",
     "l3": "L3"
+  },
+  "trv": {
+    "name": "Heizkörperthermostat",
+    "idle": "Temperatur erreicht",
+    "heating": "Heizt",
+    "off": "Aus",
+    "window": "Fenster offen",
+    "unavailable": "Nicht verfügbar",
+    "window_alert": "Fenster offen: Heizung pausiert",
+    "target": "Solltemperatur",
+    "temperature": "Temperatur",
+    "valve": "Ventil",
+    "battery": "Batterie",
+    "open": "Offen",
+    "closed": "Geschlossen"
   },
   "room_climate": {
     "name": "Raumklima",
