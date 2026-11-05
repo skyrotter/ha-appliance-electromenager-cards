@@ -552,6 +552,28 @@ const SCEN = [
       set('valve.water_main', 'open');
       checks(ctl, [['Fuite', 'binary_sensor.water_leak', false]]);
     } },
+  { kind: 'gas-meter', title: 'Compteur de gaz', lang: true,
+    cfg: { entity_index: 'sensor.gas_index', entity_flow: 'sensor.gas_flow', entity_today: 'sensor.gas_today', entity_cost: 'sensor.gas_cost', entity_valve: 'valve.gas_main', entity_leak: ['binary_sensor.gas_kitchen', 'binary_sensor.gas_boiler'] },
+    build(ctl) {
+      set('sensor.gas_index', 1234.567, { unit_of_measurement: 'm³', device_class: 'gas' });
+      range(ctl, 'Débit', 'sensor.gas_flow', 0, 3, 0.05, 0.8, 'm³/h', { unit_of_measurement: 'm³/h' });
+      set('sensor.gas_today', 2.4, { unit_of_measurement: 'm³' });
+      set('sensor.gas_cost', 3.1, { unit_of_measurement: '€' });
+      set('valve.gas_main', 'open');
+      set('binary_sensor.gas_boiler', 'off', { friendly_name: 'Chaudière' });
+      checks(ctl, [['Détecteur cuisine', 'binary_sensor.gas_kitchen', false], ['Détecteur chaudière', 'binary_sensor.gas_boiler', false]]);
+    } },
+  { kind: 'electric-meter', title: 'Compteur électrique', lang: true,
+    cfg: { entity_power: 'sensor.em_power', entity_index: 'sensor.em_index', entity_today: 'sensor.em_today', entity_cost: 'sensor.em_cost', entity_tariff: 'sensor.em_tariff',
+      entity_power_l1: 'sensor.em_l1', entity_power_l2: 'sensor.em_l2', entity_power_l3: 'sensor.em_l3', subscribed_power: 6 },
+    build(ctl) {
+      range(ctl, 'Puissance', 'sensor.em_power', 0, 9000, 50, 1500, 'W', W);
+      set('sensor.em_index', 12345.6, KWH);
+      set('sensor.em_today', 8.42, KWH);
+      set('sensor.em_cost', 1.7, { unit_of_measurement: '€' });
+      set('sensor.em_tariff', 'HC');
+      set('sensor.em_l1', 500, W); set('sensor.em_l2', 500, W); set('sensor.em_l3', 500, W);
+    } },
   { kind: 'room-climate', title: 'Climat de la pièce', lang: true,
     cfg: { name: 'Salon', entity_temperature: 'sensor.room_temp', entity_humidity: 'sensor.room_humidity', entity_outdoor_temperature: 'sensor.outdoor_temp',
       entity_outdoor_humidity: 'sensor.outdoor_humidity', entity_window: 'binary_sensor.room_window', entity_battery: 'sensor.room_sensor_battery', entity_climate: 'climate.room',

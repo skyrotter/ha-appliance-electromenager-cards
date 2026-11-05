@@ -12,19 +12,26 @@ Every sensor is optional, so it works with whatever your meter integration provi
 | `entity_flow` | flow rate; `L/min`, `L/h`, `L/s`, `m³/h`, `gal/min` are converted to L/min. **Without it, the flow is derived from the index changes** |
 | `entity_today` | today's consumption (any volume unit) |
 | `entity_cost` | cost sensor (any currency) |
-| `entity_leak` | leak sensor (`binary_sensor` on = leak) |
+| `entity_leak` | leak sensor (`binary_sensor` / `input_boolean`, on = leak). **One entity or a list**: the alert banner names the wet sensors |
+| `entity_temperature` | water temperature sensor (1 decimal, unit read from the sensor) |
+| `entity_pressure` | water pressure sensor (unit read from the sensor, no conversion, no alert) |
 | `entity_valve` | shut-off valve (`valve`, `switch` or `input_boolean`): **Close / Open valve** button, the valve handle on the pipe turns red |
 | `leak_minutes` | without a leak sensor: "Possible leak" when water runs non-stop for longer than this (60 min; `0` turns it off) |
+| `freeze_threshold` | frost alert below this temperature, in °C (3; `0` or empty turns it off). Works with a sensor in °F or K |
 | `flow_threshold` | flow below this counts as zero (0.05 L/min) |
-| `show_status`, `show_flow`, `show_today`, `show_index`, `show_cost`, `animations`, `labels`, `language` | |
+| `show_status`, `show_flow`, `show_today`, `show_index`, `show_cost`, `show_temperature`, `show_pressure`, `animations`, `labels`, `language` | |
 
-States: **No flow**, flowing (the badge shows the flow), **Possible leak** (red alert), **Valve closed**.
+States: **No flow**, flowing (the badge shows the flow), **Possible leak** (red alert), **Freezing risk** (blue alert, cold temperature tile), **Valve closed**. Priority: leak > freezing risk > valve closed > flowing > no flow.
 
 ```yaml
 type: custom:appliance-water-meter-card
 entity_index: sensor.water_meter_index      # the only sensor many meters provide
 entity_today: sensor.water_today            # optional
-entity_leak: binary_sensor.kitchen_leak     # optional
+entity_leak:                                # optional, one sensor or a list
+  - binary_sensor.kitchen_leak
+  - binary_sensor.cellar_leak
+entity_temperature: sensor.water_temperature  # optional
+entity_pressure: sensor.water_pressure        # optional
 entity_valve: valve.main_water              # optional
 ```
 

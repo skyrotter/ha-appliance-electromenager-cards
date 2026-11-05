@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.70.0";
+const VERSION = "1.72.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -9338,6 +9338,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_leak": "Leak sensor",
       "entity_valve": "Shut-off valve",
       "leak_minutes": "Leak alert after (min of continuous flow)",
+      "freeze_threshold": "Freeze threshold (°C)",
       "flow_threshold": "Flow considered zero below",
       "show_today": "Show today",
       "entity_blind": "Exterior blind (cover)",
@@ -9599,6 +9600,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_leak": "Lecksensor",
       "entity_valve": "Absperrventil",
       "leak_minutes": "Leckalarm nach (min Dauerfluss)",
+      "freeze_threshold": "Frostschwelle (°C)",
       "flow_threshold": "Durchfluss gilt als null unter",
       "show_today": "Heute anzeigen",
       "entity_blind": "Außenrollladen (cover)",
@@ -9860,6 +9862,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_leak": "Détecteur de fuite",
       "entity_valve": "Vanne d'arrêt",
       "leak_minutes": "Alerte fuite après (min d'écoulement continu)",
+      "freeze_threshold": "Seuil de gel (°C)",
       "flow_threshold": "Débit considéré nul en dessous de",
       "show_today": "Afficher le jour",
       "entity_blind": "Volet roulant extérieur (cover)",
@@ -10121,6 +10124,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_leak": "Sensore perdite",
       "entity_valve": "Valvola di intercettazione",
       "leak_minutes": "Avviso perdita dopo (min di flusso continuo)",
+      "freeze_threshold": "Soglia di gelo (°C)",
       "flow_threshold": "Portata considerata nulla sotto",
       "show_today": "Mostra oggi",
       "entity_blind": "Tenda esterna (cover)",
@@ -10382,6 +10386,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_leak": "Lekkasjesensor",
       "entity_valve": "Stengeventil",
       "leak_minutes": "Lekkasjevarsel etter (min sammenhengende strømning)",
+      "freeze_threshold": "Frostgrense (°C)",
       "flow_threshold": "Strømning regnes som null under",
       "show_today": "Vis i dag",
       "entity_blind": "Utvendig rullegardin (cover)",
@@ -10643,6 +10648,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_leak": "Leksensor",
       "entity_valve": "Afsluitkraan",
       "leak_minutes": "Lekmelding na (min onafgebroken stroming)",
+      "freeze_threshold": "Vorstdrempel (°C)",
       "flow_threshold": "Debiet telt als nul onder",
       "show_today": "Vandaag tonen",
       "entity_blind": "Buitenrolluik (cover)",
@@ -10904,6 +10910,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_leak": "Senzor de scurgere",
       "entity_valve": "Robinet de închidere",
       "leak_minutes": "Alertă scurgere după (min de curgere continuă)",
+      "freeze_threshold": "Prag de îngheț (°C)",
       "flow_threshold": "Debit considerat nul sub",
       "show_today": "Afișează ziua",
       "entity_blind": "Rulou exterior (cover)",
@@ -11165,6 +11172,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_leak": "Датчик протечки",
       "entity_valve": "Запорный кран",
       "leak_minutes": "Тревога утечки через (мин непрерывного расхода)",
+      "freeze_threshold": "Порог замерзания (°C)",
       "flow_threshold": "Расход считается нулевым ниже",
       "show_today": "Показывать за сегодня",
       "entity_blind": "Наружная рольставня (cover)",
@@ -11426,6 +11434,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_leak": "Сензор цурења",
       "entity_valve": "Запорни вентил",
       "leak_minutes": "Аларм за цурење након (мин непрекидног протока)",
+      "freeze_threshold": "Праг смрзавања (°C)",
       "flow_threshold": "Проток се сматра нулом испод",
       "show_today": "Прикажи данас",
       "entity_blind": "Спољашња жалузина (ролетна/застор)",
@@ -11687,6 +11696,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_leak": "Senzor curenja",
       "entity_valve": "Zaporni ventil",
       "leak_minutes": "Alarm za curenje nakon (min neprekidnog protoka)",
+      "freeze_threshold": "Prag smrzavanja (°C)",
       "flow_threshold": "Protok se smatra nulom ispod",
       "show_today": "Prikaži danas",
       "entity_blind": "Spoljašnja žaluzina (roletna/zastor)",
@@ -22617,7 +22627,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
  * Compteur laiton à cadran bleu : totalisateur m³ (noir) + litres (rouge), étoile de débit qui tourne
  * selon le débit, eau qui circule dans les tuyaux. Tous les capteurs sont optionnels :
  * index (m³, L, gal, ft³), débit (L/min, L/h, m³/h, gal/min…), consommation du jour, coût,
- * détecteur de fuite, vanne d'arrêt. Sans capteur de débit, le débit est déduit des variations de l'index.
+ * détecteur(s) de fuite, vanne d'arrêt, température et pression de l'eau. Sans capteur de débit, le débit est
+ * déduit des variations de l'index.
+ * entity_leak accepte une entité OU une liste de sondes : le bandeau nomme celles qui sont mouillées.
+ * entity_temperature / entity_pressure : tuiles informatives (pression sans conversion ni seuil) ; sous
+ * freeze_threshold (°C, 3 par défaut, 0 = désactivé) → état « Risque de gel » (le seuil reste en °C même si
+ * le capteur est en °F ou K).
  * Sans détecteur de fuite : « fuite possible » si l'eau coule sans interruption plus de leak_minutes.
  */
 (() => {
@@ -22639,7 +22654,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       "flow": "Flow",
       "today": "Today",
       "index": "Index",
-      "cost": "Cost"
+      "cost": "Cost",
+      "temperature": "Temperature",
+      "pressure": "Pressure",
+      "freeze": "Freezing risk",
+      "freeze_risk": "Freezing risk: {t}",
+      "leak_detected_by": "Leak detected by: {n}"
     },
     "de": {
       "name": "Wasserzähler",
@@ -22655,7 +22675,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       "flow": "Durchfluss",
       "today": "Heute",
       "index": "Zählerstand",
-      "cost": "Kosten"
+      "cost": "Kosten",
+      "temperature": "Temperatur",
+      "pressure": "Druck",
+      "freeze": "Frostgefahr",
+      "freeze_risk": "Frostgefahr: {t}",
+      "leak_detected_by": "Leck erkannt durch: {n}"
     },
     "fr": {
       "name": "Compteur d'eau",
@@ -22671,7 +22696,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       "flow": "Débit",
       "today": "Aujourd'hui",
       "index": "Index",
-      "cost": "Coût"
+      "cost": "Coût",
+      "temperature": "Température",
+      "pressure": "Pression",
+      "freeze": "Risque de gel",
+      "freeze_risk": "Risque de gel : {t}",
+      "leak_detected_by": "Fuite détectée par : {n}"
     },
     "it": {
       "name": "Contatore dell'acqua",
@@ -22687,7 +22717,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       "flow": "Portata",
       "today": "Oggi",
       "index": "Indice",
-      "cost": "Costo"
+      "cost": "Costo",
+      "temperature": "Temperatura",
+      "pressure": "Pressione",
+      "freeze": "Rischio di gelo",
+      "freeze_risk": "Rischio di gelo: {t}",
+      "leak_detected_by": "Perdita rilevata da: {n}"
     },
     "nb": {
       "name": "Vannmåler",
@@ -22703,7 +22738,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       "flow": "Strømning",
       "today": "I dag",
       "index": "Målerstand",
-      "cost": "Kostnad"
+      "cost": "Kostnad",
+      "temperature": "Temperatur",
+      "pressure": "Trykk",
+      "freeze": "Frostfare",
+      "freeze_risk": "Frostfare: {t}",
+      "leak_detected_by": "Lekkasje oppdaget av: {n}"
     },
     "nl": {
       "name": "Watermeter",
@@ -22719,7 +22759,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       "flow": "Debiet",
       "today": "Vandaag",
       "index": "Meterstand",
-      "cost": "Kosten"
+      "cost": "Kosten",
+      "temperature": "Temperatuur",
+      "pressure": "Druk",
+      "freeze": "Vorstgevaar",
+      "freeze_risk": "Vorstgevaar: {t}",
+      "leak_detected_by": "Lek gedetecteerd door: {n}"
     },
     "ro": {
       "name": "Contor de apă",
@@ -22735,7 +22780,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       "flow": "Debit",
       "today": "Azi",
       "index": "Index",
-      "cost": "Cost"
+      "cost": "Cost",
+      "temperature": "Temperatură",
+      "pressure": "Presiune",
+      "freeze": "Risc de îngheț",
+      "freeze_risk": "Risc de îngheț: {t}",
+      "leak_detected_by": "Scurgere detectată de: {n}"
     },
     "ru": {
       "name": "Счётчик воды",
@@ -22751,7 +22801,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       "flow": "Расход",
       "today": "Сегодня",
       "index": "Показания",
-      "cost": "Стоимость"
+      "cost": "Стоимость",
+      "temperature": "Температура",
+      "pressure": "Давление",
+      "freeze": "Риск замерзания",
+      "freeze_risk": "Риск замерзания: {t}",
+      "leak_detected_by": "Утечка обнаружена датчиком: {n}"
     },
     "sr": {
       "name": "Водомер",
@@ -22767,7 +22822,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       "flow": "Проток",
       "today": "Данас",
       "index": "Индекс",
-      "cost": "Трошак"
+      "cost": "Трошак",
+      "temperature": "Температура",
+      "pressure": "Притисак",
+      "freeze": "Ризик од смрзавања",
+      "freeze_risk": "Ризик од смрзавања: {t}",
+      "leak_detected_by": "Цурење детектовано сензором: {n}"
     },
     "sr-Latn": {
       "name": "Vodomer",
@@ -22783,9 +22843,15 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       "flow": "Protok",
       "today": "Danas",
       "index": "Indeks",
-      "cost": "Trošak"
+      "cost": "Trošak",
+      "temperature": "Temperatura",
+      "pressure": "Pritisak",
+      "freeze": "Rizik od smrzavanja",
+      "freeze_risk": "Rizik od smrzavanja: {t}",
+      "leak_detected_by": "Curenje detektovano senzorom: {n}"
     }
   };
+  const asList = (v) => (Array.isArray(v) ? v : v ? [v] : []); // entity_leak : string ou array → array
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
 
   // conversion en litres (volume) et en L/min (débit) selon l'unité du capteur
@@ -22801,8 +22867,9 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--wm-ok:var(--appli
 .badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
 .flowing .badge{background:color-mix(in srgb,var(--wm-cold) 22%,transparent);color:var(--wm-cold)}
 .leak .badge{background:color-mix(in srgb,var(--wm-alert) 22%,transparent);color:var(--wm-alert)}
+.freeze .badge{background:color-mix(in srgb,var(--wm-cold) 22%,transparent);color:var(--wm-cold)}
 .alert{display:none;margin-top:4px;font-size:11px;color:var(--wm-alert);font-weight:500;text-align:center}
-.alert.on{display:block}
+.alert.on{display:block}.alert.frost{color:var(--wm-cold)}
 svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height:auto;margin:2px auto 0;cursor:pointer}
 .ctl{display:flex;justify-content:center;margin-top:6px}.ctl.hide{display:none}
 .ctl button{display:flex;align-items:center;gap:4px;border:0;border-radius:10px;padding:6px 14px;cursor:pointer;background:var(--secondary-background-color);color:var(--primary-text-color);font:500 12px/16px var(--paper-font-body1_-_font-family,Roboto,sans-serif)}
@@ -22815,7 +22882,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 .tile .l ha-icon{--mdc-icon-size:13px;flex:none}
 .tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
-.tile.hide{display:none}.tile.bad .v{color:var(--wm-alert)}
+.tile.hide{display:none}.tile.bad .v{color:var(--wm-alert)}.tile.cold .v{color:var(--wm-cold)}
 /* ---- illustration ---- */
 .wm-star{transform-box:fill-box;transform-origin:50% 50%}
 .flowing .wm-star,.leak.moving .wm-star{animation:wmrot var(--spd) linear infinite}
@@ -22856,7 +22923,8 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     <g class="wm-alert"><circle cx="96" cy="40" r="9" fill="#e53935"/><path d="M96 34v7" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><circle cx="96" cy="45" r="1.3" fill="#fff"/></g>
   </svg>`;
 
-  const TILES = [['flow', 'mdi:water-pump', 'show_flow'], ['today', 'mdi:water', 'show_today'], ['index', 'mdi:counter', 'show_index'], ['cost', 'mdi:cash', 'show_cost']];
+  const TILES = [['flow', 'mdi:water-pump', 'show_flow'], ['today', 'mdi:water', 'show_today'], ['index', 'mdi:counter', 'show_index'], ['cost', 'mdi:cash', 'show_cost'],
+    ['temperature', 'mdi:thermometer', 'show_temperature'], ['pressure', 'mdi:gauge', 'show_pressure']];
 
   class ApplianceWaterMeterCard extends HTMLElement {
 
@@ -22875,7 +22943,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { show_status: true, show_flow: true, show_today: true, show_index: true, show_cost: true, leak_minutes: 60, flow_threshold: 0.05, ...c };
+      this._c = { show_status: true, show_flow: true, show_today: true, show_index: true, show_cost: true, show_temperature: true, show_pressure: true, leak_minutes: 60, flow_threshold: 0.05, freeze_threshold: 3, ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -22896,6 +22964,12 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     _lpm(id) { const v = this._num(id); return isNaN(v) ? NaN : v * (FLOW[this._unit(id, 'L/min').toLowerCase().replace('litre', 'l').replace('liter', 'l')] ?? 1); }
     _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _vol(l) { return isNaN(l) ? ['--', 'L'] : l >= 10000 ? [this._fmt(l / 1000, 1), 'm³'] : [this._fmt(l, 0), 'L']; }
+    // température ramenée en °C quel que soit l'unité du capteur (°F, K)
+    _celsius(id) {
+      const v = this._num(id); if (isNaN(v)) return NaN;
+      const u = this._unit(id, '°C').toLowerCase().replace(/[°\s]/g, '');
+      return u === 'f' ? (v - 32) / 1.8 : u === 'k' ? v - 273.15 : v;
+    }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
 
     _build() {
@@ -22914,7 +22988,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         this._hass.callService(['switch', 'valve', 'input_boolean'].includes(dom) ? dom : 'homeassistant', 'toggle', { entity_id: id });
       });
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
-        const c = this._c; this._more({ flow: c.entity_flow || c.entity_index, today: c.entity_today, index: c.entity_index, cost: c.entity_cost }[el.dataset.k]);
+        const c = this._c; this._more({ flow: c.entity_flow || c.entity_index, today: c.entity_today, index: c.entity_index, cost: c.entity_cost, temperature: c.entity_temperature, pressure: c.entity_pressure }[el.dataset.k]);
       }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
@@ -22937,20 +23011,25 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       const moving = !isNaN(flow) && flow > thr;
       // écoulement continu : depuis quand l'eau coule sans interruption
       if (moving) { if (!this._flowSince) this._flowSince = now; } else this._flowSince = 0;
-      const leakS = this._st(c.entity_leak);
-      const leakSensor = !!leakS && /^(on|wet|leak|detected|true)$/i.test(String(leakS.state));
+      // sondes de fuite : une ou plusieurs ; « fuite » dès qu'au moins une est mouillée
+      const leakIds = asList(c.entity_leak), leakS = leakIds.some((i) => this._st(i));
+      const wet = leakIds.filter((i) => { const s = this._st(i); return !!s && /^(on|wet|leak|detected|true)$/i.test(String(s.state)); });
+      const leakSensor = wet.length > 0;
+      // alerte gel : seuil en °C, 0 / vide = désactivée
+      const fthr = Number(c.freeze_threshold), temp = this._celsius(c.entity_temperature);
+      const freeze = !!fthr && !isNaN(temp) && temp < fthr;
       const leakLong = moving && this._flowSince && now - this._flowSince > Number(c.leak_minutes) * 60000 && Number(c.leak_minutes) > 0;
       const valveS = this._st(c.entity_valve), valveClosed = !!valveS && /^(off|closed|closing)$/i.test(String(valveS.state));
       const anyId = [c.entity_index, c.entity_flow, c.entity_today].filter(Boolean);
       const usable = anyId.some((i) => { const s = this._st(i); return s && !/^(unavailable|unknown)$/i.test(String(s.state)); });
-      let st = !usable && !leakS ? 'unavailable' : leakSensor || leakLong ? 'leak' : valveClosed ? 'valve_closed' : moving ? 'flowing' : 'idle';
-      return { st, idx, flow, moving, leakSensor, leakLong, valveS, valveClosed };
+      let st = !usable && !leakS ? 'unavailable' : leakSensor || leakLong ? 'leak' : freeze ? 'freeze' : valveClosed ? 'valve_closed' : moving ? 'flowing' : 'idle';
+      return { st, idx, flow, moving, leakSensor, leakLong, valveS, valveClosed, wet, freeze };
     }
 
     _render() {
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card;
-      const { st, idx, flow, moving, leakSensor, leakLong, valveS, valveClosed } = this._compute();
+      const { st, idx, flow, moving, leakSensor, leakLong, valveS, valveClosed, wet, freeze } = this._compute();
       card.className = `${st}${moving ? ' moving' : ''}${c.animations === false ? ' noanim' : ''}`;
       // vitesse de l'étoile : un tour par seconde à 6 L/min, bornée
       card.style.setProperty('--spd', `${Math.max(.15, Math.min(4, 6 / Math.max(.1, flow || 0))).toFixed(2)}s`);
@@ -22965,8 +23044,14 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       badge.textContent = st === 'flowing' ? `${this._fmt(flow, 1)} L/min` : this._t(st);
       badge.style.display = c.show_status === false ? 'none' : '';
       const al = r.getElementById('wmalert');
-      al.textContent = leakSensor ? this._t('leak_detected') : leakLong ? this._t('leak_continuous').replace('{n}', String(c.leak_minutes)) : '';
+      const tempRaw = this._num(c.entity_temperature), tempTxt = `${this._fmt(tempRaw, 1)} ${this._unit(c.entity_temperature, '°C')}`;
+      const names = wet.map((i) => this._st(i)?.attributes?.friendly_name || i).join(', ');
+      const frostOnly = freeze && !leakSensor && !leakLong;
+      al.textContent = leakSensor ? (names ? this._t('leak_detected_by').replace('{n}', names) : this._t('leak_detected'))
+        : leakLong ? this._t('leak_continuous').replace('{n}', String(c.leak_minutes))
+        : freeze ? this._t('freeze_risk').replace('{t}', tempTxt) : '';
       al.classList.toggle('on', !!al.textContent);
+      al.classList.toggle('frost', frostOnly);
 
       const ctl = r.getElementById('wmctl'), btn = ctl.querySelector('button');
       ctl.classList.toggle('hide', !c.entity_valve);
@@ -22976,16 +23061,21 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 
       const today = this._liters(c.entity_today, 'L'), cost = this._num(c.entity_cost);
       const [tv, tu] = this._vol(today);
+      // pression : unité du capteur, sans conversion ; 0 décimale pour psi/kPa/hPa/mbar/mmHg/Pa, sinon 2
+      const pU = this._unit(c.entity_pressure, 'bar'), pD = /^(psi|kpa|hpa|mbar|mmhg|pa)$/i.test(pU) ? 0 : 2;
       const V = {
         flow: [c.entity_flow || c.entity_index, isNaN(flow) ? '--' : this._fmt(flow, 1), 'L/min'],
         today: [c.entity_today, tv, tu],
         index: [c.entity_index, this._fmt(idx / 1000, 3), 'm³'],
         cost: [c.entity_cost, this._fmt(cost, 2), this._unit(c.entity_cost, '€')],
+        temperature: [c.entity_temperature, this._fmt(tempRaw, 1), this._unit(c.entity_temperature, '°C')],
+        pressure: [c.entity_pressure, this._fmt(this._num(c.entity_pressure), pD), pU],
       };
       TILES.forEach(([k, , opt]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`); const [show, val, unit] = V[k];
         el.classList.toggle('hide', !show || c[opt] === false);
         el.classList.toggle('bad', k === 'flow' && st === 'leak');
+        el.classList.toggle('cold', k === 'temperature' && freeze);
         el.querySelector('.lbl').textContent = this._l(k);
         const small = document.createElement('small'); small.textContent = unit ?? '';
         el.querySelector('.v').replaceChildren(String(val ?? ''), small);
@@ -23007,21 +23097,22 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         });
         this.appendChild(this._form);
       }
-      const ent = (name, domain) => ({ name, selector: { entity: domain ? { domain } : {} } });
+      const ent = (name, domain, extra) => ({ name, selector: { entity: { ...(domain ? { domain } : {}), ...(extra || {}) } } });
       const num = (name, min, max, step, def, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
       const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
       this._form.hass = this._hass;
-      this._form.data = this._c;
+      this._form.data = { ...this._c, entity_leak: asList(this._c && this._c.entity_leak) }; // le form attend un array
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ent('entity_index', 'sensor'), ent('entity_flow', 'sensor'), ent('entity_today', 'sensor'), ent('entity_cost', ['sensor', 'input_number']),
-        ent('entity_leak', 'binary_sensor'), ent('entity_valve', ['valve', 'switch', 'input_boolean']),
-        { type: 'grid', name: '', schema: [num('leak_minutes', 0, 1440, 5, 60, 'min'), num('flow_threshold', 0, 5, 0.01, 0.05, 'L/min')] },
+        ent('entity_temperature', 'sensor', { device_class: 'temperature' }), ent('entity_pressure', 'sensor', { device_class: 'pressure' }),
+        ent('entity_leak', ['binary_sensor', 'input_boolean'], { multiple: true }), ent('entity_valve', ['valve', 'switch', 'input_boolean']),
+        { type: 'grid', name: '', schema: [num('leak_minutes', 0, 1440, 5, 60, 'min'), num('flow_threshold', 0, 5, 0.01, 0.05, 'L/min'), num('freeze_threshold', -10, 15, 0.5, 3, '°C')] },
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
-        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_flow'), bool('show_today'), bool('show_index'), bool('show_cost'), bool('animations')] },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_flow'), bool('show_today'), bool('show_index'), bool('show_cost'), bool('show_temperature'), bool('show_pressure'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
@@ -23032,6 +23123,821 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
   window.customCards.push({
     type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`,
     description: "Compteur d'eau animé : totalisateur, débit, consommation du jour, coût, alerte fuite et vanne d'arrêt.", preview: true,
+    documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
+  });
+})();
+
+/* Carte « Compteur de gaz » — custom:appliance-gas-meter-card
+ * Compteur à soufflet jaune : totalisateur (5 chiffres + 3 décimales rouges), flamme animée selon le débit,
+ * roue de contrôle qui tourne. Tous les capteurs sont optionnels : index (m³, kWh, ft³… affiché dans l'unité
+ * du capteur, sans conversion), débit, consommation du jour, coût, détecteur(s) de gaz / fuite, vanne d'arrêt.
+ * Sans capteur de débit, le débit est déduit des variations de l'index (unité de l'index par heure).
+ * entity_leak accepte une entité OU une liste : le bandeau nomme les détecteurs déclenchés.
+ */
+(() => {
+  const TAG = 'appliance-gas-meter-card';
+  if (customElements.get(TAG)) return;
+
+  const T = {
+    "en": {
+      "name": "Gas meter",
+      "idle": "No flow",
+      "flowing": "Gas flowing",
+      "leak": "Gas leak",
+      "valve_closed": "Valve closed",
+      "unavailable": "Unavailable",
+      "leak_detected": "Gas detected by the sensor",
+      "leak_detected_by": "Gas detected by: {n}",
+      "open_valve": "Open valve",
+      "close_valve": "Close valve",
+      "flow": "Flow",
+      "today": "Today",
+      "index": "Index",
+      "cost": "Cost"
+    },
+    "de": {
+      "name": "Gaszähler",
+      "idle": "Kein Verbrauch",
+      "flowing": "Gas fließt",
+      "leak": "Gasleck",
+      "valve_closed": "Ventil geschlossen",
+      "unavailable": "Nicht verfügbar",
+      "leak_detected": "Gas vom Sensor erkannt",
+      "leak_detected_by": "Gas erkannt durch: {n}",
+      "open_valve": "Ventil öffnen",
+      "close_valve": "Ventil schließen",
+      "flow": "Durchfluss",
+      "today": "Heute",
+      "index": "Zählerstand",
+      "cost": "Kosten"
+    },
+    "fr": {
+      "name": "Compteur de gaz",
+      "idle": "Pas de consommation",
+      "flowing": "Gaz en consommation",
+      "leak": "Fuite de gaz",
+      "valve_closed": "Vanne fermée",
+      "unavailable": "Indisponible",
+      "leak_detected": "Gaz détecté par le capteur",
+      "leak_detected_by": "Gaz détecté par : {n}",
+      "open_valve": "Ouvrir la vanne",
+      "close_valve": "Fermer la vanne",
+      "flow": "Débit",
+      "today": "Aujourd'hui",
+      "index": "Index",
+      "cost": "Coût"
+    },
+    "it": {
+      "name": "Contatore del gas",
+      "idle": "Nessun consumo",
+      "flowing": "Gas in consumo",
+      "leak": "Perdita di gas",
+      "valve_closed": "Valvola chiusa",
+      "unavailable": "Non disponibile",
+      "leak_detected": "Gas rilevato dal sensore",
+      "leak_detected_by": "Gas rilevato da: {n}",
+      "open_valve": "Apri la valvola",
+      "close_valve": "Chiudi la valvola",
+      "flow": "Portata",
+      "today": "Oggi",
+      "index": "Indice",
+      "cost": "Costo"
+    },
+    "nb": {
+      "name": "Gassmåler",
+      "idle": "Ikke noe forbruk",
+      "flowing": "Gass strømmer",
+      "leak": "Gasslekkasje",
+      "valve_closed": "Ventil stengt",
+      "unavailable": "Utilgjengelig",
+      "leak_detected": "Gass oppdaget av sensoren",
+      "leak_detected_by": "Gass oppdaget av: {n}",
+      "open_valve": "Åpne ventil",
+      "close_valve": "Steng ventil",
+      "flow": "Strømning",
+      "today": "I dag",
+      "index": "Målerstand",
+      "cost": "Kostnad"
+    },
+    "nl": {
+      "name": "Gasmeter",
+      "idle": "Geen verbruik",
+      "flowing": "Gas stroomt",
+      "leak": "Gaslek",
+      "valve_closed": "Kraan dicht",
+      "unavailable": "Niet beschikbaar",
+      "leak_detected": "Gas gedetecteerd door de sensor",
+      "leak_detected_by": "Gas gedetecteerd door: {n}",
+      "open_valve": "Kraan openen",
+      "close_valve": "Kraan sluiten",
+      "flow": "Debiet",
+      "today": "Vandaag",
+      "index": "Meterstand",
+      "cost": "Kosten"
+    },
+    "ro": {
+      "name": "Contor de gaz",
+      "idle": "Fără consum",
+      "flowing": "Gaz în consum",
+      "leak": "Scurgere de gaz",
+      "valve_closed": "Robinet închis",
+      "unavailable": "Indisponibil",
+      "leak_detected": "Gaz detectat de senzor",
+      "leak_detected_by": "Gaz detectat de: {n}",
+      "open_valve": "Deschide robinetul",
+      "close_valve": "Închide robinetul",
+      "flow": "Debit",
+      "today": "Azi",
+      "index": "Index",
+      "cost": "Cost"
+    },
+    "ru": {
+      "name": "Счётчик газа",
+      "idle": "Нет расхода",
+      "flowing": "Газ идёт",
+      "leak": "Утечка газа",
+      "valve_closed": "Кран закрыт",
+      "unavailable": "Недоступно",
+      "leak_detected": "Датчик обнаружил газ",
+      "leak_detected_by": "Газ обнаружен датчиком: {n}",
+      "open_valve": "Открыть кран",
+      "close_valve": "Закрыть кран",
+      "flow": "Расход",
+      "today": "Сегодня",
+      "index": "Показания",
+      "cost": "Стоимость"
+    },
+    "sr": {
+      "name": "Мерач гаса",
+      "idle": "Нема протока",
+      "flowing": "Гас тече",
+      "leak": "Цурење гаса",
+      "valve_closed": "Вентил затворен",
+      "unavailable": "Недоступно",
+      "leak_detected": "Сензор је детектовао гас",
+      "leak_detected_by": "Гас детектован сензором: {n}",
+      "open_valve": "Отвори вентил",
+      "close_valve": "Затвори вентил",
+      "flow": "Проток",
+      "today": "Данас",
+      "index": "Индекс",
+      "cost": "Трошак"
+    },
+    "sr-Latn": {
+      "name": "Merač gasa",
+      "idle": "Nema protoka",
+      "flowing": "Gas teče",
+      "leak": "Curenje gasa",
+      "valve_closed": "Ventil zatvoren",
+      "unavailable": "Nedostupno",
+      "leak_detected": "Senzor je detektovao gas",
+      "leak_detected_by": "Gas detektovan senzorom: {n}",
+      "open_valve": "Otvori ventil",
+      "close_valve": "Zatvori ventil",
+      "flow": "Protok",
+      "today": "Danas",
+      "index": "Indeks",
+      "cost": "Trošak"
+    }
+  };
+  const asList = (v) => (Array.isArray(v) ? v : v ? [v] : []); // entity_leak : string ou array → array
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
+
+  const CSS = `
+:host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--gm-ok:var(--appliance-ok-color,#43a047);--gm-gas:var(--appliance-gas-color,#f5a623);
+  --gm-alert:var(--appliance-alert-color,#db4437);--spd:1s}
+.head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
+.flowing .badge{background:color-mix(in srgb,var(--gm-gas) 22%,transparent);color:var(--gm-gas)}
+.leak .badge{background:color-mix(in srgb,var(--gm-alert) 22%,transparent);color:var(--gm-alert)}
+.alert{display:none;margin-top:4px;font-size:11px;color:var(--gm-alert);font-weight:500;text-align:center}
+.alert.on{display:block}
+svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height:auto;margin:2px auto 0;cursor:pointer}
+.ctl{display:flex;justify-content:center;margin-top:6px}.ctl.hide{display:none}
+.ctl button{display:flex;align-items:center;gap:4px;border:0;border-radius:10px;padding:6px 14px;cursor:pointer;background:var(--secondary-background-color);color:var(--primary-text-color);font:500 12px/16px var(--paper-font-body1_-_font-family,Roboto,sans-serif)}
+.ctl button ha-icon{--mdc-icon-size:16px}
+.ctl button.closed{background:color-mix(in srgb,var(--gm-alert) 20%,var(--secondary-background-color))}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(68px,1fr));gap:6px;margin-top:6px}
+.tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
+.tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
+.tile .l span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tile .l ha-icon{--mdc-icon-size:13px;flex:none}
+.tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
+.tile.hide{display:none}.tile.bad .v{color:var(--gm-alert)}
+/* ---- illustration ---- */
+.gm-wheel{transform-box:fill-box;transform-origin:50% 50%}
+.flowing .gm-wheel,.moving .gm-wheel{animation:gmrot var(--spd) linear infinite}
+.gm-flame{transform-box:fill-box;transform-origin:50% 100%;opacity:.25;transition:opacity .4s}
+.flowing .gm-flame,.moving .gm-flame{opacity:1;animation:gmflame calc(var(--spd) * .6) ease-in-out infinite alternate}
+.gm-alert{opacity:0}.leak .gm-alert{opacity:1;animation:gmblink 1s ease-in-out infinite}
+.gm-valve{fill:#2b9af9;transition:transform .4s,fill .3s;transform-box:fill-box;transform-origin:50% 100%}
+.valve_closed .gm-valve{fill:#db4437;transform:rotate(90deg)}
+.unavailable svg{filter:grayscale(.7) opacity(.7)}
+.noanim .gm-wheel,.noanim .gm-flame,.noanim .gm-alert{animation:none}
+@keyframes gmrot{to{transform:rotate(360deg)}}
+@keyframes gmflame{from{transform:scale(.85,.9)}to{transform:scale(1.05,1.1)}}
+@keyframes gmblink{50%{opacity:.3}}
+`;
+
+  const SVG = (label) => `<svg viewBox="0 22 120 104" role="img" aria-label="${esc(label)}"><defs>
+    <radialGradient id="gmsh"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+    <linearGradient id="gmbody" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#ffd54f"/><stop offset=".55" stop-color="#f2b705"/><stop offset="1" stop-color="#b78400"/></linearGradient>
+    <linearGradient id="gmpipe" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9edf1"/><stop offset=".5" stop-color="#b6bec6"/><stop offset="1" stop-color="#7f8891"/></linearGradient>
+    <radialGradient id="gmglass" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#fff" stop-opacity=".7"/><stop offset=".5" stop-color="#fff" stop-opacity=".08"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
+    <ellipse cx="60" cy="120" rx="48" ry="5" fill="url(#gmsh)"/>
+    <!-- tuyaux d'arrivée (gauche) et de départ (droite) -->
+    <rect x="8" y="30" width="10" height="32" fill="url(#gmpipe)"/><rect x="102" y="30" width="10" height="32" fill="url(#gmpipe)"/>
+    <rect x="5" y="26" width="16" height="6" rx="2" fill="#8d959e"/><rect x="99" y="26" width="16" height="6" rx="2" fill="#8d959e"/>
+    <!-- vanne d'arrêt sur le tuyau d'arrivée -->
+    <rect x="10.5" y="44" width="5" height="8" rx="1" fill="#8d959e"/><rect class="gm-valve" x="3" y="40" width="20" height="5" rx="2.5"/>
+    <!-- corps du compteur -->
+    <rect x="16" y="56" width="88" height="62" rx="9" fill="url(#gmbody)" stroke="#7a5a00" stroke-width="1"/>
+    <rect x="22" y="62" width="76" height="22" rx="4" fill="#f4f7fb" stroke="#7a5a00" stroke-width=".6"/>
+    <text x="28" y="70" font-size="4.4" fill="#7a5a00" font-family="sans-serif" font-weight="700">GAZ</text>
+    ${[0, 1, 2, 3, 4].map((i) => `<rect x="${28 + i * 8.4}" y="72" width="7.4" height="9" fill="#111"/><text class="gm-d" x="${(31.7 + i * 8.4).toFixed(1)}" y="79.2" text-anchor="middle" font-size="7.6" fill="#fff" font-family="monospace" font-weight="700">0</text>`).join('')}
+    ${[0, 1, 2].map((i) => `<rect x="${71 + i * 7.6}" y="72" width="6.8" height="9" fill="#b71c1c"/><text class="gm-l" x="${(74.4 + i * 7.6).toFixed(1)}" y="79.2" text-anchor="middle" font-size="7.2" fill="#fff" font-family="monospace" font-weight="700">0</text>`).join('')}
+    <!-- roue de contrôle -->
+    <circle cx="32" cy="101" r="9" fill="#fff" stroke="#7a5a00" stroke-width=".8"/>
+    <g class="gm-wheel"><path d="M32 101v-7.5" stroke="#b71c1c" stroke-width="1.6" stroke-linecap="round"/><circle cx="32" cy="101" r="1.6" fill="#7a5a00"/></g>
+    <!-- flamme -->
+    <g class="gm-flame"><path d="M78 112c-9-6-11-13-6-22 1 4 3 5 5 6-1-6 1-11 6-15 0 6 3 8 5 12 3 6 1 14-10 19z" fill="#ff7a00"/><path d="M79 112c-5-3-6-8-3-13 1 2 2 3 3 3 0-3 1-5 3-7 0 3 2 5 3 7 1 5-2 8-6 10z" fill="#ffd54f"/></g>
+    <rect x="22" y="62" width="76" height="56" rx="4" fill="url(#gmglass)" opacity=".5"/>
+    <g class="gm-alert"><circle cx="100" cy="46" r="9" fill="#e53935"/><path d="M100 40v7" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><circle cx="100" cy="51" r="1.3" fill="#fff"/></g>
+  </svg>`;
+
+  const TILES = [['flow', 'mdi:fire', 'show_flow'], ['today', 'mdi:calendar-today', 'show_today'], ['index', 'mdi:counter', 'show_index'], ['cost', 'mdi:cash', 'show_cost']];
+
+  class ApplianceGasMeterCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+    get _config() { return this._c; }
+    static getConfigElement() { return document.createElement(TAG + '-editor'); }
+    static getStubConfig(hass) {
+      const ids = Object.keys((hass && hass.states) || {}), st = (i) => hass.states[i].attributes || {};
+      return {
+        entity_index: ids.find((i) => i.startsWith('sensor.') && st(i).device_class === 'gas' && st(i).state_class === 'total_increasing') || ids.find((i) => i.startsWith('sensor.') && st(i).device_class === 'gas') || '',
+        entity_leak: ids.find((i) => i.startsWith('binary_sensor.') && st(i).device_class === 'gas') || '',
+      };
+    }
+    setConfig(c) {
+      if (window.applianceSize) window.applianceSize(this, c);
+      if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
+      this._c = { show_status: true, show_flow: true, show_today: true, show_index: true, show_cost: true, flow_threshold: 0.01, ...c };
+      this._built = false;
+      if (this._hass) this._render();
+    }
+    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    connectedCallback() { this._tick = setInterval(() => { if (this._hass && this._c) this._render(); }, 20000); }
+    disconnectedCallback() { clearInterval(this._tick); }
+    getCardSize() { return 5; }
+    getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+
+    _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
+    _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
+    _lang() { let l = (this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en').slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _st(id) { return id && this._hass.states[id]; }
+    _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
+    _unit(id, d) { const s = this._st(id); return String((s && s.attributes && s.attributes.unit_of_measurement) || d).trim(); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
+
+    _build() {
+      const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
+      root.innerHTML = `<style>${CSS}</style><ha-card>
+        <div class="head"><div class="title" id="gmtitle"></div><div class="badge" id="gmbadge"></div></div>
+        ${SVG(this._c.name || this._t('name'))}
+        <div class="alert" id="gmalert"></div>
+        <div class="ctl" id="gmctl"><button><ha-icon icon="mdi:valve"></ha-icon><span></span></button></div>
+        <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
+      </ha-card>`;
+      root.querySelector('svg').addEventListener('click', () => this._more(this._c.entity_index || this._c.entity_flow));
+      root.querySelector('#gmctl button').addEventListener('click', () => {
+        const id = this._c.entity_valve; if (!this._hass || !id) return;
+        const dom = id.split('.')[0];
+        this._hass.callService(['switch', 'valve', 'input_boolean'].includes(dom) ? dom : 'homeassistant', 'toggle', { entity_id: id });
+      });
+      root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
+        const c = this._c; this._more({ flow: c.entity_flow || c.entity_index, today: c.entity_today, index: c.entity_index, cost: c.entity_cost }[el.dataset.k]);
+      }));
+      this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
+    }
+
+    _compute() {
+      const c = this._c, now = Date.now();
+      const idx = this._num(c.entity_index);
+      // débit : capteur dédié, sinon déduit de l'index (unité de l'index par heure)
+      let flow = this._num(c.entity_flow);
+      if (!c.entity_flow && !isNaN(idx)) {
+        if (this._lastIdx == null) { this._lastIdx = idx; this._lastAt = now; this._dflow = 0; }
+        else if (idx !== this._lastIdx) {
+          const h = Math.max(.001, (now - this._lastAt) / 3600000);
+          this._dflow = idx > this._lastIdx ? (idx - this._lastIdx) / h : 0;
+          this._lastIdx = idx; this._lastAt = now;
+        } else if (now - this._lastAt > 10 * 60000) this._dflow = 0;
+        flow = this._dflow;
+      }
+      const moving = !isNaN(flow) && flow > (Number(c.flow_threshold) || 0);
+      // détecteurs de gaz : un ou plusieurs ; « fuite » dès qu'au moins un est déclenché
+      const leakIds = asList(c.entity_leak), leakS = leakIds.some((i) => this._st(i));
+      const wet = leakIds.filter((i) => { const s = this._st(i); return !!s && /^(on|wet|leak|detected|gas|true)$/i.test(String(s.state)); });
+      const valveS = this._st(c.entity_valve), valveClosed = !!valveS && /^(off|closed|closing)$/i.test(String(valveS.state));
+      const anyId = [c.entity_index, c.entity_flow, c.entity_today].filter(Boolean);
+      const usable = anyId.some((i) => { const s = this._st(i); return s && !/^(unavailable|unknown)$/i.test(String(s.state)); });
+      const st = !usable && !leakS ? 'unavailable' : wet.length ? 'leak' : valveClosed ? 'valve_closed' : moving ? 'flowing' : 'idle';
+      return { st, idx, flow, moving, wet, valveS, valveClosed };
+    }
+
+    _render() {
+      if (!this._built) this._build();
+      const c = this._c, r = this._root, card = this._card;
+      const { st, idx, flow, moving, wet, valveS, valveClosed } = this._compute();
+      card.className = `${st}${moving ? ' moving' : ''}${c.animations === false ? ' noanim' : ''}`;
+      // vitesse de la roue et de la flamme : plus le débit est fort, plus elles vont vite (bornée)
+      card.style.setProperty('--spd', `${Math.max(.3, Math.min(4, 1.2 / Math.max(.05, flow || 0))).toFixed(2)}s`);
+      // totalisateur : 5 chiffres entiers et 3 décimales
+      const base = isNaN(idx) ? 0 : Math.max(0, idx), whole = Math.floor(base);
+      const ent = String(whole % 100000).padStart(5, '0'), dec = String(Math.floor((base - whole) * 1000)).padStart(3, '0');
+      r.querySelectorAll('.gm-d').forEach((el, i) => { el.textContent = ent[i]; });
+      r.querySelectorAll('.gm-l').forEach((el, i) => { el.textContent = dec[i]; });
+
+      const iu = this._unit(c.entity_index, 'm³'), fu = this._unit(c.entity_flow, `${iu}/h`);
+      r.getElementById('gmtitle').textContent = c.name || this._t('name');
+      const badge = r.getElementById('gmbadge');
+      badge.textContent = st === 'flowing' ? `${this._fmt(flow, 2)} ${fu}` : this._t(st);
+      badge.style.display = c.show_status === false ? 'none' : '';
+      const al = r.getElementById('gmalert');
+      const names = wet.map((i) => this._st(i)?.attributes?.friendly_name || i).join(', ');
+      al.textContent = wet.length ? (names ? this._t('leak_detected_by').replace('{n}', names) : this._t('leak_detected')) : '';
+      al.classList.toggle('on', !!al.textContent);
+
+      const ctl = r.getElementById('gmctl'), btn = ctl.querySelector('button');
+      ctl.classList.toggle('hide', !c.entity_valve);
+      btn.classList.toggle('closed', valveClosed);
+      btn.querySelector('span').textContent = this._t(valveClosed ? 'open_valve' : 'close_valve');
+      btn.disabled = !valveS;
+
+      const V = {
+        flow: [c.entity_flow || c.entity_index, isNaN(flow) ? '--' : this._fmt(flow, 2), fu],
+        today: [c.entity_today, this._fmt(this._num(c.entity_today), 2), this._unit(c.entity_today, iu)],
+        index: [c.entity_index, this._fmt(idx, 3), iu],
+        cost: [c.entity_cost, this._fmt(this._num(c.entity_cost), 2), this._unit(c.entity_cost, '€')],
+      };
+      TILES.forEach(([k, , opt]) => {
+        const el = r.querySelector(`.tile[data-k="${k}"]`); const [show, val, unit] = V[k];
+        el.classList.toggle('hide', !show || c[opt] === false);
+        el.classList.toggle('bad', k === 'flow' && st === 'leak');
+        el.querySelector('.lbl').textContent = this._l(k);
+        const small = document.createElement('small'); small.textContent = unit ?? '';
+        el.querySelector('.v').replaceChildren(String(val ?? ''), small);
+      });
+    }
+  }
+  customElements.define(TAG, ApplianceGasMeterCard);
+
+  /* ---- éditeur visuel ---- */
+  class ApplianceGasMeterCardEditor extends HTMLElement {
+    setConfig(c) { this._c = c; this._draw(); }
+    set hass(h) { this._hass = h; if (this._form) this._form.hass = h; }
+    _draw() {
+      if (!this._form) {
+        this._form = document.createElement('ha-form');
+        this._form.addEventListener('value-changed', (e) => {
+          this._c = e.detail.value;
+          this.dispatchEvent(new CustomEvent('config-changed', { detail: { config: this._c }, bubbles: true, composed: true }));
+        });
+        this.appendChild(this._form);
+      }
+      const ent = (name, domain, extra) => ({ name, selector: { entity: { ...(domain ? { domain } : {}), ...(extra || {}) } } });
+      const num = (name, min, max, step, def, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
+      const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
+      this._form.hass = this._hass;
+      this._form.data = { ...this._c, entity_leak: asList(this._c && this._c.entity_leak) }; // le form attend un array
+      this._form.schema = [
+        { name: 'name', selector: { text: {} } },
+        { name: 'labels', selector: { object: {} } },
+        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
+        { name: 'transparent', selector: { boolean: {} } },
+        ent('entity_index', 'sensor'), ent('entity_flow', 'sensor'), ent('entity_today', 'sensor'), ent('entity_cost', ['sensor', 'input_number']),
+        ent('entity_leak', ['binary_sensor', 'input_boolean'], { multiple: true }), ent('entity_valve', ['valve', 'switch', 'input_boolean']),
+        { type: 'grid', name: '', schema: [num('flow_threshold', 0, 5, 0.01, 0.01)] },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_flow'), bool('show_today'), bool('show_index'), bool('show_cost'), bool('animations')] },
+      ];
+      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
+    }
+  }
+  customElements.define(TAG + '-editor', ApplianceGasMeterCardEditor);
+
+  window.customCards = window.customCards || [];
+  window.customCards.push({
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`,
+    description: "Compteur de gaz animé : totalisateur, débit, consommation du jour, coût, détecteur(s) de gaz et vanne d'arrêt.", preview: true,
+    documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
+  });
+})();
+
+/* Carte « Compteur électrique » — custom:appliance-electric-meter-card
+ * Compteur à disque : disque rotatif qui tourne selon la puissance, LED d'impulsion qui clignote, totalisateur kWh
+ * (5 chiffres + 1 décimale rouge). Tous les capteurs sont optionnels : puissance (W, kW, MW), index (Wh, kWh, MWh),
+ * consommation du jour, coût, tarif en cours, puissance par phase (L1 / L2 / L3), puissance souscrite (kVA).
+ * Sans capteur de puissance, la puissance est déduite des variations de l'index.
+ * Au-dessus de subscribed_power : état « Dépassement » (bandeau d'alerte).
+ */
+(() => {
+  const TAG = 'appliance-electric-meter-card';
+  if (customElements.get(TAG)) return;
+
+  const T = {
+    "en": {
+      "name": "Electric meter",
+      "idle": "No flow",
+      "consuming": "Consuming",
+      "overload": "Overload",
+      "unavailable": "Unavailable",
+      "overload_alert": "Power above the subscribed power ({n} kVA)",
+      "power": "Power",
+      "today": "Today",
+      "index": "Index",
+      "cost": "Cost",
+      "tariff": "Tariff",
+      "l1": "L1",
+      "l2": "L2",
+      "l3": "L3"
+    },
+    "de": {
+      "name": "Stromzähler",
+      "idle": "Kein Verbrauch",
+      "consuming": "Verbrauch läuft",
+      "overload": "Überlast",
+      "unavailable": "Nicht verfügbar",
+      "overload_alert": "Leistung über der vertraglichen Leistung ({n} kVA)",
+      "power": "Leistung",
+      "today": "Heute",
+      "index": "Zählerstand",
+      "cost": "Kosten",
+      "tariff": "Tarif",
+      "l1": "L1",
+      "l2": "L2",
+      "l3": "L3"
+    },
+    "fr": {
+      "name": "Compteur électrique",
+      "idle": "Pas de consommation",
+      "consuming": "Consommation en cours",
+      "overload": "Dépassement",
+      "unavailable": "Indisponible",
+      "overload_alert": "Puissance supérieure à la puissance souscrite ({n} kVA)",
+      "power": "Puissance",
+      "today": "Aujourd'hui",
+      "index": "Index",
+      "cost": "Coût",
+      "tariff": "Tarif",
+      "l1": "L1",
+      "l2": "L2",
+      "l3": "L3"
+    },
+    "it": {
+      "name": "Contatore elettrico",
+      "idle": "Nessun consumo",
+      "consuming": "In consumo",
+      "overload": "Sovraccarico",
+      "unavailable": "Non disponibile",
+      "overload_alert": "Potenza superiore a quella impegnata ({n} kVA)",
+      "power": "Potenza",
+      "today": "Oggi",
+      "index": "Indice",
+      "cost": "Costo",
+      "tariff": "Tariffa",
+      "l1": "L1",
+      "l2": "L2",
+      "l3": "L3"
+    },
+    "nb": {
+      "name": "Strømmåler",
+      "idle": "Ikke noe forbruk",
+      "consuming": "Forbruk pågår",
+      "overload": "Overbelastning",
+      "unavailable": "Utilgjengelig",
+      "overload_alert": "Effekt over abonnert effekt ({n} kVA)",
+      "power": "Effekt",
+      "today": "I dag",
+      "index": "Målerstand",
+      "cost": "Kostnad",
+      "tariff": "Tariff",
+      "l1": "L1",
+      "l2": "L2",
+      "l3": "L3"
+    },
+    "nl": {
+      "name": "Elektriciteitsmeter",
+      "idle": "Geen verbruik",
+      "consuming": "Verbruik bezig",
+      "overload": "Overbelasting",
+      "unavailable": "Niet beschikbaar",
+      "overload_alert": "Vermogen boven het gecontracteerde vermogen ({n} kVA)",
+      "power": "Vermogen",
+      "today": "Vandaag",
+      "index": "Meterstand",
+      "cost": "Kosten",
+      "tariff": "Tarief",
+      "l1": "L1",
+      "l2": "L2",
+      "l3": "L3"
+    },
+    "ro": {
+      "name": "Contor electric",
+      "idle": "Fără consum",
+      "consuming": "Consum în curs",
+      "overload": "Suprasarcină",
+      "unavailable": "Indisponibil",
+      "overload_alert": "Putere peste puterea abonată ({n} kVA)",
+      "power": "Putere",
+      "today": "Azi",
+      "index": "Index",
+      "cost": "Cost",
+      "tariff": "Tarif",
+      "l1": "L1",
+      "l2": "L2",
+      "l3": "L3"
+    },
+    "ru": {
+      "name": "Электросчётчик",
+      "idle": "Нет расхода",
+      "consuming": "Идёт потребление",
+      "overload": "Перегрузка",
+      "unavailable": "Недоступно",
+      "overload_alert": "Мощность выше заявленной ({n} кВА)",
+      "power": "Мощность",
+      "today": "Сегодня",
+      "index": "Показания",
+      "cost": "Стоимость",
+      "tariff": "Тариф",
+      "l1": "L1",
+      "l2": "L2",
+      "l3": "L3"
+    },
+    "sr": {
+      "name": "Бројило струје",
+      "idle": "Нема протока",
+      "consuming": "Потрошња у току",
+      "overload": "Преоптерећење",
+      "unavailable": "Недоступно",
+      "overload_alert": "Снага изнад уговорене снаге ({n} kVA)",
+      "power": "Снага",
+      "today": "Данас",
+      "index": "Индекс",
+      "cost": "Трошак",
+      "tariff": "Тарифа",
+      "l1": "L1",
+      "l2": "L2",
+      "l3": "L3"
+    },
+    "sr-Latn": {
+      "name": "Brojilo struje",
+      "idle": "Nema protoka",
+      "consuming": "Potrošnja u toku",
+      "overload": "Preopterećenje",
+      "unavailable": "Nedostupno",
+      "overload_alert": "Snaga iznad ugovorene snage ({n} kVA)",
+      "power": "Snaga",
+      "today": "Danas",
+      "index": "Indeks",
+      "cost": "Trošak",
+      "tariff": "Tarifa",
+      "l1": "L1",
+      "l2": "L2",
+      "l3": "L3"
+    }
+  };
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
+
+  // conversion en W (puissance) et en kWh (énergie) selon l'unité du capteur
+  const PWR = { w: 1, kw: 1000, mw: 1e6, va: 1, kva: 1000 };
+  const NRG = { wh: 1 / 1000, kwh: 1, mwh: 1000 };
+
+  const CSS = `
+:host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--em-on:var(--appliance-power-color,#f5a623);--em-alert:var(--appliance-alert-color,#db4437);--spd:2s}
+.head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
+.consuming .badge{background:color-mix(in srgb,var(--em-on) 22%,transparent);color:var(--em-on)}
+.overload .badge{background:color-mix(in srgb,var(--em-alert) 22%,transparent);color:var(--em-alert)}
+.alert{display:none;margin-top:4px;font-size:11px;color:var(--em-alert);font-weight:500;text-align:center}
+.alert.on{display:block}
+svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height:auto;margin:2px auto 0;cursor:pointer}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(68px,1fr));gap:6px;margin-top:6px}
+.tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
+.tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
+.tile .l span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tile .l ha-icon{--mdc-icon-size:13px;flex:none}
+.tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
+.tile.hide{display:none}.tile.bad .v{color:var(--em-alert)}
+/* ---- illustration ---- */
+.em-disc{transform-box:fill-box;transform-origin:50% 50%}
+.consuming .em-disc,.overload .em-disc{animation:emrot var(--spd) linear infinite}
+.em-led{fill:#5b1a1a;transition:fill .3s}
+.consuming .em-led,.overload .em-led{fill:#ff3b30;animation:emled calc(var(--spd) * .5) steps(1) infinite}
+.em-bolt{fill:#ffc107;opacity:.25;transition:opacity .4s}
+.consuming .em-bolt{opacity:1;animation:emglow 1.4s ease-in-out infinite alternate}
+.overload .em-bolt{fill:#e53935;opacity:1;animation:emblink 1s ease-in-out infinite}
+.unavailable svg{filter:grayscale(.7) opacity(.7)}
+.noanim .em-disc,.noanim .em-led,.noanim .em-bolt{animation:none}
+@keyframes emrot{to{transform:rotate(360deg)}}
+@keyframes emled{50%{fill:#5b1a1a}}
+@keyframes emglow{to{opacity:.55}}
+@keyframes emblink{50%{opacity:.3}}
+`;
+
+  const SVG = (label) => `<svg viewBox="0 18 120 108" role="img" aria-label="${esc(label)}"><defs>
+    <radialGradient id="emsh"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+    <linearGradient id="embody" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#fdfdfd"/><stop offset=".6" stop-color="#dfe4ea"/><stop offset="1" stop-color="#aeb6bf"/></linearGradient>
+    <radialGradient id="emdisc" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#f4f6f8"/><stop offset="1" stop-color="#9aa4ae"/></radialGradient>
+    <radialGradient id="emglass" cx=".35" cy=".25" r=".9"><stop offset="0" stop-color="#fff" stop-opacity=".7"/><stop offset=".5" stop-color="#fff" stop-opacity=".08"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
+    <ellipse cx="60" cy="122" rx="44" ry="4.5" fill="url(#emsh)"/>
+    <!-- bornes -->
+    <rect x="34" y="112" width="8" height="8" rx="1.5" fill="#6d7680"/><rect x="56" y="112" width="8" height="8" rx="1.5" fill="#6d7680"/><rect x="78" y="112" width="8" height="8" rx="1.5" fill="#6d7680"/>
+    <!-- boîtier -->
+    <rect x="22" y="22" width="76" height="92" rx="10" fill="url(#embody)" stroke="#8a929b" stroke-width="1"/>
+    <!-- totalisateur kWh : 5 chiffres + 1 décimale -->
+    <rect x="32" y="30" width="56" height="14" rx="2.5" fill="#20252b"/>
+    ${[0, 1, 2, 3, 4].map((i) => `<rect x="${34 + i * 8.2}" y="32" width="7.4" height="10" fill="#111"/><text class="em-d" x="${(37.7 + i * 8.2).toFixed(1)}" y="40" text-anchor="middle" font-size="8" fill="#fff" font-family="monospace" font-weight="700">0</text>`).join('')}
+    <rect x="75.4" y="32" width="7.4" height="10" fill="#b71c1c"/><text class="em-l" x="79.1" y="40" text-anchor="middle" font-size="8" fill="#fff" font-family="monospace" font-weight="700">0</text>
+    <text x="85" y="40.5" font-size="4" fill="#fff" font-family="sans-serif">kWh</text>
+    <!-- fenêtre du disque -->
+    <circle cx="60" cy="72" r="22" fill="#2b3138"/><circle cx="60" cy="72" r="19" fill="url(#emdisc)"/>
+    <g class="em-disc"><circle cx="60" cy="72" r="19" fill="none"/><path d="M60 72V54" stroke="#d32f2f" stroke-width="3" stroke-linecap="round"/><circle cx="60" cy="72" r="2.2" fill="#6d7680"/></g>
+    <circle cx="60" cy="72" r="19" fill="url(#emglass)"/>
+    <!-- éclair et LED d'impulsion -->
+    <path class="em-bolt" d="M32 86l7-10h-4.5l3-9-8 11h4.5z"/>
+    <circle class="em-led" cx="88" cy="94" r="3.2" stroke="#7a1313" stroke-width=".6"/>
+    <text x="60" y="106" text-anchor="middle" font-size="5" fill="#6d7680" font-family="sans-serif" font-weight="700" letter-spacing=".8">1 imp/Wh</text>
+  </svg>`;
+
+  const TILES = [['power', 'mdi:flash', 'show_power'], ['today', 'mdi:calendar-today', 'show_today'], ['index', 'mdi:counter', 'show_index'], ['cost', 'mdi:cash', 'show_cost'],
+    ['tariff', 'mdi:tag-outline', 'show_tariff'], ['l1', 'mdi:numeric-1-box-outline', 'show_phases'], ['l2', 'mdi:numeric-2-box-outline', 'show_phases'], ['l3', 'mdi:numeric-3-box-outline', 'show_phases']];
+
+  class ApplianceElectricMeterCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+    get _config() { return this._c; }
+    static getConfigElement() { return document.createElement(TAG + '-editor'); }
+    static getStubConfig(hass) {
+      const ids = Object.keys((hass && hass.states) || {}), st = (i) => hass.states[i].attributes || {};
+      const s = (i) => i.startsWith('sensor.');
+      return {
+        entity_power: ids.find((i) => s(i) && st(i).device_class === 'power' && /(grid|house|total|mains|maison|reseau|réseau|compteur|meter)/i.test(i)) || ids.find((i) => s(i) && st(i).device_class === 'power') || '',
+        entity_index: ids.find((i) => s(i) && st(i).device_class === 'energy' && st(i).state_class === 'total_increasing') || ids.find((i) => s(i) && st(i).device_class === 'energy') || '',
+      };
+    }
+    setConfig(c) {
+      if (window.applianceSize) window.applianceSize(this, c);
+      if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
+      this._c = { show_status: true, show_power: true, show_today: true, show_index: true, show_cost: true, show_tariff: true, show_phases: true, power_threshold: 5, ...c };
+      this._built = false;
+      if (this._hass) this._render();
+    }
+    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    connectedCallback() { this._tick = setInterval(() => { if (this._hass && this._c) this._render(); }, 20000); }
+    disconnectedCallback() { clearInterval(this._tick); }
+    getCardSize() { return 5; }
+    getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+
+    _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
+    _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
+    _lang() { let l = (this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en').slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _st(id) { return id && this._hass.states[id]; }
+    _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
+    _unit(id, d) { const s = this._st(id); return String((s && s.attributes && s.attributes.unit_of_measurement) || d).trim(); }
+    // puissance en W et énergie en kWh, quelle que soit l'unité du capteur
+    _watts(id) { const v = this._num(id); return isNaN(v) ? NaN : v * (PWR[this._unit(id, 'W').toLowerCase()] ?? 1); }
+    _kwh(id) { const v = this._num(id); return isNaN(v) ? NaN : v * (NRG[this._unit(id, 'kWh').toLowerCase()] ?? 1); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _pw(w) { return isNaN(w) ? ['--', 'W'] : Math.abs(w) >= 10000 ? [this._fmt(w / 1000, 2), 'kW'] : [this._fmt(w, 0), 'W']; }
+    _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
+
+    _build() {
+      const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
+      root.innerHTML = `<style>${CSS}</style><ha-card>
+        <div class="head"><div class="title" id="emtitle"></div><div class="badge" id="embadge"></div></div>
+        ${SVG(this._c.name || this._t('name'))}
+        <div class="alert" id="emalert"></div>
+        <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
+      </ha-card>`;
+      root.querySelector('svg').addEventListener('click', () => this._more(this._c.entity_power || this._c.entity_index));
+      root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
+        const c = this._c; this._more({ power: c.entity_power || c.entity_index, today: c.entity_today, index: c.entity_index, cost: c.entity_cost, tariff: c.entity_tariff, l1: c.entity_power_l1, l2: c.entity_power_l2, l3: c.entity_power_l3 }[el.dataset.k]);
+      }));
+      this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
+    }
+
+    _compute() {
+      const c = this._c, now = Date.now();
+      const idx = this._kwh(c.entity_index);
+      // puissance : capteur dédié, sinon déduite de l'index (kWh écoulés depuis le dernier changement)
+      let power = this._watts(c.entity_power);
+      if (!c.entity_power && !isNaN(idx)) {
+        if (this._lastIdx == null) { this._lastIdx = idx; this._lastAt = now; this._dpower = 0; }
+        else if (idx !== this._lastIdx) {
+          const h = Math.max(.0003, (now - this._lastAt) / 3600000);
+          this._dpower = idx > this._lastIdx ? (idx - this._lastIdx) * 1000 / h : 0;
+          this._lastIdx = idx; this._lastAt = now;
+        } else if (now - this._lastAt > 15 * 60000) this._dpower = 0;
+        power = this._dpower;
+      }
+      const consuming = !isNaN(power) && power > (Number(c.power_threshold) || 0);
+      const sub = Number(c.subscribed_power) * 1000, overload = sub > 0 && !isNaN(power) && power > sub;
+      const anyId = [c.entity_power, c.entity_index, c.entity_today, c.entity_power_l1, c.entity_power_l2, c.entity_power_l3].filter(Boolean);
+      const usable = anyId.some((i) => { const s = this._st(i); return s && !/^(unavailable|unknown)$/i.test(String(s.state)); });
+      const st = !usable ? 'unavailable' : overload ? 'overload' : consuming ? 'consuming' : 'idle';
+      return { st, idx, power, consuming };
+    }
+
+    _render() {
+      if (!this._built) this._build();
+      const c = this._c, r = this._root, card = this._card;
+      const { st, idx, power } = this._compute();
+      card.className = `${st}${c.animations === false ? ' noanim' : ''}`;
+      // vitesse du disque : un tour en 2 s à 1 kW, bornée (plus la puissance est forte, plus il tourne vite)
+      card.style.setProperty('--spd', `${Math.max(.25, Math.min(8, 2000 / Math.max(50, power || 0))).toFixed(2)}s`);
+      // totalisateur : 5 chiffres de kWh + 1 décimale
+      const base = isNaN(idx) ? 0 : Math.max(0, idx), whole = Math.floor(base);
+      const ent = String(whole % 100000).padStart(5, '0'), dec = String(Math.floor((base - whole) * 10));
+      r.querySelectorAll('.em-d').forEach((el, i) => { el.textContent = ent[i]; });
+      r.querySelectorAll('.em-l').forEach((el) => { el.textContent = dec; });
+
+      r.getElementById('emtitle').textContent = c.name || this._t('name');
+      const [pv, pu] = this._pw(power);
+      const badge = r.getElementById('embadge');
+      badge.textContent = st === 'consuming' || st === 'overload' ? `${pv} ${pu}` : this._t(st);
+      badge.style.display = c.show_status === false ? 'none' : '';
+      const al = r.getElementById('emalert');
+      al.textContent = st === 'overload' ? this._t('overload_alert').replace('{n}', this._fmt(Number(c.subscribed_power), 1)) : '';
+      al.classList.toggle('on', !!al.textContent);
+
+      const tariff = this._st(c.entity_tariff), ph = (id) => this._pw(this._watts(id));
+      const V = {
+        power: [c.entity_power || c.entity_index, pv, pu],
+        today: [c.entity_today, this._fmt(this._kwh(c.entity_today), 2), 'kWh'],
+        index: [c.entity_index, this._fmt(idx, 1), 'kWh'],
+        cost: [c.entity_cost, this._fmt(this._num(c.entity_cost), 2), this._unit(c.entity_cost, '€')],
+        tariff: [c.entity_tariff, tariff ? String(tariff.state) : '--', ''],
+        l1: [c.entity_power_l1, ...ph(c.entity_power_l1)], l2: [c.entity_power_l2, ...ph(c.entity_power_l2)], l3: [c.entity_power_l3, ...ph(c.entity_power_l3)],
+      };
+      TILES.forEach(([k, , opt]) => {
+        const el = r.querySelector(`.tile[data-k="${k}"]`); const [show, val, unit] = V[k];
+        el.classList.toggle('hide', !show || c[opt] === false);
+        el.classList.toggle('bad', k === 'power' && st === 'overload');
+        el.querySelector('.lbl').textContent = this._l(k);
+        const small = document.createElement('small'); small.textContent = unit ?? '';
+        el.querySelector('.v').replaceChildren(String(val ?? ''), small);
+      });
+    }
+  }
+  customElements.define(TAG, ApplianceElectricMeterCard);
+
+  /* ---- éditeur visuel ---- */
+  class ApplianceElectricMeterCardEditor extends HTMLElement {
+    setConfig(c) { this._c = c; this._draw(); }
+    set hass(h) { this._hass = h; if (this._form) this._form.hass = h; }
+    _draw() {
+      if (!this._form) {
+        this._form = document.createElement('ha-form');
+        this._form.addEventListener('value-changed', (e) => {
+          this._c = e.detail.value;
+          this.dispatchEvent(new CustomEvent('config-changed', { detail: { config: this._c }, bubbles: true, composed: true }));
+        });
+        this.appendChild(this._form);
+      }
+      const ent = (name, domain, extra) => ({ name, selector: { entity: { ...(domain ? { domain } : {}), ...(extra || {}) } } });
+      const num = (name, min, max, step, def, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
+      const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
+      this._form.hass = this._hass;
+      this._form.data = this._c;
+      this._form.schema = [
+        { name: 'name', selector: { text: {} } },
+        { name: 'labels', selector: { object: {} } },
+        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
+        { name: 'transparent', selector: { boolean: {} } },
+        ent('entity_power', 'sensor'), ent('entity_index', 'sensor'), ent('entity_today', 'sensor'), ent('entity_cost', ['sensor', 'input_number']), ent('entity_tariff', ['sensor', 'select', 'input_select']),
+        ent('entity_power_l1', 'sensor'), ent('entity_power_l2', 'sensor'), ent('entity_power_l3', 'sensor'),
+        { type: 'grid', name: '', schema: [num('subscribed_power', 0, 100, 0.5, 0, 'kVA')] },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_power'), bool('show_today'), bool('show_index'), bool('show_cost'), bool('show_tariff'), bool('show_phases'), bool('animations')] },
+      ];
+      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
+    }
+  }
+  customElements.define(TAG + '-editor', ApplianceElectricMeterCardEditor);
+
+  window.customCards = window.customCards || [];
+  window.customCards.push({
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`,
+    description: 'Compteur électrique animé : disque rotatif, LED d\'impulsion, totalisateur kWh, puissance, consommation du jour, coût, tarif et phases.', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
   });
 })();
