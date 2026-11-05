@@ -339,6 +339,15 @@ ok('garland lit rainbow + effect tile',has(c,'st-lit')&&has(c,'gl-multi')&&/Rain
 c=card('garland',{entity:'light.g'},[mk('light.g','on',{rgb_color:[255,0,0],effect:'none'})]); ok('garland single colour',has(c,'st-lit')&&!has(c,'gl-multi')&&c.wrap.style.getPropertyValue('--glc')==='rgb(255,0,0)',c.wrap.className);
 c.sr.querySelector('.toggle')?.click(); ok('garland toggles its light',JSON.stringify(c.h.calls[0])==='["light","toggle",{"entity_id":"light.g"}]',JSON.stringify(c.h.calls));
 c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has(c,'st-off'),c.wrap.className);
+// carte unique « Appliance » : liste des appareils dans la langue de Home Assistant, triée dans cette langue
+{const opts=(lang)=>{const ed=document.createElement('appliance-card-editor');ed.hass={language:lang,locale:{language:lang},states:{}};ed.setConfig({type:'custom:appliance-card'});document.body.append(ed);
+  const o=ed.querySelector('ha-form').schema[0].selector.select.options;ed.remove();return o;};
+ const fr=opts('fr'), en=opts('en'), lab=(o,t)=>(o.find((x)=>x.value===t)||{}).label;
+ ok('single card list in French',lab(fr,'appliance-water-meter-card')==="Compteur d'eau"&&lab(fr,'appliance-washer-card')==='Lave-linge'&&!fr.some((o)=>/ \/ /.test(o.label)),lab(fr,'appliance-water-meter-card'));
+ ok('single card list in English',lab(en,'appliance-water-meter-card')==='Water meter',lab(en,'appliance-water-meter-card'));
+ const L=fr.map((o)=>o.label), sorted=[...L].sort((a,b)=>a.localeCompare(b,'fr',{sensitivity:'base'}));
+ ok('single card list sorted in the HA language, no duplicate',JSON.stringify(L)===JSON.stringify(sorted)&&new Set(L).size===L.length&&fr.length===en.length);
+}
 // compteur d'eau : capteurs facultatifs, unités converties
 {const L=(u)=>({unit_of_measurement:u}), wm=(c)=>c.sr.querySelector('ha-card'), wb=(c)=>c.sr.getElementById('wmbadge').textContent;
  let c=card('water-meter',{entity_index:'sensor.i',entity_flow:'sensor.f',entity_today:'sensor.t'},[mk('sensor.i',412.537,L('m³')),mk('sensor.f',0.57,L('m³/h')),mk('sensor.t',212,L('L'))]);

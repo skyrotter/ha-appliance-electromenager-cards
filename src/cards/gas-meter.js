@@ -243,7 +243,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`,
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: "Compteur de gaz animé : totalisateur, débit, consommation du jour, coût, détecteur(s) de gaz et vanne d'arrêt.", preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
   });

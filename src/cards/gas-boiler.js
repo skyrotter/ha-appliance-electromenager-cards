@@ -333,7 +333,7 @@ svg{display:block;width:100%;max-width:calc(170px * var(--illus-scale,1));height
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: 'Appliance – Chaudière gaz / Gas boiler',
+    type: TAG, name: 'Appliance – Chaudière gaz / Gas boiler', names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Chaudière gaz animée : flamme, départ/retour, ECS, pression, conso élec et gaz.', preview: true,
   });
 })();

@@ -357,7 +357,7 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: 'Appliance – Sauna',
+    type: TAG, name: 'Appliance – Sauna', names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Cabine de sauna animée : lueur du poêle selon la température, ondes de chaleur, vapeur, thermomètre, consommation.', preview: true,
   });
 })();

@@ -260,5 +260,5 @@ class ApplianceAquariumCard extends HTMLElement {
 
 define('appliance-aquarium-card', ApplianceAquariumCard);
 window.customCards = window.customCards || [];
-window.customCards.push({ type: 'appliance-aquarium-card', name: 'Appliance – Aquarium', description: 'Aquarium animé : puissance, kWh, température, coût', preview: true });
+window.customCards.push({ type: 'appliance-aquarium-card', name: 'Appliance – Aquarium', names: Object.fromEntries(Object.keys(I18N_AQUARIUM).map((l) => [l, I18N_AQUARIUM[l].name])), description: 'Aquarium animé : puissance, kWh, température, coût', preview: true });
 })();

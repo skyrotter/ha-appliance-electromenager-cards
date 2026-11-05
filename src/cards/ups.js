@@ -324,7 +324,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: 'Appliance – UPS / Onduleur',
+    type: TAG, name: 'Appliance – UPS / Onduleur', names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Onduleur animé : courant du secteur ou de la batterie, coupure de courant, bips, charge batterie, autonomie et charge connectée (NUT).', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
   });

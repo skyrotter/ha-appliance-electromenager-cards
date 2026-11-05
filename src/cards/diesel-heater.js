@@ -369,7 +369,7 @@ svg{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));height
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: 'Appliance – Chauffage diesel / Diesel heater',
+    type: TAG, name: 'Appliance – Chauffage diesel / Diesel heater', names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Poêle à gazole animé : couronne bleue et flammes, allumage, purge du souffleur, niveau de gazole, conso élec.', preview: true,
   });
 })();

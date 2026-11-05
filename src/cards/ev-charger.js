@@ -225,5 +225,5 @@ class ApplianceEvChargerCard extends HTMLElement {
 }
 define('appliance-ev-charger-card', ApplianceEvChargerCard);
 window.customCards = window.customCards || [];
-window.customCards.push({ type: 'appliance-ev-charger-card', name: 'Appliance – EV charger / Borne de recharge', description: 'Wallbox murale animée avec voiture branchée', preview: true });
+window.customCards.push({ type: 'appliance-ev-charger-card', name: 'Appliance – EV charger / Borne de recharge', names: Object.fromEntries(Object.keys(I18N_EV).map((l) => [l, I18N_EV[l].name])), description: 'Wallbox murale animée avec voiture branchée', preview: true });
 })();

@@ -9,7 +9,21 @@
   const isOurs = (c) => c && /^appliance-.+-card$/.test(c.type) && c.type !== TAG;
   const ours = (window.customCards || []).filter(isOurs);
   const label = (c) => String(c.name || c.type).replace(/^Appliance\s*[–-]\s*/, '');
+  // ordre d'origine (noms « anglais / français ») : sert seulement à choisir le type par défaut d'une nouvelle carte
   const OPTIONS = ours.map((c) => ({ value: c.type, label: label(c) })).sort((a, b) => a.label.localeCompare(b.label));
+  // langue de Home Assistant (no / nn → nb, sr-Latn gardé tel quel)
+  const haLang = (hass) => {
+    const full = String((hass && (hass.locale?.language || hass.language)) || navigator.language || 'en');
+    const l = /^sr[-_]latn/i.test(full) ? 'sr-Latn' : full.slice(0, 2).toLowerCase();
+    return l === 'no' || l === 'nn' ? 'nb' : l;
+  };
+  // liste des types d'appareils dans la langue de Home Assistant, triée dans cette langue
+  // names : noms traduits déclarés par chaque carte ; à défaut, le nom « anglais / français » d'origine
+  const optionsFor = (hass) => {
+    const l = haLang(hass);
+    return ours.map((c) => ({ value: c.type, label: (c.names && (c.names[l] || c.names.en)) || label(c) }))
+      .sort((a, b) => a.label.localeCompare(b.label, l, { sensitivity: 'base' }));
+  };
 
   // Aperçu live désactivé sur chaque entrée : c'est lui qui ralentit l'onglet « Par carte »
   for (const c of ours) c.preview = false;
@@ -87,7 +101,7 @@
       }
       this._form.hass = this._hass;
       this._form.data = { appliance: this._config.appliance || '' };
-      this._form.schema = [{ name: 'appliance', selector: { select: { mode: 'dropdown', options: OPTIONS } } }];
+      this._form.schema = [{ name: 'appliance', selector: { select: { mode: 'dropdown', options: optionsFor(this._hass) } } }];
       this._form.computeLabel = () => tx(this._hass).appliance;
 
       // Options du sélecteur : propres au navigateur, hors config de la carte
