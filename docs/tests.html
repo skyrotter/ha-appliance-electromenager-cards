@@ -19,7 +19,7 @@ const has=(c,cls)=>c.wrap.classList.contains(cls);
 const tags=['thermomix','washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','smart-speaker','fan','generic','tool-charger','ceiling-fan','dehumidifier','monitor','kettle','toaster','power-strip','phone-charger','piano','garland','wet-vacuum','ps5'];
 tags.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 // card picker: every core card and every self-contained card listed exactly once
-const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','ceiling-spot','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','water-meter','gas-meter','electric-meter','trv','room-climate','mailbox','smoke-detector','leak-detector'];
+const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','ceiling-spot','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','water-meter','gas-meter','electric-meter','trv','room-climate','mailbox','smoke-detector','leak-detector','mini-pc','nas','tv-box','scale'];
 solo.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 const picked=window.customCards.map(c=>c.type), wanted=[...tags,...solo].map(t=>`appliance-${t}-card`);
 ok(`customCards = ${wanted.length}`,picked.length===wanted.length&&wanted.every(t=>picked.filter(p=>p===t).length===1),
@@ -1510,6 +1510,43 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
  c=card('jacuzzi',{entity_power:'sensor.p'},[mk('sensor.p',2000,W)],'it');
  const t=c.sr.textContent.replace(/\s+/g,' ');
  ok('italian: standalone card',/Idromassaggio/.test(t)&&/Riscaldamento/.test(t),t.slice(0,200));}
+// mini PC, NAS, box TV, balance (cartes photo)
+{const cls=(c)=>c.sr.querySelector('ha-card').className.trim().split(' ')[0];
+ const P={unit_of_measurement:'%'};
+ let c=card('mini-pc',{entity:'binary_sensor.p',entity_cpu:'sensor.c'},[mk('binary_sensor.p','off'),mk('sensor.c',3,P)]); ok('mini-pc ping off -> off',cls(c)==='off',cls(c));
+ c=card('mini-pc',{entity_cpu:'sensor.c'},[mk('sensor.c',3,P)]); ok('mini-pc cpu 3 % -> idle',cls(c)==='idle',cls(c));
+ c=card('mini-pc',{entity_cpu:'sensor.c'},[mk('sensor.c',85,P)]); ok('mini-pc cpu 85 % -> busy',cls(c)==='busy',cls(c));
+ c=card('mini-pc',{entity_cpu:'sensor.c',entity_cpu_temp:'sensor.t',entity_disk:'sensor.d'},[mk('sensor.c',30,P),mk('sensor.t',92,T),mk('sensor.d',95,P)]);
+ ok('mini-pc 92 °C -> hot + disk alert',cls(c)==='hot'&&/presque plein/.test(c.sr.getElementById('mpalert').textContent),cls(c)+' '+c.sr.getElementById('mpalert').textContent);
+ c=card('mini-pc',{entity_cpu:'sensor.c',entity_net_down:'sensor.n'},[mk('sensor.c',30,P),mk('sensor.n',18400,{unit_of_measurement:'kB/s'})]);
+ ok('mini-pc rate 18400 kB/s -> 18 MB/s',/18\s*MB\/s/.test(c.sr.querySelector('.tile[data-k=down]').textContent),c.sr.querySelector('.tile[data-k=down]').textContent);
+ c=card('mini-pc',{entity_uptime:'sensor.b'},[mk('sensor.b',new Date(Date.now()-(2*86400+3*3600)*1000).toISOString())]);
+ ok('mini-pc uptime from last boot',/2 j 3 h/.test(c.sr.querySelector('.tile[data-k=uptime]').textContent),c.sr.querySelector('.tile[data-k=uptime]').textContent);
+ c=card('nas',{entity_cpu:'sensor.c',entity_volume_used:'sensor.v',entity_drive_2:'sensor.d2'},[mk('sensor.c',10,P),mk('sensor.v',50,P),mk('sensor.d2','failing')]);
+ ok('nas drive 2 failing -> warning + bay',cls(c)==='warning'&&c.sr.querySelector('.bay[data-i="1"]').classList.contains('bad')&&/Disque 2/.test(c.sr.getElementById('nsalert').textContent),cls(c));
+ c=card('nas',{entity_cpu:'sensor.c',entity_volume_used:'sensor.v',entity_drive_1:'sensor.d1',entity_drive_4:'sensor.d4'},[mk('sensor.c',5,P),mk('sensor.v',50,P),mk('sensor.d1','normal'),mk('sensor.d4','not_use')]);
+ ok('nas idle, empty bay LED off, disks 1/1',cls(c)==='idle'&&c.sr.querySelector('.led.dk[data-i="3"]').classList.contains('empty')&&/1\/1/.test(c.sr.querySelector('.tile[data-k=disks]').textContent),cls(c));
+ c=card('nas',{entity_volume:'sensor.vs',entity_volume_used:'sensor.v'},[mk('sensor.vs','degraded'),mk('sensor.v',92,P)]);
+ ok('nas volume degraded + full',cls(c)==='warning'&&/dégradé/.test(c.sr.getElementById('nsalert').textContent)&&/presque plein/.test(c.sr.getElementById('nsalert').textContent),c.sr.getElementById('nsalert').textContent);
+ const mp=(st,a={})=>mk('media_player.s',st,{supported_features:152511,volume_level:.4,...a});
+ for(const m of ['shield_tv_pro','xiaomi_tv_box_s','freebox_pop']){c=card('tv-box',{entity:'media_player.s',model:m},[mp('playing',{media_title:'Film',app_name:'Netflix'})]);
+  ok(`tv-box ${m} playing`,cls(c)==='playing'&&/Film/.test(c.sr.getElementById('tvmt').textContent),cls(c));}
+ c=card('tv-box',{entity:'media_player.s',entity_remote:'remote.s'},[mp('off'),mk('remote.s','off')]);
+ c.sr.querySelector('#tvctrls button[data-k=power]').click();
+ ok('tv-box power via remote',cls(c)==='off'&&c.h.calls.some(x=>x[0]==='remote'&&x[1]==='turn_on'),JSON.stringify(c.h.calls));
+ c=card('tv-box',{entity:'media_player.s'},[mp('playing')]); c.sr.querySelector('#tvctrls button[data-k=vol_up]').click();
+ ok('tv-box volume up -> volume_set 0.45',c.h.calls.some(x=>x[1]==='volume_set'&&x[2].volume_level===0.45),JSON.stringify(c.h.calls));
+ c=card('scale',{entity_weight:'sensor.w',height:180,animations:false},[mk('sensor.w',81,{unit_of_measurement:'kg'})]);
+ ok('scale BMI from height (25.0, over)',/25,0/.test(c.sr.getElementById('scbmi').textContent)&&/SURPOIDS/.test(c.sr.getElementById('scbmil').textContent),c.sr.getElementById('scbmi').textContent+' '+c.sr.getElementById('scbmil').textContent);
+ ok('scale LCD shows weight',c.sr.getElementById('sclcd').textContent==='81.0',c.sr.getElementById('sclcd').textContent);
+ c=card('scale',{entity_weight:'sensor.w',entity_weight_goal:'sensor.g',animations:false},[mk('sensor.w',72.3,{unit_of_measurement:'kg'}),mk('sensor.g',72,{unit_of_measurement:'kg'})]);
+ ok('scale goal reached',c.sr.getElementById('scgoal').classList.contains('on'),c.sr.getElementById('scgoal').textContent);
+ c=card('mini-pc',{entity_cpu:'sensor.c',entity_net_down:'sensor.d',entity_net_up:'sensor.u',show_up:false,show_cpu:false},[mk('sensor.c',30,P),mk('sensor.d',5,{unit_of_measurement:'MB/s'}),mk('sensor.u',1,{unit_of_measurement:'MB/s'})]);
+ ok('mini-pc show_up/show_cpu false hide only those tiles',c.sr.querySelector('.tile[data-k=up]').classList.contains('hide')&&c.sr.querySelector('.tile[data-k=cpu]').classList.contains('hide')&&!c.sr.querySelector('.tile[data-k=down]').classList.contains('hide'));
+ c=card('tv-box',{entity:'media_player.s',show_btn_mute:false,show_btn_prev:false},[mp('playing')]);
+ ok('tv-box hidden buttons',!c.sr.querySelector('#tvctrls [data-k=mute]')&&!c.sr.querySelector('#tvctrls [data-k=prev]')&&!!c.sr.querySelector('#tvctrls [data-k=next]'));
+ c=card('scale',{entity_weight:'sensor.w',entity_bone_mass:'sensor.b',entity_muscle_mass:'sensor.m',show_bone:false,animations:false},[mk('sensor.w',70,{unit_of_measurement:'kg'}),mk('sensor.b',3,{unit_of_measurement:'kg'}),mk('sensor.m',55,{unit_of_measurement:'kg'})]);
+ ok('scale show_bone false',c.sr.querySelector('.tile[data-k=bone]').classList.contains('hide')&&!c.sr.querySelector('.tile[data-k=muscle]').classList.contains('hide'));}
 window.RESULTS=R;
 const fails=R.filter(r=>!r.pass).length;
 document.getElementById('sum').innerHTML=`<b class="${fails?'f':'p'}">${R.length-fails} / ${R.length} tests réussis</b> — fichier testé : <code>dist/ha-appliance-electromenager-cards.js</code>`;

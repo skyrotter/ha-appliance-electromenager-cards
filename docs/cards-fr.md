@@ -282,6 +282,50 @@ entity_load: sensor.onduleur_load
 entity_input_voltage: sensor.onduleur_input_voltage
 ```
 
+**Mini PC** : `custom:appliance-mini-pc-card`, photo détourée du BMAX B9 Max, pour un serveur maison suivi par **Glances** ou **System Monitor**. Le bouton respire en bleu, un reflet balaie le boîtier, l'air chaud sort des ouïes (plus vite quand le CPU travaille), la chaleur monte au-dessus du capot (rouge en surchauffe), les paquets réseau montent et descendent le câble selon le débit, et trois jauges néon montrent CPU, RAM et disque. États : éteint, au repos, en marche, très sollicité, surchauffe, indisponible. Alertes : surchauffe, disque presque plein, mémoire saturée. Options : voir [mini-pc.md](cards/mini-pc.md).
+
+```yaml
+type: custom:appliance-mini-pc-card
+entity: binary_sensor.minipc_ping
+entity_cpu: sensor.system_monitor_processor_use
+entity_cpu_temp: sensor.system_monitor_processor_temperature
+entity_ram: sensor.system_monitor_memory_usage
+entity_disk: sensor.system_monitor_disk_usage
+entity_uptime: sensor.system_monitor_last_boot
+```
+
+**NAS** : `custom:appliance-nas-card`, photo détourée du Synology DS423+ (4 baies), pour l'intégration **Synology DSM**. Les LED des disques clignotent selon l'activité, un faisceau balaie les baies, les paquets volent vers l'anneau du volume ou en repartent, un disque en défaut clignote en orange et sa baie pulse en rouge, la LED STATUS passe à l'orange en alerte. Anneau du volume, barres de débit et de température sur le côté, ligne « Mise à jour DSM disponible ». Clic sur une baie : fiche du disque. Options : voir [nas.md](cards/nas.md).
+
+```yaml
+type: custom:appliance-nas-card
+entity_volume: sensor.ds423_volume_1_status
+entity_volume_used: sensor.ds423_volume_1_volume_used
+entity_cpu: sensor.ds423_cpu_utilization_total
+entity_ram: sensor.ds423_memory_usage_real
+entity_temp: sensor.ds423_temperature
+entity_drive_1: sensor.ds423_drive_1_status
+entity_drive_1_temp: sensor.ds423_drive_1_temperature
+entity_update: update.ds423_dsm_update
+```
+
+**Box TV** : `custom:appliance-tv-box-card`, photo détourée de la box choisie avec `model` : `freebox_pop` (Freebox Player Pop), `xiaomi_tv_box_s` (Xiaomi TV Box S) ou `shield_tv_pro` (NVIDIA Shield TV Pro). Un écran flottant affiche la pochette en zoom lent avec un ambilight à sa couleur, l'appli, le titre, un égaliseur et la progression ; pause qui pulse, chargement, aurore animée sur l'accueil, écran noir et LED de veille rouge quand c'est éteint. La bande verte de la Shield, la LED de la Xiaomi ou le halo du Player Pop s'allument, des ondes partent de la box en lecture et le volume s'affiche à l'écran quand il change. Télécommande : marche/arrêt, accueil, précédent, lecture/pause, suivant, volume, sourdine (`entity_remote` recommandé avec Android TV Remote). Options : voir [tv-box.md](cards/tv-box.md).
+
+```yaml
+type: custom:appliance-tv-box-card
+model: freebox_pop
+entity: media_player.freebox_player_pop
+```
+
+**Balance connectée** : `custom:appliance-scale-card`, photo détourée de la Withings posée au sol en 3D, pour l'intégration **Withings**. À chaque pesée : empreintes lumineuses, plateau qui s'enfonce, chiffres qui défilent puis clignotent, ondes d'impédance et halo au sol ; l'écran alterne ensuite poids, masse grasse et IMC. Jauge IMC à aiguille, courbe sur `trend_days` jours avec l'objectif, « Objectif atteint ». Clic sur la balance : rejoue la pesée. Options : voir [scale.md](cards/scale.md).
+
+```yaml
+type: custom:appliance-scale-card
+entity_weight: sensor.withings_weight
+entity_fat_ratio: sensor.withings_fat_ratio
+entity_weight_goal: sensor.withings_weight_goal
+height: 178
+```
+
 **Plancher chauffant** : `custom:appliance-underfloor-heating-card`, pièce en coupe avec la dalle en perspective. Le carrelage est retiré à gauche pour montrer le serpentin : circuit d'eau avec collecteur départ / retour au mur, ou câble chauffant (`heating_type: electric`). En chauffe, l'eau ou le courant circule, la dalle rougeoit selon la température du sol (de 20 °C à `floor_max`) et des ondes de chaleur montent du sol. États : arrêt, chauffe, en veille (consigne atteinte), défaut. Avec une entité `climate`, `hvac_action` décide entre chauffe et veille, et les boutons **− / Allumer-Éteindre / +** pilotent le thermostat. Alertes : sol trop chaud (au-dessus de `floor_max`, 29 °C) et eau trop chaude (au-dessus de `water_max`, 45 °C). Tuiles : pièce, consigne, sol, départ d'eau, puissance, énergie, coût. Options : voir [underfloor-heating.md](cards/underfloor-heating.md).
 
 ```yaml

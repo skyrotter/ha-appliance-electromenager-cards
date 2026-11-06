@@ -902,6 +902,56 @@ const SCEN = [
       range(ctl, 'Tension entrée', 'sensor.ups_input_voltage', 0, 250, 1, 231, 'V', { unit_of_measurement: 'V' });
       set('sensor.ups_power', 145, W);
     } },
+  { kind: 'mini-pc', title: 'Mini PC (BMAX B9 Max)', lang: true,
+    cfg: { entity: 'binary_sensor.minipc_ping', entity_cpu: 'sensor.minipc_cpu', entity_cpu_temp: 'sensor.minipc_cpu_temp', entity_ram: 'sensor.minipc_ram', entity_disk: 'sensor.minipc_disk', entity_net_down: 'sensor.minipc_rx', entity_net_up: 'sensor.minipc_tx', entity_uptime: 'sensor.minipc_last_boot', entity_power: 'sensor.minipc_power' },
+    build(ctl) {
+      select(ctl, 'Ping', 'binary_sensor.minipc_ping', [['on', 'En ligne / Online'], ['off', 'Éteint / Off'], ['unavailable', 'Indisponible']], 'on');
+      range(ctl, 'CPU', 'sensor.minipc_cpu', 0, 100, 1, 42, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Temp. CPU', 'sensor.minipc_cpu_temp', 30, 100, 1, 58, '°C', T);
+      range(ctl, 'RAM', 'sensor.minipc_ram', 0, 100, 1, 63, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Disque', 'sensor.minipc_disk', 0, 100, 1, 47, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Réception', 'sensor.minipc_rx', 0, 100, 0.1, 12.5, 'MB/s', { unit_of_measurement: 'MB/s' });
+      range(ctl, 'Envoi', 'sensor.minipc_tx', 0, 100, 0.1, 1.8, 'MB/s', { unit_of_measurement: 'MB/s' });
+      set('sensor.minipc_last_boot', new Date(Date.now() - 3 * 86400e3 - 5 * 3600e3).toISOString(), { device_class: 'timestamp' });
+      set('sensor.minipc_power', 14, W);
+    } },
+  { kind: 'nas', title: 'NAS (Synology DS423+)', lang: true,
+    cfg: { entity_volume: 'sensor.ds423_volume_1_status', entity_volume_used: 'sensor.ds423_volume_1_volume_used', entity_cpu: 'sensor.ds423_cpu_utilization_total', entity_ram: 'sensor.ds423_memory_usage_real', entity_temp: 'sensor.ds423_temperature', entity_net_down: 'sensor.ds423_download_throughput', entity_net_up: 'sensor.ds423_upload_throughput',
+      entity_drive_1: 'sensor.ds423_drive_1_status', entity_drive_2: 'sensor.ds423_drive_2_status', entity_drive_3: 'sensor.ds423_drive_3_status', entity_drive_4: 'sensor.ds423_drive_4_status',
+      entity_drive_1_temp: 'sensor.ds423_drive_1_temperature', entity_drive_2_temp: 'sensor.ds423_drive_2_temperature', entity_drive_3_temp: 'sensor.ds423_drive_3_temperature', entity_drive_4_temp: 'sensor.ds423_drive_4_temperature', entity_update: 'update.ds423_dsm_update' },
+    build(ctl) {
+      select(ctl, 'Volume', 'sensor.ds423_volume_1_status', [['normal', 'Normal'], ['degraded', 'Dégradé / Degraded'], ['unavailable', 'Indisponible']], 'normal');
+      range(ctl, 'Volume utilisé', 'sensor.ds423_volume_1_volume_used', 0, 100, 1, 68, '%', { unit_of_measurement: '%' });
+      range(ctl, 'CPU', 'sensor.ds423_cpu_utilization_total', 0, 100, 1, 23, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Temp.', 'sensor.ds423_temperature', 25, 80, 1, 41, '°C', T);
+      range(ctl, 'Téléchargement', 'sensor.ds423_download_throughput', 0, 120000, 100, 18400, 'kB/s', { unit_of_measurement: 'kB/s' });
+      range(ctl, 'Envoi', 'sensor.ds423_upload_throughput', 0, 120000, 100, 3200, 'kB/s', { unit_of_measurement: 'kB/s' });
+      select(ctl, 'Disque 3', 'sensor.ds423_drive_3_status', [['normal', 'Normal'], ['failing', 'Défaillant / Failing'], ['not_use', 'Vide / Empty']], 'normal');
+      select(ctl, 'MAJ DSM', 'update.ds423_dsm_update', [['off', 'À jour'], ['on', 'Disponible']], 'on');
+      set('sensor.ds423_memory_usage_real', 37, { unit_of_measurement: '%' });
+      ['1', '2', '4'].forEach((n) => set(`sensor.ds423_drive_${n}_status`, 'normal'));
+      [34, 36, 37, 35].forEach((t, i) => set(`sensor.ds423_drive_${i + 1}_temperature`, t, T));
+    } },
+  ...[['shield_tv_pro', 'NVIDIA Shield TV Pro', 'Netflix', 'Stranger Things', 'S4 · E1'], ['xiaomi_tv_box_s', 'Xiaomi TV Box S', 'YouTube', 'Lo-fi beats', 'Lofi Girl'], ['freebox_pop', 'Freebox Player Pop', 'Freebox TV', 'France 2', 'Journal de 20h']].map(([model, title, app, mt, ma]) => ({
+    kind: 'tv-box', title: `Box TV (${title})`, lang: true,
+    cfg: { entity: `media_player.${model}`, model, entity_power: `sensor.${model}_power` },
+    build(ctl) {
+      const id = `media_player.${model}`;
+      select(ctl, 'État', id, [['playing', 'Lecture / Playing'], ['paused', 'Pause'], ['idle', 'Accueil / Idle'], ['buffering', 'Chargement'], ['standby', 'Veille'], ['off', 'Éteint / Off']], 'playing', () => { states[id].attributes = ATTR; });
+      const ATTR = { app_name: app, media_title: mt, media_artist: ma, media_duration: 3000, media_position: 1100, media_position_updated_at: new Date().toISOString(), volume_level: 0.35, is_volume_muted: false, supported_features: 152511,
+        entity_picture: `data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='${model === 'shield_tv_pro' ? '#b3001b' : model === 'xiaomi_tv_box_s' ? '#5b3cc4' : '#0d47a1'}'/><stop offset='1' stop-color='#120a1c'/></linearGradient></defs><rect width='16' height='9' fill='url(#g)'/><circle cx='11.5' cy='3' r='1.6' fill='#ffd36b' opacity='.85'/><path d='M0 9 L5 4.5 L8 7 L11 5 L16 9Z' fill='#000' opacity='.55'/></svg>`)}` };
+      states[id].attributes = ATTR;
+      set(`sensor.${model}_power`, 6.5, W);
+    } })),
+  { kind: 'scale', title: 'Balance Withings', lang: true,
+    cfg: { entity_weight: 'sensor.withings_weight', entity_fat_ratio: 'sensor.withings_fat_ratio', entity_muscle_mass: 'sensor.withings_muscle_mass', entity_bone_mass: 'sensor.withings_bone_mass', entity_hydration: 'sensor.withings_hydration', entity_heart_pulse: 'sensor.withings_heart_pulse', entity_weight_goal: 'sensor.withings_weight_goal', height: 178 },
+    build(ctl) {
+      range(ctl, 'Poids', 'sensor.withings_weight', 40, 140, 0.1, 74.6, 'kg', { unit_of_measurement: 'kg', device_class: 'weight' });
+      range(ctl, 'Masse grasse', 'sensor.withings_fat_ratio', 5, 45, 0.1, 18.4, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Objectif', 'sensor.withings_weight_goal', 40, 140, 0.5, 72, 'kg', { unit_of_measurement: 'kg' });
+      set('sensor.withings_muscle_mass', 57.9, { unit_of_measurement: 'kg' }); set('sensor.withings_bone_mass', 3.1, { unit_of_measurement: 'kg' });
+      set('sensor.withings_hydration', 41.2, { unit_of_measurement: 'kg' }); set('sensor.withings_heart_pulse', 64, { unit_of_measurement: 'bpm' });
+    } },
   { kind: 'underfloor-heating', title: 'Plancher chauffant', lang: true,
     cfg: { entity: 'climate.underfloor', entity_floor_temp: 'sensor.floor_temp', entity_water_temp: 'sensor.underfloor_flow_temp', entity_power: 'sensor.underfloor_power', entity_energy: 'sensor.underfloor_energy', price_per_kwh: 0.2 },
     build(ctl) {
