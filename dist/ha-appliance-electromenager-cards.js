@@ -9402,6 +9402,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_index": "Meter index (total)",
       "entity_today": "Today's consumption",
       "entity_leak": "Leak sensor",
+      "detector": "Detector type",
       "entity_valve": "Shut-off valve",
       "leak_minutes": "Leak alert after (min of continuous flow)",
       "freeze_threshold": "Freeze threshold (°C)",
@@ -9760,6 +9761,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_index": "Zählerstand (gesamt)",
       "entity_today": "Verbrauch heute",
       "entity_leak": "Lecksensor",
+      "detector": "Meldertyp",
       "entity_valve": "Absperrventil",
       "leak_minutes": "Leckalarm nach (min Dauerfluss)",
       "freeze_threshold": "Frostschwelle (°C)",
@@ -10118,6 +10120,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_index": "Index du compteur (total)",
       "entity_today": "Consommation du jour",
       "entity_leak": "Détecteur de fuite",
+      "detector": "Type de détecteur",
       "entity_valve": "Vanne d'arrêt",
       "leak_minutes": "Alerte fuite après (min d'écoulement continu)",
       "freeze_threshold": "Seuil de gel (°C)",
@@ -10476,6 +10479,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_index": "Indice del contatore (totale)",
       "entity_today": "Consumo di oggi",
       "entity_leak": "Sensore perdite",
+      "detector": "Tipo di rilevatore",
       "entity_valve": "Valvola di intercettazione",
       "leak_minutes": "Avviso perdita dopo (min di flusso continuo)",
       "freeze_threshold": "Soglia di gelo (°C)",
@@ -10834,6 +10838,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_index": "Målerstand (totalt)",
       "entity_today": "Forbruk i dag",
       "entity_leak": "Lekkasjesensor",
+      "detector": "Detektortype",
       "entity_valve": "Stengeventil",
       "leak_minutes": "Lekkasjevarsel etter (min sammenhengende strømning)",
       "freeze_threshold": "Frostgrense (°C)",
@@ -11192,6 +11197,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_index": "Meterstand (totaal)",
       "entity_today": "Verbruik vandaag",
       "entity_leak": "Leksensor",
+      "detector": "Type melder",
       "entity_valve": "Afsluitkraan",
       "leak_minutes": "Lekmelding na (min onafgebroken stroming)",
       "freeze_threshold": "Vorstdrempel (°C)",
@@ -11550,6 +11556,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_index": "Index contor (total)",
       "entity_today": "Consumul de azi",
       "entity_leak": "Senzor de scurgere",
+      "detector": "Tip detector",
       "entity_valve": "Robinet de închidere",
       "leak_minutes": "Alertă scurgere după (min de curgere continuă)",
       "freeze_threshold": "Prag de îngheț (°C)",
@@ -11908,6 +11915,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_index": "Показания счётчика (всего)",
       "entity_today": "Расход за сегодня",
       "entity_leak": "Датчик протечки",
+      "detector": "Тип датчика",
       "entity_valve": "Запорный кран",
       "leak_minutes": "Тревога утечки через (мин непрерывного расхода)",
       "freeze_threshold": "Порог замерзания (°C)",
@@ -12266,6 +12274,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_index": "Индекс бројила (укупно)",
       "entity_today": "Данашња потрошња",
       "entity_leak": "Сензор цурења",
+      "detector": "Тип детектора",
       "entity_valve": "Запорни вентил",
       "leak_minutes": "Аларм за цурење након (мин непрекидног протока)",
       "freeze_threshold": "Праг смрзавања (°C)",
@@ -12624,6 +12633,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_index": "Indeks brojila (ukupno)",
       "entity_today": "Današnja potrošnja",
       "entity_leak": "Senzor curenja",
+      "detector": "Tip detektora",
       "entity_valve": "Zaporni ventil",
       "leak_minutes": "Alarm za curenje nakon (min neprekidnog protoka)",
       "freeze_threshold": "Prag smrzavanja (°C)",
@@ -28569,11 +28579,11 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 })();
 
 /* Carte « Détecteur de fumée » — custom:appliance-smoke-detector-card
- * Détecteur fixé au plafond, trois modèles (option model) : gas (détecteur de gaz méthane / GPL : textes « Gaz », nuage de gaz,
- * niveau entity_level, vanne entity_valve, sirène entity_siren), cylinder (cylindre compact, bouton-LED carré, bande grillagée)
+ * Détecteur fixé au plafond, deux modèles (option model) : cylinder (cylindre compact, bouton-LED carré, bande grillagée)
  * ou round (rond plat classique). Alarme : la fumée monte, la LED rouge clignote, des ondes sonores partent du détecteur.
  * CO (facultatif, entity_co : binary_sensor ou sensor en ppm) : nappe de gaz et ondes orange. Test : le bouton s'enfonce,
- * ondes bleues. Pile faible / défaut : LED orange et pictogramme. Boutons « Tester » et « Couper l'alarme » facultatifs.
+ * ondes bleues. Mode gaz (detector: gas, ou model: gas) : même dessin, textes « Gaz », nuage de gaz, entity_level / entity_valve /
+ * entity_siren facultatifs. Pile faible / défaut : LED orange et pictogramme. Boutons « Tester » et « Couper l'alarme » facultatifs.
  */
 (() => {
   const TAG = 'appliance-smoke-detector-card';
@@ -28604,7 +28614,6 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       "low": "Low",
       "model_cylinder": "Compact cylinder",
       "model_round": "Round",
-      "model_gas": "Gas detector",
       "gas_name": "Gas detector",
       "gas_alarm": "Gas!",
       "gas_alarm_at": "Gas detected at {t}",
@@ -28636,7 +28645,6 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       "low": "Schwach",
       "model_cylinder": "Kompakter Zylinder",
       "model_round": "Rund",
-      "model_gas": "Gasmelder",
       "gas_name": "Gasmelder",
       "gas_alarm": "Gas!",
       "gas_alarm_at": "Gas erkannt um {t}",
@@ -28668,7 +28676,6 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       "low": "Faible",
       "model_cylinder": "Cylindre compact",
       "model_round": "Rond",
-      "model_gas": "Détecteur de gaz",
       "gas_name": "Détecteur de gaz",
       "gas_alarm": "Gaz !",
       "gas_alarm_at": "Gaz détecté à {t}",
@@ -28700,7 +28707,6 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       "low": "Scarica",
       "model_cylinder": "Cilindro compatto",
       "model_round": "Rotondo",
-      "model_gas": "Rilevatore di gas",
       "gas_name": "Rilevatore di gas",
       "gas_alarm": "Gas!",
       "gas_alarm_at": "Gas rilevato alle {t}",
@@ -28732,7 +28738,6 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       "low": "Lavt",
       "model_cylinder": "Kompakt sylinder",
       "model_round": "Rund",
-      "model_gas": "Gassdetektor",
       "gas_name": "Gassdetektor",
       "gas_alarm": "Gass!",
       "gas_alarm_at": "Gass oppdaget kl. {t}",
@@ -28764,7 +28769,6 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       "low": "Laag",
       "model_cylinder": "Compacte cilinder",
       "model_round": "Rond",
-      "model_gas": "Gasmelder",
       "gas_name": "Gasmelder",
       "gas_alarm": "Gas!",
       "gas_alarm_at": "Gas gedetecteerd om {t}",
@@ -28796,7 +28800,6 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       "low": "Slabă",
       "model_cylinder": "Cilindru compact",
       "model_round": "Rotund",
-      "model_gas": "Detector de gaz",
       "gas_name": "Detector de gaz",
       "gas_alarm": "Gaz!",
       "gas_alarm_at": "Gaz detectat la {t}",
@@ -28828,7 +28831,6 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       "low": "Низкий",
       "model_cylinder": "Компактный цилиндр",
       "model_round": "Круглый",
-      "model_gas": "Датчик газа",
       "gas_name": "Датчик газа",
       "gas_alarm": "Газ!",
       "gas_alarm_at": "Газ обнаружен в {t}",
@@ -28860,7 +28862,6 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       "low": "Слаба",
       "model_cylinder": "Компактни цилиндар",
       "model_round": "Округли",
-      "model_gas": "Детектор гаса",
       "gas_name": "Детектор гаса",
       "gas_alarm": "Гас!",
       "gas_alarm_at": "Гас детектован у {t}",
@@ -28892,7 +28893,6 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       "low": "Slaba",
       "model_cylinder": "Kompaktni cilindar",
       "model_round": "Okrugli",
-      "model_gas": "Detektor gasa",
       "gas_name": "Detektor gasa",
       "gas_alarm": "Gas!",
       "gas_alarm_at": "Gas detektovan u {t}",
@@ -28954,7 +28954,6 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
 .gas .sd-smoke{display:none}
 .gas.alarm .sd-gc{animation:sdsmoke 4s ease-in infinite}
 .gas.alarm .sd-gc.g2{animation-delay:1.3s}.gas.alarm .sd-gc.g3{animation-delay:2.6s}
-.sd-gt{fill:#546e7a}
 .sd-co{opacity:0}.co .sd-co{opacity:1}
 .sd-btn{transform-box:fill-box;transform-origin:50% 50%}.test .sd-btn{animation:sdpress 1.2s infinite}
 .sd-bat,.sd-fault{opacity:0}.low_battery .sd-bat{opacity:1;animation:sdbeat 2s infinite}.fault .sd-fault{opacity:1}
@@ -29016,17 +29015,6 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
       <ellipse class="sd-btn" cx="100" cy="56" rx="13" ry="3.6" fill="#d7dde4" stroke="#b5bdc6"/>
       <circle class="sd-led" cx="124" cy="55" r="2.8"/>
       ${ICONS}`,
-    // détecteur de gaz (méthane / GPL) : boîtier rectangulaire à grille, inscription GAS, bouton test et LED
-    gas: `<defs>${DEFS}
-      <linearGradient id="sdgb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#cfd5dc"/></linearGradient></defs>
-      ${BACK}
-      <rect x="62" y="14" width="76" height="62" rx="8" fill="url(#sdgb)" stroke="#b5bdc6" stroke-width=".8"/>
-      <g stroke="#aab2bc" stroke-width="2.4" stroke-linecap="round"><path d="M74 24 H126 M74 31 H126 M74 38 H126"/></g>
-      <text class="sd-gt" x="100" y="56" text-anchor="middle" font-size="11" font-weight="700" font-family="sans-serif">GAS</text>
-      <circle class="sd-glow" cx="122" cy="66" r="12" fill="url(#sdglowg)"/>
-      <ellipse class="sd-btn" cx="96" cy="66" rx="10" ry="3.6" fill="#d7dde4" stroke="#b5bdc6"/>
-      <circle class="sd-led" cx="122" cy="66" r="2.8"/>
-      ${ICONS}`,
   };
   const SVG = (model, label) => `<svg viewBox="25 0 150 140" role="img" aria-label="${String(label).replace(/[&<>"]/g, '')}">${MODELS[model] || MODELS.cylinder}</svg>`;
 
@@ -29051,7 +29039,8 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { model: 'cylinder', co_threshold: 50, battery_low: 20, show_status: true, show_since: true, show_co: true, show_battery: true, show_temperature: true, show_level: true, show_buttons: true, ...c };
-      if (c.detector === 'gas') this._c.model = 'gas'; // alias : detector: gas
+      // mode gaz : detector: gas, ou model: gas (alias) ; le dessin reste celui du détecteur de fumée
+      if (c.model === 'gas') this._c.model = 'cylinder', this._c.detector = 'gas';
       this._built = false;
       if (this._hass) this._render();
     }
@@ -29064,7 +29053,7 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
       const L = this._c && this._c.labels;
       if (L && L[k] != null && L[k] !== '') return String(L[k]);
       const tr = T[this._lang()];
-      if (this._c && this._c.model === 'gas') { const g = tr['gas_' + k] ?? T.en['gas_' + k]; if (g != null) return g; }
+      if (this._c && this._c.detector === 'gas') { const g = tr['gas_' + k] ?? T.en['gas_' + k]; if (g != null) return g; }
       return tr[k] ?? T.en[k] ?? k;
     }
     _l(k) { return this._t(k); }
@@ -29140,7 +29129,7 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card;
       const { st, sS, coS, coPpm, coNumeric, bS, bat, batBinary, low, valveClosed } = this._compute();
-      card.className = st + (c.model === 'gas' ? ' gas' : '') + (c.animations === false ? ' noanim' : '');
+      card.className = st + (c.detector === 'gas' ? ' gas' : '') + (c.animations === false ? ' noanim' : '');
       r.getElementById('sdtitle').textContent = c.name || this._t('name');
       const badge = r.getElementById('sdbadge');
       badge.textContent = this._t(st);
@@ -29207,7 +29196,8 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
       this._form.data = this._c;
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
-        { name: 'model', selector: { select: { mode: 'dropdown', options: [{ value: 'cylinder', label: tr.model_cylinder }, { value: 'round', label: tr.model_round }, { value: 'gas', label: tr.model_gas }] } } },
+        { name: 'model', selector: { select: { mode: 'dropdown', options: [{ value: 'cylinder', label: tr.model_cylinder }, { value: 'round', label: tr.model_round }] } } },
+        { name: 'detector', selector: { select: { mode: 'dropdown', options: [{ value: 'smoke', label: tr.name }, { value: 'gas', label: tr.gas_name || T.en.gas_name }] } } },
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
@@ -29237,7 +29227,7 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
   window.customCards = window.customCards || [];
   window.customCards.push({
     type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
-    description: 'Détecteur de fumée ou de gaz animé (3 modèles) : alarme, CO, test, pile faible, défaut, boutons Tester et Couper l\'alarme.', preview: true,
+    description: 'Détecteur de fumée ou de gaz animé (2 modèles) : alarme, CO, test, pile faible, défaut, boutons Tester et Couper l\'alarme.', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/smoke-detector.md',
   });
 })();

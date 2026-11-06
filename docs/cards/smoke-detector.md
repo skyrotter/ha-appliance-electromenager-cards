@@ -1,17 +1,19 @@
 # Smoke detector
 
-`custom:appliance-smoke-detector-card`: a ceiling smoke detector, in three models picked with `model`:
+`custom:appliance-smoke-detector-card`: a ceiling smoke detector, in two models picked with `model`:
 
 - `cylinder` (default): compact cylinder with a flared base, a square LED test button and a mesh band;
-- `round`: the classic flat round detector with vents;
-- `gas`: a natural gas (methane / LPG) detector. The texts become **Gas!** / *Gas detected at {t}* and a gas cloud rises instead of smoke (`detector: gas` is an alias).
+- `round`: the classic flat round detector with vents.
+
+Set `detector: gas` to use the same detector for natural gas (methane / LPG): the texts become **Gas!** / *Gas detected at {t}* and a gas cloud rises instead of smoke (`model: gas` also works and keeps the cylinder).
 
 On alarm, smoke rises, the red LED flashes, sound waves come out of the detector and the card gets a red outline. Carbon monoxide shows an orange gas cloud and orange waves. A test presses the button and sends blue waves. A fault or a low battery turns the LED orange and shows a symbol.
 
 | Option | What it does |
 |---|---|
 | `entity_smoke` | smoke sensor: `binary_sensor` (device class smoke) or a text sensor (`smoke`, `alarm`, `detected`, `fumée`… in every language; `no smoke`, `clear`, `ok` count as no alarm) |
-| `model` | `cylinder` (default), `round` or `gas` |
+| `model` | `cylinder` (default) or `round` |
+| `detector` | `smoke` (default) or `gas` |
 | `entity_co` | carbon monoxide: `binary_sensor`, or a `sensor` in ppm compared with `co_threshold` (50 ppm) |
 | `entity_test` | test mode sensor: the button presses in, blue waves |
 | `entity_test_button` | **Test** button (`button`, `input_button`, `script`, `switch`), shown when there is no alarm |
@@ -41,7 +43,7 @@ Gas detector:
 
 ```yaml
 type: custom:appliance-smoke-detector-card
-model: gas
+detector: gas
 name: Gas
 entity_smoke: binary_sensor.kitchen_gas
 entity_level: sensor.kitchen_gas_level          # optional
