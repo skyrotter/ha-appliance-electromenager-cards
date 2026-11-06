@@ -32400,6 +32400,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "visceral": "Visceral fat",
       "pulse": "Pulse",
       "goal": "Goal",
+      "battery": "Battery",
       "bmi": "BMI",
       "goal_reached": "Goal reached",
       "last": "Weighed",
@@ -32425,6 +32426,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "visceral": "Viszeralfett",
       "pulse": "Puls",
       "goal": "Ziel",
+      "battery": "Akku",
       "bmi": "BMI",
       "goal_reached": "Ziel erreicht",
       "last": "Gewogen",
@@ -32450,6 +32452,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "visceral": "Graisse viscérale",
       "pulse": "Pouls",
       "goal": "Objectif",
+      "battery": "Batterie",
       "bmi": "IMC",
       "goal_reached": "Objectif atteint",
       "last": "Pesée",
@@ -32475,6 +32478,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "visceral": "Grasso viscerale",
       "pulse": "Battito",
       "goal": "Obiettivo",
+      "battery": "Batteria",
       "bmi": "IMC",
       "goal_reached": "Obiettivo raggiunto",
       "last": "Pesata",
@@ -32500,6 +32504,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "visceral": "Visceralt fett",
       "pulse": "Puls",
       "goal": "Mål",
+      "battery": "Batteri",
       "bmi": "KMI",
       "goal_reached": "Målet er nådd",
       "last": "Veid",
@@ -32525,6 +32530,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "visceral": "Visceraal vet",
       "pulse": "Hartslag",
       "goal": "Doel",
+      "battery": "Accu",
       "bmi": "BMI",
       "goal_reached": "Doel bereikt",
       "last": "Gewogen",
@@ -32550,6 +32556,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "visceral": "Grăsime viscerală",
       "pulse": "Puls",
       "goal": "Obiectiv",
+      "battery": "Baterie",
       "bmi": "IMC",
       "goal_reached": "Obiectiv atins",
       "last": "Cântărit",
@@ -32575,6 +32582,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "visceral": "Висцеральный жир",
       "pulse": "Пульс",
       "goal": "Цель",
+      "battery": "Батарея",
       "bmi": "ИМТ",
       "goal_reached": "Цель достигнута",
       "last": "Взвешивание",
@@ -32600,6 +32608,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "visceral": "Висцерална маст",
       "pulse": "Пулс",
       "goal": "Циљ",
+      "battery": "Батерија",
       "bmi": "БМИ",
       "goal_reached": "Циљ је достигнут",
       "last": "Мерено",
@@ -32625,6 +32634,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "visceral": "Visceralna mast",
       "pulse": "Puls",
       "goal": "Cilj",
+      "battery": "Baterija",
       "bmi": "BMI",
       "goal_reached": "Cilj je dostignut",
       "last": "Mereno",
@@ -32792,6 +32802,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     ['visceral', 'mdi:stomach', 'entity_visceral_fat', 'show_visceral'],
     ['pulse', 'mdi:heart-pulse', 'entity_heart_pulse', 'show_pulse'],
     ['goal', 'mdi:flag-checkered', 'entity_weight_goal', 'show_goal'],
+    ['battery', 'mdi:battery', 'entity_battery', 'show_battery'],
   ];
 
   class ApplianceScaleCard extends HTMLElement {
@@ -32809,6 +32820,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         entity_hydration: f(/hydration/i),
         entity_heart_pulse: f(/heart_pulse|withings.*heart_rate/i),
         entity_weight_goal: f(/weight_goal/i),
+        entity_battery: f(/battery/i),
       };
       return Object.fromEntries(Object.entries(o).filter(([, v]) => v));
     }
@@ -33006,6 +33018,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         visceral: [this._fmt(this._num(c.entity_visceral_fat), 0), this._unit(c.entity_visceral_fat, '')],
         pulse: [this._fmt(this._num(c.entity_heart_pulse), 0), this._unit(c.entity_heart_pulse, 'bpm')],
         goal: [this._fmt(goal), unit],
+        // niveau de batterie de la balance (sensor en %, ou 0-100 sans unité)
+        battery: [this._fmt(this._num(c.entity_battery), 0), this._unit(c.entity_battery, '%')],
       };
       const comp = new Set(['fat', 'fat_mass', 'muscle', 'bone', 'water', 'visceral', 'pulse']);
       TILES.forEach(([k, , ent, opt]) => {
@@ -33047,7 +33061,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ent('entity_weight'), ent('entity_fat_ratio'), ent('entity_fat_mass'), ent('entity_muscle_mass'), ent('entity_bone_mass'), ent('entity_hydration'),
-        ent('entity_visceral_fat'), ent('entity_heart_pulse'), ent('entity_weight_goal'), ent('entity_bmi'),
+        ent('entity_visceral_fat'), ent('entity_heart_pulse'), ent('entity_weight_goal'), ent('entity_battery'), ent('entity_bmi'),
         { type: 'grid', name: '', schema: [num('height', 50, 250, 1, undefined, 'cm'), num('recent_minutes', 1, 120, 1, 5, 'min'), num('trend_days', 7, 365, 1, 30)] },
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
