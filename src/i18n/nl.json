@@ -883,6 +883,7 @@
     "hold_action": "Vasthoudactie",
     "header": "Koptekst (name / icon / both)",
     "minimal": "Minimaal (alleen wijzerplaat)",
+    "big_value": "Large value (target / current)",
     "entity_unlatch": "Openknop (optioneel)",
     "entity_lock_n_go": "Lock 'n' Go-knop",
     "entity_lock_n_go_unlatch": "Lock 'n' Go met openen-knop",

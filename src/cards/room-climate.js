@@ -40,6 +40,8 @@ ha-card:focus-visible{outline:2px solid var(--c);outline-offset:-2px}
 .alert .halo{animation-duration:1.6s}
 /* fond transparent : pas de halo coloré (carte superposée à autre chose) */
 .transparent .halo{display:none}
+/* fond transparent : la ligne de consigne (− / +) garde un fond opaque pour rester lisible */
+.transparent .clim{background:color-mix(in srgb,var(--primary-text-color,#212121) 9%,var(--card-background-color,#fff))}
 .head{display:flex;align-items:center;gap:6px;position:relative;min-width:0}
 .ric{--mdc-icon-size:18px;flex:none;color:var(--c)}
 .name{flex:1;min-width:0;font-size:14px;font-weight:600;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -473,7 +475,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
         <path class="nest-arc" id="narc" d="${NEST_ARC}" fill="none" stroke-width="10" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100"/>
         <text class="nst" id="nmode" x="199" y="128" text-anchor="middle" font-size="20" font-weight="600" letter-spacing="2" opacity=".85"></text>
         <text class="nst" x="199" y="236" text-anchor="middle" font-size="104"><tspan id="t">--</tspan><tspan font-size="60" dy="-34">°</tspan></text>
-        <text class="nst" id="nsmall" x="199" y="304" text-anchor="middle" font-size="40" font-weight="500" opacity=".9"></text>
+        <text class="nst" id="nsmall" x="199" y="304" text-anchor="middle" font-size="40" font-weight="500"></text>
         <g class="nst" opacity=".85"><path id="ndrop" d="M168 334 q-9 12 -9 18 a9 9 0 0 0 18 0 q0 -6 -9 -18z" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/><text id="h" x="186" y="352" font-size="26"></text></g>
         <g class="nest-snow" stroke="#7cc4ff" stroke-width="3.2" stroke-linecap="round"><path d="M199 84 v52 M176.6 97 l44.8 26 M176.6 123 l44.8 -26"/></g></svg>${META}${NOTES}`,
     neon: () => `${HEAD()}${VT}${VH}${META}${NOTES}${SPARK}`,
@@ -1012,6 +1014,12 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
     connectedCallback() {
       const card = this.card, c = card._c, cs = getComputedStyle(card);
       THEME.forEach((v) => { const x = cs.getPropertyValue(v).trim(); if (x) this.style.setProperty(v, x); });
+      // carte transparente : le pop-up garde un fond opaque, sinon le graphique est illisible
+      const clear = (v) => !v || /^(transparent|none)$/i.test(v) || /^(rgba|hsla)\(.*(,|\/)\s*0(\.0+)?\s*\)$/i.test(v);
+      if (c.transparent || clear(cs.getPropertyValue('--ha-card-background').trim())) {
+        const bg = cs.getPropertyValue('--card-background-color').trim();
+        this.style.setProperty('--ha-card-background', clear(bg) ? '#fff' : bg);
+      }
       this.style.setProperty('--rc-heat', cs.getPropertyValue('--appliance-heat-color').trim() || cs.getPropertyValue('--state-climate-heat-color').trim() || '#ff8a3d');
       this.style.setProperty('--rc-hum', cs.getPropertyValue('--appliance-humidity-color').trim() || '#26b5c9');
       this.style.setProperty('--rc-ok', cs.getPropertyValue('--appliance-ok-color').trim() || cs.getPropertyValue('--success-color').trim() || '#43a047');

@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.83.0";
+const VERSION = "1.84.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -10139,6 +10139,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "hold_action": "Hold action",
       "header": "Header (name / icon / both)",
       "minimal": "Minimal (dial only)",
+      "big_value": "Large value (target / current)",
       "entity_unlatch": "Unlatch button (optional)",
       "entity_lock_n_go": "Lock 'n' Go button",
       "entity_lock_n_go_unlatch": "Lock 'n' Go with unlatch button",
@@ -10501,6 +10502,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "hold_action": "Akce při podržení",
       "header": "Záhlaví (název / ikona / obojí)",
       "minimal": "Minimální (jen číselník)",
+      "big_value": "Large value (target / current)",
       "entity_unlatch": "Tlačítko odjištění (volitelné)",
       "entity_lock_n_go": "Tlačítko Lock 'n' Go",
       "entity_lock_n_go_unlatch": "Tlačítko Lock 'n' Go s odjištěním",
@@ -10860,6 +10862,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "hold_action": "Halten-Aktion",
       "header": "Kopfzeile (name / icon / both)",
       "minimal": "Minimal (nur Anzeige)",
+      "big_value": "Große Anzeige (target / current)",
       "entity_unlatch": "Öffnen-Taste (optional)",
       "entity_lock_n_go": "Lock 'n' Go-Taste",
       "entity_lock_n_go_unlatch": "Lock 'n' Go mit Öffnen-Taste",
@@ -11222,6 +11225,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "hold_action": "Action appui long",
       "header": "En-tête (name / icon / both)",
       "minimal": "Minimal (cadran seul)",
+      "big_value": "Valeur en grand (target / current)",
       "entity_unlatch": "Bouton Ouvrir / unlatch (facultatif)",
       "entity_lock_n_go": "Bouton Lock 'n' Go",
       "entity_lock_n_go_unlatch": "Bouton Lock 'n' Go avec ouverture",
@@ -11584,6 +11588,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "hold_action": "Azione pressione lunga",
       "header": "Intestazione (name / icon / both)",
       "minimal": "Minimale (solo quadrante)",
+      "big_value": "Large value (target / current)",
       "entity_unlatch": "Pulsante apertura (facoltativo)",
       "entity_lock_n_go": "Pulsante Lock 'n' Go",
       "entity_lock_n_go_unlatch": "Pulsante Lock 'n' Go con apertura",
@@ -11946,6 +11951,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "hold_action": "Holdhandling",
       "header": "Topptekst (name / icon / both)",
       "minimal": "Minimal (kun skive)",
+      "big_value": "Large value (target / current)",
       "entity_unlatch": "Åpne-knapp (valgfri)",
       "entity_lock_n_go": "Lock 'n' Go-knapp",
       "entity_lock_n_go_unlatch": "Lock 'n' Go med åpne-knapp",
@@ -12308,6 +12314,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "hold_action": "Vasthoudactie",
       "header": "Koptekst (name / icon / both)",
       "minimal": "Minimaal (alleen wijzerplaat)",
+      "big_value": "Large value (target / current)",
       "entity_unlatch": "Openknop (optioneel)",
       "entity_lock_n_go": "Lock 'n' Go-knop",
       "entity_lock_n_go_unlatch": "Lock 'n' Go met openen-knop",
@@ -12670,6 +12677,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "hold_action": "Acțiune la apăsare lungă",
       "header": "Antet (name / icon / both)",
       "minimal": "Minimal (doar cadranul)",
+      "big_value": "Large value (target / current)",
       "entity_unlatch": "Buton deschidere (opțional)",
       "entity_lock_n_go": "Buton Lock 'n' Go",
       "entity_lock_n_go_unlatch": "Buton Lock 'n' Go cu deschidere",
@@ -13032,6 +13040,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "hold_action": "Действие при удержании",
       "header": "Заголовок (name / icon / both)",
       "minimal": "Минимум (только циферблат)",
+      "big_value": "Large value (target / current)",
       "entity_unlatch": "Кнопка открытия (необязательно)",
       "entity_lock_n_go": "Кнопка Lock 'n' Go",
       "entity_lock_n_go_unlatch": "Кнопка Lock 'n' Go с открытием",
@@ -13394,6 +13403,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "hold_action": "Акција на дуги притисак",
       "header": "Заглавље (name / icon / both)",
       "minimal": "Минимално (само бројчаник)",
+      "big_value": "Large value (target / current)",
       "entity_unlatch": "Дугме за отварање (опционо)",
       "entity_lock_n_go": "Дугме Lock 'n' Go",
       "entity_lock_n_go_unlatch": "Дугме Lock 'n' Go са отварањем",
@@ -13756,6 +13766,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "hold_action": "Akcija na dugi pritisak",
       "header": "Zaglavlje (name / icon / both)",
       "minimal": "Minimalno (samo brojčanik)",
+      "big_value": "Large value (target / current)",
       "entity_unlatch": "Dugme za otvaranje (opciono)",
       "entity_lock_n_go": "Dugme Lock 'n' Go",
       "entity_lock_n_go_unlatch": "Dugme Lock 'n' Go sa otvaranjem",
@@ -27265,8 +27276,11 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       const shown = this._pending != null ? this._pending : k.target;
       // en grand : la consigne ou la température selon le modèle ; pendant un réglage, la nouvelle consigne
       const model = this._model(), M = MODELS[model], tgt = fin(shown) ? `${this._fmt(shown, 1)}°` : '--', now = fin(k.cur) ? `${this._fmt(k.cur, 1)}°` : '--';
-      const bigTarget = M.big === 'target' || this._pending != null;
-      const bigTxt = k.dead ? '--' : k.off && M.big === 'target' ? 'OFF' : bigTarget ? tgt : now;
+      // big_value : choix de la valeur en grand (target / current) sur les modèles qui affichent aussi la petite valeur
+      const hasSmall = r.getElementById('tvsmall').getAttribute('display') !== 'none';
+      const big = hasSmall && ['target', 'current'].includes(c.big_value) ? c.big_value : M.big;
+      const bigTarget = big === 'target' || this._pending != null;
+      const bigTxt = k.dead ? '--' : k.off && big === 'target' ? 'OFF' : bigTarget ? tgt : now;
       const bigEl = r.getElementById('tvbig');
       bigEl.textContent = M.nodeg ? bigTxt.replace(/°$/, '') : bigTxt;
       // écran étroit (photo) : « 21,5° » est resserré dans la largeur des chiffres d'origine
@@ -27398,6 +27412,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         ent('entity_window', ['binary_sensor', 'input_boolean']), ent('entity_humidity', 'sensor'), ent('entity_battery', ['sensor', 'binary_sensor']), ent('entity_valve_position', ['sensor', 'number']),
         { type: 'grid', name: '', schema: [{ name: 'override', selector: { boolean: {} } }, { name: 'override_durations', selector: { object: {} } }] },
         { type: 'grid', name: '', schema: [{ name: 'header', selector: { select: { mode: 'dropdown', options: ['name', 'icon', 'both'] } } }, { name: 'icon', selector: { icon: {} } }] },
+        { name: 'big_value', selector: { select: { mode: 'dropdown', options: ['target', 'current'] } } },
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_hvac_modes'), bool('show_temperature'), bool('show_valve'), bool('show_battery'), bool('show_window'), bool('show_humidity'), { name: 'minimal', selector: { boolean: {} } }, bool('animations')] },
@@ -28284,6 +28299,8 @@ ha-card:focus-visible{outline:2px solid var(--c);outline-offset:-2px}
 .alert .halo{animation-duration:1.6s}
 /* fond transparent : pas de halo coloré (carte superposée à autre chose) */
 .transparent .halo{display:none}
+/* fond transparent : la ligne de consigne (− / +) garde un fond opaque pour rester lisible */
+.transparent .clim{background:color-mix(in srgb,var(--primary-text-color,#212121) 9%,var(--card-background-color,#fff))}
 .head{display:flex;align-items:center;gap:6px;position:relative;min-width:0}
 .ric{--mdc-icon-size:18px;flex:none;color:var(--c)}
 .name{flex:1;min-width:0;font-size:14px;font-weight:600;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -28717,7 +28734,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
         <path class="nest-arc" id="narc" d="${NEST_ARC}" fill="none" stroke-width="10" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100"/>
         <text class="nst" id="nmode" x="199" y="128" text-anchor="middle" font-size="20" font-weight="600" letter-spacing="2" opacity=".85"></text>
         <text class="nst" x="199" y="236" text-anchor="middle" font-size="104"><tspan id="t">--</tspan><tspan font-size="60" dy="-34">°</tspan></text>
-        <text class="nst" id="nsmall" x="199" y="304" text-anchor="middle" font-size="40" font-weight="500" opacity=".9"></text>
+        <text class="nst" id="nsmall" x="199" y="304" text-anchor="middle" font-size="40" font-weight="500"></text>
         <g class="nst" opacity=".85"><path id="ndrop" d="M168 334 q-9 12 -9 18 a9 9 0 0 0 18 0 q0 -6 -9 -18z" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/><text id="h" x="186" y="352" font-size="26"></text></g>
         <g class="nest-snow" stroke="#7cc4ff" stroke-width="3.2" stroke-linecap="round"><path d="M199 84 v52 M176.6 97 l44.8 26 M176.6 123 l44.8 -26"/></g></svg>${META}${NOTES}`,
     neon: () => `${HEAD()}${VT}${VH}${META}${NOTES}${SPARK}`,
@@ -29256,6 +29273,12 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
     connectedCallback() {
       const card = this.card, c = card._c, cs = getComputedStyle(card);
       THEME.forEach((v) => { const x = cs.getPropertyValue(v).trim(); if (x) this.style.setProperty(v, x); });
+      // carte transparente : le pop-up garde un fond opaque, sinon le graphique est illisible
+      const clear = (v) => !v || /^(transparent|none)$/i.test(v) || /^(rgba|hsla)\(.*(,|\/)\s*0(\.0+)?\s*\)$/i.test(v);
+      if (c.transparent || clear(cs.getPropertyValue('--ha-card-background').trim())) {
+        const bg = cs.getPropertyValue('--card-background-color').trim();
+        this.style.setProperty('--ha-card-background', clear(bg) ? '#fff' : bg);
+      }
       this.style.setProperty('--rc-heat', cs.getPropertyValue('--appliance-heat-color').trim() || cs.getPropertyValue('--state-climate-heat-color').trim() || '#ff8a3d');
       this.style.setProperty('--rc-hum', cs.getPropertyValue('--appliance-humidity-color').trim() || '#26b5c9');
       this.style.setProperty('--rc-ok', cs.getPropertyValue('--appliance-ok-color').trim() || cs.getPropertyValue('--success-color').trim() || '#43a047');

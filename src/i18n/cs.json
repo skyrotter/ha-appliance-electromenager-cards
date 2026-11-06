@@ -898,6 +898,7 @@
     "hold_action": "Akce při podržení",
     "header": "Záhlaví (název / ikona / obojí)",
     "minimal": "Minimální (jen číselník)",
+    "big_value": "Large value (target / current)",
     "entity_unlatch": "Tlačítko odjištění (volitelné)",
     "entity_lock_n_go": "Tlačítko Lock 'n' Go",
     "entity_lock_n_go_unlatch": "Tlačítko Lock 'n' Go s odjištěním",
