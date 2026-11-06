@@ -235,6 +235,7 @@ const STRINGS = {
     "f_freezer_temperature": "Freezer temperature sensor",
     "f_freezer_door": "Freezer door sensor",
     "f_max_temperature": "Fridge alert above (°C)",
+    "f_temperature_unit": "Temperature unit (empty: automatic)",
     "f_freezer_max_temperature": "Freezer alert above (°C)",
     "f_color": "Accent color (CSS)",
     "f_animations": "Animations",
@@ -582,6 +583,7 @@ const STRINGS = {
     "f_freezer_temperature": "Senzor teploty mrazáku",
     "f_freezer_door": "Senzor dvířek mrazáku",
     "f_max_temperature": "Upozornění chladničky nad (°C)",
+    "f_temperature_unit": "Jednotka teploty (prázdné: automaticky)",
     "f_freezer_max_temperature": "Upozornění mrazáku nad (°C)",
     "f_color": "Barva zvýraznění (CSS)",
     "f_animations": "Animace",
@@ -914,6 +916,7 @@ const STRINGS = {
     "f_freezer_temperature": "Gefrierfach-Temperatursensor",
     "f_freezer_door": "Gefrierfach-Türsensor",
     "f_max_temperature": "Kühlschrankalarm über (°C)",
+    "f_temperature_unit": "Temperatureinheit (leer: automatisch)",
     "f_freezer_max_temperature": "Gefrierfachalarm über (°C)",
     "f_color": "Akzentfarbe (CSS)",
     "f_animations": "Animationen",
@@ -1262,6 +1265,7 @@ const STRINGS = {
     "f_freezer_temperature": "Capteur température congélateur",
     "f_freezer_door": "Capteur porte congélateur",
     "f_max_temperature": "Alerte frigo au-dessus de (°C)",
+    "f_temperature_unit": "Unité de température (vide : automatique)",
     "f_freezer_max_temperature": "Alerte congélateur au-dessus de (°C)",
     "f_color": "Couleur d'accent (CSS)",
     "f_animations": "Animations",
@@ -1594,6 +1598,7 @@ const STRINGS = {
     "f_freezer_temperature": "Sensore temperatura congelatore",
     "f_freezer_door": "Sensore sportello congelatore",
     "f_max_temperature": "Avviso frigorifero sopra (°C)",
+    "f_temperature_unit": "Unità di temperatura (vuoto: automatica)",
     "f_freezer_max_temperature": "Avviso congelatore sopra (°C)",
     "f_color": "Colore accento (CSS)",
     "f_animations": "Animazioni",
@@ -1996,6 +2001,7 @@ const STRINGS = {
     "f_freezer_temperature": "Temperatursensor fryser",
     "f_freezer_door": "Dørsensor fryser",
     "f_max_temperature": "Varsel kjøleskap over (°C)",
+    "f_temperature_unit": "Temperaturenhet (tom: automatisk)",
     "f_freezer_max_temperature": "Varsel fryser over (°C)",
     "f_color": "Aksentfarge (CSS)",
     "f_animations": "Animasjoner",
@@ -2258,6 +2264,7 @@ const STRINGS = {
     "f_freezer_temperature": "Temperatuursensor diepvries",
     "f_freezer_door": "Deursensor diepvries",
     "f_max_temperature": "Alarm koelkast boven (°C)",
+    "f_temperature_unit": "Temperatuureenheid (leeg: automatisch)",
     "f_freezer_max_temperature": "Alarm diepvries boven (°C)",
     "f_color": "Accentkleur (CSS)",
     "f_animations": "Animaties",
@@ -2590,6 +2597,7 @@ const STRINGS = {
     "f_freezer_temperature": "Senzor temperatură congelator",
     "f_freezer_door": "Senzor ușă congelator",
     "f_max_temperature": "Alertă frigider peste (°C)",
+    "f_temperature_unit": "Unitate de temperatură (gol: automat)",
     "f_freezer_max_temperature": "Alertă congelator peste (°C)",
     "f_color": "Culoare de accent (CSS)",
     "f_animations": "Animații",
@@ -2922,6 +2930,7 @@ const STRINGS = {
     "f_freezer_temperature": "Датчик температуры морозильника",
     "f_freezer_door": "Датчик дверцы морозильника",
     "f_max_temperature": "Оповещать для холодильника выше (°C)",
+    "f_temperature_unit": "Единица температуры (пусто: автоматически)",
     "f_freezer_max_temperature": "Оповещать для морозильника выше (°C)",
     "f_color": "Акцентный цвет (CSS)",
     "f_animations": "Анимации",
@@ -3270,6 +3279,7 @@ const STRINGS = {
     "f_freezer_temperature": "Сензор температуре замрзивача",
     "f_freezer_door": "Сензор врата замрзивача",
     "f_max_temperature": "Обавештење за фрижидер изнад (°C)",
+    "f_temperature_unit": "Јединица температуре (празно: аутоматски)",
     "f_freezer_max_temperature": "Обавештење за замрзивач изнад (°C)",
     "f_color": "Боја акцента (CSS)",
     "f_animations": "Анимације",
@@ -3618,6 +3628,7 @@ const STRINGS = {
     "f_freezer_temperature": "Senzor temperature zamrzivača",
     "f_freezer_door": "Senzor vrata zamrzivača",
     "f_max_temperature": "Obaveštenje za frižider iznad (°C)",
+    "f_temperature_unit": "Jedinica temperature (prazno: automatski)",
     "f_freezer_max_temperature": "Obaveštenje za zamrzivač iznad (°C)",
     "f_color": "Boja akcenta (CSS)",
     "f_animations": "Animacije",
@@ -6165,7 +6176,7 @@ const DEF = {
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["cafetiere", "coffee", "senseo", "nespresso", "dolce_gusto", "tassimo", "expresso", "espresso", "cafe"] },
   wine_cooler: { accent: "cold", threshold: 15,
-    fields: ["entity", "power", "energy", "cost", "temperature", "zone2_temperature", "door", "switch"],
+    fields: ["entity", "power", "energy", "cost", "temperature", "zone2_temperature", "humidity", "door", "switch"],
     keys: ["cave_a_vin", "cave", "vin", "wine", "cellar", "wine_cooler", "wine_fridge", "vinotheque"] },
   fridge: { accent: "cold", threshold: 20,
     fields: ["entity", "power", "energy", "cost", "temperature", "freezer_temperature", "flex_temperature", "door", "freezer_door", "switch"],
@@ -6691,6 +6702,14 @@ class ApplianceCardBase extends HTMLElement {
     if (m.tempVal == null) m.tempVal = tOf(m.temp, "current_temperature");
     if (m.targetVal == null) m.targetVal = tOf(m.target, "temperature");
     m.tempUnit = m.temp?.attributes.unit_of_measurement || hass.config?.unit_system?.temperature || "°C";
+    // frigo : option temperature_unit (C / F). Les valeurs sont converties depuis l'unité de chaque capteur ; les seuils saisis
+    // sont dans l'unité choisie, les seuils par défaut (écrits en °C) sont convertis. Sans l'option, rien ne change.
+    if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind) && c.temperature_unit && window.applianceTemp) {
+      m.T = window.applianceTemp(hass, c);
+      m.tempUnit = m.T.unit;
+      if (m.tempVal != null) m.tempVal = m.T.conv(m.tempVal, m.temp);
+      if (m.zone2 != null) m.zone2 = m.T.conv(m.zone2, m.zone2Ent);
+    }
     m.nozzles = kind === "printer_3d" ? this._nozzles() : [];
     if (m.nozzles.length) {
       const t = m.nozzles.map((i) => num(S(i))).filter((v) => v != null);
@@ -6852,7 +6871,7 @@ class ApplianceCardBase extends HTMLElement {
     } else if (kind === "chest_freezer" || kind === "drawer_freezer") {
       if (base === "off" || base === "unavailable") m.status = base;
       else m.status = powered ? "cooling" : "standby";
-      if (m.tempVal != null && m.tempVal > (c.freezer_max_temperature ?? c.max_temperature ?? -12)) m.alerts.push("too_warm");
+      if (m.tempVal != null && m.tempVal > (c.freezer_max_temperature ?? c.max_temperature ?? (m.T ? m.T.c(-12) : -12))) m.alerts.push("too_warm");
     } else if (kind === "ac_split" || kind === "heat_pump") {
       const isClim = main && domainOf(c.entity) === "climate";
       const mode = isClim ? String(main.state).toLowerCase() : null;
@@ -7098,17 +7117,23 @@ class ApplianceCardBase extends HTMLElement {
     } else if (kind === "wine_cooler") {
       if (base === "off" || base === "unavailable") m.status = base;
       else m.status = powered || (watts === null && base === "running") ? "cooling" : "standby";
-      if (m.tempVal != null && m.tempVal > (c.max_temperature ?? 18)) m.alerts.push("too_warm");
+      const maxW = c.max_temperature ?? (m.T ? m.T.c(18) : 18);
+      if (m.tempVal != null && m.tempVal > maxW) m.alerts.push("too_warm");
+      // hygrométrie de la cave : alerte seulement si humidity_max est donné
+      if (c.humidity_max != null && m.humidity != null && m.humidity > c.humidity_max) m.alerts.push("humid");
       // bi-zone : seuil propre à la zone basse (vins blancs), sinon le même
-      if (m.zone2 != null && m.zone2 > (c.max_temperature_2 ?? c.max_temperature ?? 18)) m.alerts.push("too_warm");
+      if (m.zone2 != null && m.zone2 > (c.max_temperature_2 ?? maxW)) m.alerts.push("too_warm");
     } else if (kind === "fridge") {
       if (base === "off" || base === "unavailable") m.status = base;
       else m.status = powered ? "cooling" : "standby";
-      const maxF = c.max_temperature ?? 8, maxZ = c.freezer_max_temperature ?? -12;
-      if (m.tempVal != null && m.tempVal > maxF) m.alerts.push("too_warm");
-      if (num(m.ftemp) != null && num(m.ftemp) > maxZ) m.alerts.push("too_warm");
+      const T = m.T;
+      m.maxF = c.max_temperature ?? (T ? T.c(8) : 8); m.maxZ = c.freezer_max_temperature ?? (T ? T.c(-12) : -12);
+      m.ftempVal = T ? T.conv(num(m.ftemp), m.ftemp) : num(m.ftemp);
+      if (m.tempVal != null && m.tempVal > m.maxF) m.alerts.push("too_warm");
+      if (m.ftempVal != null && m.ftempVal > m.maxZ) m.alerts.push("too_warm");
       // zone flex (3e compartiment à température réglable) : alerte seulement si un seuil est donné
       m.flexVal = m.flex && ["climate", "water_heater"].includes(domainOf(m.flex.entity_id)) ? num({ state: m.flex.attributes.current_temperature }) : num(m.flex);
+      if (T && m.flexVal != null) m.flexVal = T.conv(m.flexVal, m.flex);
       if (m.flexVal != null && c.flex_max_temperature != null && m.flexVal > c.flex_max_temperature) m.alerts.push("too_warm");
     } else {
       m.status = base;
@@ -7536,12 +7561,13 @@ class ApplianceCardBase extends HTMLElement {
     const alertTxt = m.alerts.map((a) => tr(hass, a)).join(" · ");
     let frPill = "";
     if (kind === "fridge" && m.tempVal != null) {
+      const tv = m.T ? m.T.toC(m.tempVal) : m.tempVal; // seuils de couleur en °C
       let tCol = "color: #4caf50; border-color: rgba(76, 175, 80, 0.45); background: rgba(76, 175, 80, 0.15); box-shadow: 0 0 8px rgba(76, 175, 80, 0.2);";
-      if (m.tempVal >= 10) {
+      if (tv >= 10) {
         tCol = "color: #ff5252; border-color: rgba(244, 67, 54, 0.5); background: rgba(244, 67, 54, 0.18); box-shadow: 0 0 8px rgba(244, 67, 54, 0.3);";
-      } else if (m.tempVal >= 8) {
+      } else if (tv >= 8) {
         tCol = "color: #ff9800; border-color: rgba(255, 152, 0, 0.5); background: rgba(255, 152, 0, 0.18); box-shadow: 0 0 8px rgba(255, 152, 0, 0.25);";
-      } else if (m.tempVal >= 6) {
+      } else if (tv >= 6) {
         tCol = "color: #ffeb3b; border-color: rgba(255, 235, 59, 0.45); background: rgba(255, 235, 59, 0.15); box-shadow: 0 0 8px rgba(255, 235, 59, 0.2);";
       }
       frPill = `<span class="fr-pill" style="${tCol}"><ha-icon icon="mdi:thermometer" style="color: inherit;"></ha-icon>${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}</span>`;
@@ -7716,15 +7742,16 @@ class ApplianceCardBase extends HTMLElement {
     } else if (kind === "tool_charger") {
       if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0)} %`, lb("battery"), c.battery_level);
     } else if (kind === "wine_cooler") {
-      const dual = !!c.zone2_temperature, max1 = c.max_temperature ?? 18, max2 = c.max_temperature_2 ?? max1;
+      const dual = !!c.zone2_temperature, max1 = c.max_temperature ?? (m.T ? m.T.c(18) : 18), max2 = c.max_temperature_2 ?? max1;
       if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb(dual ? "zone_top" : "temperature"), tEntity, m.tempVal > max1 ? "warn" : "");
-      if (dual && m.zone2 != null) tile("mdi:thermometer-low", `${fmtNum(hass, m.zone2, 1)} ${m.zone2Ent?.attributes.unit_of_measurement || m.tempUnit}`, lb("zone_bottom"), c.zone2_temperature, m.zone2 > max2 ? "warn" : "");
+      if (dual && m.zone2 != null) tile("mdi:thermometer-low", `${fmtNum(hass, m.zone2, 1)} ${m.T ? m.T.unit : m.zone2Ent?.attributes.unit_of_measurement || m.tempUnit}`, lb("zone_bottom"), c.zone2_temperature, m.zone2 > max2 ? "warn" : "");
+      if (m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0)} %`, lb("humidity"), c.humidity, m.alerts.includes("humid") ? "warn" : "");
     } else if (kind === "fridge") {
       if ((!c.energy || c.layout !== "split") && m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("fridge_temp"), tEntity,
-        m.tempVal > (c.max_temperature ?? 8) ? "warn" : "");
-      if (m.ftemp) tile("mdi:snowflake", fmtUnit(hass, m.ftemp, 1), lb("freezer_temp"), c.freezer_temperature,
-        num(m.ftemp) > (c.freezer_max_temperature ?? -12) ? "warn" : "");
-      if (m.flexVal != null) tile("mdi:thermometer-lines", `${fmtNum(hass, m.flexVal, 1)} ${m.flex.attributes.unit_of_measurement || m.tempUnit}`, lb("flex_temp"), c.flex_temperature,
+        m.tempVal > m.maxF ? "warn" : "");
+      if (m.ftemp) tile("mdi:snowflake", m.T ? (m.ftempVal != null ? `${fmtNum(hass, m.ftempVal, 1)} ${m.T.unit}` : null) : fmtUnit(hass, m.ftemp, 1), lb("freezer_temp"), c.freezer_temperature,
+        m.ftempVal > m.maxZ ? "warn" : "");
+      if (m.flexVal != null) tile("mdi:thermometer-lines", `${fmtNum(hass, m.flexVal, 1)} ${m.T ? m.T.unit : m.flex.attributes.unit_of_measurement || m.tempUnit}`, lb("flex_temp"), c.flex_temperature,
         c.flex_max_temperature != null && m.flexVal > c.flex_max_temperature ? "warn" : "");
     } else if (kind === "radiator") {
       const te = c.temperature || (domainOf(c.entity) === "climate" ? c.entity : null);
@@ -7926,11 +7953,14 @@ function buildForm(kind) {
             { name: "spin_power", selector: { number: { min: 50, max: 2000, step: 25, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
           ...(["chest_freezer", "drawer_freezer"].includes(kind) ? [
-            { name: "freezer_max_temperature", selector: { number: { min: -30, max: 0, step: 0.5, mode: "box" } } },
+            { name: "temperature_unit", selector: { select: { mode: "dropdown", options: [{ value: "C", label: "°C" }, { value: "F", label: "°F" }] } } },
+            { name: "freezer_max_temperature", selector: { number: { min: -30, max: 32, step: 0.5, mode: "box" } } },
           ] : []),
           ...(kind === "wine_cooler" ? [
-            { name: "max_temperature", selector: { number: { min: 5, max: 25, step: 0.5, mode: "box" } } },
-            { name: "max_temperature_2", selector: { number: { min: 3, max: 25, step: 0.5, mode: "box" } } },
+            { name: "temperature_unit", selector: { select: { mode: "dropdown", options: [{ value: "C", label: "°C" }, { value: "F", label: "°F" }] } } },
+            { name: "max_temperature", selector: { number: { min: 5, max: 80, step: 0.5, mode: "box" } } },
+            { name: "max_temperature_2", selector: { number: { min: 3, max: 80, step: 0.5, mode: "box" } } },
+            { name: "humidity_max", selector: { number: { min: 40, max: 100, step: 1, mode: "box", unit_of_measurement: "%" } } },
           ] : []),
           ...(kind === "fridge" ? [
             { name: "style", selector: { select: { mode: "dropdown", options: [
@@ -7938,9 +7968,11 @@ function buildForm(kind) {
               { value: "bottom_door", label: "Combiné, porte en bas / Bottom freezer door" },
               { value: "french", label: "French door" }, { value: "four_door", label: "4 portes / 4-door" }, { value: "american", label: "Américain / Side-by-side" }, { value: "single", label: "Une porte / Single door" }] } } },
             { name: "finish", selector: { select: { mode: "dropdown", options: [{ value: "inox", label: "Inox / Stainless steel" }, { value: "white", label: "Blanc / White" }, { value: "black", label: "Noir / Black" }] } } },
-            { name: "max_temperature", selector: { number: { min: 0, max: 15, step: 0.5, mode: "box" } } },
-            { name: "freezer_max_temperature", selector: { number: { min: -30, max: 0, step: 0.5, mode: "box" } } },
-            { name: "flex_max_temperature", selector: { number: { min: -30, max: 15, step: 0.5, mode: "box" } } },
+            { name: "temperature_unit", selector: { select: { mode: "dropdown", options: [{ value: "C", label: "°C" }, { value: "F", label: "°F" }] } } },
+            // bornes larges : les seuils sont saisis dans l'unité choisie (°C ou °F)
+            { name: "max_temperature", selector: { number: { min: 0, max: 60, step: 0.5, mode: "box" } } },
+            { name: "freezer_max_temperature", selector: { number: { min: -30, max: 32, step: 0.5, mode: "box" } } },
+            { name: "flex_max_temperature", selector: { number: { min: -30, max: 60, step: 0.5, mode: "box" } } },
           ] : []),
           ...(["washer", "dryer", "dishwasher"].includes(kind) ? [
             { name: "last_cycle", selector: { boolean: {} } },

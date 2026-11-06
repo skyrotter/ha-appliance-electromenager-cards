@@ -314,6 +314,14 @@ class ApplianceCardBase extends HTMLElement {
     if (m.tempVal == null) m.tempVal = tOf(m.temp, "current_temperature");
     if (m.targetVal == null) m.targetVal = tOf(m.target, "temperature");
     m.tempUnit = m.temp?.attributes.unit_of_measurement || hass.config?.unit_system?.temperature || "°C";
+    // frigo : option temperature_unit (C / F). Les valeurs sont converties depuis l'unité de chaque capteur ; les seuils saisis
+    // sont dans l'unité choisie, les seuils par défaut (écrits en °C) sont convertis. Sans l'option, rien ne change.
+    if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind) && c.temperature_unit && window.applianceTemp) {
+      m.T = window.applianceTemp(hass, c);
+      m.tempUnit = m.T.unit;
+      if (m.tempVal != null) m.tempVal = m.T.conv(m.tempVal, m.temp);
+      if (m.zone2 != null) m.zone2 = m.T.conv(m.zone2, m.zone2Ent);
+    }
     m.nozzles = kind === "printer_3d" ? this._nozzles() : [];
     if (m.nozzles.length) {
       const t = m.nozzles.map((i) => num(S(i))).filter((v) => v != null);
@@ -475,7 +483,7 @@ class ApplianceCardBase extends HTMLElement {
     } else if (kind === "chest_freezer" || kind === "drawer_freezer") {
       if (base === "off" || base === "unavailable") m.status = base;
       else m.status = powered ? "cooling" : "standby";
-      if (m.tempVal != null && m.tempVal > (c.freezer_max_temperature ?? c.max_temperature ?? -12)) m.alerts.push("too_warm");
+      if (m.tempVal != null && m.tempVal > (c.freezer_max_temperature ?? c.max_temperature ?? (m.T ? m.T.c(-12) : -12))) m.alerts.push("too_warm");
     } else if (kind === "ac_split" || kind === "heat_pump") {
       const isClim = main && domainOf(c.entity) === "climate";
       const mode = isClim ? String(main.state).toLowerCase() : null;
@@ -721,17 +729,23 @@ class ApplianceCardBase extends HTMLElement {
     } else if (kind === "wine_cooler") {
       if (base === "off" || base === "unavailable") m.status = base;
       else m.status = powered || (watts === null && base === "running") ? "cooling" : "standby";
-      if (m.tempVal != null && m.tempVal > (c.max_temperature ?? 18)) m.alerts.push("too_warm");
+      const maxW = c.max_temperature ?? (m.T ? m.T.c(18) : 18);
+      if (m.tempVal != null && m.tempVal > maxW) m.alerts.push("too_warm");
+      // hygrométrie de la cave : alerte seulement si humidity_max est donné
+      if (c.humidity_max != null && m.humidity != null && m.humidity > c.humidity_max) m.alerts.push("humid");
       // bi-zone : seuil propre à la zone basse (vins blancs), sinon le même
-      if (m.zone2 != null && m.zone2 > (c.max_temperature_2 ?? c.max_temperature ?? 18)) m.alerts.push("too_warm");
+      if (m.zone2 != null && m.zone2 > (c.max_temperature_2 ?? maxW)) m.alerts.push("too_warm");
     } else if (kind === "fridge") {
       if (base === "off" || base === "unavailable") m.status = base;
       else m.status = powered ? "cooling" : "standby";
-      const maxF = c.max_temperature ?? 8, maxZ = c.freezer_max_temperature ?? -12;
-      if (m.tempVal != null && m.tempVal > maxF) m.alerts.push("too_warm");
-      if (num(m.ftemp) != null && num(m.ftemp) > maxZ) m.alerts.push("too_warm");
+      const T = m.T;
+      m.maxF = c.max_temperature ?? (T ? T.c(8) : 8); m.maxZ = c.freezer_max_temperature ?? (T ? T.c(-12) : -12);
+      m.ftempVal = T ? T.conv(num(m.ftemp), m.ftemp) : num(m.ftemp);
+      if (m.tempVal != null && m.tempVal > m.maxF) m.alerts.push("too_warm");
+      if (m.ftempVal != null && m.ftempVal > m.maxZ) m.alerts.push("too_warm");
       // zone flex (3e compartiment à température réglable) : alerte seulement si un seuil est donné
       m.flexVal = m.flex && ["climate", "water_heater"].includes(domainOf(m.flex.entity_id)) ? num({ state: m.flex.attributes.current_temperature }) : num(m.flex);
+      if (T && m.flexVal != null) m.flexVal = T.conv(m.flexVal, m.flex);
       if (m.flexVal != null && c.flex_max_temperature != null && m.flexVal > c.flex_max_temperature) m.alerts.push("too_warm");
     } else {
       m.status = base;
@@ -1159,12 +1173,13 @@ class ApplianceCardBase extends HTMLElement {
     const alertTxt = m.alerts.map((a) => tr(hass, a)).join(" · ");
     let frPill = "";
     if (kind === "fridge" && m.tempVal != null) {
+      const tv = m.T ? m.T.toC(m.tempVal) : m.tempVal; // seuils de couleur en °C
       let tCol = "color: #4caf50; border-color: rgba(76, 175, 80, 0.45); background: rgba(76, 175, 80, 0.15); box-shadow: 0 0 8px rgba(76, 175, 80, 0.2);";
-      if (m.tempVal >= 10) {
+      if (tv >= 10) {
         tCol = "color: #ff5252; border-color: rgba(244, 67, 54, 0.5); background: rgba(244, 67, 54, 0.18); box-shadow: 0 0 8px rgba(244, 67, 54, 0.3);";
-      } else if (m.tempVal >= 8) {
+      } else if (tv >= 8) {
         tCol = "color: #ff9800; border-color: rgba(255, 152, 0, 0.5); background: rgba(255, 152, 0, 0.18); box-shadow: 0 0 8px rgba(255, 152, 0, 0.25);";
-      } else if (m.tempVal >= 6) {
+      } else if (tv >= 6) {
         tCol = "color: #ffeb3b; border-color: rgba(255, 235, 59, 0.45); background: rgba(255, 235, 59, 0.15); box-shadow: 0 0 8px rgba(255, 235, 59, 0.2);";
       }
       frPill = `<span class="fr-pill" style="${tCol}"><ha-icon icon="mdi:thermometer" style="color: inherit;"></ha-icon>${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}</span>`;
@@ -1339,15 +1354,16 @@ class ApplianceCardBase extends HTMLElement {
     } else if (kind === "tool_charger") {
       if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0)} %`, lb("battery"), c.battery_level);
     } else if (kind === "wine_cooler") {
-      const dual = !!c.zone2_temperature, max1 = c.max_temperature ?? 18, max2 = c.max_temperature_2 ?? max1;
+      const dual = !!c.zone2_temperature, max1 = c.max_temperature ?? (m.T ? m.T.c(18) : 18), max2 = c.max_temperature_2 ?? max1;
       if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb(dual ? "zone_top" : "temperature"), tEntity, m.tempVal > max1 ? "warn" : "");
-      if (dual && m.zone2 != null) tile("mdi:thermometer-low", `${fmtNum(hass, m.zone2, 1)} ${m.zone2Ent?.attributes.unit_of_measurement || m.tempUnit}`, lb("zone_bottom"), c.zone2_temperature, m.zone2 > max2 ? "warn" : "");
+      if (dual && m.zone2 != null) tile("mdi:thermometer-low", `${fmtNum(hass, m.zone2, 1)} ${m.T ? m.T.unit : m.zone2Ent?.attributes.unit_of_measurement || m.tempUnit}`, lb("zone_bottom"), c.zone2_temperature, m.zone2 > max2 ? "warn" : "");
+      if (m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0)} %`, lb("humidity"), c.humidity, m.alerts.includes("humid") ? "warn" : "");
     } else if (kind === "fridge") {
       if ((!c.energy || c.layout !== "split") && m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("fridge_temp"), tEntity,
-        m.tempVal > (c.max_temperature ?? 8) ? "warn" : "");
-      if (m.ftemp) tile("mdi:snowflake", fmtUnit(hass, m.ftemp, 1), lb("freezer_temp"), c.freezer_temperature,
-        num(m.ftemp) > (c.freezer_max_temperature ?? -12) ? "warn" : "");
-      if (m.flexVal != null) tile("mdi:thermometer-lines", `${fmtNum(hass, m.flexVal, 1)} ${m.flex.attributes.unit_of_measurement || m.tempUnit}`, lb("flex_temp"), c.flex_temperature,
+        m.tempVal > m.maxF ? "warn" : "");
+      if (m.ftemp) tile("mdi:snowflake", m.T ? (m.ftempVal != null ? `${fmtNum(hass, m.ftempVal, 1)} ${m.T.unit}` : null) : fmtUnit(hass, m.ftemp, 1), lb("freezer_temp"), c.freezer_temperature,
+        m.ftempVal > m.maxZ ? "warn" : "");
+      if (m.flexVal != null) tile("mdi:thermometer-lines", `${fmtNum(hass, m.flexVal, 1)} ${m.T ? m.T.unit : m.flex.attributes.unit_of_measurement || m.tempUnit}`, lb("flex_temp"), c.flex_temperature,
         c.flex_max_temperature != null && m.flexVal > c.flex_max_temperature ? "warn" : "");
     } else if (kind === "radiator") {
       const te = c.temperature || (domainOf(c.entity) === "climate" ? c.entity : null);

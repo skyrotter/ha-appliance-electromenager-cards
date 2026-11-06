@@ -204,6 +204,7 @@
     "f_freezer_temperature": "Sensore temperatura congelatore",
     "f_freezer_door": "Sensore sportello congelatore",
     "f_max_temperature": "Avviso frigorifero sopra (°C)",
+    "f_temperature_unit": "Unità di temperatura (vuoto: automatica)",
     "f_freezer_max_temperature": "Avviso congelatore sopra (°C)",
     "f_color": "Colore accento (CSS)",
     "f_animations": "Animazioni",

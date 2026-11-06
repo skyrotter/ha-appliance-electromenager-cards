@@ -104,7 +104,7 @@ const DEF = {
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["cafetiere", "coffee", "senseo", "nespresso", "dolce_gusto", "tassimo", "expresso", "espresso", "cafe"] },
   wine_cooler: { accent: "cold", threshold: 15,
-    fields: ["entity", "power", "energy", "cost", "temperature", "zone2_temperature", "door", "switch"],
+    fields: ["entity", "power", "energy", "cost", "temperature", "zone2_temperature", "humidity", "door", "switch"],
     keys: ["cave_a_vin", "cave", "vin", "wine", "cellar", "wine_cooler", "wine_fridge", "vinotheque"] },
   fridge: { accent: "cold", threshold: 20,
     fields: ["entity", "power", "energy", "cost", "temperature", "freezer_temperature", "flex_temperature", "door", "freezer_door", "switch"],

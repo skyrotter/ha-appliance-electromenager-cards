@@ -66,11 +66,14 @@ function buildForm(kind) {
             { name: "spin_power", selector: { number: { min: 50, max: 2000, step: 25, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
           ...(["chest_freezer", "drawer_freezer"].includes(kind) ? [
-            { name: "freezer_max_temperature", selector: { number: { min: -30, max: 0, step: 0.5, mode: "box" } } },
+            { name: "temperature_unit", selector: { select: { mode: "dropdown", options: [{ value: "C", label: "°C" }, { value: "F", label: "°F" }] } } },
+            { name: "freezer_max_temperature", selector: { number: { min: -30, max: 32, step: 0.5, mode: "box" } } },
           ] : []),
           ...(kind === "wine_cooler" ? [
-            { name: "max_temperature", selector: { number: { min: 5, max: 25, step: 0.5, mode: "box" } } },
-            { name: "max_temperature_2", selector: { number: { min: 3, max: 25, step: 0.5, mode: "box" } } },
+            { name: "temperature_unit", selector: { select: { mode: "dropdown", options: [{ value: "C", label: "°C" }, { value: "F", label: "°F" }] } } },
+            { name: "max_temperature", selector: { number: { min: 5, max: 80, step: 0.5, mode: "box" } } },
+            { name: "max_temperature_2", selector: { number: { min: 3, max: 80, step: 0.5, mode: "box" } } },
+            { name: "humidity_max", selector: { number: { min: 40, max: 100, step: 1, mode: "box", unit_of_measurement: "%" } } },
           ] : []),
           ...(kind === "fridge" ? [
             { name: "style", selector: { select: { mode: "dropdown", options: [
@@ -78,9 +81,11 @@ function buildForm(kind) {
               { value: "bottom_door", label: "Combiné, porte en bas / Bottom freezer door" },
               { value: "french", label: "French door" }, { value: "four_door", label: "4 portes / 4-door" }, { value: "american", label: "Américain / Side-by-side" }, { value: "single", label: "Une porte / Single door" }] } } },
             { name: "finish", selector: { select: { mode: "dropdown", options: [{ value: "inox", label: "Inox / Stainless steel" }, { value: "white", label: "Blanc / White" }, { value: "black", label: "Noir / Black" }] } } },
-            { name: "max_temperature", selector: { number: { min: 0, max: 15, step: 0.5, mode: "box" } } },
-            { name: "freezer_max_temperature", selector: { number: { min: -30, max: 0, step: 0.5, mode: "box" } } },
-            { name: "flex_max_temperature", selector: { number: { min: -30, max: 15, step: 0.5, mode: "box" } } },
+            { name: "temperature_unit", selector: { select: { mode: "dropdown", options: [{ value: "C", label: "°C" }, { value: "F", label: "°F" }] } } },
+            // bornes larges : les seuils sont saisis dans l'unité choisie (°C ou °F)
+            { name: "max_temperature", selector: { number: { min: 0, max: 60, step: 0.5, mode: "box" } } },
+            { name: "freezer_max_temperature", selector: { number: { min: -30, max: 32, step: 0.5, mode: "box" } } },
+            { name: "flex_max_temperature", selector: { number: { min: -30, max: 60, step: 0.5, mode: "box" } } },
           ] : []),
           ...(["washer", "dryer", "dishwasher"].includes(kind) ? [
             { name: "last_cycle", selector: { boolean: {} } },
