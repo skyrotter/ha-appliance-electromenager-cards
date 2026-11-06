@@ -6,6 +6,12 @@
 
 🇬🇧 English · [🇫🇷 Version française](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/README.fr.md) · [🇮🇹 Italiano](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/README.it.md)
 
+## ❤️ Support the project
+
+This project is free and open source, built in my spare time. If it makes your dashboard nicer, a small donation helps me add new cards and keep the existing ones up to date. Missing an appliance? [Suggest it in the issues](https://github.com/skyrotter/ha-appliance-electromenager-cards/issues), that is how the diesel heater and the hot tub got here.
+
+[❤️ Sponsor on GitHub](https://github.com/sponsors/skyrotter) · [☕ Buy me a coffee](https://buymeacoffee.com/skyrotter) · [💙 Donate with PayPal.me](https://paypal.me/skyrotter)
+
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/79-cartes.png" width="560" alt="79 animated appliance cards for Home Assistant"></p>
 
 **90 Lovelace cards for household appliances**, each with a realistic animated illustration: a tumbling washer drum, a flickering pellet-stove flame, a diesel heater with its blue burner crown, a hot tub with bubbling jets, a robot vacuum, a Linky meter, a home battery… They show the live status, power, energy and cost, follow your Home Assistant theme (light/dark) and speak English, French, German, Norwegian, Dutch, Romanian, Russian, Serbian and Italian.
@@ -47,12 +53,6 @@ cost: sensor.washer_cost_today
 ```
 
 All options, how the status is computed, theming and the power-button safety are in **[docs/configuration.md](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/configuration.md)**.
-
-## ❤️ Support the project
-
-This project is free and open source, built in my spare time. If it makes your dashboard nicer, a small donation helps me add new cards and keep the existing ones up to date. Missing an appliance? [Suggest it in the issues](https://github.com/skyrotter/ha-appliance-electromenager-cards/issues), that is how the diesel heater and the hot tub got here.
-
-[❤️ Sponsor on GitHub](https://github.com/sponsors/skyrotter) · [☕ Donate with PayPal.me](https://paypal.me/skyrotter)
 
 ## The cards
 
