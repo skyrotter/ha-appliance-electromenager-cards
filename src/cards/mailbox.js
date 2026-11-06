@@ -186,7 +186,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { let l = (this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en'); if (!T[l]) l = l.slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
     _ok(s) { return !!s && !/^(unavailable|unknown)$/i.test(String(s.state)); }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }

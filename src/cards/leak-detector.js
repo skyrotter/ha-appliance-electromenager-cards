@@ -126,7 +126,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { let l = this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en'; if (!T[l]) l = l.slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
     _ok(s) { return !!s && !/^(unavailable|unknown)$/i.test(String(s.state)); }
     _num(s) { if (!this._ok(s)) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
@@ -223,7 +223,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         since: [probes.length, last ? this._time(last) : '--', '', ''],
         probes: [probes.length > 1, `${wet.length}/${usable.length}`, '', wet.length ? 'bad' : ''],
         battery: [list(c.entity_battery).length, isNaN(bat) ? (binLow ? this._t('low') : list(c.entity_battery).length ? this._t('ok') : '--') : String(Math.round(bat)), isNaN(bat) ? '' : '%', low ? 'warn' : ''],
-        temperature: [c.entity_temperature, isNaN(temp) ? '--' : (Math.round(temp * 10) / 10).toLocaleString(this._lang()), tc ? tc.unit : '°C', st === 'freeze' ? 'cold' : ''],
+        temperature: [c.entity_temperature, isNaN(temp) ? '--' : (Math.round(temp * 10) / 10).toLocaleString(window.applianceLocale(this._c, this._hass)), tc ? tc.unit : '°C', st === 'freeze' ? 'cold' : ''],
         humidity: [c.entity_humidity, isNaN(hum) ? '--' : String(Math.round(hum)), '%', ''],
       };
       TILES.forEach(([k, , opt]) => {

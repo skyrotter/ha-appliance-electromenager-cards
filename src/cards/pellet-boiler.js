@@ -11,7 +11,7 @@ window.customCards = window.customCards || [];
  */
 const I18N_PB = /*@i18n pellet_boiler*/{};
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
-const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
+const lang = (h) => window.applianceLang(I18N_PB, null, h);
 
 class AppliancePelletBoilerCard extends HTMLElement {
   static getStubConfig(hass) {
@@ -270,7 +270,7 @@ class AppliancePelletBoilerCard extends HTMLElement {
     if (c.show_status) it.push([this._l('status'), this._t(st), c.entity_status || c.entity_power]);
     if (c.show_power) it.push([this._l('power'), w === null ? '—' : w >= 1000 ? `${(w / 1000).toFixed(1)} kW` : `${Math.round(w)} W`, c.entity_power]);
     // départ / retour au dixième (un entier reste sans décimale), séparateur décimal de la langue
-    const ft = (v) => (v === null ? '—' : `${v.toLocaleString(this._config.language || lang(this._hass), { maximumFractionDigits: 1 })} ${tc.unit}`);
+    const ft = (v) => (v === null ? '—' : `${v.toLocaleString(window.applianceLocale(this._config, this._hass), { maximumFractionDigits: 1 })} ${tc.unit}`);
     if (c.show_temps) { it.push([this._l('flow'), ft(dep), c.entity_flow_temp]); it.push([this._l('ret'), ft(ret), c.entity_return_temp]); }
     if (c.show_pellets) it.push([this._l('pellets'), f(lvl, 0, '%'), c.entity_pellet_level]);
     if (c.show_energy) it.push([this._l('energy'), f(e, 1, 'kWh'), c.entity_energy]);

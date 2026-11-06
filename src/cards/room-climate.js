@@ -537,10 +537,10 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
     }
 
     /* ---- textes ---- */
-    _lang() { let l = (this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en').slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _fmt(v, d = 1) { return fin(v) ? v.toLocaleString(this._lang(), { minimumFractionDigits: d, maximumFractionDigits: d }) : '--'; }
+    _fmt(v, d = 1) { return fin(v) ? v.toLocaleString(window.applianceLocale(this._c, this._hass), { minimumFractionDigits: d, maximumFractionDigits: d }) : '--'; }
     _tmp() { return window.applianceTemp(this._hass, this._c); }
     _st(id) { return id && this._hass && this._hass.states[id]; }
     _raw(id) { const s = this._st(id); if (!s || BAD.test(String(s.state))) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return Number.isFinite(v) ? v : NaN; }
@@ -1312,7 +1312,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
-    _lang() { const h = this._hass; let l = ((this._c && this._c.language) || (h && (h.locale?.language || h.language)) || 'en').slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
   }
   customElements.define(TAG + '-editor', ApplianceRoomClimateCardEditor);
 

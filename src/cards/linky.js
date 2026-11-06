@@ -11,7 +11,7 @@ window.customCards = window.customCards || [];
  */
 const I18N_LINKY = /*@i18n linky*/{};
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
-const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
+const lang = (h) => window.applianceLang(I18N_LINKY, null, h);
 // Aiguilles L1 / L2 / L3 (mode « needles ») : couleurs distinctes du vert / orange / rouge de la jauge
 const PHASE_COLORS = ['#1e88e5', '#8e24aa', '#00897b'];
 
