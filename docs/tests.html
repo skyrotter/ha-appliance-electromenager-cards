@@ -1276,6 +1276,17 @@ ok('applianceNum / applianceWatts',window.applianceNum(mk('sensor.x','1,5'))===1
   &&window.applianceWatts(mk('sensor.x',1.5,{unit_of_measurement:'kW'}))===1500&&window.applianceWatts(mk('sensor.x',2,{unit_of_measurement:'MW'}))===2e6&&window.applianceWatts(mk('sensor.x',40,{unit_of_measurement:'W'}))===40);
 const gb=card('gas-boiler',{entity_power:'sensor.p'},[mk('sensor.p',1500,{unit_of_measurement:'W'})],'de'); ok('gas boiler numbers follow the HA language (de: 1,5 kW)',/1,5\s*kW/.test(gb.sr.textContent.replace(/<[^>]+>/g,'')),gb.sr.textContent.replace(/\s+/g,' ').slice(-200)); gb.el.remove();
 }
+{ // HA profile "Number format" (hass.locale.number_format): standalone and core cards
+const NF=(nf,l='en')=>({language:l,locale:{language:l,number_format:nf}});
+ok('applianceLocale: number_format comma_decimal / decimal_comma / space_comma',window.applianceLocale({},NF('comma_decimal','fr'))==='en-US'&&window.applianceLocale({},NF('decimal_comma'))==='de-DE'&&window.applianceLocale({},NF('space_comma'))==='fr-FR');
+ok('applianceLocale: number_format language / none keep the language',window.applianceLocale({},NF('language','de'))==='de'&&window.applianceLocale({},NF('none','de'))==='de');
+ok('applianceLocale: card language option wins over number_format',window.applianceLocale({language:'fr'},NF('comma_decimal','de'))==='fr');
+ok('applianceLocale: dates ignore number_format',window.applianceLocale({},NF('decimal_comma','en'),true)==='en');
+const nh=(st,nf,l)=>{const h=hassOf(st,l);h.locale.number_format=nf;return h;}, P=[mk('sensor.p',1500,W)], txt=(c)=>c.sr.textContent.replace(/\s+/g,' ');
+let c=card('washer',{power:'sensor.p'},P,'en'); c.el.hass=nh(P,'decimal_comma','en'); ok('core card numbers follow number_format (en + decimal_comma: 1,5 kW)',/1,5\s*kW/.test(txt(c)),txt(c).slice(0,200)); c.el.remove();
+c=card('washer',{power:'sensor.p'},P,'de'); c.el.hass=nh(P,'comma_decimal','de'); ok('core card numbers follow number_format (de + comma_decimal: 1.5 kW)',/1\.5\s*kW/.test(txt(c)),txt(c).slice(0,200)); c.el.remove();
+c=card('gas-boiler',{entity_power:'sensor.p'},P,'en'); c.el.hass=nh(P,'decimal_comma','en'); ok('standalone card numbers follow number_format (en + decimal_comma: 1,5 kW)',/1,5\s*kW/.test(txt(c)),txt(c).slice(-200)); c.el.remove();
+}
 ok('no page errors',__errors.length===0,__errors.join('; '));
 // labels: custom tile names override translations, empty values fall back
 {const lbls=(c)=>[...c.sr.querySelectorAll('.lbl,.tile .l,.stat .l')].map(e=>e.textContent.trim());
