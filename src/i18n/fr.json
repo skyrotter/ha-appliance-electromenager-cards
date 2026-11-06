@@ -192,7 +192,6 @@
     "energy": "Énergie",
     "cost": "Coût",
     "remaining": "Restant",
-    "program": "Programme",
     "temperature": "Température",
     "target": "Consigne",
     "fridge_temp": "Frigo",
@@ -1285,7 +1284,14 @@
     "temperature": "Température",
     "low": "Faible",
     "model_cylinder": "Cylindre compact",
-    "model_round": "Rond"
+    "model_round": "Rond",
+    "model_gas": "Détecteur de gaz",
+    "gas_name": "Détecteur de gaz",
+    "gas_alarm": "Gaz !",
+    "gas_alarm_at": "Gaz détecté à {t}",
+    "level": "Niveau de gaz",
+    "open_valve": "Ouvrir la vanne",
+    "close_valve": "Fermer la vanne"
   },
   "leak_detector": {
     "name": "Détecteur de fuite",

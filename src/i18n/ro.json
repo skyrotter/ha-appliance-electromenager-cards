@@ -1268,7 +1268,14 @@
     "temperature": "Temperatură",
     "low": "Slabă",
     "model_cylinder": "Cilindru compact",
-    "model_round": "Rotund"
+    "model_round": "Rotund",
+    "model_gas": "Detector de gaz",
+    "gas_name": "Detector de gaz",
+    "gas_alarm": "Gaz!",
+    "gas_alarm_at": "Gaz detectat la {t}",
+    "level": "Nivel de gaz",
+    "open_valve": "Deschide robinetul",
+    "close_valve": "Închide robinetul"
   },
   "leak_detector": {
     "name": "Detector de scurgeri",

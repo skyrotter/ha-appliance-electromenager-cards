@@ -1284,7 +1284,14 @@
     "temperature": "Температура",
     "low": "Слаба",
     "model_cylinder": "Компактни цилиндар",
-    "model_round": "Округли"
+    "model_round": "Округли",
+    "model_gas": "Детектор гаса",
+    "gas_name": "Детектор гаса",
+    "gas_alarm": "Гас!",
+    "gas_alarm_at": "Гас детектован у {t}",
+    "level": "Ниво гаса",
+    "open_valve": "Отвори вентил",
+    "close_valve": "Затвори вентил"
   },
   "leak_detector": {
     "name": "Детектор цурења",

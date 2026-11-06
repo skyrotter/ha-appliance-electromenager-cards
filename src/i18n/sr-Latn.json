@@ -1284,7 +1284,14 @@
     "temperature": "Temperatura",
     "low": "Slaba",
     "model_cylinder": "Kompaktni cilindar",
-    "model_round": "Okrugli"
+    "model_round": "Okrugli",
+    "model_gas": "Detektor gasa",
+    "gas_name": "Detektor gasa",
+    "gas_alarm": "Gas!",
+    "gas_alarm_at": "Gas detektovan u {t}",
+    "level": "Nivo gasa",
+    "open_valve": "Otvori ventil",
+    "close_valve": "Zatvori ventil"
   },
   "leak_detector": {
     "name": "Detektor curenja",

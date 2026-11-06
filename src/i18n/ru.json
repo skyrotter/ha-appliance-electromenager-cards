@@ -1268,7 +1268,14 @@
     "temperature": "Температура",
     "low": "Низкий",
     "model_cylinder": "Компактный цилиндр",
-    "model_round": "Круглый"
+    "model_round": "Круглый",
+    "model_gas": "Датчик газа",
+    "gas_name": "Датчик газа",
+    "gas_alarm": "Газ!",
+    "gas_alarm_at": "Газ обнаружен в {t}",
+    "level": "Уровень газа",
+    "open_valve": "Открыть клапан",
+    "close_valve": "Закрыть клапан"
   },
   "leak_detector": {
     "name": "Датчик протечки",

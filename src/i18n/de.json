@@ -1268,7 +1268,14 @@
     "temperature": "Temperatur",
     "low": "Schwach",
     "model_cylinder": "Kompakter Zylinder",
-    "model_round": "Rund"
+    "model_round": "Rund",
+    "model_gas": "Gasmelder",
+    "gas_name": "Gasmelder",
+    "gas_alarm": "Gas!",
+    "gas_alarm_at": "Gas erkannt um {t}",
+    "level": "Gaskonzentration",
+    "open_valve": "Ventil öffnen",
+    "close_valve": "Ventil schließen"
   },
   "leak_detector": {
     "name": "Wassermelder",

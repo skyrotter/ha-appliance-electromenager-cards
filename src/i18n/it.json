@@ -1268,7 +1268,14 @@
     "temperature": "Temperatura",
     "low": "Scarica",
     "model_cylinder": "Cilindro compatto",
-    "model_round": "Rotondo"
+    "model_round": "Rotondo",
+    "model_gas": "Rilevatore di gas",
+    "gas_name": "Rilevatore di gas",
+    "gas_alarm": "Gas!",
+    "gas_alarm_at": "Gas rilevato alle {t}",
+    "level": "Livello di gas",
+    "open_valve": "Apri valvola",
+    "close_valve": "Chiudi valvola"
   },
   "leak_detector": {
     "name": "Rilevatore di perdite",

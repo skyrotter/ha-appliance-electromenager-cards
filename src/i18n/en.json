@@ -192,7 +192,6 @@
     "energy": "Energy",
     "cost": "Cost",
     "remaining": "Remaining",
-    "program": "Program",
     "temperature": "Temperature",
     "target": "Target",
     "fridge_temp": "Fridge",
@@ -1285,7 +1284,14 @@
     "temperature": "Temperature",
     "low": "Low",
     "model_cylinder": "Compact cylinder",
-    "model_round": "Round"
+    "model_round": "Round",
+    "model_gas": "Gas detector",
+    "gas_name": "Gas detector",
+    "gas_alarm": "Gas!",
+    "gas_alarm_at": "Gas detected at {t}",
+    "level": "Gas level",
+    "open_valve": "Open valve",
+    "close_valve": "Close valve"
   },
   "leak_detector": {
     "name": "Leak detector",

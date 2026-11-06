@@ -1268,7 +1268,14 @@
     "temperature": "Temperatuur",
     "low": "Laag",
     "model_cylinder": "Compacte cilinder",
-    "model_round": "Rond"
+    "model_round": "Rond",
+    "model_gas": "Gasmelder",
+    "gas_name": "Gasmelder",
+    "gas_alarm": "Gas!",
+    "gas_alarm_at": "Gas gedetecteerd om {t}",
+    "level": "Gasniveau",
+    "open_valve": "Klep openen",
+    "close_valve": "Klep sluiten"
   },
   "leak_detector": {
     "name": "Lekdetector",
