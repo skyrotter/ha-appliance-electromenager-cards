@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.78.2";
+const VERSION = "1.79.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -25126,6 +25126,9 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "st_double_ring": "Double ring",
       "st_dial": "Needle dial",
       "st_neon": "Neon",
+      "st_netatmo": "Netatmo",
+      "st_nest": "Google Nest",
+      "heating_now": "Heating",
       "st_bars": "Bars",
       "lcd_auto": "Automatic (green by day, blue in dark mode)",
       "lcd_green": "Green",
@@ -25198,6 +25201,9 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "st_double_ring": "Doppelring",
       "st_dial": "Zeigerinstrument",
       "st_neon": "Neon",
+      "st_netatmo": "Netatmo",
+      "st_nest": "Google Nest",
+      "heating_now": "Heizt",
       "st_bars": "Balken",
       "lcd_auto": "Automatisch (tagsüber grün, dunkel blau)",
       "lcd_green": "Grün",
@@ -25270,6 +25276,9 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "st_double_ring": "Double anneau",
       "st_dial": "Cadran à aiguilles",
       "st_neon": "Néon",
+      "st_netatmo": "Netatmo",
+      "st_nest": "Google Nest",
+      "heating_now": "En chauffe",
       "st_bars": "Barres",
       "lcd_auto": "Automatique (vert le jour, bleu en sombre)",
       "lcd_green": "Vert",
@@ -25342,6 +25351,9 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "st_double_ring": "Doppio anello",
       "st_dial": "Quadrante a lancette",
       "st_neon": "Neon",
+      "st_netatmo": "Netatmo",
+      "st_nest": "Google Nest",
+      "heating_now": "In riscaldamento",
       "st_bars": "Barre",
       "lcd_auto": "Automatico (verde di giorno, blu in modalità scura)",
       "lcd_green": "Verde",
@@ -25414,6 +25426,9 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "st_double_ring": "Dobbel ring",
       "st_dial": "Viserinstrument",
       "st_neon": "Neon",
+      "st_netatmo": "Netatmo",
+      "st_nest": "Google Nest",
+      "heating_now": "Varmer",
       "st_bars": "Søyler",
       "lcd_auto": "Automatisk (grønn om dagen, blå i mørk modus)",
       "lcd_green": "Grønn",
@@ -25486,6 +25501,9 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "st_double_ring": "Dubbele ring",
       "st_dial": "Wijzerplaat",
       "st_neon": "Neon",
+      "st_netatmo": "Netatmo",
+      "st_nest": "Google Nest",
+      "heating_now": "Verwarmt",
       "st_bars": "Staven",
       "lcd_auto": "Automatisch (overdag groen, donker blauw)",
       "lcd_green": "Groen",
@@ -25558,6 +25576,9 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "st_double_ring": "Inel dublu",
       "st_dial": "Cadran cu ace",
       "st_neon": "Neon",
+      "st_netatmo": "Netatmo",
+      "st_nest": "Google Nest",
+      "heating_now": "Încălzește",
       "st_bars": "Bare",
       "lcd_auto": "Automat (verde ziua, albastru în modul întunecat)",
       "lcd_green": "Verde",
@@ -25630,6 +25651,9 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "st_double_ring": "Двойное кольцо",
       "st_dial": "Стрелочный циферблат",
       "st_neon": "Неон",
+      "st_netatmo": "Netatmo",
+      "st_nest": "Google Nest",
+      "heating_now": "Нагрев",
       "st_bars": "Столбики",
       "lcd_auto": "Авто (зелёный днём, синий в тёмной теме)",
       "lcd_green": "Зелёный",
@@ -25702,6 +25726,9 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "st_double_ring": "Дупли прстен",
       "st_dial": "Бројчаник са иглом",
       "st_neon": "Неон",
+      "st_netatmo": "Netatmo",
+      "st_nest": "Google Nest",
+      "heating_now": "Греје",
       "st_bars": "Траке",
       "lcd_auto": "Аутоматски (зелено дању, плаво у тамном режиму)",
       "lcd_green": "Зелена",
@@ -25774,6 +25801,9 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "st_double_ring": "Dupli prsten",
       "st_dial": "Brojčanik sa iglom",
       "st_neon": "Neon",
+      "st_netatmo": "Netatmo",
+      "st_nest": "Google Nest",
+      "heating_now": "Greje",
       "st_bars": "Trake",
       "lcd_auto": "Automatski (zeleno danju, plavo u tamnom režimu)",
       "lcd_green": "Zelena",
@@ -25991,6 +26021,33 @@ ha-card.st-double_ring{padding:14px 14px 0;--t9:var(--appliance-temperature-colo
 .d10 #h{font-size:15px;font-weight:600;color:var(--rc-hum)}
 .st-dial .meta{justify-content:center}
 
+/* ---- illustration Netatmo (variant: netatmo) : halo + flamme animés quand le thermostat chauffe ---- */
+.st-netatmo .net{display:block;width:calc(190px * var(--illus-scale,1));max-width:100%;height:auto;margin:4px auto 2px}
+.st-netatmo .meta{justify-content:center}
+.tv-ink{fill:#1b1b1b;font-family:'DIN Condensed','Arial Narrow',system-ui,sans-serif}
+.tv-glow{opacity:0;transition:opacity .5s}
+.heating .tv-glow{opacity:.8;animation:tvbreathe 2.4s ease-in-out infinite}
+.tv-heat{opacity:0;transition:opacity .4s}
+.heating .tv-heat{opacity:1}
+.heating path.tv-heat{animation:tvflame 1.2s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:50% 100%}
+.tv-snow{opacity:0}
+.winopen .tv-snow{opacity:1;animation:tvblink 1.4s ease-in-out infinite}
+.noanim .tv-glow,.noanim .tv-snow,.noanim .tv-heat{animation:none}
+@keyframes tvbreathe{50%{opacity:.35}}
+@keyframes tvblink{50%{opacity:.35}}
+@keyframes tvflame{from{opacity:.55}to{opacity:1}}
+
+/* ---- illustration Google Nest (variant: nest) : écran rond noir, fond orange qui respire en chauffe, arc de consigne ---- */
+.st-nest .nest{display:block;width:calc(210px * var(--illus-scale,1));max-width:100%;height:auto;margin:4px auto 2px}
+.st-nest .meta{justify-content:center}
+.nst{fill:#fff;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+.nest-heat{opacity:0;transition:opacity .8s}
+.heating .nest-heat{opacity:1;animation:nestbreathe 3s ease-in-out infinite}
+.nest-arc{stroke:#2b9af9;transition:stroke-dasharray .6s}.heating .nest-arc{stroke:#fff}
+.nest-snow{opacity:0}.winopen .nest-snow{opacity:1;animation:tvblink 1.4s ease-in-out infinite}
+.noanim .nest-heat,.noanim .nest-snow{animation:none}
+@keyframes nestbreathe{50%{opacity:.78}}
+
 /* ---- 11. néon ---- */
 ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
 .st-neon .name{color:#fff;font-weight:500;text-shadow:0 0 6px rgba(255,255,255,.5)}
@@ -26070,7 +26127,13 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
 
   const DROP = 'M15 3C15 3 4 17 4 26a11 11 0 0 0 22 0C26 17 15 3 15 3Z';
   const WAVE = '<svg viewBox="0 0 200 10" preserveAspectRatio="none" aria-hidden="true"><path d="M0 5Q12.5 0 25 5T50 5T75 5T100 5T125 5T150 5T175 5T200 5V10H0Z" fill="#fff"/></svg>';
-  const STYLES = ['standard', 'gauge', 'gradient', 'minimal', 'lcd', 'tile', 'thermometer', 'gradient_ring', 'double_ring', 'dial', 'neon', 'bars'];
+  const STYLES = ['standard', 'gauge', 'gradient', 'minimal', 'lcd', 'tile', 'thermometer', 'gradient_ring', 'double_ring', 'dial', 'neon', 'bars', 'netatmo', 'nest'];
+  // illustration Netatmo (même photo détourée que appliance-trv-card, model: netatmo) : écran e-ink redessiné en direct
+  const NET_IMG = 'data:image/webp;base64,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';
+  const SNOW = (x, y, s, col) => `<g class="tv-snow" stroke="${col}" stroke-width="${s / 8}" stroke-linecap="round"><path d="M${x} ${y - s / 2} v${s} M${x - s * .43} ${y - s / 4} l${s * .86} ${s / 2} M${x - s * .43} ${y + s / 4} l${s * .86} ${-s / 2}"/></g>`;
+  const FLAME = (x, y, s, col) => `<path class="tv-heat" transform="translate(${x} ${y}) scale(${s / 24})" fill="${col}" d="M17.66 11.2c-.23-.3-.51-.56-.77-.82-.67-.6-1.43-1.03-2.07-1.66C13.33 7.26 13 4.85 13.95 3c-.95.23-1.78.75-2.49 1.32-2.59 2.08-3.61 5.75-2.39 8.9.04.1.08.2.08.33 0 .22-.15.42-.35.5-.23.1-.47.04-.66-.12a.58.58 0 0 1-.14-.17c-1.13-1.43-1.31-3.48-.55-5.12C5.78 10 4.87 12.3 5 14.47c.06.5.12 1 .29 1.5.14.6.41 1.2.71 1.73 1.08 1.73 2.95 2.97 4.96 3.22 2.14.27 4.43-.12 6.07-1.6 1.83-1.66 2.47-4.32 1.53-6.6l-.13-.26c-.21-.46-.77-1.26-.77-1.26z"/>`;
+  // arc de consigne du cadran Nest (270°, ouverture en bas), comme appliance-trv-card
+  const NEST_ARC = (() => { const c = 199, r = 150, a0 = 135 * Math.PI / 180, a1 = 405 * Math.PI / 180, p = (a) => `${(c + r * Math.cos(a)).toFixed(1)} ${(c + r * Math.sin(a)).toFixed(1)}`; return `M${p(a0)} A${r} ${r} 0 1 1 ${p(a1)}`; })();
   const DIAL = { t0: 215, h0: 145, span: 110 };
   const DEF_ICON = { double_ring: 'mdi:home-thermometer-outline' };
   // arc de cercle (degrés, 0 = droite, sens horaire)
@@ -26200,6 +26263,32 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
           <ellipse cx="78" cy="58" rx="46" ry="20" fill="#fff" opacity=".18" transform="rotate(-25 78 58)"/></svg>
         <div class="d10">${VT}<span id="h"></span><span class="trend" id="trend"></span></div>${META}${NOTES}`;
     },
+    netatmo: (id) => `${HEAD()}<svg class="net" viewBox="-12 -12 440 422" aria-hidden="true">
+        <defs><radialGradient id="${id}g" cx=".5" cy=".5" r=".5"><stop offset=".6" stop-color="#ff8a00" stop-opacity=".55"/><stop offset="1" stop-color="#ff8a00" stop-opacity="0"/></radialGradient>
+          <linearGradient id="${id}k" x1="0" y1="0" x2=".3" y2="1"><stop offset="0" stop-color="#c3c3c3"/><stop offset="1" stop-color="#b3b3b3"/></linearGradient></defs>
+        <ellipse class="tv-glow" cx="208" cy="199" rx="250" ry="250" fill="url(#${id}g)"/>
+        <image href="${NET_IMG}" x="0" y="0" width="416" height="398"/>
+        <rect x="147" y="93" width="134" height="200" fill="url(#${id}k)"/>
+        <text class="tv-ink" id="t" x="212" y="196" text-anchor="middle" font-size="44" font-weight="700" letter-spacing="-1">--</text>
+        <text class="tv-ink" id="tu" x="262" y="125" font-size="15" font-weight="700">°C</text>
+        ${FLAME(158, 238, 24, '#222')}
+        <text class="tv-ink" id="h" x="232" y="264" text-anchor="middle" font-size="28" font-weight="700" opacity=".8"></text>
+        ${SNOW(170, 116, 20, '#222')}</svg>${META}${NOTES}`,
+    // Google Nest : en grand la température mesurée, en petit la consigne du thermostat lié, humidité en bas
+    nest: (id) => `${HEAD()}<svg class="nest" viewBox="0 0 398 398" aria-hidden="true">
+        <defs><radialGradient id="${id}k" cx=".5" cy=".42" r=".6"><stop offset="0" stop-color="#111"/><stop offset="1" stop-color="#000"/></radialGradient>
+          <radialGradient id="${id}h" cx=".5" cy=".42" r=".65"><stop offset="0" stop-color="#ff8a2a"/><stop offset="1" stop-color="#c2410c"/></radialGradient>
+          <linearGradient id="${id}r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f1f1f1"/><stop offset=".5" stop-color="#9a9a9a"/><stop offset="1" stop-color="#e4e4e4"/></linearGradient></defs>
+        <circle cx="199" cy="199" r="196" fill="url(#${id}r)"/>
+        <circle cx="199" cy="199" r="186" fill="url(#${id}k)"/>
+        <circle class="nest-heat" cx="199" cy="199" r="186" fill="url(#${id}h)"/>
+        <path d="${NEST_ARC}" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="10" stroke-linecap="round"/>
+        <path class="nest-arc" id="narc" d="${NEST_ARC}" fill="none" stroke-width="10" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100"/>
+        <text class="nst" id="nmode" x="199" y="128" text-anchor="middle" font-size="20" font-weight="600" letter-spacing="2" opacity=".85"></text>
+        <text class="nst" x="199" y="236" text-anchor="middle" font-size="104"><tspan id="t">--</tspan><tspan font-size="60" dy="-34">°</tspan></text>
+        <text class="nst" id="nsmall" x="199" y="304" text-anchor="middle" font-size="40" font-weight="500" opacity=".9"></text>
+        <g class="nst" opacity=".85"><path id="ndrop" d="M168 334 q-9 12 -9 18 a9 9 0 0 0 18 0 q0 -6 -9 -18z" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/><text id="h" x="186" y="352" font-size="26"></text></g>
+        <g class="nest-snow" stroke="#7cc4ff" stroke-width="3.2" stroke-linecap="round"><path d="M199 84 v52 M176.6 97 l44.8 26 M176.6 123 l44.8 -26"/></g></svg>${META}${NOTES}`,
     neon: () => `${HEAD()}${VT}${VH}${META}${NOTES}${SPARK}`,
     bars: () => `${HEAD()}<div class="b12">
         <div class="col"><div class="cv"><span id="t">--</span><small id="tu"></small></div><div class="tube"><span class="zone" id="zbt"></span><i id="bt"></i></div><ha-icon icon="mdi:thermometer"></ha-icon></div>
@@ -26252,7 +26341,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
     // variant : nom du style ; « style » reste accepté (anciennes configs) quand c'est un nom de style,
     // car dans une carte picture-elements, style est l'objet CSS de positionnement de Home Assistant
     _style() { const c = this._c || {}, v = STYLES.includes(c.variant) ? c.variant : c.style; return STYLES.includes(v) ? v : 'standard'; }
-    getCardSize() { return { thermometer: 6, double_ring: 5, gradient_ring: 4, dial: 5, tile: 2 }[this._style()] || 2; }
+    getCardSize() { return { thermometer: 6, double_ring: 5, gradient_ring: 4, dial: 5, netatmo: 5, nest: 5, tile: 2 }[this._style()] || 2; }
     getGridOptions() {
       const st = this._style();
       if (st === 'tile') return { columns: 3, min_columns: 2, rows: 'auto', min_rows: 2 };
@@ -26419,7 +26508,8 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       const $ = (id) => r.getElementById(id), txt = (id, v) => { const e = $(id); if (e && e.textContent !== v) e.textContent = v; };
       const html = (id, v) => { const e = $(id); if (e && e._html !== v) { e.innerHTML = v; e._html = v; } };
       const icon_ = (e, v) => { if (e && e.getAttribute('icon') !== v) e.setAttribute('icon', v); };
-      this._card.className = `st-${st} ${s.cls}${c.animations === false ? ' noanim' : ''}${c.transparent ? ' transparent' : ''}`;
+      const ck = c.entity_climate && this._climTarget(tmp), heat = !!ck && /^(heating|preheating)$/.test(String(ck.a.hvac_action || ''));
+      this._card.className = `st-${st} ${s.cls}${heat ? ' heating' : ''}${s.winOpen ? ' winopen' : ''}${c.animations === false ? ' noanim' : ''}${c.transparent ? ' transparent' : ''}`;
       this._card.style.setProperty('--tc', s.tcol);
       // couleurs personnalisées (éditeur) : variables --appliance-*, lues aussi par le pop-up
       Object.entries(COLORS).forEach(([k, v]) => { const col = cssColor(c[k]); if (col) this.style.setProperty(v, col); else this.style.removeProperty(v); });
@@ -26539,6 +26629,19 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
           $('zh').setAttribute('d', arc(100, 100, 78, aH(s.hMax), aH(s.hMin)));
         },
         neon: () => {},
+        netatmo: () => {},
+        nest: () => {
+          // arc = consigne du thermostat lié (entre min_temp et max_temp) ; petit chiffre = consigne ; mention en chauffe
+          const ck = c.entity_climate && this._climTarget(tmp), off = !!ck && /^(off|unavailable|unknown)$/i.test(String(ck.cs.state));
+          const shown = ck && this._pending != null ? this._pending : ck && ck.t;
+          const mn = ck && fin(ck.min) ? ck.min : tmp.c(5), mx = ck && fin(ck.max) ? ck.max : tmp.c(30);
+          const f = ck && fin(shown) && mx > mn ? clamp01((shown - mn) / (mx - mn)) : 0;
+          $('narc').setAttribute('stroke-dasharray', `${(f * 100).toFixed(1)} 100`);
+          txt('nmode', heat ? this._t('heating_now').toUpperCase() : off ? 'OFF' : '');
+          txt('nsmall', ck && !off && fin(shown) ? `${this._fmt(shown, ck.step < 1 ? 1 : 0)}°` : '');
+          const hv = fin(s.t) && fin(s.h);
+          $('ndrop').parentNode.style.display = hv ? '' : 'none';
+        },
         bars: () => {
           const lo = tmp.c(0), hi = tmp.c(40), pt = fin(s.t) ? clamp01((s.t - lo) / (hi - lo)) : 0;
           $('bt').style.height = `${pt * 100}%`; $('bh').style.height = `${clamp01(s.h / 100) * 100}%`;

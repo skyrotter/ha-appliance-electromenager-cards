@@ -2,7 +2,7 @@
 
 `custom:appliance-room-climate-card`: a compact card for one room's temperature and humidity. The thermometer's mercury rises to the temperature, water ripples in the drop up to the humidity level, a coloured halo breathes with the comfort state and the last 24 hours are drawn under the values. **Click the card** to open the history pop-up.
 
-**12 styles** (`variant`, chosen in the editor; the older name `style` still works, except inside a `picture-elements` card where `style` is the element's CSS), all animated, with the same features and the same pop-up:
+**14 styles** (`variant`, chosen in the editor; the older name `style` still works, except inside a `picture-elements` card where `style` is the element's CSS), all animated, with the same features and the same pop-up:
 
 | `variant` | Look |
 |---|---|
@@ -17,6 +17,8 @@
 | `double_ring` | temperature and humidity rings around the room icon, min / avg / max with their time, 24 h graphs in the background |
 | `dial` | brass thermo-hygrometer with two springy needles and green comfort zones |
 | `neon` | glowing neon numbers on black, colour of the comfort state |
+| `netatmo` | Netatmo thermostat illustration (same as `appliance-trv-card`), live e-ink screen, glow and flame while heating (needs `entity_climate`) |
+| `nest` | Google Nest dial (as on `appliance-trv-card`): measured temperature large, thermostat target small, target arc, humidity droplet at the bottom; the dial turns orange and "breathes" while heating (needs `entity_climate`) |
 | `bars` | two columns filling up (temperature and humidity) with the comfort zone marked |
 
 **Card**
