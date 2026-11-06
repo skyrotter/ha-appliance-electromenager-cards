@@ -1,5 +1,7 @@
 # Appliance Cards per Home Assistant — Italiano
 
+<p align="center"><a href="https://github.com/sponsors/skyrotter">❤️ Sponsor su GitHub</a> · <a href="https://paypal.me/skyrotter">💙 Dona con PayPal.me</a><br><a href="https://buymeacoffee.com/skyrotter"><img src="https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=%E2%98%95&slug=skyrotter&button_colour=FFDD00&font_colour=000000&font_family=Poppins&outline_colour=000000&coffee_colour=ffffff" alt="Buy me a coffee"></a></p>
+
 [![HACS](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://hacs.xyz)
 
 **Versione italiana della documentazione.** Il progetto offre 90 card Lovelace per gli elettrodomestici e l'energia domestica, con illustrazioni animate, stato in tempo reale e visualizzazione di potenza, energia e costo. Le card seguono il tema chiaro/scuro di Home Assistant e parlano italiano, inglese, francese, tedesco, norvegese, olandese, rumeno, russo e serbo.
@@ -9,8 +11,6 @@
 ## ❤️ Sostieni il progetto
 
 Progetto gratuito e open source. Se ti piace, una piccola donazione aiuta a creare nuove card.
-
-[❤️ Sponsor su GitHub](https://github.com/sponsors/skyrotter) · [☕ Offrimi un caffè](https://buymeacoffee.com/skyrotter) · [💙 Dona con PayPal.me](https://paypal.me/skyrotter)
 
 ## Card disponibili
 
