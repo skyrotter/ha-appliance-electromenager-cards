@@ -171,21 +171,23 @@ appliance-illustration-size: 116px
 
 ## Sélecteur de cartes : une seule entrée
 
-La carte `custom:appliance-card` apparaît dans le sélecteur de Home Assistant et permet de choisir le type d'appareil dans l'éditeur. L'aperçu live des cartes individuelles est désactivé (onglet « Par carte » plus fluide).
+La carte `custom:appliance-card` apparaît dans le sélecteur de Home Assistant et permet de choisir le type d'appareil dans l'éditeur. L'aperçu live des cartes individuelles est désactivé par défaut (onglet « Par carte » plus fluide).
 
-Dans l'éditeur de cette carte, deux cases (réglage enregistré dans le navigateur, à cocher aussi sur le smartphone, puis recharger la page) :
+Dans l'éditeur de cette carte, trois cases (réglage enregistré dans le navigateur, à cocher aussi sur le smartphone, puis recharger la page) :
 
 - **N'afficher que la carte unique Appliance** : les autres entrées Appliance disparaissent du sélecteur (le YAML existant reste valide).
+- **Afficher l'aperçu des cartes Appliance dans le sélecteur (plus lent)** : réactive l'image animée de chaque carte Appliance dans le sélecteur. Pour la cocher : « Ajouter une carte », cherche « Appliance », choisis **Appliance – Carte unique**, coche la case dans l'éditeur, puis recharge la page.
 - **Désactiver les aperçus de toutes les cartes personnalisées** : plus aucun aperçu live pour les cartes personnalisées, y compris celles d'autres dépôts HACS. Les aperçus des cartes natives de Home Assistant ne sont pas concernés.
 
 Équivalent sans l'éditeur, dans la console du navigateur :
 
 ```js
 localStorage.setItem('applianceCardsSinglePicker', '1');
+localStorage.setItem('applianceCardsPreviews', '1');
 localStorage.setItem('applianceCardsNoPreview', '1');
 ```
 
-(ou `window.applianceCardsSinglePicker = true` / `window.applianceCardsNoPreview = true` avant le chargement du module ; retire les clés pour revenir à l'état par défaut.)
+(ou `window.applianceCardsSinglePicker = true` / `window.applianceCardsPreviews = true` / `window.applianceCardsNoPreview = true` avant le chargement du module ; retire les clés pour revenir à l'état par défaut.)
 
 ```yaml
 type: custom:appliance-card
