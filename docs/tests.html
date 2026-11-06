@@ -19,9 +19,9 @@ const has=(c,cls)=>c.wrap.classList.contains(cls);
 const tags=['thermomix','washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','smart-speaker','fan','generic','tool-charger','ceiling-fan','dehumidifier','monitor','kettle','toaster','power-strip','phone-charger','piano','garland','wet-vacuum','ps5'];
 tags.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 // card picker: every core card and every self-contained card listed exactly once
-const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','ceiling-spot','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','water-meter','gas-meter','electric-meter','trv','room-climate','mailbox','smoke-detector','leak-detector','mini-pc','nas','tv-box','scale'];
+const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','ceiling-spot','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','water-meter','gas-meter','electric-meter','trv','room-climate','mailbox','smoke-detector','leak-detector','mini-pc','nas','tv-box','scale','smart-lock'];
 solo.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
-const picked=window.customCards.map(c=>c.type), wanted=[...tags,...solo].map(t=>`appliance-${t}-card`);
+const picked=window.customCards.map(c=>c.type), wanted=[...tags,...solo].map(t=>`appliance-${t}-card`).concat('appliance-card'); // + the single card (picker.js)
 ok(`customCards = ${wanted.length}`,picked.length===wanted.length&&wanted.every(t=>picked.filter(p=>p===t).length===1),
   [...wanted.filter(t=>!picked.includes(t)).map(t=>`missing ${t}`),...picked.filter(t=>!wanted.includes(t)).map(t=>`extra ${t}`),`${picked.length} entries`].join(', '));
 {const np=window.customCards.filter(c=>c.type.startsWith('appliance-')&&!c.name.startsWith('Appliance – ')).map(c=>c.name); ok('picker names start with Appliance –',!np.length,np.join(', '));}
@@ -33,15 +33,15 @@ const wcases=[
  ['input_boolean off -> idle',{entity:'input_boolean.w'},[mk('input_boolean.w','off')],'st-idle','OFF'],
  ['input_boolean on -> running/wash',{entity:'input_boolean.w'},[mk('input_boolean.w','on')],'ph-wash','WASH'],
  ['plug on + low power -> standby',{entity:'switch.w',power:'sensor.p'},[mk('switch.w','on'),mk('sensor.p',2,W)],'st-standby','OFF'],
- ['plug on + high power -> running',{entity:'switch.w',power:'sensor.p'},[mk('switch.w','on'),mk('sensor.p',1500,W)],'st-running','WASH'],
+ ['plug on + high power -> running (heating phase from power)',{entity:'switch.w',power:'sensor.p'},[mk('switch.w','on'),mk('sensor.p',1500,W)],'st-running','HEAT'],
  ['plug off -> off',{entity:'switch.w',power:'sensor.p'},[mk('switch.w','off'),mk('sensor.p',0,W)],'st-off','OFF'],
  ['power only 0 -> idle',{power:'sensor.p'},[mk('sensor.p',0,W)],'st-idle','OFF'],
- ['power kW unit -> running',{power:'sensor.p'},[mk('sensor.p',1.2,{unit_of_measurement:'kW',device_class:'power'})],'st-running','WASH'],
+ ['power kW unit -> running (1.2 kW = heating phase)',{power:'sensor.p'},[mk('sensor.p',1.2,{unit_of_measurement:'kW',device_class:'power'})],'st-running','HEAT'],
  ['sensor Rinçage -> rinse',{entity:'sensor.s'},[mk('sensor.s','Rinçage')],'ph-rinse','RINSE'],
  ['sensor spin -> spin',{entity:'sensor.s'},[mk('sensor.s','spin')],'ph-spin','SPIN'],
  ['program Essorage -> spin',{entity:'sensor.s',program:'sensor.prog'},[mk('sensor.s','running'),mk('sensor.prog','Essorage 1200')],'ph-spin','SPIN'],
  ['finished -> END',{entity:'sensor.s'},[mk('sensor.s','finished')],'st-finished','END'],
- ['finished but power high -> running',{entity:'sensor.s',power:'sensor.p'},[mk('sensor.s','finished'),mk('sensor.p',900,W)],'st-running','WASH'],
+ ['finished but power high -> running (900 W = spin phase)',{entity:'sensor.s',power:'sensor.p'},[mk('sensor.s','finished'),mk('sensor.p',900,W)],'st-running','SPIN'],
  ['unavailable -> st-unavailable',{entity:'sensor.s'},[mk('sensor.s','unavailable')],'st-unavailable','- - -'],
  ['missing entity -> unavailable',{entity:'sensor.nope'},[],'st-unavailable','- - -'],['power sensor unavailable -> unavailable',{power:'sensor.p'},[mk('sensor.p','unavailable')],'st-unavailable','- - -'],
 ];
@@ -403,7 +403,7 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  let c=card('trv',{entity:'climate.t'},[CL('heat','heating',{pi_heating_demand:40})]);
  ok('trv heating: screen and badge',/heating/.test(tv(c).className)&&bd(c)==='En chauffe'&&c.sr.getElementById('tvbig').textContent==='20,5°'&&c.sr.getElementById('tvsmall').textContent==='19,5°'&&getComputedStyle(c.sr.querySelector('.tv-glow')).animationName==='tvbreathe',tv(c).className+' '+c.sr.getElementById('tvbig').textContent);
  ok('trv tiles: temperature, valve, battery',/19,5/.test(c.sr.querySelector('.tile[data-k="temperature"]').textContent)&&/40/.test(c.sr.querySelector('.tile[data-k="valve"]').textContent)&&/80/.test(c.sr.querySelector('.tile[data-k="battery"]').textContent));
- c=card('trv',{entity:'climate.t'},[CL('heat','idle')]); ok('trv at target',/idle/.test(tv(c).className)&&bd(c)==='Consigne atteinte',tv(c).className);
+ c=card('trv',{entity:'climate.t'},[CL('heat','idle')]); ok('trv idle',/idle/.test(tv(c).className)&&bd(c)==='En pause',tv(c).className+' '+bd(c));
  c=card('trv',{entity:'climate.t'},[CL('off','off')]); ok('trv off: OFF on screen, − / + disabled',/off/.test(tv(c).className)&&c.sr.getElementById('tvbig').textContent==='OFF'&&c.sr.getElementById('tvp').disabled,tv(c).className);
  c=card('trv',{entity:'climate.t',entity_window:'binary_sensor.w'},[CL('heat','idle'),mk('binary_sensor.w','on')]); ok('trv window open',/window/.test(tv(c).className)&&/chauffage en pause/.test(c.sr.getElementById('tvalert').textContent),tv(c).className);
  c=card('trv',{entity:'climate.t'},[CL('heat','idle',{window_open:true})]); ok('trv window from attribute',/window/.test(tv(c).className),tv(c).className);
@@ -641,15 +641,15 @@ c=card('dishwasher',{power:'sensor.p'},[mk('sensor.p',0,W)]); ok('without hide_w
  el.shadowRoot.querySelector('.stat.t').click();el.shadowRoot.querySelector('.stat.p').click();el.shadowRoot.querySelector('svg').dispatchEvent(new MouseEvent('click',{bubbles:true}));
  ok('aquarium tiles and tank open more-info',got.join()==='sensor.at,sensor.ap,light.al',got.join());
  ok('aquarium tile without entity is not clickable',!el.shadowRoot.querySelector('.stat.e').dataset.e,'clickable');
- ok('aquarium shown with a preview in the card picker',window.customCards.find((x)=>x.type==='appliance-aquarium-card').preview===true,'preview false');
+ ok('aquarium: no live preview in the card picker by default (picker.js)',window.customCards.find((x)=>x.type==='appliance-aquarium-card').preview===false,'preview on');
  const stub=customElements.get('appliance-aquarium-card').getStubConfig(hassOf([mk('sensor.aquarium_power',10,W),mk('sensor.aquarium_temp',25,T),mk('light.aquarium','on')]));
  ok('aquarium stub finds aquarium entities',stub.entity_power==='sensor.aquarium_power'&&stub.entity_temperature==='sensor.aquarium_temp'&&stub.entity_light==='light.aquarium',JSON.stringify(stub));
  el.remove();}
 // aperçu du sélecteur de cartes : configuration par défaut sans entité, puis tuiles cliquables (fiche de l'entité)
 for(const t of ['aquarium','battery','ev-charger','linky','pellet-boiler','robot-mower-solo','robot-vacuum-solo']){
  try{const C=customElements.get(`appliance-${t}-card`),el=document.createElement(`appliance-${t}-card`);const H=hassOf([mk('vacuum.r','docked'),mk('lawn_mower.m','docked')]);el.setConfig(C.getStubConfig(H));document.getElementById('g').appendChild(el);el.hass=H;
-  ok(`${t}: preview in the card picker renders`,window.customCards.find((x)=>x.type===`appliance-${t}-card`).preview===true&&el.shadowRoot.querySelector('ha-card'),'no preview');el.remove();}
- catch(e){ok(`${t}: preview in the card picker renders`,false,e.message)}}
+  ok(`${t}: stub config renders (preview off by default)`,window.customCards.find((x)=>x.type===`appliance-${t}-card`).preview===false&&el.shadowRoot.querySelector('ha-card'),'preview on or not rendered');el.remove();}
+ catch(e){ok(`${t}: stub config renders (preview off by default)`,false,e.message)}}
 {const clicks=(t,cfg,states,sel)=>{const el=document.createElement(`appliance-${t}-card`);el.setConfig(cfg);document.getElementById('g').appendChild(el);el.hass=hassOf(states);
   const got=[];el.addEventListener('hass-more-info',(e)=>got.push(e.detail.entityId));(sel?el.shadowRoot.querySelectorAll(sel):el.shadowRoot.querySelectorAll('[data-e]')).forEach((x)=>x.dispatchEvent(new MouseEvent('click',{bubbles:true,composed:true})));el.remove();return got.join();};
  let g=clicks('battery',{entity_soc:'sensor.bs',entity_power:'sensor.bp'},[mk('sensor.bs',60,{unit_of_measurement:'%'}),mk('sensor.bp',500,W)]); ok('battery tiles open more-info',g==='sensor.bp,sensor.bs,sensor.bs',g); // énergie et temps restant déduits du niveau : ouvrent le niveau
