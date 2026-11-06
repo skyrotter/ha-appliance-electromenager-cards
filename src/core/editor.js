@@ -42,6 +42,13 @@ const SEL = {
   zone_2: { entity: { domain: ["sensor", "number", "select", "input_number"] } },
   zone_3: { entity: { domain: ["sensor", "number", "select", "input_number"] } },
   zone_4: { entity: { domain: ["sensor", "number", "select", "input_number"] } },
+  // piscine : analyses de l'eau et pression du filtre
+  ph: { entity: { domain: ["sensor", "number", "input_number"] } },
+  orp: { entity: { domain: ["sensor", "number", "input_number"] } },
+  pressure: { entity: { domain: ["sensor", "number", "input_number"] } },
+  tds: { entity: { domain: ["sensor", "number", "input_number"] } },
+  salt: { entity: { domain: ["sensor", "number", "input_number"] } },
+  chlorine: { entity: { domain: ["sensor", "number", "input_number"] } },
   speed: { entity: { domain: ["sensor", "number", "input_number", "select"] } },
   target_humidity: { entity: { domain: ["sensor", "number", "input_number", "humidifier"] } },
   tank_full: { entity: { domain: ["binary_sensor", "input_boolean", "sensor"] } },
@@ -258,6 +265,8 @@ function buildForm(kind) {
             { name: "sun_entity", selector: { entity: { domain: "sun" } } },
           ] : []),
           ...(kind === "pool_pump" ? [
+            // mesures affichées en tuiles : chacune se coche / décoche (affichée si le capteur est renseigné)
+            ...["temperature", "ph", "orp", "pressure", "tds", "salt", "chlorine"].map((k) => ({ name: `show_${k}`, selector: { boolean: {} }, default: true })),
             { name: "max_power", selector: { number: { min: 100, max: 3000, step: 10, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
           ...(kind === "pellet_stove" ? [
