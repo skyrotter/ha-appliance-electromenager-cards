@@ -9238,8 +9238,10 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
 /* Fonctions partagées par les cartes autonomes (chargées avant elles, une seule fois).
  * window.applianceLang(T, cfg, hass)   → langue des textes : option language, sinon langue de Home Assistant,
  *                                        si elle existe dans T (sr-Latn, puis code à 2 lettres, no / nn → nb), sinon en.
- * window.applianceLocale(cfg, hass)    → locale des nombres et dates : option language, sinon langue de Home Assistant,
+ * window.applianceLocale(cfg, hass, dates) → locale des nombres et dates : option language, sinon langue de Home Assistant,
  *                                        même sans traduction (un utilisateur polonais garde « 1,5 »).
+ *                                        Pour les nombres, le réglage « Format des nombres » du profil HA (number_format) prime
+ *                                        sur la langue ; dates = true l'ignore.
  * window.applianceNum(st)              → valeur numérique d'un état (climate / water_heater : current_temperature), sinon NaN.
  * window.applianceWatts(st)            → puissance en W (kW et MW convertis), sinon NaN.
  */
@@ -9256,8 +9258,16 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
     if (l === 'no' || l === 'nn') l = 'nb'; // norvégien : no / nn → nb (bokmål)
     return T[l] ? l : 'en';
   };
-  window.applianceLocale = (cfg, hass) => {
-    const l = haLang(cfg, hass);
+  // Réglage « Format des nombres » du profil HA (hass.locale.number_format) → locale équivalente
+  const NUM_FMT = { comma_decimal: 'en-US', decimal_comma: 'de-DE', space_comma: 'fr-FR' };
+  window.applianceLocale = (cfg, hass, dates) => {
+    const h = hass || document.querySelector('home-assistant')?.hass;
+    let l = haLang(cfg, hass);
+    if (!dates && !(cfg && cfg.language) && h && h.locale) {
+      const nf = h.locale.number_format;
+      if (NUM_FMT[nf]) l = NUM_FMT[nf];
+      else if (nf === 'system' && typeof navigator !== 'undefined' && navigator.language) l = navigator.language;
+    }
     try { return Intl.NumberFormat.supportedLocalesOf(l).length ? l : 'en'; } catch (e) { return 'en'; }
   };
   window.applianceNum = (s) => {
@@ -15412,7 +15422,7 @@ class ApplianceRobotMowerCard extends HTMLElement {
     let next = null; const ns = this._st(c.entity_next_start);
     if (ns && !['unavailable', 'unknown'].includes(ns.state)) {
       const d = new Date(ns.state);
-      next = isNaN(d) ? ns.state : d.toLocaleString(window.applianceLocale(c, this._hass).replace(/^en$/, 'en-GB'), { weekday: 'short', hour: '2-digit', minute: '2-digit' });
+      next = isNaN(d) ? ns.state : d.toLocaleString(window.applianceLocale(c, this._hass, true).replace(/^en$/, 'en-GB'), { weekday: 'short', hour: '2-digit', minute: '2-digit' });
     }
     const it = [], compact = c.layout === 'compact';
     const stTxt = raining && st !== 'mowing' ? `${this._t(st)} · ${this._t('rain')}` : this._t(st);
