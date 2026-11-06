@@ -204,6 +204,7 @@
     "f_freezer_temperature": "Gefrierfach-Temperatursensor",
     "f_freezer_door": "Gefrierfach-Türsensor",
     "f_max_temperature": "Kühlschrankalarm über (°C)",
+    "f_temperature_unit": "Temperatureinheit (leer: automatisch)",
     "f_freezer_max_temperature": "Gefrierfachalarm über (°C)",
     "f_color": "Akzentfarbe (CSS)",
     "f_animations": "Animationen",

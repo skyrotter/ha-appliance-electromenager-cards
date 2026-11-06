@@ -220,6 +220,7 @@
     "f_freezer_temperature": "Senzor temperature zamrzivača",
     "f_freezer_door": "Senzor vrata zamrzivača",
     "f_max_temperature": "Obaveštenje za frižider iznad (°C)",
+    "f_temperature_unit": "Jedinica temperature (prazno: automatski)",
     "f_freezer_max_temperature": "Obaveštenje za zamrzivač iznad (°C)",
     "f_color": "Boja akcenta (CSS)",
     "f_animations": "Animacije",

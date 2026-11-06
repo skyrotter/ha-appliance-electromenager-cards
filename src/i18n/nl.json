@@ -204,6 +204,7 @@
     "f_freezer_temperature": "Temperatuursensor diepvries",
     "f_freezer_door": "Deursensor diepvries",
     "f_max_temperature": "Alarm koelkast boven (°C)",
+    "f_temperature_unit": "Temperatuureenheid (leeg: automatisch)",
     "f_freezer_max_temperature": "Alarm diepvries boven (°C)",
     "f_color": "Accentkleur (CSS)",
     "f_animations": "Animaties",

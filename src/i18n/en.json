@@ -220,6 +220,7 @@
     "f_freezer_temperature": "Freezer temperature sensor",
     "f_freezer_door": "Freezer door sensor",
     "f_max_temperature": "Fridge alert above (°C)",
+    "f_temperature_unit": "Temperature unit (empty: automatic)",
     "f_freezer_max_temperature": "Freezer alert above (°C)",
     "f_color": "Accent color (CSS)",
     "f_animations": "Animations",

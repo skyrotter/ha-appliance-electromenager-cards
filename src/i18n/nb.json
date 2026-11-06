@@ -274,6 +274,7 @@
 "f_freezer_temperature": "Temperatursensor fryser",
 "f_freezer_door": "Dørsensor fryser",
 "f_max_temperature": "Varsel kjøleskap over (°C)",
+"f_temperature_unit": "Temperaturenhet (tom: automatisk)",
 "f_freezer_max_temperature": "Varsel fryser over (°C)",
 "f_color": "Aksentfarge (CSS)",
 "f_animations": "Animasjoner",

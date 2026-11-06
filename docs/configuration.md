@@ -35,7 +35,7 @@ All cards have a visual editor. When added from the card picker, entities are de
 | `animations` | `false` to disable animations. By default the cards follow the "reduce animations" setting of the device (Windows: Accessibility → Visual effects → Animation effects; Android: Remove animations; iOS / macOS: Reduce motion); `true` keeps the core cards animated even when it is on |
 | `illustration_size` | Size of the drawing in % (30–300, default 100), on every card. In a sections dashboard, every card can also be resized with the mouse, from 3 columns wide and in height |
 | `transparent` | `true` removes the card background, shadow and border, so the dashboard background shows through, on every card |
-| `temperature_unit` | `C` or `F`: temperature unit of the aquarium, battery, pellet boiler, gas boiler, diesel heater, hot tub, pump, pool robot, sauna, underfloor heating and water heat pump cards. Default: the unit of Home Assistant. Sensors are converted from their own unit, and temperature thresholds are entered in this unit |
+| `temperature_unit` | `C` or `F`: temperature unit of the aquarium, battery, pellet boiler, gas boiler, diesel heater, hot tub, pump, pool robot, sauna, underfloor heating and water heat pump cards, and of the refrigerator, wine cooler and freezers (values are converted from each sensor's unit; `max_temperature`, `max_temperature_2`, `freezer_max_temperature` are then entered in this unit). Default: the unit of Home Assistant. Sensors are converted from their own unit, and temperature thresholds are entered in this unit |
 | `confirm_off` | Washer, dryer, dishwasher, pellet stove, 3D printer, freezers, desktop PC, server rack: `false` to turn off the safety confirmation (default `true`, see below) |
 | `confirm_always` | Any card with a `switch` (or power strip `outlets`): `true` to always ask for a second click before cutting the plug while it is on, even on appliances without a cycle (e.g. a computer on a smart plug). Checkbox in the visual editor. `confirm_off: always` does the same |
 
@@ -91,6 +91,7 @@ labels:
 | `temperature`, `door`, `freezer_max_temperature` (default −12 °C) | chest freezer, drawer freezer |
 | `power` (production), `energy` (today), `cost` (savings), `max_power` (peak Wp, default 3000), `sun_entity` (default `sun.sun`) | solar panels |
 | `speed` (select/sensor: text, level or %), `humidity`, `high_threshold` (default 35 W), `humidity_max` (default 70 %) | extractor fan (VMC) |
+| `humidity` (sensor, shown as a tile), `humidity_max` (optional alert threshold, no default) | wine cooler |
 | `zone_1`…`zone_4` (level 0–9, W or %), `zone_power` (default 1500 W), `residual_minutes` (default 10) | cooktop |
 | `mode` (pilot wire / select: comfort, comfort -1, comfort -2, eco, frost, off), `window`, `temperature`, `target_temperature`, `humidity`, `max_power` (default 1500 W) | electric radiator (`humidity` also on the heated towel rail; otherwise `current_humidity` of a `climate` entity) |
 | `max_temperature` (default 8), `freezer_max_temperature` (default −12) | fridge alerts |

@@ -702,6 +702,15 @@ ok('fridge door open + too warm',has(c,'door-open')&&has(c,'warm')&&/Trop chaud/
 ok('fridge door transform applied',getComputedStyle(c.sr.querySelector('.fr-door')).transform!=='none');
 c=card('fridge',{temperature:'sensor.t',freezer_temperature:'sensor.f',max_temperature:3},[mk('sensor.t',4,T),mk('sensor.f',-8,T)]);
 ok('fridge custom thresholds alert',has(c,'warm'),c.wrap.className);
+// temperature_unit (C / F) : valeurs converties depuis l'unité du capteur, seuils par défaut convertis
+{ const TF={unit_of_measurement:'°F',device_class:'temperature'};
+c=card('fridge',{temperature:'sensor.t',freezer_temperature:'sensor.f',temperature_unit:'F'},[mk('sensor.t',4,T),mk('sensor.f',-18,T)],'en');
+ok('fridge °C sensor shown in °F (39.2 °F)',/39\.2\s*°F/.test(c.sr.textContent)&&/-0\.4\s*°F/.test(c.sr.textContent)&&!has(c,'warm'),c.sr.textContent.replace(/\s+/g,' ').slice(0,200));
+c=card('fridge',{temperature:'sensor.t',temperature_unit:'F'},[mk('sensor.t',50,TF)],'en'); ok('fridge °F sensor, default 8 °C threshold = 46.4 °F -> alert',has(c,'warm'),c.wrap.className);
+c=card('fridge',{temperature:'sensor.t',temperature_unit:'C'},[mk('sensor.t',39.2,TF)],'en'); ok('fridge °F sensor shown in °C, no alert',/4\s*°C/.test(c.sr.textContent)&&!has(c,'warm'),c.sr.textContent.replace(/\s+/g,' ').slice(0,200));
+c=card('fridge',{temperature:'sensor.t'},[mk('sensor.t',4,T)],'en'); ok('fridge without temperature_unit unchanged (4 °C)',/4\s*°C/.test(c.sr.textContent)); }
+c=card('wine-cooler',{temperature:'sensor.t',humidity:'sensor.h',humidity_max:75},[mk('sensor.t',12,T),mk('sensor.h',82,{unit_of_measurement:'%',device_class:'humidity'})],'en'); ok('wine cooler humidity tile + alert above humidity_max',/82\s*%/.test(c.sr.textContent)&&has(c,'warm')===false&&/humid/i.test(c.txt()),c.txt());
+c=card('wine-cooler',{temperature:'sensor.t',humidity:'sensor.h'},[mk('sensor.t',12,T),mk('sensor.h',82,{unit_of_measurement:'%',device_class:'humidity'})],'en'); ok('wine cooler humidity: no alert without humidity_max',/82\s*%/.test(c.sr.textContent)&&!/humid/i.test(c.txt()),c.txt());
 c=card('fridge',{power:'sensor.p',freezer_door:'binary_sensor.fz'},[mk('sensor.p',1,W),mk('binary_sensor.fz','on')]); ok('freezer door open',has(c,'fz-open'));
 // fridge layouts
 ['top','bottom','french','american'].forEach(st=>{c=card('fridge',{style:st,power:'sensor.p',temperature:'sensor.t',door:'binary_sensor.d'},[mk('sensor.p',90,W),mk('sensor.t',4,T),mk('binary_sensor.d','on')]);

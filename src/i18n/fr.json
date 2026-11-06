@@ -220,6 +220,7 @@
     "f_freezer_temperature": "Capteur température congélateur",
     "f_freezer_door": "Capteur porte congélateur",
     "f_max_temperature": "Alerte frigo au-dessus de (°C)",
+    "f_temperature_unit": "Unité de température (vide : automatique)",
     "f_freezer_max_temperature": "Alerte congélateur au-dessus de (°C)",
     "f_color": "Couleur d'accent (CSS)",
     "f_animations": "Animations",

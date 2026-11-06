@@ -204,6 +204,7 @@
     "f_freezer_temperature": "Senzor temperatură congelator",
     "f_freezer_door": "Senzor ușă congelator",
     "f_max_temperature": "Alertă frigider peste (°C)",
+    "f_temperature_unit": "Unitate de temperatură (gol: automat)",
     "f_freezer_max_temperature": "Alertă congelator peste (°C)",
     "f_color": "Culoare de accent (CSS)",
     "f_animations": "Animații",

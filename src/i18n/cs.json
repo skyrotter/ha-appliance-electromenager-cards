@@ -219,6 +219,7 @@
     "f_freezer_temperature": "Senzor teploty mrazáku",
     "f_freezer_door": "Senzor dvířek mrazáku",
     "f_max_temperature": "Upozornění chladničky nad (°C)",
+    "f_temperature_unit": "Jednotka teploty (prázdné: automaticky)",
     "f_freezer_max_temperature": "Upozornění mrazáku nad (°C)",
     "f_color": "Barva zvýraznění (CSS)",
     "f_animations": "Animace",
