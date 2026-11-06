@@ -6,7 +6,7 @@ A motorised smart lock (Nuki or any `lock` entity) mounted on the inside of the 
 
 | Model | Look |
 |---|---|
-| `nuki_3_pro` (default) | Nuki Smart Lock 3.0 Pro: white body, stainless knob on top |
+| `nuki_3_pro` (default) | Nuki Smart Lock 3.0 Pro: cut-out photo, white body and stainless knob |
 | `nuki_pro_5` | Nuki Smart Lock Pro (5th generation): cut-out photo of the stainless and white cylinder |
 
 Animations: the lock stands on a soft halo in the state colour (green locked, orange unlocked, blue unlatched, red jammed). The LED ring takes the same colour and its segments turn while the motor runs, the knob's reflections turn with the key, waves leave the knob when unlatched and the padlock's shackle lifts. A small door icon appears when the door sensor reports the door open. Jammed: the lock shakes and a warning sign blinks. Low battery: a battery pictogram blinks.
