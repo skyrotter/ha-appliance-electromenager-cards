@@ -893,6 +893,8 @@
     "lcd_color": "Screen colour",
     "tap_action": "Tap action",
     "hold_action": "Hold action",
+    "header": "Header (name / icon / both)",
+    "minimal": "Minimal (dial only)",
     "entity_unlatch": "Unlatch button (optional)",
     "entity_lock_n_go": "Lock 'n' Go button",
     "entity_lock_n_go_unlatch": "Lock 'n' Go with unlatch button",

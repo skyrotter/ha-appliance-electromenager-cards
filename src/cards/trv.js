@@ -56,7 +56,7 @@
       <path class="tv-arc" id="tvarc" d="${ARC}" fill="none" stroke-width="10" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100"/>
       <text class="tv-txt" id="tvmode" x="199" y="128" text-anchor="middle" font-size="20" font-weight="600" letter-spacing="2" opacity=".85"></text>
       <text class="tv-txt tv-big" id="tvbig" x="199" y="236" text-anchor="middle" font-size="104" font-weight="400">--</text>
-      <text class="tv-txt" id="tvsmall" x="199" y="290" text-anchor="middle" font-size="24" opacity=".75">--</text>
+      <text class="tv-txt" id="tvsmall" x="199" y="304" text-anchor="middle" font-size="42" font-weight="500" opacity=".9">--</text>
       ${SNOW(199, 110, 26, '#7cc4ff')}` },
     // Tado X thermostat mural : chiffres en points blancs sur la façade
     tado: { w: 435, h: 416, big: 'current', glow: [217, 208, 260, 250], svg: () => `
@@ -263,11 +263,19 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card, k = this._compute(), u = this._unit();
       card.className = `${k.st}${c.animations === false ? ' noanim' : ''}`;
-      r.getElementById('tvtitle').textContent = c.name || (k.cs && k.cs.attributes.friendly_name) || this._t('name');
+      // en-tête : nom (défaut), icône seule ou les deux (header: name / icon / both, icône au choix avec icon)
+      const hd = ['icon', 'both'].includes(c.header) ? c.header : 'name', title = r.getElementById('tvtitle');
+      const nm = c.name || (k.cs && k.cs.attributes.friendly_name) || this._t('name');
+      title.replaceChildren();
+      if (hd !== 'name') { const ic = document.createElement('ha-icon'); ic.setAttribute('icon', c.icon || 'mdi:thermostat'); ic.style.cssText = 'margin-right:6px;--mdc-icon-size:20px'; title.appendChild(ic); title.title = nm; }
+      if (hd !== 'icon') title.append(nm);
+      // mode minimal : seulement le cadran (et l'en-tête) ; un tap_action navigate ouvre une fenêtre avec toutes les infos
+      const mini = c.minimal === true;
+      r.querySelector('.tiles').style.display = mini ? 'none' : '';
       const badge = r.getElementById('tvbadge');
-      badge.textContent = this._t(k.st); badge.style.display = c.show_status === false ? 'none' : '';
+      badge.textContent = this._t(k.st); badge.style.display = c.show_status === false || mini ? 'none' : '';
       const al = r.getElementById('tvalert');
-      al.textContent = k.win ? this._t('window_alert') : ''; al.classList.toggle('on', !!al.textContent);
+      al.textContent = k.win && !mini ? this._t('window_alert') : ''; al.classList.toggle('on', !!al.textContent);
 
       // écran : consigne en grand (OFF si éteinte), température mesurée en petit
       const shown = this._pending != null ? this._pending : k.target;
@@ -295,11 +303,12 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       r.getElementById('tvsl').textContent = k.off ? this._t('off') : this._l('target');
       const tb = r.getElementById('tvt'); tb.textContent = fin(shown) ? `${this._fmt(shown, step < 1 ? 1 : 0)} ${u}` : '--'; tb.classList.toggle('pending', this._pending != null);
       r.getElementById('tvm').disabled = r.getElementById('tvp').disabled = k.dead || k.off || !fin(k.target);
+      r.getElementById('tvsetrow').style.display = mini ? 'none' : '';
 
       // boutons de mode : modes proposés par la tête, dans l'ordre de Home Assistant
       const box = r.getElementById('tvmodes');
       const modes = Array.isArray(k.a.hvac_modes) ? [...k.a.hvac_modes].sort((x, y) => (HVAC_ORDER.indexOf(x) + 1 || 99) - (HVAC_ORDER.indexOf(y) + 1 || 99)) : [];
-      box.hidden = c.show_hvac_modes === false || modes.length < 2;
+      box.hidden = c.show_hvac_modes === false || modes.length < 2 || mini;
       if (!box.hidden) {
         const key = modes.join(',');
         if (box.dataset.k !== key) { box.dataset.k = key; box.innerHTML = modes.map((m) => `<button type="button" data-m="${esc(m)}"><ha-icon icon="${HVAC_ICON[m] || 'mdi:thermostat'}"></ha-icon></button>`).join(''); }
@@ -371,9 +380,10 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ent('entity_window', ['binary_sensor', 'input_boolean']), ent('entity_battery', ['sensor', 'binary_sensor']), ent('entity_valve_position', ['sensor', 'number']),
+        { type: 'grid', name: '', schema: [{ name: 'header', selector: { select: { mode: 'dropdown', options: ['name', 'icon', 'both'] } } }, { name: 'icon', selector: { icon: {} } }] },
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
-        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_hvac_modes'), bool('show_temperature'), bool('show_valve'), bool('show_battery'), bool('show_window'), bool('animations')] },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_hvac_modes'), bool('show_temperature'), bool('show_valve'), bool('show_battery'), bool('show_window'), { name: 'minimal', selector: { boolean: {} } }, bool('animations')] },
       ];
       // « model » : libellé propre à la carte (le libellé partagé de l'éditeur parle d'un modèle de détecteur)
       this._form.computeLabel = (s) => (s.name === 'model' ? (T[lang] || T.en).model || T.en.model : window.applianceEditorLabel(s.name, this._hass));

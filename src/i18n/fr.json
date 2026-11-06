@@ -893,6 +893,8 @@
     "lcd_color": "Couleur de l'écran",
     "tap_action": "Action au clic",
     "hold_action": "Action appui long",
+    "header": "En-tête (name / icon / both)",
+    "minimal": "Minimal (cadran seul)",
     "entity_unlatch": "Bouton Ouvrir / unlatch (facultatif)",
     "entity_lock_n_go": "Bouton Lock 'n' Go",
     "entity_lock_n_go_unlatch": "Bouton Lock 'n' Go avec ouverture",
@@ -1062,7 +1064,7 @@
   },
   "trv": {
     "name": "Tête thermostatique",
-    "idle": "Consigne atteinte",
+    "idle": "En pause",
     "heating": "En chauffe",
     "off": "Éteinte",
     "window": "Fenêtre ouverte",

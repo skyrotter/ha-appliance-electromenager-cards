@@ -876,6 +876,8 @@
     "lcd_color": "Colore dello schermo",
     "tap_action": "Azione al tocco",
     "hold_action": "Azione pressione lunga",
+    "header": "Intestazione (name / icon / both)",
+    "minimal": "Minimale (solo quadrante)",
     "entity_unlatch": "Pulsante apertura (facoltativo)",
     "entity_lock_n_go": "Pulsante Lock 'n' Go",
     "entity_lock_n_go_unlatch": "Pulsante Lock 'n' Go con apertura",

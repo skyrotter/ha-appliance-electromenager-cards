@@ -876,6 +876,8 @@
     "lcd_color": "Culoarea ecranului",
     "tap_action": "Acțiune la atingere",
     "hold_action": "Acțiune la apăsare lungă",
+    "header": "Antet (name / icon / both)",
+    "minimal": "Minimal (doar cadranul)",
     "entity_unlatch": "Buton deschidere (opțional)",
     "entity_lock_n_go": "Buton Lock 'n' Go",
     "entity_lock_n_go_unlatch": "Buton Lock 'n' Go cu deschidere",

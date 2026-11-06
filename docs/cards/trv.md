@@ -12,6 +12,8 @@ It works with the `climate` entity of any smart radiator valve (Zigbee2MQTT, ZHA
 | `entity_battery` | battery (`sensor` %, or a low-battery `binary_sensor`). Without it, the `battery` attribute of the valve is used |
 | `entity_valve_position` | valve opening in % (`sensor` / `number`). Without it, the `pi_heating_demand` / `valve_position` attribute is used |
 | `show_hvac_modes` | mode buttons (off, heat, auto…), only the modes the valve offers (default `true`) |
+| `header` | `name` (default), `icon` or `both`: what the header shows. The icon is `icon` (default `mdi:thermostat`) |
+| `minimal` | `true` shows only the header and the dial (no badge, buttons or tiles). Combine with `tap_action: navigate` to open a page or pop-up with all the details |
 | `show_status`, `show_temperature`, `show_valve`, `show_battery`, `show_window`, `animations`, `labels`, `language`, `illustration_size`, `transparent` | |
 
 **Target**: **− / +** buttons, sent 0.8 s after the last tap, respecting the valve's step and limits.

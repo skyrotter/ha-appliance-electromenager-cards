@@ -876,6 +876,8 @@
     "lcd_color": "Цвет экрана",
     "tap_action": "Действие при нажатии",
     "hold_action": "Действие при удержании",
+    "header": "Заголовок (name / icon / both)",
+    "minimal": "Минимум (только циферблат)",
     "entity_unlatch": "Кнопка открытия (необязательно)",
     "entity_lock_n_go": "Кнопка Lock 'n' Go",
     "entity_lock_n_go_unlatch": "Кнопка Lock 'n' Go с открытием",

@@ -876,6 +876,8 @@
     "lcd_color": "Displayfarbe",
     "tap_action": "Tippen-Aktion",
     "hold_action": "Halten-Aktion",
+    "header": "Kopfzeile (name / icon / both)",
+    "minimal": "Minimal (nur Anzeige)",
     "entity_unlatch": "Öffnen-Taste (optional)",
     "entity_lock_n_go": "Lock 'n' Go-Taste",
     "entity_lock_n_go_unlatch": "Lock 'n' Go mit Öffnen-Taste",

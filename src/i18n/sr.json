@@ -892,6 +892,8 @@
     "lcd_color": "Боја екрана",
     "tap_action": "Акција на додир",
     "hold_action": "Акција на дуги притисак",
+    "header": "Заглавље (name / icon / both)",
+    "minimal": "Минимално (само бројчаник)",
     "entity_unlatch": "Дугме за отварање (опционо)",
     "entity_lock_n_go": "Дугме Lock 'n' Go",
     "entity_lock_n_go_unlatch": "Дугме Lock 'n' Go са отварањем",
