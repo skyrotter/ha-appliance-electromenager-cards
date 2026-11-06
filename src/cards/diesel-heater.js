@@ -237,6 +237,7 @@ svg{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));height
       for (let i = 0; i < 9; i++) ho += `<circle cx="${(77 + i * 6).toFixed(0)}" cy="164.5" r="1.1"/>`;
       root.getElementById('dhcrown').innerHTML = cr;
       root.getElementById('dhholes').innerHTML = ho;
+      window.applianceBindIllus(this, root.querySelector('svg'), () => { const c = this._c; window.applianceMore(this, c.entity_temp || c.entity_power); });
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
 
@@ -354,6 +355,7 @@ svg{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));height
           { name: 'fuel_alert', selector: { number: { min: 0, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
         ] },
         window.applianceTempField,
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           { name: 'show_status', selector: { boolean: {} }, default: true }, { name: 'show_power', selector: { boolean: {} }, default: true },

@@ -891,6 +891,7 @@
     "icon": "Икона собе",
     "lcd_color": "Боја екрана",
     "tap_action": "Акција на додир",
+    "hold_action": "Акција на дуги притисак",
     "navigation_path": "Страница за отварање (нпр. /lovelace/climate)",
     "entity_climate": "Повезани термостат",
     "color_comfort": "Боја: комфорно",

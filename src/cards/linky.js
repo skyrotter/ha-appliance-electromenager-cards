@@ -56,6 +56,7 @@ class ApplianceLinkyCard extends HTMLElement {
           { name: 'show_tariff', selector: { boolean: {} }, default: true },
           { name: 'show_cost', selector: { boolean: {} }, default: true },
         ] },
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(I18N_LINKY) } } },
       ],
       computeLabel: (s) => window.applianceEditorLabel(s.name),
@@ -190,7 +191,7 @@ class ApplianceLinkyCard extends HTMLElement {
     const sr = this.shadowRoot, c0 = this._config, more = (id) => window.applianceMore(this, id);
     const lcd = sr.querySelector('.lcd'); lcd.style.cursor = 'pointer'; lcd.onclick = () => more(this._pageId);
     const g = sr.getElementById('gaugebox').querySelector('svg'); g.style.cursor = 'pointer';
-    g.onclick = () => more(c0.entity_power || c0.entity_active_power || c0.entity_power_l1);
+    window.applianceBindIllus(this, g, () => more(c0.entity_power || c0.entity_active_power || c0.entity_power_l1));
     [1, 2, 3].forEach((i) => ['phl', 'phv'].forEach((k) => { const e = sr.getElementById(`${k}${i}`); e.style.cursor = 'pointer'; e.onclick = () => more(c0[`entity_power_l${i}`]); }));
     this._built = true;
   }

@@ -892,6 +892,7 @@
     "icon": "Room icon",
     "lcd_color": "Screen colour",
     "tap_action": "Tap action",
+    "hold_action": "Hold action",
     "navigation_path": "Page to open (e.g. /lovelace/climate)",
     "entity_climate": "Linked thermostat",
     "color_comfort": "Colour: comfortable",

@@ -51,6 +51,7 @@ class AppliancePelletBoilerCard extends HTMLElement {
           { name: 'show_pellets', selector: { boolean: {} }, default: true },
           { name: 'show_status', selector: { boolean: {} }, default: true },
         ] },
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(I18N_PB) } } },
       ],
       computeLabel: (s) => window.applianceEditorLabel(s.name),
@@ -198,6 +199,7 @@ class AppliancePelletBoilerCard extends HTMLElement {
       </svg>
       <div class="stats" id="stats"></div>
     </ha-card>`;
+    window.applianceBindIllus(this, this.shadowRoot.getElementById('svg'), () => window.applianceMore(this, this._config.entity_status || this._config.entity_power));
     this._built = true;
   }
 

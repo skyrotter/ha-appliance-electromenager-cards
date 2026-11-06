@@ -892,6 +892,7 @@
     "icon": "Icône de la pièce",
     "lcd_color": "Couleur de l'écran",
     "tap_action": "Action au clic",
+    "hold_action": "Action appui long",
     "navigation_path": "Page à ouvrir (ex. /lovelace/climat)",
     "entity_climate": "Thermostat lié",
     "color_comfort": "Couleur : confort",

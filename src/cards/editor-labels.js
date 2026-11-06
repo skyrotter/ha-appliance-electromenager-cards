@@ -67,5 +67,52 @@
     box.addEventListener('click', go);
     box.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(e); } });
   };
+  // Actions Home Assistant sur l'illustration (tap_action / hold_action, appui long 0,5 s) — cartes autonomes.
+  // Champs à ajouter au schéma de l'éditeur : ...window.applianceActionFields
+  const ACT = ['more-info', 'toggle', 'navigate', 'url', 'perform-action', 'none'];
+  window.applianceActionFields = ['tap_action', 'hold_action'].map((name) => ({ name, selector: { ui_action: { actions: ACT } } }));
+  // entité par défaut d'une action : « entity », sinon la première option entity_* renseignée
+  const dfltEntity = (c) => {
+    if (!c) return '';
+    if (typeof c.entity === 'string' && c.entity) return c.entity;
+    const k = Object.keys(c).find((n) => /^entity_/.test(n) && typeof c[n] === 'string' && c[n]);
+    return k ? c[k] : '';
+  };
+  // exécute une action : more-info / toggle / none gérés ici, le reste (navigate, url, perform-action…) confié à Home Assistant
+  window.applianceRunAction = (el, a) => {
+    const c = el._c || el._config, hass = el._hass;
+    const type = typeof a === 'string' ? a : a && a.action;
+    if (!type || type === 'none' || !hass) return;
+    const id = (a && a.entity) || dfltEntity(c);
+    if (type === 'more-info') { window.applianceMore(el, id); return; }
+    if (type === 'toggle' && id) {
+      const d = id.split('.')[0];
+      hass.callService(['light', 'switch', 'input_boolean', 'fan'].includes(d) ? d : 'homeassistant', 'toggle', { entity_id: id });
+      return;
+    }
+    el.dispatchEvent(new CustomEvent('hass-action', { detail: { config: { entity: id, tap_action: typeof a === 'string' ? { action: a } : a }, action: 'tap' }, bubbles: true, composed: true }));
+  };
+  // branche l'illustration : clic → tap_action (sinon fallback, la fiche de l'entité), appui long → hold_action
+  window.applianceBindIllus = (el, target, fallback) => {
+    if (!target || target._applianceActions) return;
+    target._applianceActions = true;
+    const cfg = () => el._c || el._config || {};
+    let timer, held = false;
+    const stop = () => clearTimeout(timer);
+    target.addEventListener('click', () => {
+      if (held) { held = false; return; } // clic qui suit un appui long : ignoré
+      const c = cfg();
+      if (c.tap_action) window.applianceRunAction(el, c.tap_action); else if (fallback) fallback();
+    });
+    target.addEventListener('pointerdown', (ev) => {
+      held = false;
+      const c = cfg();
+      if (!c.hold_action || (ev.button != null && ev.button > 0)) return;
+      stop();
+      timer = setTimeout(() => { held = true; window.applianceRunAction(el, c.hold_action); }, 500);
+    });
+    ['pointerup', 'pointerleave', 'pointercancel'].forEach((t) => target.addEventListener(t, stop));
+    target.addEventListener('contextmenu', (ev) => { if (cfg().hold_action) ev.preventDefault(); });
+  };
   window.applianceEditorLabel = (name, hass) => (name ? (L[lang(hass)] || L.en)[name] ?? L.en[name] ?? human(name) : '');
 })();

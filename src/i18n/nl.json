@@ -875,6 +875,7 @@
     "icon": "Kamerpictogram",
     "lcd_color": "Schermkleur",
     "tap_action": "Tikactie",
+    "hold_action": "Vasthoudactie",
     "navigation_path": "Te openen pagina (bijv. /lovelace/klimaat)",
     "entity_climate": "Gekoppelde thermostaat",
     "color_comfort": "Kleur: comfortabel",

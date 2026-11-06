@@ -173,7 +173,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         <div class="ctl" id="lkctl"><button id="lkvalve"><ha-icon icon="mdi:valve"></ha-icon><span></span></button><button id="lksiren"><ha-icon icon="mdi:volume-off"></ha-icon><span></span></button></div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
-      root.querySelector('svg').addEventListener('click', () => { const { wet, probes } = this._compute(); this._more(wet[0] || probes[0]); });
+      window.applianceBindIllus(this, root.querySelector('svg'), () => { const { wet, probes } = this._compute(); this._more(wet[0] || probes[0]); });
       root.getElementById('lkvalve').addEventListener('click', () => {
         const id = this._c.entity_valve; if (!this._hass || !id) return;
         const dom = id.split('.')[0];
@@ -272,6 +272,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         { name: 'freeze_temp', default: 3, selector: { number: { min: -30, max: 40, step: 0.5, mode: 'box' } } },
         window.applianceTempField,
         ent('entity_humidity', 'sensor'),
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_since'), bool('show_probes'), bool('show_battery'), bool('show_temperature'), bool('show_humidity'), bool('show_buttons'), bool('animations')] },
       ].filter(Boolean);

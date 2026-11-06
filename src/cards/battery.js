@@ -60,6 +60,7 @@ class ApplianceBatteryCard extends HTMLElement {
         window.applianceTempField,
         { name: 'layout', selector: { select: { mode: 'dropdown', options: ['default', 'split'] } } },
         { name: 'status_position', selector: { select: { mode: 'dropdown', options: ['auto', 'inside', 'below'] } } },
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(I18N_BAT) } } },
       ],
       computeLabel: (s) => window.applianceEditorLabel(s.name),
@@ -170,6 +171,7 @@ class ApplianceBatteryCard extends HTMLElement {
       <div class="status-line" id="statusline"></div>
       <div class="stats" id="stats"></div>
     </ha-card>`;
+    window.applianceBindIllus(this, this.shadowRoot.getElementById('svg'), () => window.applianceMore(this, this._config.entity_soc || this._config.entity_power));
     this._built = true;
   }
 

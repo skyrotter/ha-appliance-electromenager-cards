@@ -201,7 +201,7 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
         <div class="ctl" id="sdctl"><button id="sdtest"><ha-icon icon="mdi:gesture-tap-button"></ha-icon><span></span></button><button class="red" id="sdmute"><ha-icon icon="mdi:volume-off"></ha-icon><span></span></button></div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
-      root.querySelector('svg').addEventListener('click', () => this._more(this._c.entity_smoke || this._c.entity_co));
+      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity_smoke || this._c.entity_co));
       root.getElementById('sdtest').addEventListener('click', () => this._call(this._c.entity_test_button, true));
       root.getElementById('sdmute').addEventListener('click', () => this._call(this._c.entity_silence, false));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
@@ -291,6 +291,7 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
         { name: 'battery_low', default: 20, selector: { number: { min: 1, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
         ent('entity_temperature', 'sensor'),
         window.applianceTempField,
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_since'), bool('show_co'), bool('show_battery'), bool('show_temperature'), bool('show_buttons'), bool('animations')] },
       ].filter(Boolean);

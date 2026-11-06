@@ -190,6 +190,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
           ] },
           { type: 'grid', name: '', schema: SHOW.map((name) => ({ name, selector: { boolean: {} }, default: true })) },
           window.applianceTempField,
+          ...window.applianceActionFields,
           { name: 'language', selector: { select: { options: Object.keys(T) } } },
         ],
         computeLabel: (s) => window.applianceEditorLabel(s.name),
@@ -283,6 +284,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
         ${SVG}
         <div class="tiles" id="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </div></ha-card>`;
+      window.applianceBindIllus(this, root.querySelector('svg'), () => { const c = this._c; window.applianceMore(this, c.entity_status || c.entity_power); });
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
 

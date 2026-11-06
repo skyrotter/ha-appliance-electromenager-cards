@@ -875,6 +875,7 @@
 "icon": "Romikon",
 "lcd_color": "Skjermfarge",
 "tap_action": "Trykkhandling",
+"hold_action": "Holdhandling",
 "navigation_path": "Side som åpnes (f.eks. /lovelace/klima)",
 "entity_climate": "Tilknyttet termostat",
 "color_comfort": "Farge: komfortabelt",

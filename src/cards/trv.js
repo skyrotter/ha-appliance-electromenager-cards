@@ -225,7 +225,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         <div class="modes" id="tvmodes" role="group" hidden></div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
-      root.querySelector('svg').addEventListener('click', () => this._more(this._c.entity));
+      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity));
       root.getElementById('tvsl').addEventListener('click', () => this._more(this._c.entity));
       root.getElementById('tvm').addEventListener('click', () => this._step(-1));
       root.getElementById('tvp').addEventListener('click', () => this._step(1));
@@ -371,6 +371,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ent('entity_window', ['binary_sensor', 'input_boolean']), ent('entity_battery', ['sensor', 'binary_sensor']), ent('entity_valve_position', ['sensor', 'number']),
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_hvac_modes'), bool('show_temperature'), bool('show_valve'), bool('show_battery'), bool('show_window'), bool('animations')] },
       ];

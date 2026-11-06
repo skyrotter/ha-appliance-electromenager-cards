@@ -9400,6 +9400,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "icon": "Room icon",
       "lcd_color": "Screen colour",
       "tap_action": "Tap action",
+      "hold_action": "Hold action",
       "navigation_path": "Page to open (e.g. /lovelace/climate)",
       "entity_climate": "Linked thermostat",
       "color_comfort": "Colour: comfortable",
@@ -9675,6 +9676,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "icon": "Raumsymbol",
       "lcd_color": "Displayfarbe",
       "tap_action": "Tippen-Aktion",
+      "hold_action": "Halten-Aktion",
       "navigation_path": "Zu öffnende Seite (z. B. /lovelace/klima)",
       "entity_climate": "Verknüpftes Thermostat",
       "color_comfort": "Farbe: behaglich",
@@ -9950,6 +9952,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "icon": "Icône de la pièce",
       "lcd_color": "Couleur de l'écran",
       "tap_action": "Action au clic",
+      "hold_action": "Action appui long",
       "navigation_path": "Page à ouvrir (ex. /lovelace/climat)",
       "entity_climate": "Thermostat lié",
       "color_comfort": "Couleur : confort",
@@ -10225,6 +10228,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "icon": "Icona della stanza",
       "lcd_color": "Colore dello schermo",
       "tap_action": "Azione al tocco",
+      "hold_action": "Azione pressione lunga",
       "navigation_path": "Pagina da aprire (es. /lovelace/clima)",
       "entity_climate": "Termostato collegato",
       "color_comfort": "Colore: confortevole",
@@ -10500,6 +10504,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "icon": "Romikon",
       "lcd_color": "Skjermfarge",
       "tap_action": "Trykkhandling",
+      "hold_action": "Holdhandling",
       "navigation_path": "Side som åpnes (f.eks. /lovelace/klima)",
       "entity_climate": "Tilknyttet termostat",
       "color_comfort": "Farge: komfortabelt",
@@ -10775,6 +10780,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "icon": "Kamerpictogram",
       "lcd_color": "Schermkleur",
       "tap_action": "Tikactie",
+      "hold_action": "Vasthoudactie",
       "navigation_path": "Te openen pagina (bijv. /lovelace/klimaat)",
       "entity_climate": "Gekoppelde thermostaat",
       "color_comfort": "Kleur: comfortabel",
@@ -11050,6 +11056,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "icon": "Pictograma camerei",
       "lcd_color": "Culoarea ecranului",
       "tap_action": "Acțiune la atingere",
+      "hold_action": "Acțiune la apăsare lungă",
       "navigation_path": "Pagina de deschis (ex. /lovelace/climat)",
       "entity_climate": "Termostat asociat",
       "color_comfort": "Culoare: confortabil",
@@ -11325,6 +11332,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "icon": "Значок комнаты",
       "lcd_color": "Цвет экрана",
       "tap_action": "Действие при нажатии",
+      "hold_action": "Действие при удержании",
       "navigation_path": "Открываемая страница (напр. /lovelace/climate)",
       "entity_climate": "Связанный термостат",
       "color_comfort": "Цвет: комфортно",
@@ -11600,6 +11608,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "icon": "Икона собе",
       "lcd_color": "Боја екрана",
       "tap_action": "Акција на додир",
+      "hold_action": "Акција на дуги притисак",
       "navigation_path": "Страница за отварање (нпр. /lovelace/climate)",
       "entity_climate": "Повезани термостат",
       "color_comfort": "Боја: комфорно",
@@ -11875,6 +11884,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "icon": "Ikona sobe",
       "lcd_color": "Boja ekrana",
       "tap_action": "Akcija na dodir",
+      "hold_action": "Akcija na dugi pritisak",
       "navigation_path": "Stranica za otvaranje (npr. /lovelace/climate)",
       "entity_climate": "Povezani termostat",
       "color_comfort": "Boja: komforno",
@@ -11982,6 +11992,53 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
     const go = (e) => { const t = e.target.closest && e.target.closest('[data-e]'); if (t && box.contains(t)) { e.stopPropagation(); window.applianceMore(el, t.dataset.e); } };
     box.addEventListener('click', go);
     box.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(e); } });
+  };
+  // Actions Home Assistant sur l'illustration (tap_action / hold_action, appui long 0,5 s) — cartes autonomes.
+  // Champs à ajouter au schéma de l'éditeur : ...window.applianceActionFields
+  const ACT = ['more-info', 'toggle', 'navigate', 'url', 'perform-action', 'none'];
+  window.applianceActionFields = ['tap_action', 'hold_action'].map((name) => ({ name, selector: { ui_action: { actions: ACT } } }));
+  // entité par défaut d'une action : « entity », sinon la première option entity_* renseignée
+  const dfltEntity = (c) => {
+    if (!c) return '';
+    if (typeof c.entity === 'string' && c.entity) return c.entity;
+    const k = Object.keys(c).find((n) => /^entity_/.test(n) && typeof c[n] === 'string' && c[n]);
+    return k ? c[k] : '';
+  };
+  // exécute une action : more-info / toggle / none gérés ici, le reste (navigate, url, perform-action…) confié à Home Assistant
+  window.applianceRunAction = (el, a) => {
+    const c = el._c || el._config, hass = el._hass;
+    const type = typeof a === 'string' ? a : a && a.action;
+    if (!type || type === 'none' || !hass) return;
+    const id = (a && a.entity) || dfltEntity(c);
+    if (type === 'more-info') { window.applianceMore(el, id); return; }
+    if (type === 'toggle' && id) {
+      const d = id.split('.')[0];
+      hass.callService(['light', 'switch', 'input_boolean', 'fan'].includes(d) ? d : 'homeassistant', 'toggle', { entity_id: id });
+      return;
+    }
+    el.dispatchEvent(new CustomEvent('hass-action', { detail: { config: { entity: id, tap_action: typeof a === 'string' ? { action: a } : a }, action: 'tap' }, bubbles: true, composed: true }));
+  };
+  // branche l'illustration : clic → tap_action (sinon fallback, la fiche de l'entité), appui long → hold_action
+  window.applianceBindIllus = (el, target, fallback) => {
+    if (!target || target._applianceActions) return;
+    target._applianceActions = true;
+    const cfg = () => el._c || el._config || {};
+    let timer, held = false;
+    const stop = () => clearTimeout(timer);
+    target.addEventListener('click', () => {
+      if (held) { held = false; return; } // clic qui suit un appui long : ignoré
+      const c = cfg();
+      if (c.tap_action) window.applianceRunAction(el, c.tap_action); else if (fallback) fallback();
+    });
+    target.addEventListener('pointerdown', (ev) => {
+      held = false;
+      const c = cfg();
+      if (!c.hold_action || (ev.button != null && ev.button > 0)) return;
+      stop();
+      timer = setTimeout(() => { held = true; window.applianceRunAction(el, c.hold_action); }, 500);
+    });
+    ['pointerup', 'pointerleave', 'pointercancel'].forEach((t) => target.addEventListener(t, stop));
+    target.addEventListener('contextmenu', (ev) => { if (cfg().hold_action) ev.preventDefault(); });
   };
   window.applianceEditorLabel = (name, hass) => (name ? (L[lang(hass)] || L.en)[name] ?? L.en[name] ?? human(name) : '');
 })();
@@ -12144,6 +12201,7 @@ class ApplianceAquariumCard extends HTMLElement {
           { name: 'show_temperature', selector: { boolean: {} }, default: true },
           { name: 'show_cost', selector: { boolean: {} }, default: true },
         ] },
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(I18N_AQUARIUM) } } },
       ],
       computeLabel: (s) => window.applianceEditorLabel(s.name),
@@ -12280,7 +12338,7 @@ class ApplianceAquariumCard extends HTMLElement {
     const root = this.shadowRoot;
     root.getElementById('stats').addEventListener('click', (e) => { const t = e.target.closest('[data-e]'); if (t) this._more(t.dataset.e); });
     root.getElementById('stats').addEventListener('keydown', (e) => { const t = e.target.closest('[data-e]'); if (t && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); this._more(t.dataset.e); } });
-    root.querySelector('svg').addEventListener('click', () => { const c2 = this._config; this._more(c2.entity_light || c2.entity_temperature || c2.entity_power); });
+    window.applianceBindIllus(this, root.querySelector('svg'), () => { const c2 = this._config; this._more(c2.entity_light || c2.entity_temperature || c2.entity_power); });
     this._built = true;
   }
 
@@ -12591,6 +12649,7 @@ class ApplianceLinkyCard extends HTMLElement {
           { name: 'show_tariff', selector: { boolean: {} }, default: true },
           { name: 'show_cost', selector: { boolean: {} }, default: true },
         ] },
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(I18N_LINKY) } } },
       ],
       computeLabel: (s) => window.applianceEditorLabel(s.name),
@@ -12725,7 +12784,7 @@ class ApplianceLinkyCard extends HTMLElement {
     const sr = this.shadowRoot, c0 = this._config, more = (id) => window.applianceMore(this, id);
     const lcd = sr.querySelector('.lcd'); lcd.style.cursor = 'pointer'; lcd.onclick = () => more(this._pageId);
     const g = sr.getElementById('gaugebox').querySelector('svg'); g.style.cursor = 'pointer';
-    g.onclick = () => more(c0.entity_power || c0.entity_active_power || c0.entity_power_l1);
+    window.applianceBindIllus(this, g, () => more(c0.entity_power || c0.entity_active_power || c0.entity_power_l1));
     [1, 2, 3].forEach((i) => ['phl', 'phv'].forEach((k) => { const e = sr.getElementById(`${k}${i}`); e.style.cursor = 'pointer'; e.onclick = () => more(c0[`entity_power_l${i}`]); }));
     this._built = true;
   }
@@ -13082,6 +13141,7 @@ class ApplianceBatteryCard extends HTMLElement {
         window.applianceTempField,
         { name: 'layout', selector: { select: { mode: 'dropdown', options: ['default', 'split'] } } },
         { name: 'status_position', selector: { select: { mode: 'dropdown', options: ['auto', 'inside', 'below'] } } },
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(I18N_BAT) } } },
       ],
       computeLabel: (s) => window.applianceEditorLabel(s.name),
@@ -13192,6 +13252,7 @@ class ApplianceBatteryCard extends HTMLElement {
       <div class="status-line" id="statusline"></div>
       <div class="stats" id="stats"></div>
     </ha-card>`;
+    window.applianceBindIllus(this, this.shadowRoot.getElementById('svg'), () => window.applianceMore(this, this._config.entity_soc || this._config.entity_power));
     this._built = true;
   }
 
@@ -13426,6 +13487,7 @@ class ApplianceEvChargerCard extends HTMLElement {
           { name: 'show_duration', selector: { boolean: {} }, default: true },
           { name: 'show_cost', selector: { boolean: {} }, default: true },
         ] },
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(I18N_EV) } } },
       ],
       computeLabel: (s) => window.applianceEditorLabel(s.name),
@@ -13533,6 +13595,7 @@ class ApplianceEvChargerCard extends HTMLElement {
       </svg>
       <div class="stats" id="stats"></div>
     </ha-card>`;
+    window.applianceBindIllus(this, this.shadowRoot.getElementById('svg'), () => window.applianceMore(this, this._config.entity_status || this._config.entity_power));
     this._built = true;
   }
 
@@ -13869,6 +13932,7 @@ class ApplianceRobotVacuumCard extends HTMLElement {
         ] },
         { name: 'layout', selector: { select: { mode: 'dropdown', options: ['default', 'compact'] } } },
         { name: 'image', selector: { text: {} } },
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(I18N_VAC) } } },
       ],
       computeLabel: (s) => window.applianceEditorLabel(s.name),
@@ -14068,6 +14132,7 @@ class ApplianceRobotVacuumSoloCard extends ApplianceRobotVacuumCard {
       <div class="stats" id="stats"></div>`}
     </ha-card>`;
     this.shadowRoot.querySelectorAll('.btn').forEach((b) => { b.onclick = () => this._call(b.dataset.a); });
+    window.applianceBindIllus(this, this.shadowRoot.querySelector('.illus'), () => window.applianceMore(this, this._config.entity));
     this._built = true;
   }
 
@@ -14340,6 +14405,7 @@ class ApplianceRobotMowerCard extends HTMLElement {
         ] },
         { name: 'layout', selector: { select: { mode: 'dropdown', options: ['default', 'compact'] } } },
         { name: 'image', selector: { text: {} } },
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(I18N_MOW) } } },
       ],
       computeLabel: (s) => window.applianceEditorLabel(s.name),
@@ -14503,6 +14569,7 @@ class ApplianceRobotMowerSoloCard extends ApplianceRobotMowerCard {
       <div class="stats" id="stats"></div>`}
     </ha-card>`;
     this.shadowRoot.querySelectorAll('.btn').forEach((b) => { b.onclick = () => this._call(b.dataset.a); });
+    window.applianceBindIllus(this, this.shadowRoot.querySelector('.illus'), () => window.applianceMore(this, this._config.entity));
     this._built = true;
   }
 }
@@ -14763,6 +14830,7 @@ class AppliancePelletBoilerCard extends HTMLElement {
           { name: 'show_pellets', selector: { boolean: {} }, default: true },
           { name: 'show_status', selector: { boolean: {} }, default: true },
         ] },
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(I18N_PB) } } },
       ],
       computeLabel: (s) => window.applianceEditorLabel(s.name),
@@ -14910,6 +14978,7 @@ class AppliancePelletBoilerCard extends HTMLElement {
       </svg>
       <div class="stats" id="stats"></div>
     </ha-card>`;
+    window.applianceBindIllus(this, this.shadowRoot.getElementById('svg'), () => window.applianceMore(this, this._config.entity_status || this._config.entity_power));
     this._built = true;
   }
 
@@ -15395,6 +15464,7 @@ svg{display:block;width:100%;max-width:calc(170px * var(--illus-scale,1));height
         p += `<rect x="${x - 2}" y="132" width="4" height="3" rx="1"/>`;
       }
       fl.innerHTML = f; ports.innerHTML = p;
+      window.applianceBindIllus(this, root.querySelector('svg'), () => { const c = this._c; window.applianceMore(this, c.entity_status || c.entity_power); });
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
 
@@ -15516,6 +15586,7 @@ svg{display:block;width:100%;max-width:calc(170px * var(--illus-scale,1));height
           { name: 'off_threshold', selector: { number: { min: 0, max: 500, step: 0.1, mode: 'box', unit_of_measurement: 'W' } } },
         ] },
         window.applianceTempField,
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           { name: 'show_status', selector: { boolean: {} }, default: true }, { name: 'show_power', selector: { boolean: {} }, default: true },
@@ -15950,6 +16021,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
           ] },
           { type: 'grid', name: '', schema: SHOW.map((name) => ({ name, selector: { boolean: {} }, default: true })) },
           window.applianceTempField,
+          ...window.applianceActionFields,
           { name: 'language', selector: { select: { options: Object.keys(T) } } },
         ],
         computeLabel: (s) => window.applianceEditorLabel(s.name),
@@ -16043,6 +16115,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
         ${SVG}
         <div class="tiles" id="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </div></ha-card>`;
+      window.applianceBindIllus(this, root.querySelector('svg'), () => { const c = this._c; window.applianceMore(this, c.entity_status || c.entity_power); });
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
 
@@ -16567,6 +16640,7 @@ svg{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));height
       for (let i = 0; i < 9; i++) ho += `<circle cx="${(77 + i * 6).toFixed(0)}" cy="164.5" r="1.1"/>`;
       root.getElementById('dhcrown').innerHTML = cr;
       root.getElementById('dhholes').innerHTML = ho;
+      window.applianceBindIllus(this, root.querySelector('svg'), () => { const c = this._c; window.applianceMore(this, c.entity_temp || c.entity_power); });
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
 
@@ -16684,6 +16758,7 @@ svg{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));height
           { name: 'fuel_alert', selector: { number: { min: 0, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
         ] },
         window.applianceTempField,
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           { name: 'show_status', selector: { boolean: {} }, default: true }, { name: 'show_power', selector: { boolean: {} }, default: true },
@@ -17115,6 +17190,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       root.getElementById('jzjets').innerHTML = jt;
       root.getElementById('jzstreams').innerHTML = js;
       root.getElementById('jzbubbles').innerHTML = bb;
+      window.applianceBindIllus(this, root.querySelector('svg'), () => { const c = this._c; window.applianceMore(this, c.entity_temp || c.entity_power); });
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
 
@@ -17229,6 +17305,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
           num('ph_min', 0, 14, 0.1), num('ph_max', 0, 14, 0.1),
         ] },
         window.applianceTempField,
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           { name: 'show_status', selector: { boolean: {} }, default: true }, { name: 'show_power', selector: { boolean: {} }, default: true },
@@ -17811,7 +17888,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
         </div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${esc(k)}"><div class="l"><ha-icon icon="${esc(ic)}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
-      root.querySelector('.scene').addEventListener('click', () => this._more(this._c.entity));
+      window.applianceBindIllus(this, root.querySelector('.scene'), () => this._more(this._c.entity));
       root.querySelectorAll('.ctl button').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); this._action(b.dataset.a); }));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
         const k = el.dataset.k, cc = this._c;
@@ -17952,6 +18029,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
           ...(this.kind === 'swing_gate' ? [{ name: 'leaves', selector: { select: { options: [{ value: 1, label: '1' }, { value: 2, label: '2' }] } } }] : []),
           { name: 'invert', selector: { boolean: {} } },
         ] },
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_controls'), bool('show_position'), bool('show_power'),
@@ -18377,7 +18455,7 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
       let d = '';
       for (let x = 54; x < 216; x += 10) if (x < 94 || x > 160) d += `M${x} 32 V172 `;
       root.getElementById('snslats').setAttribute('d', d);
-      root.querySelector('svg').addEventListener('click', () => this._more(this._c.entity || this._c.entity_temp));
+      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity || this._c.entity_temp));
       root.querySelectorAll('.ctl button').forEach((b) => b.addEventListener('click', () => this._action(b.dataset.a)));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
         const cc = this._c, k = el.dataset.k;
@@ -18509,6 +18587,7 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
           tnum('temp_max', 60, 140, 1), tnum('temp_scale', 60, 150, 1),
         ] },
         window.applianceTempField,
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_controls'), bool('show_temp'), bool('show_humidity'),
@@ -19205,7 +19284,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         <div class="ctl" id="ppctl"><button data-a="power"><ha-icon icon="mdi:power"></ha-icon><span></span></button></div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${esc(k)}"><div class="l"><ha-icon icon="${esc(ic)}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
-      root.querySelector('svg').addEventListener('click', () => this._more(this._c.entity || this._c.entity_power));
+      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity || this._c.entity_power));
       root.querySelector('[data-a="power"]').addEventListener('click', () => {
         const id = this._c.entity; if (!id || !this._hass) return;
         this._hass.callService('homeassistant', 'toggle', { entity_id: id });
@@ -19345,6 +19424,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
           num('max_pressure', 1, 100, 0.5, 'bar'), num('pressure_max', 0, 100, 0.1, 'bar'), { name: 'temp_max', default: tc.c(D.temp_max), selector: { number: { ...tc.range(20, 150), step: 1, mode: 'box', unit_of_measurement: tc.unit } } }, KINDS[this.kind].sump ? num('level_max', 0, 100, 1, '%') : num('level_min', 0, 100, 1, '%'),
         ] },
         window.applianceTempField,
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_controls'), bool('show_flow'), bool('show_pressure'), bool('show_power'), bool('show_temp'),
@@ -19865,7 +19945,7 @@ svg{display:block;width:100%;max-width:calc(280px * var(--illus-scale,1));height
         </div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${esc(k)}"><div class="l"><ha-icon icon="${esc(ic)}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
-      root.querySelector('svg').addEventListener('click', () => this._more(this._c.entity));
+      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity));
       root.querySelectorAll('.ctl button').forEach((b) => b.addEventListener('click', () => this._action(b.dataset.a)));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
         const cc = this._c, k = el.dataset.k;
@@ -20006,6 +20086,7 @@ svg{display:block;width:100%;max-width:calc(280px * var(--illus-scale,1));height
           num('filter_alert', 0, 100, 1, 80), num('water_level_min', 0, 1000, 1, 70), num('water_level_full', 1, 1000, 1, 100), num('run_threshold', 0, 2000, 1, 30),
         ] },
         window.applianceTempField,
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_controls'), bool('show_status_tile'), bool('show_filter'), bool('show_water_level'), bool('show_water_temp'),
@@ -20417,7 +20498,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         <div class="alert" id="upalert"></div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${esc(k)}"><div class="l"><ha-icon icon="${esc(ic)}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
-      root.querySelector('svg').addEventListener('click', () => this._more(this._c.entity || this._c.entity_charge));
+      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity || this._c.entity_charge));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
         const cc = this._c, k = el.dataset.k;
         this._more({ charge: cc.entity_charge, runtime: cc.entity_runtime, load: cc.entity_load, power: cc.entity_power,
@@ -20520,6 +20601,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         ent('entity'), ent('entity_charge', 'sensor'), ent('entity_runtime', 'sensor'), ent('entity_load', 'sensor'), ent('entity_power', 'sensor'),
         ent('entity_input_voltage', 'sensor'), ent('entity_output_voltage', 'sensor'), ent('entity_energy', 'sensor'),
         { type: 'grid', name: '', schema: [num('battery_low', 0, 100, 1, 20, '%'), num('load_max', 10, 100, 1, 90, '%'), num('mains_min', 0, 250, 1, 100, 'V')] },
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_charge'), bool('show_runtime'), bool('show_load'), bool('show_power'), bool('show_voltage'), bool('show_energy'), bool('animations'),
@@ -20915,7 +20997,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         </div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${esc(k)}"><div class="l"><ha-icon icon="${esc(ic)}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
-      root.querySelector('svg').addEventListener('click', () => this._more(this._c.entity || this._c.entity_floor_temp));
+      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity || this._c.entity_floor_temp));
       root.querySelectorAll('.ctl button').forEach((b) => b.addEventListener('click', () => this._action(b.dataset.a)));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
         const cc = this._c, k = el.dataset.k;
@@ -21049,6 +21131,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         { name: 'heating_type', selector: { select: { options: ['water', 'electric'] } } },
         { type: 'grid', name: '', schema: [tnum('floor_max', 20, 40, 0.5, 29), tnum('water_max', 25, 70, 1, 45), num('heat_threshold', 0, 5000, 1, 20, 'W')] },
         window.applianceTempField,
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_controls'), bool('show_temp'), bool('show_floor'), bool('show_water'),
@@ -22619,7 +22702,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         </div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
-      root.querySelector('.scene').addEventListener('click', () => this._more(this._main()));
+      window.applianceBindIllus(this, root.querySelector('.scene'), () => this._more(this._main()));
       root.querySelectorAll('.ctl button').forEach((b) => b.addEventListener('click', () => {
         if (b.dataset.a === 'blind') {
           const id = this._c.entity_blind; if (!this._hass || !id) return;
@@ -22825,6 +22908,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
           { name: 'travel_time', selector: { number: { min: 0, max: 120, step: 1, mode: 'box', unit_of_measurement: 's' } } },
         ] },
         bool('invert', false),
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_controls'), bool('show_slider'), bool('show_position'),
@@ -23215,7 +23299,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         <div class="ctl" id="wmctl"><button><ha-icon icon="mdi:valve"></ha-icon><span></span></button></div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
-      root.querySelector('svg').addEventListener('click', () => this._more(this._c.entity_index || this._c.entity_flow));
+      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity_index || this._c.entity_flow));
       root.querySelector('#wmctl button').addEventListener('click', () => {
         const id = this._c.entity_valve; if (!this._hass || !id) return;
         const dom = id.split('.')[0];
@@ -23345,6 +23429,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         ent('entity_temperature', 'sensor', { device_class: 'temperature' }), ent('entity_pressure', 'sensor', { device_class: 'pressure' }),
         ent('entity_leak', ['binary_sensor', 'input_boolean'], { multiple: true }), ent('entity_valve', ['valve', 'switch', 'input_boolean']),
         { type: 'grid', name: '', schema: [num('leak_minutes', 0, 1440, 5, 60, 'min'), num('flow_threshold', 0, 5, 0.01, 0.05, 'L/min'), num('freeze_threshold', -10, 15, 0.5, 3, '°C')] },
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_flow'), bool('show_today'), bool('show_index'), bool('show_cost'), bool('show_temperature'), bool('show_pressure'), bool('animations')] },
       ];
@@ -23647,7 +23732,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         <div class="ctl" id="gmctl"><button><ha-icon icon="mdi:valve"></ha-icon><span></span></button></div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
-      root.querySelector('svg').addEventListener('click', () => this._more(this._c.entity_index || this._c.entity_flow));
+      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity_index || this._c.entity_flow));
       root.querySelector('#gmctl button').addEventListener('click', () => {
         const id = this._c.entity_valve; if (!this._hass || !id) return;
         const dom = id.split('.')[0];
@@ -23757,6 +23842,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         ent('entity_index', 'sensor'), ent('entity_flow', 'sensor'), ent('entity_today', 'sensor'), ent('entity_cost', ['sensor', 'input_number']),
         ent('entity_leak', ['binary_sensor', 'input_boolean'], { multiple: true }), ent('entity_valve', ['valve', 'switch', 'input_boolean']),
         { type: 'grid', name: '', schema: [num('flow_threshold', 0, 5, 0.01, 0.01)] },
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_flow'), bool('show_today'), bool('show_index'), bool('show_cost'), bool('animations')] },
       ];
@@ -24062,7 +24148,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         <div class="alert" id="emalert"></div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
-      root.querySelector('svg').addEventListener('click', () => this._more(this._c.entity_power || this._c.entity_index));
+      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity_power || this._c.entity_index));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
         const c = this._c; this._more({ power: c.entity_power || c.entity_index, today: c.entity_today, index: c.entity_index, cost: c.entity_cost, tariff: c.entity_tariff, l1: c.entity_power_l1, l2: c.entity_power_l2, l3: c.entity_power_l3 }[el.dataset.k]);
       }));
@@ -24160,6 +24246,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         ent('entity_power', 'sensor'), ent('entity_index', 'sensor'), ent('entity_today', 'sensor'), ent('entity_cost', ['sensor', 'input_number']), ent('entity_tariff', ['sensor', 'select', 'input_select']),
         ent('entity_power_l1', 'sensor'), ent('entity_power_l2', 'sensor'), ent('entity_power_l3', 'sensor'),
         { type: 'grid', name: '', schema: [num('subscribed_power', 0, 100, 0.5, 0, 'kVA')] },
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_power'), bool('show_today'), bool('show_index'), bool('show_cost'), bool('show_tariff'), bool('show_phases'), bool('animations')] },
       ];
@@ -24624,7 +24711,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         <div class="modes" id="tvmodes" role="group" hidden></div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
-      root.querySelector('svg').addEventListener('click', () => this._more(this._c.entity));
+      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity));
       root.getElementById('tvsl').addEventListener('click', () => this._more(this._c.entity));
       root.getElementById('tvm').addEventListener('click', () => this._step(-1));
       root.getElementById('tvp').addEventListener('click', () => this._step(1));
@@ -24770,6 +24857,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ent('entity_window', ['binary_sensor', 'input_boolean']), ent('entity_battery', ['sensor', 'binary_sensor']), ent('entity_valve_position', ['sensor', 'number']),
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_hvac_modes'), bool('show_temperature'), bool('show_valve'), bool('show_battery'), bool('show_window'), bool('animations')] },
       ];
@@ -27366,7 +27454,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         <div class="ctl" id="mbctl"><button id="mbcollect"><ha-icon icon="mdi:email-check-outline"></ha-icon><span></span></button><button id="mbopen"><ha-icon icon="mdi:door-open"></ha-icon><span></span></button></div>
         ${[TILES.slice(0, 3), TILES.slice(3)].map((row, i) => `<div class="tiles" id="mbrow${i}">${row.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>`).join('')}
       </ha-card>`;
-      root.querySelector('.scene').addEventListener('click', () => this._more(this._c.entity_mail || this._c.entity_parcel || this._c.entity_door));
+      window.applianceBindIllus(this, root.querySelector('.scene'), () => this._more(this._c.entity_mail || this._c.entity_parcel || this._c.entity_door));
       root.querySelector('#mbcollect').addEventListener('click', () => this._collect());
       root.querySelector('#mbopen').addEventListener('click', () => this._openDoor());
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
@@ -27475,6 +27563,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         ent('entity_last_open', 'sensor', { multiple: true }),
         { type: 'grid', name: '', schema: [{ name: 'mail_states', selector: { text: {} } }, { name: 'parcel_states', selector: { text: {} } }] },
         ...(boks ? [] : [{ name: 'box_color', selector: { select: { mode: 'dropdown', custom_value: true, options: Object.keys(COLORS).map((value) => ({ value, label: tr['color_' + value] || value })) } } }]),
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_since'), bool('show_count'), bool('show_battery'), bool('show_buttons'), bool('show_doors'), bool('show_last_open'), bool('animations')] },
       ];
@@ -27945,7 +28034,7 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
         <div class="ctl" id="sdctl"><button id="sdtest"><ha-icon icon="mdi:gesture-tap-button"></ha-icon><span></span></button><button class="red" id="sdmute"><ha-icon icon="mdi:volume-off"></ha-icon><span></span></button></div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
-      root.querySelector('svg').addEventListener('click', () => this._more(this._c.entity_smoke || this._c.entity_co));
+      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity_smoke || this._c.entity_co));
       root.getElementById('sdtest').addEventListener('click', () => this._call(this._c.entity_test_button, true));
       root.getElementById('sdmute').addEventListener('click', () => this._call(this._c.entity_silence, false));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
@@ -28035,6 +28124,7 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
         { name: 'battery_low', default: 20, selector: { number: { min: 1, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
         ent('entity_temperature', 'sensor'),
         window.applianceTempField,
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_since'), bool('show_co'), bool('show_battery'), bool('show_temperature'), bool('show_buttons'), bool('animations')] },
       ].filter(Boolean);
@@ -28477,7 +28567,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         <div class="ctl" id="lkctl"><button id="lkvalve"><ha-icon icon="mdi:valve"></ha-icon><span></span></button><button id="lksiren"><ha-icon icon="mdi:volume-off"></ha-icon><span></span></button></div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
-      root.querySelector('svg').addEventListener('click', () => { const { wet, probes } = this._compute(); this._more(wet[0] || probes[0]); });
+      window.applianceBindIllus(this, root.querySelector('svg'), () => { const { wet, probes } = this._compute(); this._more(wet[0] || probes[0]); });
       root.getElementById('lkvalve').addEventListener('click', () => {
         const id = this._c.entity_valve; if (!this._hass || !id) return;
         const dom = id.split('.')[0];
@@ -28576,6 +28666,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         { name: 'freeze_temp', default: 3, selector: { number: { min: -30, max: 40, step: 0.5, mode: 'box' } } },
         window.applianceTempField,
         ent('entity_humidity', 'sensor'),
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_since'), bool('show_probes'), bool('show_battery'), bool('show_temperature'), bool('show_humidity'), bool('show_buttons'), bool('animations')] },
       ].filter(Boolean);

@@ -875,6 +875,7 @@
     "icon": "Значок комнаты",
     "lcd_color": "Цвет экрана",
     "tap_action": "Действие при нажатии",
+    "hold_action": "Действие при удержании",
     "navigation_path": "Открываемая страница (напр. /lovelace/climate)",
     "entity_climate": "Связанный термостат",
     "color_comfort": "Цвет: комфортно",
