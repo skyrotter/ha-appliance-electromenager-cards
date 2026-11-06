@@ -24712,6 +24712,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       <text class="tv-txt" id="tvmode" x="199" y="128" text-anchor="middle" font-size="20" font-weight="600" letter-spacing="2" opacity=".85"></text>
       <text class="tv-txt tv-big" id="tvbig" x="199" y="236" text-anchor="middle" font-size="104" font-weight="400">--</text>
       <text class="tv-txt" id="tvsmall" x="199" y="304" text-anchor="middle" font-size="42" font-weight="500" opacity=".9">--</text>
+      <g class="tv-txt" id="tvhum" opacity=".8" display="none"><path d="M168 334 q-9 12 -9 18 a9 9 0 0 0 18 0 q0 -6 -9 -18z" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/><text id="tvhumt" x="186" y="352" font-size="26">--</text></g>
       ${SNOW(199, 110, 26, '#7cc4ff')}` },
     // Tado X thermostat mural : chiffres en points blancs sur la façade
     tado: { w: 435, h: 416, big: 'current', glow: [217, 208, 260, 250], svg: () => `
@@ -24950,6 +24951,11 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         const mn = fin(this._num(k.a.min_temp)) ? this._num(k.a.min_temp) : 5, mx = fin(this._num(k.a.max_temp)) ? this._num(k.a.max_temp) : 30;
         const f = fin(shown) && mx > mn ? Math.max(0, Math.min(1, (shown - mn) / (mx - mn))) : 0;
         arc.setAttribute('stroke-dasharray', `${(f * 100).toFixed(1)} 100`);
+        // humidité : entité dédiée, sinon l'attribut current_humidity du thermostat
+        const hS = this._st(c.entity_humidity), hum = hS ? this._num(hS.state) : this._num(k.a.current_humidity ?? k.a.humidity);
+        const hg = r.getElementById('tvhum'), showH = fin(hum) && c.show_humidity !== false && !k.dead;
+        hg.setAttribute('display', showH ? '' : 'none');
+        if (showH) r.getElementById('tvhumt').textContent = `${this._fmt(hum, 0)} %`;
         r.getElementById('tvmode').textContent = k.st === 'heating' ? this._t('heating').toUpperCase() : k.off ? 'OFF' : '';
       }
 
@@ -25034,11 +25040,11 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
-        ent('entity_window', ['binary_sensor', 'input_boolean']), ent('entity_battery', ['sensor', 'binary_sensor']), ent('entity_valve_position', ['sensor', 'number']),
+        ent('entity_window', ['binary_sensor', 'input_boolean']), ent('entity_humidity', 'sensor'), ent('entity_battery', ['sensor', 'binary_sensor']), ent('entity_valve_position', ['sensor', 'number']),
         { type: 'grid', name: '', schema: [{ name: 'header', selector: { select: { mode: 'dropdown', options: ['name', 'icon', 'both'] } } }, { name: 'icon', selector: { icon: {} } }] },
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
-        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_hvac_modes'), bool('show_temperature'), bool('show_valve'), bool('show_battery'), bool('show_window'), { name: 'minimal', selector: { boolean: {} } }, bool('animations')] },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_hvac_modes'), bool('show_temperature'), bool('show_valve'), bool('show_battery'), bool('show_window'), bool('show_humidity'), { name: 'minimal', selector: { boolean: {} } }, bool('animations')] },
       ];
       // « model » : libellé propre à la carte (le libellé partagé de l'éditeur parle d'un modèle de détecteur)
       this._form.computeLabel = (s) => (s.name === 'model' ? (T[lang] || T.en).model || T.en.model : window.applianceEditorLabel(s.name, this._hass));
