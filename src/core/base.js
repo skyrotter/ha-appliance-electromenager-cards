@@ -717,6 +717,26 @@ class ApplianceCardBase extends HTMLElement {
         }
       }
       else m.status = base === "running" ? "mixing" : base === "off" ? "off" : "standby";
+    } else if (kind === "cookeo") {
+      // prise : éteint sous standby_threshold, veille (écran allumé) jusqu'à threshold ;
+      // montée en température = résistance en continu (au-dessus de heat_threshold) ;
+      // cuisson sous pression = la résistance se coupe et se rallume pour tenir la pression (alternance sur 2 min) ;
+      // maintien au chaud = faible puissance sans chauffe récente
+      if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
+      else if (base === "unavailable") m.status = "unavailable";
+      else if (watts !== null) {
+        const heatW = c.heat_threshold ?? 600, win = 120000, now = Date.now(), stby = c.standby_threshold ?? 0.5;
+        if (watts > heatW) {
+          m.status = this._ckoLow && now - this._ckoLow < win ? "cooking" : "heating";
+          this._ckoHeat = now;
+        } else if (watts >= stby && this._ckoHeat && now - this._ckoHeat < win) {
+          m.status = "cooking"; this._ckoLow = now;
+        } else {
+          m.status = watts > threshold ? "keep_warm" : watts >= stby ? "standby" : "off";
+          this._ckoHeat = this._ckoLow = 0;
+        }
+      }
+      else m.status = base === "running" ? "cooking" : base === "finished" ? "finished" : base === "off" ? "off" : "standby";
     } else if (kind === "kettle" || kind === "toaster") {
       // en marche au-dessus du seuil ; après la coupure : « eau chaude » / « toasts prêts » pendant quelques minutes
       const on = powered || (watts === null && base === "running"), now = Date.now();
@@ -1228,7 +1248,7 @@ class ApplianceCardBase extends HTMLElement {
       // sinon confirm_off : true (défaut, protection selon l'appareil) / false (jamais)
       const always = c.confirm_always === true || c.confirm_off === "always";
       const cOff = always ? "always" : c.confirm_off === false || c.confirm_off === "off" ? "off" : "auto";
-      const autoGuard = freezer || computer || console_ || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "thermomix"].includes(kind));
+      const autoGuard = freezer || computer || console_ || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "thermomix", "cookeo"].includes(kind));
       const guarded = cOff !== "off" && on && (cOff === "always" || autoGuard);
       this._sw = { id: swId, guarded };
       const arming = guarded && this._confirmUntil && Date.now() < this._confirmUntil;
@@ -1422,9 +1442,9 @@ class ApplianceCardBase extends HTMLElement {
       if (m.targetVal != null) tile("mdi:target", `${fmtNum(hass, m.targetVal, 1)} ${m.tempUnit}`, lb("target"), c.target_temperature || tEntity);
       if (m.level != null) tile("mdi:fire", `P${fmtNum(hass, m.level, 0)}`, lb("level"), c.power_level);
       if (m.pellets != null) tile("mdi:grain", `${fmtNum(hass, m.pellets, 0)} %`, lb("pellets"), c.pellet_level, m.alerts.includes("pellets_low") ? "warn" : "");
-    } else if (["water_heater", "oven", "air_fryer", "ac_split", "heat_pump", "towel_dryer", "server_rack"].includes(kind)) {
+    } else if (["water_heater", "oven", "air_fryer", "ac_split", "heat_pump", "towel_dryer", "server_rack", "cookeo"].includes(kind)) {
       // température et consigne au dixième (18,2 / 16,5 ; un entier reste sans décimale), sauf four et friteuse (200 °C)
-      const td = ["oven", "air_fryer"].includes(kind) ? 0 : 1;
+      const td = ["oven", "air_fryer", "cookeo"].includes(kind) ? 0 : 1;
       if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, td)} ${m.tempUnit}`, lb("temperature"), tEntity);
       if (m.targetVal != null) tile("mdi:target", `${fmtNum(hass, m.targetVal, td)} ${m.tempUnit}`, lb("target"), c.target_temperature || tEntity);
       // eau chaude restante : % (tuile « Eau chaude ») et litres (tuile « Volume ») — deux tuiles, sinon le texte est tronqué
