@@ -883,6 +883,7 @@
 "hold_action": "Holdhandling",
 "header": "Topptekst (name / icon / both)",
 "minimal": "Minimal (kun skive)",
+"big_value": "Large value (target / current)",
 "entity_unlatch": "Åpne-knapp (valgfri)",
 "entity_lock_n_go": "Lock 'n' Go-knapp",
 "entity_lock_n_go_unlatch": "Lock 'n' Go med åpne-knapp",

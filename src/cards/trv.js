@@ -368,8 +368,11 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       const shown = this._pending != null ? this._pending : k.target;
       // en grand : la consigne ou la température selon le modèle ; pendant un réglage, la nouvelle consigne
       const model = this._model(), M = MODELS[model], tgt = fin(shown) ? `${this._fmt(shown, 1)}°` : '--', now = fin(k.cur) ? `${this._fmt(k.cur, 1)}°` : '--';
-      const bigTarget = M.big === 'target' || this._pending != null;
-      const bigTxt = k.dead ? '--' : k.off && M.big === 'target' ? 'OFF' : bigTarget ? tgt : now;
+      // big_value : choix de la valeur en grand (target / current) sur les modèles qui affichent aussi la petite valeur
+      const hasSmall = r.getElementById('tvsmall').getAttribute('display') !== 'none';
+      const big = hasSmall && ['target', 'current'].includes(c.big_value) ? c.big_value : M.big;
+      const bigTarget = big === 'target' || this._pending != null;
+      const bigTxt = k.dead ? '--' : k.off && big === 'target' ? 'OFF' : bigTarget ? tgt : now;
       const bigEl = r.getElementById('tvbig');
       bigEl.textContent = M.nodeg ? bigTxt.replace(/°$/, '') : bigTxt;
       // écran étroit (photo) : « 21,5° » est resserré dans la largeur des chiffres d'origine
@@ -501,6 +504,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         ent('entity_window', ['binary_sensor', 'input_boolean']), ent('entity_humidity', 'sensor'), ent('entity_battery', ['sensor', 'binary_sensor']), ent('entity_valve_position', ['sensor', 'number']),
         { type: 'grid', name: '', schema: [{ name: 'override', selector: { boolean: {} } }, { name: 'override_durations', selector: { object: {} } }] },
         { type: 'grid', name: '', schema: [{ name: 'header', selector: { select: { mode: 'dropdown', options: ['name', 'icon', 'both'] } } }, { name: 'icon', selector: { icon: {} } }] },
+        { name: 'big_value', selector: { select: { mode: 'dropdown', options: ['target', 'current'] } } },
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_hvac_modes'), bool('show_temperature'), bool('show_valve'), bool('show_battery'), bool('show_window'), bool('show_humidity'), { name: 'minimal', selector: { boolean: {} } }, bool('animations')] },

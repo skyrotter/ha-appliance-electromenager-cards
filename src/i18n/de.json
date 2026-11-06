@@ -883,6 +883,7 @@
     "hold_action": "Halten-Aktion",
     "header": "Kopfzeile (name / icon / both)",
     "minimal": "Minimal (nur Anzeige)",
+    "big_value": "Große Anzeige (target / current)",
     "entity_unlatch": "Öffnen-Taste (optional)",
     "entity_lock_n_go": "Lock 'n' Go-Taste",
     "entity_lock_n_go_unlatch": "Lock 'n' Go mit Öffnen-Taste",

@@ -883,6 +883,7 @@
     "hold_action": "Acțiune la apăsare lungă",
     "header": "Antet (name / icon / both)",
     "minimal": "Minimal (doar cadranul)",
+    "big_value": "Large value (target / current)",
     "entity_unlatch": "Buton deschidere (opțional)",
     "entity_lock_n_go": "Buton Lock 'n' Go",
     "entity_lock_n_go_unlatch": "Buton Lock 'n' Go cu deschidere",

@@ -899,6 +899,7 @@
     "hold_action": "Akcija na dugi pritisak",
     "header": "Zaglavlje (name / icon / both)",
     "minimal": "Minimalno (samo brojčanik)",
+    "big_value": "Large value (target / current)",
     "entity_unlatch": "Dugme za otvaranje (opciono)",
     "entity_lock_n_go": "Dugme Lock 'n' Go",
     "entity_lock_n_go_unlatch": "Dugme Lock 'n' Go sa otvaranjem",

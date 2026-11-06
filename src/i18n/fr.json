@@ -899,6 +899,7 @@
     "hold_action": "Action appui long",
     "header": "En-tête (name / icon / both)",
     "minimal": "Minimal (cadran seul)",
+    "big_value": "Valeur en grand (target / current)",
     "entity_unlatch": "Bouton Ouvrir / unlatch (facultatif)",
     "entity_lock_n_go": "Bouton Lock 'n' Go",
     "entity_lock_n_go_unlatch": "Bouton Lock 'n' Go avec ouverture",

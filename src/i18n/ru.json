@@ -883,6 +883,7 @@
     "hold_action": "Действие при удержании",
     "header": "Заголовок (name / icon / both)",
     "minimal": "Минимум (только циферблат)",
+    "big_value": "Large value (target / current)",
     "entity_unlatch": "Кнопка открытия (необязательно)",
     "entity_lock_n_go": "Кнопка Lock 'n' Go",
     "entity_lock_n_go_unlatch": "Кнопка Lock 'n' Go с открытием",
