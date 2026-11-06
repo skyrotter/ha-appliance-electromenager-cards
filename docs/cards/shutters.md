@@ -13,6 +13,15 @@ Three window coverings, a bioclimatic pergola and a roof window driven by a `cov
 | Swing shutters (`swing-shutter`) | two louvred leaves swing open in 3D on their hinges and fold back against the wall |
 | Bioclimatic pergola (`pergola`) | the louvres of an aluminium pergola, in front of a modern house with a pool, turn with `current_tilt_position` (or `current_position` when the cover has no tilt); sun rays and striped shadows on the terrace, LED strip and lit house at night |
 
+**Tilt only (venetian blind)**: `tilt_only: true` hides Open / Stop / Close and the position slider and keeps only the slat angle: the **Tilt** slider and preset buttons **0 / 25 / 50 / 75 / 100 %** (0 % = slats closed, 50 % = half open, 100 % = closed again, tilted the other way). Each button calls `cover.set_cover_tilt_position`; the one matching the current angle is highlighted. Change the buttons with `tilt_presets`; the cover must support tilt.
+
+```yaml
+type: custom:appliance-venetian-blind-card
+entity: cover.living_room_blind
+tilt_only: true
+tilt_presets: [0, 50, 100]   # optional, default [0, 25, 50, 75, 100]
+```
+
 The badge shows **Open**, **Closed**, **Open 40 %** or **Closing… 65 %**; while moving, the box LED blinks and an arrow follows the shutter. Buttons **Open / Stop / Close** (Stop hidden if the cover cannot stop), a **Position** slider when the cover supports it, and tiles for position, tilt, motor power and last change. Without `current_position`, open = 100 % and closed = 0 %.
 
 ## Bioclimatic pergola

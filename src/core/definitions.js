@@ -110,7 +110,7 @@ const DEF = {
     fields: ["entity", "power", "energy", "cost", "temperature", "freezer_temperature", "flex_temperature", "door", "freezer_door", "switch"],
     keys: ["refrigerateur", "frigo", "fridge", "refrigerator", "frigidaire"] },
   pellet_stove: { accent: "heat", threshold: 20,
-    fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "power_level", "pellet_level", "switch"],
+    fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "power_level", "pellet_level", "mode", "switch"],
     keys: ["poele", "pellet", "granule", "stove"] },
   pool_pump: { accent: "active", threshold: 50,
     fields: ["entity", "power", "energy", "cost", "temperature", "runtime", "speed", "switch"],

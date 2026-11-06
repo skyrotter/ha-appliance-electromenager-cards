@@ -20,6 +20,16 @@ power_level: sensor.stove_power_level           # optional, 1–5
 pellet_level: sensor.stove_pellet_level         # optional, %
 ```
 
+## Presets
+
+With a `mode` entity (`select` / `input_select`), or a `climate` entity used as `entity` that has `preset_modes`, the card shows one button per preset the entity really offers (Manual, Auto, Eco, Comfort…) and highlights the active one. A tap calls `climate.set_preset_mode` or `select.select_option`. Hide the buttons with `show_modes: false`.
+
+```yaml
+type: custom:appliance-pellet-stove-card
+entity: climate.stove      # presets come from its preset_modes
+# or: mode: select.stove_mode
+```
+
 ⚠️ **Never cut a pellet stove's power while it is burning or shutting down**: its fan must keep running to evacuate smoke. Use the stove's own controls or integration to turn it off. If you set `switch:`, the card asks for a second click before cutting power while the stove is igniting, heating or shutting down.
 
 

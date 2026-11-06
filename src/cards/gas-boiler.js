@@ -196,6 +196,7 @@ svg{display:block;width:100%;max-width:calc(170px * var(--illus-scale,1));height
         p += `<rect x="${x - 2}" y="132" width="4" height="3" rx="1"/>`;
       }
       fl.innerHTML = f; ports.innerHTML = p;
+      window.applianceBindIllus(this, root.querySelector('svg'), () => { const c = this._c; window.applianceMore(this, c.entity_status || c.entity_power); });
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
 
@@ -317,6 +318,7 @@ svg{display:block;width:100%;max-width:calc(170px * var(--illus-scale,1));height
           { name: 'off_threshold', selector: { number: { min: 0, max: 500, step: 0.1, mode: 'box', unit_of_measurement: 'W' } } },
         ] },
         window.applianceTempField,
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           { name: 'show_status', selector: { boolean: {} }, default: true }, { name: 'show_power', selector: { boolean: {} }, default: true },

@@ -65,6 +65,7 @@ class ApplianceAquariumCard extends HTMLElement {
           { name: 'show_temperature', selector: { boolean: {} }, default: true },
           { name: 'show_cost', selector: { boolean: {} }, default: true },
         ] },
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(I18N_AQUARIUM) } } },
       ],
       computeLabel: (s) => window.applianceEditorLabel(s.name),
@@ -201,7 +202,7 @@ class ApplianceAquariumCard extends HTMLElement {
     const root = this.shadowRoot;
     root.getElementById('stats').addEventListener('click', (e) => { const t = e.target.closest('[data-e]'); if (t) this._more(t.dataset.e); });
     root.getElementById('stats').addEventListener('keydown', (e) => { const t = e.target.closest('[data-e]'); if (t && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); this._more(t.dataset.e); } });
-    root.querySelector('svg').addEventListener('click', () => { const c2 = this._config; this._more(c2.entity_light || c2.entity_temperature || c2.entity_power); });
+    window.applianceBindIllus(this, root.querySelector('svg'), () => { const c2 = this._config; this._more(c2.entity_light || c2.entity_temperature || c2.entity_power); });
     this._built = true;
   }
 

@@ -212,7 +212,7 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
       let d = '';
       for (let x = 54; x < 216; x += 10) if (x < 94 || x > 160) d += `M${x} 32 V172 `;
       root.getElementById('snslats').setAttribute('d', d);
-      root.querySelector('svg').addEventListener('click', () => this._more(this._c.entity || this._c.entity_temp));
+      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity || this._c.entity_temp));
       root.querySelectorAll('.ctl button').forEach((b) => b.addEventListener('click', () => this._action(b.dataset.a)));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
         const cc = this._c, k = el.dataset.k;
@@ -344,6 +344,7 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
           tnum('temp_max', 60, 140, 1), tnum('temp_scale', 60, 150, 1),
         ] },
         window.applianceTempField,
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_controls'), bool('show_temp'), bool('show_humidity'),

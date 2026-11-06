@@ -49,6 +49,7 @@ class ApplianceRobotMowerCard extends HTMLElement {
         ] },
         { name: 'layout', selector: { select: { mode: 'dropdown', options: ['default', 'compact'] } } },
         { name: 'image', selector: { text: {} } },
+        ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(I18N_MOW) } } },
       ],
       computeLabel: (s) => window.applianceEditorLabel(s.name),
@@ -212,6 +213,7 @@ class ApplianceRobotMowerSoloCard extends ApplianceRobotMowerCard {
       <div class="stats" id="stats"></div>`}
     </ha-card>`;
     this.shadowRoot.querySelectorAll('.btn').forEach((b) => { b.onclick = () => this._call(b.dataset.a); });
+    window.applianceBindIllus(this, this.shadowRoot.querySelector('.illus'), () => window.applianceMore(this, this._config.entity));
     this._built = true;
   }
 }
