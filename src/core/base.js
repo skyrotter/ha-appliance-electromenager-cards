@@ -811,6 +811,26 @@ class ApplianceCardBase extends HTMLElement {
     }
   }
 
+  // pré-réglages du poêle à granulés : l'option exacte de l'entité `mode` (select) ou du climate (preset_mode)
+  _presetEntity() {
+    const c = this._config;
+    return c.mode || (domainOf(c.entity) === "climate" ? c.entity : null);
+  }
+  _presetOptions(st) {
+    if (!st) return [];
+    const d = domainOf(st.entity_id);
+    if (d === "select" || d === "input_select") return st.attributes.options || [];
+    if (d === "climate") return st.attributes.preset_modes || [];
+    return [];
+  }
+  _setPreset(opt) {
+    const hass = this._hass, id = this._presetEntity(), st = id && hass.states[id];
+    if (!st) return;
+    const d = domainOf(id);
+    if (d === "climate") hass.callService("climate", "set_preset_mode", { entity_id: id, preset_mode: opt });
+    else hass.callService(d, "select_option", { entity_id: id, option: opt });
+  }
+
   // boutons de l'enceinte : services media_player (volume par pas de volume_step, 5 % par défaut, si volume_set est disponible)
   _spkCmd(key) {
     const hass = this._hass, id = this._config.entity, st = id && hass.states[id];
@@ -1230,6 +1250,18 @@ class ApplianceCardBase extends HTMLElement {
       modesEl.innerHTML = MODE_ORDER.filter((k) => pickMode(opts, k)).map((k) =>
         `<button class="mode-btn ${cur === k ? "on" : ""}" data-mode="${k}" aria-pressed="${cur === k}"><ha-icon icon="${MODE_ICON[k]}"></ha-icon>${esc(tr(hass, k === "off" ? "mode_off" : k === "none" ? "mode_none" : k === "drying" ? "mode_drying" : k))}</button>`).join("");
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._setMode(b.dataset.mode); }; });
+    } else if (kind === "pellet_stove" && c.show_modes !== false && this._presetEntity() && hass.states[this._presetEntity()]) {
+      // poêle à granulés : un bouton par pré-réglage réel de l'entité (preset_modes du climate, options du select)
+      const pst = hass.states[this._presetEntity()], opts = this._presetOptions(pst);
+      const cur = String(domainOf(pst.entity_id) === "climate" ? pst.attributes.preset_mode ?? "" : pst.state).toLowerCase();
+      const cap = (s) => { const t = String(s).replace(/_/g, " "); return t.charAt(0).toUpperCase() + t.slice(1); };
+      modesEl.innerHTML = opts.map((o) => {
+        const raw = String(o).toLowerCase(), on = raw === cur;
+        // icône / couleur seulement pour un nom reconnu (confort, éco, hors-gel…), sinon icône neutre
+        const key = MODE_ORDER.find((k) => MODE_RX[k].test(raw) && modeKey(raw) === k) || "";
+        return `<button class="mode-btn ${on ? "on" : ""}" data-preset="${esc(o)}" data-mode="${key}" aria-pressed="${on}"${m.status === "unavailable" ? " disabled" : ""}><ha-icon icon="${MODE_ICON[key] || "mdi:tune-variant"}"></ha-icon>${esc(cap(o))}</button>`;
+      }).join("");
+      modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._setPreset(b.dataset.preset); }; });
     } else if (kind === "smart_speaker" && c.show_controls !== false && domainOf(c.entity) === "media_player" && hass.states[c.entity]) {
       // enceinte : marche / arrêt, volume −, lecture / pause, volume +, sourdine (selon les fonctions annoncées par l'entité)
       const sf = Number(hass.states[c.entity].attributes.supported_features);
