@@ -1235,6 +1235,7 @@
   "unavailable": "Utilgjengelig",
   "door_open": "Dør åpen",
   "door_closed": "Lukket",
+  "door_opened": "Åpen",
   "jammed_detail": "Motoren er blokkert: sjekk døren og nøkkelen",
   "battery_critical": "Kritisk batteri: bytt eller lad",
   "btn_lock": "Lås",

@@ -1251,6 +1251,7 @@
     "unavailable": "Nedostupno",
     "door_open": "Vrata otvorena",
     "door_closed": "Zatvorena",
+    "door_opened": "Otvorena",
     "jammed_detail": "Motor je blokiran: proverite vrata i ključ",
     "battery_critical": "Baterija kritična: zamenite ili napunite",
     "btn_lock": "Zaključaj",

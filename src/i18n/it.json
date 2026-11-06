@@ -1235,6 +1235,7 @@
     "unavailable": "Non disponibile",
     "door_open": "Porta aperta",
     "door_closed": "Chiusa",
+    "door_opened": "Aperta",
     "jammed_detail": "Motore bloccato: controlla la porta e la chiave",
     "battery_critical": "Batteria critica: sostituirla o ricaricarla",
     "btn_lock": "Blocca",

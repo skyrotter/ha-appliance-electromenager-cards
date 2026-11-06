@@ -1235,6 +1235,7 @@
     "unavailable": "Niet beschikbaar",
     "door_open": "Deur open",
     "door_closed": "Gesloten",
+    "door_opened": "Open",
     "jammed_detail": "Motor geblokkeerd: controleer de deur en de sleutel",
     "battery_critical": "Batterij kritiek: vervangen of opladen",
     "btn_lock": "Vergrendelen",

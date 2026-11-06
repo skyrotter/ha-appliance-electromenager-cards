@@ -1252,6 +1252,7 @@
     "unavailable": "Unavailable",
     "door_open": "Door open",
     "door_closed": "Closed",
+    "door_opened": "Open",
     "jammed_detail": "The motor is blocked: check the door and the key",
     "battery_critical": "Battery critical: replace or charge it",
     "btn_lock": "Lock",

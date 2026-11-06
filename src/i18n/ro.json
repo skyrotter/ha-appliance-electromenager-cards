@@ -1235,6 +1235,7 @@
     "unavailable": "Indisponibil",
     "door_open": "Ușă deschisă",
     "door_closed": "Închisă",
+    "door_opened": "Deschisă",
     "jammed_detail": "Motor blocat: verificați ușa și cheia",
     "battery_critical": "Baterie critică: înlocuiți-o sau încărcați-o",
     "btn_lock": "Încuie",

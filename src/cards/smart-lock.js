@@ -1,9 +1,9 @@
 /* Carte « Serrure connectée » — custom:appliance-smart-lock-card
  * Serrure motorisée posée sur le cylindre, côté intérieur de la porte. Deux modèles (option model) :
- * nuki_3_pro (boîtier blanc, bouton inox en haut) ou nuki_pro_5 (photo détourée, 5e génération), posée sur la porte.
+ * nuki_3_pro (boîtier blanc, bouton inox en haut) ou nuki_pro_5 (photo détourée, 5e génération), sur un halo de la couleur de l'état.
  * Entité lock : verrouillée / déverrouillée / ouverte (pêne tiré) / en cours / bloquée. Les reflets du bouton tournent,
- * l'anneau LED prend la couleur de l'état, le pêne sort dans la gâche, le demi-tour recule et la porte s'entrouvre
- * à l'ouverture, l'anse du cadenas se lève ; blocage : la serrure tremble.
+ * l'anneau LED prend la couleur de l'état, des ondes partent du bouton à l'ouverture, l'anse du cadenas se lève ;
+ * blocage : la serrure tremble.
  * Boutons Verrouiller / Déverrouiller / Ouvrir (2e clic de confirmation) et, facultatifs, boutons Lock 'n' Go.
  * Tuiles : batterie (%, en charge, critique), capteur de porte, dernier changement.
  */
@@ -66,16 +66,15 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 .sl-arrows{opacity:0;transition:opacity .3s}.locking .sl-arrows,.unlocking .sl-arrows,.opening .sl-arrows{opacity:1}
 .sl-arrows path{fill:none;stroke:var(--sl-c);stroke-width:2;stroke-linecap:round}
 .unlocking .sl-arrows,.opening .sl-arrows{transform:scaleX(-1)}
-/* pêne dormant (sort dans la gâche quand verrouillée) et demi-tour (rentre seulement à l'ouverture) */
-.sl-bolt{transition:transform 1.2s cubic-bezier(.45,0,.25,1);transform:translateX(14px)}
-.unlocked .sl-bolt,.open .sl-bolt,.opening .sl-bolt,.unlocking .sl-bolt{transform:translateX(0)}
-.locking .sl-bolt{transform:translateX(7px)}
-.sl-latch{transition:transform .5s ease-in-out;transform:translateX(12px)}
-.open .sl-latch,.opening .sl-latch{transform:translateX(0)}
-/* porte entrouverte (pêne tiré ou capteur de porte) : la porte recule, le jour passe dans l'interstice */
-.sl-leaf{transition:transform 1s ease-in-out}
-.open .sl-leaf,.door .sl-leaf{transform:translateX(-6px)}
-.sl-day{opacity:0;transition:opacity 1s}.open .sl-day,.door .sl-day{opacity:1;animation:slday 3s ease-in-out infinite}
+/* halo de la couleur de l'état derrière la serrure (respire quand verrouillée), ombre portée */
+.sl-aura{opacity:.55;transition:opacity .6s}.locked .sl-aura{animation:slaura 4s ease-in-out infinite}
+.unavailable .sl-aura,.unknown .sl-aura{opacity:0}
+.sl-auras{stop-color:var(--sl-c);transition:stop-color .4s}
+/* ouverture (pêne tiré) : ondes qui partent du bouton */
+.sl-wave{fill:none;stroke:var(--sl-c);stroke-width:2;opacity:0;transform-box:fill-box;transform-origin:50% 50%}
+.open .sl-wave,.opening .sl-wave{animation:slwave 1.8s ease-out infinite}.sl-wave.w2{animation-delay:.6s}.sl-wave.w3{animation-delay:1.2s}
+/* porte ouverte (capteur) : petite porte entrouverte à côté du cadenas */
+.sl-doorpic{opacity:0;transition:opacity .5s}.door .sl-doorpic{opacity:1}
 /* cadenas : l'anse se lève et pivote au déverrouillage */
 .sl-shackle{transform-box:view-box;transform-origin:28px 22px;transition:transform .8s cubic-bezier(.45,0,.25,1)}
 .unlocked .sl-shackle,.open .sl-shackle,.opening .sl-shackle{transform:translateY(-3px) rotate(-28deg)}
@@ -92,7 +91,8 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 @keyframes slspin{to{stroke-dashoffset:-34}}
 @keyframes slturn{to{transform:rotate(-360deg)}}
 @keyframes slblink{50%{opacity:.15}}
-@keyframes slday{50%{opacity:.7}}
+@keyframes slaura{50%{opacity:.85}}
+@keyframes slwave{0%{opacity:.8;transform:scale(1)}100%{opacity:0;transform:scale(1.9)}}
 @keyframes slshake{0%,100%{transform:rotate(0)}25%{transform:rotate(-2deg)}75%{transform:rotate(2deg)}}
 `;
 
@@ -110,22 +110,19 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         <circle cx="120" cy="64" r="39" fill="url(#slsteel)"/>
         <circle cx="120" cy="64" r="15" fill="url(#slbtn)" stroke="#8e959c" stroke-width=".6"/>`,
     },
-    // Nuki Smart Lock Pro (5e génération) : photo détourée, 205 × 159, posée à (24, 26) à l'échelle 0,78
+    // Nuki Smart Lock Pro (5e génération) : photo détourée, 205 × 159, posée à (40, 24) à l'échelle 0,78
     nuki_pro_5: {
-      ring: [76.8, 88.1, 26.8, 28.6], disc: [79.4, 88, 53.1, 59.3],
-      art: `<image href="${PRO5}" x="24" y="26" width="160" height="124.1"/>`,
+      ring: [92.8, 86.1, 26.8, 28.6], disc: [95.4, 86, 53.1, 59.3],
+      art: `<image href="${PRO5}" x="40" y="24" width="160" height="124.1"/>`,
     },
   };
-  // décor commun : porte (vantail qui recule à l'ouverture), dormant avec gâche, pêne et demi-tour, cadenas, pictogrammes
-  const DEFS = `<linearGradient id="slwood" x1="0" x2="1"><stop offset="0" stop-color="#d8ccb9"/><stop offset="1" stop-color="#c4b59d"/></linearGradient>
-    <linearGradient id="slframe" x1="0" x2="1"><stop offset="0" stop-color="#9b8c74"/><stop offset="1" stop-color="#b3a58c"/></linearGradient>
-    <radialGradient id="slsteel" cx=".38" cy=".32" r=".8"><stop offset="0" stop-color="#f4f6f8"/><stop offset=".45" stop-color="#c3c9cf"/><stop offset="1" stop-color="#868d94"/></radialGradient>
+  // décor commun : halo de l'état, ombre, ondes d'ouverture, cadenas, pictogrammes (porte, blocage, pile)
+  const DEFS = `<radialGradient id="slsteel" cx=".38" cy=".32" r=".8"><stop offset="0" stop-color="#f4f6f8"/><stop offset=".45" stop-color="#c3c9cf"/><stop offset="1" stop-color="#868d94"/></radialGradient>
     <radialGradient id="slbtn" cx=".42" cy=".36" r=".75"><stop offset="0" stop-color="#eef1f3"/><stop offset=".6" stop-color="#b6bcc3"/><stop offset="1" stop-color="#9aa1a8"/></radialGradient>
     <linearGradient id="slside" x1="0" x2="1"><stop offset="0" stop-color="#7d848b"/><stop offset=".5" stop-color="#c9cfd5"/><stop offset="1" stop-color="#8b9299"/></linearGradient>
     <linearGradient id="slwhite" x1="0" x2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".7" stop-color="#f1f3f5"/><stop offset="1" stop-color="#d5dade"/></linearGradient>
-    <linearGradient id="sldayg" x1="0" x2="1"><stop offset="0" stop-color="#fff3b0" stop-opacity="0"/><stop offset=".5" stop-color="#fff6c8"/><stop offset="1" stop-color="#fff3b0" stop-opacity="0"/></linearGradient>
-    <radialGradient id="slglint" cx="0" cy="0" r="80" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff" stop-opacity=".05"/><stop offset=".7" stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
-    <linearGradient id="slbrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9edf0"/><stop offset="1" stop-color="#9da4ab"/></linearGradient>`;
+    <radialGradient id="slaurag"><stop offset="0" class="sl-auras" stop-opacity=".55"/><stop offset=".6" class="sl-auras" stop-opacity=".12"/><stop offset="1" class="sl-auras" stop-opacity="0"/></radialGradient>
+    <radialGradient id="slglint" cx="0" cy="0" r="80" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff" stop-opacity=".05"/><stop offset=".7" stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>`;
   const SVG = (model, label) => {
     const M = MODELS[model] || MODELS.nuki_3_pro, [rx0, ry0, rrx, rry] = M.ring, [dx, dy, drx, dry] = M.disc;
     // reflets du disque : secteurs clairs dessinés autour de (0, 0), étirés en ellipse, qui tournent
@@ -133,16 +130,10 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     return `<svg viewBox="0 0 240 180" role="img" aria-label="${esc(label)}"><defs>${DEFS}
       <clipPath id="sldisc-${model}"><ellipse cx="${dx}" cy="${dy}" rx="${drx}" ry="${dry}"/></clipPath>
       <clipPath id="slbtnc-${model}"><ellipse cx="${rx0}" cy="${ry0}" rx="${rrx - 1.5}" ry="${rry - 1.5}"/></clipPath></defs>
-      <rect x="0" y="0" width="240" height="180" rx="8" fill="#8f816b"/>
-      <rect class="sl-day" x="203" y="4" width="20" height="172" fill="url(#sldayg)"/>
-      <g class="sl-leaf">
-        <rect x="4" y="4" width="203" height="172" rx="5" fill="url(#slwood)"/>
-        <rect x="16" y="14" width="178" height="152" rx="3" fill="none" stroke="#b3a48c" stroke-width="1.2"/>
-        <rect x="200" y="4" width="7" height="172" fill="#b9aa91"/>
-        <g class="sl-latch"><path d="M190 116 H204 L210 121 L204 126 H190Z" fill="url(#slbrass)" stroke="#7c848b" stroke-width=".6"/></g>
-        <g class="sl-bolt"><rect x="186" y="96" width="22" height="11" rx="1.5" fill="url(#slbrass)" stroke="#7c848b" stroke-width=".6"/></g>
-        <rect x="203" y="90" width="4" height="42" rx="1" fill="#c9ced3" stroke="#8d949b" stroke-width=".5"/>
-        <g class="sl-dev">${M.art}
+      <ellipse class="sl-aura" cx="${dx}" cy="${dy + 6}" rx="${drx + 46}" ry="${dry + 34}" fill="url(#slaurag)"/>
+      <ellipse cx="${dx + 6}" cy="170" rx="${drx + 8}" ry="5" fill="#000" fill-opacity=".16"/>
+      ${['', ' w2', ' w3'].map((w) => `<ellipse class="sl-wave${w}" cx="${rx0}" cy="${ry0}" rx="${rrx + 4}" ry="${rry + 4}"/>`).join('')}
+      <g class="sl-dev">${M.art}
           <g clip-path="url(#sldisc-${model})"><g transform="translate(${dx} ${dy}) scale(${(drx / dry).toFixed(3)} 1)"><g class="sl-spin"><g class="sl-sheen">${wedges}</g></g></g></g>
           <g clip-path="url(#slbtnc-${model})"><g transform="translate(${rx0} ${ry0}) scale(${(rrx / rry).toFixed(3)} 1)"><g class="sl-spin"><g class="sl-sheen">${wedges.replace(/80/g, '40')}</g></g></g></g>
           <ellipse class="sl-halo" cx="${rx0}" cy="${ry0}" rx="${rrx}" ry="${rry}"/>
@@ -151,10 +142,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
             <path d="M${dx - drx - 6} ${dy - 10} A${drx + 6} ${dry + 6} 0 0 1 ${dx - 10} ${dy - dry - 6}"/><path d="M${dx - 16} ${dy - dry - 10} L${dx - 10} ${dy - dry - 6} L${dx - 16} ${dy - dry - 1}"/>
           </g>
         </g>
-      </g>
-      <rect x="221" y="0" width="19" height="180" fill="url(#slframe)"/>
-      <rect x="223" y="94" width="6" height="15" rx="1" fill="#4a4237"/><rect x="223" y="114" width="6" height="14" rx="1" fill="#4a4237"/>
-      <rect x="221" y="90" width="3" height="42" fill="#d2d6da"/>
+      <g class="sl-doorpic" transform="translate(50 15)"><rect x="0" y="0" width="13" height="20" rx="1.5" fill="none" stroke="var(--sl-c)" stroke-width="1.8"/><path d="M0 0 L9 3 V23 L0 20Z" fill="var(--sl-c)"/></g>
       <g class="sl-padg"><circle class="sl-padbg" cx="28" cy="28" r="15"/>
         <path class="sl-shackle" d="M22 26 V21 A6 6 0 0 1 34 21 V26" fill="none" stroke="var(--sl-c)" stroke-width="2.6" stroke-linecap="round"/>
         <rect class="sl-pad" x="19.5" y="25" width="17" height="12" rx="2.5"/><circle cx="28" cy="30.5" r="1.8" fill="#fff"/></g>
@@ -319,7 +307,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       const V = {
         battery: [c.entity_battery || c.entity_battery_critical, !isNaN(bat) && !batBinary ? String(Math.round(bat)) : this._t(crit ? 'critical' : 'ok'),
           !isNaN(bat) && !batBinary ? '%' : '', crit ? 'bad' : low ? 'warn' : ''],
-        door: [c.entity_door, this._ok(dS) ? this._t(door ? 'door_open' : 'door_closed') : '--', '', door ? 'warn' : ''],
+        door: [c.entity_door, this._ok(dS) ? this._t(door ? 'door_opened' : 'door_closed') : '--', '', door ? 'warn' : ''],
         since: [s, this._since(s), '', ''],
       };
       TILES.forEach(([k, , opt]) => {
