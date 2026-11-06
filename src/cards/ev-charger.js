@@ -63,7 +63,7 @@ class ApplianceEvChargerCard extends HTMLElement {
     // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
     const l = this._config.language || lang(h);
     if (l !== this._lng) { this._lng = l; this._built = false; this._build(); }
-    this._update();
+    if (window.applianceChanged(this, h, this._config)) this._update();
   }
   getCardSize() { return 5; }
   getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }

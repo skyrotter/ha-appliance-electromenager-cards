@@ -271,7 +271,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     // horloge de l'écran (BHT6000) : rafraîchie chaque minute
     connectedCallback() { this._tick = setInterval(() => { if (this._hass && this._c && this._model() === 'bht6000') this._render(); }, 30000); }
     disconnectedCallback() { clearInterval(this._tick); }

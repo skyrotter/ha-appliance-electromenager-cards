@@ -218,7 +218,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     connectedCallback() { if (!this._tick) this._tick = setInterval(() => this._progress(), 1000); }
     disconnectedCallback() { clearInterval(this._tick); this._tick = null; clearTimeout(this._osdT); }
     getCardSize() { return 6; }

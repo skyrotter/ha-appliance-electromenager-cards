@@ -178,7 +178,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     connectedCallback() { this._tick = setInterval(() => { if (this._hass && this._c) this._render(); }, 60000); }
     disconnectedCallback() { clearInterval(this._tick); }
     getCardSize() { return 5; }

@@ -935,10 +935,10 @@ c=lk([...ph(1250,2500,3750)],L3);
 ok('linky needles (default): one needle per phase',!vis(c,'needle')&&[1,2,3].every((i)=>vis(c,`n${i}`))&&Math.abs(ndeg(c,1)+45)<0.01&&Math.abs(ndeg(c,2))<0.01&&Math.abs(ndeg(c,3)-45)<0.01,[1,2,3].map((i)=>ndeg(c,i)).join(' '));
 ok('linky needles: bar labels in needle colours',byId(c,'phl1').style.color!==''&&byId(c,'phl1').style.color!==byId(c,'phl2').style.color,byId(c,'phl1').style.color);
 c=lk([...ph(4350,4350,4350)],{...L3,phase_gauge:'cycle'});
-const seen=[0,1,2,3].map((k)=>{c.el._cycle=k;c.el.hass=c.h;return gt(c).slice(0,2);});
+const seen=[0,1,2,3].map((k)=>{c.el._cycle=k;c.el._update();return gt(c).slice(0,2);});
 ok('linky cycle: L1 → L2 → L3 → L1 even when tied',seen.join(',')==='L1,L2,L3,L1'&&vis(c,'needle')&&!vis(c,'n1'),seen.join(','));
 ok('linky cycle: current phase label in bold',byId(c,'phl1').classList.contains('cur')&&!byId(c,'phl2').classList.contains('cur'),byId(c,'phl1').className);
-c=lk([mk('sensor.l1',800,VA),mk('sensor.l3',600,VA)],{...L3,phase_gauge:'cycle'}); c.el._cycle=1; c.el.hass=c.h;
+c=lk([mk('sensor.l1',800,VA),mk('sensor.l3',600,VA)],{...L3,phase_gauge:'cycle'}); c.el._cycle=1; c.el._update(); // as the card timer does
 ok('linky cycle skips a missing phase',gt(c)==='L3 · 600 VA',gt(c));
 c=lk([...ph(300,4900,400)],{...L3,phase_gauge:'cycle'}); c.el._cycle=0; c.el.hass=c.h;
 ok('linky cycle: alert follows the most loaded phase',gt(c)==='L1 · 300 VA'&&byId(c,'meter').classList.contains('over'),gt(c)+' '+byId(c,'meter').className);
@@ -1031,7 +1031,7 @@ c=wp([mk('sensor.p',0,W),mk('sensor.e',12.34,{unit_of_measurement:'kWh',device_c
 ok('water heat pump energy kWh kept (1 decimal under 1000), unavailable shows --',tvn(c,'energy')==='12,3kWh'&&tvn(c,'heat_energy')==='--kWh',tvn(c,'energy')+' '+tvn(c,'heat_energy'));
 }
 c=wp([mk('sensor.p',900,W)],{entity_power:'sensor.p',heating_delay:60}); ok('water heat pump heating_delay: short spike stays standby',/\bstandby\b/.test(hc(c))&&!/\brun\b/.test(hc(c)),hc(c));
-c.el._since-=61000; c.el.hass=c.h; ok('water heat pump heating_delay: sustained power -> heating',/\bheating\b/.test(hc(c))&&/\brun\b/.test(hc(c)),hc(c));
+c.el._since-=61000; c.el._render(); ok('water heat pump heating_delay: sustained power -> heating',/\bheating\b/.test(hc(c))&&/\brun\b/.test(hc(c)),hc(c));
 c.el.hass=hassOf([mk('sensor.p',0.4,W)]); c.el.hass=hassOf([mk('sensor.p',900,W)]); ok('water heat pump heating_delay: restarts after dropping below',/\bstandby\b/.test(hc(c)),hc(c));
 c=wp([{...mk('sensor.p',900,W),last_changed:new Date(Date.now()-120000).toISOString()}],{entity_power:'sensor.p',heating_delay:60}); ok('water heat pump heating_delay: power steady for 2 min at load -> heating',/\bheating\b/.test(hc(c)),hc(c));
 // heating_delay : carte ouverte pendant une chauffe, capteur rafraîchi toutes les 15 s (last_changed récent) : l'historique dit depuis quand
@@ -1275,6 +1275,24 @@ ok('applianceLocale: untranslated language still formats numbers',window.applian
 ok('applianceNum / applianceWatts',window.applianceNum(mk('sensor.x','1,5'))===1.5&&isNaN(window.applianceNum(mk('sensor.x','unknown')))&&window.applianceNum(mk('climate.x','heat',{current_temperature:21.5}))===21.5
   &&window.applianceWatts(mk('sensor.x',1.5,{unit_of_measurement:'kW'}))===1500&&window.applianceWatts(mk('sensor.x',2,{unit_of_measurement:'MW'}))===2e6&&window.applianceWatts(mk('sensor.x',40,{unit_of_measurement:'W'}))===40);
 const gb=card('gas-boiler',{entity_power:'sensor.p'},[mk('sensor.p',1500,{unit_of_measurement:'W'})],'de'); ok('gas boiler numbers follow the HA language (de: 1,5 kW)',/1,5\s*kW/.test(gb.sr.textContent.replace(/<[^>]+>/g,'')),gb.sr.textContent.replace(/\s+/g,' ').slice(-200)); gb.el.remove();
+}
+{ // standalone cards redraw only when something they show has changed (window.applianceChanged)
+const spy=(c,m)=>{let n=0;const f=c.el[m];c.el[m]=function(...a){n++;return f.apply(this,a);};return ()=>n;};
+const P=mk('sensor.p',1500,W), O=mk('sensor.other',1);
+let c=card('water-heat-pump',{entity_power:'sensor.p'},[P,O]); let n=spy(c,'_render');
+c.el.hass=hassOf([P,mk('sensor.other',2)]); ok('redraw skipped when an unrelated entity changes',n()===0,n()+' redraws');
+c.el.hass=hassOf([mk('sensor.p',1600,W),O]); ok('redraw when a configured entity changes',n()===1&&/1,6/.test(c.sr.querySelector('.tile[data-k="power"]').textContent),n()+' redraws');
+c.el.hass=hassOf([mk('sensor.p',1600,W),O],'en'); ok('redraw when the language changes',n()===2&&c.sr.getElementById('badge').textContent==='Heating',n()+' '+c.sr.getElementById('badge').textContent);
+const h=c.el._hass; c.el._applianceSeen.at-=31000; c.el.hass=h; ok('redraw at least every 30 s (relative times)',n()===3,n()+' redraws');
+c.el.setConfig({entity_power:'sensor.p',name:'PAC'}); const k=n(); c.el.hass=h; ok('redraw after a new configuration',c.sr.getElementById('title').textContent==='PAC'&&n()>=k,n()+' '+c.sr.getElementById('title').textContent);
+c.el.remove();
+const A=mk('binary_sensor.a','off'), B=mk('binary_sensor.b','off'), I=mk('sensor.i',12,{unit_of_measurement:'m³'});
+c=card('gas-meter',{entity_index:'sensor.i',entity_leak:['binary_sensor.a','binary_sensor.b']},[I,A,B]); n=spy(c,'_render');
+c.el.hass=hassOf([I,A,mk('binary_sensor.b','on')]); ok('redraw when an entity of a config list changes',n()===1,n()+' redraws'); c.el.remove();
+c=card('linky',{entity_power:'sensor.p'},[P,O]); n=spy(c,'_update');
+c.el.hass=hassOf([P,mk('sensor.other',3)]); ok('linky: redraw skipped when an unrelated entity changes',n()===0,n()+' updates');
+c.el.hass=hassOf([mk('sensor.p',2000,W),O]); ok('linky: redraw when its entity changes',n()===1,n()+' updates'); c.el.remove();
+ok('applianceChanged: entity ids found in nested config',(()=>{const e={};window.applianceChanged(e,hassOf([]),{a:'sensor.x',b:['light.y',{entity:'switch.z'}],icon:'mdi:fire',n:'1.5'});return e._applianceIds.sort().join()==='light.y,sensor.x,switch.z';})());
 }
 ok('no page errors',__errors.length===0,__errors.join('; '));
 // labels: custom tile names override translations, empty values fall back

@@ -203,7 +203,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 5; }
     disconnectedCallback() { clearTimeout(this._dt); this._dt = null; }
     // Chauffage seulement si la puissance reste au-dessus du seuil pendant heating_delay secondes
