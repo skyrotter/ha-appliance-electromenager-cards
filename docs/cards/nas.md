@@ -2,7 +2,7 @@
 
 `custom:appliance-nas-card`
 
-<p align="center"><img src="../home-tech.png" width="720" alt="Mini PC, NAS, TV box and smart scale cards"></p>
+<p align="center"><img src="../home-tech.gif" width="720" alt="Mini PC, NAS, TV box and smart scale cards"></p>
 
 **NAS** (cut-out photo of the Synology DS423+, 4 bays), made for the **Synology DSM** integration. The STATUS and DISK LEDs of the photo come alive: the disk LEDs blink faster with the activity, a read beam sweeps across the bays, data packets fly to the volume ring (upload) or leave it (download), a failing disk blinks orange and its bay pulses red, the STATUS LED blinks orange on any alert, the power button breathes in blue and heat rises above the case when too hot. On the side: a volume ring (red above `volume_max`), download / upload bars and a temperature bar.
 

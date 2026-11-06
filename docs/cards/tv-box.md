@@ -2,7 +2,7 @@
 
 `custom:appliance-tv-box-card`
 
-<p align="center"><img src="../home-tech.png" width="720" alt="Mini PC, NAS, TV box and smart scale cards"></p>
+<p align="center"><img src="../home-tech.gif" width="720" alt="Mini PC, NAS, TV box and smart scale cards"></p>
 
 **TV box** with a cut-out photo of your model (`model`): `freebox_pop` (Freebox Player Pop), `xiaomi_tv_box_s` (Xiaomi TV Box S) or `shield_tv_pro` (NVIDIA Shield TV Pro, default). It reads a `media_player` (Android TV Remote, Google Cast, Freebox…).
 

@@ -2,7 +2,7 @@
 
 `custom:appliance-scale-card`
 
-<p align="center"><img src="../home-tech.png" width="720" alt="Mini PC, NAS, TV box and smart scale cards"></p>
+<p align="center"><img src="../home-tech.gif" width="720" alt="Mini PC, NAS, TV box and smart scale cards"></p>
 
 **Smart scale** (cut-out photo of the Withings WS-30, laid on the floor in 3D perspective), made for the **Withings** integration. On each new weigh-in, and when the card opens: two glowing footprints appear, the plate sinks, the digits roll up to the weight with a small wobble and blink once settled, impedance waves and a light scan cross the plate and a halo lights the floor. While the weigh-in is recent (`recent_minutes`), the display cycles weight → body fat → BMI. Click the scale to replay the weigh-in.
 
