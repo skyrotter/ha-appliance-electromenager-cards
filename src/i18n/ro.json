@@ -889,6 +889,7 @@
     "show_door": "Afișează ușa",
     "lock_model": "Model încuietoare",
     "tilt_only": "Doar înclinare (fără sus / jos)",
+    "tilt_from_position": "Înclinare = poziție (motor pe cordonul de înclinare)",
     "tilt_presets": "Presetări înclinare (listă, ex. [0, 50, 100])",
     "navigation_path": "Pagina de deschis (ex. /lovelace/climat)",
     "entity_climate": "Termostat asociat",

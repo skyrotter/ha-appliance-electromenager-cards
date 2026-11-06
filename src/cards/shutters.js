@@ -378,7 +378,10 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       // fenêtre de toit sans ouvrant motorisé, seulement un volet roulant (Velux solaire…) : les commandes pilotent le volet
       this._blindOnly = this.kind === 'roof_window' && !this._c.entity && !!this._c.entity_blind;
       // store vénitien « inclinaison seule » : ni montée ni descente, seulement l'angle des lames (curseur + préréglages)
-      this._tiltOnly = this.kind === 'venetian_blind' && !!this._c.tilt_only;
+      // tilt_from_position : moteur ordinaire (sans fonction d'inclinaison) branché sur le cordon d'inclinaison (Aqara E1…) :
+      // la position de la cover (0-100) sert d'angle des lames ; implique l'inclinaison seule
+      this._tiltFromPos = this.kind === 'venetian_blind' && !!this._c.tilt_from_position;
+      this._tiltOnly = this.kind === 'venetian_blind' && (!!this._c.tilt_only || this._tiltFromPos);
       this._built = false;
       if (this._hass) this._render();
     }
@@ -457,19 +460,27 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       });
       // préréglages d'inclinaison (0 % = lames fermées, 50 % = mi-ouvertes, 100 % = refermées dans l'autre sens)
       root.querySelectorAll('#shpre button').forEach((b) => b.addEventListener('click', () => {
-        if (this._hass) this._hass.callService('cover', 'set_cover_tilt_position', { entity_id: this._c.entity, tilt_position: Number(b.dataset.tilt) });
+        this._setTilt(Number(b.dataset.tilt));
       }));
       // cover sans set_cover_tilt_position : commandes d'inclinaison ouvrir / stop / fermer
       root.querySelectorAll('#shtbt button').forEach((b) => b.addEventListener('click', () => {
-        if (this._hass) this._hass.callService('cover', b.dataset.a, { entity_id: this._c.entity });
+        // angle porté par la position : ouvrir / stop / fermer la cover elle-même
+        if (this._hass) this._hass.callService('cover', this._tiltFromPos ? `${b.dataset.k}_cover` : b.dataset.a, { entity_id: this._c.entity });
       }));
       root.querySelector('#shtilt input').addEventListener('change', (e) => {
-        if (this._hass) this._hass.callService('cover', 'set_cover_tilt_position', { entity_id: this._c.entity, tilt_position: Number(e.target.value) });
+        this._setTilt(Number(e.target.value));
       });
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
         const k = el.dataset.k; this._more({ power: this._c.entity_power, rain: this._c.entity_rain, wind: this._c.entity_wind, blind: this._c.entity_blind }[k] || this._c.entity);
       }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true; this._pos = null; this._ang = null;
+    }
+
+    // règle l'angle des lames : set_cover_tilt_position, ou set_cover_position quand l'angle est porté par la position (invert respecté)
+    _setTilt(v) {
+      if (!this._hass) return;
+      if (this._tiltFromPos) this._hass.callService('cover', 'set_cover_position', { entity_id: this._c.entity, position: this._c.invert ? 100 - v : v });
+      else this._hass.callService('cover', 'set_cover_tilt_position', { entity_id: this._c.entity, tilt_position: v });
     }
 
     // valeurs des boutons d'inclinaison : option tilt_presets (nombres 0-100), sinon 0 / 25 / 50 / 75 / 100
@@ -514,6 +525,8 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       }
       if (!known) pos = st === 'open' || st === 'opening' ? 100 : 0;
       else if (st === 'open' && pos < 100) st = pos > 0 ? 'partial' : 'closed';
+      // angle des lames porté par la position de la cover (tilt_from_position)
+      if (this._tiltFromPos && st !== 'unavailable') tilt = pos;
       return { st, pos, known, tilt, s };
     }
 
@@ -596,11 +609,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       const posKnown = this._blindOnly ? blA.current_position != null && isFinite(Number(blA.current_position)) : known;
       const ctl = r.getElementById('shctl');
       ctl.classList.toggle('hide', c.show_controls === false || !isCover || this._tiltOnly);
+      const tiltSet = this._tiltFromPos ? has(4) : has(128);
       const pre = r.getElementById('shpre');
-      pre.classList.toggle('hide', !(this._tiltOnly && isCover && has(128) && c.show_controls !== false));
+      pre.classList.toggle('hide', !(this._tiltOnly && isCover && tiltSet && c.show_controls !== false));
       // sans set_cover_tilt_position, la carte ne reste pas vide : boutons ouvrir / stop / fermer l'inclinaison
       const tbt = r.getElementById('shtbt');
-      tbt.classList.toggle('hide', !(this._tiltOnly && isCover && !has(128) && c.show_controls !== false));
+      tbt.classList.toggle('hide', !(this._tiltOnly && isCover && !tiltSet && c.show_controls !== false));
       tbt.querySelectorAll('button').forEach((b) => {
         b.querySelector('span').textContent = this._t(`btn_${b.dataset.k}`);
         b.classList.toggle('hide', b.dataset.k === 'stop' && !has(64));
@@ -625,7 +639,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       };
       rng('shpos', isCover && !this._tiltOnly && known && (this._tiltDriven ? has(128) : has(4)) && c.show_slider !== false && st !== 'unavailable', this._blindOnly ? this._l('blind') : this._l('position'), this._blindOnly ? blPos : pos);
       // en inclinaison seule le curseur reste affiché même si la cover ne remonte pas current_tilt_position
-      rng('shtilt', isCover && this.kind === 'venetian_blind' && (this._tiltOnly || !isNaN(tilt)) && has(128) && c.show_slider !== false && st !== 'unavailable', this._l('tilt'), isNaN(tilt) ? 0 : tilt);
+      rng('shtilt', isCover && this.kind === 'venetian_blind' && (this._tiltOnly || !isNaN(tilt)) && (this._tiltOnly ? tiltSet : has(128)) && c.show_slider !== false && st !== 'unavailable', this._l('tilt'), isNaN(tilt) ? 0 : tilt);
 
       const pw = this._watts(c.entity_power);
       const V = {
@@ -677,7 +691,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
           { name: 'travel_time', selector: { number: { min: 0, max: 120, step: 1, mode: 'box', unit_of_measurement: 's' } } },
         ] },
         bool('invert', false),
-        ...(this.kind === 'venetian_blind' ? [bool('tilt_only', false), { name: 'tilt_presets', selector: { object: {} } }] : []),
+        ...(this.kind === 'venetian_blind' ? [bool('tilt_only', false), bool('tilt_from_position', false), { name: 'tilt_presets', selector: { object: {} } }] : []),
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [

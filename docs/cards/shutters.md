@@ -22,6 +22,14 @@ tilt_only: true
 tilt_presets: [0, 50, 100]   # optional, default [0, 25, 50, 75, 100]
 ```
 
+**Motor on the tilt cord (venetian blind)**: some blinds are tilted by an ordinary roller-blind motor (Aqara E1…) fixed on the tilt cord. Home Assistant sees a plain cover (open / close / stop / position) without any tilt feature. With `tilt_from_position: true`, the cover position is used as the slat angle: the card works like `tilt_only`, the slider and preset buttons send `cover.set_cover_position`, and the slats follow the position. If the angle runs the wrong way, add `invert: true`. Without `set_cover_position`, the card shows Open / Stop / Close buttons for the cover instead.
+
+```yaml
+type: custom:appliance-venetian-blind-card
+entity: cover.rolgordijn_voorraam
+tilt_from_position: true
+```
+
 The badge shows **Open**, **Closed**, **Open 40 %** or **Closing… 65 %**; while moving, the box LED blinks and an arrow follows the shutter. Buttons **Open / Stop / Close** (Stop hidden if the cover cannot stop), a **Position** slider when the cover supports it, and tiles for position, tilt, motor power and last change. Without `current_position`, open = 100 % and closed = 0 %.
 
 ## Bioclimatic pergola

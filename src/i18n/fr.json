@@ -905,6 +905,7 @@
     "show_door": "Afficher la porte",
     "lock_model": "Modèle de serrure",
     "tilt_only": "Inclinaison seule (sans monter / descendre)",
+    "tilt_from_position": "Angle = position (moteur sur le cordon d’inclinaison)",
     "tilt_presets": "Préréglages d’inclinaison (liste, ex. [0, 50, 100])",
     "navigation_path": "Page à ouvrir (ex. /lovelace/climat)",
     "entity_climate": "Thermostat lié",

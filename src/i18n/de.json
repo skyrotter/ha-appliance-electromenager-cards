@@ -889,6 +889,7 @@
     "show_door": "Tür anzeigen",
     "lock_model": "Schlossmodell",
     "tilt_only": "Nur Neigung (kein Auf / Ab)",
+    "tilt_from_position": "Neigung = Position (Motor an der Wendeschnur)",
     "tilt_presets": "Neigungs-Voreinstellungen (Liste, z. B. [0, 50, 100])",
     "navigation_path": "Zu öffnende Seite (z. B. /lovelace/klima)",
     "entity_climate": "Verknüpftes Thermostat",

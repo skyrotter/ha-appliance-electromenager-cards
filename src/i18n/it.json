@@ -889,6 +889,7 @@
     "show_door": "Mostra porta",
     "lock_model": "Modello serratura",
     "tilt_only": "Solo inclinazione (senza su / giù)",
+    "tilt_from_position": "Inclinazione = posizione (motore sul cordino di orientamento)",
     "tilt_presets": "Preimpostazioni inclinazione (elenco, es. [0, 50, 100])",
     "navigation_path": "Pagina da aprire (es. /lovelace/clima)",
     "entity_climate": "Termostato collegato",
