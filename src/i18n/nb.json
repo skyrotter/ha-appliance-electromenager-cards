@@ -127,6 +127,7 @@
 "wine_cooler": "Vinkjøleskap",
 "f_max_temperature_wine": "Varsel over (°C)",
 "f_fridge_style": "Kjøleskapstype",
+"f_fridge_finish": "Kjøleskapets finish",
 "zone_top": "Øvre sone",
 "zone_bottom": "Nedre sone",
 "f_zone2_temperature": "Temperatursensor nedre sone (to soner)",
@@ -1003,7 +1004,9 @@
 "show_btn_next": "Neste-knapp",
 "show_btn_vol_down": "Volum ned-knapp",
 "show_btn_mute": "Demp-knapp",
-"show_btn_vol_up": "Volum opp-knapp"
+"show_btn_vol_up": "Volum opp-knapp",
+"override": "Midlertidig overstyring (Netatmo)",
+"override_durations": "Varigheter (min)"
 },
 "light": {
 "light_bulb": "Lyspære",
@@ -1136,7 +1139,16 @@
 "model_nest": "Google Nest-termostat",
 "model_tado": "Tado X veggtermostat",
 "model_t6": "Honeywell Home T6-termostat",
-"model_bht6000": "Tuya BHT6000-termostat (rund, svart skjerm)"
+"model_bht6000": "Tuya BHT6000-termostat (rund, svart skjerm)",
+"model_classic": "Radiatortermostat (klassisk)",
+"model_netatmo_trv": "Netatmo-termostat (1. gen.)",
+"model_netatmo_trv2": "Netatmo-termostat (ny)",
+"model_danfoss": "Danfoss Ally-termostat",
+"model_shelly": "Shelly TRV-termostat",
+"model_somfy": "Somfy io-termostat",
+"duration": "Varighet",
+"dur_default": "Standard",
+"resume": "Tilbake til timeplan"
 },
 "room_climate": {
 "name": "Romklima",
@@ -1412,6 +1424,7 @@
 "visceral": "Visceralt fett",
 "pulse": "Puls",
 "goal": "Mål",
+"battery": "Batteri",
 "bmi": "KMI",
 "goal_reached": "Målet er nådd",
 "last": "Veid",

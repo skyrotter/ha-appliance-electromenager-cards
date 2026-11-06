@@ -58,6 +58,7 @@
     "wine_cooler": "Витрина за вино",
     "f_max_temperature_wine": "Обавештење изнад (°C)",
     "f_fridge_style": "Распоред фрижидера",
+    "f_fridge_finish": "Завршна обрада фрижидера",
     "zone_top": "Горња зона",
     "zone_bottom": "Доња зона",
     "f_zone2_temperature": "Сензор температуре доње зоне (две зоне)",
@@ -1019,7 +1020,9 @@
     "show_btn_next": "Дугме следеће",
     "show_btn_vol_down": "Дугме тише",
     "show_btn_mute": "Дугме утишај",
-    "show_btn_vol_up": "Дугме гласније"
+    "show_btn_vol_up": "Дугме гласније",
+    "override": "Привремена измена (Netatmo)",
+    "override_durations": "Трајања (мин)"
   },
   "light": {
     "light_bulb": "Сијалица",
@@ -1152,7 +1155,16 @@
     "model_nest": "Google Nest термостат",
     "model_tado": "Tado X зидни термостат",
     "model_t6": "Honeywell Home T6 термостат",
-    "model_bht6000": "Tuya BHT6000 термостат (округли, црни екран)"
+    "model_bht6000": "Tuya BHT6000 термостат (округли, црни екран)",
+    "model_classic": "Термостатска глава (класична)",
+    "model_netatmo_trv": "Netatmo глава (1. ген.)",
+    "model_netatmo_trv2": "Netatmo глава (нова)",
+    "model_danfoss": "Danfoss Ally глава",
+    "model_shelly": "Shelly TRV глава",
+    "model_somfy": "Somfy io глава",
+    "duration": "Трајање",
+    "dur_default": "Подразумевано",
+    "resume": "Назад на распоред"
   },
   "room_climate": {
     "name": "Клима у соби",
@@ -1428,6 +1440,7 @@
     "visceral": "Висцерална маст",
     "pulse": "Пулс",
     "goal": "Циљ",
+    "battery": "Батерија",
     "bmi": "БМИ",
     "goal_reached": "Циљ је достигнут",
     "last": "Мерено",

@@ -58,6 +58,7 @@
     "wine_cooler": "Wijnkoelkast",
     "f_max_temperature_wine": "Alarm boven (°C)",
     "f_fridge_style": "Type koelkast",
+    "f_fridge_finish": "Afwerking van de koelkast",
     "zone_top": "Bovenste zone",
     "zone_bottom": "Onderste zone",
     "f_zone2_temperature": "Temperatuursensor onderste zone (twee zones)",
@@ -1003,7 +1004,9 @@
     "show_btn_next": "Volgende-knop",
     "show_btn_vol_down": "Zachter-knop",
     "show_btn_mute": "Dempknop",
-    "show_btn_vol_up": "Harder-knop"
+    "show_btn_vol_up": "Harder-knop",
+    "override": "Tijdelijke afwijking (Netatmo)",
+    "override_durations": "Duur van de afwijking (min)"
   },
   "light": {
     "light_bulb": "Lamp",
@@ -1136,7 +1139,16 @@
     "model_nest": "Google Nest-thermostaat",
     "model_tado": "Tado X wandthermostaat",
     "model_t6": "Honeywell Home T6-thermostaat",
-    "model_bht6000": "Tuya BHT6000-thermostaat (rond, zwart scherm)"
+    "model_bht6000": "Tuya BHT6000-thermostaat (rond, zwart scherm)",
+    "model_classic": "Radiatorkraan (klassiek)",
+    "model_netatmo_trv": "Netatmo-radiatorkraan (1e gen.)",
+    "model_netatmo_trv2": "Netatmo-radiatorkraan (nieuw)",
+    "model_danfoss": "Danfoss Ally-radiatorkraan",
+    "model_shelly": "Shelly TRV-radiatorkraan",
+    "model_somfy": "Somfy io-radiatorkraan",
+    "duration": "Duur",
+    "dur_default": "Standaard",
+    "resume": "Terug naar schema"
   },
   "room_climate": {
     "name": "Binnenklimaat",
@@ -1412,6 +1424,7 @@
     "visceral": "Visceraal vet",
     "pulse": "Hartslag",
     "goal": "Doel",
+    "battery": "Accu",
     "bmi": "BMI",
     "goal_reached": "Doel bereikt",
     "last": "Gewogen",

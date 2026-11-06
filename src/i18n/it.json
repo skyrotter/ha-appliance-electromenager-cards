@@ -58,6 +58,7 @@
     "wine_cooler": "Cantinetta vino",
     "f_max_temperature_wine": "Avviso sopra (°C)",
     "f_fridge_style": "Disposizione del frigorifero",
+    "f_fridge_finish": "Finitura del frigorifero",
     "zone_top": "Zona superiore",
     "zone_bottom": "Zona inferiore",
     "f_zone2_temperature": "Sensore temperatura zona inferiore (doppia zona)",
@@ -1003,7 +1004,9 @@
     "show_btn_next": "Pulsante successivo",
     "show_btn_vol_down": "Pulsante volume −",
     "show_btn_mute": "Pulsante muto",
-    "show_btn_vol_up": "Pulsante volume +"
+    "show_btn_vol_up": "Pulsante volume +",
+    "override": "Deroga temporanea (Netatmo)",
+    "override_durations": "Durate della deroga (min)"
   },
   "light": {
     "light_bulb": "Lampadina",
@@ -1136,7 +1139,16 @@
     "model_nest": "Termostato Google Nest",
     "model_tado": "Termostato a parete Tado X",
     "model_t6": "Termostato Honeywell Home T6",
-    "model_bht6000": "Termostato Tuya BHT6000 (rotondo, schermo nero)"
+    "model_bht6000": "Termostato Tuya BHT6000 (rotondo, schermo nero)",
+    "model_classic": "Testa termostatica (classica)",
+    "model_netatmo_trv": "Testa Netatmo (1ª gen.)",
+    "model_netatmo_trv2": "Testa Netatmo (nuova)",
+    "model_danfoss": "Testa Danfoss Ally",
+    "model_shelly": "Testa Shelly TRV",
+    "model_somfy": "Testa Somfy io",
+    "duration": "Durata",
+    "dur_default": "Predefinita",
+    "resume": "Torna al programma"
   },
   "room_climate": {
     "name": "Clima della stanza",
@@ -1412,6 +1424,7 @@
     "visceral": "Grasso viscerale",
     "pulse": "Battito",
     "goal": "Obiettivo",
+    "battery": "Batteria",
     "bmi": "IMC",
     "goal_reached": "Obiettivo raggiunto",
     "last": "Pesata",
