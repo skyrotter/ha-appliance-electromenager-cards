@@ -189,22 +189,12 @@ svg{display:block;width:100%;max-width:calc(280px * var(--illus-scale,1));height
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en').slice(0, 2); return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
-    _num(id) {
-      const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
-      const v = parseFloat(String(s.state).replace(',', '.'));
-      return isFinite(v) ? v : NaN;
-    }
-    _watts(id) {
-      const v = this._num(id); if (isNaN(v)) return NaN;
-      const u = ((this._st(id).attributes || {}).unit_of_measurement || '').toLowerCase();
-      return u === 'kw' ? v * 1000 : v;
-    }
+    _num(id) { return window.applianceNum(this._st(id)); }
+    _watts(id) { return window.applianceWatts(this._st(id)); }
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
     // durée restante en minutes, quelle que soit l'unité du capteur (s, min, h)
     _minutes(id) {

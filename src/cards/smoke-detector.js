@@ -166,7 +166,7 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
       return tr[k] ?? T.en[k] ?? k;
     }
     _l(k) { return this._t(k); }
-    _lang() { let l = this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en'; if (!T[l]) l = l.slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
     _ok(s) { return !!s && !/^(unavailable|unknown)$/i.test(String(s.state)); }
     _num(s) { if (!this._ok(s)) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
@@ -269,8 +269,8 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
         since: [c.entity_smoke, this._ok(sS) ? this._time(sS.last_changed) : '--', '', ''],
         co_level: [coNumeric || c.entity_co, coNumeric ? String(Math.round(coPpm)) : this._t(this._ok(coS) ? (st === 'co' ? 'co_detected_short' : 'ok') : 'unavailable'), coNumeric ? 'ppm' : '', st === 'co' ? 'bad' : ''],
         battery: [c.entity_battery, batBinary ? this._t(low ? 'low' : 'ok') : isNaN(bat) ? '--' : String(Math.round(bat)), batBinary ? '' : '%', low ? 'warn' : ''],
-        level: [c.entity_level, isNaN(this._num(lvS)) ? '--' : (Math.round(this._num(lvS) * 10) / 10).toLocaleString(this._lang()), (lvS && lvS.attributes && lvS.attributes.unit_of_measurement) || '', st === 'alarm' ? 'bad' : ''],
-        temperature: [c.entity_temperature, isNaN(tempV) ? '--' : (Math.round(tempV * 10) / 10).toLocaleString(this._lang()), tc ? tc.unit : '°C', ''],
+        level: [c.entity_level, isNaN(this._num(lvS)) ? '--' : (Math.round(this._num(lvS) * 10) / 10).toLocaleString(window.applianceLocale(this._c, this._hass)), (lvS && lvS.attributes && lvS.attributes.unit_of_measurement) || '', st === 'alarm' ? 'bad' : ''],
+        temperature: [c.entity_temperature, isNaN(tempV) ? '--' : (Math.round(tempV * 10) / 10).toLocaleString(window.applianceLocale(this._c, this._hass)), tc ? tc.unit : '°C', ''],
       };
       TILES.forEach(([k, , opt]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`); const [show, val, unit, cls] = V[k];

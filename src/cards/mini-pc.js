@@ -207,12 +207,12 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en'); return T[l] ? l : T[l.slice(0, 2)] ? l.slice(0, 2) : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
     _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
     _watts(id) { const v = this._num(id); if (isNaN(v)) return NaN; return this._unit(id, 'W').toLowerCase() === 'kw' ? v * 1000 : v; }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang(), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _more(id) { if (window.applianceMore) window.applianceMore(this, id); }
     _temp(id) {
       const s = this._st(id), v = this._num(id);
@@ -300,7 +300,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const badge = r.getElementById('mpbadge'); badge.textContent = this._t(st); badge.style.display = c.show_status === false ? 'none' : '';
       const al = r.getElementById('mpalert'); al.textContent = alerts.map((a) => this._t(a)).join(' · '); al.classList.toggle('on', alerts.length > 0);
 
-      const fmtNet = (id) => fmtRate(this._num(id), this._unit(id, ''), this._lang());
+      const fmtNet = (id) => fmtRate(this._num(id), this._unit(id, ''), window.applianceLocale(this._c, this._hass));
       const V = {
         cpu: [this._fmt(cpu, 0), '%'], temp: [this._fmt(tp.v, 0), tp.unit], ram: [this._fmt(ram, 0), '%'], disk: [this._fmt(dsk, 0), '%'],
         down: fmtNet(c.entity_net_down), up: fmtNet(c.entity_net_up), uptime: [this._dur(this._uptimeSec(c.entity_uptime)), ''],

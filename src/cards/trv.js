@@ -280,10 +280,10 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { let l = (this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en'); if (!T[l]) l = l.slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
     _num(v) { const n = parseFloat(String(v).replace(',', '.')); return Number.isFinite(n) ? n : NaN; }
-    _fmt(v, d = 1) { return fin(v) ? v.toLocaleString(this._lang(), { maximumFractionDigits: d, minimumFractionDigits: 0 }) : '--'; }
+    _fmt(v, d = 1) { return fin(v) ? v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }) : '--'; }
     _model() { const m = String(this._c.model || 'trv').toLowerCase(); return MODELS[m] ? m : 'trv'; }
     // dérogation : active pour une entité de l'intégration Netatmo (ou override: true), désactivée par override: false
     _ovr() { const c = this._c; if (c.override === false) return false; return c.override === true || (this._hass?.entities?.[c.entity]?.platform === 'netatmo'); }

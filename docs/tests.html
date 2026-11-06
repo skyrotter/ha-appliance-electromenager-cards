@@ -1264,6 +1264,18 @@ ok('card size / grid',typeof c.el.getCardSize()==='number'&&c.el.getGridOptions(
   ok('light tap_action -> hass-action, no more-info',!mi&&act&&act.action==='tap'&&act.config.tap_action.perform_action==='automation.trigger',JSON.stringify(act));}
  c=card('light-bulb',{entity:'light.l',tap_action:{action:'toggle'}},[mk('light.l','off')]);
  c.sr.querySelector('.stage').click(); ok('light tap_action toggle -> light.toggle',JSON.stringify(c.h.calls[0])==='["light","toggle",{"entity_id":"light.l"}]',JSON.stringify(c.h.calls));}
+{ // shared helpers of the standalone cards (src/cards/card-helpers.js)
+const TT={en:{},fr:{},nb:{},sr:{},'sr-Latn':{}}, H=(l)=>({language:l,locale:{language:l}});
+ok('applianceLang: HA language',window.applianceLang(TT,{},H('fr'))==='fr');
+ok('applianceLang: option language wins',window.applianceLang(TT,{language:'nb'},H('fr'))==='nb');
+ok('applianceLang: no / nn -> nb',window.applianceLang(TT,{},H('no'))==='nb'&&window.applianceLang(TT,{},H('nn'))==='nb');
+ok('applianceLang: sr-Latn kept, sr-latn normalised',window.applianceLang(TT,{},H('sr-Latn'))==='sr-Latn'&&window.applianceLang(TT,{},H('sr_latn'))==='sr-Latn');
+ok('applianceLang: region dropped, untranslated -> en',window.applianceLang(TT,{},H('fr-CA'))==='fr'&&window.applianceLang(TT,{},H('pl'))==='en');
+ok('applianceLocale: untranslated language still formats numbers',window.applianceLocale({},H('pl'))==='pl'&&window.applianceLocale({language:'de'},H('pl'))==='de');
+ok('applianceNum / applianceWatts',window.applianceNum(mk('sensor.x','1,5'))===1.5&&isNaN(window.applianceNum(mk('sensor.x','unknown')))&&window.applianceNum(mk('climate.x','heat',{current_temperature:21.5}))===21.5
+  &&window.applianceWatts(mk('sensor.x',1.5,{unit_of_measurement:'kW'}))===1500&&window.applianceWatts(mk('sensor.x',2,{unit_of_measurement:'MW'}))===2e6&&window.applianceWatts(mk('sensor.x',40,{unit_of_measurement:'W'}))===40);
+const gb=card('gas-boiler',{entity_power:'sensor.p'},[mk('sensor.p',1500,{unit_of_measurement:'W'})],'de'); ok('gas boiler numbers follow the HA language (de: 1,5 kW)',/1,5\s*kW/.test(gb.sr.textContent.replace(/<[^>]+>/g,'')),gb.sr.textContent.replace(/\s+/g,' ').slice(-200)); gb.el.remove();
+}
 ok('no page errors',__errors.length===0,__errors.join('; '));
 // labels: custom tile names override translations, empty values fall back
 {const lbls=(c)=>[...c.sr.querySelectorAll('.lbl,.tile .l,.stat .l')].map(e=>e.textContent.trim());

@@ -247,20 +247,10 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en').slice(0, 2); return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
-    _num(id) {
-      const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
-      const v = parseFloat(String(s.state).replace(',', '.'));
-      return isFinite(v) ? v : NaN;
-    }
-    _watts(id) {
-      const v = this._num(id); if (isNaN(v)) return NaN;
-      const u = ((this._st(id).attributes || {}).unit_of_measurement || '').toLowerCase();
-      return u === 'kw' ? v * 1000 : u === 'mw' ? v * 1e6 : v;
-    }
+    _num(id) { return window.applianceNum(this._st(id)); }
+    _watts(id) { return window.applianceWatts(this._st(id)); }
     // relais (binary_sensor, switch…) : on / off ; capteur numérique : marche au-dessus de 0
     _on(id) {
       const s = this._st(id); if (!s) return false;
@@ -268,7 +258,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       return isNaN(v) ? /^(on|true|running|marche|heat|cool)/i.test(String(s.state)) : v > 0;
     }
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'en' ? 'en-US' : this._lang(), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _kw(w) { return isNaN(w) ? ['--', ''] : w >= 1000 ? [this._fmt(w / 1000, 2), 'kW'] : [this._fmt(w, 0), 'W']; }
     // Compteurs d'énergie toujours en kWh (Wh et MWh convertis), sans décimale au-delà de 1000 kWh
     _kwh(id) {

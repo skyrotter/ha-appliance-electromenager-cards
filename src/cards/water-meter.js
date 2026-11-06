@@ -119,14 +119,14 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { let l = (this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en').slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
     _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
     _unit(id, d) { const s = this._st(id); return String((s && s.attributes && s.attributes.unit_of_measurement) || d).trim(); }
     // volume en litres et débit en L/min, quelle que soit l'unité du capteur
     _liters(id, d = 'm³') { const v = this._num(id); return isNaN(v) ? NaN : v * (VOL[this._unit(id, d).toLowerCase()] ?? 1); }
     _lpm(id) { const v = this._num(id); return isNaN(v) ? NaN : v * (FLOW[this._unit(id, 'L/min').toLowerCase().replace('litre', 'l').replace('liter', 'l')] ?? 1); }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _vol(l) { return isNaN(l) ? ['--', 'L'] : l >= 10000 ? [this._fmt(l / 1000, 1), 'm³'] : [this._fmt(l, 0), 'L']; }
     // température ramenée en °C quel que soit l'unité du capteur (°F, K)
     _celsius(id) {

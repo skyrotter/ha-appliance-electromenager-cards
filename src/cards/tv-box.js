@@ -226,10 +226,10 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en'); return T[l] ? l : T[l.slice(0, 2)] ? l.slice(0, 2) : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass && this._hass.states[id]; }
     _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang(), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _more(id) { if (window.applianceMore) window.applianceMore(this, id); }
 
     _build() {

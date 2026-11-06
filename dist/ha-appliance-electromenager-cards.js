@@ -9235,6 +9235,45 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
   "color:#03a9f4;background:#fff;font-weight:700;border-radius:0 3px 3px 0");
 })();
 
+/* Fonctions partagées par les cartes autonomes (chargées avant elles, une seule fois).
+ * window.applianceLang(T, cfg, hass)   → langue des textes : option language, sinon langue de Home Assistant,
+ *                                        si elle existe dans T (sr-Latn, puis code à 2 lettres, no / nn → nb), sinon en.
+ * window.applianceLocale(cfg, hass)    → locale des nombres et dates : option language, sinon langue de Home Assistant,
+ *                                        même sans traduction (un utilisateur polonais garde « 1,5 »).
+ * window.applianceNum(st)              → valeur numérique d'un état (climate / water_heater : current_temperature), sinon NaN.
+ * window.applianceWatts(st)            → puissance en W (kW et MW convertis), sinon NaN.
+ */
+(() => {
+  const haLang = (cfg, hass) => {
+    const h = hass || document.querySelector('home-assistant')?.hass;
+    return String((cfg && cfg.language) || (h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').replace('_', '-');
+  };
+  window.applianceLang = (T, cfg, hass) => {
+    const full = haLang(cfg, hass);
+    if (T[full]) return full;
+    if (/^sr-latn$/i.test(full) && T['sr-Latn']) return 'sr-Latn';
+    let l = full.toLowerCase().slice(0, 2);
+    if (l === 'no' || l === 'nn') l = 'nb'; // norvégien : no / nn → nb (bokmål)
+    return T[l] ? l : 'en';
+  };
+  window.applianceLocale = (cfg, hass) => {
+    const l = haLang(cfg, hass);
+    try { return Intl.NumberFormat.supportedLocalesOf(l).length ? l : 'en'; } catch (e) { return 'en'; }
+  };
+  window.applianceNum = (s) => {
+    if (!s) return NaN;
+    // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
+    if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
+    const v = parseFloat(String(s.state).replace(',', '.'));
+    return isFinite(v) ? v : NaN;
+  };
+  window.applianceWatts = (s) => {
+    const v = window.applianceNum(s); if (isNaN(v)) return NaN;
+    const u = String((s.attributes || {}).unit_of_measurement || '').trim();
+    return /^kw$/i.test(u) ? v * 1000 : u === 'MW' ? v * 1e6 : v;
+  };
+})();
+
 /* Libellés de l'éditeur visuel des cartes autonomes (Pompe, Onduleur, Plancher chauffant, Sauna…)
  * et unité des températures (°C / °F) partagée par ces cartes.
  * window.applianceEditorLabel(nom, hass) → libellé traduit dans la langue de Home Assistant,
@@ -13079,22 +13118,7 @@ const I18N_AQUARIUM = {
   }
 };
 // Home Assistant language, used when `language` option is not explicitly set
-const lang = (h) => { 
-  const fullLang = (h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en';
-  
-  // 1. Check if the exact full language tag exists in the translations object
-  if (I18N_AQUARIUM[fullLang]) return fullLang;
-  
-  // 2. Normalize and check for variations (e.g., 'sr-latn' or 'sr_latn')
-  const formatted = fullLang.replace('_', '-');
-  const normalizedLatn = formatted.toLowerCase() === 'sr-latn' ? 'sr-Latn' : formatted;
-  if (I18N_AQUARIUM[normalizedLatn]) return normalizedLatn;
-
-  // 3. Fallback to 2-letter code
-  let l = fullLang.toLowerCase().slice(0, 2);
-  if (l === 'no' || l === 'nn') l = 'nb'; // Norwegian: no / nn → nb (bokmål)
-  return l;
-};
+const lang = (h) => window.applianceLang(I18N_AQUARIUM, null, h);
 
 class ApplianceAquariumCard extends HTMLElement {
   static getStubConfig(hass) {
@@ -13536,7 +13560,7 @@ const I18N_LINKY = {
   }
 };
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
-const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
+const lang = (h) => window.applianceLang(I18N_LINKY, null, h);
 // Aiguilles L1 / L2 / L3 (mode « needles ») : couleurs distinctes du vert / orange / rouge de la jauge
 const PHASE_COLORS = ['#1e88e5', '#8e24aa', '#00897b'];
 
@@ -14024,22 +14048,7 @@ const I18N_BAT = {
   }
 };
 // Home Assistant language, used when `language` option is not explicitly set
-const lang = (h) => { 
-  const fullLang = (h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en';
-  
-  // 1. Check if the exact full language tag exists in the translations object
-  if (I18N_BAT[fullLang]) return fullLang;
-  
-  // 2. Normalize and check for variations (e.g., 'sr-latn' or 'sr_latn')
-  const formatted = fullLang.replace('_', '-');
-  const normalizedLatn = formatted.toLowerCase() === 'sr-latn' ? 'sr-Latn' : formatted;
-  if (I18N_BAT[normalizedLatn]) return normalizedLatn;
-
-  // 3. Fallback to 2-letter code
-  let l = fullLang.toLowerCase().slice(0, 2);
-  if (l === 'no' || l === 'nn') l = 'nb'; // Norwegian: no / nn → nb (bokmål)
-  return l;
-};
+const lang = (h) => window.applianceLang(I18N_BAT, null, h);
 class ApplianceBatteryCard extends HTMLElement {
   static getStubConfig(hass) {
     // batterie domestique : niveau (device_class battery) et puissance dont le nom évoque une batterie
@@ -14385,7 +14394,7 @@ const I18N_EV = {
   }
 };
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
-const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
+const lang = (h) => window.applianceLang(I18N_EV, null, h);
 
 class ApplianceEvChargerCard extends HTMLElement {
   static getStubConfig(hass) {
@@ -14828,7 +14837,7 @@ const I18N_VAC = {
   }
 };
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
-const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
+const lang = (h) => window.applianceLang(I18N_VAC, null, h);
 const ICONS_VAC = {
   start: '<path d="M8 5v14l11-7z"/>',
   pause: '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>',
@@ -15300,7 +15309,7 @@ const I18N_MOW = {
   }
 };
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
-const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
+const lang = (h) => window.applianceLang(I18N_MOW, null, h);
 const ICONS_MOW = {
   start: '<path d="M8 5v14l11-7z"/>',
   pause: '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>',
@@ -15403,7 +15412,7 @@ class ApplianceRobotMowerCard extends HTMLElement {
     let next = null; const ns = this._st(c.entity_next_start);
     if (ns && !['unavailable', 'unknown'].includes(ns.state)) {
       const d = new Date(ns.state);
-      next = isNaN(d) ? ns.state : d.toLocaleString(c.language === 'en' ? 'en-GB' : 'fr-FR', { weekday: 'short', hour: '2-digit', minute: '2-digit' });
+      next = isNaN(d) ? ns.state : d.toLocaleString(window.applianceLocale(c, this._hass).replace(/^en$/, 'en-GB'), { weekday: 'short', hour: '2-digit', minute: '2-digit' });
     }
     const it = [], compact = c.layout === 'compact';
     const stTxt = raining && st !== 'mowing' ? `${this._t(st)} · ${this._t('rain')}` : this._t(st);
@@ -15722,7 +15731,7 @@ const I18N_PB = {
   }
 };
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
-const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
+const lang = (h) => window.applianceLang(I18N_PB, null, h);
 
 class AppliancePelletBoilerCard extends HTMLElement {
   static getStubConfig(hass) {
@@ -15981,7 +15990,7 @@ class AppliancePelletBoilerCard extends HTMLElement {
     if (c.show_status) it.push([this._l('status'), this._t(st), c.entity_status || c.entity_power]);
     if (c.show_power) it.push([this._l('power'), w === null ? '—' : w >= 1000 ? `${(w / 1000).toFixed(1)} kW` : `${Math.round(w)} W`, c.entity_power]);
     // départ / retour au dixième (un entier reste sans décimale), séparateur décimal de la langue
-    const ft = (v) => (v === null ? '—' : `${v.toLocaleString(this._config.language || lang(this._hass), { maximumFractionDigits: 1 })} ${tc.unit}`);
+    const ft = (v) => (v === null ? '—' : `${v.toLocaleString(window.applianceLocale(this._config, this._hass), { maximumFractionDigits: 1 })} ${tc.unit}`);
     if (c.show_temps) { it.push([this._l('flow'), ft(dep), c.entity_flow_temp]); it.push([this._l('ret'), ft(ret), c.entity_return_temp]); }
     if (c.show_pellets) it.push([this._l('pellets'), f(lvl, 0, '%'), c.entity_pellet_level]);
     if (c.show_energy) it.push([this._l('energy'), f(e, 1, 'kWh'), c.entity_energy]);
@@ -16362,22 +16371,12 @@ svg{display:block;width:100%;max-width:calc(170px * var(--illus-scale,1));height
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en').slice(0, 2); return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
-    _num(id) {
-      const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
-      const v = parseFloat(String(s.state).replace(',', '.'));
-      return isFinite(v) ? v : NaN;
-    }
-    _watts(id) {
-      const v = this._num(id); if (isNaN(v)) return NaN;
-      const u = ((this._st(id).attributes || {}).unit_of_measurement || '').toLowerCase();
-      return u === 'kw' ? v * 1000 : v;
-    }
+    _num(id) { return window.applianceNum(this._st(id)); }
+    _watts(id) { return window.applianceWatts(this._st(id)); }
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
 
     _build() {
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
@@ -17010,20 +17009,10 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en').slice(0, 2); return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
-    _num(id) {
-      const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
-      const v = parseFloat(String(s.state).replace(',', '.'));
-      return isFinite(v) ? v : NaN;
-    }
-    _watts(id) {
-      const v = this._num(id); if (isNaN(v)) return NaN;
-      const u = ((this._st(id).attributes || {}).unit_of_measurement || '').toLowerCase();
-      return u === 'kw' ? v * 1000 : u === 'mw' ? v * 1e6 : v;
-    }
+    _num(id) { return window.applianceNum(this._st(id)); }
+    _watts(id) { return window.applianceWatts(this._st(id)); }
     // relais (binary_sensor, switch…) : on / off ; capteur numérique : marche au-dessus de 0
     _on(id) {
       const s = this._st(id); if (!s) return false;
@@ -17031,7 +17020,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       return isNaN(v) ? /^(on|true|running|marche|heat|cool)/i.test(String(s.state)) : v > 0;
     }
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'en' ? 'en-US' : this._lang(), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _kw(w) { return isNaN(w) ? ['--', ''] : w >= 1000 ? [this._fmt(w / 1000, 2), 'kW'] : [this._fmt(w, 0), 'W']; }
     // Compteurs d'énergie toujours en kWh (Wh et MWh convertis), sans décimale au-delà de 1000 kWh
     _kwh(id) {
@@ -17537,22 +17526,12 @@ svg{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));height
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en').slice(0, 2); return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
-    _num(id) {
-      const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
-      const v = parseFloat(String(s.state).replace(',', '.'));
-      return isFinite(v) ? v : NaN;
-    }
-    _watts(id) {
-      const v = this._num(id); if (isNaN(v)) return NaN;
-      const u = ((this._st(id).attributes || {}).unit_of_measurement || '').toLowerCase();
-      return u === 'kw' ? v * 1000 : v;
-    }
+    _num(id) { return window.applianceNum(this._st(id)); }
+    _watts(id) { return window.applianceWatts(this._st(id)); }
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
 
     _build() {
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
@@ -18074,7 +18053,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en').slice(0, 2); return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
     // consigne : attribut temperature d'une entité climate / water_heater, sinon valeur numérique de l'état
     _tgt(id) {
@@ -18082,20 +18061,10 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       if (s && /^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.temperature); return s.attributes && s.attributes.temperature != null && isFinite(t) ? t : NaN; }
       return this._num(id);
     }
-    _num(id) {
-      const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
-      const v = parseFloat(String(s.state).replace(',', '.'));
-      return isFinite(v) ? v : NaN;
-    }
-    _watts(id) {
-      const v = this._num(id); if (isNaN(v)) return NaN;
-      const u = ((this._st(id).attributes || {}).unit_of_measurement || '').toLowerCase();
-      return u === 'kw' ? v * 1000 : v;
-    }
+    _num(id) { return window.applianceNum(this._st(id)); }
+    _watts(id) { return window.applianceWatts(this._st(id)); }
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
 
     _build() {
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
@@ -18777,22 +18746,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en').slice(0, 2); return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
-    _num(id) {
-      const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
-      const v = parseFloat(String(s.state).replace(',', '.'));
-      return isFinite(v) ? v : NaN;
-    }
-    _watts(id) {
-      const v = this._num(id); if (isNaN(v)) return NaN;
-      const u = ((this._st(id).attributes || {}).unit_of_measurement || '').toLowerCase();
-      return u === 'kw' ? v * 1000 : v;
-    }
+    _num(id) { return window.applianceNum(this._st(id)); }
+    _watts(id) { return window.applianceWatts(this._st(id)); }
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
 
     _scene() {
@@ -19345,7 +19304,7 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en').slice(0, 2); return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
     // consigne : attribut temperature d'une entité climate / water_heater, sinon valeur numérique de l'état
     _tgt(id) {
@@ -19353,20 +19312,10 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
       if (s && /^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.temperature); return s.attributes && s.attributes.temperature != null && isFinite(t) ? t : NaN; }
       return this._num(id);
     }
-    _num(id) {
-      const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
-      const v = parseFloat(String(s.state).replace(',', '.'));
-      return isFinite(v) ? v : NaN;
-    }
-    _watts(id) {
-      const v = this._num(id); if (isNaN(v)) return NaN;
-      const u = ((this._st(id).attributes || {}).unit_of_measurement || '').toLowerCase();
-      return u === 'kw' ? v * 1000 : v;
-    }
+    _num(id) { return window.applianceNum(this._st(id)); }
+    _watts(id) { return window.applianceWatts(this._st(id)); }
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
 
     _build() {
@@ -20177,20 +20126,10 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en').slice(0, 2); return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
-    _num(id) {
-      const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
-      const v = parseFloat(String(s.state).replace(',', '.'));
-      return isFinite(v) ? v : NaN;
-    }
-    _watts(id) {
-      const v = this._num(id); if (isNaN(v)) return NaN;
-      const u = ((this._st(id).attributes || {}).unit_of_measurement || '').toLowerCase();
-      return u === 'kw' ? v * 1000 : v;
-    }
+    _num(id) { return window.applianceNum(this._st(id)); }
+    _watts(id) { return window.applianceWatts(this._st(id)); }
     // débit converti en L/min, quelle que soit l'unité du capteur
     _lpm(id) {
       const v = this._num(id); if (isNaN(v)) return NaN;
@@ -20203,7 +20142,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       return v;
     }
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
 
     _build() {
@@ -20838,22 +20777,12 @@ svg{display:block;width:100%;max-width:calc(280px * var(--illus-scale,1));height
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en').slice(0, 2); return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
-    _num(id) {
-      const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
-      const v = parseFloat(String(s.state).replace(',', '.'));
-      return isFinite(v) ? v : NaN;
-    }
-    _watts(id) {
-      const v = this._num(id); if (isNaN(v)) return NaN;
-      const u = ((this._st(id).attributes || {}).unit_of_measurement || '').toLowerCase();
-      return u === 'kw' ? v * 1000 : v;
-    }
+    _num(id) { return window.applianceNum(this._st(id)); }
+    _watts(id) { return window.applianceWatts(this._st(id)); }
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
     // durée restante en minutes, quelle que soit l'unité du capteur (s, min, h)
     _minutes(id) {
@@ -21397,22 +21326,12 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en').slice(0, 2); return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
-    _num(id) {
-      const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
-      const v = parseFloat(String(s.state).replace(',', '.'));
-      return isFinite(v) ? v : NaN;
-    }
-    _watts(id) {
-      const v = this._num(id); if (isNaN(v)) return NaN;
-      const u = ((this._st(id).attributes || {}).unit_of_measurement || '').toLowerCase();
-      return u === 'kw' ? v * 1000 : v;
-    }
+    _num(id) { return window.applianceNum(this._st(id)); }
+    _watts(id) { return window.applianceWatts(this._st(id)); }
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
     // autonomie en minutes : NUT la donne en secondes
     _minutes(id) {
@@ -21891,7 +21810,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en').slice(0, 2); return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
     // consigne : attribut temperature d'une entité climate / water_heater, sinon valeur numérique de l'état
     _tgt(id) {
@@ -21899,20 +21818,10 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       if (s && /^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.temperature); return s.attributes && s.attributes.temperature != null && isFinite(t) ? t : NaN; }
       return this._num(id);
     }
-    _num(id) {
-      const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
-      const v = parseFloat(String(s.state).replace(',', '.'));
-      return isFinite(v) ? v : NaN;
-    }
-    _watts(id) {
-      const v = this._num(id); if (isNaN(v)) return NaN;
-      const u = ((this._st(id).attributes || {}).unit_of_measurement || '').toLowerCase();
-      return u === 'kw' ? v * 1000 : v;
-    }
+    _num(id) { return window.applianceNum(this._st(id)); }
+    _watts(id) { return window.applianceWatts(this._st(id)); }
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
 
     _build() {
@@ -22617,17 +22526,11 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { let l = (this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en').slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
-    _num(id) {
-      const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
-      const v = parseFloat(String(s.state).replace(',', '.'));
-      return isFinite(v) ? v : NaN;
-    }
+    _num(id) { return window.applianceNum(this._st(id)); }
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
 
     _build() {
@@ -23604,18 +23507,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
     }
     // libellé perso (option labels) sinon traduction
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { let l = (this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en').slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
-    _num(id) {
-      const s = this._st(id); if (!s) return NaN;
-      // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature
-      if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
-      const v = parseFloat(String(s.state).replace(',', '.'));
-      return isFinite(v) ? v : NaN;
-    }
+    _num(id) { return window.applianceNum(this._st(id)); }
     _watts(id) { const v = this._num(id); return /^kw$/i.test(this._unit(id, 'W')) ? v * 1000 : v; }
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
     _since(s) {
       const t = s && Date.parse(s.last_changed); if (!t) return '--';
@@ -24265,14 +24162,14 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { let l = (this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en').slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
     _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
     _unit(id, d) { const s = this._st(id); return String((s && s.attributes && s.attributes.unit_of_measurement) || d).trim(); }
     // volume en litres et débit en L/min, quelle que soit l'unité du capteur
     _liters(id, d = 'm³') { const v = this._num(id); return isNaN(v) ? NaN : v * (VOL[this._unit(id, d).toLowerCase()] ?? 1); }
     _lpm(id) { const v = this._num(id); return isNaN(v) ? NaN : v * (FLOW[this._unit(id, 'L/min').toLowerCase().replace('litre', 'l').replace('liter', 'l')] ?? 1); }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _vol(l) { return isNaN(l) ? ['--', 'L'] : l >= 10000 ? [this._fmt(l / 1000, 1), 'm³'] : [this._fmt(l, 0), 'L']; }
     // température ramenée en °C quel que soit l'unité du capteur (°F, K)
     _celsius(id) {
@@ -24708,11 +24605,11 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { let l = (this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en').slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
     _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
     _unit(id, d) { const s = this._st(id); return String((s && s.attributes && s.attributes.unit_of_measurement) || d).trim(); }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
 
     _build() {
@@ -25121,14 +25018,14 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { let l = (this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en').slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
     _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
     _unit(id, d) { const s = this._st(id); return String((s && s.attributes && s.attributes.unit_of_measurement) || d).trim(); }
     // puissance en W et énergie en kWh, quelle que soit l'unité du capteur
     _watts(id) { const v = this._num(id); return isNaN(v) ? NaN : v * (PWR[this._unit(id, 'W').toLowerCase()] ?? 1); }
     _kwh(id) { const v = this._num(id); return isNaN(v) ? NaN : v * (NRG[this._unit(id, 'kWh').toLowerCase()] ?? 1); }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang() === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _pw(w) { return isNaN(w) ? ['--', 'W'] : Math.abs(w) >= 10000 ? [this._fmt(w / 1000, 2), 'kW'] : [this._fmt(w, 0), 'W']; }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
 
@@ -25848,10 +25745,10 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { let l = (this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en'); if (!T[l]) l = l.slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
     _num(v) { const n = parseFloat(String(v).replace(',', '.')); return Number.isFinite(n) ? n : NaN; }
-    _fmt(v, d = 1) { return fin(v) ? v.toLocaleString(this._lang(), { maximumFractionDigits: d, minimumFractionDigits: 0 }) : '--'; }
+    _fmt(v, d = 1) { return fin(v) ? v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }) : '--'; }
     _model() { const m = String(this._c.model || 'trv').toLowerCase(); return MODELS[m] ? m : 'trv'; }
     // dérogation : active pour une entité de l'intégration Netatmo (ou override: true), désactivée par override: false
     _ovr() { const c = this._c; if (c.override === false) return false; return c.override === true || (this._hass?.entities?.[c.entity]?.platform === 'netatmo'); }
@@ -27377,10 +27274,10 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
     }
 
     /* ---- textes ---- */
-    _lang() { let l = (this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en').slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _fmt(v, d = 1) { return fin(v) ? v.toLocaleString(this._lang(), { minimumFractionDigits: d, maximumFractionDigits: d }) : '--'; }
+    _fmt(v, d = 1) { return fin(v) ? v.toLocaleString(window.applianceLocale(this._c, this._hass), { minimumFractionDigits: d, maximumFractionDigits: d }) : '--'; }
     _tmp() { return window.applianceTemp(this._hass, this._c); }
     _st(id) { return id && this._hass && this._hass.states[id]; }
     _raw(id) { const s = this._st(id); if (!s || BAD.test(String(s.state))) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return Number.isFinite(v) ? v : NaN; }
@@ -28152,7 +28049,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
-    _lang() { const h = this._hass; let l = ((this._c && this._c.language) || (h && (h.locale?.language || h.language)) || 'en').slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
   }
   customElements.define(TAG + '-editor', ApplianceRoomClimateCardEditor);
 
@@ -28683,7 +28580,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { let l = (this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en'); if (!T[l]) l = l.slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
     _ok(s) { return !!s && !/^(unavailable|unknown)$/i.test(String(s.state)); }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
@@ -29374,7 +29271,7 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
       return tr[k] ?? T.en[k] ?? k;
     }
     _l(k) { return this._t(k); }
-    _lang() { let l = this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en'; if (!T[l]) l = l.slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
     _ok(s) { return !!s && !/^(unavailable|unknown)$/i.test(String(s.state)); }
     _num(s) { if (!this._ok(s)) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
@@ -29477,8 +29374,8 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
         since: [c.entity_smoke, this._ok(sS) ? this._time(sS.last_changed) : '--', '', ''],
         co_level: [coNumeric || c.entity_co, coNumeric ? String(Math.round(coPpm)) : this._t(this._ok(coS) ? (st === 'co' ? 'co_detected_short' : 'ok') : 'unavailable'), coNumeric ? 'ppm' : '', st === 'co' ? 'bad' : ''],
         battery: [c.entity_battery, batBinary ? this._t(low ? 'low' : 'ok') : isNaN(bat) ? '--' : String(Math.round(bat)), batBinary ? '' : '%', low ? 'warn' : ''],
-        level: [c.entity_level, isNaN(this._num(lvS)) ? '--' : (Math.round(this._num(lvS) * 10) / 10).toLocaleString(this._lang()), (lvS && lvS.attributes && lvS.attributes.unit_of_measurement) || '', st === 'alarm' ? 'bad' : ''],
-        temperature: [c.entity_temperature, isNaN(tempV) ? '--' : (Math.round(tempV * 10) / 10).toLocaleString(this._lang()), tc ? tc.unit : '°C', ''],
+        level: [c.entity_level, isNaN(this._num(lvS)) ? '--' : (Math.round(this._num(lvS) * 10) / 10).toLocaleString(window.applianceLocale(this._c, this._hass)), (lvS && lvS.attributes && lvS.attributes.unit_of_measurement) || '', st === 'alarm' ? 'bad' : ''],
+        temperature: [c.entity_temperature, isNaN(tempV) ? '--' : (Math.round(tempV * 10) / 10).toLocaleString(window.applianceLocale(this._c, this._hass)), tc ? tc.unit : '°C', ''],
       };
       TILES.forEach(([k, , opt]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`); const [show, val, unit, cls] = V[k];
@@ -30037,7 +29934,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     // libellé perso (option labels) sinon traduction
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { let l = this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en'; if (!T[l]) l = l.slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
     _ok(s) { return !!s && !/^(unavailable|unknown)$/i.test(String(s.state)); }
     _on(s) { return this._ok(s) && /^(on|true|open|opened|1|yes|low|charging)$/i.test(String(s.state)); }
@@ -30606,7 +30503,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { let l = this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en'; if (!T[l]) l = l.slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
     _ok(s) { return !!s && !/^(unavailable|unknown)$/i.test(String(s.state)); }
     _num(s) { if (!this._ok(s)) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
@@ -30703,7 +30600,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         since: [probes.length, last ? this._time(last) : '--', '', ''],
         probes: [probes.length > 1, `${wet.length}/${usable.length}`, '', wet.length ? 'bad' : ''],
         battery: [list(c.entity_battery).length, isNaN(bat) ? (binLow ? this._t('low') : list(c.entity_battery).length ? this._t('ok') : '--') : String(Math.round(bat)), isNaN(bat) ? '' : '%', low ? 'warn' : ''],
-        temperature: [c.entity_temperature, isNaN(temp) ? '--' : (Math.round(temp * 10) / 10).toLocaleString(this._lang()), tc ? tc.unit : '°C', st === 'freeze' ? 'cold' : ''],
+        temperature: [c.entity_temperature, isNaN(temp) ? '--' : (Math.round(temp * 10) / 10).toLocaleString(window.applianceLocale(this._c, this._hass)), tc ? tc.unit : '°C', st === 'freeze' ? 'cold' : ''],
         humidity: [c.entity_humidity, isNaN(hum) ? '--' : String(Math.round(hum)), '%', ''],
       };
       TILES.forEach(([k, , opt]) => {
@@ -31189,12 +31086,12 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en'); return T[l] ? l : T[l.slice(0, 2)] ? l.slice(0, 2) : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
     _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
     _watts(id) { const v = this._num(id); if (isNaN(v)) return NaN; return this._unit(id, 'W').toLowerCase() === 'kw' ? v * 1000 : v; }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang(), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _more(id) { if (window.applianceMore) window.applianceMore(this, id); }
     _temp(id) {
       const s = this._st(id), v = this._num(id);
@@ -31282,7 +31179,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const badge = r.getElementById('mpbadge'); badge.textContent = this._t(st); badge.style.display = c.show_status === false ? 'none' : '';
       const al = r.getElementById('mpalert'); al.textContent = alerts.map((a) => this._t(a)).join(' · '); al.classList.toggle('on', alerts.length > 0);
 
-      const fmtNet = (id) => fmtRate(this._num(id), this._unit(id, ''), this._lang());
+      const fmtNet = (id) => fmtRate(this._num(id), this._unit(id, ''), window.applianceLocale(this._c, this._hass));
       const V = {
         cpu: [this._fmt(cpu, 0), '%'], temp: [this._fmt(tp.v, 0), tp.unit], ram: [this._fmt(ram, 0), '%'], disk: [this._fmt(dsk, 0), '%'],
         down: fmtNet(c.entity_net_down), up: fmtNet(c.entity_net_up), uptime: [this._dur(this._uptimeSec(c.entity_uptime)), ''],
@@ -31807,12 +31704,12 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en'); return T[l] ? l : T[l.slice(0, 2)] ? l.slice(0, 2) : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
     _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
     _watts(id) { const v = this._num(id); if (isNaN(v)) return NaN; return this._unit(id, 'W').toLowerCase() === 'kw' ? v * 1000 : v; }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang(), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _more(id) { if (window.applianceMore) window.applianceMore(this, id); }
     _temp(id) {
       const s = this._st(id), v = this._num(id);
@@ -31922,7 +31819,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const upd = this._st(c.entity_update);
       const info = r.getElementById('nsinfo'); info.textContent = this._t('update'); info.classList.toggle('on', !!upd && upd.state === 'on');
 
-      const fmtNet = (id) => fmtRate(this._num(id), this._unit(id, ''), this._lang());
+      const fmtNet = (id) => fmtRate(this._num(id), this._unit(id, ''), window.applianceLocale(this._c, this._hass));
       const known = drives.filter((d) => d.known && !d.empty), ok = known.filter((d) => !d.bad).length;
       const temps = drives.map((d) => d.tp.v).filter((v) => !isNaN(v));
       const V = {
@@ -32451,10 +32348,10 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en'); return T[l] ? l : T[l.slice(0, 2)] ? l.slice(0, 2) : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass && this._hass.states[id]; }
     _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
-    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang(), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _more(id) { if (window.applianceMore) window.applianceMore(this, id); }
 
     _build() {
@@ -33127,11 +33024,11 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
-    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en'); return T[l] ? l : T[l.slice(0, 2)] ? l.slice(0, 2) : 'en'; }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
     _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
-    _fmt(v, d = 1) { return isNaN(v) ? '--' : v.toLocaleString(this._lang(), { maximumFractionDigits: d, minimumFractionDigits: d }); }
+    _fmt(v, d = 1) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: d }); }
     _more(id) { if (window.applianceMore) window.applianceMore(this, id); }
     _anim() { return this._c.animations !== false; }
 
