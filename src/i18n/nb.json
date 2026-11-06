@@ -876,6 +876,8 @@
 "lcd_color": "Skjermfarge",
 "tap_action": "Trykkhandling",
 "hold_action": "Holdhandling",
+"tilt_only": "Kun helning (ikke opp / ned)",
+"tilt_presets": "Forhåndsvalg for helning (liste, f.eks. [0, 50, 100])",
 "navigation_path": "Side som åpnes (f.eks. /lovelace/klima)",
 "entity_climate": "Tilknyttet termostat",
 "color_comfort": "Farge: komfortabelt",

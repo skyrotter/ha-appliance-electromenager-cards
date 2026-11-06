@@ -876,6 +876,8 @@
     "lcd_color": "Schermkleur",
     "tap_action": "Tikactie",
     "hold_action": "Vasthoudactie",
+    "tilt_only": "Alleen kantelen (niet omhoog / omlaag)",
+    "tilt_presets": "Kantelvoorinstellingen (lijst, bv. [0, 50, 100])",
     "navigation_path": "Te openen pagina (bijv. /lovelace/klimaat)",
     "entity_climate": "Gekoppelde thermostaat",
     "color_comfort": "Kleur: comfortabel",

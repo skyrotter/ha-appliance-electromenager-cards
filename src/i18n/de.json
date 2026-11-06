@@ -876,6 +876,8 @@
     "lcd_color": "Displayfarbe",
     "tap_action": "Tippen-Aktion",
     "hold_action": "Halten-Aktion",
+    "tilt_only": "Nur Neigung (kein Auf / Ab)",
+    "tilt_presets": "Neigungs-Voreinstellungen (Liste, z. B. [0, 50, 100])",
     "navigation_path": "Zu öffnende Seite (z. B. /lovelace/klima)",
     "entity_climate": "Verknüpftes Thermostat",
     "color_comfort": "Farbe: behaglich",

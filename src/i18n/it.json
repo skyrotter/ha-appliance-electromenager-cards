@@ -876,6 +876,8 @@
     "lcd_color": "Colore dello schermo",
     "tap_action": "Azione al tocco",
     "hold_action": "Azione pressione lunga",
+    "tilt_only": "Solo inclinazione (senza su / giù)",
+    "tilt_presets": "Preimpostazioni inclinazione (elenco, es. [0, 50, 100])",
     "navigation_path": "Pagina da aprire (es. /lovelace/clima)",
     "entity_climate": "Termostato collegato",
     "color_comfort": "Colore: confortevole",

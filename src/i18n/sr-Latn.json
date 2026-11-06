@@ -892,6 +892,8 @@
     "lcd_color": "Boja ekrana",
     "tap_action": "Akcija na dodir",
     "hold_action": "Akcija na dugi pritisak",
+    "tilt_only": "Samo nagib (bez gore / dole)",
+    "tilt_presets": "Unapred zadate vrednosti nagiba (lista, npr. [0, 50, 100])",
     "navigation_path": "Stranica za otvaranje (npr. /lovelace/climate)",
     "entity_climate": "Povezani termostat",
     "color_comfort": "Boja: komforno",

@@ -876,6 +876,8 @@
     "lcd_color": "Culoarea ecranului",
     "tap_action": "Acțiune la atingere",
     "hold_action": "Acțiune la apăsare lungă",
+    "tilt_only": "Doar înclinare (fără sus / jos)",
+    "tilt_presets": "Presetări înclinare (listă, ex. [0, 50, 100])",
     "navigation_path": "Pagina de deschis (ex. /lovelace/climat)",
     "entity_climate": "Termostat asociat",
     "color_comfort": "Culoare: confortabil",
