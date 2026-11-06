@@ -1019,7 +1019,9 @@
     "show_btn_next": "Dugme sledeće",
     "show_btn_vol_down": "Dugme tiše",
     "show_btn_mute": "Dugme utišaj",
-    "show_btn_vol_up": "Dugme glasnije"
+    "show_btn_vol_up": "Dugme glasnije",
+    "override": "Privremena izmena (Netatmo)",
+    "override_durations": "Trajanja (min)"
   },
   "light": {
     "light_bulb": "Sijalica",
@@ -1152,7 +1154,16 @@
     "model_nest": "Google Nest termostat",
     "model_tado": "Tado X zidni termostat",
     "model_t6": "Honeywell Home T6 termostat",
-    "model_bht6000": "Tuya BHT6000 termostat (okrugli, crni ekran)"
+    "model_bht6000": "Tuya BHT6000 termostat (okrugli, crni ekran)",
+    "model_classic": "Termostatska glava (klasična)",
+    "model_netatmo_trv": "Netatmo glava (1. gen.)",
+    "model_netatmo_trv2": "Netatmo glava (nova)",
+    "model_danfoss": "Danfoss Ally glava",
+    "model_shelly": "Shelly TRV glava",
+    "model_somfy": "Somfy io glava",
+    "duration": "Trajanje",
+    "dur_default": "Podrazumevano",
+    "resume": "Nazad na raspored"
   },
   "room_climate": {
     "name": "Klima u sobi",

@@ -1003,7 +1003,9 @@
     "show_btn_next": "Кнопка «Далее»",
     "show_btn_vol_down": "Кнопка «Тише»",
     "show_btn_mute": "Кнопка «Без звука»",
-    "show_btn_vol_up": "Кнопка «Громче»"
+    "show_btn_vol_up": "Кнопка «Громче»",
+    "override": "Временное изменение (Netatmo)",
+    "override_durations": "Длительности (мин)"
   },
   "light": {
     "light_bulb": "Лампа",
@@ -1136,7 +1138,16 @@
     "model_nest": "Термостат Google Nest",
     "model_tado": "Настенный термостат Tado X",
     "model_t6": "Термостат Honeywell Home T6",
-    "model_bht6000": "Термостат Tuya BHT6000 (круглый, чёрный экран)"
+    "model_bht6000": "Термостат Tuya BHT6000 (круглый, чёрный экран)",
+    "model_classic": "Термоголовка (классическая)",
+    "model_netatmo_trv": "Термоголовка Netatmo (1-е пок.)",
+    "model_netatmo_trv2": "Термоголовка Netatmo (новая)",
+    "model_danfoss": "Термоголовка Danfoss Ally",
+    "model_shelly": "Термоголовка Shelly TRV",
+    "model_somfy": "Термоголовка Somfy io",
+    "duration": "Длительность",
+    "dur_default": "По умолчанию",
+    "resume": "Вернуться к расписанию"
   },
   "room_climate": {
     "name": "Климат комнаты",

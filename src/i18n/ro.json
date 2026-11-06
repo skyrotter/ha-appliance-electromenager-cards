@@ -1003,7 +1003,9 @@
     "show_btn_next": "Buton următor",
     "show_btn_vol_down": "Buton volum −",
     "show_btn_mute": "Buton fără sunet",
-    "show_btn_vol_up": "Buton volum +"
+    "show_btn_vol_up": "Buton volum +",
+    "override": "Derogare temporară (Netatmo)",
+    "override_durations": "Durate derogare (min)"
   },
   "light": {
     "light_bulb": "Bec",
@@ -1136,7 +1138,16 @@
     "model_nest": "Termostat Google Nest",
     "model_tado": "Termostat de perete Tado X",
     "model_t6": "Termostat Honeywell Home T6",
-    "model_bht6000": "Termostat Tuya BHT6000 (rotund, ecran negru)"
+    "model_bht6000": "Termostat Tuya BHT6000 (rotund, ecran negru)",
+    "model_classic": "Cap termostatic (clasic)",
+    "model_netatmo_trv": "Cap Netatmo (gen. 1)",
+    "model_netatmo_trv2": "Cap Netatmo (nou)",
+    "model_danfoss": "Cap Danfoss Ally",
+    "model_shelly": "Cap Shelly TRV",
+    "model_somfy": "Cap Somfy io",
+    "duration": "Durată",
+    "dur_default": "Implicit",
+    "resume": "Revino la program"
   },
   "room_climate": {
     "name": "Climat cameră",

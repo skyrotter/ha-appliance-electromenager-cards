@@ -1019,7 +1019,9 @@
     "show_btn_next": "Bouton suivant",
     "show_btn_vol_down": "Bouton volume −",
     "show_btn_mute": "Bouton muet",
-    "show_btn_vol_up": "Bouton volume +"
+    "show_btn_vol_up": "Bouton volume +",
+    "override": "Dérogation temporaire (Netatmo)",
+    "override_durations": "Durées de dérogation (min)"
   },
   "light": {
     "light_bulb": "Ampoule",
@@ -1152,7 +1154,16 @@
     "model_nest": "Thermostat Google Nest",
     "model_tado": "Thermostat mural Tado X",
     "model_t6": "Thermostat Honeywell Home T6",
-    "model_bht6000": "Thermostat Tuya BHT6000 (rond, écran noir)"
+    "model_bht6000": "Thermostat Tuya BHT6000 (rond, écran noir)",
+    "model_classic": "Tête thermostatique (classique)",
+    "model_netatmo_trv": "Tête Netatmo (1re génération)",
+    "model_netatmo_trv2": "Tête Netatmo (nouvelle)",
+    "model_danfoss": "Tête Danfoss Ally",
+    "model_shelly": "Tête Shelly TRV",
+    "model_somfy": "Tête Somfy io",
+    "duration": "Durée",
+    "dur_default": "Défaut",
+    "resume": "Reprendre le planning"
   },
   "room_climate": {
     "name": "Climat pièce",

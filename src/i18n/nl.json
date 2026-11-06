@@ -1003,7 +1003,9 @@
     "show_btn_next": "Volgende-knop",
     "show_btn_vol_down": "Zachter-knop",
     "show_btn_mute": "Dempknop",
-    "show_btn_vol_up": "Harder-knop"
+    "show_btn_vol_up": "Harder-knop",
+    "override": "Tijdelijke afwijking (Netatmo)",
+    "override_durations": "Duur van de afwijking (min)"
   },
   "light": {
     "light_bulb": "Lamp",
@@ -1136,7 +1138,16 @@
     "model_nest": "Google Nest-thermostaat",
     "model_tado": "Tado X wandthermostaat",
     "model_t6": "Honeywell Home T6-thermostaat",
-    "model_bht6000": "Tuya BHT6000-thermostaat (rond, zwart scherm)"
+    "model_bht6000": "Tuya BHT6000-thermostaat (rond, zwart scherm)",
+    "model_classic": "Radiatorkraan (klassiek)",
+    "model_netatmo_trv": "Netatmo-radiatorkraan (1e gen.)",
+    "model_netatmo_trv2": "Netatmo-radiatorkraan (nieuw)",
+    "model_danfoss": "Danfoss Ally-radiatorkraan",
+    "model_shelly": "Shelly TRV-radiatorkraan",
+    "model_somfy": "Somfy io-radiatorkraan",
+    "duration": "Duur",
+    "dur_default": "Standaard",
+    "resume": "Terug naar schema"
   },
   "room_climate": {
     "name": "Binnenklimaat",

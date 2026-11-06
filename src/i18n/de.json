@@ -1003,7 +1003,9 @@
     "show_btn_next": "Weiter-Taste",
     "show_btn_vol_down": "Leiser-Taste",
     "show_btn_mute": "Stumm-Taste",
-    "show_btn_vol_up": "Lauter-Taste"
+    "show_btn_vol_up": "Lauter-Taste",
+    "override": "Zeitlich begrenzte Änderung (Netatmo)",
+    "override_durations": "Dauern (min)"
   },
   "light": {
     "light_bulb": "Glühbirne",
@@ -1136,7 +1138,16 @@
     "model_nest": "Google-Nest-Thermostat",
     "model_tado": "Tado X Wandthermostat",
     "model_t6": "Honeywell Home T6 Thermostat",
-    "model_bht6000": "Tuya BHT6000 Thermostat (rund, schwarzes Display)"
+    "model_bht6000": "Tuya BHT6000 Thermostat (rund, schwarzes Display)",
+    "model_classic": "Heizkörperthermostat (klassisch)",
+    "model_netatmo_trv": "Netatmo-Thermostat (1. Gen.)",
+    "model_netatmo_trv2": "Netatmo-Thermostat (neu)",
+    "model_danfoss": "Danfoss Ally Thermostat",
+    "model_shelly": "Shelly TRV Thermostat",
+    "model_somfy": "Somfy io Thermostat",
+    "duration": "Dauer",
+    "dur_default": "Standard",
+    "resume": "Zurück zum Zeitplan"
   },
   "room_climate": {
     "name": "Raumklima",

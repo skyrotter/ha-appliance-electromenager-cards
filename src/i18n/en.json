@@ -1019,7 +1019,9 @@
     "show_btn_next": "Next button",
     "show_btn_vol_down": "Volume − button",
     "show_btn_mute": "Mute button",
-    "show_btn_vol_up": "Volume + button"
+    "show_btn_vol_up": "Volume + button",
+    "override": "Temporary override (Netatmo)",
+    "override_durations": "Override durations (min)"
   },
   "light": {
     "light_bulb": "Bulb",
@@ -1152,7 +1154,16 @@
     "model_nest": "Google Nest thermostat",
     "model_tado": "Tado X wall thermostat",
     "model_t6": "Honeywell Home T6 thermostat",
-    "model_bht6000": "Tuya BHT6000 thermostat (round, black screen)"
+    "model_bht6000": "Tuya BHT6000 thermostat (round, black screen)",
+    "model_classic": "Radiator valve (classic)",
+    "model_netatmo_trv": "Netatmo valve (1st gen.)",
+    "model_netatmo_trv2": "Netatmo valve (new)",
+    "model_danfoss": "Danfoss Ally valve",
+    "model_shelly": "Shelly TRV valve",
+    "model_somfy": "Somfy io valve",
+    "duration": "Duration",
+    "dur_default": "Default",
+    "resume": "Back to schedule"
   },
   "room_climate": {
     "name": "Room climate",
