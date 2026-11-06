@@ -9433,6 +9433,14 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "lcd_color": "Screen colour",
       "tap_action": "Tap action",
       "hold_action": "Hold action",
+      "entity_unlatch": "Unlatch button (optional)",
+      "entity_lock_n_go": "Lock 'n' Go button",
+      "entity_lock_n_go_unlatch": "Lock 'n' Go with unlatch button",
+      "entity_battery_charging": "Battery charging",
+      "entity_battery_critical": "Battery critical",
+      "confirm_open": "Confirm Unlatch (2nd click)",
+      "show_door": "Show door",
+      "lock_model": "Lock model",
       "tilt_only": "Tilt only (no up / down)",
       "tilt_presets": "Tilt presets (list, e.g. [0, 50, 100])",
       "navigation_path": "Page to open (e.g. /lovelace/climate)",
@@ -9711,6 +9719,14 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "lcd_color": "Displayfarbe",
       "tap_action": "Tippen-Aktion",
       "hold_action": "Halten-Aktion",
+      "entity_unlatch": "Öffnen-Taste (optional)",
+      "entity_lock_n_go": "Lock 'n' Go-Taste",
+      "entity_lock_n_go_unlatch": "Lock 'n' Go mit Öffnen-Taste",
+      "entity_battery_charging": "Batterie lädt",
+      "entity_battery_critical": "Batterie kritisch",
+      "confirm_open": "Öffnen bestätigen (2. Klick)",
+      "show_door": "Tür anzeigen",
+      "lock_model": "Schlossmodell",
       "tilt_only": "Nur Neigung (kein Auf / Ab)",
       "tilt_presets": "Neigungs-Voreinstellungen (Liste, z. B. [0, 50, 100])",
       "navigation_path": "Zu öffnende Seite (z. B. /lovelace/klima)",
@@ -9989,6 +10005,14 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "lcd_color": "Couleur de l'écran",
       "tap_action": "Action au clic",
       "hold_action": "Action appui long",
+      "entity_unlatch": "Bouton Ouvrir / unlatch (facultatif)",
+      "entity_lock_n_go": "Bouton Lock 'n' Go",
+      "entity_lock_n_go_unlatch": "Bouton Lock 'n' Go avec ouverture",
+      "entity_battery_charging": "Batterie en charge",
+      "entity_battery_critical": "Batterie critique",
+      "confirm_open": "Confirmer Ouvrir (2e clic)",
+      "show_door": "Afficher la porte",
+      "lock_model": "Modèle de serrure",
       "tilt_only": "Inclinaison seule (sans monter / descendre)",
       "tilt_presets": "Préréglages d’inclinaison (liste, ex. [0, 50, 100])",
       "navigation_path": "Page à ouvrir (ex. /lovelace/climat)",
@@ -10267,6 +10291,14 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "lcd_color": "Colore dello schermo",
       "tap_action": "Azione al tocco",
       "hold_action": "Azione pressione lunga",
+      "entity_unlatch": "Pulsante apertura (facoltativo)",
+      "entity_lock_n_go": "Pulsante Lock 'n' Go",
+      "entity_lock_n_go_unlatch": "Pulsante Lock 'n' Go con apertura",
+      "entity_battery_charging": "Batteria in carica",
+      "entity_battery_critical": "Batteria critica",
+      "confirm_open": "Conferma apertura (2° clic)",
+      "show_door": "Mostra porta",
+      "lock_model": "Modello serratura",
       "tilt_only": "Solo inclinazione (senza su / giù)",
       "tilt_presets": "Preimpostazioni inclinazione (elenco, es. [0, 50, 100])",
       "navigation_path": "Pagina da aprire (es. /lovelace/clima)",
@@ -10545,6 +10577,14 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "lcd_color": "Skjermfarge",
       "tap_action": "Trykkhandling",
       "hold_action": "Holdhandling",
+      "entity_unlatch": "Åpne-knapp (valgfri)",
+      "entity_lock_n_go": "Lock 'n' Go-knapp",
+      "entity_lock_n_go_unlatch": "Lock 'n' Go med åpne-knapp",
+      "entity_battery_charging": "Batteri lader",
+      "entity_battery_critical": "Kritisk batteri",
+      "confirm_open": "Bekreft åpning (2. klikk)",
+      "show_door": "Vis dør",
+      "lock_model": "Låsmodell",
       "tilt_only": "Kun helning (ikke opp / ned)",
       "tilt_presets": "Forhåndsvalg for helning (liste, f.eks. [0, 50, 100])",
       "navigation_path": "Side som åpnes (f.eks. /lovelace/klima)",
@@ -10823,6 +10863,14 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "lcd_color": "Schermkleur",
       "tap_action": "Tikactie",
       "hold_action": "Vasthoudactie",
+      "entity_unlatch": "Openknop (optioneel)",
+      "entity_lock_n_go": "Lock 'n' Go-knop",
+      "entity_lock_n_go_unlatch": "Lock 'n' Go met openen-knop",
+      "entity_battery_charging": "Batterij laadt",
+      "entity_battery_critical": "Batterij kritiek",
+      "confirm_open": "Openen bevestigen (2e klik)",
+      "show_door": "Deur tonen",
+      "lock_model": "Slotmodel",
       "tilt_only": "Alleen kantelen (niet omhoog / omlaag)",
       "tilt_presets": "Kantelvoorinstellingen (lijst, bv. [0, 50, 100])",
       "navigation_path": "Te openen pagina (bijv. /lovelace/klimaat)",
@@ -11101,6 +11149,14 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "lcd_color": "Culoarea ecranului",
       "tap_action": "Acțiune la atingere",
       "hold_action": "Acțiune la apăsare lungă",
+      "entity_unlatch": "Buton deschidere (opțional)",
+      "entity_lock_n_go": "Buton Lock 'n' Go",
+      "entity_lock_n_go_unlatch": "Buton Lock 'n' Go cu deschidere",
+      "entity_battery_charging": "Baterie în încărcare",
+      "entity_battery_critical": "Baterie critică",
+      "confirm_open": "Confirmare deschidere (al 2-lea clic)",
+      "show_door": "Afișează ușa",
+      "lock_model": "Model încuietoare",
       "tilt_only": "Doar înclinare (fără sus / jos)",
       "tilt_presets": "Presetări înclinare (listă, ex. [0, 50, 100])",
       "navigation_path": "Pagina de deschis (ex. /lovelace/climat)",
@@ -11379,6 +11435,14 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "lcd_color": "Цвет экрана",
       "tap_action": "Действие при нажатии",
       "hold_action": "Действие при удержании",
+      "entity_unlatch": "Кнопка открытия (необязательно)",
+      "entity_lock_n_go": "Кнопка Lock 'n' Go",
+      "entity_lock_n_go_unlatch": "Кнопка Lock 'n' Go с открытием",
+      "entity_battery_charging": "Зарядка батареи",
+      "entity_battery_critical": "Критический заряд",
+      "confirm_open": "Подтверждать открытие (2-й клик)",
+      "show_door": "Показывать дверь",
+      "lock_model": "Модель замка",
       "tilt_only": "Только наклон (без подъёма / опускания)",
       "tilt_presets": "Пресеты наклона (список, напр. [0, 50, 100])",
       "navigation_path": "Открываемая страница (напр. /lovelace/climate)",
@@ -11657,6 +11721,14 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "lcd_color": "Боја екрана",
       "tap_action": "Акција на додир",
       "hold_action": "Акција на дуги притисак",
+      "entity_unlatch": "Дугме за отварање (опционо)",
+      "entity_lock_n_go": "Дугме Lock 'n' Go",
+      "entity_lock_n_go_unlatch": "Дугме Lock 'n' Go са отварањем",
+      "entity_battery_charging": "Батерија се пуни",
+      "entity_battery_critical": "Критична батерија",
+      "confirm_open": "Потврди отварање (2. клик)",
+      "show_door": "Прикажи врата",
+      "lock_model": "Модел браве",
       "tilt_only": "Само нагиб (без горе / доле)",
       "tilt_presets": "Унапред задате вредности нагиба (листа, нпр. [0, 50, 100])",
       "navigation_path": "Страница за отварање (нпр. /lovelace/climate)",
@@ -11935,6 +12007,14 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "lcd_color": "Boja ekrana",
       "tap_action": "Akcija na dodir",
       "hold_action": "Akcija na dugi pritisak",
+      "entity_unlatch": "Dugme za otvaranje (opciono)",
+      "entity_lock_n_go": "Dugme Lock 'n' Go",
+      "entity_lock_n_go_unlatch": "Dugme Lock 'n' Go sa otvaranjem",
+      "entity_battery_charging": "Baterija se puni",
+      "entity_battery_critical": "Kritična baterija",
+      "confirm_open": "Potvrdi otvaranje (2. klik)",
+      "show_door": "Prikaži vrata",
+      "lock_model": "Model brave",
       "tilt_only": "Samo nagib (bez gore / dole)",
       "tilt_presets": "Unapred zadate vrednosti nagiba (lista, npr. [0, 50, 100])",
       "navigation_path": "Stranica za otvaranje (npr. /lovelace/climate)",
@@ -28207,6 +28287,694 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
     type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Détecteur de fumée animé (2 modèles) : alarme, CO, test, pile faible, défaut, boutons Tester et Couper l\'alarme.', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/smoke-detector.md',
+  });
+})();
+
+/* Carte « Serrure connectée » — custom:appliance-smart-lock-card
+ * Serrure motorisée posée sur le cylindre, côté intérieur de la porte. Deux modèles (option model) :
+ * nuki_3_pro (boîtier blanc, bouton inox en haut) ou nuki_pro_5 (photo détourée, 5e génération), posée sur la porte.
+ * Entité lock : verrouillée / déverrouillée / ouverte (pêne tiré) / en cours / bloquée. Les reflets du bouton tournent,
+ * l'anneau LED prend la couleur de l'état, le pêne sort dans la gâche, le demi-tour recule et la porte s'entrouvre
+ * à l'ouverture, l'anse du cadenas se lève ; blocage : la serrure tremble.
+ * Boutons Verrouiller / Déverrouiller / Ouvrir (2e clic de confirmation) et, facultatifs, boutons Lock 'n' Go.
+ * Tuiles : batterie (%, en charge, critique), capteur de porte, dernier changement.
+ */
+(() => {
+  const TAG = 'appliance-smart-lock-card';
+  if (customElements.get(TAG)) return;
+
+  const T = {
+    "en": {
+      "name": "Smart lock",
+      "model_nuki_3_pro": "Nuki Smart Lock 3.0 Pro",
+      "model_nuki_pro_5": "Nuki Smart Lock Pro (5th gen.)",
+      "locked": "Locked",
+      "unlocked": "Unlocked",
+      "locking": "Locking",
+      "unlocking": "Unlocking",
+      "open": "Unlatched",
+      "opening": "Unlatching",
+      "jammed": "Jammed",
+      "unknown": "Unknown",
+      "unavailable": "Unavailable",
+      "door_open": "Door open",
+      "door_closed": "Closed",
+      "jammed_detail": "The motor is blocked: check the door and the key",
+      "battery_critical": "Battery critical: replace or charge it",
+      "btn_lock": "Lock",
+      "btn_unlock": "Unlock",
+      "btn_open": "Unlatch",
+      "btn_confirm": "Confirm?",
+      "btn_lock_n_go": "Lock 'n' Go",
+      "btn_lock_n_go_unlatch": "Lock 'n' Go + unlatch",
+      "battery": "Battery",
+      "charging": "Charging",
+      "critical": "Critical",
+      "ok": "OK",
+      "door": "Door",
+      "since": "Since"
+    },
+    "de": {
+      "name": "Smartes Schloss",
+      "model_nuki_3_pro": "Nuki Smart Lock 3.0 Pro",
+      "model_nuki_pro_5": "Nuki Smart Lock Pro (5. Gen.)",
+      "locked": "Verriegelt",
+      "unlocked": "Entriegelt",
+      "locking": "Verriegelt…",
+      "unlocking": "Entriegelt…",
+      "open": "Geöffnet",
+      "opening": "Öffnet",
+      "jammed": "Blockiert",
+      "unknown": "Unbekannt",
+      "unavailable": "Nicht verfügbar",
+      "door_open": "Tür offen",
+      "door_closed": "Geschlossen",
+      "jammed_detail": "Motor blockiert: Tür und Schlüssel prüfen",
+      "battery_critical": "Batterie kritisch: ersetzen oder laden",
+      "btn_lock": "Verriegeln",
+      "btn_unlock": "Entriegeln",
+      "btn_open": "Öffnen",
+      "btn_confirm": "Bestätigen?",
+      "btn_lock_n_go": "Lock 'n' Go",
+      "btn_lock_n_go_unlatch": "Lock 'n' Go + öffnen",
+      "battery": "Batterie",
+      "charging": "Lädt",
+      "critical": "Kritisch",
+      "ok": "OK",
+      "door": "Tür",
+      "since": "Seit"
+    },
+    "fr": {
+      "name": "Serrure connectée",
+      "model_nuki_3_pro": "Nuki Smart Lock 3.0 Pro",
+      "model_nuki_pro_5": "Nuki Smart Lock Pro (5e gén.)",
+      "locked": "Verrouillée",
+      "unlocked": "Déverrouillée",
+      "locking": "Verrouillage",
+      "unlocking": "Déverrouillage",
+      "open": "Ouverte",
+      "opening": "Ouverture",
+      "jammed": "Bloquée",
+      "unknown": "Inconnu",
+      "unavailable": "Indisponible",
+      "door_open": "Porte ouverte",
+      "door_closed": "Fermée",
+      "jammed_detail": "Le moteur est bloqué : vérifiez la porte et la clé",
+      "battery_critical": "Batterie critique : remplacez-la ou rechargez-la",
+      "btn_lock": "Verrouiller",
+      "btn_unlock": "Déverrouiller",
+      "btn_open": "Ouvrir",
+      "btn_confirm": "Confirmer ?",
+      "btn_lock_n_go": "Lock 'n' Go",
+      "btn_lock_n_go_unlatch": "Lock 'n' Go + ouvrir",
+      "battery": "Batterie",
+      "charging": "En charge",
+      "critical": "Critique",
+      "ok": "OK",
+      "door": "Porte",
+      "since": "Depuis"
+    },
+    "it": {
+      "name": "Serratura smart",
+      "model_nuki_3_pro": "Nuki Smart Lock 3.0 Pro",
+      "model_nuki_pro_5": "Nuki Smart Lock Pro (5ª gen.)",
+      "locked": "Bloccata",
+      "unlocked": "Sbloccata",
+      "locking": "Blocco",
+      "unlocking": "Sblocco",
+      "open": "Aperta",
+      "opening": "Apertura",
+      "jammed": "Inceppata",
+      "unknown": "Sconosciuto",
+      "unavailable": "Non disponibile",
+      "door_open": "Porta aperta",
+      "door_closed": "Chiusa",
+      "jammed_detail": "Motore bloccato: controlla la porta e la chiave",
+      "battery_critical": "Batteria critica: sostituirla o ricaricarla",
+      "btn_lock": "Blocca",
+      "btn_unlock": "Sblocca",
+      "btn_open": "Apri",
+      "btn_confirm": "Confermare?",
+      "btn_lock_n_go": "Lock 'n' Go",
+      "btn_lock_n_go_unlatch": "Lock 'n' Go + apri",
+      "battery": "Batteria",
+      "charging": "In carica",
+      "critical": "Critica",
+      "ok": "OK",
+      "door": "Porta",
+      "since": "Da"
+    },
+    "nb": {
+      "name": "Smartlås",
+      "model_nuki_3_pro": "Nuki Smart Lock 3.0 Pro",
+      "model_nuki_pro_5": "Nuki Smart Lock Pro (5. gen.)",
+      "locked": "Låst",
+      "unlocked": "Ulåst",
+      "locking": "Låser",
+      "unlocking": "Låser opp",
+      "open": "Åpnet",
+      "opening": "Åpner",
+      "jammed": "Fastkjørt",
+      "unknown": "Ukjent",
+      "unavailable": "Utilgjengelig",
+      "door_open": "Dør åpen",
+      "door_closed": "Lukket",
+      "jammed_detail": "Motoren er blokkert: sjekk døren og nøkkelen",
+      "battery_critical": "Kritisk batteri: bytt eller lad",
+      "btn_lock": "Lås",
+      "btn_unlock": "Lås opp",
+      "btn_open": "Åpne",
+      "btn_confirm": "Bekreft?",
+      "btn_lock_n_go": "Lock 'n' Go",
+      "btn_lock_n_go_unlatch": "Lock 'n' Go + åpne",
+      "battery": "Batteri",
+      "charging": "Lader",
+      "critical": "Kritisk",
+      "ok": "OK",
+      "door": "Dør",
+      "since": "Siden"
+    },
+    "nl": {
+      "name": "Slim slot",
+      "model_nuki_3_pro": "Nuki Smart Lock 3.0 Pro",
+      "model_nuki_pro_5": "Nuki Smart Lock Pro (5e gen.)",
+      "locked": "Vergrendeld",
+      "unlocked": "Ontgrendeld",
+      "locking": "Vergrendelen",
+      "unlocking": "Ontgrendelen",
+      "open": "Geopend",
+      "opening": "Openen",
+      "jammed": "Geblokkeerd",
+      "unknown": "Onbekend",
+      "unavailable": "Niet beschikbaar",
+      "door_open": "Deur open",
+      "door_closed": "Gesloten",
+      "jammed_detail": "Motor geblokkeerd: controleer de deur en de sleutel",
+      "battery_critical": "Batterij kritiek: vervangen of opladen",
+      "btn_lock": "Vergrendelen",
+      "btn_unlock": "Ontgrendelen",
+      "btn_open": "Openen",
+      "btn_confirm": "Bevestigen?",
+      "btn_lock_n_go": "Lock 'n' Go",
+      "btn_lock_n_go_unlatch": "Lock 'n' Go + openen",
+      "battery": "Batterij",
+      "charging": "Laadt",
+      "critical": "Kritiek",
+      "ok": "OK",
+      "door": "Deur",
+      "since": "Sinds"
+    },
+    "ro": {
+      "name": "Încuietoare inteligentă",
+      "model_nuki_3_pro": "Nuki Smart Lock 3.0 Pro",
+      "model_nuki_pro_5": "Nuki Smart Lock Pro (gen. 5)",
+      "locked": "Încuiată",
+      "unlocked": "Descuiată",
+      "locking": "Se încuie",
+      "unlocking": "Se descuie",
+      "open": "Deschisă",
+      "opening": "Se deschide",
+      "jammed": "Blocată",
+      "unknown": "Necunoscut",
+      "unavailable": "Indisponibil",
+      "door_open": "Ușă deschisă",
+      "door_closed": "Închisă",
+      "jammed_detail": "Motor blocat: verificați ușa și cheia",
+      "battery_critical": "Baterie critică: înlocuiți-o sau încărcați-o",
+      "btn_lock": "Încuie",
+      "btn_unlock": "Descuie",
+      "btn_open": "Deschide",
+      "btn_confirm": "Confirmați?",
+      "btn_lock_n_go": "Lock 'n' Go",
+      "btn_lock_n_go_unlatch": "Lock 'n' Go + deschide",
+      "battery": "Baterie",
+      "charging": "Se încarcă",
+      "critical": "Critică",
+      "ok": "OK",
+      "door": "Ușă",
+      "since": "De la"
+    },
+    "ru": {
+      "name": "Умный замок",
+      "model_nuki_3_pro": "Nuki Smart Lock 3.0 Pro",
+      "model_nuki_pro_5": "Nuki Smart Lock Pro (5-е пок.)",
+      "locked": "Заперт",
+      "unlocked": "Открыт",
+      "locking": "Запирается",
+      "unlocking": "Открывается",
+      "open": "Открыта",
+      "opening": "Открывается",
+      "jammed": "Заклинило",
+      "unknown": "Неизвестно",
+      "unavailable": "Недоступно",
+      "door_open": "Дверь открыта",
+      "door_closed": "Закрыта",
+      "jammed_detail": "Мотор заблокирован: проверьте дверь и ключ",
+      "battery_critical": "Батарея разряжена: замените или зарядите",
+      "btn_lock": "Запереть",
+      "btn_unlock": "Открыть",
+      "btn_open": "Открыть дверь",
+      "btn_confirm": "Подтвердить?",
+      "btn_lock_n_go": "Lock 'n' Go",
+      "btn_lock_n_go_unlatch": "Lock 'n' Go + открыть",
+      "battery": "Батарея",
+      "charging": "Заряжается",
+      "critical": "Критично",
+      "ok": "OK",
+      "door": "Дверь",
+      "since": "С"
+    },
+    "sr": {
+      "name": "Паметна брава",
+      "model_nuki_3_pro": "Nuki Smart Lock 3.0 Pro",
+      "model_nuki_pro_5": "Nuki Smart Lock Pro (5. ген.)",
+      "locked": "Закључана",
+      "unlocked": "Откључана",
+      "locking": "Закључавање",
+      "unlocking": "Откључавање",
+      "open": "Отворена",
+      "opening": "Отварање",
+      "jammed": "Заглављена",
+      "unknown": "Непознато",
+      "unavailable": "Недоступно",
+      "door_open": "Врата отворена",
+      "door_closed": "Затворена",
+      "jammed_detail": "Мотор је блокиран: проверите врата и кључ",
+      "battery_critical": "Батерија критична: замените или напуните",
+      "btn_lock": "Закључај",
+      "btn_unlock": "Откључај",
+      "btn_open": "Отвори",
+      "btn_confirm": "Потврди?",
+      "btn_lock_n_go": "Lock 'n' Go",
+      "btn_lock_n_go_unlatch": "Lock 'n' Go + отвори",
+      "battery": "Батерија",
+      "charging": "Пуни се",
+      "critical": "Критично",
+      "ok": "OK",
+      "door": "Врата",
+      "since": "Од"
+    },
+    "sr-Latn": {
+      "name": "Pametna brava",
+      "model_nuki_3_pro": "Nuki Smart Lock 3.0 Pro",
+      "model_nuki_pro_5": "Nuki Smart Lock Pro (5. gen.)",
+      "locked": "Zaključana",
+      "unlocked": "Otključana",
+      "locking": "Zaključavanje",
+      "unlocking": "Otključavanje",
+      "open": "Otvorena",
+      "opening": "Otvaranje",
+      "jammed": "Zaglavljena",
+      "unknown": "Nepoznato",
+      "unavailable": "Nedostupno",
+      "door_open": "Vrata otvorena",
+      "door_closed": "Zatvorena",
+      "jammed_detail": "Motor je blokiran: proverite vrata i ključ",
+      "battery_critical": "Baterija kritična: zamenite ili napunite",
+      "btn_lock": "Zaključaj",
+      "btn_unlock": "Otključaj",
+      "btn_open": "Otvori",
+      "btn_confirm": "Potvrdi?",
+      "btn_lock_n_go": "Lock 'n' Go",
+      "btn_lock_n_go_unlatch": "Lock 'n' Go + otvori",
+      "battery": "Baterija",
+      "charging": "Puni se",
+      "critical": "Kritično",
+      "ok": "OK",
+      "door": "Vrata",
+      "since": "Od"
+    }
+  };
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
+
+  const CSS = `
+:host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sl-ok:var(--appliance-ok-color,#43a047);--sl-alert:var(--appliance-alert-color,#db4437);
+  --sl-warn:var(--appliance-warn-color,#ffa000);--sl-cold:var(--appliance-cold-color,#2b9af9);--sl-c:#9aa3ad}
+.head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
+ha-card.locked{--sl-c:var(--sl-ok)}
+ha-card.unlocked{--sl-c:var(--sl-warn)}
+ha-card.open,ha-card.opening{--sl-c:var(--sl-cold)}
+ha-card.locking{--sl-c:var(--sl-ok)}
+ha-card.unlocking{--sl-c:var(--sl-warn)}
+ha-card.jammed{--sl-c:var(--sl-alert)}
+.locked .badge,.unlocked .badge,.open .badge,.opening .badge,.locking .badge,.unlocking .badge,.jammed .badge{background:color-mix(in srgb,var(--sl-c) 22%,transparent);color:var(--sl-c)}
+ha-card.jammed{box-shadow:0 0 0 1px color-mix(in srgb,var(--sl-alert) 60%,transparent),0 0 22px color-mix(in srgb,var(--sl-alert) 30%,transparent)}
+.alert{display:none;margin-top:2px;font-size:11px;color:var(--sl-alert);font-weight:500;text-align:center}
+.alert.on{display:block}.alert.warn{color:var(--sl-warn)}
+svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height:auto;margin:2px auto 0;cursor:pointer;overflow:visible}
+.ctl{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:6px}.ctl.hide,.ctl button.hide{display:none}
+.ctl button{flex:1 1 74px;max-width:130px;display:flex;align-items:center;justify-content:center;gap:4px;border:0;border-radius:10px;padding:6px 8px;cursor:pointer;
+  background:var(--secondary-background-color);color:var(--primary-text-color);font:500 12px/16px var(--paper-font-body1_-_font-family,Roboto,sans-serif)}
+.ctl button ha-icon{--mdc-icon-size:16px}
+.ctl button:hover{filter:brightness(1.12)}
+.ctl button:disabled{opacity:.4;cursor:default;filter:none}
+.ctl button.on{background:color-mix(in srgb,var(--sl-c) 28%,var(--secondary-background-color))}
+.ctl button.confirm{background:color-mix(in srgb,var(--sl-cold) 35%,var(--secondary-background-color))}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(68px,1fr));gap:6px;margin-top:6px}
+.tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
+.tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
+.tile .l span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tile .l ha-icon{--mdc-icon-size:13px;flex:none}
+.tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
+.tile.hide{display:none}.tile.bad .v{color:var(--sl-alert)}.tile.warn .v{color:var(--sl-warn)}
+/* ---- illustration ---- */
+/* reflet du bouton : tourne avec l'état (verrouillé 0, déverrouillé 2 tours, ouvert 2,5 tours), en continu pendant le mouvement */
+.sl-sheen{transition:transform 1.6s cubic-bezier(.45,0,.25,1);transform:rotate(var(--sl-turn,0deg))}
+.unlocked{--sl-turn:-720deg}.open{--sl-turn:-900deg}
+.locking .sl-spin,.unlocking .sl-spin,.opening .sl-spin{animation:slturn 1.1s linear infinite}
+.unlocking .sl-spin,.opening .sl-spin{animation-direction:reverse}
+/* anneau LED : couleur de l'état, pulsation verrouillée, segments qui tournent en mouvement, clignote si bloquée */
+.sl-ring{fill:none;stroke:var(--sl-c);stroke-width:2.4;filter:drop-shadow(0 0 2.5px var(--sl-c));transition:stroke .4s}
+.sl-halo{fill:none;stroke:var(--sl-c);stroke-width:7;opacity:.18;transition:stroke .4s}
+.locked .sl-ring,.locked .sl-halo{animation:slbeat 4s ease-in-out infinite}
+.locking .sl-ring,.unlocking .sl-ring,.opening .sl-ring{stroke-dasharray:10 7;animation:slspin .9s linear infinite}
+.unlocking .sl-ring,.opening .sl-ring{animation-direction:reverse}
+.jammed .sl-ring,.jammed .sl-halo{animation:slblink .5s infinite}
+.unavailable .sl-ring,.unknown .sl-ring{stroke:#5d646b;filter:none}.unavailable .sl-halo,.unknown .sl-halo{opacity:0}
+/* flèches de rotation autour du bouton pendant le mouvement */
+.sl-arrows{opacity:0;transition:opacity .3s}.locking .sl-arrows,.unlocking .sl-arrows,.opening .sl-arrows{opacity:1}
+.sl-arrows path{fill:none;stroke:var(--sl-c);stroke-width:2;stroke-linecap:round}
+.unlocking .sl-arrows,.opening .sl-arrows{transform:scaleX(-1)}
+/* pêne dormant (sort dans la gâche quand verrouillée) et demi-tour (rentre seulement à l'ouverture) */
+.sl-bolt{transition:transform 1.2s cubic-bezier(.45,0,.25,1);transform:translateX(14px)}
+.unlocked .sl-bolt,.open .sl-bolt,.opening .sl-bolt,.unlocking .sl-bolt{transform:translateX(0)}
+.locking .sl-bolt{transform:translateX(7px)}
+.sl-latch{transition:transform .5s ease-in-out;transform:translateX(12px)}
+.open .sl-latch,.opening .sl-latch{transform:translateX(0)}
+/* porte entrouverte (pêne tiré ou capteur de porte) : la porte recule, le jour passe dans l'interstice */
+.sl-leaf{transition:transform 1s ease-in-out}
+.open .sl-leaf,.door .sl-leaf{transform:translateX(-6px)}
+.sl-day{opacity:0;transition:opacity 1s}.open .sl-day,.door .sl-day{opacity:1;animation:slday 3s ease-in-out infinite}
+/* cadenas : l'anse se lève et pivote au déverrouillage */
+.sl-shackle{transform-box:view-box;transform-origin:28px 22px;transition:transform .8s cubic-bezier(.45,0,.25,1)}
+.unlocked .sl-shackle,.open .sl-shackle,.opening .sl-shackle{transform:translateY(-3px) rotate(-28deg)}
+.unlocking .sl-shackle,.locking .sl-shackle{transform:translateY(-2px)}
+.sl-pad{fill:var(--sl-c);transition:fill .4s}.sl-padbg{fill:color-mix(in srgb,var(--sl-c) 18%,#fff);transition:fill .4s}
+/* blocage : la serrure tremble ; pile faible / critique : pictogramme qui clignote */
+.jammed .sl-dev{animation:slshake .35s ease-in-out 3,slshake .35s ease-in-out 4s infinite}
+.sl-warn,.sl-bat{opacity:0}.jammed .sl-warn{opacity:1;animation:slblink 1s infinite}
+.lowbat .sl-bat{opacity:1;animation:slblink 1.6s infinite}.critbat .sl-bat path{fill:var(--sl-alert)}
+.sl-dev{transform-box:view-box;transform-origin:120px 100px}
+.unavailable svg{filter:grayscale(.8) opacity(.6)}
+.noanim *{animation:none!important;transition:none!important}
+@keyframes slbeat{0%,100%{stroke-opacity:.45}50%{stroke-opacity:1}}
+@keyframes slspin{to{stroke-dashoffset:-34}}
+@keyframes slturn{to{transform:rotate(-360deg)}}
+@keyframes slblink{50%{opacity:.15}}
+@keyframes slday{50%{opacity:.7}}
+@keyframes slshake{0%,100%{transform:rotate(0)}25%{transform:rotate(-2deg)}75%{transform:rotate(2deg)}}
+`;
+
+  // Photos détourées (coordonnées en pixels de la photo) et dessins ; chaque modèle donne la place de l'anneau LED
+  // et du disque tournant (cx, cy, rx, ry) dans la scène 240 × 180.
+  const PRO5 = 'data:image/webp;base64,UklGRnAXAABXRUJQVlA4WAoAAAAQAAAAzAAAngAAQUxQSDIIAAAB78agbSRH5yx/1N8LgIjI5eVc5SxIDiElRELFKJJs2Y3IROMXCQaNJClauv2j9y/4aMFARP8nALZ4/+0X5gdEWQGA7dgCN8UGpQo0I6xSzIjI7Kd9LHSgJNVsUq1Gc6kmzEy1ihjwSd7+/6Cq+rBdRNGUoaBtIyfhD/t+3AIQERNg5OiVfDWtXBWTya9YV5xJtmI2+cGkfC8m8v3yHPymtG2bolZ636+qWtAIkHDc3cbd3dY+v29+wexct7q14+4n0gS6ahEBms7HNiImgNJtW2sb6RbjqMb97z1rZmZm5jDIMsqSBR++dxsc8rI+N0wiYgLwzyUBEAgIBJhiBAGuo5HYeRGGwSC3UBVSr1OujiCYACTFOhtZZwkwqs8szq1GsR0sPVxq0NrO+XDXL+Wq6J2PUVRXEdpDBE1aqVV3Npuz7bl5CxDGxDbAMOR9byBUJa9TeFV+mE+qZWk6XaHNXAFqj5BSiaqzJw7uX0iNjZ2zWE+A2DBgq8SVe+eCipAr2q/fWJIxDwzbg5has3GyvW/vfC11BEhMOgkAxEptCqXmg3Ft4BHKjhLXO8+f21uL09iQKGOSQMj90x6VLJQa7UznyNnDx+cikih3ZZy2w0E2a5W6mWjr3XffPt6uxoJtURmy6dtfdWYSdAOZ2uILp5/clRpi+9RYNHb/qTzzulkobu6px063KobYXhU0o5PBaebLRBqtXYcPzSWG2I4lZMeD04gl8sprZ+ZiwbatPjtedCwHiWYuH+/WBNu6unTeShlI4+CnMzVDbPd0ccdOHKVytLPTEAqU1rvzIpNlqvWoYgx0aNvOdaNJMu3HD1cJNYosfrnAiSHk1NEZA01GXUdwMiRJLtAJdCkEzEQE7DtjCYVKGkLxmN7zdUKnq0GKRjzWNtCqNzUp2NKfjyhqYe2xSrFCdmsVimV1tYdrN6+tjZE81wzYe6Bk5FoE5ImBcr2/4xXr6W2f1A7g9w3XYu3K8iBAv6zzsA757d8fBChYhoNc1iD79+IAKg555NVxedIwjUCsYVW0gnQmr0i+KBTpTDsPY7HzvxsktM7eHYcxmMbpUlIKcXyMMSZPPKtIa2kkjK7y4m6k1vD8chhRMAuHK6mFsC+MavAwciyUFw0I/l4KIwlrvdSiyHkvNgpg6PX8SHyvHrNQ8AINuub9/ijCoFK3ULgk0ZofQe92q0KN0TWuZsOFlVtCqJzhxkoYanC7B6Uz7fbzobL7FUudQaKVXhjmYWYIrbXebZkh/M26Uxvswi43BO6QULvZ8WXXbCnAG8XBdSNsOc+tgebjttsS2x6aN52PO7IFHxZy1SHZm3ALmDtrqTokNbMZ02MtQvVim3Vu1jzVUB4r3RnZrLonhvIJg02jPRVqDxk2ZWX/VBF1Iqi/F20C17LUHnEs3YjJrgTqq3/UMRtAYujftCw2NA0zBUCwIauPVTkFbMrGmYZMEfGuGNNkhKmQm0yHpmamCGm83OT0gOazDZkiTN1gvZ0OQKx3HcepYEO6RYcp0jbtNOGajlOBX8fqoepU4JcC1iu2QZodQwB24rgNlF+VCtBmZiuwOxYAza7BVugJAGEUuBWcGfB/yrBV2CPL7UEmj090BS3TD2Ea8Hd2v3VbABQrdfb8TLaAs+M8Ivlp9AwQ6W92DM8Ak0/Lj0s9QxpJPdo9i9W6/Lym8kCPM1m9W6ryxOhZkFqge7bftzwLTD2dv1LoWfSnXndSFhFn6/SVqdccq09LPQd8fiLp/MO/ImyVbmeXcv1bqdlS6N2YSbr5Gz9XMKQrEm7tam6G4acVUy2//l2KYfvvl5pq/WsSDYXFaUi0/MZ31WZ/MEQYDjJJs8HN3AwwdMC+qmhMb/1WwwjD8nmhxvyVzIwCAfuqoi8ZfZNiNMvnDfXlR2JGg4BDNdGW3/kiwah6D6y24uj7RxwV8qwdU1Wsf4p3RxeW/smgaru3extj1A63RVNMDMZJN4JQUWOX4heoySQcG8h9qeiIMwcTjg3u35sDFXm/b9Zg/PHqH0tBQeHe3zlRQPYf+UjUE/zN+x7FXLsJoXIkTgceRTW1WHQTws4UBXYLHaeZ0Ps3SJGk9UJLFIM4Cyi0a7WcVgi/yoCCi4NOKYbwKL7oRLrhoYMUjy5oJGa/vDqMSE3hEPpBHarFy9k8ymrAxDId1F8+/zUFACaHnonAuPj1q38STHgoryUBY3300dsRSvDhMvaeyjL74rWTBUpQm3dzYZ8pw7D88s28dFIGkPzQWukpkiF3+SBflNcezUMpQKzNcu0fktoWPh+MXR6UuBVQkpTR641qj5AEu1nsfnit8HmgYsMGnj5iUsPyIwlovVC6X1+YSVtEKjaw2OzW7jkr5UWCAE1liObLt5ekmUZCsakHvWRf0hCWEEmo6Zwn7O4Xv4RbrioUoGKzB14/IFVhqSihZRNpdnZOMg+aytx6bGQi+jBkOL9PqgTLQEHQlkarj36YBZrWegAkr92Ogn4MfgXn9/leIpwkJQBdLBXu6NOfjJZtAEiih4Nf8b9f77AiYOEUIKBuGglWH3zSgrbqSBI9HvyjlaVruwIcwIIQBBGKEEg1J09NCeqiVoAkep+UpNt+8clmc1ZAchwkSBtDcDGO354WjZJuEgGQREIa25ipPfdSU+JGVQCC4GYBBP8Wu9aqPajLyXHh4zxEBQhFilKkPivJvidOV0BWYpsICCJkXpyJBHT22+/7nRiJzkWQRNqSZFKvCqR2dGd9T8wYMbLzWTPZHwWA0TROQRBEKgsISBrbxIAgQubFWQ8AhCLNCQIgAASAxD/FVlA4IBgPAABwTgCdASrNAJ8APj0Yi0OiIaEXCN48IAPEtIBr0BqvWU/J70J803ujxx6CcT7uT/ccZvAI/Hv5//qOHnAN9dv+JyH9t1yR1Av9IejB/2+d36o/9H+m+An+df2j/n+tv7OvQ5/W5P11Im/qYOGY52RT1DW+iDNUggjmZyMHAFTgyT7vhUldUcsejRC1tgjpm+Qr+BqZjWb1em3ybXhPEOA3ljS/2V9XqXBmuyVoA03Bs44vNb22rGg+gGukqHSM7e3Rn/60wL1dJQdJuCGbtWAiMapBm0F5nwIFlYhKF9a/2KK6L8NtQnkMag5gfdQeB76wfpG1P7EzgiOvSFWAOi40B0NY3Lr39JI9loQtwnMXDUMCn/jtR0YhbCFDsZYcPWcBB4bY6e9MUrSY4kha1P4J3zSAHrMIhQQBpgt6ckYAiZWDwPuHrGeHxybRUoVsBiRPgqas1L/I2lsF7bL+7HCBkrk1MK12ZbSfB0beaLe153J4t8aah9LVz82q6NW5czHQPtwVTSOhr/+I4ZNdB4NYza4I7nErXja8V/eoOFAJISEdMmu2whhoz79NlcrerTbglRuP+/UevCPMircj1ITH0LsVFK8+TBSgKAtS0mVdl6zR/vJYCpIlFxw8aGbykhcx0V9Pzgd/UmAvuvuqh7nqnTl1aXOPDQF5vBxoSdbOYJ8/TBOB9LCfOQRYqoBL5cDLfBgg8xPXDjaIL9Ym4WnZc42X+W4WdK+zomhk2azxCT8mAjedEzrHBRGqo/CC+41/8FkgiEnwpUSG9v3th+2saYvLkOkiHh60M/nrO94qHj90FCAf/5wCHFFJX9awMCtdK6omXJ40egGHMDAA/v6lOHa1KkQMHCimIuyyaSWL4+xmEpgmafXors1Q22KInVz9Wy9TVYSZMeOD2q12HiAxZJHB9lhnYa8cBebyxGSrKiGf650INaNnebqkQPrzUgxf2BtSfU6Z6hQzL7yMLXz0I/fU2piUkfvzyx5+pqFoFPv78KPe+kr3OyPMPcfltSQBEz+hl/9UYRxe+L4KeuQVUGkhrGOJiv8sDxuVfCHeOABonwIoIx6z/HwG3i0yQ6M9T1sxu2nrPmH274cXiktfK9tHgfwEiMbo1c1oFCoJ+NHUJLXGRXcSrIV3/OuPDZQd4iY+S1AROFsDZPS34Y6wQv67kXTIbcEVJkHm6RP35aHm/eng2OUiy1pkL6Ln4poc37/+Axfp1wGsleGwG42KZh+aWjZyUbg3o1xaSliboBy1gnptl6M5X+V0VG7S3JE6wZHSKNA/GV7/lQTRgw/ANkH5mrPbSczUuyHZ8WSyn8+STFLsa3bDhfT/UfrattkNcOE/iRpf2khegvapQb+HQ8yClEc9DIQJYR5+rLfEh9TyA5n5nRib8McZ8jPGs39JNrAvrTr6s56avzxJuK4xIOTqgzi46EAT+0GDeMvadBjSHkyLQWSb3WDkA9VbAfpzJHwWYOyAFXBPqP/TjQwcy83keBkRYa3p9IzaBWQm0snGdIf7p4GmMnSb0cnX1kA0B9EP67pTn+bnnxEYB+mAoVnqNfK5boHEFzPELzhPAhg8ibUxlxl5/HeV5hzVxcw5i32Jo7YE5cGKwe3251uYkMlMTIevVhZuIhIjFs1DAsiDwUUsJSMMTNFVP5QBgNpEI9SH6BpGAz8srZR/bcalXPcyIzLDlzj9co7dW1mSTSffS7FrS9VHELnqVdo8nx62bKFxeaRFScVc/Bu2w2dinAnSrvgfcWH7qXeV7+FZ+YeB9USXrUzS3O4bKAu39u8lLhZGXTyu9Cc5m7U5EKeSuSZqcny+jkBQkCzW6qO/PeGa4vQPk4ZHfcXwBB9nlmMx4NKvlRu1HUdsHmqx7TLV7Lxvqs2Omr/LbIMfR8qeSsiwOGJhxkaTBvKJ5obcNVLBF9xklg4A0vI6UioIwxeO6huLFPmax6gB17aJJUQmeeUifuLNZ7M/Pb+niC5pa+kFGE2cw2xHWoerPaowznRoJ1jinXuffWrFQ0UaW8LXZqVjpZoTyqIZgn1dwqmsGrDjDevoKuHBRNEJephoaHHdqWbiJMNCpAwZKWlifohYlEglRoE7sYLLZ+4HqybpAMYOke9hamA/HMVUhC/RIn6QoirBewJ7XOQBJh2yhQ69hNcy1kY+VZU19ecHtlwM0XSBQ4v99qchpJPGwYe1Q0BSpNf498+Ily6a75yunwjNytygt16Ct4zs3bMBJNxWuiqXOvHQQ+ggD3VFUtXFs5mfnE4uvj3DzXCnkCPc6Xa/+e3hTnRvvB4uC2KfTZGcZXOEkZMLw5z18PawQN7pG+j1Vvk9Jv6tw7ooDbFDs9qcMR4Vanh2hxysMjSlc6MwOmEfmxw2HDtO+X1KXeVSP7+q1KGCALvVt08IooOvxcR/xfN0LUz9D+o9b9SPu1rn5yoP40w5Rc+0fIzjhEB0a0TWo2OinNoQUeL1YPKceu+QpWgsqjUK5kJjYpTepteV7p0v3vKr8BIAGRXx4H4oeZqPOU8NFrGaTKdnlv1rcCiRXyYs8mYBS9ATD75Jvn+uNl//GN5c9Z8J2bsTkblyBS3sWVkjuLBzc7L5bgs8QNbPZ1uHwc6JgZUuMODOjiiy3sWWwVk2zJrKPCGgyUsWAOM8kyLE1mUWx4PPNFM/XzDKInuEhhMIJqte099a/2lzbIWxfjTjLaJLl2+TA6sAajeMzZTHiG93BrWoIlyU4EJDtgQlaqRuZ0135zgC3yo89YeC6moR+2KrsHXa9x9hpljDx5rQ2UryyelSub6XuTS3hct+bZLtrbsDg1DjdfAdwRBBHkmDLCVrCwaCtGe2QSH6hLtMmwYhOhXwLYxILcpnW8LtSsgw4xNhMUPv14nVdbJrYg/2hEummD2O376J24UTgotkDb/dYpO46SL8O9pVYejKVM6/iPW/fYQYUEBVkYWyE03byhWwbXvXimIhFtlG544DGGuPH8Ea4wUUSmdJ6q+cRezJHiJlI7L2dJDC+9ZpvzyxhQ6wCR7+/EMxrqmq32jHyshqE9vV9metenvu+lv6ufnvl8JWKslHrNPQ2s9tn+gFAVD3r39Aua1/7S233d4yRuwpEv6QIVmVCq1m7UXk0BWqhzpPkCrz+DmW0ZssBl8LIM17jpNLxmsftjlNgG2AOb+l0smCUdmCVsGDy/c1N9cBe3uNY8sG+opclD1pdOmRP+4oVU9Z703bYM/9xsfXhiKruIavFX48s+oK/oKW4KN9bXhAGMDhVqmnvqyUQbCB2daD8CV0Bjtqc+m/i8rrk1+jyvhgbG1D/ujqWoxh9sYnPYGJRq7UQeW0i3YIpfpvXR6nALB+oIYg1atlym5x7ikDQ7rndZj65U3LUNb5BQo/sxNKOteOUWBVZFaM1fDRKXNPJzBTrjQa8UVcLGgRNgIoL/39ZVYBJR56Xa5erj3tLkz1UllQFvfk/Azcybv7Y4gaxHiUFafOmo+k4BtE5vuHddVdcrSHWXwYsUM5UJ7FWGdOQywC0hGgX7H3orfzHcq/+LGP3vg+TODuGedtxD+nevjASxuVLlXBvZnxXPy2PMjHQWNv/W94RpzxsntsuZ83zBO4D5ZNK0XfNARkQvJnBMLPAdjKz3ARZ3bpma3/Okc0p2K3py8U0wVasXJpd6wQ/xBbszroz31Jo3Dji0TZGt+ZuybBP2PIQVxvwffQaQB+AdcEEHlQmnkhJ2q45Fwt9pkAxZMVU7YyzroPfw5z08/4qHC8/sE94ogMI9rFieMejbT4LVxuclrDwaq4/bh2Qepavtm6cUNaFw8U1DAc+Eml9/hQjaPHvio9HT3gRTaanZpP9p3FdaIo4A/BJ7My+MeQrZAME3H+EZH8YEz68miIBnXm/2U3Y9QcPF7sq9HrJmhDLfDBcu8X/6Nf5v+6GSd5vun2nEuDlkP2B9SmtLHIRSpY0s7PqXJ6yDODmTq7XxAnp2LRFSIzEkzaHnKbizTk9qY/4pKk3MvE4tP0A1y2Ckp0FPx3MtklEtI6kKm3VNzacgAv7/JSSsgEyZEdWA9E38lTG6xNs48qgFY0M99yp5EeD9zItaV4SqouKJRUREFnw4FCkb9I7JhkxO9HNUsXra8Im1IdLMoFsFLzzfHrxvPeWCjgtUZUK7Kmd2sKqC8Z/NrnxSuuMNsE2zbpL9LcDqLRdL3mlZVHKZf/vm1Kk+Vo6fcFaMOtDR1AIQrVoICtsRRDW84fJC2o1qBicfWPtxCCEML8989nyK75Awe4fVEUzMjk6qT+DQX0YqOuJCMAeazmM6fahPvGTPnMnPM/gIsF15y8hX9DMPbzbBss56eumeW1A0e4hUuRx3fQL65u5s9GYcbTu9/u161rqE2mER+zQLMPXjcOjkWTAOcLpk/1e/J0rJNRcSo8YwyomLsSeFJN68LBypymDsT8DReHxEMQKkgb3hMtm+GvY4YqqY54j9tVlF3XD0V2wu2pRtkYQ5pWaYjYatAEV470+ZQUk1gDmBCiHklY1GvB8T6AE2CbgjRXccQKxzz27Wx7jNjsZjfUFWEDocxju56pvJDb2UEcNi+NkUSznS2hD8Ge6G3ON1K2NqBi6X/MXgm+DT6BRVo+TDfSLo7Ugd1psmw5BZTO1t9lxp2gzfoJ8Vwz79+UgW9J4F5giZkehmJF2rZ9kZ4/Ybm+pobTHXIerhe7M1tkDiySz/TkbQqU9xgjM4LygOI6oSvYZ0rYDp5Kn8MBeW/nwp8lst15oL0wUtugBbijTxXY32Cc+G+EStWMaxEsL2S747o8wtfS9ouS4SsOabmtVzeB0DAzvVcUNWWbI2QnUa6+sQwJy0NwGoqiyhl0by5TC/rMedK4woNloHbSO3WKf/VRIx2pVr4gJbix0xLQhxiQ7ZzIfZXmGM1deQdacX0osLN3oc1LVGgMA9AgAuqSr3/oeuUnDdMfNZzmqdXtOccI6JxlpEA92xVyoWQQAz59voFIq7odi1Oe8EgAQ6VqlHGUMV0meltLbZqTHyZekrK0SvkLBbLWemL0FkonBgPwJYl68u/R/OOtJe4I+sIIkOiQt7yk+NB5W7HLI8NfyUn3YRzmg8fSr8yba2jjIa6xTR5U5Lt9I669CQ7spmDEB6kzZxeBATEKdrI/T6vmIQ3hvDwbsJ4AAAA=';
+  const MODELS = {
+    // Nuki Smart Lock 3.0 Pro : boîtier blanc arrondi, cylindre inox en haut, plaque de montage dessous (dessin)
+    nuki_3_pro: {
+      ring: [120, 64, 17, 17], disc: [120, 64, 39, 39],
+      art: `<rect x="100" y="156" width="40" height="12" rx="2" fill="#e3e6e9" stroke="#c7ccd1" stroke-width=".6"/>
+        <rect x="88" y="66" width="64" height="94" rx="11" fill="url(#slwhite)" stroke="#cdd2d7" stroke-width=".8"/>
+        <text x="120" y="146" text-anchor="middle" font-size="8.5" font-weight="600" letter-spacing="2.2" fill="#8a9096" font-family="sans-serif">NUKI</text>
+        <circle cx="124" cy="62" r="40" fill="url(#slside)"/>
+        <circle cx="120" cy="64" r="39" fill="url(#slsteel)"/>
+        <circle cx="120" cy="64" r="15" fill="url(#slbtn)" stroke="#8e959c" stroke-width=".6"/>`,
+    },
+    // Nuki Smart Lock Pro (5e génération) : photo détourée, 205 × 159, posée à (24, 26) à l'échelle 0,78
+    nuki_pro_5: {
+      ring: [76.8, 88.1, 26.8, 28.6], disc: [79.4, 88, 53.1, 59.3],
+      art: `<image href="${PRO5}" x="24" y="26" width="160" height="124.1"/>`,
+    },
+  };
+  // décor commun : porte (vantail qui recule à l'ouverture), dormant avec gâche, pêne et demi-tour, cadenas, pictogrammes
+  const DEFS = `<linearGradient id="slwood" x1="0" x2="1"><stop offset="0" stop-color="#d8ccb9"/><stop offset="1" stop-color="#c4b59d"/></linearGradient>
+    <linearGradient id="slframe" x1="0" x2="1"><stop offset="0" stop-color="#9b8c74"/><stop offset="1" stop-color="#b3a58c"/></linearGradient>
+    <radialGradient id="slsteel" cx=".38" cy=".32" r=".8"><stop offset="0" stop-color="#f4f6f8"/><stop offset=".45" stop-color="#c3c9cf"/><stop offset="1" stop-color="#868d94"/></radialGradient>
+    <radialGradient id="slbtn" cx=".42" cy=".36" r=".75"><stop offset="0" stop-color="#eef1f3"/><stop offset=".6" stop-color="#b6bcc3"/><stop offset="1" stop-color="#9aa1a8"/></radialGradient>
+    <linearGradient id="slside" x1="0" x2="1"><stop offset="0" stop-color="#7d848b"/><stop offset=".5" stop-color="#c9cfd5"/><stop offset="1" stop-color="#8b9299"/></linearGradient>
+    <linearGradient id="slwhite" x1="0" x2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".7" stop-color="#f1f3f5"/><stop offset="1" stop-color="#d5dade"/></linearGradient>
+    <linearGradient id="sldayg" x1="0" x2="1"><stop offset="0" stop-color="#fff3b0" stop-opacity="0"/><stop offset=".5" stop-color="#fff6c8"/><stop offset="1" stop-color="#fff3b0" stop-opacity="0"/></linearGradient>
+    <radialGradient id="slglint" cx="0" cy="0" r="80" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff" stop-opacity=".05"/><stop offset=".7" stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="slbrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9edf0"/><stop offset="1" stop-color="#9da4ab"/></linearGradient>`;
+  const SVG = (model, label) => {
+    const M = MODELS[model] || MODELS.nuki_3_pro, [rx0, ry0, rrx, rry] = M.ring, [dx, dy, drx, dry] = M.disc;
+    // reflets du disque : secteurs clairs dessinés autour de (0, 0), étirés en ellipse, qui tournent
+    const wedges = [0, 180].map((a) => `<path d="M0 0 L${Math.cos((a - 22) * Math.PI / 180) * 80} ${Math.sin((a - 22) * Math.PI / 180) * 80} A80 80 0 0 1 ${Math.cos((a + 22) * Math.PI / 180) * 80} ${Math.sin((a + 22) * Math.PI / 180) * 80}Z" fill="url(#slglint)"/>`).join('');
+    return `<svg viewBox="0 0 240 180" role="img" aria-label="${esc(label)}"><defs>${DEFS}
+      <clipPath id="sldisc-${model}"><ellipse cx="${dx}" cy="${dy}" rx="${drx}" ry="${dry}"/></clipPath>
+      <clipPath id="slbtnc-${model}"><ellipse cx="${rx0}" cy="${ry0}" rx="${rrx - 1.5}" ry="${rry - 1.5}"/></clipPath></defs>
+      <rect x="0" y="0" width="240" height="180" rx="8" fill="#8f816b"/>
+      <rect class="sl-day" x="203" y="4" width="20" height="172" fill="url(#sldayg)"/>
+      <g class="sl-leaf">
+        <rect x="4" y="4" width="203" height="172" rx="5" fill="url(#slwood)"/>
+        <rect x="16" y="14" width="178" height="152" rx="3" fill="none" stroke="#b3a48c" stroke-width="1.2"/>
+        <rect x="200" y="4" width="7" height="172" fill="#b9aa91"/>
+        <g class="sl-latch"><path d="M190 116 H204 L210 121 L204 126 H190Z" fill="url(#slbrass)" stroke="#7c848b" stroke-width=".6"/></g>
+        <g class="sl-bolt"><rect x="186" y="96" width="22" height="11" rx="1.5" fill="url(#slbrass)" stroke="#7c848b" stroke-width=".6"/></g>
+        <rect x="203" y="90" width="4" height="42" rx="1" fill="#c9ced3" stroke="#8d949b" stroke-width=".5"/>
+        <g class="sl-dev">${M.art}
+          <g clip-path="url(#sldisc-${model})"><g transform="translate(${dx} ${dy}) scale(${(drx / dry).toFixed(3)} 1)"><g class="sl-spin"><g class="sl-sheen">${wedges}</g></g></g></g>
+          <g clip-path="url(#slbtnc-${model})"><g transform="translate(${rx0} ${ry0}) scale(${(rrx / rry).toFixed(3)} 1)"><g class="sl-spin"><g class="sl-sheen">${wedges.replace(/80/g, '40')}</g></g></g></g>
+          <ellipse class="sl-halo" cx="${rx0}" cy="${ry0}" rx="${rrx}" ry="${rry}"/>
+          <ellipse class="sl-ring" cx="${rx0}" cy="${ry0}" rx="${rrx}" ry="${rry}"/>
+          <g class="sl-arrows" style="transform-box:view-box;transform-origin:${dx}px ${dy}px">
+            <path d="M${dx - drx - 6} ${dy - 10} A${drx + 6} ${dry + 6} 0 0 1 ${dx - 10} ${dy - dry - 6}"/><path d="M${dx - 16} ${dy - dry - 10} L${dx - 10} ${dy - dry - 6} L${dx - 16} ${dy - dry - 1}"/>
+          </g>
+        </g>
+      </g>
+      <rect x="221" y="0" width="19" height="180" fill="url(#slframe)"/>
+      <rect x="223" y="94" width="6" height="15" rx="1" fill="#4a4237"/><rect x="223" y="114" width="6" height="14" rx="1" fill="#4a4237"/>
+      <rect x="221" y="90" width="3" height="42" fill="#d2d6da"/>
+      <g class="sl-padg"><circle class="sl-padbg" cx="28" cy="28" r="15"/>
+        <path class="sl-shackle" d="M22 26 V21 A6 6 0 0 1 34 21 V26" fill="none" stroke="var(--sl-c)" stroke-width="2.6" stroke-linecap="round"/>
+        <rect class="sl-pad" x="19.5" y="25" width="17" height="12" rx="2.5"/><circle cx="28" cy="30.5" r="1.8" fill="#fff"/></g>
+      <g class="sl-warn"><path d="M212 18 L226 42 H198 Z" fill="#db4437"/><path d="M212 26 V34" stroke="#fff" stroke-width="2.4"/><circle cx="212" cy="38" r="1.4" fill="#fff"/></g>
+      <g class="sl-bat"><rect x="14" y="152" width="22" height="12" rx="2" fill="none" stroke="#ffa000" stroke-width="2"/><rect x="36" y="155" width="3" height="6" fill="#ffa000"/><path d="M17 155 h4 v6 h-4z" fill="#ffa000"/></g>
+    </svg>`;
+  };
+
+  const TILES = [['battery', 'mdi:battery', 'show_battery'], ['door', 'mdi:door', 'show_door'], ['since', 'mdi:clock-outline', 'show_since']];
+  const STATES = ['locked', 'unlocked', 'locking', 'unlocking', 'open', 'opening', 'jammed'];
+
+  class ApplianceSmartLockCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
+    static getConfigElement() { return document.createElement(TAG + '-editor'); }
+    static getStubConfig(hass) {
+      const ids = Object.keys((hass && hass.states) || {}), dc = (i) => (hass.states[i].attributes || {}).device_class;
+      const lock = ids.find((i) => i.startsWith('lock.') && /nuki|serrure|lock|porte|door/i.test(i)) || ids.find((i) => i.startsWith('lock.')) || '';
+      const dev = lock.split('.')[1] || '\u0000';
+      return {
+        entity: lock,
+        entity_battery: ids.find((i) => i.startsWith('sensor.') && dc(i) === 'battery' && i.includes(dev)) || '',
+      };
+    }
+    setConfig(c) {
+      if (window.applianceSize) window.applianceSize(this, c);
+      if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
+      this._c = { model: 'nuki_3_pro', battery_low: 20, confirm_open: true, show_status: true, show_buttons: true, show_battery: true, show_door: true, show_since: true, ...c };
+      this._built = false;
+      if (this._hass) this._render();
+    }
+    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    getCardSize() { return 6; }
+    getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+
+    _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
+    // libellé perso (option labels) sinon traduction
+    _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
+    _lang() { let l = this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en'; if (!T[l]) l = l.slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _st(id) { return id && this._hass.states[id]; }
+    _ok(s) { return !!s && !/^(unavailable|unknown)$/i.test(String(s.state)); }
+    _on(s) { return this._ok(s) && /^(on|true|open|opened|1|yes|low|charging)$/i.test(String(s.state)); }
+    _num(s) { if (!this._ok(s)) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
+    _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
+    _since(s) {
+      const t = s && Date.parse(s.last_changed); if (!t) return '--';
+      const sec = Math.max(0, (Date.now() - t) / 1000);
+      const [n, u] = sec < 45 ? [0, 'second'] : sec < 3600 ? [Math.max(1, sec / 60), 'minute'] : sec < 86400 ? [sec / 3600, 'hour'] : [sec / 86400, 'day'];
+      try { return n ? new Intl.NumberFormat(this._lang(), { style: 'unit', unit: u, unitDisplay: 'short' }).format(Math.floor(n)) : new Intl.RelativeTimeFormat(this._lang(), { numeric: 'auto' }).format(0, 'second'); }
+      catch (e) { return `${Math.floor(n)} ${u[0]}`; }
+    }
+    // bouton : entité button / script, sinon service lock
+    _press(id) {
+      if (!this._hass || !id) return;
+      const d = id.split('.')[0];
+      const [dom, svc] = { button: ['button', 'press'], input_button: ['input_button', 'press'], script: ['script', 'turn_on'] }[d] || ['homeassistant', 'turn_on'];
+      this._hass.callService(dom, svc, { entity_id: id });
+    }
+    _lock(svc) { if (this._hass && this._c.entity) this._hass.callService('lock', svc, { entity_id: this._c.entity }); }
+
+    _compute() {
+      const c = this._c, s = this._st(c.entity);
+      const raw = s ? String(s.state).toLowerCase() : 'unavailable';
+      const st = STATES.includes(raw) ? raw : raw === 'unknown' ? 'unknown' : this._ok(s) ? 'unknown' : 'unavailable';
+      // batterie : % (sensor), ou binary_sensor « critique » ; en charge : binary_sensor
+      const bS = this._st(c.entity_battery), bat = this._num(bS), batBinary = !!bS && /^binary_sensor\./.test(c.entity_battery);
+      const crit = this._on(this._st(c.entity_battery_critical)) || (batBinary && this._on(bS));
+      const low = crit || (!isNaN(bat) && bat < Number(c.battery_low));
+      const charging = this._on(this._st(c.entity_battery_charging));
+      const dS = this._st(c.entity_door), door = this._on(dS);
+      return { st, s, bS, bat, batBinary, crit, low, charging, dS, door };
+    }
+
+    _build() {
+      const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
+      root.innerHTML = `<style>${CSS}</style><ha-card>
+        <div class="head"><div class="title" id="sltitle"></div><div class="badge" id="slbadge"></div></div>
+        ${SVG(this._c.model, this._c.name || this._t('name'))}
+        <div class="alert" id="slalert"></div>
+        <div class="ctl" id="slctl">
+          <button data-a="lock"><ha-icon icon="mdi:lock"></ha-icon><span></span></button>
+          <button data-a="unlock"><ha-icon icon="mdi:lock-open-variant"></ha-icon><span></span></button>
+          <button data-a="open"><ha-icon icon="mdi:door-open"></ha-icon><span></span></button>
+        </div>
+        <div class="ctl" id="slgo">
+          <button data-a="lock_n_go"><ha-icon icon="mdi:lock-clock"></ha-icon><span></span></button>
+          <button data-a="lock_n_go_unlatch"><ha-icon icon="mdi:door-open"></ha-icon><span></span></button>
+        </div>
+        <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
+      </ha-card>`;
+      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity));
+      root.querySelectorAll('.ctl button').forEach((b) => b.addEventListener('click', () => this._action(b.dataset.a)));
+      root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
+        const c = this._c; this._more({ battery: c.entity_battery || c.entity_battery_critical, door: c.entity_door, since: c.entity }[el.dataset.k]);
+      }));
+      this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
+    }
+
+    _action(a) {
+      const c = this._c;
+      if (a === 'lock') return this._lock('lock');
+      if (a === 'unlock') return this._lock('unlock');
+      if (a === 'lock_n_go') return this._press(c.entity_lock_n_go);
+      if (a === 'lock_n_go_unlatch') return this._press(c.entity_lock_n_go_unlatch);
+      if (a === 'open') {
+        // ouvrir = tirer le pêne : 2e clic dans les 4 s (confirm_open: false pour un seul clic)
+        if (c.confirm_open !== false && !(this._confirmUntil && Date.now() < this._confirmUntil)) {
+          this._confirmUntil = Date.now() + 4000;
+          clearTimeout(this._confirmTimer);
+          this._confirmTimer = setTimeout(() => { this._confirmUntil = 0; this._render(); }, 4000);
+          this._render();
+          return;
+        }
+        this._confirmUntil = 0; clearTimeout(this._confirmTimer);
+        if (c.entity_unlatch) this._press(c.entity_unlatch); else this._lock('open');
+        this._render();
+      }
+    }
+
+    _render() {
+      if (!this._built) this._build();
+      const c = this._c, r = this._root, card = this._card;
+      const { st, s, bS, bat, batBinary, crit, low, charging, dS, door } = this._compute();
+      card.className = `${st}${door ? ' door' : ''}${low ? ' lowbat' : ''}${crit ? ' critbat' : ''}${c.animations === false ? ' noanim' : ''}`;
+      r.getElementById('sltitle').textContent = c.name || this._t('name');
+      const badge = r.getElementById('slbadge');
+      badge.textContent = this._t(st) + (door ? ` · ${this._t('door_open')}` : '');
+      badge.style.display = c.show_status === false ? 'none' : '';
+
+      const al = r.getElementById('slalert');
+      al.textContent = st === 'jammed' ? this._t('jammed_detail') : crit ? this._t('battery_critical') : '';
+      al.classList.toggle('on', !!al.textContent);
+      al.classList.toggle('warn', st !== 'jammed');
+
+      // commandes : Ouvrir seulement si la serrure sait tirer le pêne (LockEntityFeature.OPEN = 1) ou avec un bouton dédié
+      const sf = Number(s && s.attributes && s.attributes.supported_features);
+      const canOpen = !!c.entity_unlatch || (isFinite(sf) && (sf & 1) === 1);
+      const busy = /ing$/.test(st), dead = st === 'unavailable';
+      const confirm = this._confirmUntil && Date.now() < this._confirmUntil;
+      const ctl = r.getElementById('slctl');
+      ctl.classList.toggle('hide', c.show_buttons === false || !c.entity);
+      ctl.querySelectorAll('button').forEach((b) => {
+        const a = b.dataset.a;
+        b.querySelector('span').textContent = a === 'open' && confirm ? this._t('btn_confirm') : this._t(`btn_${a}`);
+        b.classList.toggle('hide', a === 'open' && !canOpen);
+        b.classList.toggle('on', (a === 'lock' && st === 'locked') || (a === 'unlock' && st === 'unlocked') || (a === 'open' && st === 'open'));
+        b.classList.toggle('confirm', a === 'open' && !!confirm);
+        b.disabled = dead || busy || (a === 'lock' && st === 'locked') || (a === 'unlock' && st === 'unlocked');
+      });
+      const go = r.getElementById('slgo');
+      go.querySelectorAll('button').forEach((b) => {
+        b.querySelector('span').textContent = this._t(`btn_${b.dataset.a}`);
+        b.classList.toggle('hide', !c[`entity_${b.dataset.a}`]);
+        b.disabled = dead || busy;
+      });
+      go.classList.toggle('hide', c.show_buttons === false || (!c.entity_lock_n_go && !c.entity_lock_n_go_unlatch));
+
+      const batIcon = charging ? 'mdi:battery-charging' : low ? 'mdi:battery-alert' : 'mdi:battery';
+      r.querySelector('.tile[data-k="battery"] ha-icon').setAttribute('icon', batIcon);
+      const V = {
+        battery: [c.entity_battery || c.entity_battery_critical, !isNaN(bat) && !batBinary ? String(Math.round(bat)) : this._t(crit ? 'critical' : 'ok'),
+          !isNaN(bat) && !batBinary ? '%' : '', crit ? 'bad' : low ? 'warn' : ''],
+        door: [c.entity_door, this._ok(dS) ? this._t(door ? 'door_open' : 'door_closed') : '--', '', door ? 'warn' : ''],
+        since: [s, this._since(s), '', ''],
+      };
+      TILES.forEach(([k, , opt]) => {
+        const el = r.querySelector(`.tile[data-k="${k}"]`); const [show, val, unit, cls] = V[k];
+        el.classList.toggle('hide', !show || c[opt] === false);
+        el.classList.toggle('bad', cls === 'bad'); el.classList.toggle('warn', cls === 'warn');
+        el.querySelector('.lbl').textContent = this._l(k === 'battery' && charging ? 'charging' : k);
+        const small = document.createElement('small'); small.textContent = unit ?? '';
+        el.querySelector('.v').replaceChildren(String(val ?? ''), small);
+      });
+    }
+  }
+  customElements.define(TAG, ApplianceSmartLockCard);
+
+  /* ---- éditeur visuel ---- */
+  class ApplianceSmartLockCardEditor extends HTMLElement {
+    setConfig(c) { this._c = c; this._draw(); }
+    set hass(h) { this._hass = h; if (this._form) this._form.hass = h; }
+    _draw() {
+      if (!this._form) {
+        this._form = document.createElement('ha-form');
+        this._form.addEventListener('value-changed', (e) => {
+          this._c = e.detail.value;
+          this.dispatchEvent(new CustomEvent('config-changed', { detail: { config: this._c }, bubbles: true, composed: true }));
+        });
+        this.appendChild(this._form);
+      }
+      const ent = (name, domain) => ({ name, selector: { entity: domain ? { domain } : {} } });
+      const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
+      const lang = (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en';
+      const tr = T[lang] || T[String(lang).slice(0, 2)] || T.en;
+      this._form.hass = this._hass;
+      this._form.data = this._c;
+      this._form.schema = [
+        { name: 'name', selector: { text: {} } },
+        { name: 'model', selector: { select: { mode: 'dropdown', options: [{ value: 'nuki_3_pro', label: tr.model_nuki_3_pro }, { value: 'nuki_pro_5', label: tr.model_nuki_pro_5 }] } } },
+        { name: 'labels', selector: { object: {} } },
+        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
+        { name: 'transparent', selector: { boolean: {} } },
+        ent('entity', 'lock'),
+        ent('entity_unlatch', ['button', 'input_button', 'script']),
+        ent('entity_lock_n_go', ['button', 'input_button', 'script']),
+        ent('entity_lock_n_go_unlatch', ['button', 'input_button', 'script']),
+        ent('entity_battery', ['sensor', 'binary_sensor']),
+        ent('entity_battery_charging', 'binary_sensor'),
+        ent('entity_battery_critical', 'binary_sensor'),
+        { name: 'battery_low', default: 20, selector: { number: { min: 1, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
+        ent('entity_door', ['binary_sensor', 'sensor']),
+        ...window.applianceActionFields,
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { type: 'grid', name: '', schema: [bool('confirm_open'), bool('show_status'), bool('show_buttons'), bool('show_battery'), bool('show_door'), bool('show_since'), bool('animations')] },
+      ];
+      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'lock_model' : s.name, this._hass);
+    }
+  }
+  customElements.define(TAG + '-editor', ApplianceSmartLockCardEditor);
+
+  window.customCards = window.customCards || [];
+  window.customCards.push({
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
+    description: 'Serrure connectée animée (Nuki 3.0 Pro, Nuki Pro 5e gén.) : verrouiller, déverrouiller, ouvrir, Lock \'n\' Go, batterie, porte.', preview: true,
+    documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/smart-lock.md',
   });
 })();
 
