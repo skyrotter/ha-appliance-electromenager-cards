@@ -9489,7 +9489,58 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_valve": "Show valve opening",
       "show_window": "Show window",
       "spot_count": "Number of spotlights",
-      "brightness_slider": "Brightness slider"
+      "brightness_slider": "Brightness slider",
+      "entity_cpu": "CPU usage",
+      "entity_cpu_temp": "CPU temperature",
+      "entity_ram": "Memory usage (%)",
+      "entity_disk": "Disk usage (%)",
+      "entity_net_down": "Download rate",
+      "entity_net_up": "Upload rate",
+      "entity_uptime": "Uptime or last boot",
+      "cpu_busy": "Busy threshold (CPU %)",
+      "ram_max": "Memory alert (%)",
+      "disk_max": "Disk alert (%)",
+      "show_cpu": "Show CPU",
+      "show_ram": "Show memory",
+      "show_disk": "Show disk",
+      "show_network": "Show network",
+      "show_uptime": "Show uptime",
+      "entity_volume": "Volume status",
+      "entity_volume_used": "Volume used (%)",
+      "entity_security": "Security status",
+      "entity_update": "DSM update",
+      "volume_max": "Volume alert (%)",
+      "disk_temp_max": "Disk temperature alert",
+      "show_volume": "Show volume",
+      "show_disks": "Show disks",
+      "entity_remote": "Remote entity (power)",
+      "volume_step": "Volume step",
+      "show_artwork": "Show artwork",
+      "show_app": "Show app",
+      "tv_model": "Box model",
+      "entity_weight": "Weight",
+      "entity_fat_ratio": "Body fat (%)",
+      "entity_fat_mass": "Fat mass",
+      "entity_muscle_mass": "Muscle mass",
+      "entity_bone_mass": "Bone mass",
+      "entity_hydration": "Hydration",
+      "entity_heart_pulse": "Heart rate",
+      "entity_visceral_fat": "Visceral fat",
+      "entity_weight_goal": "Weight goal",
+      "entity_bmi": "BMI (sensor)",
+      "height": "Height (for BMI)",
+      "recent_minutes": "Recent weigh-in (min)",
+      "trend_days": "Trend (days)",
+      "show_bmi": "Show BMI",
+      "show_composition": "Show body composition",
+      "entity_drive_1": "Disk 1",
+      "entity_drive_1_temp": "Disk 1 temperature",
+      "entity_drive_2": "Disk 2",
+      "entity_drive_2_temp": "Disk 2 temperature",
+      "entity_drive_3": "Disk 3",
+      "entity_drive_3_temp": "Disk 3 temperature",
+      "entity_drive_4": "Disk 4",
+      "entity_drive_4_temp": "Disk 4 temperature"
     },
     "de": {
       "animations": "Animationen",
@@ -9777,7 +9828,58 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_valve": "Ventilöffnung anzeigen",
       "show_window": "Fenster anzeigen",
       "spot_count": "Anzahl der Strahler",
-      "brightness_slider": "Helligkeitsregler"
+      "brightness_slider": "Helligkeitsregler",
+      "entity_cpu": "CPU-Auslastung",
+      "entity_cpu_temp": "CPU-Temperatur",
+      "entity_ram": "Speichernutzung (%)",
+      "entity_disk": "Festplattennutzung (%)",
+      "entity_net_down": "Download-Rate",
+      "entity_net_up": "Upload-Rate",
+      "entity_uptime": "Laufzeit oder letzter Start",
+      "cpu_busy": "Schwelle ausgelastet (CPU %)",
+      "ram_max": "Speicherwarnung (%)",
+      "disk_max": "Festplattenwarnung (%)",
+      "show_cpu": "CPU anzeigen",
+      "show_ram": "Speicher anzeigen",
+      "show_disk": "Festplatte anzeigen",
+      "show_network": "Netzwerk anzeigen",
+      "show_uptime": "Laufzeit anzeigen",
+      "entity_volume": "Volume-Status",
+      "entity_volume_used": "Volume belegt (%)",
+      "entity_security": "Sicherheitsstatus",
+      "entity_update": "DSM-Update",
+      "volume_max": "Volume-Warnung (%)",
+      "disk_temp_max": "Warnung Festplattentemperatur",
+      "show_volume": "Volume anzeigen",
+      "show_disks": "Festplatten anzeigen",
+      "entity_remote": "Remote-Entität (Einschalten)",
+      "volume_step": "Lautstärkeschritt",
+      "show_artwork": "Cover anzeigen",
+      "show_app": "App anzeigen",
+      "tv_model": "Box-Modell",
+      "entity_weight": "Gewicht",
+      "entity_fat_ratio": "Körperfett (%)",
+      "entity_fat_mass": "Fettmasse",
+      "entity_muscle_mass": "Muskelmasse",
+      "entity_bone_mass": "Knochenmasse",
+      "entity_hydration": "Hydratation",
+      "entity_heart_pulse": "Herzfrequenz",
+      "entity_visceral_fat": "Viszeralfett",
+      "entity_weight_goal": "Gewichtsziel",
+      "entity_bmi": "BMI (Sensor)",
+      "height": "Größe (für BMI)",
+      "recent_minutes": "Aktuelle Wägung (Min.)",
+      "trend_days": "Verlauf (Tage)",
+      "show_bmi": "BMI anzeigen",
+      "show_composition": "Körperzusammensetzung anzeigen",
+      "entity_drive_1": "Festplatte 1",
+      "entity_drive_1_temp": "Temperatur Festplatte 1",
+      "entity_drive_2": "Festplatte 2",
+      "entity_drive_2_temp": "Temperatur Festplatte 2",
+      "entity_drive_3": "Festplatte 3",
+      "entity_drive_3_temp": "Temperatur Festplatte 3",
+      "entity_drive_4": "Festplatte 4",
+      "entity_drive_4_temp": "Temperatur Festplatte 4"
     },
     "fr": {
       "animations": "Animations",
@@ -10065,7 +10167,58 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_valve": "Afficher l'ouverture de la vanne",
       "show_window": "Afficher la fenêtre",
       "spot_count": "Nombre de spots",
-      "brightness_slider": "Curseur de luminosité"
+      "brightness_slider": "Curseur de luminosité",
+      "entity_cpu": "Utilisation CPU",
+      "entity_cpu_temp": "Température CPU",
+      "entity_ram": "Mémoire utilisée (%)",
+      "entity_disk": "Disque utilisé (%)",
+      "entity_net_down": "Débit descendant",
+      "entity_net_up": "Débit montant",
+      "entity_uptime": "Durée ou dernier démarrage",
+      "cpu_busy": "Seuil « très sollicité » (CPU %)",
+      "ram_max": "Alerte mémoire (%)",
+      "disk_max": "Alerte disque (%)",
+      "show_cpu": "Afficher le CPU",
+      "show_ram": "Afficher la mémoire",
+      "show_disk": "Afficher le disque",
+      "show_network": "Afficher le réseau",
+      "show_uptime": "Afficher la durée de marche",
+      "entity_volume": "État du volume",
+      "entity_volume_used": "Volume utilisé (%)",
+      "entity_security": "État de sécurité",
+      "entity_update": "Mise à jour DSM",
+      "volume_max": "Alerte volume (%)",
+      "disk_temp_max": "Alerte température disque",
+      "show_volume": "Afficher le volume",
+      "show_disks": "Afficher les disques",
+      "entity_remote": "Entité remote (allumage)",
+      "volume_step": "Pas du volume",
+      "show_artwork": "Afficher la pochette",
+      "show_app": "Afficher l'appli",
+      "tv_model": "Modèle de box",
+      "entity_weight": "Poids",
+      "entity_fat_ratio": "Masse grasse (%)",
+      "entity_fat_mass": "Masse de graisse",
+      "entity_muscle_mass": "Masse musculaire",
+      "entity_bone_mass": "Masse osseuse",
+      "entity_hydration": "Hydratation",
+      "entity_heart_pulse": "Fréquence cardiaque",
+      "entity_visceral_fat": "Graisse viscérale",
+      "entity_weight_goal": "Objectif de poids",
+      "entity_bmi": "IMC (capteur)",
+      "height": "Taille (pour l’IMC)",
+      "recent_minutes": "Pesée récente (min)",
+      "trend_days": "Courbe (jours)",
+      "show_bmi": "Afficher l'IMC",
+      "show_composition": "Afficher la composition corporelle",
+      "entity_drive_1": "Disque 1",
+      "entity_drive_1_temp": "Température disque 1",
+      "entity_drive_2": "Disque 2",
+      "entity_drive_2_temp": "Température disque 2",
+      "entity_drive_3": "Disque 3",
+      "entity_drive_3_temp": "Température disque 3",
+      "entity_drive_4": "Disque 4",
+      "entity_drive_4_temp": "Température disque 4"
     },
     "it": {
       "animations": "Animazioni",
@@ -10353,7 +10506,58 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_valve": "Mostra apertura valvola",
       "show_window": "Mostra finestra",
       "spot_count": "Numero di faretti",
-      "brightness_slider": "Cursore luminosità"
+      "brightness_slider": "Cursore luminosità",
+      "entity_cpu": "Uso CPU",
+      "entity_cpu_temp": "Temperatura CPU",
+      "entity_ram": "Memoria usata (%)",
+      "entity_disk": "Disco usato (%)",
+      "entity_net_down": "Velocità download",
+      "entity_net_up": "Velocità upload",
+      "entity_uptime": "Uptime o ultimo avvio",
+      "cpu_busy": "Soglia sotto carico (CPU %)",
+      "ram_max": "Avviso memoria (%)",
+      "disk_max": "Avviso disco (%)",
+      "show_cpu": "Mostra CPU",
+      "show_ram": "Mostra memoria",
+      "show_disk": "Mostra disco",
+      "show_network": "Mostra rete",
+      "show_uptime": "Mostra uptime",
+      "entity_volume": "Stato volume",
+      "entity_volume_used": "Volume usato (%)",
+      "entity_security": "Stato sicurezza",
+      "entity_update": "Aggiornamento DSM",
+      "volume_max": "Avviso volume (%)",
+      "disk_temp_max": "Avviso temperatura disco",
+      "show_volume": "Mostra volume",
+      "show_disks": "Mostra dischi",
+      "entity_remote": "Entità remote (accensione)",
+      "volume_step": "Passo volume",
+      "show_artwork": "Mostra copertina",
+      "show_app": "Mostra app",
+      "tv_model": "Modello box",
+      "entity_weight": "Peso",
+      "entity_fat_ratio": "Massa grassa (%)",
+      "entity_fat_mass": "Massa grassa (kg)",
+      "entity_muscle_mass": "Massa muscolare",
+      "entity_bone_mass": "Massa ossea",
+      "entity_hydration": "Idratazione",
+      "entity_heart_pulse": "Frequenza cardiaca",
+      "entity_visceral_fat": "Grasso viscerale",
+      "entity_weight_goal": "Obiettivo di peso",
+      "entity_bmi": "IMC (sensore)",
+      "height": "Altezza (per IMC)",
+      "recent_minutes": "Pesata recente (min)",
+      "trend_days": "Andamento (giorni)",
+      "show_bmi": "Mostra IMC",
+      "show_composition": "Mostra composizione corporea",
+      "entity_drive_1": "Disco 1",
+      "entity_drive_1_temp": "Temperatura disco 1",
+      "entity_drive_2": "Disco 2",
+      "entity_drive_2_temp": "Temperatura disco 2",
+      "entity_drive_3": "Disco 3",
+      "entity_drive_3_temp": "Temperatura disco 3",
+      "entity_drive_4": "Disco 4",
+      "entity_drive_4_temp": "Temperatura disco 4"
     },
     "nb": {
       "illustration_size": "Størrelse på illustrasjonen",
@@ -10641,7 +10845,58 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_valve": "Vis ventilåpning",
       "show_window": "Vis vindu",
       "spot_count": "Antall spotter",
-      "brightness_slider": "Lysstyrkeglidebryter"
+      "brightness_slider": "Lysstyrkeglidebryter",
+      "entity_cpu": "CPU-bruk",
+      "entity_cpu_temp": "CPU-temperatur",
+      "entity_ram": "Minnebruk (%)",
+      "entity_disk": "Diskbruk (%)",
+      "entity_net_down": "Nedlastingshastighet",
+      "entity_net_up": "Opplastingshastighet",
+      "entity_uptime": "Oppetid eller siste oppstart",
+      "cpu_busy": "Terskel høy belastning (CPU %)",
+      "ram_max": "Minnevarsel (%)",
+      "disk_max": "Diskvarsel (%)",
+      "show_cpu": "Vis CPU",
+      "show_ram": "Vis minne",
+      "show_disk": "Vis disk",
+      "show_network": "Vis nettverk",
+      "show_uptime": "Vis oppetid",
+      "entity_volume": "Volumstatus",
+      "entity_volume_used": "Volum brukt (%)",
+      "entity_security": "Sikkerhetsstatus",
+      "entity_update": "DSM-oppdatering",
+      "volume_max": "Volumvarsel (%)",
+      "disk_temp_max": "Varsel disktemperatur",
+      "show_volume": "Vis volum",
+      "show_disks": "Vis disker",
+      "entity_remote": "Remote-entitet (påslag)",
+      "volume_step": "Volumsteg",
+      "show_artwork": "Vis omslag",
+      "show_app": "Vis app",
+      "tv_model": "Boksmodell",
+      "entity_weight": "Vekt",
+      "entity_fat_ratio": "Kroppsfett (%)",
+      "entity_fat_mass": "Fettmasse",
+      "entity_muscle_mass": "Muskelmasse",
+      "entity_bone_mass": "Beinmasse",
+      "entity_hydration": "Hydrering",
+      "entity_heart_pulse": "Puls",
+      "entity_visceral_fat": "Visceralt fett",
+      "entity_weight_goal": "Vektmål",
+      "entity_bmi": "KMI (sensor)",
+      "height": "Høyde (for KMI)",
+      "recent_minutes": "Nylig veiing (min)",
+      "trend_days": "Trend (dager)",
+      "show_bmi": "Vis KMI",
+      "show_composition": "Vis kroppssammensetning",
+      "entity_drive_1": "Disk 1",
+      "entity_drive_1_temp": "Temperatur disk 1",
+      "entity_drive_2": "Disk 2",
+      "entity_drive_2_temp": "Temperatur disk 2",
+      "entity_drive_3": "Disk 3",
+      "entity_drive_3_temp": "Temperatur disk 3",
+      "entity_drive_4": "Disk 4",
+      "entity_drive_4_temp": "Temperatur disk 4"
     },
     "nl": {
       "animations": "Animaties",
@@ -10929,7 +11184,58 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_valve": "Klepopening tonen",
       "show_window": "Raam tonen",
       "spot_count": "Aantal spots",
-      "brightness_slider": "Helderheidsschuif"
+      "brightness_slider": "Helderheidsschuif",
+      "entity_cpu": "CPU-gebruik",
+      "entity_cpu_temp": "CPU-temperatuur",
+      "entity_ram": "Geheugengebruik (%)",
+      "entity_disk": "Schijfgebruik (%)",
+      "entity_net_down": "Downloadsnelheid",
+      "entity_net_up": "Uploadsnelheid",
+      "entity_uptime": "Uptime of laatste start",
+      "cpu_busy": "Drempel zwaar belast (CPU %)",
+      "ram_max": "Geheugenwaarschuwing (%)",
+      "disk_max": "Schijfwaarschuwing (%)",
+      "show_cpu": "CPU tonen",
+      "show_ram": "Geheugen tonen",
+      "show_disk": "Schijf tonen",
+      "show_network": "Netwerk tonen",
+      "show_uptime": "Uptime tonen",
+      "entity_volume": "Volumestatus",
+      "entity_volume_used": "Volume gebruikt (%)",
+      "entity_security": "Beveiligingsstatus",
+      "entity_update": "DSM-update",
+      "volume_max": "Volumewaarschuwing (%)",
+      "disk_temp_max": "Waarschuwing schijftemperatuur",
+      "show_volume": "Volume tonen",
+      "show_disks": "Schijven tonen",
+      "entity_remote": "Remote-entiteit (inschakelen)",
+      "volume_step": "Volumestap",
+      "show_artwork": "Albumhoes tonen",
+      "show_app": "App tonen",
+      "tv_model": "Boxmodel",
+      "entity_weight": "Gewicht",
+      "entity_fat_ratio": "Vetpercentage (%)",
+      "entity_fat_mass": "Vetmassa",
+      "entity_muscle_mass": "Spiermassa",
+      "entity_bone_mass": "Botmassa",
+      "entity_hydration": "Hydratatie",
+      "entity_heart_pulse": "Hartslag",
+      "entity_visceral_fat": "Visceraal vet",
+      "entity_weight_goal": "Gewichtsdoel",
+      "entity_bmi": "BMI (sensor)",
+      "height": "Lengte (voor BMI)",
+      "recent_minutes": "Recente weging (min)",
+      "trend_days": "Trend (dagen)",
+      "show_bmi": "BMI tonen",
+      "show_composition": "Lichaamssamenstelling tonen",
+      "entity_drive_1": "Schijf 1",
+      "entity_drive_1_temp": "Temperatuur schijf 1",
+      "entity_drive_2": "Schijf 2",
+      "entity_drive_2_temp": "Temperatuur schijf 2",
+      "entity_drive_3": "Schijf 3",
+      "entity_drive_3_temp": "Temperatuur schijf 3",
+      "entity_drive_4": "Schijf 4",
+      "entity_drive_4_temp": "Temperatuur schijf 4"
     },
     "ro": {
       "animations": "Animații",
@@ -11217,7 +11523,58 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_valve": "Afișează deschiderea supapei",
       "show_window": "Afișează fereastra",
       "spot_count": "Număr de spoturi",
-      "brightness_slider": "Cursor luminozitate"
+      "brightness_slider": "Cursor luminozitate",
+      "entity_cpu": "Utilizare CPU",
+      "entity_cpu_temp": "Temperatură CPU",
+      "entity_ram": "Memorie folosită (%)",
+      "entity_disk": "Disc folosit (%)",
+      "entity_net_down": "Viteză descărcare",
+      "entity_net_up": "Viteză încărcare",
+      "entity_uptime": "Timp pornit sau ultima pornire",
+      "cpu_busy": "Prag solicitat (CPU %)",
+      "ram_max": "Alertă memorie (%)",
+      "disk_max": "Alertă disc (%)",
+      "show_cpu": "Afișează CPU",
+      "show_ram": "Afișează memoria",
+      "show_disk": "Afișează discul",
+      "show_network": "Afișează rețeaua",
+      "show_uptime": "Afișează timpul pornit",
+      "entity_volume": "Stare volum",
+      "entity_volume_used": "Volum folosit (%)",
+      "entity_security": "Stare securitate",
+      "entity_update": "Actualizare DSM",
+      "volume_max": "Alertă volum (%)",
+      "disk_temp_max": "Alertă temperatură disc",
+      "show_volume": "Afișează volumul",
+      "show_disks": "Afișează discurile",
+      "entity_remote": "Entitate remote (pornire)",
+      "volume_step": "Pas volum",
+      "show_artwork": "Afișează coperta",
+      "show_app": "Afișează aplicația",
+      "tv_model": "Model box",
+      "entity_weight": "Greutate",
+      "entity_fat_ratio": "Grăsime (%)",
+      "entity_fat_mass": "Masă grasă",
+      "entity_muscle_mass": "Masă musculară",
+      "entity_bone_mass": "Masă osoasă",
+      "entity_hydration": "Hidratare",
+      "entity_heart_pulse": "Puls",
+      "entity_visceral_fat": "Grăsime viscerală",
+      "entity_weight_goal": "Obiectiv de greutate",
+      "entity_bmi": "IMC (senzor)",
+      "height": "Înălțime (pentru IMC)",
+      "recent_minutes": "Cântărire recentă (min)",
+      "trend_days": "Evoluție (zile)",
+      "show_bmi": "Afișează IMC",
+      "show_composition": "Afișează compoziția corporală",
+      "entity_drive_1": "Disc 1",
+      "entity_drive_1_temp": "Temperatură disc 1",
+      "entity_drive_2": "Disc 2",
+      "entity_drive_2_temp": "Temperatură disc 2",
+      "entity_drive_3": "Disc 3",
+      "entity_drive_3_temp": "Temperatură disc 3",
+      "entity_drive_4": "Disc 4",
+      "entity_drive_4_temp": "Temperatură disc 4"
     },
     "ru": {
       "animations": "Анимации",
@@ -11505,7 +11862,58 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_valve": "Показывать открытие клапана",
       "show_window": "Показывать окно",
       "spot_count": "Количество светильников",
-      "brightness_slider": "Ползунок яркости"
+      "brightness_slider": "Ползунок яркости",
+      "entity_cpu": "Загрузка ЦП",
+      "entity_cpu_temp": "Температура ЦП",
+      "entity_ram": "Использование памяти (%)",
+      "entity_disk": "Использование диска (%)",
+      "entity_net_down": "Скорость загрузки",
+      "entity_net_up": "Скорость отдачи",
+      "entity_uptime": "Аптайм или последний запуск",
+      "cpu_busy": "Порог нагрузки (ЦП %)",
+      "ram_max": "Порог памяти (%)",
+      "disk_max": "Порог диска (%)",
+      "show_cpu": "Показывать ЦП",
+      "show_ram": "Показывать память",
+      "show_disk": "Показывать диск",
+      "show_network": "Показывать сеть",
+      "show_uptime": "Показывать аптайм",
+      "entity_volume": "Состояние тома",
+      "entity_volume_used": "Занято на томе (%)",
+      "entity_security": "Состояние безопасности",
+      "entity_update": "Обновление DSM",
+      "volume_max": "Порог тома (%)",
+      "disk_temp_max": "Порог температуры диска",
+      "show_volume": "Показывать том",
+      "show_disks": "Показывать диски",
+      "entity_remote": "Сущность remote (включение)",
+      "volume_step": "Шаг громкости",
+      "show_artwork": "Показывать обложку",
+      "show_app": "Показывать приложение",
+      "tv_model": "Модель приставки",
+      "entity_weight": "Вес",
+      "entity_fat_ratio": "Жир (%)",
+      "entity_fat_mass": "Жировая масса",
+      "entity_muscle_mass": "Мышечная масса",
+      "entity_bone_mass": "Костная масса",
+      "entity_hydration": "Гидратация",
+      "entity_heart_pulse": "Пульс",
+      "entity_visceral_fat": "Висцеральный жир",
+      "entity_weight_goal": "Целевой вес",
+      "entity_bmi": "ИМТ (датчик)",
+      "height": "Рост (для ИМТ)",
+      "recent_minutes": "Недавнее взвешивание (мин)",
+      "trend_days": "Тренд (дни)",
+      "show_bmi": "Показывать ИМТ",
+      "show_composition": "Показывать состав тела",
+      "entity_drive_1": "Диск 1",
+      "entity_drive_1_temp": "Температура диска 1",
+      "entity_drive_2": "Диск 2",
+      "entity_drive_2_temp": "Температура диска 2",
+      "entity_drive_3": "Диск 3",
+      "entity_drive_3_temp": "Температура диска 3",
+      "entity_drive_4": "Диск 4",
+      "entity_drive_4_temp": "Температура диска 4"
     },
     "sr": {
       "animations": "Анимације",
@@ -11793,7 +12201,58 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_valve": "Прикажи отвореност вентила",
       "show_window": "Прикажи прозор",
       "spot_count": "Број спотова",
-      "brightness_slider": "Клизач осветљености"
+      "brightness_slider": "Клизач осветљености",
+      "entity_cpu": "Искоришћење ЦПУ",
+      "entity_cpu_temp": "Температура ЦПУ",
+      "entity_ram": "Искоришћење меморије (%)",
+      "entity_disk": "Искоришћење диска (%)",
+      "entity_net_down": "Брзина преузимања",
+      "entity_net_up": "Брзина отпремања",
+      "entity_uptime": "Време рада или последње покретање",
+      "cpu_busy": "Праг оптерећења (ЦПУ %)",
+      "ram_max": "Упозорење меморије (%)",
+      "disk_max": "Упозорење диска (%)",
+      "show_cpu": "Прикажи ЦПУ",
+      "show_ram": "Прикажи меморију",
+      "show_disk": "Прикажи диск",
+      "show_network": "Прикажи мрежу",
+      "show_uptime": "Прикажи време рада",
+      "entity_volume": "Стање волумена",
+      "entity_volume_used": "Заузет волумен (%)",
+      "entity_security": "Безбедносни статус",
+      "entity_update": "Ажурирање DSM",
+      "volume_max": "Упозорење волумена (%)",
+      "disk_temp_max": "Упозорење температуре диска",
+      "show_volume": "Прикажи волумен",
+      "show_disks": "Прикажи дискове",
+      "entity_remote": "Remote ентитет (укључивање)",
+      "volume_step": "Корак јачине",
+      "show_artwork": "Прикажи омот",
+      "show_app": "Прикажи апликацију",
+      "tv_model": "Модел бокса",
+      "entity_weight": "Тежина",
+      "entity_fat_ratio": "Масти (%)",
+      "entity_fat_mass": "Масна маса",
+      "entity_muscle_mass": "Мишићна маса",
+      "entity_bone_mass": "Коштана маса",
+      "entity_hydration": "Хидратација",
+      "entity_heart_pulse": "Пулс",
+      "entity_visceral_fat": "Висцерална маст",
+      "entity_weight_goal": "Циљна тежина",
+      "entity_bmi": "БМИ (сензор)",
+      "height": "Висина (за БМИ)",
+      "recent_minutes": "Скорашње мерење (мин)",
+      "trend_days": "Тренд (дани)",
+      "show_bmi": "Прикажи БМИ",
+      "show_composition": "Прикажи састав тела",
+      "entity_drive_1": "Диск 1",
+      "entity_drive_1_temp": "Температура диска 1",
+      "entity_drive_2": "Диск 2",
+      "entity_drive_2_temp": "Температура диска 2",
+      "entity_drive_3": "Диск 3",
+      "entity_drive_3_temp": "Температура диска 3",
+      "entity_drive_4": "Диск 4",
+      "entity_drive_4_temp": "Температура диска 4"
     },
     "sr-Latn": {
       "animations": "Animacije",
@@ -12081,7 +12540,58 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_valve": "Prikaži otvorenost ventila",
       "show_window": "Prikaži prozor",
       "spot_count": "Broj spotova",
-      "brightness_slider": "Klizač osvetljenosti"
+      "brightness_slider": "Klizač osvetljenosti",
+      "entity_cpu": "Iskorišćenje CPU",
+      "entity_cpu_temp": "Temperatura CPU",
+      "entity_ram": "Iskorišćenje memorije (%)",
+      "entity_disk": "Iskorišćenje diska (%)",
+      "entity_net_down": "Brzina preuzimanja",
+      "entity_net_up": "Brzina otpremanja",
+      "entity_uptime": "Vreme rada ili poslednje pokretanje",
+      "cpu_busy": "Prag opterećenja (CPU %)",
+      "ram_max": "Upozorenje memorije (%)",
+      "disk_max": "Upozorenje diska (%)",
+      "show_cpu": "Prikaži CPU",
+      "show_ram": "Prikaži memoriju",
+      "show_disk": "Prikaži disk",
+      "show_network": "Prikaži mrežu",
+      "show_uptime": "Prikaži vreme rada",
+      "entity_volume": "Stanje volumena",
+      "entity_volume_used": "Zauzet volumen (%)",
+      "entity_security": "Bezbednosni status",
+      "entity_update": "Ažuriranje DSM",
+      "volume_max": "Upozorenje volumena (%)",
+      "disk_temp_max": "Upozorenje temperature diska",
+      "show_volume": "Prikaži volumen",
+      "show_disks": "Prikaži diskove",
+      "entity_remote": "Remote entitet (uključivanje)",
+      "volume_step": "Korak jačine",
+      "show_artwork": "Prikaži omot",
+      "show_app": "Prikaži aplikaciju",
+      "tv_model": "Model boksa",
+      "entity_weight": "Težina",
+      "entity_fat_ratio": "Masti (%)",
+      "entity_fat_mass": "Masna masa",
+      "entity_muscle_mass": "Mišićna masa",
+      "entity_bone_mass": "Koštana masa",
+      "entity_hydration": "Hidratacija",
+      "entity_heart_pulse": "Puls",
+      "entity_visceral_fat": "Visceralna mast",
+      "entity_weight_goal": "Ciljna težina",
+      "entity_bmi": "BMI (senzor)",
+      "height": "Visina (za BMI)",
+      "recent_minutes": "Skorašnje merenje (min)",
+      "trend_days": "Trend (dani)",
+      "show_bmi": "Prikaži BMI",
+      "show_composition": "Prikaži sastav tela",
+      "entity_drive_1": "Disk 1",
+      "entity_drive_1_temp": "Temperatura diska 1",
+      "entity_drive_2": "Disk 2",
+      "entity_drive_2_temp": "Temperatura diska 2",
+      "entity_drive_3": "Disk 3",
+      "entity_drive_3_temp": "Temperatura diska 3",
+      "entity_drive_4": "Disk 4",
+      "entity_drive_4_temp": "Temperatura diska 4"
     }
   };
   const lang = (hass) => {
@@ -29646,6 +30156,2533 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
     type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: "Détecteur de fuite d'eau animé : flaque, gouttes, une ou plusieurs sondes, vanne d'arrêt, sirène, alerte gel.", preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/leak-detector.md',
+  });
+})();
+
+/* Carte « Mini PC » — custom:appliance-mini-pc-card (photo détourée du BMAX B9 Max)
+ * Serveur domestique (Home Assistant, Proxmox, Jellyfin…) suivi par Glances ou System Monitor.
+ * Animations : bouton d'alimentation qui respire, reflet qui balaie le boîtier, air chaud qui sort des
+ * ouïes (vitesse selon le CPU), chaleur qui monte au-dessus du capot (rouge en surchauffe), paquets
+ * réseau qui montent / descendent selon le débit, jauges CPU / RAM / disque en néon sur le côté.
+ * États : off, idle, running, busy, hot, unavailable.
+ */
+(() => {
+  const TAG = 'appliance-mini-pc-card';
+  if (customElements.get(TAG)) return;
+
+  const T = {
+    "en": {
+      "name": "Mini PC",
+      "off": "Off",
+      "idle": "Idle",
+      "running": "Running",
+      "busy": "Busy",
+      "hot": "Overheating",
+      "unavailable": "Unavailable",
+      "cpu": "CPU",
+      "temp": "CPU temp.",
+      "ram": "RAM",
+      "disk": "Disk",
+      "down": "Download",
+      "up": "Upload",
+      "uptime": "Uptime",
+      "power": "Power",
+      "overheating": "Overheating",
+      "disk_full": "Disk almost full",
+      "ram_full": "Memory saturated",
+      "d": "d"
+    },
+    "de": {
+      "name": "Mini-PC",
+      "off": "Aus",
+      "idle": "Leerlauf",
+      "running": "Läuft",
+      "busy": "Ausgelastet",
+      "hot": "Überhitzung",
+      "unavailable": "Nicht verfügbar",
+      "cpu": "CPU",
+      "temp": "CPU-Temp.",
+      "ram": "RAM",
+      "disk": "Festplatte",
+      "down": "Download",
+      "up": "Upload",
+      "uptime": "Laufzeit",
+      "power": "Leistung",
+      "overheating": "Überhitzung",
+      "disk_full": "Festplatte fast voll",
+      "ram_full": "Speicher ausgelastet",
+      "d": "T"
+    },
+    "fr": {
+      "name": "Mini PC",
+      "off": "Éteint",
+      "idle": "Au repos",
+      "running": "En marche",
+      "busy": "Très sollicité",
+      "hot": "Surchauffe",
+      "unavailable": "Indisponible",
+      "cpu": "CPU",
+      "temp": "Temp. CPU",
+      "ram": "RAM",
+      "disk": "Disque",
+      "down": "Réception",
+      "up": "Envoi",
+      "uptime": "Allumé depuis",
+      "power": "Puissance",
+      "overheating": "Surchauffe",
+      "disk_full": "Disque presque plein",
+      "ram_full": "Mémoire saturée",
+      "d": "j"
+    },
+    "it": {
+      "name": "Mini PC",
+      "off": "Spento",
+      "idle": "Inattivo",
+      "running": "In funzione",
+      "busy": "Sotto carico",
+      "hot": "Surriscaldamento",
+      "unavailable": "Non disponibile",
+      "cpu": "CPU",
+      "temp": "Temp. CPU",
+      "ram": "RAM",
+      "disk": "Disco",
+      "down": "Download",
+      "up": "Upload",
+      "uptime": "Uptime",
+      "power": "Potenza",
+      "overheating": "Surriscaldamento",
+      "disk_full": "Disco quasi pieno",
+      "ram_full": "Memoria satura",
+      "d": "g"
+    },
+    "nb": {
+      "name": "Mini-PC",
+      "off": "Av",
+      "idle": "Inaktiv",
+      "running": "Kjører",
+      "busy": "Høy belastning",
+      "hot": "Overoppheting",
+      "unavailable": "Utilgjengelig",
+      "cpu": "CPU",
+      "temp": "CPU-temp.",
+      "ram": "RAM",
+      "disk": "Disk",
+      "down": "Ned",
+      "up": "Opp",
+      "uptime": "Oppetid",
+      "power": "Effekt",
+      "overheating": "Overoppheting",
+      "disk_full": "Disken er nesten full",
+      "ram_full": "Minnet er fullt",
+      "d": "d"
+    },
+    "nl": {
+      "name": "Mini-pc",
+      "off": "Uit",
+      "idle": "Inactief",
+      "running": "Actief",
+      "busy": "Zwaar belast",
+      "hot": "Oververhit",
+      "unavailable": "Niet beschikbaar",
+      "cpu": "CPU",
+      "temp": "CPU-temp.",
+      "ram": "RAM",
+      "disk": "Schijf",
+      "down": "Download",
+      "up": "Upload",
+      "uptime": "Uptime",
+      "power": "Vermogen",
+      "overheating": "Oververhitting",
+      "disk_full": "Schijf bijna vol",
+      "ram_full": "Geheugen vol",
+      "d": "d"
+    },
+    "ro": {
+      "name": "Mini PC",
+      "off": "Oprit",
+      "idle": "Inactiv",
+      "running": "Pornit",
+      "busy": "Solicitat",
+      "hot": "Supraîncălzire",
+      "unavailable": "Indisponibil",
+      "cpu": "CPU",
+      "temp": "Temp. CPU",
+      "ram": "RAM",
+      "disk": "Disc",
+      "down": "Descărcare",
+      "up": "Încărcare",
+      "uptime": "Timp pornit",
+      "power": "Putere",
+      "overheating": "Supraîncălzire",
+      "disk_full": "Disc aproape plin",
+      "ram_full": "Memorie saturată",
+      "d": "z"
+    },
+    "ru": {
+      "name": "Мини-ПК",
+      "off": "Выключен",
+      "idle": "Простой",
+      "running": "Работает",
+      "busy": "Нагружен",
+      "hot": "Перегрев",
+      "unavailable": "Недоступно",
+      "cpu": "ЦП",
+      "temp": "Темп. ЦП",
+      "ram": "ОЗУ",
+      "disk": "Диск",
+      "down": "Загрузка",
+      "up": "Отдача",
+      "uptime": "Аптайм",
+      "power": "Мощность",
+      "overheating": "Перегрев",
+      "disk_full": "Диск почти заполнен",
+      "ram_full": "Память переполнена",
+      "d": "д"
+    },
+    "sr": {
+      "name": "Мини рачунар",
+      "off": "Искључен",
+      "idle": "Мирује",
+      "running": "Ради",
+      "busy": "Оптерећен",
+      "hot": "Прегревање",
+      "unavailable": "Недоступно",
+      "cpu": "ЦПУ",
+      "temp": "Темп. ЦПУ",
+      "ram": "РАМ",
+      "disk": "Диск",
+      "down": "Преузимање",
+      "up": "Отпремање",
+      "uptime": "Време рада",
+      "power": "Снага",
+      "overheating": "Прегревање",
+      "disk_full": "Диск је скоро пун",
+      "ram_full": "Меморија је пуна",
+      "d": "д"
+    },
+    "sr-Latn": {
+      "name": "Mini računar",
+      "off": "Isključen",
+      "idle": "Miruje",
+      "running": "Radi",
+      "busy": "Opterećen",
+      "hot": "Pregrevanje",
+      "unavailable": "Nedostupno",
+      "cpu": "CPU",
+      "temp": "Temp. CPU",
+      "ram": "RAM",
+      "disk": "Disk",
+      "down": "Preuzimanje",
+      "up": "Otpremanje",
+      "uptime": "Vreme rada",
+      "power": "Snaga",
+      "overheating": "Pregrevanje",
+      "disk_full": "Disk je skoro pun",
+      "ram_full": "Memorija je puna",
+      "d": "d"
+    }
+  };
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+  const IMG = 'data:image/webp;base64,UklGRsQ8AABXRUJQVlA4WAoAAAAQAAAAZwEA7QAAQUxQSOcLAAARBn8IeE17Gv/f4Vw38igxGCQNSpQRQ4nSfRMziwZJZeiidrWzj74XW4ot1m5BMkqxWOxsmb632dPZrBiKdqM4ZESxs6TYgrTSkCBKVCSSBnmSh/DcnPPHvTxm8XkO779eJyImALUqV065OSDTm7/env215gAABIABkFFypjsAuFPl0cKlmUvantv3avre148O5/1w/95X8crmG5vrCQADMAQO6VFIo+yofkHq8g3f+y4A/07n0VOZHw+WdUpHP+1/c9t9SwsEjlDLcXqIUkGVNtzWtjq5ruuPf3L3P//p2GgpOVEqa16ZWgWkNNL32v3L5xAirrkYnho8jTKbln1lmbvfs/1Hya6ez8+fS16Y1GzJjrMBnVJxAAq59Ld9DzQSIq51ODNkUqYXknNbNz2x2R07ek8cT35W0orjdMmp01kAh0Iu/GlTA3GoVdhTQZU23rkqubn7zR53f/PYyFhyXLMlO04COuMFgOLiHzfVEaNW4My07PrGZNO6nZ3Jrt4zg8kRrVQq1llVoMDF7hYCV22cnyqMbtqw0d03dX1w/BgAH5wsx0nNlgp1thdo6eQTc4irKc5NFS5oXbnCsabrl//3S6Dn1OhYsqQVS7ped0Ux/IsbiascTg2poLxzFiQbbv/3Z7c/s/2F3jMD7l+cL2uFkpl1HReVwyuJqxNODVGAOyiz4O51rR3r78WGV9//IHm6JLEDmilJFZWkVpMCf7uZuIrgZIiSlHtBSyuAO5/8ibv/T/8IcGW0rOlSoVavgtLLUVXAITUK7qDU+saF7k1tW7e5P/V//Z+6+5mi5hXE7o50rYYFg+uJr1OcGiUD5Y1WrOsA/qOnF8CRzydK7i6aHiclXavww4sZ1xtOhhRKX7i8xd3bO/e/5t0nht19THNLnIpUrdqluIeuE5yT0ucUgKb7tm7ZumVHb39ycFJFMyUGHJlaIw50UOBZjDMpb+Pdbav94TcOvXXQPxgeLwIlzS3pWnsK3ltMYRbidMqOFi5q8puefGUPXn3n3LD7iGheya017NXOwJhdGHCAkjx3ntfd/ahv3n/s7x/56aLmlWRajSw6dC9FswgHByXnLLkd9zz96x5/60wR42VNl2ytvUWldymFWYI9AgENS9qf3fnK34ZwtqhJydbaXrT08pzAswFHgRAtv3frb/uGygJNxu4uSbVAwRfraRbgQODlG/b1XSoqIMnYobbo6F1MPMMYhIUP7+u7KApIDABqkIJiV8SYUUxo2HzokigkqWYpOtBOM5oJ3+y9rIAAapuC95qIZw7Tkpe/UECgBlp8KRDPEI6o+c+TaqdnO2YORTvHVexEehcTzwguNG06raKGOr4r8pnA1PHmybKt4PP1FGYAWt4rjYuaquDtJg7Tj3dMxqLGKmNdBca0azikMcxFz7QTY7qtGhSYCwRHmmnatV9Qi9Hizoh4ug1bDETPtlMwMeDQYmIDg8QTncHEIHqmg9jCIDjSSGxhwNiuwLAw0YG1ZGKAHF5CwcRQ3MmAiWHgXoosTBQHmykYGATFziiwieln68jCAMHbi4htbOzliGFgEB38GpkYBIcXEVsYMLGTpqUFYaCD2MbQewOxicnVTo5gYvp5OwULg8SHmyiyMGDspbmBLUx0oJ0YBgbBoWYysolnmdjCYv17i4lBMPH6XGIDg+jljTYGwbFWYguDlPfPtTHAnyC2MfS1EJuYlLrnMCwMOL+JAluY6LFWCjY28do8hoFB9NKjHGBh0L5WCgYGQXnfXIaBQXD+MWIYGGL0LScTg0z8NCIbU99ADAOD6MllZGSlfQWGgQG4+BgFG8PRGynY2OT+QmALEz33GAU2MIj+dSmHfBfMqvgkMfKsGjIqiPavopBn4UGrguiv5xPn4L2GdaHDyIAjS4gNDILSrsjEIBj4JrGFQfRwA8PCIFe+TcHEICduoWBiiLvnEpsYLn6PAluY6PGVFCwMmOyuY1iY6Ce3UDAxjG2hiE1MuygY2U8LbGGI8VErBQsTPd9mYzHO/f+zVRxZmOjFDirMszBM/rLplhYDg+jI62izMKA8crrdxmIMG5mYWthnZbyzbGS0akjFxhoOi41x2FEWmBi1ndXYxur/RwUGRkx+VmMbW/A7FVhYoKdKamEIuOkjG2OErkkVA0OE+4ZtjHHDQTExRPjOqIqFBb7pEzXtLEb0k9jEwLTqcxXTOv+1NNBPympaR5tTwLRhVMWy9oesJX1q2KJ7OQ3AtqsqFsZY3GdjYNoVGxnWDQtMjOp/K4CBgaljWI2s4YCRATsmBQaGgFv61cQYUWdJYGAIuP0TG2PM71GBhQV8d0QtDEyL3jGyiHaX1cIQ8PUBFQtjRN2iFoaANQM2xlTXq2JioGeKamFgLD2uYmEA7xM1Mab7LqlYGFD3JyNjuu+Sio3V94iJgenhURVTElzdQtempd+a9PSKa4PC7pLAkmKcWnJtAt39mTktvSZgajyoAgtD+MGoWhiYln5oZAH7RMXAEGHdoI0x5r0hamEI6BgUmBg3vKcmxoF2jquFganl7yoWBsYbojZGmy6r2FjdW2rFUwSmjZdVbKyxz8YA3hsLLIzp9tNqY4j2TpoYmNqGVGys6R0VGBg4bB1TEwtYdtzGmAo/U4GBIWD9kNoY1/eowMAQsH3Cym76u5oYA50Tar0S60eLpgwBK/6uYj0o/7QwdQjcOaHmU9pCPA3Qdk7FeHTo6xSmjqmh13hEiy8UiKcOTJtH1HJFcbiZAqbF4r+r2I1g8v3biTEtgNdjNdxze1qIQdOS6Z4zArM5uy2iwDRd5/1RzSb+ZYEjmr68rSgwGUHpJWKavkzNfWoyAh1YzdOLuwQwGOD8zkDTmqljWC1FkgqMn3iYiafZgt9aiGRrMr5y8qVlBKbpzbR+WMUwJK8CkHLx9Afdj7YQmKY7o/6XApiCpMap0LxXz3x26n+e27ZqYURg0PQP2HBJrUAQuyNVM4uj7lf+/uv/cX/jqVV33lRHADgKNBMdLSdqOUmPU6HJlJGTR/96FH1vPb1h46b7b6oruM+hZOSBQTOTUegqqdRekl/Ty8NDwId7dr7geLSlOdlI6QwgRO4AzeCAOz+tjSRTBdDsUhHA+OWjv+sBfPfa23Hb4ogYlM3uIQpIpZnOqPtTzSMAtNLRU3939wPbHn3MffP65rnz3BFRKicD0mkW5Yi+d0VrSMmdlZy4MJw8987ePcBufLelyd3nUYWcl2bjgBuO1ASSrrnj8WJy4MhBP/DSmtXu3nZ3I+Xn/DTrB3znS5UqTHLGAKC5v/y0391Pdv/7luSaBVEhomzOT9dXRsOBcpUk6XES0ApLl4b9wvCx7tf2u2+9eXmL+9I5lMkAAtLpOs6gB86pVDeSHieh6VJKHevvTR7cdd+6Dqy7MVBejlIDklQNMlpPVSOSGrs7AM1bHvo0+fdfbEv99i2NC93RECiV3d2jkAqqPgvdZZXqQXJr+sSVEVy5+MHPfuL+0861rcmW+VQhR8mAVKpWme4bvb5Jfk0XIHY/d/QDvP/BoR3rO+5dv2ZJIRkokz0d6VQNMzW9J9cjydQKJ85+MeB+bM/2Z7Y/8/S6xgUA6plyM0ISmVRVM91+QuU6IOlZ2aUx4MuxwYO/TH1pdevKFd7ElJ9zU1XPtHlU49lJ8mq2lGN3L31xLHn8vRc2um/YuHo+Vci5qXZk1O0dkxizglSqeeXSwCCAof7uTnfftePrjanzqULOpBo1YOHvRAUzSRCnZmjm+Fjycl+Pv/nTh+9ZlWyNqEIOSSCt5mVq3X9GNBZgukimp0OzRZPlgRN+3E8c3L75Cce3N7QU3JkyOaQjk2prpjnrjhQVAsSYGvEk0jVncfhccuCt3T9y993PrV2WvIEyGQhRegDV9gxa+tSBMyUFIFOqmT5Rcr/af+BPyT/3bF+z2t3b7m5iAsCUGaLUwADICtkJDfc8dejU6TGd0gunkh/3/Md3vovvPbqiwRck65kyOTVkgkySQUBD88ote396cvgaXvj4v/e+iq71S5PN86lSRgDgjkyyTQZAADhavrb9Gq4sMADK5NSAbKrVAQBWUDggtjAAALCsAJ0BKmgB7gA+bTCUR6QioiOmVPyYgA2JaUDy+cFP/Y7ZpW4hflSvfGG/9dP+us/3vMF9T8x5QNq7sPnKLvjd3qT+wDfp+YD9Xv1r95H0Z7w16AHlueyjkGnUj8TvDj/J/lV5u+bT5t7sfGtdf+Q8EftX/I9dH9t3t/Kb/e9QX8j/on+r/uPqGfOf9X/Wd35qn+o/8n+U9gj1x+ff8T/Bfu9/qPoo+/80f6v90vcB/XP/i+2H+T8Ezzz/fe4D/Lf7n/2f8L/j/2q+oP/A/93+1/Lr3o/oX+X/8f+a+BL+Y/17/hf3z/P/td86Hte/d72XP1q/4/55nz0PDBUCylJhgQVSSJGpY6o5jNch6LWH/8H7ARXCpWbtRL2dumpjvQXaCdTeBIKend5QMNmiwnzv/aL45vBbY5WLT0HmCCjyzcjG/Hl+Bx4/aBvsxkJNLpVL1mxHPv1AUC4nYxx90uftxrTxw1DxwrIrntiPSGkRA8z0fCMW3DWS/+Ntpe7gznHKgJBa8SAbSfDlOWgknySUYZa4Rnde0d//+hZ4P3//VE/4we2W4tz67QAPoz4Hj5IbqIW13i5DwvTtW6Q7CCtU172GxGsE4Ny3gpH0I51fZakhAStxIXqSmvteTje9ydZvcD/CjFw/8Zf/s/pv9n7PJ/7thfxiat3/eyDNU64eEbdvNZcYqncNS9TbBuu/vQ53XzLUjBR3ehOBM8Limn5pktKwK2c8z6/BsdIpDDFgeyQaLYyNRvCs4Wj7uJVPZjrmHu7bhaXcxg/2F9qw17VIiO3Wz7JhFk8R+6yvrwX/8Mxh1xG+q2ePyfv4SWxBv9Boc8BU2zTrulWYM5oqBuWQesIzg7N86NTT49OBghiAJ3ZyGbB684WVa9MMGy+HecFOc8rAbv8d2++REQ+8RblI4CvQ5pvOizNLjFrnGWrO+VslKaMb2tI//C7D6d4rAWDjDQlrTHxifbHYLdaREe7/YTiJcTYiwhmQrFBdWesFS0ZwG6Sw4N3ohCN/qCWo3Ot60AmfQQagqJojSROfuQFOLKXjKBe39xyachbybxEPY1gX6djiKJ+EJwVpVakqmL9czI76jqMi/ND3QY+l6JMsdxHWjKF6OGj6pIZOaRxFQsSl0+jbmSL8xT/l6vXLu4bbPU7m0gmu4ikN7GjMLKscdST4VglO9WWS+FDcBXZbKnYeSlfvGoMMpg/WztwHjFdekQamLgMVm9sqPlFAUea+B1bGccjIyloW0mQsYuS1ZSkLmYNWbbSd04m0Awfe+mjMKhoaS3TfvAk5IHwXDuqpxf6yObeyGzGmSGuZRb7CVD1S6ZMLYw8sF0nupwyhfZXuozTdluSM3v+MuF8ORil7KK5TGEilwO01f3N21Oiqaao4xmTLSKGQjYZ6sjHgSHZ5EkOwv3WdRYwR8v+OXCOZJNQjIHnTw1kXEi12yutsB/bDexyT2wmn+f+yR45M0Jlv2oSh9aFJYILRO+F25pDj7u27Q8ZC1m1rQlyGUFxBgeWPl6yAP73GbCEbU7yDw1jMPVJe7a1YOnfcB9FxH811aEkQCKnyJOrmRY5t0Z+cuHu3qJ1RDpHDl2mQ+1UsB85ShIVRfcC20DRewRVBNHH8bNJjNdQ78DIqFByq7qLXfC/rbQcpAHQqZOSLzjEwbLPtz2fbLrUJ2+2j+0WxB7Bc61eJQwQMUDWUKsJTVAASGLCAn0r1n2CDb8H9QAG4wA/1ud3YB0TyxTpukjmztmp1CnOiwfsmRAmh7iimJ325zh/PLDegbvQ384MCOei9022NjmY6KhHDzEu3dYgYoSbJxdRGyBnfD1xYzXUD04eVCmFKpxf6AFwyS53IOAAA/vz4RsU7OB+wMc9358k75Ng0oOkfCX4P+dcdPxF7Vr+KO9Ie5sGlYwJhwxobGOAIzdo/3m7rmMlCKdm3F5Krw3Nd9O0G5A13jHugjNBhhCUlMHPeoguaID7LJJ1VHR+qQ0INNJ70NuVeigSP0eYLSB0niRab1mfiZdds2Mfz/ZDp26Gp/qQvkNX6pHGLuvEGMnSrFt4ojpTAbALDXr3KxYiCL/m3q4/Z/aEXC9MQsCvFEacHWJ45EzvLM/HVAohZltU6d/W/k0cysJUypvPw8pc06GfH2g6e47GhLUcerKM2j6JlzROTnW+D/fNZ9Stv5ExjzuM3X/ZdGbhDiVk3+IEKCSgHwIXPxApe5fxbEzl6M42mZunaJmOakrt7ludzVqnkxzhfr5iUUs7tRXv9E9rQ2UzPefLMYv3TlqKlnA66oSj2MSO1d4zeMUZjZaf/Kx3U4g/5iK/1Ee2+gStBqF7BLyRde7F1dGe6QHrW4M3wZaEiGAJw84zpP1dKCLpS4Vttl4pI7rX4JJM+9Uml63ZKqYHIEdltwXF5/mM63OoDPEA/QlP50hiFJV9b5J3YaYCVnBiFZiO3sIqioIT6liCKjxQgHtjIvADDH2xmIJ+hzlq/uVlyreYuM/Fsebrq/unY+welKTKjclFI56CbXQ/7fRxZuNY8yvFIBkqHvY6FAxVQI5ccXrYcRcdZAvzHTgXzqWaN0iA6L8ygyfyzFborC7MwjJ1I4Legs7JgpGhNJiotx4nMyBfjgPw4WLiF/bJLfvSVfcdVNXUWxW4z4gHvb9XjD8IM/U6S29s6pf1YlAPwETtefyZ3cgClV3FOYzN7sGPd7ALJzhFiD0U9sluGEbcBDTUaVt7t3vVjMoPD7Ein2DqbTkxxGq+uIKE6rNSAxjcX0eiJZD4AAqKuJ3fWDD5BScZCEQroqmovYlZCPt0v18oJyKrRxT+LyUqrK/3BAyJs+3AgtydW9f79YN+C6lR/PMGNnZOpza/8XCxZ/TNobIhh5wz9MuGiHAnLVBN+a3VNFLC+wVSpy7ObEu97qQe4TjZyKG/sQ70DPNOnPvDLQNCn7oNDgj6Pj6Vez57eBLRo9fc4mG53oz/KrUNpe2HrySB8ejQAfazzK8lL7TrBnJfhpevlsFHPh8ktbxnp5MeuOCrfwsSupqByRQ1UHyR/WiOp/AYhFn4i91nPQEAlWTwY6g6J9RbMWiQK7z2bLbB1T7YGCWXKQi12fPmH7XnLAVpiE6HGd9Hju/i/tEXv9oTpoOJWBz1CwLjdXqLnhkCTINhuY1rDPsYmWjoMMxrjUYye8XL2nBYzKtp6p2y48A3ng4x5UBOEuA9jXKBR+ZT3rJrRF6F3J0U2CkkLFYDDlJmTWrT8HubIkKHbzOT1tq2GznV3XsTraZmE6VfGbNwA4JUsWBFpS/GzGsDC5Nojn78LFu3F75jWHcsgEmJUmZ6DJOyyxvqVvlzyvtIhK6IshXXswQabhXQ2vPFLLIfETFYoHOwosh/Z35odOk3iV5EbteP/0i2sv0NIAOojFtFp5oGM+oiNU/zY5/vAQ2n2q2Z7FpjEVzV8oNmf2CYURiusyrTx9Lb3A4SmSb9wXwltSY8Vd8HbnPXDYgg+8V7jHWeP4LRD1/9IwMugEYaeL+zvgsMJMkfqBTK5kAncYg8TBlSXdKuZI9AWSk3gf+uDPD3YRCjSZcW99X51i15Hx39HhNIAxQAw1+ukthfA7hsJ7Hb34PAZmrdJ6yqMjiaZjdR+3C1hgZO6gMLpNdNjRH0g16RhwXa3UxLasL+ywnN8wcCoA0axYCmhXp4g7OKauseD/ZFGiKXODe4kzKE6y9gxT3vHurOgzuLflmBsWUDQTeu5qDcwwqr7XpaMk2Docx/rtElUZbvWP4i7LtLgB0ZSvPXBKRsfw3WmO3yHVzDfecpYoWUJbrApc/kavrX9I3y/OD1Hsg9e+DA3bfBgrWb8r4pyEF0dlNyfAK5h2HvCp+JkI/SVn5aK4AIyXuRj/0eOT+iaKICvyLIxNMekLJw2K3w9wlNAX8/DJoV/bPhVe+hNjJlduJqMCXHjO5Yy0LCy6fz1kkjUcEk6pnt9qW2H2ZucavDfFW/bqzyZJm5j75va1j/PahOV+644XMMQA6zK7BRY3a5FMlZn8ebOJKm4YPnlcFZx/PtDcuZComHZc2gqdPiQDC5+M7u9tbTCb0Mbf1TXGR31gKFvSaw2FjcTHA27deK6YWFHxkYOB8h6pngHG4wshxE+QAV4MA3YWLX4rBjbCxoAbFRRtaeM/XjkRAZiDE15CptV5669ClS/k77V6+F9wW+R/n1RtO++nSlFpsA2Tg5gATiwJdSqU2qUx2jpq82q1aPUHIv9LIAaYebaY0JIX/D77BbLHLRv0a5eUFyVrvwd/18d/duq/YcAhWiOcOq98TQwlXcqt6iNsGJ+QKaGaWu+W5WOixyGsX7/WydP/ZSQysQ/F8+X4i0v+Kreo/9GHUqjwuyGfZKzXonlTCtEb9I7nFjwz7/lmhukFeq5ACnsZer6UmO/su5hHn0nrufl9Kaaatvywz205RMq4iaMr4NbdFAUlR49XWfQCy7F72cqFHHN8vBTZ2MA3RtRCEiivRxcXACASIVQ4/+v31qVSaoSoYnzR15P/VNwb24u2Pi9c5uSmMyQ9K6mj7wKFTsT63I2lsTR7LHOhJDiC0awuaMRVy47yIyCboXSZDd3OlDIPPJfQDCQpCveguOpGuZ01add4cgvNu9fdx9UZLco4z5uhC6Ow1YfzxnKPoyvxi3BVuMXtm334kZuJDd8B2k3TBTZAPI4oiCBIIbt6wk15Qhpdiw5HSxOu10ncA0bT9Qz/VpPCjftI1RD20SQ/pc7o8rt3da9KpuM8ax1Jm66WiH6hgakM7GcuOaojakUTG5qiATetw6xXhN1JxTThtBtJf3G4y0HEFpk4DERxHZ05d1NDxaszGRqnDUPGdGJCYg53pXXnmTH+RLqetjV6gVddRHMO6gSKUHw2RnBLITmIrKOArcvAakDSJIYBeMwPlGD6Axa79UsK7ftMBgwEb7k7oqyEqJQp/lxQIdXHZy+AaF2cOO/Cb7NtLNf/PT6W7RgXUdalJuYpdH7KkVVRGvi3gOlNvwPFwH5CFmr0/CDraX9CtteFLr0EDIoDCvs+fgzNgg2VbLoEOa4FEixz0QZJ6tnMWsPIqtN/qrpnJyLEKPlRXwIn6Z2q3VvOCalDibr01YP2LEHxv9mJvHkr1rr1PKHWht6mXUYjTbXZRQoaxtQUUDtkZ3w5+bmgJFs1MlrREKw60cATRLHzCYpdiY0MIH5di1XV23rDB7xAadlOqN5l3AEdiO4Uz+LHlZp3VZtVXFK1tjpkMSaoKljRfN9vcQOrEA073Lrow8g6NSOukrvfIW5N5S+BrR038RX/i3v0GnwM1IBY96udimtnvqpH5+9pwE2ICH6uHLMDBYr1V9oIwnV5xAcEWrS+zjuFfA6/3JH682NeieJTJvmddbpEv0HVbhg6ncVTRWzA9KJZR3i2cGp8QsGTKv1ACWHPhsiHMUimjm1HqWE72IiRjJD1mqiLYJXHW329Hb1VPI63QggEHlfMYGc1s44IUd6DCTvbj+8iu1XLuhngaENqaz1XHh/rV195FfKCi5g0cBpppJPw/z5Fq8mRZGbr6I/sdbKjZqPQLgop7pyOsXf33xdoFL6qTheBnbrFUHHwsKo19tS9EwvaqXWOzhDZoDGBnu+v9BUqnvuAjr/dYlyXq+xePjJBjjQSxFcRQDeXwqtbbxoK3DVQUKI89AxtB9dtwyPy9Shq2ctgyKVGJXNSZ8r0GN9pMaoGOjImUywmO0Kw0Otd5Uj5U4tT/m4Vmg0UD7nlpKytTS5ek5X0iLybknNQPFFLqM6Sc5Tjzr8/1VTmfwAt8Ysrw7S/vXM5YCekR3niCx31snTW+jAqm6k0wV2fToYw1MWorAId0aog8LtRE0GNVUo7LU742d6JBtmpndrdsnGxR5UeuiWmaoDe19WjjoDVHOfhU7oe4cyFJ09Z5afIHOAa5Wo3C9KlkBgMUoXEdtzf3G0szVBYAG8woHKTX8vJZx4hz1CNJeVER8iMrXB6HaLajJIRev+AzBW2p8SLyZQIjl9z88ISIOgOSXmrFsOkDPJ583Z0+qYt42DpEC6MQKRFiHJxoBTcv6ljxpOoteG/K/Yjppz9XovwrCzJRdLdRILlqbTqyK2WwgIgGCkFxCd+TzlXYEzgnl+wspCodqaRzD0wDtGFOKx98pO88+XbECtd7F7JC5hP27YdgCSkQfbiIdABZiWEJIJH4ec5lIaZ2/VbWlNdreDNect07p2U1HgZRMAdRzOyy3f9wZFFIxz59kpFUcH2tEImLhgORQBfvBxrj1ZK7hBxm6OZJdVv0LG4chBjouSGVwI49tONZrr8FH+6yLI25bRreR/BNfuHLy3JekB3FQKfK9+gUcWrFX55wkszSfURFQXCkw0csZgoBlbegQghnz9Jrw9FdwC1CbSpDFoEemI2nz90S3zfdv3PZYcQKiU3k/bNpv3lifx2+K5RFUAoE3OdRhHrXwFlL+K+ug55IcOM12MqLyleQ3oDdCtGVvFrRrOTwW56QRdZU61oKQxgLwIJ+uunzMAzROjZ6Fv+NBd9ohYTi5oDaPvGlFN6OECRaWUuq2m+Hiz6dH8eN6Af0WpiEoOEfyHUKpTMEMANbhp11tyx9eDQCf2KPttlqxdbUb3cxe1BEsu0u9yMExj8vJPaw7C5C2cpk8QELkVlDYX/UGDCYoswyl0/8EgPmMtxW5Od9L0xANbAhZfNnQ7KN8H8PwAxmLvEIEC6VKEuvo5Me+PbwWS5S0jjIf/hUhg2+CYimClZWqbah+Yep6SHyq/Xzm/n/fIjC/DgVoVibX4Q+fjcLklXCHpHxfL4fxrtiIjlzDimYECNB+7sD09FFf7qD1RKkMu3Tn5K6JY0Kcg5TlQQ4ZyJ+r1w49XibuwYFN5gnJFJ7pBMWqKxFGDUrcv5mhXJyJKdDx7ydceKqipKaHsVMKJpeigeQqmKAREcXka4XbAS6N/QylxurIMn2qkDUY13DnoIAlCoR+kG2wYLt5Qba3ZTD/MnC19caWQ5I7keBJ4y8bZgrwTS08aoX3C4Zuhn+E4919oL4qwT5gVAFretZBnW9CvOAcOtXEZxKh8EWf1HDVofloGCkDSZ2ctk6gYkBk1LYMR8A9e5AgAt6dKA7VNbnKCYe9HS54FRenFizEXi4u4xwbi3PnxIU8ZEeXcCb4Av9YXXEmSrk0RTys09I1H+J2Q99th7N9cMFDYmokwKFtFD+1LCgIB/n4V5pZrYeOjXMljjjMhKMdesJwtDZGe+zxbIqb3cjexWhO4yLX5Uv0gH4P9DAJOvnQfI+i2b6KXqgZ7RPu4eZnUgPU0SZgVbOsaKILEMGQXhFzAG/Y/jMNj2ffgSPQzT44nqTRiPpeubb+XIevEvLzhoQkR+6/jhp+p4VGX8q9Vg+ep/knfh9ns/tUdJcsN9ou8WQz6f/R1L4XhK86y0IfQPfDh1I433nQPOCchwGru8VK4bSzWZm6P1vj/flLcqeXGJbKIgBnR4KLLUvzbtcvk3zn50IVM7OlTKGBpRsHQ5NyKt9V+MI16VfofS3oG8c7c8nW0dqRW9xwAh61/2NYfjN5X47vJUVAb0LumNaIOVmm/Thj1SF2Ne+5vuVJxVodmqy53t5GD8oq5rQtS+MdWypS76s1fw4F1Xc/+bW+uCjCF7C1vacnoulKwNpKXy72XOkPG9PPIg44eDWY2uKN/BoEmzAJq6aBX/i/2FaS/wrV/m783D1IwonHIWhOrUk0r1nPSZ4nhaKWtK/V/9mYNdigNhYZphIhZM8gBAA0Mz0U/tei5WAhrfI4Kpc47T1qH/k5thPGD0+SBnNGx/EhszaURS+0Ox7fXRY3c9fbIlTCeqNcvM4cH7y9Bt+kbcMBevedbx4BQkYCxk+NaqmKC0LNpNxBfaBXI+3vMJjqesmjN1sBGW2UfbOfSFbdkaHwtFLzjtm2VhaxteSKNfa/I5wdBENDA9loLiu2sDxasQ9agv+iY78W0vwqmyr06sThH2EU6q7hwnqf//ith78YOuBwuF4wTL0tXtYszQO7NPff+LW0IS+WLmvkfVrj8Ib0+85O8AkYSEu4rmY0FISj+QZOivnautZdTmXssTP5/ZSTI1c8Ay4pZRUtD0mRIC5B2pKC3egxiZqWpqr+IY+P9B7nyYVB2gM+gd0swMF+RPl+/V4ZHWv+eKlqAe4iZ6gBLzHebH3Xx/Vkg8e8HSs0+J2IN45Tl4bHv8wV9/FF0qkpjs1tdXgoJChuCNzcQhP4+McvU2izoqq2CSzYkEBXuBazgUWka2aRDEF6ooW/6mh4BVHMrPb0ZXrMZwgqJzIcZjcFtUvcTb28XuhJNQvhZntXEMHCq3aTA36nAdUtM1SH1z3u41zyYFar9QPmag8YU2JUrFcWzNrInLhBT6Haxj8AOEkzNo2OlHa6BnnRcOOXskBQShAAnfCpmFKHDFJFwUckKYk7c0watrt2oIBMQLGZuf45Hw0EIllmIFvWnasbum3z8t1ijg3juikS3DVkoWm9sFB45EVYPiaOLFUfeLnviuHoqpeByITPrAvamEOiUYbim44cceZCskp6k09ws8EkjCt6yyaFixU9fEyn1uHiWCVTGl79RUqztbsWH3PzxHcQv4T0CybqFDCMPKgOLBO+kzcVKiCY4gSUfKVL4zC9hanY5hue6COUIt8vVu+KGxSvSDuQIYVl9MR8p/MqKxWB01nmuMkpjz0Av8+R/jb1M2RDO1fO/OJEFfJIAYW9jgg+hQQD2Oj7oR4BUAzKyrGiK4ejMMpyXBeO0P6VmlNlwmaNhAk9YLHrFXiqAQ/hliSf754J1pUTirfCwXOhXZ+HoS/IFq3b3r7uBAxZAtzXZrd/0cZ/gAg0lJwqyNUoIiEac+0uRqFW5KR9dFOkS5t0CwbQG2AiOMVw6uBtt6BiKR0tEQjpcOrXDK4JSklSuQlbl3ijAJ9gn5H/hbO0zIGNjxHMQ46DCjqCSW56m3JSW0YeeDXTMuWVGGaunipdBOOicyUMNVUXfHtgEdWwywDYGhP46CtytJ74YwE/Y3pY0VPc8zg+LY1O8wgnRIBgGXA3kirsLfKbUogSMb/n47ylQn7B69uC4k/ipBKHTj7A8o+ceKPJUY4Ue1mPc1vkwpz4CqnOobWJAFcUFifTVcAXZ+cMmLXPcSfbDiyHHo97RMjWXUnkUpVfk6iiRUNo2Xx6rJ8WWbC9MQ864cH8GjwogNgKJYEd7FHFu9TUuZd4mzA4vdjPf/6m0Rma09Y4NP3QgSS3fzF1bZ66MFjUUhL0ICOynmleFSEvJPQN7tOQoVEZ8tozRETWLilpTDkKuGTDkGT4Kx1H4FU5yjTxC0p4AZ8POx0ug5bJ6D15hnEMykutfZEEQNmXn47nG/KRNmMgxJJkDGWNue8cH3Qj9tPtSipRG0k7BqGDO9edFOfLG/WQ0xromqIkf5BGMWaKRBRIAn9uaeYVd3JMyciWUlA+VKN3wCNn9Zd/ya7IWl0vdKFgewzvN+5SRG+Nc43HSweJBRKtpHhmrXnFbOyvvJPKnL109zoqofj6wuNbOnFaI1pizX3J68U5XsQLN53F8dK8x93t3NZFykfyihThYX/VbTG6/YPWdm7gXivkaMQXxQBoYJKmJmN/XoWiY9LqdTNZl7iLrWjWfJG3Uw+zxc/M1rwD187RYMQr+Cw+d8u0EBTLZ2dRMGO8ugGI+2jWjaUt0KLJVYzACExgcNf4HsaR29RcnJf8hnqw5DTplLDolLNxp/qeXpWJYFwNvYqDvZ8da2jHJ/9jG///6gv5/FngaEgDTHPeQspqlIC9liF69ATevBNXWux8iVcTzTDSbcoQ72xKVOZKYCdZtxW5G7QN+jLfDG6HSbem4nFl5FevsEPdAGUqq7mGLGdMvwM5MfnjXg2pPaZU/+vxoaFaO6PqkDH8tKCke8NQVUarqvY6wdjVVtxTUMxCnVFYIHO00zf4aj2cW8nTyeL91Kl7O+xIU7jZnnxoSe6c3/v7YDOygj3TyLm1jW4l3kjIbwVejixINvt42/UEsjZdi/S6V3pX8sbf20CjzRmMzcsfLa56Vse35lyRxHmpjnSeFwWDLHXgWry/RP0yhSyhSojv7eUKNPKQFAQhiy32QK6i6DOd8PlrkwfOO3x5efEF62wr9uP0B4UkC+PtDx90lsZs88Q2NkhsY/ymbs6KQpQOT+vttgM7glK6vOSkeEGdU/LhMKbYb0IBHIY1RLtPkxn2a+TNBbJRtuXDPOBpxdj/p9pOBg+CJHw0Dm966ZayBJlSZ/GMZlY1zMKQkq8alPsJorbxeYsSl5IqiBrVu47Ehvh4NChViUNhH8ismUD9S4mtwNmUeyfQNbT0XZx/Sj8FNaGdhl6/yesQ0CSYKsmenzfm+XN4RFwZeAUO91peZoKiMUye3LsOR2Aa3e+MoHECaorsf7yJudUuBP/ZlzYJk29+4lg0QC7vIRzdAHaD/hRlgE0SkWerBvvmZDH35FW/ctandCOBhZ4+d1099q0uAXC+S0ljYFHRfSIuQRDHVINaR8R0qI6hEjswZhb5yiXNT7GNwZyJfz2zcqNmusplzjIpCjTdv8SPiHVnyJ80zOU0gDCKiz6u6Fe/lpFoncS48aPPPIdlvUa78JPNS67Hs2ZCqj6y3ReXmsHA24XxKpMK4xGedbIOmQhydPBvmk/M8krOc7G3hgIVkfsiwuhd53j/Kt7ORDMrahHYs0cAFX1DdLtlGP9UyuCFYzTxjjDEvX6AnWAz77HPzUxovc2kuSReSovfpurQywUfkkHBumsFZZ8ocWhLjuZP9xmhdaUAkQEOCabv6/20P+Y9eVFjmwMgdjCJLO7cIFQ52d5R0JhrUk57IhNbbcrrCHkcUl7xbmM31k2gjEXQfgnhDLp9kYp3k2rVXIqIW4IK+xJeZUAPVqkWbQxYiTkY4CSkPbPLLqWjy6qYrYRWhZOgP5XJ7R0bs6m+JV1GmNOg/bG7mEWom5C5vvljP8s65Sjzouu8Z18tlrjp5YlIvO0zO1Nc1Z0oyMvof5Qu3hzx+ncw5Mcp+1cd8kWGcDF8ovBEHbPt8T9o3HYUKszKdkcTmnBKr6XdWnLKyXxJOEnlpsLp7CRlRIsQzsi9+hSIwlOPCBN2vhN6A5UYX0iBkdBB7noi8bvdh4odF4If0eBmW0p2XtuQEf0Qjd2Jzs/yAEOL50giGtpPKAaoPmoAfpoompcS2pMlhsfkAiwRO20icLs8sMlkYLg432+GCcHztDqqvAVAjkQ3aXWVZX+rQC3kQlb03STNoZy/suasCysnIyenpij0WF4leaVXm6uzq3SgcgyVRpzz+ehMyF4+tbAW3KZWhxRlhOSPGhINpgZoOvOKjUOTjJG9R0o6b1H7cbfkqbew0zH8ZCtAb7s+Pj8sznFI8tDEA+VdDzg3VZktfTrE5pgpGwsz2t7BlQLDwMeWDJaQPitmCF8EQ54m5pY1fupGaQBfeUTE0S+30YunOaxO/JrO+/ExjgJ3HBsDoW+j0qrC6EJqq+R/EfuQoL2X7JKjLa+HK+UVAyqaen1GVu7Kb98RU7qu6a1mJ54PI5BnG/r1NBbxp2rMbNXgwyA4eLmn1IhnuQn8xXh4JXQhzvVOLpDI0GwTa0xTALnlm44wkzXoBCrgRIGYqK1d4MWb53xd+9jQdPsYK1HyGFS30jQHH7yxkZLwRs9+ACEctucApJGJrmAmwg15anSIBIhHaE0vbhO/KJz/BkgGP/kkcQqNkvyQoBM0OQhqFWsBOGGTt734uy+MJxU4DgylBXk2Q5omSbUqCDdB7uBS+MudZ6MYLGuASXPOJhpZ3fN8zcZuxgQWsTTaYHUXDbJR586Rw6M37xTnUD4OYa76OyxLBj9QVjhdkqfuWXM3CPfrLZ/pYvPVy9x/aFkthF95P4SUzIOLyya1wfO7OtOBj6buTzf5njyr3GmH2R2C6WqDvBeltzkokbmD33D9WNRTnpzbPitGbm5AZ0NE7r0/VRwqpk+3T048+9WZ8Vrkp1dx/n9lnNfXK6zbenmmM/Vo7FMNQDFURvwXTo7sqOYbnCPjwvdaaaM7wVWSSI+3H9HREyer59fCCxp9oanyEgs3xK8bKrY3idKzhRE+assR3HaTFozoFSAXyvzmJXkQUCUxF45nuyNFAvIqwdQd7huyqCZENVegOOPG9DEWXfHheK3ChFmcx1aUfNpuh4VCdK6j90x6H5AJnnIbEIowbS4ZqHvCe/vHzBSAMFjiCM2DV9zmpnXhS064fNs74lKMIQevNkDlmppOfbdJEcdzj6LgxDvFL8gvrqiK1mbH7/nuZ3+IbUpI0oeeY2x/bxN4zylfjDdu/7ql0VwRGX32bn5V1Fx1u1kuc7jKygCW0zth5yAklqLZBHk1XM3gGy5eKrUhBf7YANxDEAosqO1DXBTs7fKTn+zhETn+LWO0xw82NhRNbcuYiYhGHJicHHnlHr+PRfj3ovLh7utPWndSSUYi5rAQKTsWRtQr88CyJeNFUObgAVeIj/BOfaIGG5J4nlij2K7guN3R9rwtWAoA/kee0CpLr7L+IAMqnHgDzlTI6IrEKVGH9oCr5G3Xw+kVQNAnxWVKiPmoUVVrNn0nqpvY4F5HDQfoZ+56VFo/+e0KZfgAiF0JUH4feYga3jM4ebl4J3FRpK09MhRuSuBUlwfUXhfg6SJbqk+yZzCBm6Mbvc/QuFiT3aOQdHObDNSW+bJ+sxUQNyfAII/3eyIsdIX5X0bpOcWAQ5EYAHkomu1DfrYc4vVc/7wAiTQeqj7hkbbBySoAfmMEHim6TVoAAJxAP4n1c0geB4kjMhrMkDBtW6kpg3Xfnk73RR/4WP8oewbjOOgsISh3IgUjRUt/+BRgbIPN5BTAonoY/INLKZyqUT1XKb50GeDf0RfbSVoczlLC7xW4bVGvMbWLmMFS1N6AFkRfEDNLoMqS0Qg19jJ/xYWU0p0KnKaLpaDFRhEzcNcOyq0hqGjmu+/UP66MtocdfP9d5QnD1sXjXf/ol/xcgH47btrv956zKgz8yzYRsJ8ecv+5SdQ3DBZGF5MgGy5m8OV5iduMbmTkn9w/79o39v+XssP/t7bfLzauWduVpBfNC84KafPN4HN+HdBtVFdgDi2Ec+kFnOQdtLcgS19GsWXF/lNy/wzc0EX7PUdiagFi+mitjmo9/UHg4DR3Xf4OccKKEf7F2QTc5TFzzxKy+mZ5p/sgoRaO5lgr+nbh9AcBwlaJMeHX0uOrJe//C7DGBImichBDY4WpPswNuJL7SQ7S2sEAMTjCdzxQPF5cwlvVtr/kHLNFoIH9NZYXWpg/qohXguhiXFqkmPad3HoMA6mZeByvv0ZCcXAAVMaTsYnHMgkzIM3JbAd4MvtnNuntfLtm367y/1DpPsv28FzS5k2p9W95+IO97AOFesxHNSX/9UKDLkfCkoDtVQf2JHUuO6at6D0twl2TnNPt2/6HxnI6V07qq33g+C5AYliH0wxtfKVRXzOoMS5SGmEdE2FjaLPZKGGWt5s3zsezB51HRdarNtROsoyhdbH1WsAMBrn4TwcQ6HnZC3MPmET+8GR1S62uM0wL2MSGEiNVUmeUbfrPYlc4yrX54TFWpm0Rx9/sF514Fb5AwbJt2VXhiPpjcHvM0bkOcRqRCR4ymZ/fczD5g/YjOmf51ZrWuVbrgJ+uU3/GHQ9D1XEtMI92hVQrgVgSXnnRNcBrJPLsDwhkjUmgQX9YFAa84Gs14gb/VYrLGZvAhgItf7FE84m2GkJT7UzazxxcGrpkctn/3FKy6e93PhjFreHe8wOvVNH9H1yKNWx0hF9fuDdGEejlbSeWFt2Gt/gov/T/k5Pi1Nv20Ji55ha0Q1t7MDVuyev0qe2KU3/CQeC9mbd3UGRGrXBCXPdD37dEzFGYo8EHgPdbp9F1rTPZmUXQl4dT84z9a5Sq5YxwjGQgdl0ThZXFXgEB4r0ng8gv4OB6KAcnUAnFuXvDhdxkEOp944g/wkP92pf+79fFCDpe37eSvUE0XqszRGtlc1sLi+ZNhTB1QI6fiOxwchLXXC3K8HvY8jE1s6THfarYjGS9U1PDFoeQaYYBtz+7ETMBB+HLVJF6G0v90hddJBSB3w7qpjsme7XJnqy6jvW2qHBu/JtKliEzZtvdPBFEPGH3w+wdVjrOoNSb6yLN6zEntY2TD7uT9BMjSvOj9ZTDMDHjQ4UjXrqjLCGP//uMhqheic2P0gpDE2c/2V4aRsEm2d/XNh253Q7bzys5FXQkIqDg5CM9LDer1xERlsVPgS07QOszTv3EAX9nYv1yZ5uIADOsKvbMUOpugIpAeRwjDEpWRRdoDMzsoSTf3TWFUVmagoORQKb2AKhMaOO1L+UGqp+37TYkhacjsshdNcJz3ClS9X2tLxuRkg/+LX8yYIX+uDDwDjJ/NQynq8kRMZXlEY80GmQeBwa8bhuhK2c1bc/cRjtwoVw6b1mkKwBOyKsxIpyG91rMDJM9TEFojFsj1l7C7EFZuXekWY0rAiec0DSc/FXqsjKgLRKDTavwKgZj4lL+ZyCtltlSzVlhxZy9McnRjon3r46O/3cIk34dhgACHi2VdqZrAvdvFOxoVuM8h0tbN0hhq5pOLFQJWjjT+99T756ZdHMsTKyPl4TNTVHGCMTYIgBMKtjCMauBaFhEw+QmfetiSfwo8vOiiaU5dSZ03OVSskNx8M/5ogGBsamcNGh5prqksAOtnbuyDtKIUKL0Cx74FLOcv5wVRtA3qi/w4wSPnLc+DNb0prQ8w1xB85WP5h249DGfBR718vqYlixw0dUkUK1tXx3SsH1nLeuPqilxqfbt+0ktEcieyvYoLDfwt3+crTklHgR+D/htufft5akbl13+Px3vE1AeKMBF3y2H+Ay/gDLXN8L1kOMxfnGaDG5u+vY0H62wpPgR43GWdclYW6RSkg4IYw2BzdtUf5ycyLzkWE1FT9udAsOcJGu9I9tibuR6angxsdWJ1yPfwbMtS4tjwH8RBxMwWTRAbsZHEkmDkmWiZp/BUlKGbizxNQsBVkb8mc9f7o82G/e8KitwURHdarPbT2Vz+zlr1QScQv5i1DPVZwuB9mQeYRUpyF7G01GP/sMdnlxUAol6dlhkgl1DbGGqPFSAmLnfDBK7BF7Zk0Uge5QlKKKedUJI5qEJtXGTlv4ou2GDjlhdnlEEt3tWUWc35k8Nggl+c2t8d3CXlUKJtPRVNN4YcYsJyq6HgjrJGe/ytY/7r7k5+zMiY8i00RXvOEeb8EO1VDtNvvWLVs/ywDGPD81pJhmZvAnkOf30TOV0AlJFYbpukxo9kB+LEN21Pa/c6VxR7pGfa7NnNIF+l8nVL7gOAoF+47Zl6/YQV00OCp5dWoLcAYPb2GLo3clPOpQn5eKbg1s173w1s9pIhO3m7ARTa+zYulkV+xPcbJ+2sF157Q6aPzPbx+jyx9Ceo1ZH7lhF/Qwi/KPsGoNF2O4hS3UrN0eUlC77+SuKL29W5D5E8YXt1H6SBH3aYxbQN3qasOq/l9Ezm6x8xIsUsloeZ3ZeyorRNL7sUqt+B5F7v5Uypr7kby63nmdD2SmkmcEshmKlnODzpqi8MLY5mbSceCYaJSgmksA1RZY0dQzOmw1UVXzlpBUnpI9FtzZf3+O/opbIN0vT4vsnbr7IbvbZ4h4Jbx7qnD9YlqDYwPgglGXNR4Hfvf2kIjPg6DaLwznye/UB1cLC528tJ5BnahuSukOwLSLAhIecH/jpCgL+tICbo12O7qX9auxqQ5Zz2z1L80ZMRYsuRAdwYDdVDtxJgF2fWy8eI6p86/tFzubv4ZXrm6o/kLwmaE73eESMpiVbPmgc5/1QFswsQlLkyUpaoWp/4uLwtpGzRyn4iPOVABwKfz6gFvE6CZJ4tjxZSJxARSGTeMaJYN//kKBWOZj/dPCnp3aum3qM4p+JgIW3mAJX2CaKeOYz6d6lThpSrcp/v3hYzNtLaK+THFtVRRhd5vCSznszf2aajPM3G7Sgzz9KaA9dCWn3+KLQIvIUUF9yr/CLbEYrkmLYElzXG0zvPOpftioAbfTWjXP196sdQuwLJ+V2kgRRK422iN7nDohVfZsAZYAqKl/zNtQI/5kSPP/DSsShLxhgEpGsWwV/GLYbijPoDqwqveqkLLcrJ3m6wXZTiwa5g1CJjySRRcCkFVnfN0t0dv2bC3b7RGV1ePssIDkBr71Q5BG1sLOD9d3e5h5WHAZE4juG/HZTU++xE5I9MD1o/4qtaee/Os+xjhAaGyw7q0oK2A51vH08H2Pt+tqc3Qvp8Tr2v3SyFSW1kr2TWM8Vub+lu5sIEns7GY7UE+VGDTX/F2tbdAe4TGO6oBZBYR15tsPYqyagStwZCS81Jg2lEJcKcSzCx2vLG/Sg6z0a6cvMn8VR42o8Jy5ijmO4DPRw3ucZJganoas/w3cbd5lGqUM+I/J4/lAgBRTsaDDeDWG/jbphAX6R8nLlCS5I3gIvtorAzvLpRIogswPGhUnicDxDzXX0ySku6joamu7KVarOdDx0P4sk4Vso6g2z2jRO+j0GjBfDDFzFd8duoMVkRK6/vpBJm4Y/WtTbUoMq9lYxAD9H/CCscJ71iUK00i4k8GUVgcNY/gw7t7DEF/+VoX/5eEAAAAAAA';
+
+  const CSS = `
+:host{display:block;height:100%}ha-card{height:100%;box-sizing:border-box;display:block;padding:10px 12px 12px;overflow:hidden;
+  --mp-ok:var(--appliance-ok-color,#43a047);--mp-warn:#ffa31a;--mp-alert:var(--appliance-alert-color,#db4437);--mp-blue:#2f9bff;
+  --cpu:0;--ram:0;--dsk:0;--spd:2s;--net-d:0;--net-u:0}
+.head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
+.idle .badge,.running .badge{background:color-mix(in srgb,var(--mp-ok) 22%,transparent);color:var(--mp-ok)}
+.busy .badge{background:color-mix(in srgb,var(--mp-warn) 22%,transparent);color:var(--mp-warn)}
+.hot .badge{background:color-mix(in srgb,var(--mp-alert) 22%,transparent);color:var(--mp-alert)}
+.alert{display:none;margin-top:4px;font-size:11px;color:var(--mp-alert);font-weight:500;text-align:center}
+.alert.on{display:block}
+svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible;cursor:pointer}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:6px;margin-top:6px}
+.tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
+.tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
+.tile .l span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tile .l ha-icon{--mdc-icon-size:13px;flex:none}
+.tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
+.tile.hide{display:none}.tile.bad .v{color:var(--mp-alert)}
+
+/* ---- illustration ---- */
+.photo{transition:filter .6s}
+.off .photo,.unavailable .photo{filter:grayscale(.5) brightness(.62)}
+/* halo derrière le boîtier : bleu en marche, rouge qui pulse en surchauffe */
+.aura{opacity:0;transition:opacity .8s}
+.idle .aura,.running .aura,.busy .aura{opacity:calc(.25 + var(--cpu) * .5)}
+.hot .aura{opacity:.9;animation:mpaura 1.4s ease-in-out infinite}
+.aura stop{transition:stop-color .6s}
+.hot .aura stop{stop-color:#ff3b30}
+@keyframes mpaura{50%{opacity:.35}}
+/* bouton d'alimentation : anneau bleu qui respire */
+.pwr{fill:none;stroke:var(--mp-blue);stroke-width:1.6;opacity:0;filter:drop-shadow(0 0 3px var(--mp-blue))}
+.idle .pwr,.running .pwr,.busy .pwr,.hot .pwr{opacity:1;animation:mpbreath 3s ease-in-out infinite}
+.hot .pwr{stroke:#ff3b30;filter:drop-shadow(0 0 3px #ff3b30);animation-duration:.8s}
+@keyframes mpbreath{50%{opacity:.35}}
+.led{fill:#fff;opacity:0}
+.idle .led,.running .led,.busy .led,.hot .led{opacity:1;filter:drop-shadow(0 0 2px #fff)}
+.busy .led,.hot .led{animation:mpblink .25s steps(2) infinite}
+@keyframes mpblink{50%{opacity:.25}}
+/* reflet qui balaie le boîtier (masqué par la silhouette de la photo) */
+.glint{opacity:0}
+.idle .glint,.running .glint,.busy .glint,.hot .glint{opacity:1;animation:mpglint 5s ease-in-out infinite}
+@keyframes mpglint{0%,55%{transform:translateX(-140px)}100%{transform:translateX(260px)}}
+/* air chaud qui sort des ouïes latérales */
+.air path{fill:none;stroke:#9fd2ff;stroke-width:1.4;stroke-linecap:round;stroke-dasharray:3 9;opacity:0}
+.running .air path,.busy .air path,.hot .air path{opacity:calc(.35 + var(--cpu) * .6);animation:mpair var(--spd) linear infinite}
+.hot .air path{stroke:#ff8a65}
+.air path:nth-child(2){animation-delay:-.3s}.air path:nth-child(3){animation-delay:-.6s}.air path:nth-child(4){animation-delay:-.9s}
+@keyframes mpair{to{stroke-dashoffset:24}}
+/* chaleur au-dessus du capot */
+.heat path{fill:none;stroke:#ffb74d;stroke-width:1.5;stroke-linecap:round;opacity:0;transform-box:fill-box;transform-origin:50% 100%}
+.busy .heat path,.hot .heat path{animation:mpheat 2.2s ease-in infinite}
+.hot .heat path{stroke:#ff5252}
+.heat path:nth-child(2){animation-delay:-.7s}.heat path:nth-child(3){animation-delay:-1.4s}
+@keyframes mpheat{0%{opacity:0;transform:translateY(6px) scaleY(.6)}35%{opacity:.85}100%{opacity:0;transform:translateY(-14px) scaleY(1.1)}}
+/* réseau : paquets qui descendent (bleu) et montent (vert) le long du câble */
+.cable{fill:none;stroke:#3a4148;stroke-width:2.4;stroke-linecap:round}
+.pk{fill:none;stroke-width:2.6;stroke-linecap:round;opacity:0}
+.pk.d{stroke:#4fc3ff;stroke-dasharray:.1 12}.pk.u{stroke:#5df28a;stroke-dasharray:.1 16}
+.on-net .pk.d{opacity:calc(.25 + var(--net-d) * .75);animation:mpdown var(--sd,1.6s) linear infinite}
+.on-net .pk.u{opacity:calc(.25 + var(--net-u) * .75);animation:mpup var(--su,1.6s) linear infinite}
+@keyframes mpdown{to{stroke-dashoffset:-24}}@keyframes mpup{to{stroke-dashoffset:32}}
+.globe{fill:none;stroke:#7d8791;stroke-width:1.1}
+.on-net .globe{stroke:#4fc3ff;animation:mpglobe 4s linear infinite;transform-box:fill-box;transform-origin:50% 50%}
+@keyframes mpglobe{50%{stroke:#5df28a}}
+/* jauges néon CPU / RAM / disque */
+.gb{fill:#1d2126;stroke:#2c333a}
+.gf{transform-box:fill-box;transform-origin:50% 100%;transition:transform 1s cubic-bezier(.3,1.4,.5,1),fill .4s}
+.g-cpu .gf{transform:scaleY(var(--cpu));fill:url(#mp-gcpu)}.g-ram .gf{transform:scaleY(var(--ram));fill:url(#mp-gram)}.g-dsk .gf{transform:scaleY(var(--dsk));fill:url(#mp-gdsk)}
+.gf.bad{fill:#ff3b30!important}
+.busy .g-cpu .gf,.hot .g-cpu .gf{animation:mpjit .45s steps(3) infinite}
+@keyframes mpjit{33%{opacity:.75}66%{opacity:1}}
+.gl{fill:var(--secondary-text-color);font:600 5px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif);text-anchor:middle}
+.gv{fill:var(--primary-text-color);font:700 7px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif);text-anchor:middle}
+.gscan{fill:#fff;opacity:0}
+.idle .gscan,.running .gscan,.busy .gscan,.hot .gscan{animation:mpscan 2.6s linear infinite;opacity:.25}
+@keyframes mpscan{from{transform:translateY(0)}to{transform:translateY(-78px)}}
+.off .gauges,.unavailable .gauges{opacity:.35}
+.noanim *{animation:none!important;transition:none!important}
+`;
+
+  /* Photo de 360 × 238 px réduite à 220 de large, posée en (30, 26) : px photo × 0,611 + décalage */
+  const SVG = (label) => `
+<svg viewBox="0 0 300 180" role="img" aria-label="${esc(label)}">
+ <defs>
+  <radialGradient id="mp-aura"><stop offset="0" stop-color="#2f9bff" stop-opacity=".55"/><stop offset="1" stop-color="#2f9bff" stop-opacity="0"/></radialGradient>
+  <radialGradient id="mp-shadow"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  <linearGradient id="mp-glint" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".28"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  <linearGradient id="mp-gcpu" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#00b3ff"/><stop offset="1" stop-color="#7c4dff"/></linearGradient>
+  <linearGradient id="mp-gram" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#00e5a0"/><stop offset="1" stop-color="#00b3ff"/></linearGradient>
+  <linearGradient id="mp-gdsk" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffc400"/><stop offset="1" stop-color="#ff6d00"/></linearGradient>
+  <mask id="mp-sil" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="300" height="180"><image href="${IMG}" x="30" y="26" width="220" height="145.4"/></mask>
+  <clipPath id="mp-gclip"><rect x="252" y="40" width="9" height="80" rx="4.5"/><rect x="268" y="40" width="9" height="80" rx="4.5"/><rect x="284" y="40" width="9" height="80" rx="4.5"/></clipPath>
+ </defs>
+ <ellipse class="aura" cx="140" cy="100" rx="125" ry="70" fill="url(#mp-aura)"/>
+ <ellipse cx="142" cy="170" rx="112" ry="7" fill="url(#mp-shadow)"/>
+ <!-- câble réseau vers Internet -->
+ <path class="cable" d="M232 52 C 244 40 236 18 222 14"/>
+ <path class="pk d" d="M222 14 C 236 18 244 40 232 52"/>
+ <path class="pk u" d="M232 52 C 244 40 236 18 222 14"/>
+ <g class="globe"><circle cx="214" cy="12" r="7"/><ellipse cx="214" cy="12" rx="3" ry="7"/><path d="M207 12 H221 M208.5 8 H219.5 M208.5 16 H219.5"/></g>
+ <g class="heat"><path d="M110 40 q-4 -6 0 -12 t0 -12"/><path d="M140 34 q-4 -6 0 -12 t0 -12"/><path d="M170 32 q-4 -6 0 -12 t0 -12"/></g>
+ <g class="air"><path d="M34 108 C 24 106 14 110 4 106"/><path d="M36 120 C 26 118 16 122 6 118"/><path d="M38 132 C 28 130 18 134 8 130"/><path d="M40 144 C 30 142 20 146 10 142"/></g>
+ <image class="photo" href="${IMG}" x="30" y="26" width="220" height="145.4"/>
+ <g mask="url(#mp-sil)"><g transform="skewX(-20)"><rect class="glint" x="0" y="0" width="70" height="180" fill="url(#mp-glint)"/></g></g>
+ <circle class="pwr" cx="223.1" cy="127.4" r="8.4"/>
+ <circle class="led" cx="209" cy="120.1" r="1.1"/>
+ <!-- jauges -->
+ <g class="gauges">
+  <g class="g-cpu"><rect class="gb" x="252" y="40" width="9" height="80" rx="4.5"/><rect class="gf" x="252" y="40" width="9" height="80" rx="4.5"/></g>
+  <g class="g-ram"><rect class="gb" x="268" y="40" width="9" height="80" rx="4.5"/><rect class="gf" x="268" y="40" width="9" height="80" rx="4.5"/></g>
+  <g class="g-dsk"><rect class="gb" x="284" y="40" width="9" height="80" rx="4.5"/><rect class="gf" x="284" y="40" width="9" height="80" rx="4.5"/></g>
+  <g clip-path="url(#mp-gclip)"><rect class="gscan" x="250" y="118" width="42" height="3"/></g>
+  <text class="gl" x="256.5" y="130">CPU</text><text class="gl" x="272.5" y="130">RAM</text><text class="gl" x="288.5" y="130">SSD</text>
+  <text class="gv" id="mp-vcpu" x="256.5" y="36">--</text><text class="gv" id="mp-vram" x="272.5" y="36">--</text><text class="gv" id="mp-vdsk" x="288.5" y="36">--</text>
+ </g>
+</svg>`;
+
+  const TILES = [
+    ['cpu', 'mdi:cpu-64-bit', 'show_cpu', 'entity_cpu'],
+    ['temp', 'mdi:thermometer', 'show_temp', 'entity_cpu_temp'],
+    ['ram', 'mdi:memory', 'show_ram', 'entity_ram'],
+    ['disk', 'mdi:harddisk', 'show_disk', 'entity_disk'],
+    ['down', 'mdi:download-network', 'show_network', 'entity_net_down'],
+    ['up', 'mdi:upload-network', 'show_network', 'entity_net_up'],
+    ['uptime', 'mdi:timer-outline', 'show_uptime', 'entity_uptime'],
+    ['power', 'mdi:flash', 'show_power', 'entity_power'],
+  ];
+
+  // débit lisible : garde la famille de l'unité (octets ou bits) et choisit k / M / G
+  const fmtRate = (v, unit, loc) => {
+    const u = String(unit || '');
+    const m = u.replace(/\s/g, '').match(/^([kKMGT]?)(i?)(B|b|bit|byte|bps|Bps)(\/s|ps)?$/);
+    if (isNaN(v)) return ['--', u];
+    if (!m) return [v.toLocaleString(loc, { maximumFractionDigits: v < 10 ? 1 : 0 }), u];
+    const base = v * { '': 1, k: 1e3, K: 1e3, M: 1e6, G: 1e9, T: 1e12 }[m[1]];
+    const bytes = /^(B|byte|Bps)$/.test(m[3]);
+    const [div, p] = base >= 1e9 ? [1e9, 'G'] : base >= 1e6 ? [1e6, 'M'] : base >= 1e3 ? [1e3, 'k'] : [1, ''];
+    const x = base / div;
+    return [x.toLocaleString(loc, { maximumFractionDigits: x < 10 ? 1 : 0 }), bytes ? `${p}B/s` : `${p}bit/s`];
+  };
+  // débit → Mbit/s, quelle que soit l'unité (B/s, kB/s, KiB/s, MB/s, Mbit/s, kbps…)
+  const toMbit = (v, unit) => {
+    if (isNaN(v)) return NaN;
+    const u = String(unit || '').replace(/\s/g, '');
+    const m = u.match(/^([kKMGT]?)(i?)(B|b|bit|byte|bps|Bps)/);
+    if (!m) return v;
+    const mul = { '': 1, k: 1e3, K: 1e3, M: 1e6, G: 1e9, T: 1e12 }[m[1]] * (m[2] ? 1.024 : 1);
+    const bits = /^(B|byte|Bps)$/.test(m[3]) ? 8 : 1;
+    return (v * mul * bits) / 1e6;
+  };
+
+  class ApplianceMiniPcCard extends HTMLElement {
+    get _config() { return this._c; }
+    static getConfigElement() { return document.createElement(TAG + '-editor'); }
+    static getStubConfig(hass) {
+      const ids = Object.keys((hass && hass.states) || {});
+      const f = (re, dom) => ids.find((i) => (!dom || i.startsWith(dom + '.')) && re.test(i)) || '';
+      return {
+        entity_cpu: f(/(processor_use|cpu_(use|usage|load|percent)|cpu_utili[sz]ation)/i, 'sensor'),
+        entity_cpu_temp: f(/(cpu|processor|package).*temp/i, 'sensor'),
+        entity_ram: f(/(memory_use_percent|memory_usage|ram_(used_)?percent|ram_use)/i, 'sensor'),
+        entity_disk: f(/disk_use_percent|disk_usage|(root|disk).*used_percent/i, 'sensor'),
+        entity_uptime: f(/last_boot|uptime/i, 'sensor'),
+      };
+    }
+    setConfig(c) {
+      if (window.applianceSize) window.applianceSize(this, c);
+      if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
+      this._c = { show_status: true, show_cpu: true, show_temp: true, show_ram: true, show_disk: true, show_network: true, show_uptime: true, show_power: true,
+        cpu_busy: 70, temp_max: 85, ram_max: 90, disk_max: 90, off_threshold: 3, ...c };
+      this._built = false;
+      if (this._hass) this._render();
+    }
+    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    getCardSize() { return 5; }
+    getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+
+    _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
+    _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
+    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en'); return T[l] ? l : T[l.slice(0, 2)] ? l.slice(0, 2) : 'en'; }
+    _st(id) { return id && this._hass.states[id]; }
+    _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
+    _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
+    _watts(id) { const v = this._num(id); if (isNaN(v)) return NaN; return this._unit(id, 'W').toLowerCase() === 'kw' ? v * 1000 : v; }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang(), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _more(id) { if (window.applianceMore) window.applianceMore(this, id); }
+    _temp(id) {
+      const s = this._st(id), v = this._num(id);
+      if (!window.applianceTemp) return { v, unit: '°C' };
+      const tt = window.applianceTemp(this._hass, this._c);
+      return { v: tt.conv(v, s), unit: tt.unit };
+    }
+    // temps écoulé depuis le démarrage : capteur horodaté (« Last boot ») ou durée (s, min, h, d)
+    _uptimeSec(id) {
+      const s = this._st(id); if (!s) return NaN;
+      const raw = String(s.state);
+      if (/^\d{4}-\d\d-\d\d/.test(raw)) { const t = Date.parse(raw); return isNaN(t) ? NaN : Math.max(0, (Date.now() - t) / 1000); }
+      const v = this._num(id); if (isNaN(v)) return NaN;
+      const u = this._unit(id, 's').toLowerCase();
+      return v * (/^d/.test(u) ? 86400 : /^h/.test(u) ? 3600 : /^min/.test(u) ? 60 : 1);
+    }
+    _dur(sec) {
+      if (isNaN(sec)) return '--';
+      const d = Math.floor(sec / 86400), h = Math.floor((sec % 86400) / 3600), m = Math.floor((sec % 3600) / 60);
+      return d ? `${d} ${this._t('d')} ${h} h` : h ? `${h} h ${String(m).padStart(2, '0')}` : `${m} min`;
+    }
+
+    _build() {
+      const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
+      root.innerHTML = `<style>${CSS}</style><ha-card>
+        <div class="head"><div class="title" id="mptitle"></div><div class="badge" id="mpbadge"></div></div>
+        ${SVG(this._c.name || this._t('name'))}
+        <div class="alert" id="mpalert"></div>
+        <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${esc(k)}"><div class="l"><ha-icon icon="${esc(ic)}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
+      </ha-card>`;
+      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity || this._c.entity_cpu));
+      root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
+        const t = TILES.find((x) => x[0] === el.dataset.k); this._more(this._c[t[3]]);
+      }));
+      this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
+    }
+
+    _compute() {
+      const c = this._c, s = this._st(c.entity);
+      const cpu = this._num(c.entity_cpu), ram = this._num(c.entity_ram), dsk = this._num(c.entity_disk);
+      const tp = this._temp(c.entity_cpu_temp), pw = this._watts(c.entity_power);
+      const raw = s ? String(s.state).toLowerCase() : '';
+      let st;
+      if (s && /^(unavailable|unknown)$/.test(raw)) st = 'unavailable';
+      else if (s && /^(off|not_home|offline|down|false|stopped)$/.test(raw)) st = 'off';
+      else if (!s && !isNaN(pw) && pw < Number(c.off_threshold) && isNaN(cpu)) st = 'off';
+      else if (!s && c.entity_cpu && isNaN(cpu)) st = 'unavailable';
+      else st = 'running';
+      const alerts = [];
+      if (st === 'running') {
+        if (!isNaN(tp.v) && tp.v >= Number(c.temp_max)) { st = 'hot'; alerts.push('overheating'); }
+        else if (!isNaN(cpu) && cpu >= Number(c.cpu_busy)) st = 'busy';
+        else if (!isNaN(cpu) && cpu < 8) st = 'idle';
+      }
+      if (st !== 'off' && st !== 'unavailable') {
+        if (!isNaN(dsk) && dsk >= Number(c.disk_max)) alerts.push('disk_full');
+        if (!isNaN(ram) && ram >= Number(c.ram_max)) alerts.push('ram_full');
+      }
+      return { st, cpu, ram, dsk, tp, pw, alerts };
+    }
+
+    _render() {
+      if (!this._built) this._build();
+      const c = this._c, r = this._root, card = this._card;
+      const { st, cpu, ram, dsk, tp, pw, alerts } = this._compute();
+      const on = st !== 'off' && st !== 'unavailable';
+      const clamp = (x) => Math.max(0, Math.min(1, isNaN(x) ? 0 : x));
+      // débits en Mbit/s, intensité sur une échelle log (1 kbit/s → 0, 1 Gbit/s → 1)
+      const dn = toMbit(this._num(c.entity_net_down), this._unit(c.entity_net_down)), upr = toMbit(this._num(c.entity_net_up), this._unit(c.entity_net_up));
+      const lvl = (m) => (isNaN(m) || m <= 0.001 ? 0 : clamp((Math.log10(m) + 3) / 6));
+      const nd = lvl(dn), nu = lvl(upr), net = on && (nd > 0 || nu > 0);
+      card.className = `${st}${net ? ' on-net' : ''}${c.animations === false ? ' noanim' : ''}`;
+      const set = (k, v) => card.style.setProperty(k, v);
+      set('--cpu', on ? clamp(cpu / 100).toFixed(3) : 0); set('--ram', clamp(ram / 100).toFixed(3)); set('--dsk', clamp(dsk / 100).toFixed(3));
+      set('--spd', `${(2.4 - clamp(cpu / 100) * 1.9).toFixed(2)}s`);
+      set('--net-d', nd.toFixed(2)); set('--net-u', nu.toFixed(2));
+      set('--sd', `${(2.2 - nd * 1.8).toFixed(2)}s`); set('--su', `${(2.2 - nu * 1.8).toFixed(2)}s`);
+      const pct = (v) => (isNaN(v) ? '--' : `${Math.round(v)}`);
+      r.getElementById('mp-vcpu').textContent = pct(cpu); r.getElementById('mp-vram').textContent = pct(ram); r.getElementById('mp-vdsk').textContent = pct(dsk);
+      r.querySelector('.g-ram .gf').classList.toggle('bad', alerts.includes('ram_full'));
+      r.querySelector('.g-dsk .gf').classList.toggle('bad', alerts.includes('disk_full'));
+      r.querySelector('.g-cpu .gf').classList.toggle('bad', st === 'hot');
+
+      r.getElementById('mptitle').textContent = c.name || this._t('name');
+      const badge = r.getElementById('mpbadge'); badge.textContent = this._t(st); badge.style.display = c.show_status === false ? 'none' : '';
+      const al = r.getElementById('mpalert'); al.textContent = alerts.map((a) => this._t(a)).join(' · '); al.classList.toggle('on', alerts.length > 0);
+
+      const fmtNet = (id) => fmtRate(this._num(id), this._unit(id, ''), this._lang());
+      const V = {
+        cpu: [this._fmt(cpu, 0), '%'], temp: [this._fmt(tp.v, 0), tp.unit], ram: [this._fmt(ram, 0), '%'], disk: [this._fmt(dsk, 0), '%'],
+        down: fmtNet(c.entity_net_down), up: fmtNet(c.entity_net_up), uptime: [this._dur(this._uptimeSec(c.entity_uptime)), ''],
+        power: [this._fmt(pw, 0), 'W'],
+      };
+      const bad = { temp: st === 'hot', ram: alerts.includes('ram_full'), disk: alerts.includes('disk_full') };
+      TILES.forEach(([k, , opt, ent]) => {
+        const el = r.querySelector(`.tile[data-k="${k}"]`), [val, unit] = V[k];
+        el.classList.toggle('hide', !c[ent] || c[opt] === false);
+        el.classList.toggle('bad', !!bad[k]);
+        el.querySelector('.lbl').textContent = this._l(k);
+        const small = document.createElement('small'); small.textContent = unit ?? '';
+        el.querySelector('.v').replaceChildren(String(val ?? ''), small);
+      });
+    }
+  }
+  customElements.define(TAG, ApplianceMiniPcCard);
+
+  /* ---- éditeur visuel ---- */
+  class ApplianceMiniPcCardEditor extends HTMLElement {
+    setConfig(c) { this._c = c; this._draw(); }
+    set hass(h) { this._hass = h; if (this._form) this._form.hass = h; }
+    _draw() {
+      if (!this._form) {
+        this._form = document.createElement('ha-form');
+        this._form.addEventListener('value-changed', (e) => {
+          this._c = e.detail.value;
+          this.dispatchEvent(new CustomEvent('config-changed', { detail: { config: this._c }, bubbles: true, composed: true }));
+        });
+        this.appendChild(this._form);
+      }
+      const ent = (name, domain) => ({ name, selector: { entity: domain ? { domain } : {} } });
+      const num = (name, min, max, step, def, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
+      const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
+      this._form.hass = this._hass;
+      this._form.data = this._c;
+      this._form.schema = [
+        { name: 'name', selector: { text: {} } },
+        { name: 'labels', selector: { object: {} } },
+        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
+        { name: 'transparent', selector: { boolean: {} } },
+        ent('entity'), ent('entity_cpu', 'sensor'), ent('entity_cpu_temp', 'sensor'), ent('entity_ram', 'sensor'), ent('entity_disk', 'sensor'),
+        ent('entity_net_down', 'sensor'), ent('entity_net_up', 'sensor'), ent('entity_uptime', 'sensor'), ent('entity_power', 'sensor'),
+        { type: 'grid', name: '', schema: [num('cpu_busy', 10, 100, 1, 70, '%'), num('temp_max', 40, 110, 1, 85, '°'), num('ram_max', 10, 100, 1, 90, '%'), num('disk_max', 10, 100, 1, 90, '%')] },
+        window.applianceTempField,
+        ...window.applianceActionFields,
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { type: 'grid', name: '', schema: [
+          bool('show_status'), bool('show_cpu'), bool('show_temp'), bool('show_ram'), bool('show_disk'), bool('show_network'), bool('show_uptime'), bool('show_power'), bool('animations'),
+        ] },
+      ];
+      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
+    }
+  }
+  customElements.define(TAG + '-editor', ApplianceMiniPcCardEditor);
+
+  window.customCards = window.customCards || [];
+  window.customCards.push({
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
+    description: 'Mini PC BMAX B9 Max en photo : bouton qui respire, air chaud des ouïes, paquets réseau, jauges CPU / RAM / disque (Glances, System Monitor).', preview: true,
+    documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
+  });
+})();
+
+/* Carte « NAS » — custom:appliance-nas-card (photo détourée du Synology DS423+, 4 baies)
+ * Intégration Synology DSM : volume, 4 disques (état + température), CPU, RAM, température, débits,
+ * sécurité, mise à jour DSM. Animations : LED des disques qui clignotent selon l'activité, faisceau
+ * de lecture qui balaie les baies, paquets qui volent vers l'anneau du volume (écriture) ou en
+ * repartent (lecture), baie en défaut qui pulse en rouge, LED STATUS orange qui clignote en alerte,
+ * bouton bleu qui respire, chaleur au-dessus du boîtier en surchauffe.
+ * États : off, idle, running, busy, warning, unavailable.
+ */
+(() => {
+  const TAG = 'appliance-nas-card';
+  if (customElements.get(TAG)) return;
+
+  const T = {
+    "en": {
+      "name": "NAS",
+      "off": "Off",
+      "idle": "Idle",
+      "running": "Running",
+      "busy": "Active",
+      "warning": "Warning",
+      "unavailable": "Unavailable",
+      "volume": "Volume",
+      "cpu": "CPU",
+      "ram": "RAM",
+      "temp": "Temperature",
+      "disks": "Disks",
+      "disk": "Disk",
+      "down": "Download",
+      "up": "Upload",
+      "power": "Power",
+      "volume_alert": "Volume degraded",
+      "drive_alert": "Disk {n}: problem",
+      "hot": "Overheating",
+      "volume_full": "Volume almost full",
+      "security": "Security warning",
+      "update": "⬆ DSM update available"
+    },
+    "de": {
+      "name": "NAS",
+      "off": "Aus",
+      "idle": "Leerlauf",
+      "running": "Läuft",
+      "busy": "Sehr aktiv",
+      "warning": "Warnung",
+      "unavailable": "Nicht verfügbar",
+      "volume": "Volume",
+      "cpu": "CPU",
+      "ram": "RAM",
+      "temp": "Temperatur",
+      "disks": "Festplatten",
+      "disk": "Festplatte",
+      "down": "Download",
+      "up": "Upload",
+      "power": "Leistung",
+      "volume_alert": "Volume beeinträchtigt",
+      "drive_alert": "Festplatte {n}: Problem",
+      "hot": "Überhitzung",
+      "volume_full": "Volume fast voll",
+      "security": "Sicherheitswarnung",
+      "update": "⬆ DSM-Update verfügbar"
+    },
+    "fr": {
+      "name": "NAS",
+      "off": "Éteint",
+      "idle": "Au repos",
+      "running": "En marche",
+      "busy": "Très actif",
+      "warning": "Alerte",
+      "unavailable": "Indisponible",
+      "volume": "Volume",
+      "cpu": "CPU",
+      "ram": "RAM",
+      "temp": "Température",
+      "disks": "Disques",
+      "disk": "Disque",
+      "down": "Réception",
+      "up": "Envoi",
+      "power": "Puissance",
+      "volume_alert": "Volume dégradé",
+      "drive_alert": "Disque {n} : problème",
+      "hot": "Surchauffe",
+      "volume_full": "Volume presque plein",
+      "security": "Alerte de sécurité",
+      "update": "⬆ Mise à jour DSM disponible"
+    },
+    "it": {
+      "name": "NAS",
+      "off": "Spento",
+      "idle": "Inattivo",
+      "running": "In funzione",
+      "busy": "Molto attivo",
+      "warning": "Avviso",
+      "unavailable": "Non disponibile",
+      "volume": "Volume",
+      "cpu": "CPU",
+      "ram": "RAM",
+      "temp": "Temperatura",
+      "disks": "Dischi",
+      "disk": "Disco",
+      "down": "Download",
+      "up": "Upload",
+      "power": "Potenza",
+      "volume_alert": "Volume degradato",
+      "drive_alert": "Disco {n}: problema",
+      "hot": "Surriscaldamento",
+      "volume_full": "Volume quasi pieno",
+      "security": "Avviso di sicurezza",
+      "update": "⬆ Aggiornamento DSM disponibile"
+    },
+    "nb": {
+      "name": "NAS",
+      "off": "Av",
+      "idle": "Inaktiv",
+      "running": "Kjører",
+      "busy": "Svært aktiv",
+      "warning": "Varsel",
+      "unavailable": "Utilgjengelig",
+      "volume": "Volum",
+      "cpu": "CPU",
+      "ram": "RAM",
+      "temp": "Temperatur",
+      "disks": "Disker",
+      "disk": "Disk",
+      "down": "Ned",
+      "up": "Opp",
+      "power": "Effekt",
+      "volume_alert": "Volumet er degradert",
+      "drive_alert": "Disk {n}: problem",
+      "hot": "Overoppheting",
+      "volume_full": "Volumet er nesten fullt",
+      "security": "Sikkerhetsvarsel",
+      "update": "⬆ DSM-oppdatering tilgjengelig"
+    },
+    "nl": {
+      "name": "NAS",
+      "off": "Uit",
+      "idle": "Inactief",
+      "running": "Actief",
+      "busy": "Zeer actief",
+      "warning": "Waarschuwing",
+      "unavailable": "Niet beschikbaar",
+      "volume": "Volume",
+      "cpu": "CPU",
+      "ram": "RAM",
+      "temp": "Temperatuur",
+      "disks": "Schijven",
+      "disk": "Schijf",
+      "down": "Download",
+      "up": "Upload",
+      "power": "Vermogen",
+      "volume_alert": "Volume gedegradeerd",
+      "drive_alert": "Schijf {n}: probleem",
+      "hot": "Oververhitting",
+      "volume_full": "Volume bijna vol",
+      "security": "Beveiligingswaarschuwing",
+      "update": "⬆ DSM-update beschikbaar"
+    },
+    "ro": {
+      "name": "NAS",
+      "off": "Oprit",
+      "idle": "Inactiv",
+      "running": "Pornit",
+      "busy": "Foarte activ",
+      "warning": "Avertizare",
+      "unavailable": "Indisponibil",
+      "volume": "Volum",
+      "cpu": "CPU",
+      "ram": "RAM",
+      "temp": "Temperatură",
+      "disks": "Discuri",
+      "disk": "Disc",
+      "down": "Descărcare",
+      "up": "Încărcare",
+      "power": "Putere",
+      "volume_alert": "Volum degradat",
+      "drive_alert": "Disc {n}: problemă",
+      "hot": "Supraîncălzire",
+      "volume_full": "Volum aproape plin",
+      "security": "Avertizare de securitate",
+      "update": "⬆ Actualizare DSM disponibilă"
+    },
+    "ru": {
+      "name": "NAS",
+      "off": "Выключен",
+      "idle": "Простой",
+      "running": "Работает",
+      "busy": "Активен",
+      "warning": "Предупреждение",
+      "unavailable": "Недоступно",
+      "volume": "Том",
+      "cpu": "ЦП",
+      "ram": "ОЗУ",
+      "temp": "Температура",
+      "disks": "Диски",
+      "disk": "Диск",
+      "down": "Загрузка",
+      "up": "Отдача",
+      "power": "Мощность",
+      "volume_alert": "Том деградирован",
+      "drive_alert": "Диск {n}: проблема",
+      "hot": "Перегрев",
+      "volume_full": "Том почти заполнен",
+      "security": "Предупреждение безопасности",
+      "update": "⬆ Доступно обновление DSM"
+    },
+    "sr": {
+      "name": "NAS",
+      "off": "Искључен",
+      "idle": "Мирује",
+      "running": "Ради",
+      "busy": "Активан",
+      "warning": "Упозорење",
+      "unavailable": "Недоступно",
+      "volume": "Волумен",
+      "cpu": "ЦПУ",
+      "ram": "РАМ",
+      "temp": "Температура",
+      "disks": "Дискови",
+      "disk": "Диск",
+      "down": "Преузимање",
+      "up": "Отпремање",
+      "power": "Снага",
+      "volume_alert": "Волумен је деградиран",
+      "drive_alert": "Диск {n}: проблем",
+      "hot": "Прегревање",
+      "volume_full": "Волумен је скоро пун",
+      "security": "Безбедносно упозорење",
+      "update": "⬆ Доступно ажурирање DSM"
+    },
+    "sr-Latn": {
+      "name": "NAS",
+      "off": "Isključen",
+      "idle": "Miruje",
+      "running": "Radi",
+      "busy": "Aktivan",
+      "warning": "Upozorenje",
+      "unavailable": "Nedostupno",
+      "volume": "Volumen",
+      "cpu": "CPU",
+      "ram": "RAM",
+      "temp": "Temperatura",
+      "disks": "Diskovi",
+      "disk": "Disk",
+      "down": "Preuzimanje",
+      "up": "Otpremanje",
+      "power": "Snaga",
+      "volume_alert": "Volumen je degradiran",
+      "drive_alert": "Disk {n}: problem",
+      "hot": "Pregrevanje",
+      "volume_full": "Volumen je skoro pun",
+      "security": "Bezbednosno upozorenje",
+      "update": "⬆ Dostupno ažuriranje DSM"
+    }
+  };
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+  const IMG = 'data:image/webp;base64,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';
+  const BAD = /crash|fail|degrad|warn|attention|critical|abnormal|danger|broken|error/i; // états DSM d'un disque / volume en défaut
+  const EMPTY = /not_?use|not_?insert|none|empty|absent/i;
+
+  const CSS = `
+:host{display:block;height:100%}ha-card{height:100%;box-sizing:border-box;display:block;padding:10px 12px 12px;overflow:hidden;
+  --ns-ok:var(--appliance-ok-color,#43a047);--ns-warn:#ffa31a;--ns-alert:var(--appliance-alert-color,#db4437);--ns-blue:#2f9bff;
+  --vol:0;--act:0;--blink:1s;--net-d:0;--net-u:0;--tmp:0}
+.head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
+.idle .badge,.running .badge{background:color-mix(in srgb,var(--ns-ok) 22%,transparent);color:var(--ns-ok)}
+.busy .badge{background:color-mix(in srgb,var(--ns-blue) 22%,transparent);color:var(--ns-blue)}
+.warning .badge{background:color-mix(in srgb,var(--ns-alert) 22%,transparent);color:var(--ns-alert)}
+.alert{display:none;margin-top:4px;font-size:11px;color:var(--ns-alert);font-weight:500;text-align:center}
+.alert.on{display:block}
+.info{display:none;margin-top:2px;font-size:11px;color:var(--ns-blue);font-weight:500;text-align:center;cursor:pointer}
+.info.on{display:block}
+svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible;cursor:pointer}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:6px;margin-top:6px}
+.tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
+.tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
+.tile .l span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tile .l ha-icon{--mdc-icon-size:13px;flex:none}
+.tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
+.tile.hide{display:none}.tile.bad .v{color:var(--ns-alert)}
+
+/* ---- illustration ---- */
+.photo{transition:filter .6s}
+.off .photo,.unavailable .photo{filter:grayscale(.5) brightness(.6)}
+.aura{opacity:0;transition:opacity .8s}
+.idle .aura,.running .aura,.busy .aura{opacity:calc(.2 + var(--act) * .6)}
+.warning .aura{opacity:.85;animation:nsaura 1.6s ease-in-out infinite}
+.warning .aura stop{stop-color:#ff3b30}
+@keyframes nsaura{50%{opacity:.3}}
+/* LED : on masque les LED vertes de la photo puis on les rallume selon l'état */
+.ledmask{fill:#17191c}
+.led{opacity:0;fill:#3ddc5a;filter:drop-shadow(0 0 1.6px #3ddc5a)}
+.on .led{opacity:1}
+.on .led.dk{animation:nsblink var(--blink) steps(2) infinite;animation-delay:var(--dl,0s)}
+.idle .led.dk{animation:none}
+.led.bad{fill:#ff9800;filter:drop-shadow(0 0 2px #ff9800);animation:nsblink .7s steps(2) infinite!important}
+.led.empty{opacity:0!important}
+.warning .led.st{fill:#ff9800;filter:drop-shadow(0 0 2px #ff9800);animation:nsblink 1s steps(2) infinite}
+@keyframes nsblink{50%{opacity:.15}}
+.pwr{fill:none;stroke:var(--ns-blue);stroke-width:1.3;opacity:0;filter:drop-shadow(0 0 2.5px var(--ns-blue))}
+.on .pwr{opacity:1;animation:nsbreath 3.2s ease-in-out infinite}
+@keyframes nsbreath{50%{opacity:.35}}
+/* faisceau de lecture qui balaie les baies */
+.beam{opacity:0}
+.busy .beam,.running .beam{opacity:calc(.25 + var(--act) * .75);animation:nsbeam calc(3.4s - var(--act) * 1.8s) ease-in-out infinite}
+@keyframes nsbeam{0%{transform:translateX(-30px)}50%{transform:translateX(112px)}100%{transform:translateX(-30px)}}
+.bay{fill:#ff3b30;opacity:0}
+.bay.bad{animation:nsbay 1.2s ease-in-out infinite}
+@keyframes nsbay{50%{opacity:.38}}
+.bayhit{fill:transparent}
+/* chaleur au-dessus du boîtier */
+.heat path{fill:none;stroke:#ff6e40;stroke-width:1.5;stroke-linecap:round;opacity:0;transform-box:fill-box;transform-origin:50% 100%}
+.hot .heat path{animation:nsheat 2s ease-in infinite}
+.heat path:nth-child(2){animation-delay:-.65s}.heat path:nth-child(3){animation-delay:-1.3s}
+@keyframes nsheat{0%{opacity:0;transform:translateY(6px) scaleY(.6)}35%{opacity:.85}100%{opacity:0;transform:translateY(-14px) scaleY(1.1)}}
+/* flux de données : vers l'anneau (téléversement) et depuis l'anneau (téléchargement) */
+.flow{fill:none;stroke-width:2.4;stroke-linecap:round;opacity:0}
+.flow.d{stroke:#4fc3ff;stroke-dasharray:.1 11}.flow.u{stroke:#5df28a;stroke-dasharray:.1 14}
+.on .flow.d{opacity:calc(var(--net-d) * 1);animation:nsfd var(--sd,1.6s) linear infinite}
+.on .flow.u{opacity:calc(var(--net-u) * 1);animation:nsfu var(--su,1.6s) linear infinite}
+@keyframes nsfd{to{stroke-dashoffset:-22}}@keyframes nsfu{to{stroke-dashoffset:28}}
+/* anneau du volume */
+.ring-bg{fill:none;stroke:color-mix(in srgb,var(--primary-text-color) 12%,transparent);stroke-width:6}
+.ring{fill:none;stroke:url(#ns-ring);stroke-width:6;stroke-linecap:round;stroke-dasharray:0 100;transition:stroke-dasharray 1.2s cubic-bezier(.3,1.3,.5,1);transform:rotate(-90deg);transform-origin:262px 60px}
+.ring.full{stroke:#ff3b30}
+.ring-glow{fill:none;stroke:#7c4dff;stroke-width:1;opacity:0;transform-origin:262px 60px}
+.on .ring-glow{animation:nsspin 6s linear infinite;opacity:.6}
+@keyframes nsspin{to{transform:rotate(360deg)}}
+.rv{fill:var(--primary-text-color);font:700 11px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif);text-anchor:middle}
+.rl{fill:var(--secondary-text-color);font:600 6px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif);text-anchor:middle;letter-spacing:.06em}
+/* mini barres réseau et température */
+.mb{fill:color-mix(in srgb,var(--primary-text-color) 10%,transparent)}
+.mf{transform-box:fill-box;transform-origin:0 50%;transition:transform 1s cubic-bezier(.3,1.3,.5,1)}
+.mf.d{fill:#4fc3ff;transform:scaleX(var(--net-d))}.mf.u{fill:#5df28a;transform:scaleX(var(--net-u))}.mf.t{fill:url(#ns-temp);transform:scaleX(var(--tmp))}
+.hot .mf.t{animation:nsblink .8s steps(2) infinite}
+.mi{fill:var(--secondary-text-color);font:600 6.5px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif)}
+.off .hud,.unavailable .hud{opacity:.4}
+.noanim *{animation:none!important;transition:none!important}
+`;
+
+  /* Photo 400 × 299 px réduite à 200 de large, posée en (12, 22) : px photo × 0,5 + décalage */
+  const BAYS = [[32.5, 21.5], [58, 22], [83.5, 22], [109, 24]];
+  const LEDY = [70, 79, 88, 97.5];
+  const SVG = (label) => `
+<svg viewBox="0 0 300 180" role="img" aria-label="${esc(label)}">
+ <defs>
+  <radialGradient id="ns-aura"><stop offset="0" stop-color="#2f9bff" stop-opacity=".5"/><stop offset="1" stop-color="#2f9bff" stop-opacity="0"/></radialGradient>
+  <radialGradient id="ns-shadow"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  <linearGradient id="ns-beam" x1="0" x2="1"><stop offset="0" stop-color="#8fd3ff" stop-opacity="0"/><stop offset=".5" stop-color="#8fd3ff" stop-opacity=".45"/><stop offset="1" stop-color="#8fd3ff" stop-opacity="0"/></linearGradient>
+  <linearGradient id="ns-ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00e5ff"/><stop offset="1" stop-color="#7c4dff"/></linearGradient>
+  <linearGradient id="ns-temp" x1="0" x2="1"><stop offset="0" stop-color="#4fc3ff"/><stop offset=".6" stop-color="#ffc400"/><stop offset="1" stop-color="#ff3b30"/></linearGradient>
+  <clipPath id="ns-bays">${BAYS.map(([x, w]) => `<rect x="${x}" y="47" width="${w}" height="94" rx="1.5"/>`).join('')}</clipPath>
+ </defs>
+ <ellipse class="aura" cx="112" cy="96" rx="112" ry="78" fill="url(#ns-aura)"/>
+ <ellipse cx="112" cy="171" rx="100" ry="6" fill="url(#ns-shadow)"/>
+ <g class="heat"><path d="M70 22 q-4 -6 0 -12 t0 -12"/><path d="M110 20 q-4 -6 0 -12 t0 -12"/><path d="M150 20 q-4 -6 0 -12 t0 -12"/></g>
+ <path class="flow d" d="M236 60 C 210 20 170 10 140 28"/>
+ <path class="flow u" d="M140 28 C 170 10 210 20 236 60"/>
+ <image class="photo" href="${IMG}" x="12" y="22" width="200" height="149.5"/>
+ ${BAYS.map(([x, w], i) => `<rect class="bay" data-i="${i}" x="${x}" y="47" width="${w}" height="94" rx="1.5"/>`).join('')}
+ <g clip-path="url(#ns-bays)"><rect class="beam" x="20" y="45" width="26" height="100" fill="url(#ns-beam)"/></g>
+ <g>${[61, ...LEDY].map((y) => `<circle class="ledmask" cx="164.5" cy="${y}" r="1.9"/>`).join('')}</g>
+ <circle class="led st" cx="164.5" cy="61" r="1.3"/>
+ ${LEDY.map((y, i) => `<circle class="led dk" data-i="${i}" cx="164.5" cy="${y}" r="1.3" style="--dl:-${(i * 0.37).toFixed(2)}s"/>`).join('')}
+ <circle class="pwr" cx="157" cy="150.5" r="5.6"/>
+ ${BAYS.map(([x, w], i) => `<rect class="bayhit" data-i="${i}" x="${x}" y="47" width="${w}" height="94"><title></title></rect>`).join('')}
+ <!-- volume et barres -->
+ <g class="hud">
+  <circle class="ring-bg" cx="262" cy="60" r="26"/>
+  <circle class="ring" cx="262" cy="60" r="26" pathLength="100"/>
+  <circle class="ring-glow" cx="262" cy="60" r="32" stroke-dasharray="6 14"/>
+  <text class="rv" id="ns-vol" x="262" y="62">--</text>
+  <text class="rl" id="ns-voll" x="262" y="71">VOLUME</text>
+  <text class="mi" x="226" y="112">↓</text><rect class="mb" x="234" y="107" width="62" height="5" rx="2.5"/><rect class="mf d" x="234" y="107" width="62" height="5" rx="2.5"/>
+  <text class="mi" x="226" y="127">↑</text><rect class="mb" x="234" y="122" width="62" height="5" rx="2.5"/><rect class="mf u" x="234" y="122" width="62" height="5" rx="2.5"/>
+  <text class="mi" x="225" y="142">°</text><rect class="mb" x="234" y="137" width="62" height="5" rx="2.5"/><rect class="mf t" x="234" y="137" width="62" height="5" rx="2.5"/>
+ </g>
+</svg>`;
+
+  const TILES = [
+    ['volume', 'mdi:database', 'show_volume', 'entity_volume_used'],
+    ['cpu', 'mdi:cpu-64-bit', 'show_cpu', 'entity_cpu'],
+    ['ram', 'mdi:memory', 'show_ram', 'entity_ram'],
+    ['temp', 'mdi:thermometer', 'show_temp', 'entity_temp'],
+    ['disks', 'mdi:harddisk', 'show_disks', '_disks'],
+    ['down', 'mdi:download-network', 'show_network', 'entity_net_down'],
+    ['up', 'mdi:upload-network', 'show_network', 'entity_net_up'],
+    ['power', 'mdi:flash', 'show_power', 'entity_power'],
+  ];
+
+  // débit lisible : garde la famille de l'unité (octets ou bits) et choisit k / M / G
+  const fmtRate = (v, unit, loc) => {
+    const u = String(unit || '');
+    const m = u.replace(/\s/g, '').match(/^([kKMGT]?)(i?)(B|b|bit|byte|bps|Bps)(\/s|ps)?$/);
+    if (isNaN(v)) return ['--', u];
+    if (!m) return [v.toLocaleString(loc, { maximumFractionDigits: v < 10 ? 1 : 0 }), u];
+    const base = v * { '': 1, k: 1e3, K: 1e3, M: 1e6, G: 1e9, T: 1e12 }[m[1]];
+    const bytes = /^(B|byte|Bps)$/.test(m[3]);
+    const [div, p] = base >= 1e9 ? [1e9, 'G'] : base >= 1e6 ? [1e6, 'M'] : base >= 1e3 ? [1e3, 'k'] : [1, ''];
+    const x = base / div;
+    return [x.toLocaleString(loc, { maximumFractionDigits: x < 10 ? 1 : 0 }), bytes ? `${p}B/s` : `${p}bit/s`];
+  };
+  const toMbit = (v, unit) => {
+    if (isNaN(v)) return NaN;
+    const u = String(unit || '').replace(/\s/g, '');
+    const m = u.match(/^([kKMGT]?)(i?)(B|b|bit|byte|bps|Bps)/);
+    if (!m) return v;
+    const mul = { '': 1, k: 1e3, K: 1e3, M: 1e6, G: 1e9, T: 1e12 }[m[1]] * (m[2] ? 1.024 : 1);
+    return (v * mul * (/^(B|byte|Bps)$/.test(m[3]) ? 8 : 1)) / 1e6;
+  };
+
+  class ApplianceNasCard extends HTMLElement {
+    get _config() { return this._c; }
+    static getConfigElement() { return document.createElement(TAG + '-editor'); }
+    static getStubConfig(hass) {
+      const ids = Object.keys((hass && hass.states) || {});
+      const f = (re, dom) => ids.find((i) => (!dom || i.startsWith(dom + '.')) && re.test(i)) || '';
+      const o = {
+        entity_volume: f(/volume_1_status/i, 'sensor'),
+        entity_volume_used: f(/volume_1_volume_used|volume_1_.*used.*percent/i, 'sensor'),
+        entity_cpu: f(/cpu_utili[sz]ation_total|cpu_load_total/i, 'sensor'),
+        entity_ram: f(/memory_usage_real|memory_usage/i, 'sensor'),
+        entity_temp: f(/(ds\d|nas|synology|diskstation).*_temperature$/i, 'sensor'),
+        entity_net_down: f(/download_throughput/i, 'sensor'),
+        entity_net_up: f(/upload_throughput/i, 'sensor'),
+      };
+      for (let i = 1; i <= 4; i++) {
+        o[`entity_drive_${i}`] = f(new RegExp(`(drive|disk)_${i}_status`, 'i'), 'sensor');
+        o[`entity_drive_${i}_temp`] = f(new RegExp(`(drive|disk)_${i}_temperature`, 'i'), 'sensor');
+      }
+      return Object.fromEntries(Object.entries(o).filter(([, v]) => v));
+    }
+    setConfig(c) {
+      if (window.applianceSize) window.applianceSize(this, c);
+      if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
+      this._c = { show_status: true, show_volume: true, show_cpu: true, show_ram: true, show_temp: true, show_disks: true, show_network: true, show_power: true,
+        cpu_busy: 60, temp_max: 60, disk_temp_max: 50, volume_max: 85, ...c };
+      this._built = false;
+      if (this._hass) this._render();
+    }
+    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    getCardSize() { return 5; }
+    getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+
+    _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
+    _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
+    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en'); return T[l] ? l : T[l.slice(0, 2)] ? l.slice(0, 2) : 'en'; }
+    _st(id) { return id && this._hass.states[id]; }
+    _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
+    _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
+    _watts(id) { const v = this._num(id); if (isNaN(v)) return NaN; return this._unit(id, 'W').toLowerCase() === 'kw' ? v * 1000 : v; }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang(), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _more(id) { if (window.applianceMore) window.applianceMore(this, id); }
+    _temp(id) {
+      const s = this._st(id), v = this._num(id);
+      if (!window.applianceTemp) return { v, unit: '°C' };
+      const tt = window.applianceTemp(this._hass, this._c);
+      return { v: tt.conv(v, s), unit: tt.unit };
+    }
+
+    _build() {
+      const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
+      root.innerHTML = `<style>${CSS}</style><ha-card>
+        <div class="head"><div class="title" id="nstitle"></div><div class="badge" id="nsbadge"></div></div>
+        ${SVG(this._c.name || this._t('name'))}
+        <div class="alert" id="nsalert"></div><div class="info" id="nsinfo"></div>
+        <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${esc(k)}"><div class="l"><ha-icon icon="${esc(ic)}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
+      </ha-card>`;
+      const svg = root.querySelector('svg');
+      // clic sur une baie : fiche du disque ; ailleurs : action de l'illustration
+      svg.addEventListener('click', (e) => {
+        const b = e.target.closest && e.target.closest('.bayhit'); if (!b) return;
+        const id = this._c[`entity_drive_${+b.dataset.i + 1}`]; if (id) { e.stopImmediatePropagation(); this._more(id); }
+      }, true);
+      window.applianceBindIllus(this, svg, () => this._more(this._c.entity || this._c.entity_volume || this._c.entity_cpu));
+      root.getElementById('nsinfo').addEventListener('click', () => this._more(this._c.entity_update));
+      root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
+        const t = TILES.find((x) => x[0] === el.dataset.k);
+        this._more(t[3] === '_disks' ? [1, 2, 3, 4].map((i) => this._c[`entity_drive_${i}`]).find(Boolean) : this._c[t[3]]);
+      }));
+      this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
+    }
+
+    _drives() {
+      const c = this._c;
+      return [1, 2, 3, 4].map((i) => {
+        const id = c[`entity_drive_${i}`], s = this._st(id), raw = s ? String(s.state) : '';
+        const tp = this._temp(c[`entity_drive_${i}_temp`]);
+        const empty = !!s && EMPTY.test(raw);
+        const bad = !!s && !empty && (BAD.test(raw) || (!isNaN(tp.v) && tp.v >= Number(c.disk_temp_max)));
+        return { i, id, raw, tp, empty, bad, known: !!s };
+      });
+    }
+
+    _compute() {
+      const c = this._c, s = this._st(c.entity), raw = s ? String(s.state).toLowerCase() : '';
+      const cpu = this._num(c.entity_cpu), ram = this._num(c.entity_ram), vol = this._num(c.entity_volume_used);
+      const tp = this._temp(c.entity_temp), pw = this._watts(c.entity_power);
+      const dn = toMbit(this._num(c.entity_net_down), this._unit(c.entity_net_down, 'kB/s')), up = toMbit(this._num(c.entity_net_up), this._unit(c.entity_net_up, 'kB/s'));
+      const drives = this._drives();
+      let st;
+      if (s && /^(unavailable|unknown)$/.test(raw)) st = 'unavailable';
+      else if (s && /^(off|not_home|offline|down|false)$/.test(raw)) st = 'off';
+      else if (!s && c.entity_cpu && isNaN(cpu) && isNaN(vol)) st = 'unavailable';
+      else st = 'running';
+      const alerts = [];
+      if (st === 'running') {
+        const vs = this._st(c.entity_volume);
+        if (vs && BAD.test(String(vs.state))) alerts.push(this._t('volume_alert'));
+        drives.filter((d) => d.bad).forEach((d) => alerts.push(this._t('drive_alert').replace('{n}', d.i)));
+        if (!isNaN(tp.v) && tp.v >= Number(c.temp_max)) alerts.push(this._t('hot'));
+        if (!isNaN(vol) && vol >= Number(c.volume_max)) alerts.push(this._t('volume_full'));
+        const sec = this._st(c.entity_security);
+        if (sec && (sec.state === 'on' || BAD.test(String(sec.state)) || /outofdate|risk/i.test(String(sec.state)))) alerts.push(this._t('security'));
+      }
+      const lvl = (m) => (isNaN(m) || m <= 0.001 ? 0 : Math.max(0, Math.min(1, (Math.log10(m) + 3) / 6)));
+      const nd = lvl(dn), nu = lvl(up);
+      const act = Math.max(isNaN(cpu) ? 0 : cpu / 100, nd, nu);
+      if (st === 'running') {
+        if (alerts.length) st = 'warning';
+        else if ((!isNaN(cpu) && cpu >= Number(c.cpu_busy)) || Math.max(nd, nu) > 0.7) st = 'busy';
+        else if (act < 0.2) st = 'idle';
+      }
+      const hot = !isNaN(tp.v) && tp.v >= Number(c.temp_max);
+      return { st, cpu, ram, vol, tp, pw, nd, nu, act, drives, alerts, hot };
+    }
+
+    _render() {
+      if (!this._built) this._build();
+      const c = this._c, r = this._root, card = this._card;
+      const { st, cpu, ram, vol, tp, pw, nd, nu, act, drives, alerts, hot } = this._compute();
+      const on = st !== 'off' && st !== 'unavailable';
+      const clamp = (x) => Math.max(0, Math.min(1, isNaN(x) ? 0 : x));
+      card.className = `${st}${on ? ' on' : ''}${hot && on ? ' hot' : ''}${c.animations === false ? ' noanim' : ''}`;
+      const set = (k, v) => card.style.setProperty(k, v);
+      set('--vol', clamp(vol / 100).toFixed(3)); set('--act', on ? act.toFixed(2) : 0);
+      set('--blink', `${(1.1 - act * 0.9).toFixed(2)}s`);
+      set('--net-d', on ? nd.toFixed(2) : 0); set('--net-u', on ? nu.toFixed(2) : 0);
+      set('--sd', `${(2.2 - nd * 1.8).toFixed(2)}s`); set('--su', `${(2.2 - nu * 1.8).toFixed(2)}s`);
+      // barre de température : 20 °C → vide, temp_max → pleine (échelle dans l'unité d'affichage)
+      const tmax = Number(c.temp_max), tmin = tp.unit === '°F' ? 68 : 20;
+      set('--tmp', clamp((tp.v - tmin) / (tmax - tmin)).toFixed(3));
+      const ring = r.querySelector('.ring');
+      ring.classList.toggle('full', !isNaN(vol) && vol >= Number(c.volume_max));
+      ring.style.strokeDasharray = `${(clamp(vol / 100) * 100).toFixed(1)} 100`;
+      r.getElementById('ns-vol').textContent = isNaN(vol) ? '--' : `${Math.round(vol)}%`;
+      r.getElementById('ns-voll').textContent = this._l('volume').toUpperCase();
+      drives.forEach((d) => {
+        const led = r.querySelector(`.led.dk[data-i="${d.i - 1}"]`);
+        led.classList.toggle('bad', on && d.bad); led.classList.toggle('empty', d.empty);
+        r.querySelector(`.bay[data-i="${d.i - 1}"]`).classList.toggle('bad', on && d.bad);
+        const tip = r.querySelector(`.bayhit[data-i="${d.i - 1}"] title`);
+        tip.textContent = `${this._t('disk')} ${d.i}${d.known ? ` · ${d.raw}` : ''}${isNaN(d.tp.v) ? '' : ` · ${this._fmt(d.tp.v, 0)} ${d.tp.unit}`}`;
+      });
+
+      r.getElementById('nstitle').textContent = c.name || this._t('name');
+      const badge = r.getElementById('nsbadge'); badge.textContent = this._t(st); badge.style.display = c.show_status === false ? 'none' : '';
+      const al = r.getElementById('nsalert'); al.textContent = alerts.join(' · '); al.classList.toggle('on', alerts.length > 0);
+      const upd = this._st(c.entity_update);
+      const info = r.getElementById('nsinfo'); info.textContent = this._t('update'); info.classList.toggle('on', !!upd && upd.state === 'on');
+
+      const fmtNet = (id) => fmtRate(this._num(id), this._unit(id, ''), this._lang());
+      const known = drives.filter((d) => d.known && !d.empty), ok = known.filter((d) => !d.bad).length;
+      const temps = drives.map((d) => d.tp.v).filter((v) => !isNaN(v));
+      const V = {
+        volume: [this._fmt(vol, 0), '%'], cpu: [this._fmt(cpu, 0), '%'], ram: [this._fmt(ram, 0), '%'], temp: [this._fmt(tp.v, 0), tp.unit],
+        disks: known.length ? [`${ok}/${known.length}`, temps.length ? `${this._fmt(Math.max(...temps), 0)}${tp.unit}` : ''] : ['--', ''],
+        down: fmtNet(c.entity_net_down), up: fmtNet(c.entity_net_up), power: [this._fmt(pw, 0), 'W'],
+      };
+      const bad = { volume: !isNaN(vol) && vol >= Number(c.volume_max), temp: hot, disks: ok < known.length };
+      TILES.forEach(([k, , opt, ent]) => {
+        const el = r.querySelector(`.tile[data-k="${k}"]`), [val, unit] = V[k];
+        const has = ent === '_disks' ? known.length > 0 : !!c[ent];
+        el.classList.toggle('hide', !has || c[opt] === false);
+        el.classList.toggle('bad', !!bad[k]);
+        el.querySelector('.lbl').textContent = this._l(k);
+        const small = document.createElement('small'); small.textContent = unit ?? '';
+        el.querySelector('.v').replaceChildren(String(val ?? ''), small);
+      });
+    }
+  }
+  customElements.define(TAG, ApplianceNasCard);
+
+  /* ---- éditeur visuel ---- */
+  class ApplianceNasCardEditor extends HTMLElement {
+    setConfig(c) { this._c = c; this._draw(); }
+    set hass(h) { this._hass = h; if (this._form) this._form.hass = h; }
+    _draw() {
+      if (!this._form) {
+        this._form = document.createElement('ha-form');
+        this._form.addEventListener('value-changed', (e) => {
+          this._c = e.detail.value;
+          this.dispatchEvent(new CustomEvent('config-changed', { detail: { config: this._c }, bubbles: true, composed: true }));
+        });
+        this.appendChild(this._form);
+      }
+      const ent = (name, domain) => ({ name, selector: { entity: domain ? { domain } : {} } });
+      const num = (name, min, max, step, def, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
+      const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
+      this._form.hass = this._hass;
+      this._form.data = this._c;
+      this._form.schema = [
+        { name: 'name', selector: { text: {} } },
+        { name: 'labels', selector: { object: {} } },
+        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
+        { name: 'transparent', selector: { boolean: {} } },
+        ent('entity'), ent('entity_volume', 'sensor'), ent('entity_volume_used', 'sensor'), ent('entity_cpu', 'sensor'), ent('entity_ram', 'sensor'), ent('entity_temp', 'sensor'),
+        ent('entity_net_down', 'sensor'), ent('entity_net_up', 'sensor'),
+        { type: 'grid', name: '', schema: [1, 2, 3, 4].flatMap((i) => [ent(`entity_drive_${i}`, 'sensor'), ent(`entity_drive_${i}_temp`, 'sensor')]) },
+        ent('entity_security', 'binary_sensor'), ent('entity_update', 'update'), ent('entity_power', 'sensor'),
+        { type: 'grid', name: '', schema: [num('cpu_busy', 10, 100, 1, 60, '%'), num('volume_max', 10, 100, 1, 85, '%'), num('temp_max', 30, 100, 1, 60, '°'), num('disk_temp_max', 30, 80, 1, 50, '°')] },
+        window.applianceTempField,
+        ...window.applianceActionFields,
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { type: 'grid', name: '', schema: [
+          bool('show_status'), bool('show_volume'), bool('show_cpu'), bool('show_ram'), bool('show_temp'), bool('show_disks'), bool('show_network'), bool('show_power'), bool('animations'),
+        ] },
+      ];
+      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
+    }
+  }
+  customElements.define(TAG + '-editor', ApplianceNasCardEditor);
+
+  window.customCards = window.customCards || [];
+  window.customCards.push({
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
+    description: 'NAS Synology DS423+ en photo : LED des 4 disques selon l\'activité, faisceau sur les baies, disque en défaut, anneau du volume, flux réseau (Synology DSM).', preview: true,
+    documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
+  });
+})();
+
+/* Carte « Box TV » — custom:appliance-tv-box-card
+ * Photos détourées : Freebox Player Pop (model: freebox_pop), Xiaomi TV Box S (xiaomi_tv_box_s),
+ * NVIDIA Shield TV Pro (shield_tv_pro). Entité media_player (Android TV Remote, Cast, Freebox…),
+ * remote facultatif pour l'allumage.
+ * Animations : écran flottant avec pochette en fondu « Ken Burns », ambilight à la couleur de la
+ * pochette, aurore animée sur l'accueil, égaliseur et barre de progression en lecture, pause qui
+ * pulse, chargement qui tourne, ondes émises par la box, LED de la box (bande verte de la Shield,
+ * LED blanche de la Xiaomi, halo du Player Pop), affichage du volume à l'écran quand il change.
+ * États : off, standby, idle, on, playing, paused, buffering, unavailable.
+ */
+(() => {
+  const TAG = 'appliance-tv-box-card';
+  if (customElements.get(TAG)) return;
+
+  const T = {
+    "en": {
+      "name": "TV box",
+      "off": "Off",
+      "standby": "Standby",
+      "idle": "Idle",
+      "on": "On",
+      "playing": "Playing",
+      "paused": "Paused",
+      "buffering": "Loading",
+      "unavailable": "Unavailable",
+      "app": "App",
+      "volume": "Volume",
+      "power": "Power",
+      "muted": "Muted",
+      "play": "Play",
+      "pause": "Pause",
+      "previous": "Previous",
+      "next": "Next",
+      "vol_down": "Volume down",
+      "vol_up": "Volume up",
+      "mute": "Mute",
+      "home": "Home"
+    },
+    "de": {
+      "name": "TV-Box",
+      "off": "Aus",
+      "standby": "Standby",
+      "idle": "Leerlauf",
+      "on": "An",
+      "playing": "Wiedergabe",
+      "paused": "Pausiert",
+      "buffering": "Lädt",
+      "unavailable": "Nicht verfügbar",
+      "app": "App",
+      "volume": "Lautstärke",
+      "power": "Leistung",
+      "muted": "Stumm",
+      "play": "Wiedergabe",
+      "pause": "Pause",
+      "previous": "Zurück",
+      "next": "Weiter",
+      "vol_down": "Leiser",
+      "vol_up": "Lauter",
+      "mute": "Stumm",
+      "home": "Startseite"
+    },
+    "fr": {
+      "name": "Box TV",
+      "off": "Éteint",
+      "standby": "En veille",
+      "idle": "Au repos",
+      "on": "Allumée",
+      "playing": "Lecture",
+      "paused": "En pause",
+      "buffering": "Chargement",
+      "unavailable": "Indisponible",
+      "app": "Appli",
+      "volume": "Volume",
+      "power": "Puissance",
+      "muted": "Muet",
+      "play": "Lecture",
+      "pause": "Pause",
+      "previous": "Précédent",
+      "next": "Suivant",
+      "vol_down": "Volume −",
+      "vol_up": "Volume +",
+      "mute": "Muet",
+      "home": "Accueil"
+    },
+    "it": {
+      "name": "TV box",
+      "off": "Spento",
+      "standby": "Standby",
+      "idle": "Inattivo",
+      "on": "Accesa",
+      "playing": "In riproduzione",
+      "paused": "In pausa",
+      "buffering": "Caricamento",
+      "unavailable": "Non disponibile",
+      "app": "App",
+      "volume": "Volume",
+      "power": "Potenza",
+      "muted": "Muto",
+      "play": "Riproduci",
+      "pause": "Pausa",
+      "previous": "Precedente",
+      "next": "Successivo",
+      "vol_down": "Volume −",
+      "vol_up": "Volume +",
+      "mute": "Muto",
+      "home": "Home"
+    },
+    "nb": {
+      "name": "TV-boks",
+      "off": "Av",
+      "standby": "Hvilemodus",
+      "idle": "Inaktiv",
+      "on": "På",
+      "playing": "Spiller",
+      "paused": "Pause",
+      "buffering": "Laster",
+      "unavailable": "Utilgjengelig",
+      "app": "App",
+      "volume": "Volum",
+      "power": "Effekt",
+      "muted": "Dempet",
+      "play": "Spill",
+      "pause": "Pause",
+      "previous": "Forrige",
+      "next": "Neste",
+      "vol_down": "Volum ned",
+      "vol_up": "Volum opp",
+      "mute": "Demp",
+      "home": "Hjem"
+    },
+    "nl": {
+      "name": "Tv-box",
+      "off": "Uit",
+      "standby": "Stand-by",
+      "idle": "Inactief",
+      "on": "Aan",
+      "playing": "Speelt af",
+      "paused": "Gepauzeerd",
+      "buffering": "Laden",
+      "unavailable": "Niet beschikbaar",
+      "app": "App",
+      "volume": "Volume",
+      "power": "Vermogen",
+      "muted": "Gedempt",
+      "play": "Afspelen",
+      "pause": "Pauze",
+      "previous": "Vorige",
+      "next": "Volgende",
+      "vol_down": "Zachter",
+      "vol_up": "Harder",
+      "mute": "Dempen",
+      "home": "Start"
+    },
+    "ro": {
+      "name": "TV box",
+      "off": "Oprit",
+      "standby": "Standby",
+      "idle": "Inactiv",
+      "on": "Pornit",
+      "playing": "Redare",
+      "paused": "Pauză",
+      "buffering": "Se încarcă",
+      "unavailable": "Indisponibil",
+      "app": "Aplicație",
+      "volume": "Volum",
+      "power": "Putere",
+      "muted": "Fără sunet",
+      "play": "Redă",
+      "pause": "Pauză",
+      "previous": "Anterior",
+      "next": "Următor",
+      "vol_down": "Volum −",
+      "vol_up": "Volum +",
+      "mute": "Fără sunet",
+      "home": "Acasă"
+    },
+    "ru": {
+      "name": "ТВ-приставка",
+      "off": "Выключен",
+      "standby": "Ожидание",
+      "idle": "Простой",
+      "on": "Включена",
+      "playing": "Воспроизведение",
+      "paused": "Пауза",
+      "buffering": "Загрузка",
+      "unavailable": "Недоступно",
+      "app": "Приложение",
+      "volume": "Громкость",
+      "power": "Мощность",
+      "muted": "Без звука",
+      "play": "Воспроизвести",
+      "pause": "Пауза",
+      "previous": "Назад",
+      "next": "Далее",
+      "vol_down": "Тише",
+      "vol_up": "Громче",
+      "mute": "Без звука",
+      "home": "Домой"
+    },
+    "sr": {
+      "name": "ТВ бокс",
+      "off": "Искључен",
+      "standby": "Приправност",
+      "idle": "Мирује",
+      "on": "Укључен",
+      "playing": "Репродукција",
+      "paused": "Пауза",
+      "buffering": "Учитавање",
+      "unavailable": "Недоступно",
+      "app": "Апликација",
+      "volume": "Јачина",
+      "power": "Снага",
+      "muted": "Утишано",
+      "play": "Пусти",
+      "pause": "Пауза",
+      "previous": "Претходно",
+      "next": "Следеће",
+      "vol_down": "Тише",
+      "vol_up": "Гласније",
+      "mute": "Утишај",
+      "home": "Почетна"
+    },
+    "sr-Latn": {
+      "name": "TV boks",
+      "off": "Isključen",
+      "standby": "Pripravnost",
+      "idle": "Miruje",
+      "on": "Uključen",
+      "playing": "Reprodukcija",
+      "paused": "Pauza",
+      "buffering": "Učitavanje",
+      "unavailable": "Nedostupno",
+      "app": "Aplikacija",
+      "volume": "Jačina",
+      "power": "Snaga",
+      "muted": "Utišano",
+      "play": "Pusti",
+      "pause": "Pauza",
+      "previous": "Prethodno",
+      "next": "Sledeće",
+      "vol_down": "Tiše",
+      "vol_up": "Glasnije",
+      "mute": "Utišaj",
+      "home": "Početna"
+    }
+  };
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+
+  /* Chaque modèle : photo, position dans le dessin (x, y, w, h), couleur d'accent, point d'émission des ondes,
+     et calque lumineux propre (LED). Coordonnées = px photo × échelle + décalage. */
+  const MODELS = {
+    shield_tv_pro: {
+      label: 'NVIDIA Shield TV Pro', img: 'data:image/webp;base64,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', box: [204, 22, 86.3, 150], accent: '#76b900', wave: [214, 70],
+      // bande verte de la photo : coin haut → nœud → bas, et petite branche à droite
+      led: `<path class="ledoff" d="M224.6 32.3 L260.3 58.6 L236.1 122.7 M260.3 58.6 L268.9 63.1"/>
+            <path class="ledon" d="M224.6 32.3 L260.3 58.6 L236.1 122.7 M260.3 58.6 L268.9 63.1"/>
+            <path class="ledrun" pathLength="100" d="M224.6 32.3 L260.3 58.6 L236.1 122.7"/>`,
+    },
+    xiaomi_tv_box_s: {
+      label: 'Xiaomi TV Box S', img: 'data:image/webp;base64,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', box: [196, 76, 96, 96], accent: '#ff6900', wave: [204, 104],
+      led: `<rect class="ledoff" x="240.6" y="165.6" width="7" height="2.4" rx="1.2"/><rect class="ledon dot" x="240.6" y="165.6" width="7" height="2.4" rx="1.2"/>`,
+    },
+    freebox_pop: {
+      label: 'Freebox Player Pop', img: 'data:image/webp;base64,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', box: [186, 84, 112, 84.7], accent: '#e2001a', wave: [196, 112],
+      // halo lumineux sous le galet (le Player Pop n'a pas de LED en façade)
+      led: `<ellipse class="halo" cx="242" cy="166" rx="62" ry="9" fill="url(#tv-halo)"/>`,
+    },
+  };
+  const ALIAS = { shield: 'shield_tv_pro', shieldtvpro: 'shield_tv_pro', xiaomi: 'xiaomi_tv_box_s', xiaomitvboxs: 'xiaomi_tv_box_s', mibox: 'xiaomi_tv_box_s', freebox: 'freebox_pop', freeboxpop: 'freebox_pop', playerpop: 'freebox_pop' };
+  const modelKey = (m) => { const k = String(m || '').toLowerCase(); if (MODELS[k]) return k; const n = k.replace(/[^a-z0-9]/g, ''); return ALIAS[n] || 'shield_tv_pro'; };
+
+  const CSS = `
+:host{display:block;height:100%}ha-card{height:100%;box-sizing:border-box;display:block;padding:10px 12px 12px;overflow:hidden;
+  --tv-ok:var(--appliance-ok-color,#43a047);--tv-alert:var(--appliance-alert-color,#db4437);--acc:#76b900;--amb:#3d7bff;--prog:0}
+.head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
+.playing .badge,.buffering .badge{background:color-mix(in srgb,var(--acc) 24%,transparent);color:var(--acc)}
+.on .badge,.idle .badge,.paused .badge{background:color-mix(in srgb,var(--tv-ok) 20%,transparent);color:var(--tv-ok)}
+svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible;cursor:pointer}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:6px;margin-top:6px}
+.tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
+.tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
+.tile .l span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tile .l ha-icon{--mdc-icon-size:13px;flex:none}
+.tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
+.tile.hide{display:none}
+.ctrls{display:flex;justify-content:center;gap:6px;margin-top:6px;flex-wrap:wrap}
+.ctrls.hide{display:none}
+.ctrls button{width:34px;height:34px;border-radius:50%;border:0;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--primary-text-color);
+  background:var(--secondary-background-color,rgba(127,127,127,.18));transition:transform .15s,background .3s,box-shadow .3s;--mdc-icon-size:19px;padding:0}
+.ctrls button:hover{transform:scale(1.08)}.ctrls button:active{transform:scale(.92)}
+.ctrls button.on{background:var(--acc);color:#fff;box-shadow:0 0 12px color-mix(in srgb,var(--acc) 60%,transparent)}
+.ctrls button.main{width:40px;height:40px;--mdc-icon-size:22px}
+.ctrls button:disabled{opacity:.35;cursor:default;transform:none}
+
+/* ---- écran flottant ---- */
+.amb{opacity:0;transition:opacity 1s,fill 1.2s}
+.amb rect{fill:var(--amb);transition:fill 1.2s}
+.on .amb,.idle .amb{opacity:.35}
+.playing .amb{opacity:.75;animation:tvamb 4s ease-in-out infinite}
+.paused .amb,.buffering .amb{opacity:.3}
+@keyframes tvamb{50%{opacity:.45}}
+.scr{fill:#05070a;stroke:#2a2f36;stroke-width:1.4}
+.aur{opacity:0;transition:opacity .8s}
+.on .aur,.idle .aur,.buffering .aur,.noart .aur{opacity:1}
+.off .aur,.standby .aur,.unavailable .aur{opacity:0!important}
+.aur ellipse{transform-box:fill-box;transform-origin:50% 50%}
+.aur .a1{fill:var(--acc);opacity:.55;animation:tvau1 9s ease-in-out infinite}
+.aur .a2{fill:#3d7bff;opacity:.5;animation:tvau2 11s ease-in-out infinite}
+.aur .a3{fill:#b14dff;opacity:.4;animation:tvau3 13s ease-in-out infinite}
+@keyframes tvau1{50%{transform:translate(60px,18px) scale(1.3)}}
+@keyframes tvau2{50%{transform:translate(-50px,-14px) scale(1.4)}}
+@keyframes tvau3{50%{transform:translate(30px,-20px) scale(.8)}}
+.art{opacity:0;transition:opacity .9s;transform-box:fill-box;transform-origin:50% 50%}
+.hasart.playing .art,.hasart.paused .art,.hasart.buffering .art{opacity:1}
+.hasart.playing .art{animation:tvkb 18s ease-in-out infinite alternate}
+.paused .art{filter:brightness(.5) saturate(.6)}
+@keyframes tvkb{from{transform:scale(1) translate(0,0)}to{transform:scale(1.14) translate(-6px,-3px)}}
+.shade{opacity:0;transition:opacity .6s}
+.playing .shade,.paused .shade,.buffering .shade,.on .shade,.idle .shade{opacity:1}
+.app{fill:#fff;font:700 7px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif);letter-spacing:.08em;opacity:0;transition:opacity .5s}
+.mt{fill:#fff;font:700 9.5px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif);opacity:0;transition:opacity .5s}
+.ma{fill:#cfd6de;font:500 7px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif);opacity:0;transition:opacity .5s}
+.playing .app,.paused .app,.buffering .app,.on .app,.idle .app,.playing .mt,.paused .mt,.playing .ma,.paused .ma,.on .mt,.idle .mt{opacity:1}
+.pbar{fill:rgba(255,255,255,.22)}.pfill{fill:var(--acc);transform-box:fill-box;transform-origin:0 50%;transform:scaleX(var(--prog));transition:transform 1s linear}
+.prog{opacity:0}.hasdur.playing .prog,.hasdur.paused .prog{opacity:1}
+.eq rect{fill:var(--acc);transform-box:fill-box;transform-origin:50% 100%;opacity:0}
+.playing .eq rect{opacity:.95;animation:tveq .9s ease-in-out infinite}
+.eq rect:nth-child(2){animation-delay:-.3s!important;animation-duration:.7s!important}.eq rect:nth-child(3){animation-delay:-.55s!important;animation-duration:1.1s!important}
+.eq rect:nth-child(4){animation-delay:-.15s!important;animation-duration:.8s!important}
+@keyframes tveq{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
+.pz{opacity:0;transform-box:fill-box;transform-origin:50% 50%}
+.paused .pz{opacity:.9;animation:tvpz 1.6s ease-in-out infinite}
+@keyframes tvpz{50%{transform:scale(1.12);opacity:.55}}
+.spin{fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;stroke-dasharray:22 60;opacity:0;transform-box:fill-box;transform-origin:50% 50%}
+.buffering .spin{opacity:.9;animation:tvspin .9s linear infinite}
+@keyframes tvspin{to{transform:rotate(360deg)}}
+.glass{pointer-events:none}
+.sby{fill:#ff2d2d;opacity:0}
+.off .sby,.standby .sby{opacity:.9;animation:tvsby 3s ease-in-out infinite}
+@keyframes tvsby{50%{opacity:.35}}
+.osd{opacity:0;transition:opacity .35s}
+.osd.show{opacity:1}
+.osd .ob{fill:rgba(0,0,0,.55)}.osd .of{fill:#fff;transform-box:fill-box;transform-origin:0 50%;transition:transform .3s}
+.osdt{fill:#fff;font:700 7px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif)}
+
+/* ---- box ---- */
+.photo{transition:filter .6s}
+.off .photo,.unavailable .photo{filter:brightness(.72) saturate(.7)}
+.shadow{opacity:.5}
+.waves path{fill:none;stroke:var(--acc);stroke-width:1.6;stroke-linecap:round;opacity:0}
+.playing .waves path{animation:tvwave 1.8s ease-out infinite}
+.waves path:nth-child(2){animation-delay:.3s!important}.waves path:nth-child(3){animation-delay:.6s!important}
+@keyframes tvwave{0%{opacity:0;transform:translateX(4px)}25%{opacity:.9}100%{opacity:0;transform:translateX(-10px)}}
+.ledoff{fill:#141618;stroke:#141618;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.ledon{fill:none;stroke:var(--acc);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:0;filter:drop-shadow(0 0 2.5px var(--acc));transition:opacity .6s}
+.ledon.dot{fill:#fff;stroke:none;filter:drop-shadow(0 0 3px #fff)}
+.on .ledon,.idle .ledon,.paused .ledon,.buffering .ledon{opacity:.85}
+.playing .ledon{opacity:1}
+.standby .ledon{opacity:.6;animation:tvbr 4s ease-in-out infinite}
+@keyframes tvbr{50%{opacity:.08}}
+.ledrun{fill:none;stroke:#eaffc0;stroke-width:1.8;stroke-linecap:round;stroke-dasharray:8 92;opacity:0;filter:drop-shadow(0 0 3px #b6ff3b)}
+.playing .ledrun{opacity:1;animation:tvrun 2.4s linear infinite}
+@keyframes tvrun{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+.halo{opacity:0;transition:opacity .8s}
+.on .halo,.idle .halo,.paused .halo,.buffering .halo{opacity:.55}
+.playing .halo{opacity:.9;animation:tvhalo 3s ease-in-out infinite}
+.standby .halo{opacity:.25}
+@keyframes tvhalo{50%{opacity:.5}}
+.noanim *{animation:none!important;transition:none!important}
+`;
+
+  // icônes de lecture dessinées (pause, logo par défaut)
+  const SVG = (label, m) => {
+    const [bx, by, bw, bh] = m.box, [wx, wy] = m.wave;
+    return `
+<svg viewBox="0 0 300 180" role="img" aria-label="${esc(label)}">
+ <defs>
+  <filter id="tv-blur" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="9"/></filter>
+  <filter id="tv-blur2" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="8"/></filter>
+  <clipPath id="tv-scr"><rect x="10" y="10" width="176" height="99" rx="6"/></clipPath>
+  <linearGradient id="tv-shade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset=".35" stop-color="#000" stop-opacity="0"/><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".8"/></linearGradient>
+  <linearGradient id="tv-glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset=".38" stop-color="#fff" stop-opacity=".03"/><stop offset=".4" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  <radialGradient id="tv-halo"><stop offset="0" style="stop-color:var(--acc)" stop-opacity=".9"/><stop offset="1" style="stop-color:var(--acc)" stop-opacity="0"/></radialGradient>
+  <radialGradient id="tv-shadow"><stop offset="0" stop-color="#000" stop-opacity=".5"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+ </defs>
+ <!-- ambilight -->
+ <g class="amb" filter="url(#tv-blur)"><rect x="4" y="4" width="188" height="111" rx="10"/></g>
+ <rect class="scr" x="10" y="10" width="176" height="99" rx="6"/>
+ <g clip-path="url(#tv-scr)">
+  <g class="aur" filter="url(#tv-blur2)"><ellipse class="a1" cx="50" cy="40" rx="50" ry="26"/><ellipse class="a2" cx="140" cy="80" rx="55" ry="28"/><ellipse class="a3" cx="100" cy="30" rx="40" ry="22"/></g>
+  <image class="art" id="tvart" x="10" y="10" width="176" height="99" preserveAspectRatio="xMidYMid slice"/>
+  <rect class="shade" x="10" y="10" width="176" height="99" fill="url(#tv-shade)"/>
+  <text class="app" id="tvapp" x="18" y="22"></text>
+  <text class="mt" id="tvmt" x="18" y="88"></text>
+  <text class="ma" id="tvma" x="18" y="98"></text>
+  <g class="eq"><rect x="164" y="80" width="3" height="12" rx="1"/><rect x="169" y="80" width="3" height="12" rx="1"/><rect x="174" y="80" width="3" height="12" rx="1"/><rect x="179" y="80" width="3" height="12" rx="1"/></g>
+  <g class="prog"><rect class="pbar" x="18" y="103" width="160" height="2" rx="1"/><rect class="pfill" x="18" y="103" width="160" height="2" rx="1"/></g>
+  <g class="pz"><circle cx="98" cy="56" r="14" fill="rgba(0,0,0,.45)"/><rect x="92.5" y="49" width="4" height="14" rx="1.2" fill="#fff"/><rect x="99.5" y="49" width="4" height="14" rx="1.2" fill="#fff"/></g>
+  <circle class="spin" cx="98" cy="56" r="10"/>
+  <g class="osd" id="tvosd"><rect class="ob" x="58" y="44" width="80" height="22" rx="6"/><text class="osdt" id="tvosdt" x="66" y="53">VOL</text>
+   <rect x="66" y="57" width="64" height="3" rx="1.5" fill="rgba(255,255,255,.25)"/><rect class="of" id="tvosdf" x="66" y="57" width="64" height="3" rx="1.5"/></g>
+  <rect class="glass" x="10" y="10" width="176" height="99" fill="url(#tv-glass)"/>
+ </g>
+ <circle class="sby" cx="98" cy="113.5" r="1.3"/>
+ <path d="M84 109.5 h28 l3 5 h-34 z" fill="#23272d"/>
+ <!-- box -->
+ <ellipse class="shadow" cx="${bx + bw / 2}" cy="${by + bh - 1}" rx="${bw * 0.48}" ry="5" fill="url(#tv-shadow)"/>
+ <g class="waves"><path d="M${wx} ${wy - 6} q-5 6 0 12"/><path d="M${wx - 5} ${wy - 10} q-8 10 0 20"/><path d="M${wx - 10} ${wy - 14} q-11 14 0 28"/></g>
+ <image class="photo" href="${m.img}" x="${bx}" y="${by}" width="${bw}" height="${bh}"/>
+ ${m.led}
+</svg>`;
+  };
+
+  class ApplianceTvBoxCard extends HTMLElement {
+    get _config() { return this._c; }
+    static getConfigElement() { return document.createElement(TAG + '-editor'); }
+    static getStubConfig(hass) {
+      const ids = Object.keys((hass && hass.states) || {});
+      const mp = ids.filter((i) => i.startsWith('media_player.'));
+      const pick = mp.find((i) => /shield|freebox|player|xiaomi|mibox|tv_box|android/i.test(i)) || mp[0] || '';
+      const model = /freebox|player_pop|free/i.test(pick) ? 'freebox_pop' : /xiaomi|mibox|mi_box/i.test(pick) ? 'xiaomi_tv_box_s' : 'shield_tv_pro';
+      const base = pick.split('.')[1] || '';
+      const remote = ids.find((i) => i === `remote.${base}`) || '';
+      return { entity: pick, model, ...(remote ? { entity_remote: remote } : {}) };
+    }
+    setConfig(c) {
+      if (window.applianceSize) window.applianceSize(this, c);
+      if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
+      this._c = { show_status: true, show_controls: true, show_artwork: true, show_app: true, show_volume: true, show_power: true, volume_step: 0.05, ...c };
+      this._built = false;
+      if (this._hass) this._render();
+    }
+    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    connectedCallback() { if (!this._tick) this._tick = setInterval(() => this._progress(), 1000); }
+    disconnectedCallback() { clearInterval(this._tick); this._tick = null; clearTimeout(this._osdT); }
+    getCardSize() { return 6; }
+    getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+
+    _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
+    _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
+    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en'); return T[l] ? l : T[l.slice(0, 2)] ? l.slice(0, 2) : 'en'; }
+    _st(id) { return id && this._hass && this._hass.states[id]; }
+    _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(this._lang(), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _more(id) { if (window.applianceMore) window.applianceMore(this, id); }
+
+    _build() {
+      const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
+      const m = MODELS[modelKey(this._c.model)];
+      this._model = m;
+      root.innerHTML = `<style>${CSS}</style><ha-card>
+        <div class="head"><div class="title" id="tvtitle"></div><div class="badge" id="tvbadge"></div></div>
+        ${SVG(this._c.name || m.label, m)}
+        <div class="ctrls" id="tvctrls"></div>
+        <div class="tiles">
+          <div class="tile hide" data-k="app"><div class="l"><ha-icon icon="mdi:apps"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>
+          <div class="tile hide" data-k="volume"><div class="l"><ha-icon icon="mdi:volume-high"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>
+          <div class="tile hide" data-k="power"><div class="l"><ha-icon icon="mdi:flash"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>
+        </div>
+      </ha-card>`;
+      this._card = root.querySelector('ha-card');
+      this._card.style.setProperty('--acc', m.accent);
+      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity));
+      root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => this._more(el.dataset.k === 'power' ? this._c.entity_power : this._c.entity)));
+      root.getElementById('tvctrls').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { e.stopPropagation(); this._cmd(b.dataset.k); } });
+      const art = root.getElementById('tvart');
+      art.addEventListener('load', () => this._card.classList.add('artok'));
+      this._root = root; this._built = true; this._lastVol = undefined; this._lastPic = undefined;
+    }
+
+    _state() {
+      const s = this._st(this._c.entity);
+      if (!s) return 'unavailable';
+      const raw = String(s.state).toLowerCase();
+      if (raw === 'unknown') return 'unavailable';
+      return ['off', 'standby', 'idle', 'on', 'playing', 'paused', 'buffering', 'unavailable'].includes(raw) ? raw : 'on';
+    }
+
+    // couleur moyenne de la pochette (ambilight) ; reste sur l'accent si l'image n'est pas lisible
+    _ambient(url) {
+      if (!url) { this._card.style.setProperty('--amb', this._model.accent); return; }
+      if (this._ambUrl === url) return;
+      this._ambUrl = url;
+      try {
+        const img = new Image(); img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          try {
+            const cv = document.createElement('canvas'); cv.width = cv.height = 8;
+            const cx = cv.getContext('2d'); cx.drawImage(img, 0, 0, 8, 8);
+            const d = cx.getImageData(0, 0, 8, 8).data; let r = 0, g = 0, b = 0, n = 0;
+            for (let i = 0; i < d.length; i += 4) { const w = Math.max(d[i], d[i + 1], d[i + 2]) - Math.min(d[i], d[i + 1], d[i + 2]) + 20; r += d[i] * w; g += d[i + 1] * w; b += d[i + 2] * w; n += w; }
+            if (n && this._ambUrl === url) this._card.style.setProperty('--amb', `rgb(${Math.round(r / n)},${Math.round(g / n)},${Math.round(b / n)})`);
+          } catch (e) { this._card.style.setProperty('--amb', this._model.accent); }
+        };
+        img.onerror = () => this._card.style.setProperty('--amb', this._model.accent);
+        img.src = url;
+      } catch (e) { this._card.style.setProperty('--amb', this._model.accent); }
+    }
+
+    // position de lecture estimée : media_position + temps écoulé depuis media_position_updated_at
+    _progress() {
+      if (!this._built || !this._hass) return;
+      const s = this._st(this._c.entity); if (!s) return;
+      const a = s.attributes || {}, dur = Number(a.media_duration), pos = Number(a.media_position);
+      if (!(dur > 0) || !isFinite(pos)) { this._card.classList.remove('hasdur'); return; }
+      let p = pos;
+      if (String(s.state) === 'playing' && a.media_position_updated_at) p += (Date.now() - Date.parse(a.media_position_updated_at)) / 1000;
+      this._card.classList.add('hasdur');
+      this._card.style.setProperty('--prog', Math.max(0, Math.min(1, p / dur)).toFixed(4));
+    }
+
+    _osd(vol, muted) {
+      const r = this._root, el = r.getElementById('tvosd');
+      r.getElementById('tvosdt').textContent = muted ? this._t('muted').toUpperCase() : `VOL ${Math.round(vol * 100)}`;
+      r.getElementById('tvosdf').style.transform = `scaleX(${muted ? 0 : vol})`;
+      el.classList.add('show'); clearTimeout(this._osdT);
+      this._osdT = setTimeout(() => el.classList.remove('show'), 1800);
+    }
+
+    _cmd(k) {
+      const hass = this._hass, c = this._c, id = c.entity, s = this._st(id); if (!s) return;
+      const a = s.attributes || {}, sf = Number(a.supported_features), step = Number(c.volume_step) || 0.05;
+      const call = (svc, data = {}) => hass.callService('media_player', svc, { entity_id: id, ...data });
+      const off = ['off', 'standby', 'unavailable'].includes(String(s.state).toLowerCase());
+      if (k === 'power') {
+        // Android TV Remote : l'allumage passe mieux par l'entité remote
+        if (c.entity_remote && this._st(c.entity_remote)) hass.callService('remote', off ? 'turn_on' : 'turn_off', { entity_id: c.entity_remote });
+        else call(off ? 'turn_on' : 'turn_off');
+      } else if (k === 'play_pause') call('media_play_pause');
+      else if (k === 'prev') call('media_previous_track');
+      else if (k === 'next') call('media_next_track');
+      else if (k === 'mute') call('volume_mute', { is_volume_muted: !a.is_volume_muted });
+      else if (k === 'home' && c.entity_remote) hass.callService('remote', 'send_command', { entity_id: c.entity_remote, command: 'HOME' });
+      else if (k === 'vol_up' || k === 'vol_down') {
+        const v = Number(a.volume_level), up = k === 'vol_up';
+        if (a.volume_level != null && isFinite(v) && (!isFinite(sf) || (sf & 4))) call('volume_set', { volume_level: Math.round(Math.max(0, Math.min(1, v + (up ? step : -step))) * 100) / 100 });
+        else call(up ? 'volume_up' : 'volume_down');
+      }
+    }
+
+    _render() {
+      if (!this._built || this._model !== MODELS[modelKey(this._c.model)]) this._build();
+      const c = this._c, r = this._root, card = this._card, s = this._st(c.entity), a = (s && s.attributes) || {};
+      const st = this._state(), m = this._model;
+      const live = !['off', 'standby', 'unavailable'].includes(st);
+      const pic = c.show_artwork !== false && live ? a.entity_picture_local || a.entity_picture || '' : '';
+      const art = r.getElementById('tvart');
+      if (pic !== this._lastPic) { this._lastPic = pic; card.classList.remove('artok'); if (pic) art.setAttribute('href', pic); else art.removeAttribute('href'); this._ambient(pic); }
+      card.className = `${st}${pic ? ' hasart' : ' noart'}${card.classList.contains('artok') ? ' artok' : ''}${card.classList.contains('hasdur') ? ' hasdur' : ''}${c.animations === false ? ' noanim' : ''}`;
+      if (!pic) card.style.setProperty('--amb', m.accent);
+
+      const app = a.app_name || a.source || '';
+      const title = a.media_title || (live ? app || m.label : '');
+      const sub = [a.media_series_title, a.media_artist, a.media_album_name].filter(Boolean).join(' · ');
+      const cut = (t, n) => (t.length > n ? t.slice(0, n - 1) + '…' : t);
+      r.getElementById('tvapp').textContent = c.show_app === false ? '' : cut(String(app).toUpperCase(), 30);
+      r.getElementById('tvmt').textContent = cut(String(title), 30);
+      r.getElementById('tvma').textContent = cut(String(sub), 42);
+      this._progress();
+
+      // affichage du volume à l'écran quand il change (pas au premier rendu)
+      const vol = Number(a.volume_level), muted = !!a.is_volume_muted, key = `${vol}|${muted}`;
+      if (this._lastVol !== undefined && this._lastVol !== key && live && isFinite(vol)) this._osd(vol, muted);
+      this._lastVol = key;
+
+      r.getElementById('tvtitle').textContent = c.name || m.label;
+      const badge = r.getElementById('tvbadge'); badge.textContent = this._t(st); badge.style.display = c.show_status === false ? 'none' : '';
+
+      // télécommande (selon les fonctions annoncées : PAUSE 1, VOLUME_SET 4, MUTE 8, PREVIOUS 16, NEXT 32, TURN_ON 128, TURN_OFF 256, VOLUME_STEP 1024, PLAY 16384)
+      const ctr = r.getElementById('tvctrls');
+      ctr.classList.toggle('hide', c.show_controls === false || !s);
+      const sf = Number(a.supported_features), has = (bit) => !isFinite(sf) || (sf & bit) !== 0;
+      const play = st === 'playing', volOk = has(4) || has(1024);
+      const btns = [
+        ['power', 'mdi:power', 'power', live, has(128) || has(256) || !!c.entity_remote],
+        ['home', 'mdi:home', 'home', null, !!c.entity_remote],
+        ['prev', 'mdi:skip-previous', 'previous', null, has(16)],
+        ['play_pause', play ? 'mdi:pause' : 'mdi:play', play ? 'pause' : 'play', null, has(1) || has(16384), 'main'],
+        ['next', 'mdi:skip-next', 'next', null, has(32)],
+        ['vol_down', 'mdi:volume-minus', 'vol_down', null, volOk],
+        ['mute', muted ? 'mdi:volume-off' : 'mdi:volume-high', 'mute', muted, has(8)],
+        ['vol_up', 'mdi:volume-plus', 'vol_up', null, volOk],
+      ].filter((b) => b[4]);
+      const sig = btns.map((b) => b.join('|')).join(';') + st;
+      if (ctr._sig !== sig) {
+        ctr._sig = sig;
+        ctr.innerHTML = btns.map(([k, icon, lbl, on, , cls]) => {
+          const dis = st === 'unavailable' || (!live && k !== 'power');
+          return `<button class="${cls || ''}${on ? ' on' : ''}" data-k="${k}" title="${esc(this._t(lbl))}" aria-label="${esc(this._t(lbl))}"${dis ? ' disabled' : ''}><ha-icon icon="${icon}"></ha-icon></button>`;
+        }).join('');
+      }
+
+      const pw = this._num(c.entity_power), pu = (this._st(c.entity_power)?.attributes || {}).unit_of_measurement || 'W';
+      const V = {
+        app: [!!s && !!app && c.show_app !== false, cut(String(app), 22), ''],
+        volume: [!!s && a.volume_level != null && c.show_volume !== false, muted ? '🔇' : this._fmt(vol * 100, 0), muted ? '' : '%'],
+        power: [!!c.entity_power && c.show_power !== false, this._fmt(pw, pw < 10 ? 1 : 0), pu],
+      };
+      Object.entries(V).forEach(([k, [show, val, unit]]) => {
+        const el = r.querySelector(`.tile[data-k="${k}"]`);
+        el.classList.toggle('hide', !show);
+        el.querySelector('.lbl').textContent = this._l(k);
+        const small = document.createElement('small'); small.textContent = unit;
+        el.querySelector('.v').replaceChildren(String(val), small);
+      });
+    }
+  }
+  customElements.define(TAG, ApplianceTvBoxCard);
+
+  /* ---- éditeur visuel ---- */
+  class ApplianceTvBoxCardEditor extends HTMLElement {
+    setConfig(c) { this._c = c; this._draw(); }
+    set hass(h) { this._hass = h; if (this._form) this._form.hass = h; }
+    _draw() {
+      if (!this._form) {
+        this._form = document.createElement('ha-form');
+        this._form.addEventListener('value-changed', (e) => {
+          this._c = e.detail.value;
+          this.dispatchEvent(new CustomEvent('config-changed', { detail: { config: this._c }, bubbles: true, composed: true }));
+        });
+        this.appendChild(this._form);
+      }
+      const ent = (name, domain) => ({ name, selector: { entity: domain ? { domain } : {} } });
+      const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
+      this._form.hass = this._hass;
+      this._form.data = this._c;
+      this._form.schema = [
+        { name: 'name', selector: { text: {} } },
+        { name: 'model', selector: { select: { mode: 'dropdown', options: Object.entries(MODELS).map(([value, m]) => ({ value, label: m.label })) } } },
+        { name: 'labels', selector: { object: {} } },
+        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
+        { name: 'transparent', selector: { boolean: {} } },
+        ent('entity', 'media_player'), ent('entity_remote', 'remote'), ent('entity_power', 'sensor'),
+        { name: 'volume_step', default: 0.05, selector: { number: { min: 0.01, max: 0.2, step: 0.01, mode: 'box' } } },
+        ...window.applianceActionFields,
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_controls'), bool('show_artwork'), bool('show_app'), bool('show_volume'), bool('show_power'), bool('animations')] },
+      ];
+      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'tv_model' : s.name, this._hass);
+    }
+  }
+  customElements.define(TAG + '-editor', ApplianceTvBoxCardEditor);
+
+  window.customCards = window.customCards || [];
+  window.customCards.push({
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
+    description: 'Box TV en photo (Freebox Player Pop, Xiaomi TV Box S, NVIDIA Shield TV Pro) : écran flottant avec pochette et ambilight, égaliseur, LED de la box, télécommande (media_player).', preview: true,
+    documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
+  });
+})();
+
+/* Carte « Balance connectée » — custom:appliance-scale-card (photo détourée de la Withings WS-30)
+ * Intégration Withings : poids, masse grasse, muscles, os, eau, pouls, graisse viscérale, objectif.
+ * La balance est posée au sol en perspective 3D. À chaque nouvelle pesée (et à l'ouverture de la carte) :
+ * les empreintes de pieds apparaissent, le plateau s'enfonce, les chiffres défilent puis se fixent en
+ * clignotant, des ondes d'impédance traversent le plateau et un halo s'allume au sol ; ensuite l'écran
+ * alterne poids / masse grasse / IMC. À côté : jauge IMC à aiguille et courbe des 30 derniers jours
+ * avec la ligne d'objectif. Clic sur la balance : rejoue la pesée.
+ */
+(() => {
+  const TAG = 'appliance-scale-card';
+  if (customElements.get(TAG)) return;
+
+  const T = {
+    "en": {
+      "name": "Smart scale",
+      "weight": "Weight",
+      "fat": "Body fat",
+      "fat_mass": "Fat mass",
+      "muscle": "Muscle",
+      "bone": "Bone",
+      "water": "Water",
+      "visceral": "Visceral fat",
+      "pulse": "Pulse",
+      "goal": "Goal",
+      "bmi": "BMI",
+      "goal_reached": "Goal reached",
+      "last": "Weighed",
+      "just_now": "just now",
+      "min_ago": "{n} min ago",
+      "h_ago": "{n} h ago",
+      "d_ago": "{n} d ago",
+      "unavailable": "Unavailable",
+      "trend": "{n} days",
+      "under": "Under",
+      "normal": "Normal",
+      "over": "Over",
+      "obese": "Obese"
+    },
+    "de": {
+      "name": "Smarte Waage",
+      "weight": "Gewicht",
+      "fat": "Körperfett",
+      "fat_mass": "Fettmasse",
+      "muscle": "Muskeln",
+      "bone": "Knochen",
+      "water": "Wasser",
+      "visceral": "Viszeralfett",
+      "pulse": "Puls",
+      "goal": "Ziel",
+      "bmi": "BMI",
+      "goal_reached": "Ziel erreicht",
+      "last": "Gewogen",
+      "just_now": "gerade eben",
+      "min_ago": "vor {n} Min.",
+      "h_ago": "vor {n} Std.",
+      "d_ago": "vor {n} T.",
+      "unavailable": "Nicht verfügbar",
+      "trend": "{n} Tage",
+      "under": "Unter",
+      "normal": "Normal",
+      "over": "Über",
+      "obese": "Adipös"
+    },
+    "fr": {
+      "name": "Balance connectée",
+      "weight": "Poids",
+      "fat": "Masse grasse",
+      "fat_mass": "Graisse",
+      "muscle": "Muscles",
+      "bone": "Os",
+      "water": "Eau",
+      "visceral": "Graisse viscérale",
+      "pulse": "Pouls",
+      "goal": "Objectif",
+      "bmi": "IMC",
+      "goal_reached": "Objectif atteint",
+      "last": "Pesée",
+      "just_now": "à l'instant",
+      "min_ago": "il y a {n} min",
+      "h_ago": "il y a {n} h",
+      "d_ago": "il y a {n} j",
+      "unavailable": "Indisponible",
+      "trend": "{n} jours",
+      "under": "Maigreur",
+      "normal": "Normal",
+      "over": "Surpoids",
+      "obese": "Obésité"
+    },
+    "it": {
+      "name": "Bilancia smart",
+      "weight": "Peso",
+      "fat": "Massa grassa",
+      "fat_mass": "Grasso",
+      "muscle": "Muscoli",
+      "bone": "Ossa",
+      "water": "Acqua",
+      "visceral": "Grasso viscerale",
+      "pulse": "Battito",
+      "goal": "Obiettivo",
+      "bmi": "IMC",
+      "goal_reached": "Obiettivo raggiunto",
+      "last": "Pesata",
+      "just_now": "adesso",
+      "min_ago": "{n} min fa",
+      "h_ago": "{n} h fa",
+      "d_ago": "{n} g fa",
+      "unavailable": "Non disponibile",
+      "trend": "{n} giorni",
+      "under": "Sotto",
+      "normal": "Normale",
+      "over": "Sovrappeso",
+      "obese": "Obeso"
+    },
+    "nb": {
+      "name": "Smartvekt",
+      "weight": "Vekt",
+      "fat": "Kroppsfett",
+      "fat_mass": "Fettmasse",
+      "muscle": "Muskler",
+      "bone": "Bein",
+      "water": "Vann",
+      "visceral": "Visceralt fett",
+      "pulse": "Puls",
+      "goal": "Mål",
+      "bmi": "KMI",
+      "goal_reached": "Målet er nådd",
+      "last": "Veid",
+      "just_now": "akkurat nå",
+      "min_ago": "for {n} min siden",
+      "h_ago": "for {n} t siden",
+      "d_ago": "for {n} d siden",
+      "unavailable": "Utilgjengelig",
+      "trend": "{n} dager",
+      "under": "Under",
+      "normal": "Normal",
+      "over": "Over",
+      "obese": "Fedme"
+    },
+    "nl": {
+      "name": "Slimme weegschaal",
+      "weight": "Gewicht",
+      "fat": "Vetpercentage",
+      "fat_mass": "Vetmassa",
+      "muscle": "Spieren",
+      "bone": "Botten",
+      "water": "Water",
+      "visceral": "Visceraal vet",
+      "pulse": "Hartslag",
+      "goal": "Doel",
+      "bmi": "BMI",
+      "goal_reached": "Doel bereikt",
+      "last": "Gewogen",
+      "just_now": "zojuist",
+      "min_ago": "{n} min geleden",
+      "h_ago": "{n} u geleden",
+      "d_ago": "{n} d geleden",
+      "unavailable": "Niet beschikbaar",
+      "trend": "{n} dagen",
+      "under": "Onder",
+      "normal": "Normaal",
+      "over": "Over",
+      "obese": "Obesitas"
+    },
+    "ro": {
+      "name": "Cântar inteligent",
+      "weight": "Greutate",
+      "fat": "Grăsime",
+      "fat_mass": "Masă grasă",
+      "muscle": "Mușchi",
+      "bone": "Oase",
+      "water": "Apă",
+      "visceral": "Grăsime viscerală",
+      "pulse": "Puls",
+      "goal": "Obiectiv",
+      "bmi": "IMC",
+      "goal_reached": "Obiectiv atins",
+      "last": "Cântărit",
+      "just_now": "chiar acum",
+      "min_ago": "acum {n} min",
+      "h_ago": "acum {n} h",
+      "d_ago": "acum {n} z",
+      "unavailable": "Indisponibil",
+      "trend": "{n} zile",
+      "under": "Sub",
+      "normal": "Normal",
+      "over": "Supra",
+      "obese": "Obezitate"
+    },
+    "ru": {
+      "name": "Умные весы",
+      "weight": "Вес",
+      "fat": "Жир",
+      "fat_mass": "Жировая масса",
+      "muscle": "Мышцы",
+      "bone": "Кости",
+      "water": "Вода",
+      "visceral": "Висцеральный жир",
+      "pulse": "Пульс",
+      "goal": "Цель",
+      "bmi": "ИМТ",
+      "goal_reached": "Цель достигнута",
+      "last": "Взвешивание",
+      "just_now": "только что",
+      "min_ago": "{n} мин назад",
+      "h_ago": "{n} ч назад",
+      "d_ago": "{n} д назад",
+      "unavailable": "Недоступно",
+      "trend": "{n} дней",
+      "under": "Дефицит",
+      "normal": "Норма",
+      "over": "Избыток",
+      "obese": "Ожирение"
+    },
+    "sr": {
+      "name": "Паметна вага",
+      "weight": "Тежина",
+      "fat": "Масти",
+      "fat_mass": "Масна маса",
+      "muscle": "Мишићи",
+      "bone": "Кости",
+      "water": "Вода",
+      "visceral": "Висцерална маст",
+      "pulse": "Пулс",
+      "goal": "Циљ",
+      "bmi": "БМИ",
+      "goal_reached": "Циљ је достигнут",
+      "last": "Мерено",
+      "just_now": "управо",
+      "min_ago": "пре {n} мин",
+      "h_ago": "пре {n} ч",
+      "d_ago": "пре {n} д",
+      "unavailable": "Недоступно",
+      "trend": "{n} дана",
+      "under": "Мање",
+      "normal": "Нормално",
+      "over": "Вишак",
+      "obese": "Гојазност"
+    },
+    "sr-Latn": {
+      "name": "Pametna vaga",
+      "weight": "Težina",
+      "fat": "Masti",
+      "fat_mass": "Masna masa",
+      "muscle": "Mišići",
+      "bone": "Kosti",
+      "water": "Voda",
+      "visceral": "Visceralna mast",
+      "pulse": "Puls",
+      "goal": "Cilj",
+      "bmi": "BMI",
+      "goal_reached": "Cilj je dostignut",
+      "last": "Mereno",
+      "just_now": "upravo",
+      "min_ago": "pre {n} min",
+      "h_ago": "pre {n} h",
+      "d_ago": "pre {n} d",
+      "unavailable": "Nedostupno",
+      "trend": "{n} dana",
+      "under": "Manje",
+      "normal": "Normalno",
+      "over": "Višak",
+      "obese": "Gojaznost"
+    }
+  };
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+  const IMG = 'data:image/webp;base64,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';
+  const BMI_MIN = 15, BMI_MAX = 40;
+
+  const CSS = `
+:host{display:block;height:100%}ha-card{height:100%;box-sizing:border-box;display:block;padding:10px 12px 12px;overflow:hidden;
+  --sc-acc:#00c2d1;--sc-ok:var(--appliance-ok-color,#43a047);--needle:-90deg}
+.head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
+.recent .badge{background:color-mix(in srgb,var(--sc-acc) 22%,transparent);color:var(--sc-acc)}
+.goal{display:none;margin-top:2px;font-size:11px;font-weight:600;text-align:center;color:var(--sc-ok)}
+.goal.on{display:block;animation:scgoal 2.4s ease-in-out infinite}
+@keyframes scgoal{50%{opacity:.55}}
+.stage{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:2px}
+.floor{flex:1 1 56%;min-width:0;height:calc(150px * var(--illus-scale,1));perspective:560px;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative}
+.side{flex:1 1 44%;min-width:0;max-width:calc(150px * var(--illus-scale,1))}
+.side svg{display:block;width:100%;overflow:visible}
+.plate{position:relative;width:calc(140px * var(--illus-scale,1));aspect-ratio:1;transform:rotateX(54deg) rotateZ(-6deg);transform-style:preserve-3d;transition:transform .5s cubic-bezier(.3,1.5,.5,1)}
+.plate img,.plate svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.plate img{filter:drop-shadow(0 14px 10px rgba(0,0,0,.45))}
+.weigh .plate{animation:scpress .7s cubic-bezier(.3,1.6,.5,1)}
+@keyframes scpress{0%{transform:rotateX(54deg) rotateZ(-6deg) translateZ(0)}35%{transform:rotateX(54deg) rotateZ(-6deg) translateZ(-7px)}100%{transform:rotateX(54deg) rotateZ(-6deg) translateZ(0)}}
+.glow{position:absolute;left:12%;right:12%;bottom:6%;height:26%;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--sc-acc) 70%,transparent),transparent);opacity:0;transition:opacity 1s;pointer-events:none}
+.recent .glow{opacity:.55}
+.weigh .glow{opacity:1}
+/* écran LCD redessiné sur la photo */
+.lcdbg{fill:#15181b}
+.lcd{fill:#eaf6ff;font:700 25px/1 'Segment7','DS-Digital',ui-monospace,'SFMono-Regular',Menlo,monospace;text-anchor:middle;letter-spacing:.5px;filter:drop-shadow(0 0 3px rgba(160,220,255,.9))}
+.lcdu{fill:#9fb3c4;font:700 7px/1 ui-monospace,monospace;text-anchor:middle}
+.idle .lcd{opacity:.55;filter:none}
+.blink .lcd{animation:scblink .35s steps(2) 3}
+@keyframes scblink{50%{opacity:0}}
+/* empreintes et ondes d'impédance */
+.feet{opacity:0;transition:opacity .5s}
+.weigh .feet,.recent .feet{opacity:.85}
+.feet path{fill:color-mix(in srgb,var(--sc-acc) 55%,#fff);filter:drop-shadow(0 0 6px var(--sc-acc))}
+.ring{fill:none;stroke:var(--sc-acc);stroke-width:4;opacity:0;transform-box:fill-box;transform-origin:50% 50%}
+.weigh .ring{animation:scring 1.6s ease-out 2}
+.ring:nth-of-type(2){animation-delay:.4s!important}.ring:nth-of-type(3){animation-delay:.8s!important}
+@keyframes scring{0%{opacity:.9;transform:scale(.15)}100%{opacity:0;transform:scale(1.25)}}
+.scan{fill:url(#sc-scan);opacity:0}
+.weigh .scan{animation:scscan 1.4s ease-in-out 2}
+@keyframes scscan{0%{opacity:0;transform:translateY(240px)}20%{opacity:.8}100%{opacity:0;transform:translateY(0)}}
+/* jauge IMC */
+.zone{fill:none;stroke-width:9}
+.needle{transform-origin:65px 62px;transform:rotate(var(--needle));transition:transform 1.6s cubic-bezier(.3,1.5,.4,1)}
+.needle path{fill:var(--primary-text-color)}
+.hub{fill:var(--primary-text-color)}
+.bmi{fill:var(--primary-text-color);font:700 13px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif);text-anchor:middle}
+.bmil{fill:var(--secondary-text-color);font:600 6.5px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif);text-anchor:middle;letter-spacing:.06em}
+.nobmi .gauge{opacity:.25}
+/* courbe 30 jours */
+.grid{stroke:color-mix(in srgb,var(--primary-text-color) 10%,transparent);stroke-width:.6}
+.line{fill:none;stroke:var(--sc-acc);stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:400;stroke-dashoffset:400}
+.drawn .line{animation:scdraw 1.8s ease-out forwards}
+@keyframes scdraw{to{stroke-dashoffset:0}}
+.area{fill:url(#sc-area);opacity:0;transition:opacity 1.2s .6s}
+.drawn .area{opacity:1}
+.goalline{stroke:var(--sc-ok);stroke-width:.9;stroke-dasharray:3 2}
+.last{fill:var(--sc-acc)}
+.lastp{fill:none;stroke:var(--sc-acc);stroke-width:1;transform-box:fill-box;transform-origin:50% 50%;animation:scping 2s ease-out infinite}
+@keyframes scping{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(3)}}
+.tl{fill:var(--secondary-text-color);font:600 6.5px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif)}
+.td{font:700 7.5px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif);text-anchor:end}
+.td.dn{fill:var(--sc-ok)}.td.up{fill:#ff9800}.td.eq{fill:var(--secondary-text-color)}
+.notrend .trend{display:none}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(66px,1fr));gap:6px;margin-top:6px}
+.tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
+.tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
+.tile .l span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tile .l ha-icon{--mdc-icon-size:13px;flex:none}
+.tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
+.tile.hide{display:none}
+.unavailable .plate{filter:grayscale(.6) brightness(.7)}
+.noanim *{animation:none!important;transition:none!important}
+`;
+
+  // pied (empreinte) : semelle + 5 orteils
+  const FOOT = (x, y, flip) => `<g transform="translate(${x} ${y}) scale(${flip ? -1 : 1} 1)">
+    <path d="M0 0 c-9 0 -14 12 -13 26 c1 14 5 30 4 42 c-1 10 2 18 10 18 c8 0 11 -8 10 -18 c-1 -14 4 -28 4 -44 c0 -14 -6 -24 -15 -24z"/>
+    <path d="M-10 -8 a4.5 5 0 1 0 0.1 0z M-2 -12 a3.5 4 0 1 0 0.1 0z M5 -11 a3 3.5 0 1 0 0.1 0z M11 -7 a2.6 3 0 1 0 0.1 0z M15 -1 a2.2 2.6 0 1 0 0.1 0z"/></g>`;
+
+  // arcs de la jauge IMC (zones OMS : maigreur, normal, surpoids, obésité)
+  const arcAt = (v) => { const a = Math.PI * (1 - (v - BMI_MIN) / (BMI_MAX - BMI_MIN)); return [65 + 46 * Math.cos(a), 62 - 46 * Math.sin(a)]; };
+  const zone = (a, b, col) => { const [x1, y1] = arcAt(a), [x2, y2] = arcAt(b); return `<path class="zone" stroke="${col}" d="M${x1.toFixed(1)} ${y1.toFixed(1)} A46 46 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}"/>`; };
+
+  const HTML = (label) => `
+<div class="stage">
+ <div class="floor" id="scfloor" role="img" aria-label="${esc(label)}">
+  <div class="glow"></div>
+  <div class="plate">
+   <img src="${IMG}" alt="">
+   <svg viewBox="0 0 300 300">
+    <defs><linearGradient id="sc-scan" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00e5ff" stop-opacity="0"/><stop offset=".5" stop-color="#00e5ff" stop-opacity=".55"/><stop offset="1" stop-color="#00e5ff" stop-opacity="0"/></linearGradient>
+     <clipPath id="sc-plate"><rect x="3" y="3" width="294" height="294" rx="26"/></clipPath></defs>
+    <g clip-path="url(#sc-plate)"><rect class="scan" x="0" y="0" width="300" height="50"/></g>
+    <circle class="ring" cx="150" cy="185" r="110"/><circle class="ring" cx="150" cy="185" r="110"/><circle class="ring" cx="150" cy="185" r="110"/>
+    <g class="feet">${FOOT(112, 140, true)}${FOOT(188, 140, false)}</g>
+    <rect class="lcdbg" x="121" y="17" width="58" height="39" rx="3"/>
+    <text class="lcdu" id="scunit" x="150" y="26">KG</text>
+    <text class="lcd" id="sclcd" x="150" y="51">--.-</text>
+   </svg>
+  </div>
+ </div>
+ <div class="side">
+  <svg viewBox="0 0 130 150">
+   <defs><linearGradient id="sc-area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00c2d1" stop-opacity=".35"/><stop offset="1" stop-color="#00c2d1" stop-opacity="0"/></linearGradient></defs>
+   <g class="gauge">
+    ${zone(BMI_MIN, 18.5, '#42a5f5')}${zone(18.5, 25, '#43a047')}${zone(25, 30, '#ffa31a')}${zone(30, BMI_MAX, '#e53935')}
+    <g class="needle"><path d="M63.3 62 L65 20 L66.7 62 Z"/></g><circle class="hub" cx="65" cy="62" r="3.4"/>
+    <text class="bmi" id="scbmi" x="65" y="80">--</text>
+    <text class="bmil" id="scbmil" x="65" y="89">BMI</text>
+   </g>
+   <g class="trend">
+    <line class="grid" x1="4" y1="104" x2="126" y2="104"/><line class="grid" x1="4" y1="142" x2="126" y2="142"/>
+    <path class="area" id="scarea"/><line class="goalline" id="scgoalline" x1="4" x2="126" y1="0" y2="0" style="display:none"/>
+    <path class="line" id="scline"/>
+    <circle class="lastp" id="sclastp" r="2.2" cx="-10" cy="-10"/><circle class="last" id="sclast" r="2.2" cx="-10" cy="-10"/>
+    <text class="tl" id="sctl" x="4" y="100">30 j</text><text class="td eq" id="sctd" x="126" y="100"></text>
+   </g>
+  </svg>
+ </div>
+</div>`;
+
+  const TILES = [
+    ['weight', 'mdi:scale-bathroom', 'entity_weight'],
+    ['fat', 'mdi:water-percent', 'entity_fat_ratio'],
+    ['fat_mass', 'mdi:human', 'entity_fat_mass'],
+    ['muscle', 'mdi:arm-flex', 'entity_muscle_mass'],
+    ['bone', 'mdi:bone', 'entity_bone_mass'],
+    ['water', 'mdi:water', 'entity_hydration'],
+    ['visceral', 'mdi:stomach', 'entity_visceral_fat'],
+    ['pulse', 'mdi:heart-pulse', 'entity_heart_pulse'],
+    ['goal', 'mdi:flag-checkered', 'entity_weight_goal'],
+  ];
+
+  class ApplianceScaleCard extends HTMLElement {
+    get _config() { return this._c; }
+    static getConfigElement() { return document.createElement(TAG + '-editor'); }
+    static getStubConfig(hass) {
+      const ids = Object.keys((hass && hass.states) || {});
+      const f = (re) => ids.find((i) => i.startsWith('sensor.') && re.test(i)) || '';
+      const o = {
+        entity_weight: f(/withings.*_weight$|^sensor\.weight$|withings.*weight(?!_goal)/i) || f(/(poids|weight)(?!.*goal)/i),
+        entity_fat_ratio: f(/fat_ratio|body_fat|fat_percent/i),
+        entity_fat_mass: f(/fat_mass/i),
+        entity_muscle_mass: f(/muscle_mass/i),
+        entity_bone_mass: f(/bone_mass/i),
+        entity_hydration: f(/hydration/i),
+        entity_heart_pulse: f(/heart_pulse|withings.*heart_rate/i),
+        entity_weight_goal: f(/weight_goal/i),
+      };
+      return Object.fromEntries(Object.entries(o).filter(([, v]) => v));
+    }
+    setConfig(c) {
+      if (window.applianceSize) window.applianceSize(this, c);
+      if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
+      this._c = { show_status: true, show_bmi: true, show_trend: true, show_composition: true, recent_minutes: 5, trend_days: 30, ...c };
+      this._built = false;
+      if (this._hass) this._render();
+    }
+    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    disconnectedCallback() { cancelAnimationFrame(this._raf); clearInterval(this._cyc); clearTimeout(this._wt); }
+    connectedCallback() { if (this._built && this._hass) this._render(); }
+    getCardSize() { return 5; }
+    getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+
+    _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
+    _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
+    _lang() { const l = (this._c.language || (this._hass && this._hass.language) || 'en'); return T[l] ? l : T[l.slice(0, 2)] ? l.slice(0, 2) : 'en'; }
+    _st(id) { return id && this._hass.states[id]; }
+    _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
+    _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
+    _fmt(v, d = 1) { return isNaN(v) ? '--' : v.toLocaleString(this._lang(), { maximumFractionDigits: d, minimumFractionDigits: d }); }
+    _more(id) { if (window.applianceMore) window.applianceMore(this, id); }
+    _anim() { return this._c.animations !== false; }
+
+    _build() {
+      const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
+      root.innerHTML = `<style>${CSS}</style><ha-card>
+        <div class="head"><div class="title" id="sctitle"></div><div class="badge" id="scbadge"></div></div>
+        ${HTML(this._c.name || this._t('name'))}
+        <div class="goal" id="scgoal"></div>
+        <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${esc(k)}"><div class="l"><ha-icon icon="${esc(ic)}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}
+          <div class="tile hide" data-k="bmi"><div class="l"><ha-icon icon="mdi:human-male-height"></ha-icon><span class="lbl"></span></div><div class="v"></div></div></div>
+      </ha-card>`;
+      this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
+      // clic sur la balance : action configurée, sinon on rejoue la pesée
+      window.applianceBindIllus(this, root.getElementById('scfloor'), () => this._weigh(true));
+      root.querySelector('.side').addEventListener('click', () => this._more(this._c.entity_weight));
+      root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
+        const t = TILES.find((x) => x[0] === el.dataset.k); this._more(t ? this._c[t[2]] : this._c.entity_bmi || this._c.entity_weight);
+      }));
+      this._seen = undefined; this._shown = NaN; this._histAt = 0; this._hist = null; this._drawnKey = '';
+    }
+
+    _weightKg() {
+      const v = this._num(this._c.entity_weight);
+      return /lb/i.test(this._unit(this._c.entity_weight, 'kg')) ? v * 0.45359237 : v;
+    }
+    _bmi() {
+      const c = this._c, b = this._num(c.entity_bmi);
+      if (!isNaN(b)) return b;
+      const h = Number(c.height) / 100, w = this._weightKg();
+      return h > 0.5 && !isNaN(w) ? w / (h * h) : NaN;
+    }
+    _cat(b) { return isNaN(b) ? '' : b < 18.5 ? 'under' : b < 25 ? 'normal' : b < 30 ? 'over' : 'obese'; }
+
+    // séquence de pesée : chiffres qui défilent jusqu'au poids, puis clignotement et alternance des mesures
+    _weigh(force) {
+      const r = this._root, card = this._card, w = this._num(this._c.entity_weight), lcd = r.getElementById('sclcd');
+      cancelAnimationFrame(this._raf); clearInterval(this._cyc); clearTimeout(this._wt); this._cyc = 0; this._weighing = false;
+      if (isNaN(w)) { lcd.textContent = '--.-'; return; }
+      if (!this._anim()) { this._shown = w; this._startCycle(); return; }
+      this._weighing = true;
+      card.classList.remove('weigh', 'blink'); void card.offsetWidth; card.classList.add('weigh');
+      r.getElementById('scunit').textContent = this._unit(this._c.entity_weight, 'kg').toUpperCase();
+      const t0 = performance.now(), D = 1700, from = force || isNaN(this._shown) ? 0 : this._shown;
+      const step = (now) => {
+        const k = Math.min(1, (now - t0) / D), e = 1 - Math.pow(1 - k, 3);
+        // petite oscillation avant stabilisation, comme une vraie balance
+        const wob = k < 1 ? Math.sin(k * 26) * (1 - k) * 0.9 : 0;
+        lcd.textContent = this._fmtLcd(from + (w - from) * e + wob);
+        if (k < 1) this._raf = requestAnimationFrame(step);
+        else {
+          this._shown = w; card.classList.add('blink');
+          this._wt = setTimeout(() => { card.classList.remove('weigh', 'blink'); this._weighing = false; this._startCycle(); }, 1600);
+        }
+      };
+      this._raf = requestAnimationFrame(step);
+    }
+    _fmtLcd(v) { return isNaN(v) ? '--.-' : v.toFixed(1); }
+    // écran : alterne poids → masse grasse → IMC tant que la pesée est récente, sinon poids fixe
+    _startCycle() {
+      const r = this._root, c = this._c, lcd = r.getElementById('sclcd'), unit = r.getElementById('scunit');
+      clearInterval(this._cyc); this._cyc = 0;
+      const items = [[this._num(c.entity_weight), this._unit(c.entity_weight, 'kg').toUpperCase()]];
+      const fat = this._num(c.entity_fat_ratio), bmi = this._bmi();
+      if (!isNaN(fat)) items.push([fat, '% FAT']);
+      if (!isNaN(bmi)) items.push([bmi, 'BMI']);
+      let i = 0;
+      const show = () => { const [v, u] = items[i % items.length]; lcd.textContent = this._fmtLcd(v); unit.textContent = u; i++; };
+      show();
+      this._cycOn = this._card.classList.contains('recent') && items.length > 1 && this._anim();
+      if (this._cycOn) this._cyc = setInterval(show, 2600);
+    }
+
+    _ago(ms) {
+      const m = Math.round(ms / 60000);
+      if (m < 1) return this._t('just_now');
+      if (m < 60) return this._t('min_ago').replace('{n}', m);
+      const h = Math.round(m / 60); if (h < 36) return this._t('h_ago').replace('{n}', h);
+      return this._t('d_ago').replace('{n}', Math.round(h / 24));
+    }
+
+    _fetchHist() {
+      const c = this._c, h = this._hass, id = c.entity_weight;
+      if (!id || c.show_trend === false || this._histBusy || Date.now() - this._histAt < 30 * 60000 || !h || typeof h.callWS !== 'function') return;
+      this._histBusy = true; this._histAt = Date.now();
+      const end = Date.now(), start = end - Number(c.trend_days || 30) * 86400e3;
+      h.callWS({ type: 'history/history_during_period', start_time: new Date(start).toISOString(), end_time: new Date(end).toISOString(),
+        entity_ids: [id], minimal_response: true, no_attributes: true, significant_changes_only: false })
+        .then((res) => {
+          // une valeur par jour (moyenne) : la courbe suit la tendance, pas chaque mise à jour du capteur
+          const days = new Map();
+          ((res && res[id]) || []).forEach((p) => {
+            const t = (p.lu ?? p.lc) * 1000, v = parseFloat(p.s); if (!isFinite(t) || !isFinite(v)) return;
+            const k = Math.floor(t / 86400e3), d = days.get(k) || { t: 0, v: 0, n: 0 }; d.t += t; d.v += v; d.n++; days.set(k, d);
+          });
+          this._hist = [...days.values()].map((d) => ({ t: d.t / d.n, v: d.v / d.n })).sort((a, b) => a.t - b.t);
+        })
+        .catch(() => { this._hist = null; })
+        .finally(() => { this._histBusy = false; this._drawnKey = ''; if (this._hass) this._render(); });
+    }
+
+    _drawTrend() {
+      const r = this._root, c = this._c, card = this._card, w = this._num(c.entity_weight), goal = this._num(c.entity_weight_goal);
+      const pts = (this._hist || []).slice();
+      if (!isNaN(w)) pts.push({ t: Date.now(), v: w });
+      const show = c.show_trend !== false && pts.length >= 2;
+      card.classList.toggle('notrend', !show);
+      if (!show) return;
+      const key = pts.map((p) => p.v).join(',') + goal;
+      if (key === this._drawnKey) return;
+      this._drawnKey = key;
+      const t0 = pts[0].t, t1 = pts[pts.length - 1].t || t0 + 1;
+      const vals = pts.map((p) => p.v).concat(isNaN(goal) ? [] : [goal]);
+      let lo = Math.min(...vals), hi = Math.max(...vals); if (hi - lo < 1) { lo -= 0.5; hi += 0.5; }
+      const X = (t) => 4 + ((t - t0) / Math.max(1, t1 - t0)) * 122, Y = (v) => 140 - ((v - lo) / (hi - lo)) * 34;
+      const d = pts.map((p, i) => `${i ? 'L' : 'M'}${X(p.t).toFixed(1)} ${Y(p.v).toFixed(1)}`).join(' ');
+      r.getElementById('scline').setAttribute('d', d);
+      r.getElementById('scarea').setAttribute('d', `${d} L126 142 L4 142 Z`);
+      const lx = X(pts[pts.length - 1].t), ly = Y(pts[pts.length - 1].v);
+      ['sclast', 'sclastp'].forEach((id) => { const e = r.getElementById(id); e.setAttribute('cx', lx.toFixed(1)); e.setAttribute('cy', ly.toFixed(1)); });
+      const gl = r.getElementById('scgoalline');
+      if (!isNaN(goal)) { gl.style.display = ''; gl.setAttribute('y1', Y(goal).toFixed(1)); gl.setAttribute('y2', Y(goal).toFixed(1)); } else gl.style.display = 'none';
+      const delta = pts[pts.length - 1].v - pts[0].v, td = r.getElementById('sctd');
+      td.textContent = `${delta > 0 ? '+' : delta < 0 ? '−' : '±'}${this._fmt(Math.abs(delta), 1)} ${this._unit(c.entity_weight, 'kg')}`;
+      td.setAttribute('class', `td ${Math.abs(delta) < 0.05 ? 'eq' : delta < 0 ? 'dn' : 'up'}`);
+      r.getElementById('sctl').textContent = this._t('trend').replace('{n}', Number(c.trend_days || 30));
+      // retrace la courbe
+      card.classList.remove('drawn'); void card.offsetWidth; card.classList.add('drawn');
+    }
+
+    _render() {
+      if (!this._built) this._build();
+      const c = this._c, r = this._root, card = this._card, s = this._st(c.entity_weight);
+      const w = this._num(c.entity_weight), unit = this._unit(c.entity_weight, 'kg');
+      const raw = s ? String(s.state) : '';
+      const unav = !s || /^(unavailable|unknown)$/.test(raw);
+      const since = s ? Date.now() - Date.parse(s.last_changed || s.last_updated) : NaN;
+      const recent = !unav && isFinite(since) && since < Number(c.recent_minutes) * 60000;
+      const bmi = c.show_bmi === false ? NaN : this._bmi();
+      card.classList.toggle('unavailable', unav); card.classList.toggle('recent', recent); card.classList.toggle('idle', !recent && !unav);
+      card.classList.toggle('nobmi', isNaN(bmi)); card.classList.toggle('noanim', !this._anim());
+      r.getElementById('sctitle').textContent = c.name || this._t('name');
+      const badge = r.getElementById('scbadge');
+      badge.textContent = unav ? this._t('unavailable') : isFinite(since) ? `${this._t('last')} ${this._ago(since)}` : '';
+      badge.style.display = c.show_status === false ? 'none' : '';
+
+      // nouvelle mesure (ou premier affichage) : animation de pesée
+      const sig = s ? `${raw}|${s.last_changed}` : '';
+      if (sig !== this._seen) { const first = this._seen === undefined; this._seen = sig; if (!unav) this._weigh(first); else r.getElementById('sclcd').textContent = '--.-'; }
+      // fin de la période « récente » (ou retour) : on relance l'affichage fixe / alterné
+      else if (!this._weighing && !unav && !!this._cycOn !== recent) this._startCycle();
+
+      // jauge IMC
+      const cl = Math.max(BMI_MIN, Math.min(BMI_MAX, isNaN(bmi) ? BMI_MIN : bmi));
+      card.style.setProperty('--needle', `${(-90 + ((cl - BMI_MIN) / (BMI_MAX - BMI_MIN)) * 180).toFixed(1)}deg`);
+      r.getElementById('scbmi').textContent = isNaN(bmi) ? '--' : this._fmt(bmi, 1);
+      r.getElementById('scbmil').textContent = isNaN(bmi) ? 'BMI' : `BMI · ${this._t(this._cat(bmi)).toUpperCase()}`;
+
+      // objectif atteint (±0,5)
+      const goal = this._num(c.entity_weight_goal), ge = r.getElementById('scgoal');
+      const reached = !isNaN(goal) && !isNaN(w) && Math.abs(w - goal) <= 0.5;
+      ge.textContent = reached ? `🎯 ${this._t('goal_reached')}` : ''; ge.classList.toggle('on', reached);
+
+      this._fetchHist(); this._drawTrend();
+
+      const V = {
+        weight: [this._fmt(w), unit], fat: [this._fmt(this._num(c.entity_fat_ratio)), '%'],
+        fat_mass: [this._fmt(this._num(c.entity_fat_mass)), this._unit(c.entity_fat_mass, 'kg')],
+        muscle: [this._fmt(this._num(c.entity_muscle_mass)), this._unit(c.entity_muscle_mass, 'kg')],
+        bone: [this._fmt(this._num(c.entity_bone_mass)), this._unit(c.entity_bone_mass, 'kg')],
+        water: [this._fmt(this._num(c.entity_hydration)), this._unit(c.entity_hydration, 'kg')],
+        visceral: [this._fmt(this._num(c.entity_visceral_fat), 0), this._unit(c.entity_visceral_fat, '')],
+        pulse: [this._fmt(this._num(c.entity_heart_pulse), 0), this._unit(c.entity_heart_pulse, 'bpm')],
+        goal: [this._fmt(goal), unit],
+      };
+      const comp = new Set(['fat', 'fat_mass', 'muscle', 'bone', 'water', 'visceral', 'pulse']);
+      TILES.forEach(([k, , ent]) => {
+        const el = r.querySelector(`.tile[data-k="${k}"]`), [val, u] = V[k];
+        el.classList.toggle('hide', !c[ent] || (comp.has(k) && c.show_composition === false));
+        el.querySelector('.lbl').textContent = this._l(k);
+        const small = document.createElement('small'); small.textContent = u ?? '';
+        el.querySelector('.v').replaceChildren(String(val ?? ''), small);
+      });
+      const bt = r.querySelector('.tile[data-k="bmi"]');
+      bt.classList.toggle('hide', isNaN(bmi) || c.show_bmi === false);
+      bt.querySelector('.lbl').textContent = this._l('bmi');
+      bt.querySelector('.v').replaceChildren(this._fmt(bmi, 1));
+    }
+  }
+  customElements.define(TAG, ApplianceScaleCard);
+
+  /* ---- éditeur visuel ---- */
+  class ApplianceScaleCardEditor extends HTMLElement {
+    setConfig(c) { this._c = c; this._draw(); }
+    set hass(h) { this._hass = h; if (this._form) this._form.hass = h; }
+    _draw() {
+      if (!this._form) {
+        this._form = document.createElement('ha-form');
+        this._form.addEventListener('value-changed', (e) => {
+          this._c = e.detail.value;
+          this.dispatchEvent(new CustomEvent('config-changed', { detail: { config: this._c }, bubbles: true, composed: true }));
+        });
+        this.appendChild(this._form);
+      }
+      const ent = (name) => ({ name, selector: { entity: { domain: 'sensor' } } });
+      const num = (name, min, max, step, def, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
+      const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
+      this._form.hass = this._hass;
+      this._form.data = this._c;
+      this._form.schema = [
+        { name: 'name', selector: { text: {} } },
+        { name: 'labels', selector: { object: {} } },
+        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
+        { name: 'transparent', selector: { boolean: {} } },
+        ent('entity_weight'), ent('entity_fat_ratio'), ent('entity_fat_mass'), ent('entity_muscle_mass'), ent('entity_bone_mass'), ent('entity_hydration'),
+        ent('entity_visceral_fat'), ent('entity_heart_pulse'), ent('entity_weight_goal'), ent('entity_bmi'),
+        { type: 'grid', name: '', schema: [num('height', 50, 250, 1, undefined, 'cm'), num('recent_minutes', 1, 120, 1, 5, 'min'), num('trend_days', 7, 365, 1, 30)] },
+        ...window.applianceActionFields,
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_bmi'), bool('show_trend'), bool('show_composition'), bool('animations')] },
+      ];
+      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
+    }
+  }
+  customElements.define(TAG + '-editor', ApplianceScaleCardEditor);
+
+  window.customCards = window.customCards || [];
+  window.customCards.push({
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
+    description: 'Balance Withings en photo 3D : pesée animée (empreintes, chiffres qui défilent, ondes), jauge IMC, courbe 30 jours et objectif (Withings).', preview: true,
+    documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
   });
 })();
 
