@@ -1121,6 +1121,8 @@
     "st_dial": "Wijzerplaat",
     "st_neon": "Neon",
     "st_netatmo": "Netatmo",
+    "st_nest": "Google Nest",
+    "heating_now": "Verwarmt",
     "st_bars": "Staven",
     "lcd_auto": "Automatisch (overdag groen, donker blauw)",
     "lcd_green": "Groen",

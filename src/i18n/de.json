@@ -1121,6 +1121,8 @@
     "st_dial": "Zeigerinstrument",
     "st_neon": "Neon",
     "st_netatmo": "Netatmo",
+    "st_nest": "Google Nest",
+    "heating_now": "Heizt",
     "st_bars": "Balken",
     "lcd_auto": "Automatisch (tagsüber grün, dunkel blau)",
     "lcd_green": "Grün",

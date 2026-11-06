@@ -1121,6 +1121,8 @@
 "st_dial": "Viserinstrument",
 "st_neon": "Neon",
 "st_netatmo": "Netatmo",
+"st_nest": "Google Nest",
+"heating_now": "Varmer",
 "st_bars": "Søyler",
 "lcd_auto": "Automatisk (grønn om dagen, blå i mørk modus)",
 "lcd_green": "Grønn",

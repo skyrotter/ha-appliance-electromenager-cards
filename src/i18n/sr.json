@@ -1137,6 +1137,8 @@
     "st_dial": "Бројчаник са иглом",
     "st_neon": "Неон",
     "st_netatmo": "Netatmo",
+    "st_nest": "Google Nest",
+    "heating_now": "Греје",
     "st_bars": "Траке",
     "lcd_auto": "Аутоматски (зелено дању, плаво у тамном режиму)",
     "lcd_green": "Зелена",

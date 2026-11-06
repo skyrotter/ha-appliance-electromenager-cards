@@ -1138,6 +1138,8 @@
     "st_dial": "Cadran à aiguilles",
     "st_neon": "Néon",
     "st_netatmo": "Netatmo",
+    "st_nest": "Google Nest",
+    "heating_now": "En chauffe",
     "st_bars": "Barres",
     "lcd_auto": "Automatique (vert le jour, bleu en sombre)",
     "lcd_green": "Vert",

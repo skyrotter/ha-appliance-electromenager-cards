@@ -1138,6 +1138,8 @@
     "st_dial": "Needle dial",
     "st_neon": "Neon",
     "st_netatmo": "Netatmo",
+    "st_nest": "Google Nest",
+    "heating_now": "Heating",
     "st_bars": "Bars",
     "lcd_auto": "Automatic (green by day, blue in dark mode)",
     "lcd_green": "Green",
