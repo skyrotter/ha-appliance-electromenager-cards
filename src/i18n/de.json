@@ -58,6 +58,7 @@
     "wine_cooler": "Weinkühlschrank",
     "f_max_temperature_wine": "Alarm über (°C)",
     "f_fridge_style": "Kühlschrank-Bauform",
+    "f_fridge_finish": "Ausführung des Kühlschranks",
     "zone_top": "Obere Zone",
     "zone_bottom": "Untere Zone",
     "f_zone2_temperature": "Temperatursensor untere Zone (Zwei-Zonen)",

@@ -58,6 +58,7 @@
     "wine_cooler": "Vinotecă",
     "f_max_temperature_wine": "Alertă peste (°C)",
     "f_fridge_style": "Tip frigider",
+    "f_fridge_finish": "Finisajul frigiderului",
     "zone_top": "Zona de sus",
     "zone_bottom": "Zona de jos",
     "f_zone2_temperature": "Senzor temperatură zona de jos (două zone)",

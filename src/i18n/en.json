@@ -58,6 +58,7 @@
     "wine_cooler": "Wine cooler",
     "f_max_temperature_wine": "Alert above (°C)",
     "f_fridge_style": "Refrigerator layout",
+    "f_fridge_finish": "Refrigerator finish",
     "zone_top": "Upper zone",
     "zone_bottom": "Lower zone",
     "f_zone2_temperature": "Lower zone temperature sensor (dual-zone)",

@@ -73,6 +73,7 @@ const STRINGS = {
     "wine_cooler": "Wine cooler",
     "f_max_temperature_wine": "Alert above (°C)",
     "f_fridge_style": "Refrigerator layout",
+    "f_fridge_finish": "Refrigerator finish",
     "zone_top": "Upper zone",
     "zone_bottom": "Lower zone",
     "f_zone2_temperature": "Lower zone temperature sensor (dual-zone)",
@@ -420,6 +421,7 @@ const STRINGS = {
     "wine_cooler": "Weinkühlschrank",
     "f_max_temperature_wine": "Alarm über (°C)",
     "f_fridge_style": "Kühlschrank-Bauform",
+    "f_fridge_finish": "Ausführung des Kühlschranks",
     "zone_top": "Obere Zone",
     "zone_bottom": "Untere Zone",
     "f_zone2_temperature": "Temperatursensor untere Zone (Zwei-Zonen)",
@@ -751,6 +753,7 @@ const STRINGS = {
     "wine_cooler": "Cave à vin",
     "f_max_temperature_wine": "Alerte au-dessus de (°C)",
     "f_fridge_style": "Type de réfrigérateur",
+    "f_fridge_finish": "Finition du réfrigérateur",
     "zone_top": "Zone haute",
     "zone_bottom": "Zone basse",
     "f_zone2_temperature": "Capteur de température zone basse (bi-zone)",
@@ -1098,6 +1101,7 @@ const STRINGS = {
     "wine_cooler": "Cantinetta vino",
     "f_max_temperature_wine": "Avviso sopra (°C)",
     "f_fridge_style": "Disposizione del frigorifero",
+    "f_fridge_finish": "Finitura del frigorifero",
     "zone_top": "Zona superiore",
     "zone_bottom": "Zona inferiore",
     "f_zone2_temperature": "Sensore temperatura zona inferiore (doppia zona)",
@@ -1498,6 +1502,7 @@ const STRINGS = {
     "wine_cooler": "Vinkjøleskap",
     "f_max_temperature_wine": "Varsel over (°C)",
     "f_fridge_style": "Kjøleskapstype",
+    "f_fridge_finish": "Kjøleskapets finish",
     "zone_top": "Øvre sone",
     "zone_bottom": "Nedre sone",
     "f_zone2_temperature": "Temperatursensor nedre sone (to soner)",
@@ -1760,6 +1765,7 @@ const STRINGS = {
     "wine_cooler": "Wijnkoelkast",
     "f_max_temperature_wine": "Alarm boven (°C)",
     "f_fridge_style": "Type koelkast",
+    "f_fridge_finish": "Afwerking van de koelkast",
     "zone_top": "Bovenste zone",
     "zone_bottom": "Onderste zone",
     "f_zone2_temperature": "Temperatuursensor onderste zone (twee zones)",
@@ -2091,6 +2097,7 @@ const STRINGS = {
     "wine_cooler": "Vinotecă",
     "f_max_temperature_wine": "Alertă peste (°C)",
     "f_fridge_style": "Tip frigider",
+    "f_fridge_finish": "Finisajul frigiderului",
     "zone_top": "Zona de sus",
     "zone_bottom": "Zona de jos",
     "f_zone2_temperature": "Senzor temperatură zona de jos (două zone)",
@@ -2422,6 +2429,7 @@ const STRINGS = {
     "wine_cooler": "Винный шкаф",
     "f_max_temperature_wine": "Оповещать выше (°C)",
     "f_fridge_style": "Компоновка холодильника",
+    "f_fridge_finish": "Отделка холодильника",
     "zone_top": "Верхняя зона",
     "zone_bottom": "Нижняя зона",
     "f_zone2_temperature": "Датчик температуры нижней зоны (двухзонный)",
@@ -2753,6 +2761,7 @@ const STRINGS = {
     "wine_cooler": "Витрина за вино",
     "f_max_temperature_wine": "Обавештење изнад (°C)",
     "f_fridge_style": "Распоред фрижидера",
+    "f_fridge_finish": "Завршна обрада фрижидера",
     "zone_top": "Горња зона",
     "zone_bottom": "Доња зона",
     "f_zone2_temperature": "Сензор температуре доње зоне (две зоне)",
@@ -3100,6 +3109,7 @@ const STRINGS = {
     "wine_cooler": "Vitrina za vino",
     "f_max_temperature_wine": "Obaveštenje iznad (°C)",
     "f_fridge_style": "Raspored frižidera",
+    "f_fridge_finish": "Završna obrada frižidera",
     "zone_top": "Gornja zona",
     "zone_bottom": "Donja zona",
     "f_zone2_temperature": "Senzor temperature donje zone (dve zone)",
@@ -4054,7 +4064,9 @@ const flexLcd = (x, y) => `
 <text class="lcd3" x="${x + 11}" y="${y + 8.4}" text-anchor="middle" fill="#7cf0c4" font-size="8.5" font-weight="800">--°</text>`;
 const FRIDGE_DEFS = `<defs>${DEFS}
 <linearGradient id="ID-in" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dfe9f2"/></linearGradient>
-<linearGradient id="ID-frost" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9f6ff"/><stop offset="1" stop-color="#bfe0f5"/></linearGradient></defs>`;
+<linearGradient id="ID-frost" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9f6ff"/><stop offset="1" stop-color="#bfe0f5"/></linearGradient>
+<linearGradient id="ID-fwhite" x1="0" x2="1"><stop offset="0" stop-color="#dfe3e7"/><stop offset=".22" stop-color="#ffffff"/><stop offset=".55" stop-color="#f3f5f7"/><stop offset=".8" stop-color="#fbfcfd"/><stop offset="1" stop-color="#d3d8dd"/></linearGradient>
+<linearGradient id="ID-fblack" x1="0" x2="1"><stop offset="0" stop-color="#1c1f23"/><stop offset=".22" stop-color="#4a5058"/><stop offset=".5" stop-color="#2b2f35"/><stop offset=".75" stop-color="#40464d"/><stop offset="1" stop-color="#16181b"/></linearGradient></defs>`;
 const fridgeMist = `<g class="mist"><circle cx="40" cy="132" r="1.1"/><circle cx="52" cy="133" r=".9"/><circle cx="66" cy="132" r="1.2"/><circle cx="79" cy="133" r=".9"/></g>`;
 
 const FRIDGE = {
@@ -4245,7 +4257,12 @@ ${fridgeFood(62, 7, 43, 120)}
 </g>`,
 };
 
-SVG.fridge = (c) => `${FRIDGE_DEFS}${FRIDGE[fridgeStyle(c)](!!(c && c.flex_temperature))}${fridgeMist}`;
+// finition des portes (option finish) : inox (défaut), blanc ou noir
+const fridgeFinish = (c) => ({ white: "fwhite", blanc: "fwhite", black: "fblack", noir: "fblack" }[String(c?.finish || "").toLowerCase()] || "");
+SVG.fridge = (c) => {
+  const f = fridgeFinish(c), body = FRIDGE[fridgeStyle(c)](!!(c && c.flex_temperature));
+  return `${FRIDGE_DEFS}${f ? body.replace(/url\(#ID-inox\)/g, `url(#ID-${f})`) : body}${fridgeMist}`;
+};
 
 SVG.garland = () => {
   // deux rangées de festons sous une poutre de terrasse, trois globes par feston
@@ -7573,6 +7590,7 @@ function buildForm(kind) {
               { value: "top", label: "Congélateur en haut / Top freezer" }, { value: "bottom", label: "Congélateur en bas / Bottom freezer" },
               { value: "bottom_door", label: "Combiné, porte en bas / Bottom freezer door" },
               { value: "french", label: "French door" }, { value: "four_door", label: "4 portes / 4-door" }, { value: "american", label: "Américain / Side-by-side" }, { value: "single", label: "Une porte / Single door" }] } } },
+            { name: "finish", selector: { select: { mode: "dropdown", options: [{ value: "inox", label: "Inox / Stainless steel" }, { value: "white", label: "Blanc / White" }, { value: "black", label: "Noir / Black" }] } } },
             { name: "max_temperature", selector: { number: { min: 0, max: 15, step: 0.5, mode: "box" } } },
             { name: "freezer_max_temperature", selector: { number: { min: -30, max: 0, step: 0.5, mode: "box" } } },
             { name: "flex_max_temperature", selector: { number: { min: -30, max: 15, step: 0.5, mode: "box" } } },
@@ -7758,7 +7776,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "fridge" && s.name === "finish" ? "f_fridge_finish" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
   };
 }
 

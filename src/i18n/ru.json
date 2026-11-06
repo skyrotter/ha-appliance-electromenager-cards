@@ -58,6 +58,7 @@
     "wine_cooler": "Винный шкаф",
     "f_max_temperature_wine": "Оповещать выше (°C)",
     "f_fridge_style": "Компоновка холодильника",
+    "f_fridge_finish": "Отделка холодильника",
     "zone_top": "Верхняя зона",
     "zone_bottom": "Нижняя зона",
     "f_zone2_temperature": "Датчик температуры нижней зоны (двухзонный)",

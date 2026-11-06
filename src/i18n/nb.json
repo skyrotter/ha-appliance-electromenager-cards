@@ -127,6 +127,7 @@
 "wine_cooler": "Vinkjøleskap",
 "f_max_temperature_wine": "Varsel over (°C)",
 "f_fridge_style": "Kjøleskapstype",
+"f_fridge_finish": "Kjøleskapets finish",
 "zone_top": "Øvre sone",
 "zone_bottom": "Nedre sone",
 "f_zone2_temperature": "Temperatursensor nedre sone (to soner)",

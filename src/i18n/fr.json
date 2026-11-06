@@ -58,6 +58,7 @@
     "wine_cooler": "Cave à vin",
     "f_max_temperature_wine": "Alerte au-dessus de (°C)",
     "f_fridge_style": "Type de réfrigérateur",
+    "f_fridge_finish": "Finition du réfrigérateur",
     "zone_top": "Zone haute",
     "zone_bottom": "Zone basse",
     "f_zone2_temperature": "Capteur de température zone basse (bi-zone)",

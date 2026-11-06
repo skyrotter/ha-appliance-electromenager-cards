@@ -58,6 +58,7 @@
     "wine_cooler": "Wijnkoelkast",
     "f_max_temperature_wine": "Alarm boven (°C)",
     "f_fridge_style": "Type koelkast",
+    "f_fridge_finish": "Afwerking van de koelkast",
     "zone_top": "Bovenste zone",
     "zone_bottom": "Onderste zone",
     "f_zone2_temperature": "Temperatuursensor onderste zone (twee zones)",

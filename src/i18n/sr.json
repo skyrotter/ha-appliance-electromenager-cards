@@ -58,6 +58,7 @@
     "wine_cooler": "Витрина за вино",
     "f_max_temperature_wine": "Обавештење изнад (°C)",
     "f_fridge_style": "Распоред фрижидера",
+    "f_fridge_finish": "Завршна обрада фрижидера",
     "zone_top": "Горња зона",
     "zone_bottom": "Доња зона",
     "f_zone2_temperature": "Сензор температуре доње зоне (две зоне)",

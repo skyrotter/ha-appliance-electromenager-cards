@@ -22,6 +22,8 @@ The refrigerator card has seven layouts, chosen with `style` (also in the visual
 - `single`: one full-height door, no freezer (larder fridge): glass shelves and two crisper drawers. Aliases: `one_door`, `une_porte`, `larder`.
 - `american`: side-by-side, freezer on the left with an ice and water dispenser (it lights up and drips while cooling), fridge on the right.
 
+`finish` sets the colour of the doors: `inox` (default, stainless steel), `white` or `black` (also in the visual editor).
+
 `door` opens the fridge door(s), `freezer_door` opens the freezer door(s) or pulls out the top drawer. Temperatures, alerts and status work the same in every layout.
 
 The wine cooler becomes dual-zone (reds on top, whites below) when you add `zone2_temperature`: a second display, a divider shelf, a cooler lower zone, and an Upper zone / Lower zone chip each. `max_temperature_2` sets the lower zone alert (defaults to `max_temperature`).

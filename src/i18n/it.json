@@ -58,6 +58,7 @@
     "wine_cooler": "Cantinetta vino",
     "f_max_temperature_wine": "Avviso sopra (°C)",
     "f_fridge_style": "Disposizione del frigorifero",
+    "f_fridge_finish": "Finitura del frigorifero",
     "zone_top": "Zona superiore",
     "zone_bottom": "Zona inferiore",
     "f_zone2_temperature": "Sensore temperatura zona inferiore (doppia zona)",

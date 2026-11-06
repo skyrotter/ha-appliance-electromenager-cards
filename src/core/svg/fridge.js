@@ -35,7 +35,9 @@ const flexLcd = (x, y) => `
 <text class="lcd3" x="${x + 11}" y="${y + 8.4}" text-anchor="middle" fill="#7cf0c4" font-size="8.5" font-weight="800">--°</text>`;
 const FRIDGE_DEFS = `<defs>${DEFS}
 <linearGradient id="ID-in" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dfe9f2"/></linearGradient>
-<linearGradient id="ID-frost" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9f6ff"/><stop offset="1" stop-color="#bfe0f5"/></linearGradient></defs>`;
+<linearGradient id="ID-frost" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9f6ff"/><stop offset="1" stop-color="#bfe0f5"/></linearGradient>
+<linearGradient id="ID-fwhite" x1="0" x2="1"><stop offset="0" stop-color="#dfe3e7"/><stop offset=".22" stop-color="#ffffff"/><stop offset=".55" stop-color="#f3f5f7"/><stop offset=".8" stop-color="#fbfcfd"/><stop offset="1" stop-color="#d3d8dd"/></linearGradient>
+<linearGradient id="ID-fblack" x1="0" x2="1"><stop offset="0" stop-color="#1c1f23"/><stop offset=".22" stop-color="#4a5058"/><stop offset=".5" stop-color="#2b2f35"/><stop offset=".75" stop-color="#40464d"/><stop offset="1" stop-color="#16181b"/></linearGradient></defs>`;
 const fridgeMist = `<g class="mist"><circle cx="40" cy="132" r="1.1"/><circle cx="52" cy="133" r=".9"/><circle cx="66" cy="132" r="1.2"/><circle cx="79" cy="133" r=".9"/></g>`;
 
 const FRIDGE = {
@@ -226,4 +228,9 @@ ${fridgeFood(62, 7, 43, 120)}
 </g>`,
 };
 
-SVG.fridge = (c) => `${FRIDGE_DEFS}${FRIDGE[fridgeStyle(c)](!!(c && c.flex_temperature))}${fridgeMist}`;
+// finition des portes (option finish) : inox (défaut), blanc ou noir
+const fridgeFinish = (c) => ({ white: "fwhite", blanc: "fwhite", black: "fblack", noir: "fblack" }[String(c?.finish || "").toLowerCase()] || "");
+SVG.fridge = (c) => {
+  const f = fridgeFinish(c), body = FRIDGE[fridgeStyle(c)](!!(c && c.flex_temperature));
+  return `${FRIDGE_DEFS}${f ? body.replace(/url\(#ID-inox\)/g, `url(#ID-${f})`) : body}${fridgeMist}`;
+};
