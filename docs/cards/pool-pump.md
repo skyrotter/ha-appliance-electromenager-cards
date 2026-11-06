@@ -18,6 +18,18 @@ sensor:
     end: "{{ now() }}"
 ```
 
+Water analysis and pressure, shown as tiles (each one only if its sensor is set, and each can be switched off):
+
+| Option | Tile | Hide with |
+|---|---|---|
+| `temperature` | Pool water temperature | `show_temperature: false` |
+| `ph` | pH | `show_ph: false` |
+| `orp` | ORP (mV) | `show_orp: false` |
+| `pressure` | Filter pressure | `show_pressure: false` |
+| `tds` | TDS | `show_tds: false` |
+| `salt` | Salt | `show_salt: false` |
+| `chlorine` | Chlorine level | `show_chlorine: false` |
+
 ```yaml
 type: custom:appliance-pool-pump-card
 switch: switch.pool_pump
@@ -26,6 +38,13 @@ power: sensor.pool_pump_power
 energy: sensor.pool_pump_energy_today
 temperature: sensor.pool_water_temperature
 runtime: sensor.pool_filtration_today
+ph: sensor.pool_ph
+orp: sensor.pool_orp
+pressure: sensor.pool_filter_pressure
+tds: sensor.pool_tds
+salt: sensor.pool_salt
+chlorine: sensor.pool_chlorine
+show_tds: false             # hide a tile without removing its sensor
 max_power: 1100
 ```
 

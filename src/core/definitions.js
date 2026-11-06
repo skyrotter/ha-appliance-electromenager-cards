@@ -117,7 +117,7 @@ const DEF = {
     fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "power_level", "pellet_level", "mode", "switch"],
     keys: ["poele", "pellet", "granule", "stove"] },
   pool_pump: { accent: "active", threshold: 50,
-    fields: ["entity", "power", "energy", "cost", "temperature", "runtime", "speed", "switch"],
+    fields: ["entity", "power", "energy", "cost", "temperature", "ph", "orp", "pressure", "tds", "salt", "chlorine", "runtime", "speed", "switch"],
     keys: ["piscine", "pool", "filtration", "pompe"] },
   chest_freezer: { accent: "cold", threshold: 20,
     fields: ["entity", "power", "energy", "cost", "temperature", "door", "switch"],
