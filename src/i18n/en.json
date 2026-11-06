@@ -1137,6 +1137,7 @@
     "st_double_ring": "Double ring",
     "st_dial": "Needle dial",
     "st_neon": "Neon",
+    "st_netatmo": "Netatmo",
     "st_bars": "Bars",
     "lcd_auto": "Automatic (green by day, blue in dark mode)",
     "lcd_green": "Green",
