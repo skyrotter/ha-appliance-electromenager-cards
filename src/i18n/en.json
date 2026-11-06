@@ -905,6 +905,7 @@
     "show_door": "Show door",
     "lock_model": "Lock model",
     "tilt_only": "Tilt only (no up / down)",
+    "tilt_from_position": "Tilt from position (motor on the tilt cord)",
     "tilt_presets": "Tilt presets (list, e.g. [0, 50, 100])",
     "navigation_path": "Page to open (e.g. /lovelace/climate)",
     "entity_climate": "Linked thermostat",

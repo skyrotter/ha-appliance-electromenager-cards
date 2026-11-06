@@ -889,6 +889,7 @@
     "show_door": "Deur tonen",
     "lock_model": "Slotmodel",
     "tilt_only": "Alleen kantelen (niet omhoog / omlaag)",
+    "tilt_from_position": "Kanteling = positie (motor op het kantelkoord)",
     "tilt_presets": "Kantelvoorinstellingen (lijst, bv. [0, 50, 100])",
     "navigation_path": "Te openen pagina (bijv. /lovelace/klimaat)",
     "entity_climate": "Gekoppelde thermostaat",

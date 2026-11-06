@@ -889,6 +889,7 @@
 "show_door": "Vis dør",
 "lock_model": "Låsmodell",
 "tilt_only": "Kun helning (ikke opp / ned)",
+"tilt_from_position": "Vinkel = posisjon (motor på vippesnoren)",
 "tilt_presets": "Forhåndsvalg for helning (liste, f.eks. [0, 50, 100])",
 "navigation_path": "Side som åpnes (f.eks. /lovelace/klima)",
 "entity_climate": "Tilknyttet termostat",

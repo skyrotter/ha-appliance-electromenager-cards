@@ -905,6 +905,7 @@
     "show_door": "Prikaži vrata",
     "lock_model": "Model brave",
     "tilt_only": "Samo nagib (bez gore / dole)",
+    "tilt_from_position": "Nagib = položaj (motor na kanapu za nagib)",
     "tilt_presets": "Unapred zadate vrednosti nagiba (lista, npr. [0, 50, 100])",
     "navigation_path": "Stranica za otvaranje (npr. /lovelace/climate)",
     "entity_climate": "Povezani termostat",
