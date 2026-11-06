@@ -13,12 +13,13 @@ door: binary_sensor.cave_a_vin_door   # optional
 
 <p align="center"><img src="../fridge-styles.gif" width="640" alt="Refrigerator layouts and dual-zone wine cooler"></p>
 
-The refrigerator card has six layouts, chosen with `style` (also in the visual editor):
+The refrigerator card has seven layouts, chosen with `style` (also in the visual editor):
 - `top` (default): freezer on top, fridge below.
 - `bottom`: fridge on top, two pull-out freezer drawers below (European combi).
 - `bottom_door`: fridge on top, one hinged freezer door below (classic combi). Aliases: `bottom-door`, `combi_door`.
 - `french`: two fridge doors on top, two freezer drawers below.
 - `four_door`: two fridge doors on top, two hinged freezer doors below (cross door). Aliases: `4_door`, `cross_door`.
+- `single`: one full-height door, no freezer (larder fridge): glass shelves and two crisper drawers. Aliases: `one_door`, `une_porte`, `larder`.
 - `american`: side-by-side, freezer on the left with an ice and water dispenser (it lights up and drips while cooling), fridge on the right.
 
 `door` opens the fridge door(s), `freezer_door` opens the freezer door(s) or pulls out the top drawer. Temperatures, alerts and status work the same in every layout.
@@ -27,7 +28,7 @@ The wine cooler becomes dual-zone (reds on top, whites below) when you add `zone
 
 ```yaml
 type: custom:appliance-fridge-card
-style: american            # top | bottom | bottom_door | french | four_door | american
+style: american            # top | bottom | bottom_door | french | four_door | american | single
 power: sensor.fridge_power
 temperature: sensor.fridge_temperature
 door: binary_sensor.fridge_door
