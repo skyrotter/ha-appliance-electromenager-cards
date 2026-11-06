@@ -6,6 +6,12 @@
 
 [🇬🇧 English](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/README.md) · 🇫🇷 Français · [🇮🇹 Italiano](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/README.it.md)
 
+## ❤️ Soutenir le projet
+
+Ce projet est gratuit et open source, développé sur mon temps libre. Si les cartes embellissent ton tableau de bord, un petit don m'aide à ajouter de nouvelles cartes et à maintenir les existantes. Il manque un appareil ? [Propose-le dans les issues](https://github.com/skyrotter/ha-appliance-electromenager-cards/issues) : c'est comme ça que le chauffage diesel et le jacuzzi sont arrivés.
+
+[❤️ Sponsor sur GitHub](https://github.com/sponsors/skyrotter) · [☕ Offre-moi un café](https://buymeacoffee.com/skyrotter) · [💙 Don via PayPal.me](https://paypal.me/skyrotter)
+
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/79-cartes.png" width="560" alt="79 cartes animées pour Home Assistant"></p>
 
 **90 cartes Lovelace pour l'électroménager**, chacune avec une illustration animée réaliste : tambour de lave-linge, flamme de poêle à granulés, chauffage diesel et sa couronne bleue, jacuzzi et ses jets, robot aspirateur, compteur Linky, batterie domestique… Elles affichent l'état en direct, la puissance, l'énergie et le coût, suivent le thème de Home Assistant (clair/sombre) et parlent français, anglais, allemand, norvégien, néerlandais, roumain, russe, serbe et italien.
@@ -41,12 +47,6 @@ cost: sensor.washer_cost_today
 ```
 
 Toutes les options, le calcul de l'état, les thèmes et la sécurité du bouton marche/arrêt sont dans **[docs/configuration.md](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/configuration.md)** (en anglais).
-
-## ❤️ Soutenir le projet
-
-Ce projet est gratuit et open source, développé sur mon temps libre. Si les cartes embellissent ton tableau de bord, un petit don m'aide à ajouter de nouvelles cartes et à maintenir les existantes. Il manque un appareil ? [Propose-le dans les issues](https://github.com/skyrotter/ha-appliance-electromenager-cards/issues) : c'est comme ça que le chauffage diesel et le jacuzzi sont arrivés.
-
-[❤️ Sponsor sur GitHub](https://github.com/sponsors/skyrotter) · [☕ Don via PayPal.me](https://paypal.me/skyrotter)
 
 ## Les cartes
 

@@ -6,6 +6,12 @@
 
 [Demo interattiva](https://skyrotter.github.io/ha-appliance-electromenager-cards/docs/demo.html) · [Test automatici](https://skyrotter.github.io/ha-appliance-electromenager-cards/docs/tests.html) · [README originale in inglese/francese](README.md)
 
+## ❤️ Sostieni il progetto
+
+Progetto gratuito e open source. Se ti piace, una piccola donazione aiuta a creare nuove card.
+
+[❤️ Sponsor su GitHub](https://github.com/sponsors/skyrotter) · [☕ Offrimi un caffè](https://buymeacoffee.com/skyrotter) · [💙 Dona con PayPal.me](https://paypal.me/skyrotter)
+
 ## Card disponibili
 
 Alcuni esempi (elenco completo con anteprime nel [README in inglese](README.md#the-cards)):
