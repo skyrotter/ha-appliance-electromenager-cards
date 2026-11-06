@@ -2,7 +2,8 @@
  * Détecteur fixé au plafond, deux modèles (option model) : cylinder (cylindre compact, bouton-LED carré, bande grillagée)
  * ou round (rond plat classique). Alarme : la fumée monte, la LED rouge clignote, des ondes sonores partent du détecteur.
  * CO (facultatif, entity_co : binary_sensor ou sensor en ppm) : nappe de gaz et ondes orange. Test : le bouton s'enfonce,
- * ondes bleues. Pile faible / défaut : LED orange et pictogramme. Boutons « Tester » et « Couper l'alarme » facultatifs.
+ * ondes bleues. Mode gaz (detector: gas, ou model: gas) : même dessin, textes « Gaz », nuage de gaz, entity_level / entity_valve /
+ * entity_siren facultatifs. Pile faible / défaut : LED orange et pictogramme. Boutons « Tester » et « Couper l'alarme » facultatifs.
  */
 (() => {
   const TAG = 'appliance-smoke-detector-card';
@@ -11,9 +12,9 @@
   const T = /*@i18n smoke_detector*/{};
 
   // états reconnus : on / off des binary_sensor, et textes des capteurs (toutes langues des traductions)
-  const ON_RE = /^(on|true|yes|1|detected|alarm|alarming|triggered|fire|smoke|emergency|active)$/i;
+  const ON_RE = /^(on|true|yes|1|detected|alarm|alarming|triggered|fire|smoke|emergency|active|gas|leak)$/i;
   const OFF_RE = /^(off|false|no|0|clear|idle|ok|normal|none|safe|not_detected|no_smoke|inactive|standby)$/i;
-  const SMOKE_WORDS = ['smoke', 'alarm', 'fire', 'fumée', 'fumee', 'feu', 'rauch', 'feuer', 'fumo', 'incendio', 'røyk', 'brann', 'rook', 'brand', 'fum', 'incendiu', 'дым', 'пожар', 'dim', 'požar', 'дим'];
+  const SMOKE_WORDS = ['smoke', 'alarm', 'fire', 'fumée', 'fumee', 'feu', 'rauch', 'feuer', 'fumo', 'incendio', 'røyk', 'brann', 'rook', 'brand', 'fum', 'incendiu', 'дым', 'пожар', 'dim', 'požar', 'дим', 'gas', 'gaz', 'methane', 'méthane', 'metan', 'lpg'];
 
   const CSS = `
 :host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
@@ -58,6 +59,10 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
 .alarm .sd-smoke{animation:sdsmoke 4s ease-in infinite}
 .alarm .sd-smoke.s2{animation-delay:1.3s}.alarm .sd-smoke.s3{animation-delay:2.6s}
 .sd-gas{opacity:0}.co .sd-gas{animation:sdgas 3s ease-in-out infinite}
+.sd-gc{opacity:0;transform-box:fill-box;transform-origin:50% 50%}
+.gas .sd-smoke{display:none}
+.gas.alarm .sd-gc{animation:sdsmoke 4s ease-in infinite}
+.gas.alarm .sd-gc.g2{animation-delay:1.3s}.gas.alarm .sd-gc.g3{animation-delay:2.6s}
 .sd-co{opacity:0}.co .sd-co{opacity:1}
 .sd-btn{transform-box:fill-box;transform-origin:50% 50%}.test .sd-btn{animation:sdpress 1.2s infinite}
 .sd-bat,.sd-fault{opacity:0}.low_battery .sd-bat{opacity:1;animation:sdbeat 2s infinite}.fault .sd-fault{opacity:1}
@@ -80,6 +85,9 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
     <ellipse class="sd-smoke" cx="72" cy="122" rx="30" ry="14" fill="url(#sdsmk)"/>
     <ellipse class="sd-smoke s2" cx="128" cy="126" rx="34" ry="15" fill="url(#sdsmk)"/>
     <ellipse class="sd-smoke s3" cx="100" cy="114" rx="26" ry="12" fill="url(#sdsmk)"/>
+    <ellipse class="sd-gc" cx="72" cy="122" rx="30" ry="14" fill="url(#sdgasg)"/>
+    <ellipse class="sd-gc g2" cx="128" cy="126" rx="34" ry="15" fill="url(#sdgasg)"/>
+    <ellipse class="sd-gc g3" cx="100" cy="114" rx="26" ry="12" fill="url(#sdgasg)"/>
     <ellipse class="sd-gas" cx="100" cy="120" rx="64" ry="18" fill="url(#sdgasg)"/>
     ${['', ' w2', ' w3'].map((w) => `<path class="sd-wave${w}" d="M54 70 Q44 54 54 38 M146 70 Q156 54 146 38"/>`).join('')}`;
   const ICONS = `<g class="sd-bat"><rect x="146" y="80" width="22" height="12" rx="2" fill="none" stroke="#ffa000" stroke-width="2"/><rect x="168" y="83" width="3" height="6" fill="#ffa000"/><rect x="149" y="83" width="4" height="6" fill="#ffa000"/></g>
@@ -119,7 +127,7 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
   };
   const SVG = (model, label) => `<svg viewBox="25 0 150 140" role="img" aria-label="${String(label).replace(/[&<>"]/g, '')}">${MODELS[model] || MODELS.cylinder}</svg>`;
 
-  const TILES = [['since', 'mdi:clock-outline', 'show_since'], ['co_level', 'mdi:molecule-co', 'show_co'], ['battery', 'mdi:battery', 'show_battery'], ['temperature', 'mdi:thermometer', 'show_temperature']];
+  const TILES = [['since', 'mdi:clock-outline', 'show_since'], ['co_level', 'mdi:molecule-co', 'show_co'], ['battery', 'mdi:battery', 'show_battery'], ['temperature', 'mdi:thermometer', 'show_temperature'], ['level', 'mdi:gauge', 'show_level']];
 
   class ApplianceSmokeDetectorCard extends HTMLElement {
 
@@ -139,7 +147,9 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { model: 'cylinder', co_threshold: 50, battery_low: 20, show_status: true, show_since: true, show_co: true, show_battery: true, show_temperature: true, show_buttons: true, ...c };
+      this._c = { model: 'cylinder', co_threshold: 50, battery_low: 20, show_status: true, show_since: true, show_co: true, show_battery: true, show_temperature: true, show_level: true, show_buttons: true, ...c };
+      // mode gaz : detector: gas, ou model: gas (alias) ; le dessin reste celui du détecteur de fumée
+      if (c.model === 'gas') this._c.model = 'cylinder', this._c.detector = 'gas';
       this._built = false;
       if (this._hass) this._render();
     }
@@ -147,8 +157,15 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
     getCardSize() { return 5; }
     getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
-    _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
-    _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
+    // textes : labels (config) > variante gaz (gas_<clé>) > langue > anglais
+    _t(k) {
+      const L = this._c && this._c.labels;
+      if (L && L[k] != null && L[k] !== '') return String(L[k]);
+      const tr = T[this._lang()];
+      if (this._c && this._c.detector === 'gas') { const g = tr['gas_' + k] ?? T.en['gas_' + k]; if (g != null) return g; }
+      return tr[k] ?? T.en[k] ?? k;
+    }
+    _l(k) { return this._t(k); }
     _lang() { let l = this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en'; if (!T[l]) l = l.slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
     _st(id) { return id && this._hass.states[id]; }
     _ok(s) { return !!s && !/^(unavailable|unknown)$/i.test(String(s.state)); }
@@ -189,7 +206,8 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
       const batBinary = !!bS && /^binary_sensor\./.test(c.entity_battery);
       const low = batBinary ? this._on(bS) : !isNaN(bat) && bat < Number(c.battery_low);
       const st = !this._ok(sS) && !this._ok(coS) ? 'unavailable' : smoke ? 'alarm' : co ? 'co' : test ? 'test' : fault ? 'fault' : low ? 'low_battery' : 'ok';
-      return { st, sS, coS, coPpm, coNumeric, bS, bat, batBinary, low };
+      const vS = this._st(c.entity_valve), valveClosed = this._ok(vS) && /^(off|closed|closing)$/i.test(String(vS.state));
+      return { st, sS, coS, coPpm, coNumeric, bS, bat, batBinary, low, valveClosed };
     }
 
     _build() {
@@ -198,14 +216,20 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
         <div class="head"><div class="title" id="sdtitle"></div><div class="badge" id="sdbadge"></div></div>
         ${SVG(this._c.model, this._c.name || this._t('name'))}
         <div class="alert" id="sdalert"></div>
-        <div class="ctl" id="sdctl"><button id="sdtest"><ha-icon icon="mdi:gesture-tap-button"></ha-icon><span></span></button><button class="red" id="sdmute"><ha-icon icon="mdi:volume-off"></ha-icon><span></span></button></div>
+        <div class="ctl" id="sdctl"><button id="sdvalve"><ha-icon icon="mdi:valve"></ha-icon><span></span></button><button id="sdtest"><ha-icon icon="mdi:gesture-tap-button"></ha-icon><span></span></button><button class="red" id="sdmute"><ha-icon icon="mdi:volume-off"></ha-icon><span></span></button></div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
       window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity_smoke || this._c.entity_co));
       root.getElementById('sdtest').addEventListener('click', () => this._call(this._c.entity_test_button, true));
-      root.getElementById('sdmute').addEventListener('click', () => this._call(this._c.entity_silence, false));
+      root.getElementById('sdmute').addEventListener('click', () => this._call(this._c.entity_silence || this._c.entity_siren, false));
+      // vanne de coupure (gaz) : bascule, comme sur la carte détecteur de fuite
+      root.getElementById('sdvalve').addEventListener('click', () => {
+        const id = this._c.entity_valve; if (!this._hass || !id) return;
+        const dom = id.split('.')[0];
+        this._hass.callService(['switch', 'valve', 'input_boolean'].includes(dom) ? dom : 'homeassistant', 'toggle', { entity_id: id });
+      });
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
-        const c = this._c; this._more({ since: c.entity_smoke, co_level: c.entity_co, battery: c.entity_battery, temperature: c.entity_temperature }[el.dataset.k]);
+        const c = this._c; this._more({ since: c.entity_smoke, co_level: c.entity_co, battery: c.entity_battery, temperature: c.entity_temperature, level: c.entity_level }[el.dataset.k]);
       }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
@@ -213,8 +237,8 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
     _render() {
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card;
-      const { st, sS, coS, coPpm, coNumeric, bS, bat, batBinary, low } = this._compute();
-      card.className = st + (c.animations === false ? ' noanim' : '');
+      const { st, sS, coS, coPpm, coNumeric, bS, bat, batBinary, low, valveClosed } = this._compute();
+      card.className = st + (c.detector === 'gas' ? ' gas' : '') + (c.animations === false ? ' noanim' : '');
       r.getElementById('sdtitle').textContent = c.name || this._t('name');
       const badge = r.getElementById('sdbadge');
       badge.textContent = this._t(st);
@@ -229,18 +253,23 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
       // « Tester » hors alarme, « Couper l'alarme » seulement pendant une alarme
       const alarming = st === 'alarm' || st === 'co';
       const bt = r.getElementById('sdtest'), bm = r.getElementById('sdmute');
+      const bv = r.getElementById('sdvalve');
+      bv.classList.toggle('hide', !c.entity_valve);
+      bv.classList.toggle('red', alarming && !valveClosed);
+      bv.querySelector('span').textContent = this._t(valveClosed ? 'open_valve' : 'close_valve');
       bt.classList.toggle('hide', !c.entity_test_button || alarming);
-      bm.classList.toggle('hide', !c.entity_silence || !alarming);
+      bm.classList.toggle('hide', !(c.entity_silence || c.entity_siren) || !alarming);
       bt.querySelector('span').textContent = this._t('test_button');
       bm.querySelector('span').textContent = this._t('silence');
-      r.getElementById('sdctl').classList.toggle('hide', c.show_buttons === false || (bt.classList.contains('hide') && bm.classList.contains('hide')));
+      r.getElementById('sdctl').classList.toggle('hide', c.show_buttons === false || (bt.classList.contains('hide') && bm.classList.contains('hide') && bv.classList.contains('hide')));
 
-      const tS = this._st(c.entity_temperature), tc = window.applianceTemp ? window.applianceTemp(this._hass, c) : null;
+      const lvS = this._st(c.entity_level), tS = this._st(c.entity_temperature), tc = window.applianceTemp ? window.applianceTemp(this._hass, c) : null;
       const temp = this._num(tS), tempV = tc ? tc.conv(temp, tS) : temp;
       const V = {
         since: [c.entity_smoke, this._ok(sS) ? this._time(sS.last_changed) : '--', '', ''],
         co_level: [coNumeric || c.entity_co, coNumeric ? String(Math.round(coPpm)) : this._t(this._ok(coS) ? (st === 'co' ? 'co_detected_short' : 'ok') : 'unavailable'), coNumeric ? 'ppm' : '', st === 'co' ? 'bad' : ''],
         battery: [c.entity_battery, batBinary ? this._t(low ? 'low' : 'ok') : isNaN(bat) ? '--' : String(Math.round(bat)), batBinary ? '' : '%', low ? 'warn' : ''],
+        level: [c.entity_level, isNaN(this._num(lvS)) ? '--' : (Math.round(this._num(lvS) * 10) / 10).toLocaleString(this._lang()), (lvS && lvS.attributes && lvS.attributes.unit_of_measurement) || '', st === 'alarm' ? 'bad' : ''],
         temperature: [c.entity_temperature, isNaN(tempV) ? '--' : (Math.round(tempV * 10) / 10).toLocaleString(this._lang()), tc ? tc.unit : '°C', ''],
       };
       TILES.forEach(([k, , opt]) => {
@@ -277,6 +306,7 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
         { name: 'model', selector: { select: { mode: 'dropdown', options: [{ value: 'cylinder', label: tr.model_cylinder }, { value: 'round', label: tr.model_round }] } } },
+        { name: 'detector', selector: { select: { mode: 'dropdown', options: [{ value: 'smoke', label: tr.name }, { value: 'gas', label: tr.gas_name || T.en.gas_name }] } } },
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
@@ -286,6 +316,9 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
         ent('entity_test', ['binary_sensor', 'sensor', 'input_boolean']),
         ent('entity_test_button', ['button', 'input_button', 'script', 'switch']),
         ent('entity_silence', ['button', 'input_button', 'switch', 'siren', 'script', 'input_boolean']),
+        ent('entity_siren', 'siren'),
+        ent('entity_level', 'sensor'),
+        ent('entity_valve', ['valve', 'switch', 'input_boolean']),
         ent('entity_fault', 'binary_sensor'),
         ent('entity_battery', ['sensor', 'binary_sensor']),
         { name: 'battery_low', default: 20, selector: { number: { min: 1, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
@@ -293,7 +326,7 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
         window.applianceTempField,
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
-        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_since'), bool('show_co'), bool('show_battery'), bool('show_temperature'), bool('show_buttons'), bool('animations')] },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_since'), bool('show_co'), bool('show_battery'), bool('show_temperature'), bool('show_level'), bool('show_buttons'), bool('animations')] },
       ].filter(Boolean);
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
@@ -303,7 +336,7 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
   window.customCards = window.customCards || [];
   window.customCards.push({
     type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
-    description: 'Détecteur de fumée animé (2 modèles) : alarme, CO, test, pile faible, défaut, boutons Tester et Couper l\'alarme.', preview: true,
+    description: 'Détecteur de fumée ou de gaz animé (2 modèles) : alarme, CO, test, pile faible, défaut, boutons Tester et Couper l\'alarme.', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/smoke-detector.md',
   });
 })();

@@ -845,6 +845,7 @@
     "entity_index": "Indice del contatore (totale)",
     "entity_today": "Consumo di oggi",
     "entity_leak": "Sensore perdite",
+    "detector": "Tipo di rilevatore",
     "entity_valve": "Valvola di intercettazione",
     "leak_minutes": "Avviso perdita dopo (min di flusso continuo)",
     "freeze_threshold": "Soglia di gelo (°C)",
@@ -1268,7 +1269,13 @@
     "temperature": "Temperatura",
     "low": "Scarica",
     "model_cylinder": "Cilindro compatto",
-    "model_round": "Rotondo"
+    "model_round": "Rotondo",
+    "gas_name": "Rilevatore di gas",
+    "gas_alarm": "Gas!",
+    "gas_alarm_at": "Gas rilevato alle {t}",
+    "level": "Livello di gas",
+    "open_valve": "Apri valvola",
+    "close_valve": "Chiudi valvola"
   },
   "leak_detector": {
     "name": "Rilevatore di perdite",

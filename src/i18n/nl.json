@@ -845,6 +845,7 @@
     "entity_index": "Meterstand (totaal)",
     "entity_today": "Verbruik vandaag",
     "entity_leak": "Leksensor",
+    "detector": "Type melder",
     "entity_valve": "Afsluitkraan",
     "leak_minutes": "Lekmelding na (min onafgebroken stroming)",
     "freeze_threshold": "Vorstdrempel (°C)",
@@ -1268,7 +1269,13 @@
     "temperature": "Temperatuur",
     "low": "Laag",
     "model_cylinder": "Compacte cilinder",
-    "model_round": "Rond"
+    "model_round": "Rond",
+    "gas_name": "Gasmelder",
+    "gas_alarm": "Gas!",
+    "gas_alarm_at": "Gas gedetecteerd om {t}",
+    "level": "Gasniveau",
+    "open_valve": "Klep openen",
+    "close_valve": "Klep sluiten"
   },
   "leak_detector": {
     "name": "Lekdetector",

@@ -861,6 +861,7 @@
     "entity_index": "Индекс бројила (укупно)",
     "entity_today": "Данашња потрошња",
     "entity_leak": "Сензор цурења",
+    "detector": "Тип детектора",
     "entity_valve": "Запорни вентил",
     "leak_minutes": "Аларм за цурење након (мин непрекидног протока)",
     "freeze_threshold": "Праг смрзавања (°C)",
@@ -1284,7 +1285,13 @@
     "temperature": "Температура",
     "low": "Слаба",
     "model_cylinder": "Компактни цилиндар",
-    "model_round": "Округли"
+    "model_round": "Округли",
+    "gas_name": "Детектор гаса",
+    "gas_alarm": "Гас!",
+    "gas_alarm_at": "Гас детектован у {t}",
+    "level": "Ниво гаса",
+    "open_valve": "Отвори вентил",
+    "close_valve": "Затвори вентил"
   },
   "leak_detector": {
     "name": "Детектор цурења",
