@@ -1540,7 +1540,13 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
  ok('scale BMI from height (25.0, over)',/25,0/.test(c.sr.getElementById('scbmi').textContent)&&/SURPOIDS/.test(c.sr.getElementById('scbmil').textContent),c.sr.getElementById('scbmi').textContent+' '+c.sr.getElementById('scbmil').textContent);
  ok('scale LCD shows weight',c.sr.getElementById('sclcd').textContent==='81.0',c.sr.getElementById('sclcd').textContent);
  c=card('scale',{entity_weight:'sensor.w',entity_weight_goal:'sensor.g',animations:false},[mk('sensor.w',72.3,{unit_of_measurement:'kg'}),mk('sensor.g',72,{unit_of_measurement:'kg'})]);
- ok('scale goal reached',c.sr.getElementById('scgoal').classList.contains('on'),c.sr.getElementById('scgoal').textContent);}
+ ok('scale goal reached',c.sr.getElementById('scgoal').classList.contains('on'),c.sr.getElementById('scgoal').textContent);
+ c=card('mini-pc',{entity_cpu:'sensor.c',entity_net_down:'sensor.d',entity_net_up:'sensor.u',show_up:false,show_cpu:false},[mk('sensor.c',30,P),mk('sensor.d',5,{unit_of_measurement:'MB/s'}),mk('sensor.u',1,{unit_of_measurement:'MB/s'})]);
+ ok('mini-pc show_up/show_cpu false hide only those tiles',c.sr.querySelector('.tile[data-k=up]').classList.contains('hide')&&c.sr.querySelector('.tile[data-k=cpu]').classList.contains('hide')&&!c.sr.querySelector('.tile[data-k=down]').classList.contains('hide'));
+ c=card('tv-box',{entity:'media_player.s',show_btn_mute:false,show_btn_prev:false},[mp('playing')]);
+ ok('tv-box hidden buttons',!c.sr.querySelector('#tvctrls [data-k=mute]')&&!c.sr.querySelector('#tvctrls [data-k=prev]')&&!!c.sr.querySelector('#tvctrls [data-k=next]'));
+ c=card('scale',{entity_weight:'sensor.w',entity_bone_mass:'sensor.b',entity_muscle_mass:'sensor.m',show_bone:false,animations:false},[mk('sensor.w',70,{unit_of_measurement:'kg'}),mk('sensor.b',3,{unit_of_measurement:'kg'}),mk('sensor.m',55,{unit_of_measurement:'kg'})]);
+ ok('scale show_bone false',c.sr.querySelector('.tile[data-k=bone]').classList.contains('hide')&&!c.sr.querySelector('.tile[data-k=muscle]').classList.contains('hide'));}
 window.RESULTS=R;
 const fails=R.filter(r=>!r.pass).length;
 document.getElementById('sum').innerHTML=`<b class="${fails?'f':'p'}">${R.length-fails} / ${R.length} tests réussis</b> — fichier testé : <code>dist/ha-appliance-electromenager-cards.js</code>`;

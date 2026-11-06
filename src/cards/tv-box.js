@@ -35,6 +35,7 @@
       led: `<ellipse class="halo" cx="242" cy="166" rx="62" ry="9" fill="url(#tv-halo)"/>`,
     },
   };
+  const BTN_KEYS = ['power', 'home', 'prev', 'play_pause', 'next', 'vol_down', 'mute', 'vol_up'];
   const ALIAS = { shield: 'shield_tv_pro', shieldtvpro: 'shield_tv_pro', xiaomi: 'xiaomi_tv_box_s', xiaomitvboxs: 'xiaomi_tv_box_s', mibox: 'xiaomi_tv_box_s', freebox: 'freebox_pop', freeboxpop: 'freebox_pop', playerpop: 'freebox_pop' };
   const modelKey = (m) => { const k = String(m || '').toLowerCase(); if (MODELS[k]) return k; const n = k.replace(/[^a-z0-9]/g, ''); return ALIAS[n] || 'shield_tv_pro'; };
 
@@ -139,6 +140,21 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
 .standby .halo{opacity:.25}
 @keyframes tvhalo{50%{opacity:.5}}
 .noanim *{animation:none!important;transition:none!important}
+
+/* ---- compact : petits emplacements fixes ; l'illustration prend la hauteur restante (même règles que les autres cartes) ---- */
+ha-card.compact{display:flex;flex-direction:column;padding:6px}
+.compact .head{flex:none;gap:4px}
+.compact .title{font-size:12px;line-height:16px}
+.compact .badge{font-size:10px;padding:0 6px}
+.compact .alert,.compact .info,.compact .goal{flex:none;font-size:10px;margin-top:2px}
+.compact .tiles{flex:none;gap:4px;margin-top:4px;grid-template-columns:repeat(auto-fit,minmax(56px,1fr))}
+.compact .tile{padding:2px 5px;border-radius:8px}
+.compact .tile .l ha-icon{--mdc-icon-size:12px}
+.compact .tile .v{font-size:12px;line-height:15px;margin-top:0}
+.compact > svg{flex:1 1 0;min-height:40px;width:calc(100% * min(1, var(--illus-scale,1)));max-width:none;height:auto;margin-top:3px}
+.compact .ctrls{flex:none;gap:2px;margin-top:4px;flex-wrap:nowrap}
+.compact .ctrls button{width:21px;height:21px;--mdc-icon-size:13px}
+.compact .ctrls button.main{width:24px;height:24px;--mdc-icon-size:15px}
 `;
 
   // icônes de lecture dessinées (pause, logo par défaut)
@@ -318,7 +334,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
       const pic = c.show_artwork !== false && live ? a.entity_picture_local || a.entity_picture || '' : '';
       const art = r.getElementById('tvart');
       if (pic !== this._lastPic) { this._lastPic = pic; card.classList.remove('artok'); if (pic) art.setAttribute('href', pic); else art.removeAttribute('href'); this._ambient(pic); }
-      card.className = `${st}${pic ? ' hasart' : ' noart'}${card.classList.contains('artok') ? ' artok' : ''}${card.classList.contains('hasdur') ? ' hasdur' : ''}${c.animations === false ? ' noanim' : ''}`;
+      card.className = `${st}${pic ? ' hasart' : ' noart'}${card.classList.contains('artok') ? ' artok' : ''}${card.classList.contains('hasdur') ? ' hasdur' : ''}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`;
       if (!pic) card.style.setProperty('--amb', m.accent);
 
       const app = a.app_name || a.source || '';
@@ -352,7 +368,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
         ['vol_down', 'mdi:volume-minus', 'vol_down', null, volOk],
         ['mute', muted ? 'mdi:volume-off' : 'mdi:volume-high', 'mute', muted, has(8)],
         ['vol_up', 'mdi:volume-plus', 'vol_up', null, volOk],
-      ].filter((b) => b[4]);
+      ].filter((b) => b[4] && c[`show_btn_${b[0]}`] !== false); // case décochée dans l'éditeur : bouton masqué
       const sig = btns.map((b) => b.join('|')).join(';') + st;
       if (ctr._sig !== sig) {
         ctr._sig = sig;
@@ -393,7 +409,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
         this.appendChild(this._form);
       }
       const ent = (name, domain) => ({ name, selector: { entity: domain ? { domain } : {} } });
-      const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
+      const bool = (name, def = true) => ({ name, selector: { boolean: {} }, default: def });
       this._form.hass = this._hass;
       this._form.data = this._c;
       this._form.schema = [
@@ -406,7 +422,9 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
         { name: 'volume_step', default: 0.05, selector: { number: { min: 0.01, max: 0.2, step: 0.01, mode: 'box' } } },
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
-        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_controls'), bool('show_artwork'), bool('show_app'), bool('show_volume'), bool('show_power'), bool('animations')] },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('compact', false), bool('show_controls'), bool('show_artwork'), bool('show_app'), bool('show_volume'), bool('show_power'), bool('animations')] },
+        // boutons de la télécommande, un par un
+        { type: 'grid', name: '', schema: BTN_KEYS.map((k) => bool(`show_btn_${k}`)) },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'tv_model' : s.name, this._hass);
     }

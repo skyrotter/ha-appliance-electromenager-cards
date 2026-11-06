@@ -20,7 +20,8 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `entity_security` (binary_sensor, on = problem), `entity_update` (update entity), `entity_power` (W)
 - `cpu_busy` (default 60 %), `volume_max` (default 85 %), `temp_max` (default 60 °), `disk_temp_max` (default 50 °), `temperature_unit`
 - `animations` (default true)
-- `show_status`, `show_volume`, `show_cpu`, `show_ram`, `show_temp`, `show_disks`, `show_network`, `show_power`
+- `compact: true` (small fixed slots: smaller title, tiles and buttons, the illustration takes the remaining height), `transparent: true` (no card background), `illustration_size` (%)
+- One checkbox per tile in the visual editor: `show_status`, `show_volume`, `show_cpu`, `show_ram`, `show_temp`, `show_disks`, `show_down`, `show_up`, `show_power` (`show_network: false` hides both network tiles)
 
 ## Example
 

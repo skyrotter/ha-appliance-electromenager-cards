@@ -88,6 +88,21 @@
 .tile.hide{display:none}
 .unavailable .plate{filter:grayscale(.6) brightness(.7)}
 .noanim *{animation:none!important;transition:none!important}
+
+/* ---- compact : petits emplacements fixes ; l'illustration prend la hauteur restante (même règles que les autres cartes) ---- */
+ha-card.compact{display:flex;flex-direction:column;padding:6px}
+.compact .head{flex:none;gap:4px}
+.compact .title{font-size:12px;line-height:16px}
+.compact .badge{font-size:10px;padding:0 6px}
+.compact .alert,.compact .info,.compact .goal{flex:none;font-size:10px;margin-top:2px}
+.compact .tiles{flex:none;gap:4px;margin-top:4px;grid-template-columns:repeat(auto-fit,minmax(56px,1fr))}
+.compact .tile{padding:2px 5px;border-radius:8px}
+.compact .tile .l ha-icon{--mdc-icon-size:12px}
+.compact .tile .v{font-size:12px;line-height:15px;margin-top:0}
+.compact .stage{flex:1 1 0;min-height:60px;margin-top:3px}
+.compact .floor{height:100%}
+.compact .plate{width:calc(min(110px, 100%) * var(--illus-scale,1))}
+.compact .side svg{max-height:100%}
 `;
 
   // pied (empreinte) : semelle + 5 orteils
@@ -138,15 +153,16 @@
 </div>`;
 
   const TILES = [
-    ['weight', 'mdi:scale-bathroom', 'entity_weight'],
-    ['fat', 'mdi:water-percent', 'entity_fat_ratio'],
-    ['fat_mass', 'mdi:human', 'entity_fat_mass'],
-    ['muscle', 'mdi:arm-flex', 'entity_muscle_mass'],
-    ['bone', 'mdi:bone', 'entity_bone_mass'],
-    ['water', 'mdi:water', 'entity_hydration'],
-    ['visceral', 'mdi:stomach', 'entity_visceral_fat'],
-    ['pulse', 'mdi:heart-pulse', 'entity_heart_pulse'],
-    ['goal', 'mdi:flag-checkered', 'entity_weight_goal'],
+    // [tuile, icône, entité, option qui l'affiche / la masque]
+    ['weight', 'mdi:scale-bathroom', 'entity_weight', 'show_weight'],
+    ['fat', 'mdi:water-percent', 'entity_fat_ratio', 'show_fat'],
+    ['fat_mass', 'mdi:human', 'entity_fat_mass', 'show_fat_mass'],
+    ['muscle', 'mdi:arm-flex', 'entity_muscle_mass', 'show_muscle'],
+    ['bone', 'mdi:bone', 'entity_bone_mass', 'show_bone'],
+    ['water', 'mdi:water', 'entity_hydration', 'show_hydration'],
+    ['visceral', 'mdi:stomach', 'entity_visceral_fat', 'show_visceral'],
+    ['pulse', 'mdi:heart-pulse', 'entity_heart_pulse', 'show_pulse'],
+    ['goal', 'mdi:flag-checkered', 'entity_weight_goal', 'show_goal'],
   ];
 
   class ApplianceScaleCard extends HTMLElement {
@@ -327,7 +343,7 @@
       const recent = !unav && isFinite(since) && since < Number(c.recent_minutes) * 60000;
       const bmi = c.show_bmi === false ? NaN : this._bmi();
       card.classList.toggle('unavailable', unav); card.classList.toggle('recent', recent); card.classList.toggle('idle', !recent && !unav);
-      card.classList.toggle('nobmi', isNaN(bmi)); card.classList.toggle('noanim', !this._anim());
+      card.classList.toggle('nobmi', isNaN(bmi)); card.classList.toggle('noanim', !this._anim()); card.classList.toggle('compact', c.compact === true);
       r.getElementById('sctitle').textContent = c.name || this._t('name');
       const badge = r.getElementById('scbadge');
       badge.textContent = unav ? this._t('unavailable') : isFinite(since) ? `${this._t('last')} ${this._ago(since)}` : '';
@@ -363,9 +379,9 @@
         goal: [this._fmt(goal), unit],
       };
       const comp = new Set(['fat', 'fat_mass', 'muscle', 'bone', 'water', 'visceral', 'pulse']);
-      TILES.forEach(([k, , ent]) => {
+      TILES.forEach(([k, , ent, opt]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`), [val, u] = V[k];
-        el.classList.toggle('hide', !c[ent] || (comp.has(k) && c.show_composition === false));
+        el.classList.toggle('hide', !c[ent] || c[opt] === false || (comp.has(k) && c.show_composition === false));
         el.querySelector('.lbl').textContent = this._l(k);
         const small = document.createElement('small'); small.textContent = u ?? '';
         el.querySelector('.v').replaceChildren(String(val ?? ''), small);
@@ -393,7 +409,7 @@
       }
       const ent = (name) => ({ name, selector: { entity: { domain: 'sensor' } } });
       const num = (name, min, max, step, def, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
-      const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
+      const bool = (name, def = true) => ({ name, selector: { boolean: {} }, default: def });
       this._form.hass = this._hass;
       this._form.data = this._c;
       this._form.schema = [
@@ -406,7 +422,9 @@
         { type: 'grid', name: '', schema: [num('height', 50, 250, 1, undefined, 'cm'), num('recent_minutes', 1, 120, 1, 5, 'min'), num('trend_days', 7, 365, 1, 30)] },
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
-        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_bmi'), bool('show_trend'), bool('show_composition'), bool('animations')] },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('compact', false), bool('show_bmi'), bool('show_trend'), bool('animations')] },
+        // une case par tuile
+        { type: 'grid', name: '', schema: TILES.map((t) => bool(t[3])) },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }

@@ -15,7 +15,9 @@ Remote buttons (only those the entity supports): power, home (with `entity_remot
 - `entity` (media_player), `model`, `entity_remote` (remote entity), `entity_power` (W)
 - `volume_step` (default 0.05)
 - `animations` (default true)
+- `compact: true` (small fixed slots: smaller title, tiles and buttons, the illustration takes the remaining height), `transparent: true` (no card background), `illustration_size` (%)
 - `show_status`, `show_controls`, `show_artwork`, `show_app`, `show_volume`, `show_power`
+- One checkbox per remote button: `show_btn_power`, `show_btn_home`, `show_btn_prev`, `show_btn_play_pause`, `show_btn_next`, `show_btn_vol_down`, `show_btn_mute`, `show_btn_vol_up`
 - `language: fr|en|de|it|nb|nl|ro|ru|sr|sr-Latn`
 
 ## Examples

@@ -97,6 +97,18 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
 .mi{fill:var(--secondary-text-color);font:600 6.5px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif)}
 .off .hud,.unavailable .hud{opacity:.4}
 .noanim *{animation:none!important;transition:none!important}
+
+/* ---- compact : petits emplacements fixes ; l'illustration prend la hauteur restante (même règles que les autres cartes) ---- */
+ha-card.compact{display:flex;flex-direction:column;padding:6px}
+.compact .head{flex:none;gap:4px}
+.compact .title{font-size:12px;line-height:16px}
+.compact .badge{font-size:10px;padding:0 6px}
+.compact .alert,.compact .info,.compact .goal{flex:none;font-size:10px;margin-top:2px}
+.compact .tiles{flex:none;gap:4px;margin-top:4px;grid-template-columns:repeat(auto-fit,minmax(56px,1fr))}
+.compact .tile{padding:2px 5px;border-radius:8px}
+.compact .tile .l ha-icon{--mdc-icon-size:12px}
+.compact .tile .v{font-size:12px;line-height:15px;margin-top:0}
+.compact > svg{flex:1 1 0;min-height:40px;width:calc(100% * min(1, var(--illus-scale,1)));max-width:none;height:auto;margin-top:3px}
 `;
 
   /* Photo 400 × 299 px réduite à 200 de large, posée en (12, 22) : px photo × 0,5 + décalage */
@@ -144,8 +156,8 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
     ['ram', 'mdi:memory', 'show_ram', 'entity_ram'],
     ['temp', 'mdi:thermometer', 'show_temp', 'entity_temp'],
     ['disks', 'mdi:harddisk', 'show_disks', '_disks'],
-    ['down', 'mdi:download-network', 'show_network', 'entity_net_down'],
-    ['up', 'mdi:upload-network', 'show_network', 'entity_net_up'],
+    ['down', 'mdi:download-network', 'show_down', 'entity_net_down'],
+    ['up', 'mdi:upload-network', 'show_up', 'entity_net_up'],
     ['power', 'mdi:flash', 'show_power', 'entity_power'],
   ];
 
@@ -292,7 +304,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
       const { st, cpu, ram, vol, tp, pw, nd, nu, act, drives, alerts, hot } = this._compute();
       const on = st !== 'off' && st !== 'unavailable';
       const clamp = (x) => Math.max(0, Math.min(1, isNaN(x) ? 0 : x));
-      card.className = `${st}${on ? ' on' : ''}${hot && on ? ' hot' : ''}${c.animations === false ? ' noanim' : ''}`;
+      card.className = `${st}${on ? ' on' : ''}${hot && on ? ' hot' : ''}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`;
       const set = (k, v) => card.style.setProperty(k, v);
       set('--vol', clamp(vol / 100).toFixed(3)); set('--act', on ? act.toFixed(2) : 0);
       set('--blink', `${(1.1 - act * 0.9).toFixed(2)}s`);
@@ -332,7 +344,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
       TILES.forEach(([k, , opt, ent]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`), [val, unit] = V[k];
         const has = ent === '_disks' ? known.length > 0 : !!c[ent];
-        el.classList.toggle('hide', !has || c[opt] === false);
+        el.classList.toggle('hide', !has || c[opt] === false || (c.show_network === false && (k === 'down' || k === 'up')));
         el.classList.toggle('bad', !!bad[k]);
         el.querySelector('.lbl').textContent = this._l(k);
         const small = document.createElement('small'); small.textContent = unit ?? '';
@@ -357,7 +369,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
       }
       const ent = (name, domain) => ({ name, selector: { entity: domain ? { domain } : {} } });
       const num = (name, min, max, step, def, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
-      const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
+      const bool = (name, def = true) => ({ name, selector: { boolean: {} }, default: def });
       this._form.hass = this._hass;
       this._form.data = this._c;
       this._form.schema = [
@@ -374,7 +386,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
-          bool('show_status'), bool('show_volume'), bool('show_cpu'), bool('show_ram'), bool('show_temp'), bool('show_disks'), bool('show_network'), bool('show_power'), bool('animations'),
+          bool('show_status'), bool('compact', false), bool('show_volume'), bool('show_cpu'), bool('show_ram'), bool('show_temp'), bool('show_disks'), bool('show_down'), bool('show_up'), bool('show_power'), bool('animations'),
         ] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);

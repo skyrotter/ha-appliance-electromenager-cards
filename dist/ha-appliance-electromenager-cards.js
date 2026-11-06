@@ -9540,7 +9540,26 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_drive_3": "Disk 3",
       "entity_drive_3_temp": "Disk 3 temperature",
       "entity_drive_4": "Disk 4",
-      "entity_drive_4_temp": "Disk 4 temperature"
+      "entity_drive_4_temp": "Disk 4 temperature",
+      "show_down": "Show download",
+      "show_up": "Show upload",
+      "show_weight": "Show weight",
+      "show_fat": "Show body fat (%)",
+      "show_fat_mass": "Show fat mass",
+      "show_muscle": "Show muscle mass",
+      "show_bone": "Show bone mass",
+      "show_hydration": "Show hydration",
+      "show_visceral": "Show visceral fat",
+      "show_pulse": "Show heart rate",
+      "show_goal": "Show goal",
+      "show_btn_power": "Power button",
+      "show_btn_home": "Home button",
+      "show_btn_prev": "Previous button",
+      "show_btn_play_pause": "Play / pause button",
+      "show_btn_next": "Next button",
+      "show_btn_vol_down": "Volume − button",
+      "show_btn_mute": "Mute button",
+      "show_btn_vol_up": "Volume + button"
     },
     "de": {
       "animations": "Animationen",
@@ -9879,7 +9898,26 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_drive_3": "Festplatte 3",
       "entity_drive_3_temp": "Temperatur Festplatte 3",
       "entity_drive_4": "Festplatte 4",
-      "entity_drive_4_temp": "Temperatur Festplatte 4"
+      "entity_drive_4_temp": "Temperatur Festplatte 4",
+      "show_down": "Download anzeigen",
+      "show_up": "Upload anzeigen",
+      "show_weight": "Gewicht anzeigen",
+      "show_fat": "Körperfett anzeigen (%)",
+      "show_fat_mass": "Fettmasse anzeigen",
+      "show_muscle": "Muskelmasse anzeigen",
+      "show_bone": "Knochenmasse anzeigen",
+      "show_hydration": "Hydratation anzeigen",
+      "show_visceral": "Viszeralfett anzeigen",
+      "show_pulse": "Puls anzeigen",
+      "show_goal": "Ziel anzeigen",
+      "show_btn_power": "Ein/Aus-Taste",
+      "show_btn_home": "Home-Taste",
+      "show_btn_prev": "Zurück-Taste",
+      "show_btn_play_pause": "Play/Pause-Taste",
+      "show_btn_next": "Weiter-Taste",
+      "show_btn_vol_down": "Leiser-Taste",
+      "show_btn_mute": "Stumm-Taste",
+      "show_btn_vol_up": "Lauter-Taste"
     },
     "fr": {
       "animations": "Animations",
@@ -10218,7 +10256,26 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_drive_3": "Disque 3",
       "entity_drive_3_temp": "Température disque 3",
       "entity_drive_4": "Disque 4",
-      "entity_drive_4_temp": "Température disque 4"
+      "entity_drive_4_temp": "Température disque 4",
+      "show_down": "Afficher la réception",
+      "show_up": "Afficher l'envoi",
+      "show_weight": "Afficher le poids",
+      "show_fat": "Afficher la masse grasse (%)",
+      "show_fat_mass": "Afficher la masse de graisse",
+      "show_muscle": "Afficher les muscles",
+      "show_bone": "Afficher les os",
+      "show_hydration": "Afficher l'eau",
+      "show_visceral": "Afficher la graisse viscérale",
+      "show_pulse": "Afficher le pouls",
+      "show_goal": "Afficher l'objectif",
+      "show_btn_power": "Bouton marche / arrêt",
+      "show_btn_home": "Bouton accueil",
+      "show_btn_prev": "Bouton précédent",
+      "show_btn_play_pause": "Bouton lecture / pause",
+      "show_btn_next": "Bouton suivant",
+      "show_btn_vol_down": "Bouton volume −",
+      "show_btn_mute": "Bouton muet",
+      "show_btn_vol_up": "Bouton volume +"
     },
     "it": {
       "animations": "Animazioni",
@@ -10557,7 +10614,26 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_drive_3": "Disco 3",
       "entity_drive_3_temp": "Temperatura disco 3",
       "entity_drive_4": "Disco 4",
-      "entity_drive_4_temp": "Temperatura disco 4"
+      "entity_drive_4_temp": "Temperatura disco 4",
+      "show_down": "Mostra download",
+      "show_up": "Mostra upload",
+      "show_weight": "Mostra peso",
+      "show_fat": "Mostra massa grassa (%)",
+      "show_fat_mass": "Mostra massa grassa (kg)",
+      "show_muscle": "Mostra muscoli",
+      "show_bone": "Mostra ossa",
+      "show_hydration": "Mostra idratazione",
+      "show_visceral": "Mostra grasso viscerale",
+      "show_pulse": "Mostra battito",
+      "show_goal": "Mostra obiettivo",
+      "show_btn_power": "Pulsante accensione",
+      "show_btn_home": "Pulsante home",
+      "show_btn_prev": "Pulsante precedente",
+      "show_btn_play_pause": "Pulsante play / pausa",
+      "show_btn_next": "Pulsante successivo",
+      "show_btn_vol_down": "Pulsante volume −",
+      "show_btn_mute": "Pulsante muto",
+      "show_btn_vol_up": "Pulsante volume +"
     },
     "nb": {
       "illustration_size": "Størrelse på illustrasjonen",
@@ -10896,7 +10972,26 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_drive_3": "Disk 3",
       "entity_drive_3_temp": "Temperatur disk 3",
       "entity_drive_4": "Disk 4",
-      "entity_drive_4_temp": "Temperatur disk 4"
+      "entity_drive_4_temp": "Temperatur disk 4",
+      "show_down": "Vis nedlasting",
+      "show_up": "Vis opplasting",
+      "show_weight": "Vis vekt",
+      "show_fat": "Vis kroppsfett (%)",
+      "show_fat_mass": "Vis fettmasse",
+      "show_muscle": "Vis muskelmasse",
+      "show_bone": "Vis beinmasse",
+      "show_hydration": "Vis hydrering",
+      "show_visceral": "Vis visceralt fett",
+      "show_pulse": "Vis puls",
+      "show_goal": "Vis mål",
+      "show_btn_power": "Av/på-knapp",
+      "show_btn_home": "Hjem-knapp",
+      "show_btn_prev": "Forrige-knapp",
+      "show_btn_play_pause": "Spill/pause-knapp",
+      "show_btn_next": "Neste-knapp",
+      "show_btn_vol_down": "Volum ned-knapp",
+      "show_btn_mute": "Demp-knapp",
+      "show_btn_vol_up": "Volum opp-knapp"
     },
     "nl": {
       "animations": "Animaties",
@@ -11235,7 +11330,26 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_drive_3": "Schijf 3",
       "entity_drive_3_temp": "Temperatuur schijf 3",
       "entity_drive_4": "Schijf 4",
-      "entity_drive_4_temp": "Temperatuur schijf 4"
+      "entity_drive_4_temp": "Temperatuur schijf 4",
+      "show_down": "Download tonen",
+      "show_up": "Upload tonen",
+      "show_weight": "Gewicht tonen",
+      "show_fat": "Vetpercentage tonen",
+      "show_fat_mass": "Vetmassa tonen",
+      "show_muscle": "Spiermassa tonen",
+      "show_bone": "Botmassa tonen",
+      "show_hydration": "Hydratatie tonen",
+      "show_visceral": "Visceraal vet tonen",
+      "show_pulse": "Hartslag tonen",
+      "show_goal": "Doel tonen",
+      "show_btn_power": "Aan/uit-knop",
+      "show_btn_home": "Startknop",
+      "show_btn_prev": "Vorige-knop",
+      "show_btn_play_pause": "Afspelen/pauze-knop",
+      "show_btn_next": "Volgende-knop",
+      "show_btn_vol_down": "Zachter-knop",
+      "show_btn_mute": "Dempknop",
+      "show_btn_vol_up": "Harder-knop"
     },
     "ro": {
       "animations": "Animații",
@@ -11574,7 +11688,26 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_drive_3": "Disc 3",
       "entity_drive_3_temp": "Temperatură disc 3",
       "entity_drive_4": "Disc 4",
-      "entity_drive_4_temp": "Temperatură disc 4"
+      "entity_drive_4_temp": "Temperatură disc 4",
+      "show_down": "Afișează descărcarea",
+      "show_up": "Afișează încărcarea",
+      "show_weight": "Afișează greutatea",
+      "show_fat": "Afișează grăsimea (%)",
+      "show_fat_mass": "Afișează masa grasă",
+      "show_muscle": "Afișează mușchii",
+      "show_bone": "Afișează oasele",
+      "show_hydration": "Afișează hidratarea",
+      "show_visceral": "Afișează grăsimea viscerală",
+      "show_pulse": "Afișează pulsul",
+      "show_goal": "Afișează obiectivul",
+      "show_btn_power": "Buton pornire",
+      "show_btn_home": "Buton acasă",
+      "show_btn_prev": "Buton anterior",
+      "show_btn_play_pause": "Buton redare / pauză",
+      "show_btn_next": "Buton următor",
+      "show_btn_vol_down": "Buton volum −",
+      "show_btn_mute": "Buton fără sunet",
+      "show_btn_vol_up": "Buton volum +"
     },
     "ru": {
       "animations": "Анимации",
@@ -11913,7 +12046,26 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_drive_3": "Диск 3",
       "entity_drive_3_temp": "Температура диска 3",
       "entity_drive_4": "Диск 4",
-      "entity_drive_4_temp": "Температура диска 4"
+      "entity_drive_4_temp": "Температура диска 4",
+      "show_down": "Показывать загрузку",
+      "show_up": "Показывать отдачу",
+      "show_weight": "Показывать вес",
+      "show_fat": "Показывать жир (%)",
+      "show_fat_mass": "Показывать жировую массу",
+      "show_muscle": "Показывать мышцы",
+      "show_bone": "Показывать кости",
+      "show_hydration": "Показывать воду",
+      "show_visceral": "Показывать висцеральный жир",
+      "show_pulse": "Показывать пульс",
+      "show_goal": "Показывать цель",
+      "show_btn_power": "Кнопка питания",
+      "show_btn_home": "Кнопка «Домой»",
+      "show_btn_prev": "Кнопка «Назад»",
+      "show_btn_play_pause": "Кнопка воспроизведения",
+      "show_btn_next": "Кнопка «Далее»",
+      "show_btn_vol_down": "Кнопка «Тише»",
+      "show_btn_mute": "Кнопка «Без звука»",
+      "show_btn_vol_up": "Кнопка «Громче»"
     },
     "sr": {
       "animations": "Анимације",
@@ -12252,7 +12404,26 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_drive_3": "Диск 3",
       "entity_drive_3_temp": "Температура диска 3",
       "entity_drive_4": "Диск 4",
-      "entity_drive_4_temp": "Температура диска 4"
+      "entity_drive_4_temp": "Температура диска 4",
+      "show_down": "Прикажи преузимање",
+      "show_up": "Прикажи отпремање",
+      "show_weight": "Прикажи тежину",
+      "show_fat": "Прикажи масти (%)",
+      "show_fat_mass": "Прикажи масну масу",
+      "show_muscle": "Прикажи мишиће",
+      "show_bone": "Прикажи кости",
+      "show_hydration": "Прикажи хидратацију",
+      "show_visceral": "Прикажи висцералну маст",
+      "show_pulse": "Прикажи пулс",
+      "show_goal": "Прикажи циљ",
+      "show_btn_power": "Дугме за напајање",
+      "show_btn_home": "Дугме почетна",
+      "show_btn_prev": "Дугме претходно",
+      "show_btn_play_pause": "Дугме пусти / пауза",
+      "show_btn_next": "Дугме следеће",
+      "show_btn_vol_down": "Дугме тише",
+      "show_btn_mute": "Дугме утишај",
+      "show_btn_vol_up": "Дугме гласније"
     },
     "sr-Latn": {
       "animations": "Animacije",
@@ -12591,7 +12762,26 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_drive_3": "Disk 3",
       "entity_drive_3_temp": "Temperatura diska 3",
       "entity_drive_4": "Disk 4",
-      "entity_drive_4_temp": "Temperatura diska 4"
+      "entity_drive_4_temp": "Temperatura diska 4",
+      "show_down": "Prikaži preuzimanje",
+      "show_up": "Prikaži otpremanje",
+      "show_weight": "Prikaži težinu",
+      "show_fat": "Prikaži masti (%)",
+      "show_fat_mass": "Prikaži masnu masu",
+      "show_muscle": "Prikaži mišiće",
+      "show_bone": "Prikaži kosti",
+      "show_hydration": "Prikaži hidrataciju",
+      "show_visceral": "Prikaži visceralnu mast",
+      "show_pulse": "Prikaži puls",
+      "show_goal": "Prikaži cilj",
+      "show_btn_power": "Dugme za napajanje",
+      "show_btn_home": "Dugme početna",
+      "show_btn_prev": "Dugme prethodno",
+      "show_btn_play_pause": "Dugme pusti / pauza",
+      "show_btn_next": "Dugme sledeće",
+      "show_btn_vol_down": "Dugme tiše",
+      "show_btn_mute": "Dugme utišaj",
+      "show_btn_vol_up": "Dugme glasnije"
     }
   };
   const lang = (hass) => {
@@ -30466,6 +30656,18 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
 @keyframes mpscan{from{transform:translateY(0)}to{transform:translateY(-78px)}}
 .off .gauges,.unavailable .gauges{opacity:.35}
 .noanim *{animation:none!important;transition:none!important}
+
+/* ---- compact : petits emplacements fixes ; l'illustration prend la hauteur restante (même règles que les autres cartes) ---- */
+ha-card.compact{display:flex;flex-direction:column;padding:6px}
+.compact .head{flex:none;gap:4px}
+.compact .title{font-size:12px;line-height:16px}
+.compact .badge{font-size:10px;padding:0 6px}
+.compact .alert,.compact .info,.compact .goal{flex:none;font-size:10px;margin-top:2px}
+.compact .tiles{flex:none;gap:4px;margin-top:4px;grid-template-columns:repeat(auto-fit,minmax(56px,1fr))}
+.compact .tile{padding:2px 5px;border-radius:8px}
+.compact .tile .l ha-icon{--mdc-icon-size:12px}
+.compact .tile .v{font-size:12px;line-height:15px;margin-top:0}
+.compact > svg{flex:1 1 0;min-height:40px;width:calc(100% * min(1, var(--illus-scale,1)));max-width:none;height:auto;margin-top:3px}
 `;
 
   /* Photo de 360 × 238 px réduite à 220 de large, posée en (30, 26) : px photo × 0,611 + décalage */
@@ -30510,8 +30712,8 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
     ['temp', 'mdi:thermometer', 'show_temp', 'entity_cpu_temp'],
     ['ram', 'mdi:memory', 'show_ram', 'entity_ram'],
     ['disk', 'mdi:harddisk', 'show_disk', 'entity_disk'],
-    ['down', 'mdi:download-network', 'show_network', 'entity_net_down'],
-    ['up', 'mdi:upload-network', 'show_network', 'entity_net_up'],
+    ['down', 'mdi:download-network', 'show_down', 'entity_net_down'],
+    ['up', 'mdi:upload-network', 'show_up', 'entity_net_up'],
     ['uptime', 'mdi:timer-outline', 'show_uptime', 'entity_uptime'],
     ['power', 'mdi:flash', 'show_power', 'entity_power'],
   ];
@@ -30644,7 +30846,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
       const dn = toMbit(this._num(c.entity_net_down), this._unit(c.entity_net_down)), upr = toMbit(this._num(c.entity_net_up), this._unit(c.entity_net_up));
       const lvl = (m) => (isNaN(m) || m <= 0.001 ? 0 : clamp((Math.log10(m) + 3) / 6));
       const nd = lvl(dn), nu = lvl(upr), net = on && (nd > 0 || nu > 0);
-      card.className = `${st}${net ? ' on-net' : ''}${c.animations === false ? ' noanim' : ''}`;
+      card.className = `${st}${net ? ' on-net' : ''}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`;
       const set = (k, v) => card.style.setProperty(k, v);
       set('--cpu', on ? clamp(cpu / 100).toFixed(3) : 0); set('--ram', clamp(ram / 100).toFixed(3)); set('--dsk', clamp(dsk / 100).toFixed(3));
       set('--spd', `${(2.4 - clamp(cpu / 100) * 1.9).toFixed(2)}s`);
@@ -30669,7 +30871,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
       const bad = { temp: st === 'hot', ram: alerts.includes('ram_full'), disk: alerts.includes('disk_full') };
       TILES.forEach(([k, , opt, ent]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`), [val, unit] = V[k];
-        el.classList.toggle('hide', !c[ent] || c[opt] === false);
+        el.classList.toggle('hide', !c[ent] || c[opt] === false || (c.show_network === false && (k === 'down' || k === 'up')));
         el.classList.toggle('bad', !!bad[k]);
         el.querySelector('.lbl').textContent = this._l(k);
         const small = document.createElement('small'); small.textContent = unit ?? '';
@@ -30694,7 +30896,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
       }
       const ent = (name, domain) => ({ name, selector: { entity: domain ? { domain } : {} } });
       const num = (name, min, max, step, def, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
-      const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
+      const bool = (name, def = true) => ({ name, selector: { boolean: {} }, default: def });
       this._form.hass = this._hass;
       this._form.data = this._c;
       this._form.schema = [
@@ -30709,7 +30911,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
-          bool('show_status'), bool('show_cpu'), bool('show_temp'), bool('show_ram'), bool('show_disk'), bool('show_network'), bool('show_uptime'), bool('show_power'), bool('animations'),
+          bool('show_status'), bool('compact', false), bool('show_cpu'), bool('show_temp'), bool('show_ram'), bool('show_disk'), bool('show_down'), bool('show_up'), bool('show_uptime'), bool('show_power'), bool('animations'),
         ] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
@@ -31065,6 +31267,18 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
 .mi{fill:var(--secondary-text-color);font:600 6.5px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif)}
 .off .hud,.unavailable .hud{opacity:.4}
 .noanim *{animation:none!important;transition:none!important}
+
+/* ---- compact : petits emplacements fixes ; l'illustration prend la hauteur restante (même règles que les autres cartes) ---- */
+ha-card.compact{display:flex;flex-direction:column;padding:6px}
+.compact .head{flex:none;gap:4px}
+.compact .title{font-size:12px;line-height:16px}
+.compact .badge{font-size:10px;padding:0 6px}
+.compact .alert,.compact .info,.compact .goal{flex:none;font-size:10px;margin-top:2px}
+.compact .tiles{flex:none;gap:4px;margin-top:4px;grid-template-columns:repeat(auto-fit,minmax(56px,1fr))}
+.compact .tile{padding:2px 5px;border-radius:8px}
+.compact .tile .l ha-icon{--mdc-icon-size:12px}
+.compact .tile .v{font-size:12px;line-height:15px;margin-top:0}
+.compact > svg{flex:1 1 0;min-height:40px;width:calc(100% * min(1, var(--illus-scale,1)));max-width:none;height:auto;margin-top:3px}
 `;
 
   /* Photo 400 × 299 px réduite à 200 de large, posée en (12, 22) : px photo × 0,5 + décalage */
@@ -31112,8 +31326,8 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
     ['ram', 'mdi:memory', 'show_ram', 'entity_ram'],
     ['temp', 'mdi:thermometer', 'show_temp', 'entity_temp'],
     ['disks', 'mdi:harddisk', 'show_disks', '_disks'],
-    ['down', 'mdi:download-network', 'show_network', 'entity_net_down'],
-    ['up', 'mdi:upload-network', 'show_network', 'entity_net_up'],
+    ['down', 'mdi:download-network', 'show_down', 'entity_net_down'],
+    ['up', 'mdi:upload-network', 'show_up', 'entity_net_up'],
     ['power', 'mdi:flash', 'show_power', 'entity_power'],
   ];
 
@@ -31260,7 +31474,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
       const { st, cpu, ram, vol, tp, pw, nd, nu, act, drives, alerts, hot } = this._compute();
       const on = st !== 'off' && st !== 'unavailable';
       const clamp = (x) => Math.max(0, Math.min(1, isNaN(x) ? 0 : x));
-      card.className = `${st}${on ? ' on' : ''}${hot && on ? ' hot' : ''}${c.animations === false ? ' noanim' : ''}`;
+      card.className = `${st}${on ? ' on' : ''}${hot && on ? ' hot' : ''}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`;
       const set = (k, v) => card.style.setProperty(k, v);
       set('--vol', clamp(vol / 100).toFixed(3)); set('--act', on ? act.toFixed(2) : 0);
       set('--blink', `${(1.1 - act * 0.9).toFixed(2)}s`);
@@ -31300,7 +31514,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
       TILES.forEach(([k, , opt, ent]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`), [val, unit] = V[k];
         const has = ent === '_disks' ? known.length > 0 : !!c[ent];
-        el.classList.toggle('hide', !has || c[opt] === false);
+        el.classList.toggle('hide', !has || c[opt] === false || (c.show_network === false && (k === 'down' || k === 'up')));
         el.classList.toggle('bad', !!bad[k]);
         el.querySelector('.lbl').textContent = this._l(k);
         const small = document.createElement('small'); small.textContent = unit ?? '';
@@ -31325,7 +31539,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
       }
       const ent = (name, domain) => ({ name, selector: { entity: domain ? { domain } : {} } });
       const num = (name, min, max, step, def, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
-      const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
+      const bool = (name, def = true) => ({ name, selector: { boolean: {} }, default: def });
       this._form.hass = this._hass;
       this._form.data = this._c;
       this._form.schema = [
@@ -31342,7 +31556,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
-          bool('show_status'), bool('show_volume'), bool('show_cpu'), bool('show_ram'), bool('show_temp'), bool('show_disks'), bool('show_network'), bool('show_power'), bool('animations'),
+          bool('show_status'), bool('compact', false), bool('show_volume'), bool('show_cpu'), bool('show_ram'), bool('show_temp'), bool('show_disks'), bool('show_down'), bool('show_up'), bool('show_power'), bool('animations'),
         ] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
@@ -31626,6 +31840,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
       led: `<ellipse class="halo" cx="242" cy="166" rx="62" ry="9" fill="url(#tv-halo)"/>`,
     },
   };
+  const BTN_KEYS = ['power', 'home', 'prev', 'play_pause', 'next', 'vol_down', 'mute', 'vol_up'];
   const ALIAS = { shield: 'shield_tv_pro', shieldtvpro: 'shield_tv_pro', xiaomi: 'xiaomi_tv_box_s', xiaomitvboxs: 'xiaomi_tv_box_s', mibox: 'xiaomi_tv_box_s', freebox: 'freebox_pop', freeboxpop: 'freebox_pop', playerpop: 'freebox_pop' };
   const modelKey = (m) => { const k = String(m || '').toLowerCase(); if (MODELS[k]) return k; const n = k.replace(/[^a-z0-9]/g, ''); return ALIAS[n] || 'shield_tv_pro'; };
 
@@ -31730,6 +31945,21 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
 .standby .halo{opacity:.25}
 @keyframes tvhalo{50%{opacity:.5}}
 .noanim *{animation:none!important;transition:none!important}
+
+/* ---- compact : petits emplacements fixes ; l'illustration prend la hauteur restante (même règles que les autres cartes) ---- */
+ha-card.compact{display:flex;flex-direction:column;padding:6px}
+.compact .head{flex:none;gap:4px}
+.compact .title{font-size:12px;line-height:16px}
+.compact .badge{font-size:10px;padding:0 6px}
+.compact .alert,.compact .info,.compact .goal{flex:none;font-size:10px;margin-top:2px}
+.compact .tiles{flex:none;gap:4px;margin-top:4px;grid-template-columns:repeat(auto-fit,minmax(56px,1fr))}
+.compact .tile{padding:2px 5px;border-radius:8px}
+.compact .tile .l ha-icon{--mdc-icon-size:12px}
+.compact .tile .v{font-size:12px;line-height:15px;margin-top:0}
+.compact > svg{flex:1 1 0;min-height:40px;width:calc(100% * min(1, var(--illus-scale,1)));max-width:none;height:auto;margin-top:3px}
+.compact .ctrls{flex:none;gap:2px;margin-top:4px;flex-wrap:nowrap}
+.compact .ctrls button{width:21px;height:21px;--mdc-icon-size:13px}
+.compact .ctrls button.main{width:24px;height:24px;--mdc-icon-size:15px}
 `;
 
   // icônes de lecture dessinées (pause, logo par défaut)
@@ -31909,7 +32139,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
       const pic = c.show_artwork !== false && live ? a.entity_picture_local || a.entity_picture || '' : '';
       const art = r.getElementById('tvart');
       if (pic !== this._lastPic) { this._lastPic = pic; card.classList.remove('artok'); if (pic) art.setAttribute('href', pic); else art.removeAttribute('href'); this._ambient(pic); }
-      card.className = `${st}${pic ? ' hasart' : ' noart'}${card.classList.contains('artok') ? ' artok' : ''}${card.classList.contains('hasdur') ? ' hasdur' : ''}${c.animations === false ? ' noanim' : ''}`;
+      card.className = `${st}${pic ? ' hasart' : ' noart'}${card.classList.contains('artok') ? ' artok' : ''}${card.classList.contains('hasdur') ? ' hasdur' : ''}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`;
       if (!pic) card.style.setProperty('--amb', m.accent);
 
       const app = a.app_name || a.source || '';
@@ -31943,7 +32173,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
         ['vol_down', 'mdi:volume-minus', 'vol_down', null, volOk],
         ['mute', muted ? 'mdi:volume-off' : 'mdi:volume-high', 'mute', muted, has(8)],
         ['vol_up', 'mdi:volume-plus', 'vol_up', null, volOk],
-      ].filter((b) => b[4]);
+      ].filter((b) => b[4] && c[`show_btn_${b[0]}`] !== false); // case décochée dans l'éditeur : bouton masqué
       const sig = btns.map((b) => b.join('|')).join(';') + st;
       if (ctr._sig !== sig) {
         ctr._sig = sig;
@@ -31984,7 +32214,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
         this.appendChild(this._form);
       }
       const ent = (name, domain) => ({ name, selector: { entity: domain ? { domain } : {} } });
-      const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
+      const bool = (name, def = true) => ({ name, selector: { boolean: {} }, default: def });
       this._form.hass = this._hass;
       this._form.data = this._c;
       this._form.schema = [
@@ -31997,7 +32227,9 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
         { name: 'volume_step', default: 0.05, selector: { number: { min: 0.01, max: 0.2, step: 0.01, mode: 'box' } } },
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
-        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_controls'), bool('show_artwork'), bool('show_app'), bool('show_volume'), bool('show_power'), bool('animations')] },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('compact', false), bool('show_controls'), bool('show_artwork'), bool('show_app'), bool('show_volume'), bool('show_power'), bool('animations')] },
+        // boutons de la télécommande, un par un
+        { type: 'grid', name: '', schema: BTN_KEYS.map((k) => bool(`show_btn_${k}`)) },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'tv_model' : s.name, this._hass);
     }
@@ -32353,6 +32585,21 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
 .tile.hide{display:none}
 .unavailable .plate{filter:grayscale(.6) brightness(.7)}
 .noanim *{animation:none!important;transition:none!important}
+
+/* ---- compact : petits emplacements fixes ; l'illustration prend la hauteur restante (même règles que les autres cartes) ---- */
+ha-card.compact{display:flex;flex-direction:column;padding:6px}
+.compact .head{flex:none;gap:4px}
+.compact .title{font-size:12px;line-height:16px}
+.compact .badge{font-size:10px;padding:0 6px}
+.compact .alert,.compact .info,.compact .goal{flex:none;font-size:10px;margin-top:2px}
+.compact .tiles{flex:none;gap:4px;margin-top:4px;grid-template-columns:repeat(auto-fit,minmax(56px,1fr))}
+.compact .tile{padding:2px 5px;border-radius:8px}
+.compact .tile .l ha-icon{--mdc-icon-size:12px}
+.compact .tile .v{font-size:12px;line-height:15px;margin-top:0}
+.compact .stage{flex:1 1 0;min-height:60px;margin-top:3px}
+.compact .floor{height:100%}
+.compact .plate{width:calc(min(110px, 100%) * var(--illus-scale,1))}
+.compact .side svg{max-height:100%}
 `;
 
   // pied (empreinte) : semelle + 5 orteils
@@ -32403,15 +32650,16 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
 </div>`;
 
   const TILES = [
-    ['weight', 'mdi:scale-bathroom', 'entity_weight'],
-    ['fat', 'mdi:water-percent', 'entity_fat_ratio'],
-    ['fat_mass', 'mdi:human', 'entity_fat_mass'],
-    ['muscle', 'mdi:arm-flex', 'entity_muscle_mass'],
-    ['bone', 'mdi:bone', 'entity_bone_mass'],
-    ['water', 'mdi:water', 'entity_hydration'],
-    ['visceral', 'mdi:stomach', 'entity_visceral_fat'],
-    ['pulse', 'mdi:heart-pulse', 'entity_heart_pulse'],
-    ['goal', 'mdi:flag-checkered', 'entity_weight_goal'],
+    // [tuile, icône, entité, option qui l'affiche / la masque]
+    ['weight', 'mdi:scale-bathroom', 'entity_weight', 'show_weight'],
+    ['fat', 'mdi:water-percent', 'entity_fat_ratio', 'show_fat'],
+    ['fat_mass', 'mdi:human', 'entity_fat_mass', 'show_fat_mass'],
+    ['muscle', 'mdi:arm-flex', 'entity_muscle_mass', 'show_muscle'],
+    ['bone', 'mdi:bone', 'entity_bone_mass', 'show_bone'],
+    ['water', 'mdi:water', 'entity_hydration', 'show_hydration'],
+    ['visceral', 'mdi:stomach', 'entity_visceral_fat', 'show_visceral'],
+    ['pulse', 'mdi:heart-pulse', 'entity_heart_pulse', 'show_pulse'],
+    ['goal', 'mdi:flag-checkered', 'entity_weight_goal', 'show_goal'],
   ];
 
   class ApplianceScaleCard extends HTMLElement {
@@ -32592,7 +32840,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
       const recent = !unav && isFinite(since) && since < Number(c.recent_minutes) * 60000;
       const bmi = c.show_bmi === false ? NaN : this._bmi();
       card.classList.toggle('unavailable', unav); card.classList.toggle('recent', recent); card.classList.toggle('idle', !recent && !unav);
-      card.classList.toggle('nobmi', isNaN(bmi)); card.classList.toggle('noanim', !this._anim());
+      card.classList.toggle('nobmi', isNaN(bmi)); card.classList.toggle('noanim', !this._anim()); card.classList.toggle('compact', c.compact === true);
       r.getElementById('sctitle').textContent = c.name || this._t('name');
       const badge = r.getElementById('scbadge');
       badge.textContent = unav ? this._t('unavailable') : isFinite(since) ? `${this._t('last')} ${this._ago(since)}` : '';
@@ -32628,9 +32876,9 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
         goal: [this._fmt(goal), unit],
       };
       const comp = new Set(['fat', 'fat_mass', 'muscle', 'bone', 'water', 'visceral', 'pulse']);
-      TILES.forEach(([k, , ent]) => {
+      TILES.forEach(([k, , ent, opt]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`), [val, u] = V[k];
-        el.classList.toggle('hide', !c[ent] || (comp.has(k) && c.show_composition === false));
+        el.classList.toggle('hide', !c[ent] || c[opt] === false || (comp.has(k) && c.show_composition === false));
         el.querySelector('.lbl').textContent = this._l(k);
         const small = document.createElement('small'); small.textContent = u ?? '';
         el.querySelector('.v').replaceChildren(String(val ?? ''), small);
@@ -32658,7 +32906,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
       }
       const ent = (name) => ({ name, selector: { entity: { domain: 'sensor' } } });
       const num = (name, min, max, step, def, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
-      const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
+      const bool = (name, def = true) => ({ name, selector: { boolean: {} }, default: def });
       this._form.hass = this._hass;
       this._form.data = this._c;
       this._form.schema = [
@@ -32671,7 +32919,9 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
         { type: 'grid', name: '', schema: [num('height', 50, 250, 1, undefined, 'cm'), num('recent_minutes', 1, 120, 1, 5, 'min'), num('trend_days', 7, 365, 1, 30)] },
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
-        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_bmi'), bool('show_trend'), bool('show_composition'), bool('animations')] },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('compact', false), bool('show_bmi'), bool('show_trend'), bool('animations')] },
+        // une case par tuile
+        { type: 'grid', name: '', schema: TILES.map((t) => bool(t[3])) },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }

@@ -19,7 +19,8 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `entity_power` (W, smart plug)
 - `cpu_busy` (default 70 %), `temp_max` (default 85 °), `ram_max` (default 90 %), `disk_max` (default 90 %), `temperature_unit`
 - `animations` (default true)
-- `show_status`, `show_cpu`, `show_temp`, `show_ram`, `show_disk`, `show_network`, `show_uptime`, `show_power`
+- `compact: true` (small fixed slots: smaller title, tiles and buttons, the illustration takes the remaining height), `transparent: true` (no card background), `illustration_size` (%)
+- One checkbox per tile in the visual editor: `show_status`, `show_cpu`, `show_temp`, `show_ram`, `show_disk`, `show_down`, `show_up`, `show_uptime`, `show_power` (`show_network: false` hides both network tiles)
 
 ## Example (System Monitor)
 
