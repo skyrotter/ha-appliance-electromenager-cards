@@ -23212,11 +23212,16 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
 .slit{fill:#ffe9a8;opacity:.55}
 .isnight .slit{opacity:0}
 
-/* ---- store vénitien : les lamelles se tassent en haut, s'inclinent (--t, 100 = à plat) ---- */
+/* ---- store vénitien : les lamelles se tassent en haut et s'inclinent (--t : 0 = fermées, 50 = ouvertes à plat, 100 = refermées dans l'autre sens) ----
+   --sf = hauteur apparente d'une lamelle vue de face, --sd / --sl = face qui s'assombrit / s'éclaire, --lt = lumière qui passe (0-100) */
 .lift{transform-box:view-box;transform-origin:100px 42px;transform:scaleY(calc(1 - var(--p) * .0092))}
 .rail{transform:translateY(calc(var(--p) * -.94px))}
-.sl{transform-box:fill-box;transform-origin:center;transform:scaleY(calc(1 - var(--t) * .0085));transition:transform 1.2s ease-in-out}
-.vb .beam{opacity:calc(max(var(--p), var(--t) * .7) * .0022)}
+.sl{transform-box:fill-box;transform-origin:center;transform:scaleY(var(--sf,1));transition:transform 1.2s ease-in-out}
+.sl .sd,.sl .sw{transition:opacity 1.2s ease-in-out}.sl .sd{opacity:var(--sd,0)}.sl .sw{opacity:var(--sl,0)}
+.vb .beam{opacity:calc(max(var(--p), var(--lt,0) * .7) * .0022)}
+/* inclinaison seule : les lamelles restent réparties sur toute la fenêtre, seul leur angle change */
+.tonly .lift,.tonly .rail{transform:none}.tonly .vb .arrow{display:none}
+.tonly .vb .beam{opacity:calc(var(--lt,0) * .0015)}
 .isnight .vb .beam{opacity:0}
 
 /* ---- volets battants : deux vantaux en 3D, pivot sur les gonds ---- */
@@ -23301,7 +23306,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
     // lamelles (couleur --sc) qui se tassent sous le caisson et pivotent sur elles-mêmes
     venetian_blind: () => {
       let sl = '';
-      for (let y = Y0 + 8; y < Y1 - 4; y += 7) sl += `<g class="sl"><rect x="${X0 + 2}" y="${y - 3}" width="${W - 4}" height="6" rx=".6" fill="var(--sc)"/><rect x="${X0 + 2}" y="${y - 3}" width="${W - 4}" height="6" rx=".6" fill="url(#shrelief)"/></g>`;
+      for (let y = Y0 + 8; y < Y1 - 4; y += 7) sl += `<g class="sl"><rect x="${X0 + 2}" y="${y - 3}" width="${W - 4}" height="6" rx=".6" fill="var(--sc)"/><rect x="${X0 + 2}" y="${y - 3}" width="${W - 4}" height="6" rx=".6" fill="url(#shrelief)"/><rect class="sd" x="${X0 + 2}" y="${y - 3}" width="${W - 4}" height="6" rx=".6" fill="#000"/><rect class="sw" x="${X0 + 2}" y="${y - 3}" width="${W - 4}" height="6" rx=".6" fill="#fff"/></g>`;
       const cords = [64, 136].map((x) => `<line x1="${x}" y1="${Y0 + 4}" x2="${x}" y2="${Y1 - 4}" stroke="#00000035" stroke-width=".8"/>`).join('');
       return `<g class="vb"><rect x="14" y="14" width="172" height="146" rx="4" fill="#3a3f47"/>${outside(X0, Y0, X1, Y1, 'shwv')}
         <line x1="100" y1="${Y0}" x2="100" y2="${Y1}" stroke="#e9edf1" stroke-width="3"/>
@@ -23558,6 +23563,11 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         <div class="rng ps" id="shpos"><span></span><input type="range" min="0" max="100" step="1"></div>
         <div class="rng tl" id="shtilt"><span></span><input type="range" min="0" max="100" step="1"></div>
         <div class="ctl" id="shpre">${this._tiltPresets().map((v) => `<button data-tilt="${v}"><span>${v} %</span></button>`).join('')}</div>
+        <div class="ctl" id="shtbt">
+          <button data-k="open" data-a="open_cover_tilt"><ha-icon icon="mdi:blinds-open"></ha-icon><span></span></button>
+          <button data-k="stop" data-a="stop_cover_tilt"><ha-icon icon="mdi:stop"></ha-icon><span></span></button>
+          <button data-k="close" data-a="close_cover_tilt"><ha-icon icon="mdi:blinds-horizontal-closed"></ha-icon><span></span></button>
+        </div>
         <div class="ctl" id="shctl">
           <button data-a="open"><ha-icon icon="mdi:arrow-up"></ha-icon><span></span></button>
           <button data-a="stop"><ha-icon icon="mdi:stop"></ha-icon><span></span></button>
@@ -23586,6 +23596,10 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       // préréglages d'inclinaison (0 % = lames fermées, 50 % = mi-ouvertes, 100 % = refermées dans l'autre sens)
       root.querySelectorAll('#shpre button').forEach((b) => b.addEventListener('click', () => {
         if (this._hass) this._hass.callService('cover', 'set_cover_tilt_position', { entity_id: this._c.entity, tilt_position: Number(b.dataset.tilt) });
+      }));
+      // cover sans set_cover_tilt_position : commandes d'inclinaison ouvrir / stop / fermer
+      root.querySelectorAll('#shtbt button').forEach((b) => b.addEventListener('click', () => {
+        if (this._hass) this._hass.callService('cover', b.dataset.a, { entity_id: this._c.entity });
       }));
       root.querySelector('#shtilt input').addEventListener('change', (e) => {
         if (this._hass) this._hass.callService('cover', 'set_cover_tilt_position', { entity_id: this._c.entity, tilt_position: Number(e.target.value) });
@@ -23669,7 +23683,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       const sun = this._st(c.sun_entity), night = !!sun && sun.state === 'below_horizon';
       const rainS = this._st(c.entity_rain), rain = !!rainS && (/^(on|true|wet|rain|pluie|raining)$/i.test(String(rainS.state)) || this._num(c.entity_rain) > 0);
       const lightS = this._st(c.entity_light), leds = !!lightS && /^on$/i.test(String(lightS.state));
-      card.className = `${st}${night ? ' isnight' : ''}${c.animations === false ? ' noanim' : ''}${rain ? ' rain' : ''}${leds ? ' leds' : ''}`;
+      card.className = `${st}${night ? ' isnight' : ''}${c.animations === false ? ' noanim' : ''}${this._tiltOnly ? ' tonly' : ''}${rain ? ' rain' : ''}${leds ? ' leds' : ''}`;
       const blS = this._st(c.entity_blind), blA = (blS && blS.attributes) || {};
       const blPos = blS ? (isFinite(Number(blA.current_position)) && blA.current_position != null ? Number(blA.current_position) : /^(closed|closing)$/i.test(blS.state) ? 0 : 100) : 100;
       this._blindDown = 100 - Math.max(0, Math.min(100, blPos));
@@ -23687,6 +23701,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       }
       card.style.setProperty('--p', String(pos));
       card.style.setProperty('--t', String(isNaN(tilt) ? (st === 'closed' ? 0 : 100) : tilt));
+      // lamelles vues de face : hauteur apparente = sin(angle depuis l'horizontale), 80° au maximum quand elles sont fermées
+      const tv = isNaN(tilt) ? (st === 'closed' ? 0 : 50) : tilt, dev = Math.abs(tv - 50) / 50;
+      card.style.setProperty('--sf', Math.max(.12, Math.sin(dev * 80 * Math.PI / 180)).toFixed(3));
+      card.style.setProperty('--sd', tv > 50 ? (dev * .35).toFixed(3) : '0');
+      card.style.setProperty('--sl', tv < 50 ? (dev * .25).toFixed(3) : '0');
+      card.style.setProperty('--lt', String(Math.round((1 - dev) * 100)));
       card.style.setProperty('--sc', /^[#a-z0-9(),.\s%]+$/i.test(String(c.color || '').trim()) ? String(c.color).trim() : KINDS[this.kind].color);
 
       const name = c.name || this._t(this.kind);
@@ -23716,6 +23736,14 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       ctl.classList.toggle('hide', c.show_controls === false || !isCover || this._tiltOnly);
       const pre = r.getElementById('shpre');
       pre.classList.toggle('hide', !(this._tiltOnly && isCover && has(128) && c.show_controls !== false));
+      // sans set_cover_tilt_position, la carte ne reste pas vide : boutons ouvrir / stop / fermer l'inclinaison
+      const tbt = r.getElementById('shtbt');
+      tbt.classList.toggle('hide', !(this._tiltOnly && isCover && !has(128) && c.show_controls !== false));
+      tbt.querySelectorAll('button').forEach((b) => {
+        b.querySelector('span').textContent = this._t(`btn_${b.dataset.k}`);
+        b.classList.toggle('hide', b.dataset.k === 'stop' && !has(64));
+        b.disabled = st === 'unavailable';
+      });
       pre.querySelectorAll('button').forEach((b) => { b.classList.toggle('on', !isNaN(tilt) && Math.abs(tilt - Number(b.dataset.tilt)) <= 2); b.disabled = st === 'unavailable'; });
       ctl.querySelectorAll('button').forEach((b) => {
         const a = b.dataset.a;
@@ -23734,7 +23762,8 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         if (this._root.activeElement !== inp) inp.value = String(Math.round(val));
       };
       rng('shpos', isCover && !this._tiltOnly && known && (this._tiltDriven ? has(128) : has(4)) && c.show_slider !== false && st !== 'unavailable', this._blindOnly ? this._l('blind') : this._l('position'), this._blindOnly ? blPos : pos);
-      rng('shtilt', isCover && this.kind === 'venetian_blind' && !isNaN(tilt) && has(128) && c.show_slider !== false && st !== 'unavailable', this._l('tilt'), tilt);
+      // en inclinaison seule le curseur reste affiché même si la cover ne remonte pas current_tilt_position
+      rng('shtilt', isCover && this.kind === 'venetian_blind' && (this._tiltOnly || !isNaN(tilt)) && has(128) && c.show_slider !== false && st !== 'unavailable', this._l('tilt'), isNaN(tilt) ? 0 : tilt);
 
       const pw = this._watts(c.entity_power);
       const V = {
