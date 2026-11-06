@@ -1,1 +1,1 @@
-const VERSION = "1.81.2";
+const VERSION = "1.82.0";
