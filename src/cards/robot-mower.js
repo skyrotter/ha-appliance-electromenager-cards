@@ -115,7 +115,7 @@ class ApplianceRobotMowerCard extends HTMLElement {
     let next = null; const ns = this._st(c.entity_next_start);
     if (ns && !['unavailable', 'unknown'].includes(ns.state)) {
       const d = new Date(ns.state);
-      next = isNaN(d) ? ns.state : d.toLocaleString(window.applianceLocale(c, this._hass).replace(/^en$/, 'en-GB'), { weekday: 'short', hour: '2-digit', minute: '2-digit' });
+      next = isNaN(d) ? ns.state : d.toLocaleString(window.applianceLocale(c, this._hass, true).replace(/^en$/, 'en-GB'), { weekday: 'short', hour: '2-digit', minute: '2-digit' });
     }
     const it = [], compact = c.layout === 'compact';
     const stTxt = raining && st !== 'mowing' ? `${this._t(st)} · ${this._t('rain')}` : this._t(st);
