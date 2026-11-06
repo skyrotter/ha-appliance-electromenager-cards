@@ -37,6 +37,7 @@ Alcuni esempi (elenco completo con anteprime nel [README in inglese](README.md#t
 | Friggitrice ad aria | `custom:appliance-air-fryer-card` |
 | Macchina del caffè | `custom:appliance-coffee-maker-card` |
 | Bimby / Thermomix (TM6 / TM7) | `custom:appliance-thermomix-card` |
+| Cookeo (multicooker) | `custom:appliance-cookeo-card` |
 | Televisore | `custom:appliance-tv-card` |
 | Altoparlante smart (Echo, Nest, Sonos, Devialet, HomePod) | `custom:appliance-smart-speaker-card` |
 | Cappa aspirante | `custom:appliance-range-hood-card` |

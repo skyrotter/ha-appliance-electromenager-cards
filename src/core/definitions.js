@@ -100,6 +100,10 @@ const DEF = {
   thermomix: { accent: "heat", threshold: 15,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["thermomix", "tm6", "tm7", "tm5", "vorwerk", "robot_cuiseur", "robot_culinaire", "cookidoo"] },
+  // Multicuiseur Cookeo (Moulinex) : prise connectée (W), et si disponibles statut, programme, temps restant, température
+  cookeo: { accent: "heat", threshold: 15,
+    fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "program", "remaining", "progress", "switch"],
+    keys: ["cookeo", "moulinex", "multicuiseur", "multi_cuiseur", "multicooker", "pressure_cooker", "autocuiseur", "instant_pot", "instantpot"] },
   coffee_maker: { accent: "heat", threshold: 300,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["cafetiere", "coffee", "senseo", "nespresso", "dolce_gusto", "tassimo", "expresso", "espresso", "cafe"] },

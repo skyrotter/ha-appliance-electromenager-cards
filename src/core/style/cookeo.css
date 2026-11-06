@@ -1,0 +1,34 @@
+/* ---------- Multicuiseur Cookeo (photo ou dessin + calques animés) ---------- */
+/* écran : verre sombre quand l'appareil est éteint, allumé en veille comme en cuisson */
+.ck-off { opacity: 0; transition: opacity .6s; }
+.k-cookeo.st-off .ck-off, .k-cookeo.st-unavailable .ck-off { opacity: .92; }
+.ck-glow { opacity: 0; }
+.k-cookeo.active .ck-glow { animation: ck-glow 2.4s ease-in-out infinite; }
+@keyframes ck-glow { 50% { opacity: .1; } }
+/* tuile sélectionnée : passe d'une tuile à l'autre (veille et cuisson) */
+.ck-sel { fill: none; stroke: #fff; stroke-width: 2; opacity: 0; }
+.k-cookeo.st-standby .ck-sel, .k-cookeo.active .ck-sel { animation: ck-sel 8s steps(1) infinite; }
+.k-cookeo .ck-s2 { animation-delay: -6s !important; } .k-cookeo .ck-s3 { animation-delay: -4s !important; } .k-cookeo .ck-s4 { animation-delay: -2s !important; }
+@keyframes ck-sel { 0% { opacity: .95; } 25% { opacity: 0; } }
+/* arc rouge autour de la molette : en marche */
+.ck-ring { fill: none; stroke: #ff3b2f; stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: 38 170; opacity: 0; transform-box: fill-box; transform-origin: 50% 50%; }
+.k-cookeo.active .ck-ring { opacity: .9; animation: ck-spin 2.8s linear infinite; }
+@keyframes ck-spin { to { transform: rotate(360deg); } }
+/* voyant de pression : clignote pendant la cuisson sous pression */
+.s-photo .ck-led { opacity: 0; }
+.s-drawing .ck-led { fill: #cfd5d8; }
+.k-cookeo.st-cooking .s-photo .ck-led { animation: ck-led-p 1.6s ease-in-out infinite; }
+.k-cookeo.st-cooking .s-drawing .ck-led { animation: ck-led-d 1.6s ease-in-out infinite; }
+@keyframes ck-led-p { 50% { opacity: .85; } }
+@keyframes ck-led-d { 50% { fill: #7fc8ff; } }
+/* vapeur : montée en température et cuisson */
+.ck-steam > * { opacity: 0; transform-box: fill-box; transform-origin: 50% 100%; }
+.s-drawing .ck-steam path { fill: none; stroke: #c9d1d7; stroke-width: 9; stroke-linecap: round; }
+.k-cookeo.st-heating .ck-steam > *, .k-cookeo.st-cooking .ck-steam > * { animation: ck-rise 3s ease-out infinite; }
+.k-cookeo .ck-steam > :nth-child(2) { animation-delay: 1s !important; } .k-cookeo .ck-steam > :nth-child(3) { animation-delay: 2s !important; }
+@keyframes ck-rise { 0% { opacity: 0; transform: translateY(0) scale(.5); } 20% { opacity: 1; } 100% { opacity: 0; transform: translateY(-60px) scale(1.8); } }
+/* légère vibration sous pression */
+.ck-body { transform-box: fill-box; transform-origin: 50% 100%; }
+.k-cookeo.st-cooking .ck-body { animation: ck-shake .3s linear infinite; }
+/* dessin réduit à ~24 % : amplitude en unités de la photo */
+@keyframes ck-shake { 0%,100% { transform: translate(0,0); } 25% { transform: translate(-2.5px,1px); } 50% { transform: translate(2px,-1.2px); } 75% { transform: translate(-1.2px,-.8px); } }
