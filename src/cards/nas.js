@@ -313,6 +313,10 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         drives.filter((d) => d.bad).forEach((d) => alerts.push(this._t(d.nvme ? 'nvme_alert' : 'drive_alert').replace('{n}', d.i)));
         if (!isNaN(tp.v) && tp.v >= Number(c.temp_max)) alerts.push(this._t('hot'));
         if (!isNaN(vol) && vol >= Number(c.volume_max)) alerts.push(this._t('volume_full'));
+        // Unraid : parité (binary_sensor « valide » : off = invalide) et clé USB flash (binary_sensor « problème »), cochables dans l'éditeur
+        const par = this._st(c.entity_parity), fl = this._st(c.entity_flash);
+        if (c.show_parity !== false && par && /^(off|false|invalid|problem|failed)$/i.test(String(par.state))) alerts.push(this._t('parity_alert'));
+        if (c.show_flash !== false && fl && (fl.state === 'on' || BAD.test(String(fl.state)))) alerts.push(this._t('flash_alert'));
         const sec = this._st(c.entity_security);
         if (sec && (sec.state === 'on' || BAD.test(String(sec.state)) || /outofdate|risk/i.test(String(sec.state)))) alerts.push(this._t('security'));
       }
@@ -415,13 +419,14 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ent('entity_net_down', 'sensor'), ent('entity_net_up', 'sensor'),
         { type: 'grid', name: '', schema: [...Array(modelOf(this._c).bays.length).keys()].map((n) => n + 1).flatMap((i) => [ent(`entity_drive_${i}`, ['sensor', 'binary_sensor']), ent(`entity_drive_${i}_temp`, 'sensor')]) },
         { type: 'grid', name: '', schema: [1, 2].flatMap((i) => [ent(`entity_nvme_${i}`, ['sensor', 'binary_sensor']), ent(`entity_nvme_${i}_temp`, 'sensor')]) },
+        ent('entity_parity', 'binary_sensor'), ent('entity_flash', 'binary_sensor'),
         ent('entity_security', 'binary_sensor'), ent('entity_update', 'update'), ent('entity_power', 'sensor'),
         { type: 'grid', name: '', schema: [num('cpu_busy', 10, 100, 1, 60, '%'), num('volume_max', 10, 100, 1, 85, '%'), num('temp_max', 30, 100, 1, 60, '°'), num('disk_temp_max', 30, 80, 1, 50, '°')] },
         window.applianceTempField,
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
-          bool('show_status'), bool('compact', false), bool('show_volume'), bool('show_cpu'), bool('show_ram'), bool('show_temp'), bool('show_disks'), bool('show_down'), bool('show_up'), bool('show_power'), bool('animations'),
+          bool('show_status'), bool('compact', false), bool('show_volume'), bool('show_cpu'), bool('show_ram'), bool('show_temp'), bool('show_disks'), bool('show_down'), bool('show_up'), bool('show_power'), bool('show_parity'), bool('show_flash'), bool('animations'),
         ] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'nas_model' : s.name, this._hass);

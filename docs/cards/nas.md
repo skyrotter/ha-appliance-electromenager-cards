@@ -21,6 +21,7 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `entity_drive_1` … `entity_drive_4` (`entity_drive_6` on the 6-bay iDX6011 Pro) (disk status: a text sensor for DSM, or the `binary_sensor` « problem » of TerraMaster, on = fault), `entity_drive_1_temp` … `entity_drive_4_temp` (up to `_6_temp`)
 - `entity_nvme_1`, `entity_nvme_2` (SSD NVMe status or `binary_sensor` « problem »), `entity_nvme_1_temp`, `entity_nvme_2_temp`: counted in the disks tile and in the alerts (« SSD N: problem »), they have no bay on the photo
   All four disks, and each temperature, are optional: fill in only the entities your integration provides (DSM does not always report every disk temperature). The disks tile counts only the disks you set (`OK / known`) and shows the highest temperature among those that have one.
+- `entity_parity` (binary_sensor, **off = invalid**: « Parity invalid » alert) and `entity_flash` (binary_sensor, on = problem: USB flash boot device alert), for Unraid. Each alert can be unchecked in the visual editor (`show_parity`, `show_flash`)
 - `entity_security` (binary_sensor, on = problem), `entity_update` (update entity), `entity_power` (W)
 - `cpu_busy` (default 60 %), `volume_max` (default 85 %), `temp_max` (default 60 °), `disk_temp_max` (default 50 °), `temperature_unit`
 - `animations` (default true)
@@ -70,6 +71,8 @@ entity_nvme_1: binary_sensor.controlroom_unraid_idx_disk_apps_health
 entity_nvme_1_temp: sensor.unraid_disk_apps_temperature
 entity_nvme_2: binary_sensor.controlroom_unraid_idx_disk_vms_health
 entity_nvme_2_temp: sensor.unraid_disk_vms_temperature
+entity_parity: binary_sensor.controlroom_unraid_idx_parity_valid
+entity_flash: binary_sensor.controlroom_unraid_idx_disk_flash_health
 ```
 
 ## Synology example
