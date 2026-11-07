@@ -26,6 +26,6 @@ entity_battery_critical: binary_sensor.porte_entree_battery_critical  # optional
 entity_door: binary_sensor.porte_entree_door                      # optional (door sensor)
 ```
 
-Options: `name`, `labels`, `illustration_size`, `transparent`, `battery_low` (20 %), `confirm_open`, `tap_action` / `hold_action`, `language`, `show_status`, `show_buttons`, `show_battery`, `show_door`, `show_since`, `animations`.
+Options: `name`, `color` (colour marker: bar on the left edge + dot before the title, to tell several locks apart; `[r,g,b]` or `"#1e88e5"`), `labels`, `illustration_size`, `transparent`, `battery_low` (20 %), `confirm_open`, `tap_action` / `hold_action`, `language`, `show_status`, `show_buttons`, `show_battery`, `show_door`, `show_since`, `animations`.
 
 [← All cards](../../README.md#the-cards)
