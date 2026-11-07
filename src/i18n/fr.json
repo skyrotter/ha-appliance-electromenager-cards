@@ -1073,8 +1073,10 @@
     "entity_locked_out": "Lock « Sortie seule » (Sure Petcare)",
     "entity_target": "Température de consigne",
     "entity_reserve": "Réserve d'eau chaude (%)",
+    "entity_temp_bottom": "Température du bas (entité)",
     "boost_above": "Boost au-dessus de (W)",
     "running_above": "En marche au-dessus de (W)",
+    "green_above": "Éco (vert) au-dessus de (W)",
     "show_target": "Afficher la consigne",
     "show_reserve": "Afficher l'eau chaude",
     "nas_model": "Modèle de NAS",
@@ -1597,6 +1599,7 @@
     "mode": "Mode",
     "temp": "Température",
     "target": "Consigne",
+    "bottom": "Bas du ballon",
     "reserve": "Eau chaude"
   }
 }

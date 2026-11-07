@@ -15,3 +15,6 @@
 .k-server_rack .lcd { font-size: 5.6px; fill: #24404f; }
 .k-server_rack.active .lcd { fill: var(--ac-lcd); }
 @keyframes rk-blink { 0% { opacity: 1; } 20% { opacity: .25; } 35% { opacity: 1; } 62% { opacity: .35; } 78% { opacity: 1; } 100% { opacity: 1; } }
+/* tuiles lisibles aussi en mode transparent (comme mini-pc / NAS) : fond opaque du thème au lieu d'un gris à 9 % */
+.k-server_rack .tile { background: var(--secondary-background-color, rgba(127,127,127,.2)); }
+.k-server_rack .tile:hover { background: color-mix(in srgb, var(--primary-text-color) 8%, var(--secondary-background-color, rgba(127,127,127,.2))); }
