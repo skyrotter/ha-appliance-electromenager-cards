@@ -19,7 +19,7 @@ const has=(c,cls)=>c.wrap.classList.contains(cls);
 const tags=['thermomix','cookeo','washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','smart-speaker','fan','generic','tool-charger','ceiling-fan','dehumidifier','monitor','kettle','toaster','power-strip','phone-charger','piano','garland','wet-vacuum','ps5'];
 tags.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 // card picker: every core card and every self-contained card listed exactly once
-const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','ceiling-spot','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','water-meter','gas-meter','electric-meter','trv','room-climate','mailbox','smoke-detector','leak-detector','mini-pc','nas','tv-box','scale','smart-lock','cat-flap','pet-fountain','thermo-heater','smart-tap','water-valve','water-softener'];
+const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','ceiling-spot','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','water-meter','gas-meter','electric-meter','trv','room-climate','mailbox','smoke-detector','leak-detector','mini-pc','nas','tv-box','scale','smart-lock','cat-flap','pet-fountain','thermo-heater','smart-tap','water-valve','water-softener','rain-gauge'];
 solo.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 const picked=window.customCards.map(c=>c.type), wanted=[...tags,...solo].map(t=>`appliance-${t}-card`).concat('appliance-card'); // + the single card (picker.js)
 ok(`customCards = ${wanted.length}`,picked.length===wanted.length&&wanted.every(t=>picked.filter(p=>p===t).length===1),
@@ -548,6 +548,26 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c=card('water-valve',{entity:'valve.v',entity_temperature:'sensor.t'},[mk('valve.v','closed'),mk('sensor.t',1,T)]); ok('valve freeze',/freeze/.test(hc(c)),hc(c));
  c=card('water-valve',{entity:'valve.v',entity_remaining:'sensor.r'},[mk('valve.v','open'),mk('sensor.r','0:20:00')]); ok('valve remaining H:MM:SS',/^20/.test(tl(c,'remaining').querySelector('.v').textContent),tl(c,'remaining').textContent);
  document.querySelectorAll('appliance-smart-tap-card,appliance-water-valve-card').forEach((e)=>e.remove());
+}
+// pluviomètre : intensité, niveaux, unités, tuiles désactivables
+{const hc=(c)=>c.sr.querySelector('ha-card').className, bd=(c)=>c.sr.getElementById('rgbadge').textContent, vis=(c,k)=>!c.sr.querySelector(`.tile[data-k="${k}"]`).classList.contains('hide');
+ let c=card('rain-gauge',{entity:'sensor.r'},[mk('sensor.r',0,{unit_of_measurement:'mm/h'})]); ok('rain dry',/^dry/.test(hc(c))&&bd(c)==='Sec',hc(c)+bd(c));
+ c=card('rain-gauge',{entity:'sensor.r'},[mk('sensor.r',1.2,{unit_of_measurement:'mm/h'})]); ok('rain light',/^light/.test(hc(c))&&bd(c)==='Pluie faible',hc(c));
+ c=card('rain-gauge',{entity:'sensor.r'},[mk('sensor.r',5,{unit_of_measurement:'mm/h'})]); ok('rain moderate',/^moderate/.test(hc(c)),hc(c));
+ c=card('rain-gauge',{entity:'sensor.r'},[mk('sensor.r',12,{unit_of_measurement:'mm/h'})]); ok('rain heavy',/^heavy/.test(hc(c)),hc(c));
+ c=card('rain-gauge',{entity:'sensor.r',heavy_rate:15},[mk('sensor.r',12,{unit_of_measurement:'mm/h'})]); ok('rain heavy_rate option',/^moderate/.test(hc(c)),hc(c));
+ c=card('rain-gauge',{entity:'sensor.r'},[mk('sensor.r',60,{unit_of_measurement:'mm/h'})]); ok('rain violent',/^violent/.test(hc(c)),hc(c));
+ c=card('rain-gauge',{entity:'sensor.r'},[mk('sensor.r',0.2,{unit_of_measurement:'in/h'})]); ok('rain inches converted (0.2 in/h = 5 mm/h)',/^moderate/.test(hc(c)),hc(c));
+ c=card('rain-gauge',{entity:'binary_sensor.r'},[mk('binary_sensor.r','on')]); ok('rain binary_sensor on',/^moderate/.test(hc(c)),hc(c));
+ c=card('rain-gauge',{entity:'binary_sensor.r'},[mk('binary_sensor.r','off')]); ok('rain binary_sensor off',/^dry/.test(hc(c)),hc(c));
+ c=card('rain-gauge',{entity:'sensor.r'},[mk('sensor.r','Pluie')]); ok('rain text sensor',/^moderate/.test(hc(c)),hc(c));
+ c=card('rain-gauge',{entity:'sensor.r'},[mk('sensor.r','unavailable')]); ok('rain unavailable',/^unavailable/.test(hc(c)),hc(c));
+ c=card('rain-gauge',{entity:'sensor.r',entity_day:'sensor.d',gauge_max:20},[mk('sensor.r',0,{unit_of_measurement:'mm/h'}),mk('sensor.d',10,{unit_of_measurement:'mm'})]); ok('rain water level = day / gauge_max',c.sr.querySelector('ha-card').style.getPropertyValue('--lvl')==='0.500',c.sr.querySelector('ha-card').style.getPropertyValue('--lvl'));
+ c=card('rain-gauge',{entity:'sensor.r',entity_battery:'sensor.b'},[mk('sensor.r',0,{unit_of_measurement:'mm/h'}),mk('sensor.b',8,{unit_of_measurement:'%'})]); ok('rain low battery',/lowbat/.test(hc(c))&&bd(c)==='Batterie faible',hc(c)+bd(c));
+ c=card('rain-gauge',{entity:'sensor.r',entity_hour:'sensor.h',entity_week:'sensor.w',show_week:false},[mk('sensor.r',2,{unit_of_measurement:'mm/h'}),mk('sensor.h',3.2,{unit_of_measurement:'mm'}),mk('sensor.w',30,{unit_of_measurement:'mm'})]);
+ ok('rain tiles: set entity shown, show_* off hides, no entity hidden',vis(c,'rate')&&vis(c,'hour')&&!vis(c,'week')&&!vis(c,'day')&&/3,2/.test(c.sr.querySelector('.tile[data-k="hour"] .v').textContent),c.sr.querySelector('.tiles').textContent);
+ c=card('rain-gauge',{entity:'sensor.r',compact:true,transparent:true},[mk('sensor.r',2,{unit_of_measurement:'mm/h'})]); ok('rain compact + transparent',/compact/.test(hc(c))&&c.sr.host.style.getPropertyValue('--ha-card-background')==='transparent',hc(c));
+ document.querySelectorAll('appliance-rain-gauge-card').forEach((e)=>e.remove());
 }
 // détecteur de fuite : une ou plusieurs sondes, vanne, sirène, gel, batterie
 {const hc=(c)=>c.sr.querySelector('ha-card').className, bd=(c)=>c.sr.getElementById('lkbadge').textContent, al=(c)=>c.sr.getElementById('lkalert').textContent;

@@ -219,6 +219,17 @@ entity_leak: binary_sensor.fuite_evier
 entity_valve: valve.arrivee_eau
 ```
 
+**Pluviomètre** (`custom:appliance-rain-gauge-card`) : pluviomètre à auget (coupelle en verre, collecteur noir, socle blanc). Il pleut : un nuage apparaît, les gouttes tombent dans la coupelle (5, 9 ou 14 selon l'intensité), des rides se forment, l'auget « bat » à chaque basculement, le niveau d'eau suit le cumul du jour et un éclair éclaire les pluies violentes (≥ 50 mm/h). Intensité : faible, pluie, forte (≥ `heavy_rate`, 7,6 mm/h), violente. Tuiles désactivables : intensité, dernière heure, jour, semaine, mois, année, dernière pluie, batterie, signal. Les pouces (in) sont convertis. Détail : [docs/cards/rain-gauge.md](cards/rain-gauge.md).
+
+```yaml
+type: custom:appliance-rain-gauge-card
+name: Pluviomètre
+entity: sensor.pluviometre_pluie        # intensité (mm/h) ou binary_sensor « il pleut »
+entity_hour: sensor.pluviometre_pluie_1h
+entity_day: sensor.pluviometre_pluie_24h
+entity_battery: sensor.pluviometre_batterie
+```
+
 **Sauna** : `custom:appliance-sauna-card`, cabine en lames de bois vue de face avec porte vitrée teintée (banquettes, poêle et pierres visibles), thermomètre mural, panneau de commande et conduit de ventilation. États : arrêt, chauffe, prêt (à `ready_margin` = 3 °C de la consigne), refroidissement (éteint mais au-dessus de 40 °C) et défaut. La lueur du poêle et les braises suivent la température, les ondes de chaleur montent au-dessus des pierres, la vapeur sort du conduit, le thermomètre se remplit ; alerte au-dessus de `temp_max` (110 °C). Avec une entité `climate`, la température et la consigne viennent de ses attributs et les boutons **− / Allumer-Éteindre / +** pilotent le thermostat. Tuiles : température, consigne, humidité, puissance du poêle, énergie, coût. Options : voir [sauna.md](cards/sauna.md).
 
 ```yaml

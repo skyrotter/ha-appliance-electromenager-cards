@@ -861,6 +861,15 @@ const SCEN = [
       range(ctl, 'Capacité restante', 'sensor.softener_capacity', 0, 100, 1, 72, '%', { unit_of_measurement: '%' });
       set('sensor.softener_hin', 32, { unit_of_measurement: '°f' }); set('sensor.softener_hout', 2, { unit_of_measurement: '°f' }); set('sensor.softener_today', 286, { unit_of_measurement: 'L' }); set('sensor.softener_regen', 3, { unit_of_measurement: 'd' }); set('sensor.softener_power', 4, { unit_of_measurement: 'W' });
     } },
+  { kind: 'rain-gauge', title: 'Pluviomètre', lang: true,
+    cfg: { name: 'Pluviomètre jardin', entity: 'sensor.rain_rate', entity_hour: 'sensor.rain_1h', entity_day: 'sensor.rain_24h', entity_week: 'sensor.rain_week', entity_month: 'sensor.rain_month', entity_year: 'sensor.rain_year', entity_last: 'sensor.rain_last', entity_battery: 'sensor.rain_battery', entity_signal: 'sensor.rain_signal' },
+    build(ctl) {
+      range(ctl, 'Intensité', 'sensor.rain_rate', 0, 80, 0.5, 4.5, 'mm/h', { unit_of_measurement: 'mm/h' });
+      range(ctl, 'Pluie du jour', 'sensor.rain_24h', 0, 60, 0.5, 14, 'mm', { unit_of_measurement: 'mm' });
+      range(ctl, 'Batterie', 'sensor.rain_battery', 0, 100, 1, 78, '%', { unit_of_measurement: '%', device_class: 'battery' });
+      set('sensor.rain_1h', 3.2, { unit_of_measurement: 'mm' }); set('sensor.rain_week', 31.5, { unit_of_measurement: 'mm' }); set('sensor.rain_month', 88, { unit_of_measurement: 'mm' }); set('sensor.rain_year', 640, { unit_of_measurement: 'mm' });
+      set('sensor.rain_last', new Date(Date.now() - 3 * 3600e3).toISOString(), { device_class: 'timestamp' }); set('sensor.rain_signal', 72, { unit_of_measurement: '%' });
+    } },
   { kind: 'smart-tap', title: 'Robinet connecté', lang: true,
     cfg: { name: 'Robinet jardin', entity: 'valve.garden_tap', entity_flow: 'sensor.tap_flow', entity_today: 'sensor.tap_today', entity_remaining: 'sensor.tap_left', entity_duration: 'number.tap_duration', entity_schedule: 'switch.tap_schedule', entity_rain: 'binary_sensor.tap_rain', entity_moisture: 'sensor.tap_moisture', entity_battery: 'sensor.tap_battery', entity_signal: 'sensor.tap_lqi' },
     build(ctl) {
