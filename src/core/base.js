@@ -408,6 +408,8 @@ class ApplianceCardBase extends HTMLElement {
       else if (base === "running") m.status = "printing";
       else if (base === "standby" || base === "idle") m.status = main || sw ? "ready" : "off";
       else m.status = base;
+      // lampe de la tête : l'entité light si elle est configurée, sinon allumée pendant la chauffe et l'impression
+      m.lights = m.light ? isOn(m.light) : (m.status === "printing" || m.status === "heating");
     } else if (kind === "radiator") {
       const isClimate = main && domainOf(c.entity) === "climate";
       const act = isClimate ? String(main.attributes.hvac_action || "").toLowerCase() : "";
@@ -1140,6 +1142,7 @@ class ApplianceCardBase extends HTMLElement {
       const cb = Number(clip.dataset.b) || 104, ch = Number(clip.dataset.h) || H, hh = (frac ?? 0) * ch;
       clip.setAttribute("y", (cb - hh).toFixed(2)); clip.setAttribute("height", hh.toFixed(2));
       wrap.style.setProperty("--h-obj", hh.toFixed(2));
+      wrap.style.setProperty("--pr", (frac ?? 1).toFixed(3)); // barre de progression sur l'écran (modèles en photo)
       wrap.style.setProperty("--fil", c.filament_color || "#ff8a1f");
     }
     if (kind === "pool_pump") {

@@ -40,3 +40,33 @@
 .k-printer_3d.st-off .p3-photo { filter: brightness(.8) saturate(.6); }
 .k-printer_3d.st-failed .p3-scr { opacity: .7; fill: var(--ac-alert); mix-blend-mode: screen; animation: ac-pulse 1.2s ease-in-out infinite; }
 @keyframes p3-sweep { from { transform: translate(-5px, calc(var(--h-obj, 0) * -1px)); } to { transform: translate(5px, calc(var(--h-obj, 0) * -1px)); } }
+/* Bambu Lab A1 : voyant rond de la tête (engrenage qui tourne + halo d'état), bloc chauffant, lampe, barre de progression sur l'écran */
+.k-printer_3d { --p3-ring: #ffc83d; }
+.k-printer_3d.st-heating { --p3-ring: #ff8a3d; }
+.k-printer_3d.st-finished { --p3-ring: #3ddc84; }
+.k-printer_3d.st-failed { --p3-ring: var(--ac-alert); }
+.p3-ring-halo { fill: none; stroke: var(--p3-ring); stroke-width: .45; opacity: 0; filter: drop-shadow(0 0 1.3px var(--p3-ring)); transition: opacity .5s; }
+.k-printer_3d.st-printing .p3-ring-halo, .k-printer_3d.st-heating .p3-ring-halo { opacity: 1; animation: ac-pulse 1.6s ease-in-out infinite; }
+.k-printer_3d.st-finished .p3-ring-halo, .k-printer_3d.st-failed .p3-ring-halo, .k-printer_3d.st-paused .p3-ring-halo { opacity: 1; animation: ac-pulse 2.4s ease-in-out infinite; }
+.p3-gear { opacity: 0; transition: opacity .4s; }
+.k-printer_3d.st-printing .p3-gear, .k-printer_3d.st-heating .p3-gear { opacity: 1; }
+.p3-gear-spin path { fill: none; stroke: #f2c230; stroke-width: .42; stroke-linecap: round; }
+.p3-gear-hub { fill: #f2c230; }
+.p3-gear-spin { transform-box: view-box; }
+.k-printer_3d.st-printing .p3-gear-spin { animation: ac-rot 1.1s linear infinite; }
+.k-printer_3d.st-heating .p3-gear-spin { animation: ac-rot 3.2s linear infinite; }
+.p3-hb { opacity: 0; mix-blend-mode: screen; transition: opacity .5s; }
+.k-printer_3d.st-heating .p3-hb { opacity: 1; animation: ac-pulse 1.1s ease-in-out infinite; }
+.k-printer_3d.st-printing .p3-hb { opacity: .55; }
+/* lampe de la tête : s'allume avec un petit scintillement (entité light, ou automatiquement pendant la chauffe / l'impression) */
+.p3-beam, .p3-pool { opacity: 0; mix-blend-mode: screen; transition: opacity .5s; }
+.k-printer_3d.lights-on .p3-beam { opacity: .38; animation: p3-lampon .9s ease-out; }
+.k-printer_3d.lights-on .p3-pool { opacity: 1; animation: p3-lampon .9s ease-out; }
+@keyframes p3-lampon { 0% { opacity: 0; } 12% { opacity: .9; } 22% { opacity: .15; } 38% { opacity: 1; } 52% { opacity: .35; } 100% { opacity: 1; } }
+/* barre de progression sur l'écran tactile */
+.p3-bar { opacity: 0; transition: opacity .5s; }
+.k-printer_3d.st-printing .p3-bar, .k-printer_3d.st-paused .p3-bar, .k-printer_3d.st-heating .p3-bar, .k-printer_3d.st-finished .p3-bar { opacity: 1; }
+.p3-bar-fill { transform-box: fill-box; transform-origin: 0 50%; transform: scaleX(var(--pr, 0)); transition: transform .8s ease; }
+.k-printer_3d.indeterminate.st-printing .p3-bar-fill { transform: none; animation: ac-pulse 1.4s ease-in-out infinite; }
+.k-printer_3d.st-paused .p3-bar-fill { fill: #ffb347; animation: ac-pulse 1s steps(2) infinite; }
+.k-printer_3d.st-heating .p3-bar-fill { fill: #ff8a3d; }
