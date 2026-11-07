@@ -17,10 +17,11 @@ Buttons: **Open / Stop / Close** for a `cover` (Stop is hidden when the cover do
 
 ## Options
 
-Every value tile can be hidden with its `show_…` option, and `language: fr|en|de|it|nb|nl|ro|ru|sr|sr-Latn` forces the language.
+Every value tile can be hidden with its `show_…` option, and `language: fr|en|de|it|nb|nl|pl|ro|ru|sr|sr-Latn` forces the language.
 
 - `entity` (cover, or binary_sensor / input_boolean / switch where on = open, or a text sensor: open / closed / opening / closing…)
 - `entity_control` (optional impulse entity: button, input_button, script or switch)
+- `entity_pedestrian` (optional pedestrian / partial opening: `button`, `input_button`, `script`, `scene`, `switch` or a `cover`; adds a **Pedestrian** button)
 - `entity_power` (motor)
 - `entity_energy`
 - `entity_cost` or `price_per_kwh` (with `currency`)

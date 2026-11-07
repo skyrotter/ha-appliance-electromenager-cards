@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.86.0";
+const VERSION = "1.87.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -2531,6 +2531,375 @@ const STRINGS = {
     "f_hide_delay": "Zichtbaar houden na het einde (min)",
     "f_cycle_gap": "Pauze binnen dezelfde cyclus (min)",
     "f_hide_zero_power": "Vermogen verbergen als het 0 is"
+  },
+  "pl": {
+    "washer": "Pralka",
+    "dryer": "Suszarka",
+    "dishwasher": "Zmywarka",
+    "water_heater": "Podgrzewacz wody",
+    "oven": "Piekarnik",
+    "microwave": "Kuchenka mikrofalowa",
+    "air_fryer": "Frytkownica beztłuszczowa",
+    "coffee_maker": "Ekspres do kawy",
+    "f_printer_model": "Drukarka",
+    "printer_drawing": "Rysunek (ogólny)",
+    "thermomix": "Thermomix",
+    "cookeo": "Multicooker Cookeo",
+    "mixing": "Mieszanie",
+    "turbo": "Turbo",
+    "f_thermomix_model": "Model",
+    "f_cookeo_style": "Wyświetlacz",
+    "smart_speaker": "Inteligentny głośnik",
+    "f_speaker_model": "Model głośnika",
+    "f_speaker_finish": "Kolor głośnika (Devialet, HomePod)",
+    "f_show_controls": "Pokaż przyciski odtwarzania",
+    "f_show_media": "Pokaż odtwarzany utwór",
+    "f_volume_step": "Krok głośności (0,05 = 5 %)",
+    "volume": "Głośność",
+    "source": "Źródło",
+    "volume_up": "Głośniej",
+    "volume_down": "Ciszej",
+    "play": "Odtwarzaj",
+    "pause": "Pauza",
+    "mute": "Wycisz",
+    "f_turbo_threshold": "Turbo powyżej (W)",
+    "f_heat_threshold": "Grzanie powyżej (W)",
+    "f_show_energy": "Pokaż energię",
+    "f_show_cost": "Pokaż koszt",
+    "f_show_toggle": "Pokaż przycisk wł./wył.",
+    "tv": "Telewizor",
+    "range_hood": "Okap kuchenny",
+    "beer_tap": "Kranik do piwa",
+    "av_receiver": "Amplituner kina domowego",
+    "fan": "Wentylator",
+    "ceiling_fan": "Wentylator sufitowy",
+    "generic": "Urządzenie ogólne (własny obraz)",
+    "towel_dryer": "Grzejnik łazienkowy",
+    "server_rack": "Szafa serwerowa (homelab)",
+    "desktop_pc": "Komputer stacjonarny",
+    "laptop": "Laptop",
+    "tool_charger": "Ładowarka do akumulatorów narzędzi",
+    "charging": "Ładowanie",
+    "charged": "Naładowany",
+    "battery": "Bateria",
+    "f_battery_level": "Czujnik poziomu baterii (%)",
+    "f_standby_threshold": "Naładowany (podtrzymanie) powyżej (W)",
+    "online": "Online",
+    "f_max_power_rack": "Maks. obciążenie (W)",
+    "f_power_solar": "Czujnik nadwyżki mocy słonecznej (W)",
+    "f_energy_solar": "Czujnik nadwyżki energii słonecznej (kWh)",
+    "solar_surplus": "Nadwyżka słoneczna",
+    "mode_off": "Wył.",
+    "wine_cooler": "Chłodziarka do wina",
+    "f_max_temperature_wine": "Alarm powyżej (°C)",
+    "f_fridge_style": "Układ lodówki",
+    "f_fridge_finish": "Wykończenie lodówki",
+    "zone_top": "Strefa górna",
+    "zone_bottom": "Strefa dolna",
+    "f_zone2_temperature": "Czujnik temperatury strefy dolnej (dwustrefowy)",
+    "f_max_temperature_2": "Alarm strefy dolnej powyżej (°C)",
+    "f_show_modes": "Pokaż przyciski trybów",
+    "f_show_power": "Pokaż moc",
+    "f_usage_time": "Czujnik czasu użytkowania dzisiaj (opcjonalny)",
+    "f_show_usage_time": "Pokaż czas użytkowania dzisiaj",
+    "usage_today": "Użycie dzisiaj",
+    "grid": "Sieć",
+    "energy_grid": "Energia z sieci",
+    "energy_solar": "Energia słoneczna",
+    "ac_split": "Klimatyzator (jednostka wewnętrzna)",
+    "heat_pump": "Pompa ciepła (jednostka zewnętrzna)",
+    "ac_dry": "Osuszanie",
+    "ac_fan": "Tylko wentylator",
+    "at_target": "Osiągnięto cel",
+    "defrost": "Rozmrażanie",
+    "f_hvac": "Tryb bez encji climate",
+    "screen_on": "Wł.",
+    "lights": "Tylko światła",
+    "f_light": "Encja oświetlenia (opcjonalna)",
+    "brewing": "Parzenie",
+    "keep_warm": "Utrzymywanie ciepła",
+    "f_style": "Typ ekspresu do kawy",
+    "f_tv_style": "Szafka RTV",
+    "f_tv_model": "Telewizor lub projektor",
+    "f_lamp_hours": "Czujnik godzin pracy lampy / lasera (projektor)",
+    "f_picture_mode": "Encja trybu obrazu",
+    "f_show_controls_tv": "Pokaż przyciski sterowania (projektor: domyślnie włączone)",
+    "f_show_media_tv": "Pokaż aplikację / program",
+    "f_show_source": "Pokaż źródło (projektor: domyślnie włączone)",
+    "f_show_volume": "Pokaż głośność (projektor: domyślnie włączone)",
+    "f_show_lamp": "Pokaż godziny pracy lampy",
+    "f_show_picture_mode": "Pokaż tryb obrazu",
+    "f_show_temperature": "Pokaż temperaturę",
+    "lamp": "Lampa",
+    "picture_mode": "Obraz",
+    "source_next": "Następne źródło",
+    "f_warm_threshold": "Utrzymywanie ciepła / gotowość powyżej (W)",
+    "fridge": "Lodówka",
+    "pellet_stove": "Piec na pellet",
+    "pool_pump": "Pompa basenowa",
+    "printer_3d": "Drukarka 3D",
+    "chest_freezer": "Zamrażarka skrzyniowa",
+    "drawer_freezer": "Zamrażarka szufladowa",
+    "solar": "Panele słoneczne",
+    "vmc": "Wentylator wyciągowy",
+    "hob": "Płyta grzewcza",
+    "radiator": "Grzejnik elektryczny",
+    "comfort": "Komfort",
+    "comfort_1": "Komfort -1",
+    "comfort_2": "Komfort -2",
+    "eco": "Eko",
+    "frost": "Ochrona przed mrozem",
+    "mode_drying": "Osuszanie",
+    "boost": "Boost",
+    "program": "Program",
+    "mode_none": "Brak",
+    "window_open": "Okno otwarte",
+    "f_mode": "Encja trybu (przewód pilotujący, select…)",
+    "f_window": "Czujnik okna",
+    "f_max_power_rad": "Moc grzejnika (W)",
+    "cooking": "Gotowanie",
+    "residual": "Ciepło resztkowe",
+    "zones": "Aktywne strefy",
+    "f_zone_power": "Moc jednej strefy (W)",
+    "f_zone_1": "Strefa lewa przednia (poziom lub W)",
+    "f_zone_2": "Strefa prawa przednia",
+    "f_zone_3": "Strefa lewa tylna",
+    "f_zone_4": "Strefa prawa tylna",
+    "f_residual_minutes": "Wskaźnik ciepła resztkowego (min)",
+    "speed1": "Niski bieg",
+    "speed2": "Wysoki bieg",
+    "humid": "Wysoka wilgotność",
+    "humidity": "Wilgotność",
+    "f_humidity": "Czujnik wilgotności (%)",
+    "f_high_threshold": "Wysoki bieg powyżej (W)",
+    "f_humidity_max": "Alarm wilgotności powyżej (%)",
+    "producing": "Produkcja",
+    "low": "Niska produkcja",
+    "night": "Noc",
+    "production": "Produkcja",
+    "savings": "Oszczędności",
+    "f_sun_entity": "Encja słońca",
+    "f_max_power_solar": "Moc szczytowa (Wp)",
+    "printing": "Drukowanie",
+    "paused": "Wstrzymano",
+    "failed": "Niepowodzenie",
+    "progress": "Postęp",
+    "nozzle": "Dysza",
+    "bed": "Stół",
+    "f_bed_temperature": "Czujnik temperatury stołu",
+    "f_filament_color": "Kolor filamentu (CSS)",
+    "f_image": "Adres URL obrazu (np. /local/moje-urzadzenie.png)",
+    "f_nozzle_temperatures": "Czujniki temperatury dyszy (T0, T1…)",
+    "filtering": "Filtrowanie",
+    "water": "Woda",
+    "today": "Dzisiaj",
+    "speed": "Prędkość",
+    "f_runtime": "Czujnik czasu filtracji dzisiaj",
+    "ph": "pH",
+    "orp": "ORP",
+    "pressure": "Ciśnienie",
+    "tds": "TDS",
+    "salt": "Sól",
+    "chlorine": "Chlor",
+    "f_ph": "Czujnik pH",
+    "f_orp": "Czujnik ORP (mV)",
+    "f_pressure": "Czujnik ciśnienia filtra",
+    "f_tds": "Czujnik TDS",
+    "f_salt": "Czujnik soli",
+    "f_chlorine": "Czujnik poziomu chloru",
+    "f_show_ph": "Pokaż pH",
+    "f_show_orp": "Pokaż ORP",
+    "f_show_pressure": "Pokaż ciśnienie",
+    "f_show_tds": "Pokaż TDS",
+    "f_show_salt": "Pokaż sól",
+    "f_show_chlorine": "Pokaż chlor",
+    "f_speed": "Czujnik prędkości (obr./min lub %)",
+    "f_max_power": "Maks. moc przy pełnej prędkości (W)",
+    "ignition": "Rozpalanie",
+    "extinguishing": "Wyłączanie",
+    "alarm": "Alarm",
+    "pellets": "Pellet",
+    "pellets_low": "Mało pelletu",
+    "level": "Poziom",
+    "f_power_level": "Czujnik poziomu ciepła (1-5)",
+    "f_pellet_level": "Czujnik poziomu pelletu (%)",
+    "f_ignition_threshold": "Rozpalanie powyżej (W)",
+    "f_pellet_alert": "Alarm niskiego poziomu pelletu poniżej (%)",
+    "off": "Wył.",
+    "idle": "Bezczynny",
+    "standby": "Czuwanie",
+    "running": "Pracuje",
+    "finished": "Zakończono",
+    "heating": "Grzanie",
+    "ready": "Gotowy",
+    "preheating": "Nagrzewanie",
+    "cooling": "Chłodzenie",
+    "door_open": "Drzwi otwarte",
+    "unavailable": "Niedostępny",
+    "too_warm": "Za gorąco",
+    "ph_wash": "Pranie",
+    "ph_rinse": "Płukanie",
+    "ph_spin": "Wirowanie",
+    "ph_dry": "Osuszanie",
+    "ph_cool": "Schładzanie",
+    "power": "Moc",
+    "energy": "Energia",
+    "cost": "Koszt",
+    "remaining": "Pozostało",
+    "temperature": "Temperatura",
+    "target": "Cel",
+    "fridge_temp": "Lodówka",
+    "freezer_temp": "Zamrażarka",
+    "ends_at": "Koniec o",
+    "ends_at_est": "Szacowany koniec",
+    "almost_done": "Prawie gotowe",
+    "toggle": "Włącz/wyłącz",
+    "confirm_off": "Cykl trwa – kliknij ponownie, aby odciąć zasilanie",
+    "confirm_off_pc": "Komputer włączony – kliknij ponownie, aby odciąć zasilanie",
+    "f_name": "Nazwa",
+    "f_labels": "Własne etykiety kafelków (klucz: tekst)",
+    "f_entity": "Encja stanu (switch, sensor, input_select…)",
+    "f_power": "Czujnik mocy (W)",
+    "f_energy": "Czujnik energii (kWh)",
+    "f_cost": "Czujnik kosztu",
+    "f_remaining": "Czujnik pozostałego czasu",
+    "f_progress": "Czujnik postępu (%)",
+    "f_program": "Czujnik programu / fazy",
+    "f_door": "Czujnik drzwi",
+    "f_switch": "Przełącznik do przełączania (opcjonalny)",
+    "f_threshold": "Próg pracy (W)",
+    "f_temperature": "Czujnik temperatury",
+    "f_target_temperature": "Czujnik temperatury docelowej",
+    "f_freezer_temperature": "Czujnik temperatury zamrażarki",
+    "f_freezer_door": "Czujnik drzwi zamrażarki",
+    "f_max_temperature": "Alarm lodówki powyżej (°C)",
+    "f_temperature_unit": "Jednostka temperatury (puste: automatycznie)",
+    "f_freezer_max_temperature": "Alarm zamrażarki powyżej (°C)",
+    "f_color": "Kolor akcentu (CSS)",
+    "f_animations": "Animacje",
+    "f_confirm_off": "Potwierdź przed odcięciem zasilania",
+    "err_need_entity": "Ustaw co najmniej jedno z: `entity`, `power`, `switch` lub `temperature`.",
+    "of_peak": "szczytu",
+    "lcd_night": "NOC",
+    "lcd_ignition": "ROZP.",
+    "lcd_extinguishing": "CHŁ.",
+    "lcd_brewing": "PARZ.",
+    "lcd_ready": "GOTOWE",
+    "pouring": "Nalewanie",
+    "playing": "Odtwarzanie",
+    "muted": "Wyciszono",
+    "keg": "Beczka",
+    "keg_low": "Beczka prawie pusta",
+    "f_keg_level": "Czujnik poziomu beczki (%)",
+    "f_hot_water_level": "Pozostała gorąca woda (%)",
+    "f_hot_water_volume": "Pozostała gorąca woda (L)",
+    "f_tank_volume": "Pojemność zbiornika (L)",
+    "f_pouring": "Czujnik nalewania (opcjonalny)",
+    "fan_1": "Bieg 1",
+    "fan_2": "Bieg 2",
+    "fan_3": "Bieg 3",
+    "f_oscillating": "Oscylacja",
+    "f_mid_threshold": "Bieg 2 powyżej (W)",
+    "ph_heat": "Grzanie",
+    "f_heating_power": "Próg fazy grzania (W)",
+    "f_spin_power": "Próg fazy wirowania (W)",
+    "f_images": "Obrazy według stanu (lista: obraz + powyżej / poniżej / stan)",
+    "energy_none": "Brak",
+    "energy_day": "Dzisiaj",
+    "energy_week": "Ten tydzień",
+    "energy_month": "Ten miesiąc",
+    "cost_day": "Koszt dzisiaj",
+    "cost_week": "Koszt w tym tygodniu",
+    "cost_month": "Koszt w tym miesiącu",
+    "energy_24h": "Ostatnie 24 godziny",
+    "energy_7d": "Ostatnie 7 dni",
+    "energy_30d": "Ostatnie 30 dni",
+    "cost_24h": "Koszt ostatnich 24 h",
+    "cost_7d": "Koszt ostatnich 7 dni",
+    "cost_30d": "Koszt ostatnich 30 dni",
+    "f_display": "Zużycie pokazywane jako (kWh, koszt lub oba)",
+    "f_tap_action": "Akcja dotknięcia (ilustracja)",
+    "f_hold_action": "Akcja przytrzymania (ilustracja)",
+    "ps5": "PlayStation 5",
+    "ps_rest": "Tryb spoczynku",
+    "ps_gaming": "Granie",
+    "confirm_off_console": "Konsola włączona – kliknij ponownie, aby odciąć zasilanie",
+    "confirm_off_always": "Kliknij ponownie, aby odciąć zasilanie",
+    "f_confirm_always": "Zawsze potwierdzaj przed odcięciem zasilania (wtyczka włączona)",
+    "f_standby_threshold_ps5": "Tryb spoczynku powyżej (W)",
+    "f_gaming_threshold": "Granie powyżej (W)",
+    "f_energy_period": "Pokazywana energia (licznik lub okres)",
+    "flex_temp": "Strefa elastyczna",
+    "f_flex_temperature": "Czujnik temperatury strefy elastycznej",
+    "f_flex_max_temperature": "Alarm strefy elastycznej powyżej (°C)",
+    "f_illustration_size": "Rozmiar ilustracji",
+    "f_transparent": "Przezroczyste tło",
+    "monitor": "Monitor",
+    "monitors": "Monitory",
+    "monitor_on": "Wł.",
+    "monitors_on": "Wł.",
+    "pc_tower": "Obudowa komputera",
+    "f_screens": "Liczba ekranów",
+    "f_pc_style": "Ilustracja",
+    "f_standby_threshold_monitor": "Czuwanie powyżej (W)",
+    "kettle": "Czajnik",
+    "toaster": "Toster",
+    "boiling": "Wrzenie",
+    "hot_water": "Gorąca woda",
+    "toasting": "Opiekanie",
+    "toast_ready": "Tosty gotowe!",
+    "f_hot_minutes": "Pokaż „gorąca woda” przez (min)",
+    "f_ready_minutes": "Pokaż „tosty gotowe” przez (min)",
+    "power_strip": "Listwa zasilająca",
+    "phone_charger": "Ładowarka do telefonu",
+    "piano": "Pianino cyfrowe",
+    "garland": "Łańcuch świetlny LED",
+    "powered": "Wł.",
+    "lit": "Świeci",
+    "outlets": "Gniazda",
+    "effect": "Efekt",
+    "f_outlets": "Sterowane gniazda (przełączniki)",
+    "f_sockets": "Liczba gniazd",
+    "f_multicolor": "Wielokolorowy (tęcza)",
+    "dehumidifier": "Osuszacz powietrza",
+    "drying": "Osuszanie",
+    "tank_full": "Zbiornik pełny",
+    "empty_tank": "Opróżnij zbiornik",
+    "tank": "Zbiornik",
+    "tank_full_short": "Pełny",
+    "tank_ok": "OK",
+    "fan_speed": "Wentylator",
+    "mode": "Tryb",
+    "f_target_humidity": "Docelowa wilgotność (czujnik, number lub humidifier)",
+    "f_tank_full": "Czujnik pełnego zbiornika",
+    "f_fan_speed": "Encja prędkości wentylatora (select, number, fan…)",
+    "last_cycle": "Ostatni cykl",
+    "cycle_duration": "Czas trwania cyklu",
+    "cycle_energy": "Energia cyklu",
+    "cycle_cost": "Koszt cyklu",
+    "yesterday": "wczoraj",
+    "f_last_cycle": "Pokaż ostatni cykl (start, koniec, czas trwania, energia, koszt)",
+    "f_estimate": "Szacuj pozostały czas i postęp (bez czujnika)",
+    "f_price_per_kwh": "Cena za kWh (number lub encja, do obliczania kosztów)",
+    "wet_vacuum": "Odkurzacz piorący i ssący",
+    "wv_cleaning": "Czyszczenie",
+    "wv_selfclean": "Samoczyszczenie",
+    "wv_drying": "Osuszanie",
+    "clean_water_empty": "Zbiornik czystej wody pusty",
+    "dirty_water_full": "Zbiornik brudnej wody pełny",
+    "battery_low": "Niski poziom baterii",
+    "error": "Błąd",
+    "clean_water": "Czysta woda",
+    "dirty_water": "Brudna woda",
+    "tank_empty_short": "Pusty",
+    "f_clean_water": "Zbiornik czystej wody (% lub czujnik binarny)",
+    "f_dirty_water": "Zbiornik brudnej wody (% lub czujnik binarny)",
+    "f_selfclean_threshold": "Samoczyszczenie powyżej (W, wtyczka stacji dokującej)",
+    "f_battery_low": "Niski poziom baterii poniżej (%)",
+    "f_hide_when_inactive": "Ukryj, gdy nieaktywne (brak cyklu, brak alarmu)",
+    "f_hide_delay": "Pozostaw widoczne po zakończeniu (min)",
+    "f_cycle_gap": "Pauza zaliczana do tego samego cyklu (min)",
+    "f_hide_zero_power": "Ukryj moc, gdy wynosi 0"
   },
   "ro": {
     "washer": "Mașină de spălat rufe",
@@ -10135,6 +10504,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_charge": "Battery charge",
       "entity_compressor": "Compressor",
       "entity_control": "Control (button / switch)",
+      "entity_pedestrian": "Pedestrian opening (button / script)",
       "entity_cop": "COP",
       "entity_cost": "Cost",
       "entity_energy": "Energy",
@@ -10501,7 +10871,13 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_drink": "Show last drink",
       "show_clean": "Show cleaning",
       "entity_locked_in": "Lock \"In only\" (Sure Petcare)",
-      "entity_locked_out": "Lock \"Out only\" (Sure Petcare)"
+      "entity_locked_out": "Lock \"Out only\" (Sure Petcare)",
+      "entity_target": "Target temperature",
+      "entity_reserve": "Hot water reserve (%)",
+      "boost_above": "Boost above (W)",
+      "running_above": "Running above (W)",
+      "show_target": "Show target",
+      "show_reserve": "Show hot water"
     },
     "cs": {
       "animations": "Animace",
@@ -10881,6 +11257,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_charge": "Akkuladung",
       "entity_compressor": "Verdichter",
       "entity_control": "Steuerung (Taste / Schalter)",
+      "entity_pedestrian": "Fußgängeröffnung (Taste / Skript)",
       "entity_cop": "COP",
       "entity_cost": "Kosten",
       "entity_energy": "Energie",
@@ -11267,6 +11644,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_charge": "Charge de la batterie",
       "entity_compressor": "Compresseur",
       "entity_control": "Commande (bouton / interrupteur)",
+      "entity_pedestrian": "Ouverture piéton (bouton / script)",
       "entity_cop": "COP",
       "entity_cost": "Coût",
       "entity_energy": "Énergie",
@@ -11633,7 +12011,13 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_drink": "Afficher la dernière gorgée",
       "show_clean": "Afficher le nettoyage",
       "entity_locked_in": "Lock « Entrée seule » (Sure Petcare)",
-      "entity_locked_out": "Lock « Sortie seule » (Sure Petcare)"
+      "entity_locked_out": "Lock « Sortie seule » (Sure Petcare)",
+      "entity_target": "Température de consigne",
+      "entity_reserve": "Réserve d'eau chaude (%)",
+      "boost_above": "Boost au-dessus de (W)",
+      "running_above": "En marche au-dessus de (W)",
+      "show_target": "Afficher la consigne",
+      "show_reserve": "Afficher l'eau chaude"
     },
     "it": {
       "animations": "Animazioni",
@@ -11653,6 +12037,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_charge": "Carica della batteria",
       "entity_compressor": "Compressore",
       "entity_control": "Comando (pulsante / interruttore)",
+      "entity_pedestrian": "Apertura pedonale (pulsante / script)",
       "entity_cop": "COP",
       "entity_cost": "Costo",
       "entity_energy": "Energia",
@@ -12425,6 +12810,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_charge": "Batterijlading",
       "entity_compressor": "Compressor",
       "entity_control": "Bediening (knop / schakelaar)",
+      "entity_pedestrian": "Voetgangersopening (knop / script)",
       "entity_cop": "COP",
       "entity_cost": "Kosten",
       "entity_energy": "Energie",
@@ -12792,6 +13178,399 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_clean": "Reiniging tonen",
       "entity_locked_in": "Slot 'Alleen in' (Sure Petcare)",
       "entity_locked_out": "Slot 'Alleen uit' (Sure Petcare)"
+    },
+    "pl": {
+      "animations": "Animacje",
+      "battery_low": "Niski poziom baterii (%)",
+      "buffer_tank": "Zbiornik buforowy",
+      "capacity_kwh": "Pojemność (kWh)",
+      "car_color": "Kolor samochodu",
+      "compressor_threshold": "Próg sprężarki (W)",
+      "entity": "Encja główna",
+      "entity_active_power": "Moc czynna",
+      "entity_area": "Wyczyszczona powierzchnia",
+      "entity_battery": "Bateria",
+      "entity_blade": "Nóż",
+      "entity_brush": "Szczotka",
+      "entity_buffer_temp": "Temperatura zbiornika buforowego",
+      "entity_car_soc": "Poziom baterii samochodu",
+      "entity_charge": "Poziom naładowania baterii",
+      "entity_compressor": "Sprężarka",
+      "entity_control": "Sterowanie (przycisk / przełącznik)",
+      "entity_pedestrian": "Otwarcie dla pieszych (przycisk / skrypt)",
+      "entity_cop": "COP",
+      "entity_cost": "Koszt",
+      "entity_energy": "Energia",
+      "entity_fault": "Czujnik usterki",
+      "entity_filter": "Filtr",
+      "entity_flame": "Płomień",
+      "entity_float": "Pływak wysokiego poziomu",
+      "entity_floor_temp": "Temperatura podłogi",
+      "entity_flow": "Przepływ (L/min, m³/h…)",
+      "entity_flow_rate": "Przepływ",
+      "entity_flow_temp": "Temperatura zasilania",
+      "entity_flue_temp": "Temperatura spalin",
+      "entity_fuel_level": "Poziom paliwa",
+      "entity_fuel_used": "Zużyte paliwo",
+      "entity_gas": "Zużycie gazu",
+      "entity_hc": "Indeks pozaszczytowy",
+      "entity_heat_energy": "Energia cieplna",
+      "entity_heat_power": "Moc grzewcza",
+      "entity_hp": "Indeks godzin szczytu",
+      "entity_humidity": "Wilgotność",
+      "entity_injection": "Indeks oddawania",
+      "entity_input_voltage": "Napięcie wejściowe",
+      "entity_level": "Poziom (%)",
+      "entity_light": "Światło",
+      "entity_load": "Obciążenie",
+      "entity_mode": "Tryb",
+      "entity_modulation": "Modulacja",
+      "entity_next_start": "Następny start",
+      "entity_output_voltage": "Napięcie wyjściowe",
+      "entity_pellet_level": "Poziom pelletu",
+      "entity_ph": "PH",
+      "entity_power": "Moc",
+      "entity_power_injection": "Moc oddawania",
+      "entity_power_l1": "Moc L1",
+      "entity_power_l2": "Moc L2",
+      "entity_power_l3": "Moc L3",
+      "entity_pressure": "Ciśnienie",
+      "entity_rain": "Czujnik deszczu",
+      "entity_return_temp": "Temperatura powrotu",
+      "entity_runtime": "Czas pracy",
+      "entity_scop": "SCOP",
+      "entity_session_energy": "Energia sesji",
+      "entity_soc": "Stan naładowania",
+      "entity_source_in_temp": "Temperatura wlotu źródła",
+      "entity_source_out_temp": "Temperatura wylotu źródła",
+      "entity_source_pump": "Pompa źródła",
+      "entity_starts": "Liczba uruchomień",
+      "entity_status": "Czujnik statusu",
+      "entity_switch": "Inteligentna wtyczka / przełącznik",
+      "entity_target_temp": "Temperatura docelowa",
+      "entity_tariff": "Aktualna taryfa",
+      "entity_temp": "Temperatura",
+      "entity_temperature": "Temperatura",
+      "entity_time": "Pozostały czas",
+      "entity_water_level": "Poziom wody",
+      "entity_water_temp": "Temperatura wody",
+      "filter_alert": "Alarm filtra (%)",
+      "filter_threshold": "Próg alarmu filtra",
+      "floor_max": "Maks. temperatura podłogi",
+      "flow_temp_max": "Maks. temperatura zasilania",
+      "fluid_color": "Kolor płynu",
+      "fuel_alert": "Alarm paliwa (%)",
+      "hc_ranges": "Godziny pozaszczytowe (np. 22:00-06:00)",
+      "heat_threshold": "Próg grzania (W)",
+      "heater_threshold": "Próg grzałki (W)",
+      "heating_delay": "Opóźnienie grzania",
+      "heating_type": "Typ ogrzewania (woda / elektryczne)",
+      "ignition_threshold": "Próg rozpalania (W)",
+      "indexes": "Indeksy licznika",
+      "invert": "Odwróć stan",
+      "invert_position": "Odwróć pozycję (otwarte ↔ zamknięte)",
+      "invert_power": "Odwróć znak mocy",
+      "jets_threshold": "Próg dysz (W)",
+      "language": "Język",
+      "layout": "Układ",
+      "leaves": "Liczba skrzydeł",
+      "level_max": "Alarm wysokiego poziomu (%)",
+      "level_min": "Alarm niskiego poziomu (%)",
+      "load_max": "Przeciążenie powyżej (%)",
+      "low_threshold": "Niski próg",
+      "mains_min": "Utrata zasilania poniżej (V)",
+      "max_flow": "Maksymalny przepływ (L/min)",
+      "max_power": "Moc maksymalna (W)",
+      "max_pressure": "Skala wskaźnika (bar)",
+      "moving_threshold": "Próg ruchu silnika (W)",
+      "name": "Nazwa",
+      "off_threshold": "Próg wyłączenia (W)",
+      "pellet_alert": "Alarm pelletu (%)",
+      "ph_max": "PH maks.",
+      "ph_min": "PH min.",
+      "phase_gauge": "Wskaźnik faz",
+      "power_max": "Moc maksymalna",
+      "pressure_max": "Alarm nadciśnienia (bar)",
+      "price_per_kwh": "Cena za kWh",
+      "price_per_liter": "Cena za litr",
+      "price_per_unit": "Cena za jednostkę",
+      "ready_margin": "Margines gotowości",
+      "run_threshold": "Próg pracy (W)",
+      "show_area": "Pokaż powierzchnię",
+      "show_battery": "Pokaż baterię",
+      "show_blade": "Pokaż nóż",
+      "compact": "Układ kompaktowy",
+      "show_button_labels": "Pokaż etykiety przycisków",
+      "show_buttons": "Pokaż przyciski",
+      "show_charge": "Pokaż poziom naładowania baterii",
+      "show_consumables": "Pokaż materiały eksploatacyjne",
+      "show_controls": "Pokaż przyciski",
+      "show_cost": "Pokaż koszt",
+      "show_duration": "Pokaż czas trwania",
+      "show_energy": "Pokaż energię",
+      "show_fan": "Pokaż prędkość wentylatora",
+      "show_filter": "Pokaż filtr",
+      "show_floor": "Pokaż temperaturę podłogi",
+      "show_flow": "Pokaż przepływ",
+      "show_fuel": "Pokaż paliwo",
+      "show_fuel_used": "Pokaż zużyte paliwo",
+      "show_gas": "Pokaż gaz",
+      "show_gauge": "Pokaż wskaźnik",
+      "show_humidity": "Pokaż wilgotność",
+      "show_index": "Pokaż indeks",
+      "show_injection": "Pokaż oddawanie",
+      "show_level": "Pokaż poziom",
+      "show_load": "Pokaż obciążenie",
+      "show_mode": "Pokaż tryb",
+      "show_modulation": "Pokaż modulację",
+      "show_next": "Pokaż następny start",
+      "show_pellets": "Pokaż pellet",
+      "show_ph": "Pokaż pH",
+      "show_phases": "Pokaż fazy",
+      "show_position": "Pokaż pozycję",
+      "show_power": "Pokaż moc",
+      "show_pressure": "Pokaż ciśnienie",
+      "show_runtime": "Pokaż czas pracy",
+      "show_since": "Pokaż ostatnią zmianę",
+      "show_soc": "Pokaż stan naładowania",
+      "show_starts": "Pokaż uruchomienia",
+      "show_status": "Pokaż status",
+      "show_status_tile": "Pokaż kafelek statusu",
+      "show_tariff": "Pokaż taryfę",
+      "show_temp": "Pokaż temperaturę",
+      "show_temperature": "Pokaż temperaturę",
+      "show_temps": "Pokaż temperatury",
+      "show_time": "Pokaż czas",
+      "show_voltage": "Pokaż napięcia",
+      "show_water": "Pokaż temperaturę wody",
+      "show_water_level": "Pokaż poziom wody",
+      "show_water_temp": "Pokaż temperaturę wody",
+      "small": "Kompaktowy",
+      "source_threshold": "Próg pompy źródła (W)",
+      "status_position": "Pozycja statusu",
+      "subscribed_power": "Moc umowna (kVA)",
+      "target_temp": "Temperatura docelowa",
+      "temp_max": "Temperatura maksymalna",
+      "temp_min": "Temperatura minimalna",
+      "temp_scale": "Skala termometru",
+      "temperature_unit": "Jednostka temperatury (puste: automatycznie)",
+      "threshold": "Próg mocy (W)",
+      "travel_time": "Czas przejazdu (s)",
+      "water_level_full": "Poziom wody w pełnym basenie",
+      "water_level_min": "Minimalny poziom wody",
+      "water_max": "Maks. temperatura wody",
+      "color": "Kolor światła",
+      "follow_light_color": "Śledź kolor żarówki",
+      "color_cycle": "Cykl kolorów",
+      "multicolor": "Światła wielokolorowe",
+      "show_brightness": "Pokaż jasność",
+      "labels": "Własne etykiety kafelków (klucz: tekst)",
+      "sun_entity": "Encja słońca (dzień / noc)",
+      "shutter_color": "Kolor rolety",
+      "show_slider": "Pokaż suwaki",
+      "show_tilt": "Pokaż nachylenie",
+      "image": "Własny obraz (URL)",
+      "illustration_size": "Rozmiar ilustracji",
+      "transparent": "Przezroczyste tło",
+      "entity_wind": "Czujnik prędkości wiatru",
+      "show_rain": "Pokaż deszcz",
+      "show_wind": "Pokaż wiatr",
+      "louvre_color": "Kolor lameli",
+      "entity_index": "Indeks licznika (suma)",
+      "entity_today": "Dzisiejsze zużycie",
+      "entity_leak": "Czujnik wycieku",
+      "detector": "Typ detektora",
+      "entity_valve": "Zawór odcinający",
+      "leak_minutes": "Alarm wycieku po (min ciągłego przepływu)",
+      "freeze_threshold": "Próg zamarzania (°C)",
+      "flow_threshold": "Przepływ uznawany za zerowy poniżej",
+      "show_today": "Pokaż dzisiaj",
+      "entity_blind": "Żaluzja zewnętrzna (cover)",
+      "show_blind": "Pokaż żaluzję",
+      "entity_outdoor_temperature": "Temperatura zewnętrzna",
+      "entity_outdoor_humidity": "Wilgotność zewnętrzna",
+      "entity_window": "Czujnik okna",
+      "comfort_temp_min": "Komfort: temperatura minimalna",
+      "comfort_temp_max": "Komfort: temperatura maksymalna",
+      "humidity_min": "Komfort: wilgotność minimalna (%)",
+      "humidity_max": "Komfort: wilgotność maksymalna (%)",
+      "alert_temp_min": "Alarm poniżej (temperatura)",
+      "alert_temp_max": "Alarm powyżej (temperatura)",
+      "alert_humidity_min": "Alarm poniżej (wilgotność %)",
+      "alert_humidity_max": "Alarm powyżej (wilgotność %)",
+      "mold_humidity": "Ryzyko pleśni od (wilgotność %)",
+      "window_drop": "Wykrywanie otwartego okna: spadek w 15 min (0 = wył.)",
+      "history_days": "Okres okna podręcznego",
+      "history_mode": "Okno podręczne pokazuje",
+      "show_outdoor": "Pokaż wartości zewnętrzne",
+      "show_dew_point": "Pokaż punkt rosy",
+      "show_advice": "Pokaż porady i zagrożenia",
+      "show_graph": "Pokaż wykres 24 h",
+      "style": "Styl",
+      "icon": "Ikona pokoju",
+      "lcd_color": "Kolor ekranu",
+      "tap_action": "Akcja dotknięcia",
+      "hold_action": "Akcja przytrzymania",
+      "header": "Nagłówek (nazwa / ikona / oba)",
+      "minimal": "Minimalny (tylko tarcza)",
+      "big_value": "Duża wartość (cel / aktualna)",
+      "entity_unlatch": "Przycisk otwarcia zamka (opcjonalny)",
+      "entity_lock_n_go": "Przycisk Lock 'n' Go",
+      "entity_lock_n_go_unlatch": "Przycisk Lock 'n' Go z otwarciem zamka",
+      "entity_battery_charging": "Ładowanie baterii",
+      "entity_battery_critical": "Bateria krytyczna",
+      "confirm_open": "Potwierdź otwarcie zamka (2. kliknięcie)",
+      "show_door": "Pokaż drzwi",
+      "lock_model": "Model zamka",
+      "tilt_only": "Tylko pochylenie (bez góra / dół)",
+      "tilt_from_position": "Pochylenie od pozycji (silnik na sznurku pochylenia)",
+      "tilt_presets": "Presety pochylenia (lista, np. [0, 50, 100])",
+      "navigation_path": "Strona do otwarcia (np. /lovelace/climate)",
+      "entity_climate": "Powiązany termostat",
+      "color_comfort": "Kolor: komfortowo",
+      "color_cool": "Kolor: chłodno",
+      "color_warm": "Kolor: ciepło",
+      "color_humidity": "Kolor: wilgotność",
+      "color_dry": "Kolor: sucho",
+      "color_alert": "Kolor: alarm",
+      "show_trend": "Pokaż trend (1 h)",
+      "variant": "Styl",
+      "entity_mail": "Czujnik poczty (on, liczba lub tekst)",
+      "entity_parcel": "Czujnik paczek",
+      "entity_door": "Czujnik drzwi",
+      "entity_door_back": "Czujnik tylnych drzwiczek (skrzynka dwudrzwiowa)",
+      "show_doors": "Pokaż stany drzwiczek",
+      "entity_count": "Licznik listów",
+      "entity_reset": "Oznacz jako odebrane (przycisk, helper, licznik, skrypt…)",
+      "mail_states": "Dodatkowe stany poczty (oddzielone przecinkami)",
+      "parcel_states": "Dodatkowe stany paczek (oddzielone przecinkami)",
+      "box_color": "Kolor skrzynki pocztowej",
+      "show_count": "Pokaż liczbę",
+      "entity_smoke": "Czujnik dymu",
+      "entity_co": "Czujnik tlenku węgla (CO)",
+      "co_threshold": "Próg alarmu CO",
+      "entity_test": "Czujnik trybu testowego",
+      "entity_test_button": "Przycisk testu",
+      "entity_silence": "Wycisz alarm (przycisk, przełącznik, syrena…)",
+      "model": "Model czujnika",
+      "show_co": "Pokaż CO",
+      "entity_siren": "Syrena",
+      "freeze_temp": "Alarm zamarzania poniżej",
+      "show_probes": "Pokaż sondy",
+      "box_model": "Model skrzynki pocztowej",
+      "entity_open": "Otwarcie drzwi (przycisk, zamek…)",
+      "entity_last_open": "Ostatnie otwarcie (jeden lub więcej znaczników czasu)",
+      "entity_battery_low": "Niski poziom baterii",
+      "show_last_open": "Pokaż ostatnie otwarcie",
+      "show_hvac_modes": "Przyciski trybów termostatu",
+      "show_fan_modes": "Lista trybów wentylatora termostatu",
+      "show_preset_modes": "Lista presetów termostatu",
+      "entity_valve_position": "Otwarcie zaworu (%)",
+      "show_valve": "Pokaż otwarcie zaworu",
+      "show_window": "Pokaż okno",
+      "spot_count": "Liczba reflektorów",
+      "brightness_slider": "Suwak jasności",
+      "entity_cpu": "Użycie procesora",
+      "entity_cpu_temp": "Temperatura procesora",
+      "entity_ram": "Użycie pamięci (%)",
+      "entity_disk": "Użycie dysku (%)",
+      "entity_net_down": "Prędkość pobierania",
+      "entity_net_up": "Prędkość wysyłania",
+      "entity_uptime": "Czas działania lub ostatni rozruch",
+      "cpu_busy": "Próg obciążenia (CPU %)",
+      "ram_max": "Alarm pamięci (%)",
+      "disk_max": "Alarm dysku (%)",
+      "show_cpu": "Pokaż CPU",
+      "show_ram": "Pokaż pamięć",
+      "show_disk": "Pokaż dysk",
+      "show_network": "Pokaż sieć",
+      "show_uptime": "Pokaż czas działania",
+      "entity_volume": "Status woluminu",
+      "entity_volume_used": "Użycie woluminu (%)",
+      "entity_security": "Status bezpieczeństwa",
+      "entity_update": "Aktualizacja DSM",
+      "volume_max": "Alarm woluminu (%)",
+      "disk_temp_max": "Alarm temperatury dysku",
+      "show_volume": "Pokaż wolumin",
+      "show_disks": "Pokaż dyski",
+      "entity_remote": "Encja zdalna (zasilanie)",
+      "volume_step": "Krok głośności",
+      "show_artwork": "Pokaż okładkę",
+      "show_app": "Pokaż aplikację",
+      "tv_model": "Model dekodera",
+      "entity_weight": "Waga",
+      "entity_fat_ratio": "Tkanka tłuszczowa (%)",
+      "entity_fat_mass": "Masa tłuszczu",
+      "entity_muscle_mass": "Masa mięśniowa",
+      "entity_bone_mass": "Masa kostna",
+      "entity_hydration": "Nawodnienie",
+      "entity_heart_pulse": "Tętno",
+      "entity_visceral_fat": "Tłuszcz trzewny",
+      "entity_weight_goal": "Cel wagi",
+      "entity_bmi": "BMI (czujnik)",
+      "height": "Wzrost (do BMI)",
+      "recent_minutes": "Ostatnie ważenie (min)",
+      "trend_days": "Trend (dni)",
+      "show_bmi": "Pokaż BMI",
+      "show_composition": "Pokaż skład ciała",
+      "entity_drive_1": "Dysk 1",
+      "entity_drive_1_temp": "Temperatura dysku 1",
+      "entity_drive_2": "Dysk 2",
+      "entity_drive_2_temp": "Temperatura dysku 2",
+      "entity_drive_3": "Dysk 3",
+      "entity_drive_3_temp": "Temperatura dysku 3",
+      "entity_drive_4": "Dysk 4",
+      "entity_drive_4_temp": "Temperatura dysku 4",
+      "show_down": "Pokaż pobieranie",
+      "show_up": "Pokaż wysyłanie",
+      "show_weight": "Pokaż wagę",
+      "show_fat": "Pokaż tkankę tłuszczową (%)",
+      "show_fat_mass": "Pokaż masę tłuszczu",
+      "show_muscle": "Pokaż masę mięśniową",
+      "show_bone": "Pokaż masę kostną",
+      "show_hydration": "Pokaż nawodnienie",
+      "show_visceral": "Pokaż tłuszcz trzewny",
+      "show_pulse": "Pokaż tętno",
+      "show_goal": "Pokaż cel",
+      "show_btn_power": "Przycisk zasilania",
+      "show_btn_home": "Przycisk początkowy",
+      "show_btn_prev": "Przycisk poprzedni",
+      "show_btn_play_pause": "Przycisk odtwarzanie / pauza",
+      "show_btn_next": "Przycisk następny",
+      "show_btn_vol_down": "Przycisk głośność −",
+      "show_btn_mute": "Przycisk wyciszenia",
+      "show_btn_vol_up": "Przycisk głośność +",
+      "override": "Tymczasowe nadpisanie (Netatmo)",
+      "override_durations": "Czasy nadpisania (min)",
+      "pets": "Zwierzęta (lista: encja, nazwa, zdjęcie)",
+      "entity_motion": "Czujnik ruchu klapki",
+      "entity_curfew": "Godzina policyjna",
+      "entity_intruder": "Wykryto nieznane zwierzę",
+      "show_pets": "Pokaż zwierzęta",
+      "show_inside": "Pokaż w środku",
+      "show_outside": "Pokaż na zewnątrz",
+      "show_curfew": "Pokaż godzinę policyjną",
+      "entity_low_water": "Alarm niskiego poziomu wody",
+      "entity_water_today": "Woda wypita dzisiaj",
+      "entity_drinking": "Czujnik pojenia zwierzęcia",
+      "entity_last_drink": "Ostatnie picie",
+      "entity_clean": "Czyszczenie (termin / dni)",
+      "entity_filter_reset": "Przycisk resetu filtra",
+      "entity_clean_reset": "Przycisk resetu czyszczenia",
+      "capacity": "Pojemność zbiornika (w jednostce poziomu, jeśli nie %)",
+      "level_low": "Niski poziom wody (%)",
+      "filter_low_days": "Alarm filtra (pozostałe dni)",
+      "filter_low": "Alarm filtra (pozostało %)",
+      "show_drink": "Pokaż ostatnie picie",
+      "show_clean": "Pokaż czyszczenie",
+      "entity_locked_in": "Blokada „Tylko wejście” (Sure Petcare)",
+      "entity_locked_out": "Blokada „Tylko wyjście” (Sure Petcare)",
+      "entity_target": "Temperatura docelowa",
+      "entity_reserve": "Zapas ciepłej wody (%)",
+      "boost_above": "Boost powyżej (W)",
+      "running_above": "Praca powyżej (W)",
+      "show_target": "Pokaż temperaturę docelową",
+      "show_reserve": "Pokaż ciepłą wodę"
     },
     "ro": {
       "animations": "Animații",
@@ -14432,6 +15211,15 @@ const I18N_AQUARIUM = {
     "alert": "Temperatuur buiten bereik",
     "unavailable": "Niet beschikbaar"
   },
+  "pl": {
+    "power": "Moc",
+    "energy": "Energia",
+    "temp": "Woda",
+    "cost": "Koszt",
+    "name": "Akwarium",
+    "alert": "Temperatura poza zakresem",
+    "unavailable": "Niedostępny"
+  },
   "ro": {
     "power": "Putere",
     "energy": "Energie",
@@ -14852,6 +15640,25 @@ const I18N_LINKY = {
     "injection": "INDEX INJECTIE",
     "injection_power": "INJECTIE",
     "prod": "injectie"
+  },
+  "pl": {
+    "power": "MOC",
+    "hp": "INDEKS GODZIN SZCZYTU",
+    "hc": "INDEKS GODZIN POZASZCZYTOWYCH",
+    "tariff": "OKRES",
+    "cost": "KOSZT DZISIAJ",
+    "subscribed": "Moc umowna",
+    "name": "Linky",
+    "conso": "zużycie",
+    "alert": "Przeciążenie",
+    "active": "MOC CZYNNA",
+    "active_short": "Czynna",
+    "per_phase": "na fazę",
+    "peak": "GODZINY SZCZYTU",
+    "offpeak": "GODZINY POZASZCZYTOWE",
+    "injection": "INDEKS EKSPORTU",
+    "injection_power": "EKSPORT",
+    "prod": "eksport"
   },
   "ro": {
     "power": "PUTERE",
@@ -15378,6 +16185,19 @@ const I18N_BAT = {
     "empty": "Leeg over",
     "low": "Batterij bijna leeg"
   },
+  "pl": {
+    "name": "Bateria słoneczna",
+    "soc": "Ładowanie",
+    "power": "Moc",
+    "energy": "Energia",
+    "temp": "Temperatura",
+    "charging": "Ładowanie",
+    "discharging": "Rozładowywanie",
+    "idle": "Bezczynny",
+    "full": "Pełna za",
+    "empty": "Pusta za",
+    "low": "Niski poziom baterii"
+  },
   "ro": {
     "name": "Baterie solară",
     "soc": "Încărcare",
@@ -15736,6 +16556,19 @@ const I18N_EV = {
     "plugged": "Aangesloten",
     "done": "Volgeladen",
     "disconnected": "Niet aangesloten"
+  },
+  "pl": {
+    "name": "Ładowarka EV",
+    "power": "Moc",
+    "energy": "Sesja",
+    "soc": "Bateria",
+    "status": "Status",
+    "duration": "Czas trwania",
+    "cost": "Koszt",
+    "charging": "Ładowanie",
+    "plugged": "Podłączono",
+    "done": "Zakończono",
+    "disconnected": "Odłączono"
   },
   "ro": {
     "name": "Stație de încărcare",
@@ -16168,6 +17001,27 @@ const I18N_VAC = {
     "idle": "Inactief",
     "error": "Fout",
     "emptying": "Aan het legen"
+  },
+  "pl": {
+    "name": "Robot sprzątający",
+    "battery": "Bateria",
+    "area": "Powierzchnia",
+    "time": "Czas",
+    "fan": "Moc ssania",
+    "status": "Status",
+    "filter": "Filtr",
+    "brush": "Szczotka",
+    "start": "Start",
+    "pause": "Pauza",
+    "dock": "Stacja",
+    "cleaning": "Czyszczenie",
+    "docked": "W stacji",
+    "charging": "Ładowanie",
+    "returning": "Powrót",
+    "paused": "Wstrzymano",
+    "idle": "Bezczynny",
+    "error": "Błąd",
+    "emptying": "Opróżnianie"
   },
   "ro": {
     "name": "Robot aspirator",
@@ -16665,6 +17519,26 @@ const I18N_MOW = {
     "idle": "Inactief",
     "error": "Fout"
   },
+  "pl": {
+    "name": "Robot koszący",
+    "battery": "Bateria",
+    "area": "Powierzchnia",
+    "time": "Koszenie",
+    "next": "Następny start",
+    "status": "Status",
+    "blade": "Nóż",
+    "rain": "Deszcz",
+    "start": "Koś",
+    "pause": "Pauza",
+    "dock": "Stacja",
+    "mowing": "Koszenie",
+    "docked": "W stacji",
+    "charging": "Ładowanie",
+    "returning": "Powrót",
+    "paused": "Wstrzymano",
+    "idle": "Bezczynny",
+    "error": "Błąd"
+  },
   "ro": {
     "name": "Robot de tuns iarba",
     "battery": "Baterie",
@@ -17118,6 +17992,22 @@ const I18N_PB = {
     "extinguishing": "Uitdoven",
     "alarm": "Alarm",
     "low": "Pellets bijna op"
+  },
+  "pl": {
+    "name": "Kocioł na pellet",
+    "power": "Moc",
+    "energy": "Energia",
+    "cost": "Koszt",
+    "flow": "Zasilanie",
+    "ret": "Powrót",
+    "pellets": "Pellet",
+    "status": "Status",
+    "off": "Wył.",
+    "ignition": "Rozpalanie",
+    "heating": "Grzanie",
+    "extinguishing": "Wyłączanie",
+    "alarm": "Alarm",
+    "low": "Mało pelletu"
   },
   "ro": {
     "name": "Cazan pe peleți",
@@ -17609,6 +18499,26 @@ window.customCards.push({ type: 'appliance-pellet-boiler-card', name: 'Appliance
       "highp": "Hoge druk",
       "hotf": "Aanvoer te heet"
     },
+    "pl": {
+      "name": "Kocioł gazowy",
+      "off": "Wył.",
+      "standby": "Czuwanie",
+      "heating": "Grzanie",
+      "dhw": "Gorąca woda",
+      "alarm": "Usterka",
+      "power": "Prąd",
+      "energy": "Energia el.",
+      "gas": "Gaz",
+      "cost": "Koszt",
+      "flow": "Zasilanie",
+      "ret": "Powrót",
+      "pressure": "Ciśnienie",
+      "mod": "Modulacja",
+      "delta": "ΔT",
+      "lowp": "Niskie ciśnienie",
+      "highp": "Wysokie ciśnienie",
+      "hotf": "Zasilanie za gorące"
+    },
     "ro": {
       "name": "Centrală pe gaz",
       "off": "Oprită",
@@ -17992,7 +18902,7 @@ svg{display:block;width:100%;max-width:calc(170px * var(--illus-scale,1));height
         ] },
         window.applianceTempField,
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           { name: 'show_status', selector: { boolean: {} }, default: true }, { name: 'show_power', selector: { boolean: {} }, default: true },
           { name: 'show_energy', selector: { boolean: {} }, default: true }, { name: 'show_gas', selector: { boolean: {} }, default: true },
@@ -18176,6 +19086,28 @@ svg{display:block;width:100%;max-width:calc(170px * var(--illus-scale,1));height
       "heat_energy": "Warmte-energie",
       "scop": "SCOP",
       "buffer": "Buffervat"
+    },
+    "pl": {
+      "name": "Pompa ciepła woda-woda",
+      "off": "Wył.",
+      "standby": "Czuwanie",
+      "heating": "Grzanie",
+      "dhw": "Gorąca woda",
+      "cooling": "Chłodzenie",
+      "alarm": "Usterka",
+      "power": "Prąd",
+      "heat": "Moc grzewcza",
+      "cop": "COP",
+      "flow": "Zasilanie",
+      "ret": "Powrót",
+      "delta": "ΔT",
+      "src_in": "Źródło wej.",
+      "src_out": "Źródło wyj.",
+      "rate": "Przepływ",
+      "energy": "Energia el.",
+      "heat_energy": "Energia cieplna",
+      "scop": "SCOP",
+      "buffer": "Zbiornik buforowy"
     },
     "ro": {
       "name": "Pompă de căldură apă-apă",
@@ -18773,6 +19705,24 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       "lowfuel": "Diesel bijna op",
       "hotflue": "Rookgas te heet"
     },
+    "pl": {
+      "name": "Ogrzewacz diesla",
+      "off": "Wył.",
+      "standby": "Czuwanie",
+      "ignition": "Rozpalanie",
+      "heating": "Grzanie",
+      "cooldown": "Przedmuch dmuchawy",
+      "alarm": "Usterka",
+      "power": "Prąd",
+      "energy": "Energia el.",
+      "fuel": "Olej napędowy",
+      "used": "Zużyto",
+      "cost": "Koszt",
+      "temp": "Pokój",
+      "flue": "Spaliny",
+      "lowfuel": "Mało paliwa",
+      "hotflue": "Spaliny za gorące"
+    },
     "ro": {
       "name": "Sobă pe motorină",
       "off": "Oprit",
@@ -19184,7 +20134,7 @@ svg{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));height
         ] },
         window.applianceTempField,
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           { name: 'show_status', selector: { boolean: {} }, default: true }, { name: 'show_power', selector: { boolean: {} }, default: true },
           { name: 'show_energy', selector: { boolean: {} }, default: true }, { name: 'show_fuel', selector: { boolean: {} }, default: true },
@@ -19340,6 +20290,24 @@ svg{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));height
       "lowph": "pH te laag",
       "highph": "pH te hoog",
       "hot": "Water te heet"
+    },
+    "pl": {
+      "name": "Jacuzzi",
+      "off": "Wył.",
+      "standby": "Czuwanie",
+      "filtering": "Filtrowanie",
+      "heating": "Grzanie",
+      "jets": "Dysze",
+      "alarm": "Usterka",
+      "power": "Prąd",
+      "energy": "Energia el.",
+      "temp": "Woda",
+      "target": "Cel",
+      "ph": "pH",
+      "cost": "Koszt",
+      "lowph": "pH za niskie",
+      "highph": "pH za wysokie",
+      "hot": "Woda za gorąca"
     },
     "ro": {
       "name": "Jacuzzi",
@@ -19739,7 +20707,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         ] },
         window.applianceTempField,
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           { name: 'show_status', selector: { boolean: {} }, default: true }, { name: 'show_power', selector: { boolean: {} }, default: true },
           { name: 'show_energy', selector: { boolean: {} }, default: true }, { name: 'show_temp', selector: { boolean: {} }, default: true },
@@ -19791,7 +20759,8 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "btn_open": "Open",
       "btn_stop": "Stop",
       "btn_close": "Close",
-      "btn_command": "Command"
+      "btn_command": "Command",
+      "btn_pedestrian": "Pedestrian"
     },
     "cs": {
       "barrier": "Závora",
@@ -19833,7 +20802,8 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "btn_open": "Öffnen",
       "btn_stop": "Stopp",
       "btn_close": "Schließen",
-      "btn_command": "Befehl"
+      "btn_command": "Befehl",
+      "btn_pedestrian": "Fußgänger"
     },
     "fr": {
       "barrier": "Barrière",
@@ -19854,7 +20824,8 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "btn_open": "Ouvrir",
       "btn_stop": "Stop",
       "btn_close": "Fermer",
-      "btn_command": "Commande"
+      "btn_command": "Commande",
+      "btn_pedestrian": "Piéton"
     },
     "it": {
       "barrier": "Sbarra",
@@ -19875,7 +20846,8 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "btn_open": "Apri",
       "btn_stop": "Stop",
       "btn_close": "Chiudi",
-      "btn_command": "Comando"
+      "btn_command": "Comando",
+      "btn_pedestrian": "Pedonale"
     },
     "nb": {
       "barrier": "Bom",
@@ -19917,7 +20889,30 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "btn_open": "Openen",
       "btn_stop": "Stop",
       "btn_close": "Sluiten",
-      "btn_command": "Bediening"
+      "btn_command": "Bediening",
+      "btn_pedestrian": "Voetganger"
+    },
+    "pl": {
+      "barrier": "Szlaban",
+      "sliding_gate": "Brama przesuwna",
+      "swing_gate": "Brama skrzydłowa",
+      "garage_door": "Brama garażowa",
+      "open": "Otwarta",
+      "closed": "Zamknięta",
+      "opening": "Otwieranie",
+      "closing": "Zamykanie",
+      "partial": "Częściowo otwarta",
+      "unavailable": "Niedostępny",
+      "position": "Pozycja",
+      "power": "Silnik",
+      "energy": "Energia",
+      "cost": "Koszt",
+      "since": "Ostatnia zmiana",
+      "btn_open": "Otwarta",
+      "btn_stop": "Stop",
+      "btn_close": "Zamknij",
+      "btn_command": "Polecenie",
+      "btn_pedestrian": "Furtka"
     },
     "ro": {
       "barrier": "Barieră",
@@ -20329,6 +21324,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
           <button data-a="stop"><ha-icon icon="mdi:stop"></ha-icon><span></span></button>
           <button data-a="close"><ha-icon icon="${esc(K.ico[1])}"></ha-icon><span></span></button>
           <button data-a="command"><ha-icon icon="mdi:gesture-tap-button"></ha-icon><span></span></button>
+          <button data-a="pedestrian"><ha-icon icon="mdi:walk"></ha-icon><span></span></button>
         </div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${esc(k)}"><div class="l"><ha-icon icon="${esc(ic)}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
@@ -20343,6 +21339,13 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
 
     _action(a) {
       const c = this._c, h = this._hass; if (!h) return;
+      if (a === 'pedestrian') { // ouverture partielle : entité dédiée (bouton, script, scène, interrupteur, cover)
+        const id = c.entity_pedestrian, d = id.split('.')[0];
+        if (d === 'button' || d === 'input_button') h.callService(d, 'press', { entity_id: id });
+        else if (d === 'cover') h.callService('cover', 'open_cover', { entity_id: id });
+        else h.callService(['script', 'scene', 'switch', 'input_boolean'].includes(d) ? d : 'homeassistant', 'turn_on', { entity_id: id });
+        return;
+      }
       if (a === 'command') {
         const id = c.entity_control || c.entity, d = id.split('.')[0];
         if (d === 'button' || d === 'input_button') h.callService(d, 'press', { entity_id: id });
@@ -20412,11 +21415,11 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
       const canCmd = !!c.entity_control || ['switch', 'input_boolean', 'button', 'input_button', 'script'].includes(d);
       const sf = s && s.attributes && Number(s.attributes.supported_features);
       const ctl = r.getElementById('accctl');
-      ctl.classList.toggle('hide', c.show_controls === false || (!isCover && !canCmd));
+      ctl.classList.toggle('hide', c.show_controls === false || (!isCover && !canCmd && !c.entity_pedestrian));
       ctl.querySelectorAll('button').forEach((b) => {
         const a = b.dataset.a;
         b.querySelector('span').textContent = this._t(`btn_${a}`);
-        b.classList.toggle('hide', a === 'command' ? isCover : !isCover || (a === 'stop' && isFinite(sf) && sf > 0 && !(sf & 8)));
+        b.classList.toggle('hide', a === 'pedestrian' ? !c.entity_pedestrian : a === 'command' ? isCover || !canCmd : !isCover || (a === 'stop' && isFinite(sf) && sf > 0 && !(sf & 8)));
         b.disabled = st === 'unavailable' || (a === 'open' && (st === 'open' || st === 'opening')) || (a === 'close' && (st === 'closed' || st === 'closing'));
       });
       if (K.ico) ctl.querySelector('[data-a="command"] ha-icon').setAttribute('icon', st === 'closed' ? K.ico[0] : K.ico[1]);
@@ -20465,7 +21468,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
-        ent('entity'), ent('entity_control'),
+        ent('entity'), ent('entity_control'), ent('entity_pedestrian'),
         ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'), ent('entity_cost', 'sensor'),
         { name: 'price_per_kwh', selector: { number: { min: 0, step: 0.0001, mode: 'box' } } },
         { type: 'grid', name: '', schema: [
@@ -20474,7 +21477,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
           { name: 'invert', selector: { boolean: {} } },
         ] },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_controls'), bool('show_position'), bool('show_power'),
           bool('show_energy'), bool('show_cost'), bool('show_since'), bool('animations'),
@@ -20644,6 +21647,23 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
       "turn_on": "Aanzetten",
       "turn_off": "Uitzetten",
       "overheat": "Te heet"
+    },
+    "pl": {
+      "name": "Sauna",
+      "off": "Wył.",
+      "heating": "Grzanie",
+      "ready": "Gotowy",
+      "cooling": "Schładzanie",
+      "fault": "Usterka",
+      "temp": "Kabina",
+      "target": "Cel",
+      "humidity": "Wilgotność",
+      "power": "Piec",
+      "energy": "Energia",
+      "cost": "Koszt",
+      "turn_on": "Włącz",
+      "turn_off": "Wyłącz",
+      "overheat": "Za gorąco"
     },
     "ro": {
       "name": "Saună",
@@ -21039,7 +22059,7 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
         ] },
         window.applianceTempField,
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_controls'), bool('show_temp'), bool('show_humidity'),
           bool('show_power'), bool('show_energy'), bool('show_cost'), bool('animations'),
@@ -21269,6 +22289,34 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
       "high_level": "Waterniveau te hoog",
       "pit": "Put",
       "starts": "Starts"
+    },
+    "pl": {
+      "water_pump": "Pompa wodna",
+      "industrial_pump": "Pompa przemysłowa",
+      "off": "Wył.",
+      "running": "Pracuje",
+      "warning": "Ostrzeżenie",
+      "fault": "Usterka",
+      "unavailable": "Niedostępny",
+      "flow": "Zasilanie",
+      "pressure": "Ciśnienie",
+      "power": "Moc",
+      "temp": "Silnik",
+      "level": "Zbiornik",
+      "runtime": "Czas pracy",
+      "energy": "Energia",
+      "cost": "Koszt",
+      "turn_on": "Włącz",
+      "turn_off": "Wyłącz",
+      "no_flow": "Brak przepływu: praca na sucho?",
+      "overpressure": "Nadciśnienie",
+      "overheat": "Silnik za gorący",
+      "low_level": "Niski poziom",
+      "sump_pump": "Pompa zatapialna",
+      "alarm": "Wysoki poziom",
+      "high_level": "Wysoki poziom wody",
+      "pit": "Studzienka",
+      "starts": "Uruchomienia"
     },
     "ro": {
       "water_pump": "Pompă de apă",
@@ -21894,7 +22942,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         ] },
         window.applianceTempField,
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_controls'), bool('show_flow'), bool('show_pressure'), bool('show_power'), bool('show_temp'),
           bool('show_level'), bool('show_runtime'), bool('show_starts'), bool('show_energy'), bool('show_cost'), bool('animations'),
@@ -22122,6 +23170,31 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       "energy": "Energie",
       "filter_full": "Filter reinigen",
       "low_water": "Laag waterniveau"
+    },
+    "pl": {
+      "name": "Robot basenowy",
+      "cleaning": "Czyszczenie",
+      "paused": "Wstrzymano",
+      "returning": "Wypływa",
+      "idle": "Bezczynny",
+      "error": "Błąd",
+      "unavailable": "Niedostępny",
+      "start": "Start",
+      "pause": "Pauza",
+      "dock": "Wypłyń",
+      "turn_on": "Włącz",
+      "turn_off": "Wyłącz",
+      "status": "Status",
+      "filter": "Filtr",
+      "water_level": "Poziom wody",
+      "water_temp": "Woda",
+      "time": "Pozostało",
+      "battery": "Bateria",
+      "mode": "Tryb",
+      "power": "Moc",
+      "energy": "Energia",
+      "filter_full": "Filtr wymaga czyszczenia",
+      "low_water": "Niski poziom wody"
     },
     "ro": {
       "name": "Robot de piscină",
@@ -22571,7 +23644,7 @@ svg{display:block;width:100%;max-width:calc(280px * var(--illus-scale,1));height
         ] },
         window.applianceTempField,
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_controls'), bool('show_status_tile'), bool('show_filter'), bool('show_water_level'), bool('show_water_temp'),
           bool('show_time'), bool('show_battery'), bool('show_mode'), bool('show_power'), bool('show_energy'), bool('animations'),
@@ -22729,6 +23802,24 @@ svg{display:block;width:100%;max-width:calc(280px * var(--illus-scale,1));height
       "energy": "Energie",
       "overload": "Overbelasting",
       "replace_battery": "Vervang de batterij"
+    },
+    "pl": {
+      "name": "UPS",
+      "online": "Zasilanie sieciowe",
+      "charging": "Ładowanie",
+      "on_battery": "Praca z baterii",
+      "low_battery": "Niski poziom baterii",
+      "offline": "Wył.",
+      "unavailable": "Niedostępny",
+      "charge": "Bateria",
+      "runtime": "Czas pracy",
+      "load": "Obciążenie",
+      "power": "Moc",
+      "input": "Wejście",
+      "output": "Wyjście",
+      "energy": "Energia",
+      "overload": "Przeciążenie",
+      "replace_battery": "Wymień baterię"
     },
     "ro": {
       "name": "UPS",
@@ -23094,7 +24185,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         ent('entity_input_voltage', 'sensor'), ent('entity_output_voltage', 'sensor'), ent('entity_energy', 'sensor'),
         { type: 'grid', name: '', schema: [num('battery_low', 0, 100, 1, 20, '%'), num('load_max', 10, 100, 1, 90, '%'), num('mains_min', 0, 250, 1, 100, 'V')] },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_charge'), bool('show_runtime'), bool('show_load'), bool('show_power'), bool('show_voltage'), bool('show_energy'), bool('animations'),
         ] },
@@ -23250,6 +24341,24 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       "turn_off": "Uitzetten",
       "floor_hot": "Vloer te heet",
       "water_hot": "Water te heet"
+    },
+    "pl": {
+      "name": "Ogrzewanie podłogowe",
+      "off": "Wył.",
+      "heating": "Grzanie",
+      "idle": "Bezczynny",
+      "fault": "Usterka",
+      "temp": "Pokój",
+      "target": "Cel",
+      "floor": "Podłoga",
+      "water": "Zasilanie",
+      "power": "Moc",
+      "energy": "Energia",
+      "cost": "Koszt",
+      "turn_on": "Włącz",
+      "turn_off": "Wyłącz",
+      "floor_hot": "Podłoga za gorąca",
+      "water_hot": "Woda za gorąca"
     },
     "ro": {
       "name": "Încălzire în pardoseală",
@@ -23632,7 +24741,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         { type: 'grid', name: '', schema: [tnum('floor_max', 20, 40, 0.5, 29), tnum('water_max', 25, 70, 1, 45), num('heat_threshold', 0, 5000, 1, 20, 'W')] },
         window.applianceTempField,
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_controls'), bool('show_temp'), bool('show_floor'), bool('show_water'),
           bool('show_power'), bool('show_energy'), bool('show_cost'), bool('animations'),
@@ -23817,6 +24926,28 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       "power": "Vermogen",
       "energy": "Energie",
       "ceiling_spot": "Inbouwspots"
+    },
+    "pl": {
+      "light_bulb": "Żarówka",
+      "color_bulb": "Żarówka kolorowa",
+      "filament_bulb": "Żarówka żarnikowa",
+      "pendant_light": "Lampa wisząca",
+      "pendant_cluster": "Zespół lamp wiszących",
+      "desk_lamp": "Lampka biurkowa",
+      "floor_lamp": "Lampa podłogowa",
+      "chandelier": "Żyrandol",
+      "garden_spotlight": "Reflektor ogrodowy",
+      "christmas_tree": "Choinka",
+      "on": "Wł.",
+      "off": "Wył.",
+      "unavailable": "Niedostępny",
+      "turn_on": "Wł.",
+      "turn_off": "Wył.",
+      "color": "Kolor",
+      "brightness": "Jasność",
+      "power": "Moc",
+      "energy": "Energia",
+      "ceiling_spot": "Oprawy wpuszczane"
     },
     "ro": {
       "light_bulb": "Bec",
@@ -24401,7 +25532,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ] },
         // spots encastrés : nombre de spots pilotés par la même entité
         ...(this.kind === 'ceiling_spot' ? [{ name: 'spot_count', default: 1, selector: { number: { min: 1, max: 4, step: 1, mode: 'slider' } } }] : []),
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('compact', false), bool('show_controls'), bool('show_button_labels'), bool('show_brightness'), bool('show_power'), bool('show_energy'), bool('animations'),
         ] },
@@ -24694,6 +25825,42 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "blind": "Rolluik",
       "blind_down": "Rolluik dicht",
       "btn_blind": "Rolluik"
+    },
+    "pl": {
+      "roller_shutter": "Roleta zewnętrzna",
+      "venetian_blind": "Żaluzja",
+      "swing_shutter": "Okiennice skrzydłowe",
+      "open": "Otwarta",
+      "closed": "Zamknięta",
+      "opening": "Otwieranie",
+      "closing": "Zamykanie",
+      "partial": "Otwarta",
+      "unavailable": "Niedostępny",
+      "btn_open": "Otwarta",
+      "btn_stop": "Stop",
+      "btn_close": "Zamknij",
+      "position": "Pozycja",
+      "tilt": "Pochylenie",
+      "power": "Silnik",
+      "since": "Ostatnia zmiana",
+      "pergola": "Pergola bioklimatyczna",
+      "pg_open": "Otwarta",
+      "pg_closed": "Zamknięta",
+      "pg_partial": "Otwarta",
+      "pg_position": "Lamele",
+      "rain": "Deszcz",
+      "wind": "Wiatr",
+      "yes": "Tak",
+      "no": "Nie",
+      "btn_light": "LED",
+      "roof_window": "Okno dachowe",
+      "rw_open": "Otwarta",
+      "rw_closed": "Zamknięta",
+      "rw_partial": "Otwarta",
+      "rw_position": "Otwieranie",
+      "blind": "Roleta",
+      "blind_down": "Roleta opuszczona",
+      "btn_blind": "Roleta"
     },
     "ro": {
       "roller_shutter": "Rulou exterior",
@@ -25515,7 +26682,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         bool('invert', false),
         ...(this.kind === 'venetian_blind' ? [bool('tilt_only', false), bool('tilt_from_position', false), { name: 'tilt_presets', selector: { object: {} } }] : []),
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_controls'), bool('show_slider'), bool('show_position'),
           ...(this.kind === 'venetian_blind' ? [bool('show_tilt')] : []), bool('show_power'),
@@ -25710,6 +26877,27 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       "freeze": "Vorstgevaar",
       "freeze_risk": "Vorstgevaar: {t}",
       "leak_detected_by": "Lek gedetecteerd door: {n}"
+    },
+    "pl": {
+      "name": "Wodomierz",
+      "idle": "Brak przepływu",
+      "flowing": "Płynie",
+      "leak": "Możliwy wyciek",
+      "valve_closed": "Zawór zamknięty",
+      "unavailable": "Niedostępny",
+      "leak_detected": "Czujnik wykrył wyciek",
+      "leak_continuous": "Woda płynie bez przerwy od ponad {n} min",
+      "open_valve": "Otwórz zawór",
+      "close_valve": "Zamknij zawór",
+      "flow": "Zasilanie",
+      "today": "Dzisiaj",
+      "index": "Indeks",
+      "cost": "Koszt",
+      "temperature": "Temperatura",
+      "pressure": "Ciśnienie",
+      "freeze": "Ryzyko zamarznięcia",
+      "freeze_risk": "Ryzyko zamarznięcia: {t}",
+      "leak_detected_by": "Wyciek wykryty przez: {n}"
     },
     "ro": {
       "name": "Contor de apă",
@@ -26057,7 +27245,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         ent('entity_leak', ['binary_sensor', 'input_boolean'], { multiple: true }), ent('entity_valve', ['valve', 'switch', 'input_boolean']),
         { type: 'grid', name: '', schema: [num('leak_minutes', 0, 1440, 5, 60, 'min'), num('flow_threshold', 0, 5, 0.01, 0.05, 'L/min'), num('freeze_threshold', -10, 15, 0.5, 3, '°C')] },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_flow'), bool('show_today'), bool('show_index'), bool('show_cost'), bool('show_temperature'), bool('show_pressure'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
@@ -26099,7 +27287,9 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "flow": "Flow",
       "today": "Today",
       "index": "Index",
-      "cost": "Cost"
+      "cost": "Cost",
+      "variant_classic": "Classic (yellow bellows meter)",
+      "variant_modern": "Modern (grey meter, yellow pipe)"
     },
     "cs": {
       "name": "Plynoměr",
@@ -26131,7 +27321,9 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "flow": "Durchfluss",
       "today": "Heute",
       "index": "Zählerstand",
-      "cost": "Kosten"
+      "cost": "Kosten",
+      "variant_classic": "Klassisch (gelber Balgengaszähler)",
+      "variant_modern": "Modern (grauer Zähler, gelbes Rohr)"
     },
     "fr": {
       "name": "Compteur de gaz",
@@ -26147,7 +27339,9 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "flow": "Débit",
       "today": "Aujourd'hui",
       "index": "Index",
-      "cost": "Coût"
+      "cost": "Coût",
+      "variant_classic": "Classique (compteur à soufflet jaune)",
+      "variant_modern": "Moderne (compteur gris, tuyau jaune)"
     },
     "it": {
       "name": "Contatore del gas",
@@ -26163,7 +27357,9 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "flow": "Portata",
       "today": "Oggi",
       "index": "Indice",
-      "cost": "Costo"
+      "cost": "Costo",
+      "variant_classic": "Classico (contatore a soffietto giallo)",
+      "variant_modern": "Moderno (contatore grigio, tubo giallo)"
     },
     "nb": {
       "name": "Gassmåler",
@@ -26195,7 +27391,27 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "flow": "Debiet",
       "today": "Vandaag",
       "index": "Meterstand",
-      "cost": "Kosten"
+      "cost": "Kosten",
+      "variant_classic": "Klassiek (gele balggasmeter)",
+      "variant_modern": "Modern (grijze meter, gele leiding)"
+    },
+    "pl": {
+      "name": "Gazomierz",
+      "idle": "Brak przepływu",
+      "flowing": "Gaz płynie",
+      "leak": "Wyciek gazu",
+      "valve_closed": "Zawór zamknięty",
+      "unavailable": "Niedostępny",
+      "leak_detected": "Czujnik wykrył gaz",
+      "leak_detected_by": "Gaz wykryty przez: {n}",
+      "open_valve": "Otwórz zawór",
+      "close_valve": "Zamknij zawór",
+      "flow": "Zasilanie",
+      "today": "Dzisiaj",
+      "index": "Indeks",
+      "cost": "Koszt",
+      "variant_classic": "Klasyczny (żółty gazomierz miechowy)",
+      "variant_modern": "Nowoczesny (szary gazomierz, żółta rura)"
     },
     "ro": {
       "name": "Contor de gaz",
@@ -26297,11 +27513,16 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 .gm-alert{opacity:0}.leak .gm-alert{opacity:1;animation:gmblink 1s ease-in-out infinite}
 .gm-valve{fill:#2b9af9;transition:transform .4s,fill .3s;transform-box:fill-box;transform-origin:50% 100%}
 .valve_closed .gm-valve{fill:#db4437;transform:rotate(90deg)}
+.gm-chev{fill:#887f17;transition:opacity .3s}
+.flowing .gm-chev,.moving .gm-chev{animation:gmchev calc(var(--spd) * 1.5) ease-in-out infinite}
+.gm-pv{fill:#db4437;opacity:0;transition:opacity .3s}.valve_closed .gm-pv{opacity:.75}
+.leak .gm-lcd{fill:#ffb4ab}
 .unavailable svg{filter:grayscale(.7) opacity(.7)}
-.noanim .gm-wheel,.noanim .gm-flame,.noanim .gm-alert{animation:none}
+.noanim .gm-wheel,.noanim .gm-flame,.noanim .gm-alert,.noanim .gm-chev{animation:none}
 @keyframes gmrot{to{transform:rotate(360deg)}}
 @keyframes gmflame{from{transform:scale(.85,.9)}to{transform:scale(1.05,1.1)}}
 @keyframes gmblink{50%{opacity:.3}}
+@keyframes gmchev{0%,100%{opacity:.25}50%{opacity:1}}
 `;
 
   const SVG = (label) => `<svg viewBox="0 22 120 104" role="img" aria-label="${esc(label)}"><defs>
@@ -26328,6 +27549,30 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     <g class="gm-flame"><path d="M78 112c-9-6-11-13-6-22 1 4 3 5 5 6-1-6 1-11 6-15 0 6 3 8 5 12 3 6 1 14-10 19z" fill="#ff7a00"/><path d="M79 112c-5-3-6-8-3-13 1 2 2 3 3 3 0-3 1-5 3-7 0 3 2 5 3 7 1 5-2 8-6 10z" fill="#ffd54f"/></g>
     <rect x="22" y="62" width="76" height="56" rx="4" fill="url(#gmglass)" opacity=".5"/>
     <g class="gm-alert"><circle cx="100" cy="46" r="9" fill="#e53935"/><path d="M100 40v7" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><circle cx="100" cy="51" r="1.3" fill="#fff"/></g>
+  </svg>`;
+
+  // variante « modern » : dessin de Ppatou (#267). Chevrons animés selon le débit, roue qui tourne, voile rouge sur le tuyau si la vanne est fermée
+  const chev = (x, y, i) => `<polygon class="gm-chev" style="animation-delay:calc(var(--spd) * ${(i * 0.25).toFixed(2)})" points="${[[163, 12], [0, 82], [0, 52], [129, -2], [0, -55], [0, -85], [163, -16]].map(([dx, dy]) => `${x + dx},${y + dy}`).join(' ')}"/>`;
+  const SVG_MODERN = (label) => `<svg viewBox="250 400 3000 2860" role="img" aria-label="${esc(label)}"><defs>
+    <radialGradient id="gmm0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1 0 0 .916467 0 84)" cx="1756" cy="1002" r="229"><stop offset="0" stop-color="#fefefe"/><stop offset="1" stop-color="#ebd600"/></radialGradient>
+    <radialGradient id="gmm1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1 0 0 .916464 0 84)" cx="858" cy="1002" r="229"><stop offset="0" stop-color="#fefefe"/><stop offset="1" stop-color="#ebd600"/></radialGradient>
+    <radialGradient id="gmm2" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1 0 0 .916464 0 84)" cx="2651" cy="1002" r="229"><stop offset="0" stop-color="#fefefe"/><stop offset="1" stop-color="#ebd600"/></radialGradient>
+    <radialGradient id="gmmsh"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
+    <ellipse cx="1760" cy="3190" rx="1100" ry="70" fill="url(#gmmsh)"/>
+    <polygon fill="gray" points="2231,1731 1359,1722 1312,1792 959,1792 711,1904 711,2879 825,3108 2676,3108 2803,2885 2812,1841 2723,1840 2701,1797 2281,1797"/>
+    <path fill="#ccc" d="M1026 1893l1483 0c144,402 133,803 0,1188l-1483 0c-167,-413 -163,-795 0,-1188z"/>
+    <rect fill="#4d4d4d" x="1004" y="2032" width="1490" height="383" rx="89" ry="48"/>
+    <text class="gm-lcd" x="1749" y="2316" text-anchor="middle" fill="#fff" font-size="256" font-family="Arial,Helvetica,sans-serif"></text>
+    <rect fill="#d3d2d8" x="1639" y="1393" width="306" height="219" rx="25"/><rect fill="#7f7e75" x="1396" y="1393" width="241" height="219" rx="20" ry="25"/>
+    <rect fill="#5d5956" x="1949" y="1393" width="175" height="219" rx="14" ry="25"/><rect fill="#a5a6a1" x="1450" y="1617" width="621" height="102" rx="8" ry="18"/>
+    <rect fill="#bcbcbe" x="1375" y="1338" width="770" height="56" rx="10"/>
+    <rect fill="url(#gmm0)" x="1400" y="675" width="712" height="652" rx="73"/>
+    <rect fill="url(#gmm1)" x="317" y="838" width="1082" height="326" rx="111" ry="36"/><rect fill="url(#gmm2)" x="2110" y="838" width="1082" height="326" rx="111" ry="36"/>
+    <rect class="gm-pv" x="317" y="838" width="1082" height="326" rx="111" ry="36"/>
+    ${[452, 791, 1131].map((x, i) => chev(x, 1000, i)).join('')}${[2247, 2586, 2925].map((x, i) => chev(x, 1000, i + 3)).join('')}
+    <circle fill="#fff" stroke="gray" stroke-width="29" cx="1704" cy="2727" r="218"/>
+    <g class="gm-wheel"><path fill="red" d="M1705 2729l-189 -109c39,-67 111,-109 189,-109l0 218z"/><path fill="red" d="M1704 2728l189 108c-39,68 -110,110 -188,110l-1 -218z"/></g>
+    <g class="gm-alert"><circle cx="2960" cy="560" r="170" fill="#e53935"/><path d="M2960 450v130" stroke="#fff" stroke-width="40" stroke-linecap="round"/><circle cx="2960" cy="650" r="24" fill="#fff"/></g>
   </svg>`;
 
   const TILES = [['flow', 'mdi:fire', 'show_flow'], ['today', 'mdi:calendar-today', 'show_today'], ['index', 'mdi:counter', 'show_index'], ['cost', 'mdi:cash', 'show_cost']];
@@ -26370,7 +27615,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="gmtitle"></div><div class="badge" id="gmbadge"></div></div>
-        ${SVG(this._c.name || this._t('name'))}
+        ${(this._c.variant === 'modern' ? SVG_MODERN : SVG)(this._c.name || this._t('name'))}
         <div class="alert" id="gmalert"></div>
         <div class="ctl" id="gmctl"><button><ha-icon icon="mdi:valve"></ha-icon><span></span></button></div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
@@ -26422,6 +27667,11 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       // totalisateur : 5 chiffres entiers et 3 décimales
       const base = isNaN(idx) ? 0 : Math.max(0, idx), whole = Math.floor(base);
       const ent = String(whole % 100000).padStart(5, '0'), dec = String(Math.floor((base - whole) * 1000)).padStart(3, '0');
+      const lcd = r.querySelector('.gm-lcd');
+      if (lcd) { // variante moderne : « 123,456 m³ », police réduite si le texte est long
+        const txt = `${base.toLocaleString(window.applianceLocale(c, this._hass), { minimumFractionDigits: 3, maximumFractionDigits: 3, useGrouping: false })} ${this._unit(c.entity_index, 'm³')}`.trim();
+        lcd.textContent = txt; lcd.setAttribute('font-size', String(Math.round(Math.min(256, 1400 / (txt.length * 0.56)))));
+      }
       r.querySelectorAll('.gm-d').forEach((el, i) => { el.textContent = ent[i]; });
       r.querySelectorAll('.gm-l').forEach((el, i) => { el.textContent = dec[i]; });
 
@@ -26475,10 +27725,13 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       const ent = (name, domain, extra) => ({ name, selector: { entity: { ...(domain ? { domain } : {}), ...(extra || {}) } } });
       const num = (name, min, max, step, def, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
       const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
+      const lang = (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en';
+      const tr = T[lang] || T[String(lang).slice(0, 2)] || T.en;
       this._form.hass = this._hass;
       this._form.data = { ...this._c, entity_leak: asList(this._c && this._c.entity_leak) }; // le form attend un array
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
+        { name: 'variant', selector: { select: { mode: 'dropdown', options: [{ value: 'classic', label: tr.variant_classic }, { value: 'modern', label: tr.variant_modern }] } } },
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
@@ -26486,7 +27739,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         ent('entity_leak', ['binary_sensor', 'input_boolean'], { multiple: true }), ent('entity_valve', ['valve', 'switch', 'input_boolean']),
         { type: 'grid', name: '', schema: [num('flow_threshold', 0, 5, 0.01, 0.01)] },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_flow'), bool('show_today'), bool('show_index'), bool('show_cost'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
@@ -26622,6 +27875,22 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "index": "Meterstand",
       "cost": "Kosten",
       "tariff": "Tarief",
+      "l1": "L1",
+      "l2": "L2",
+      "l3": "L3"
+    },
+    "pl": {
+      "name": "Licznik energii elektrycznej",
+      "idle": "Brak przepływu",
+      "consuming": "Pobór",
+      "overload": "Przeciążenie",
+      "unavailable": "Niedostępny",
+      "overload_alert": "Moc powyżej mocy umownej ({n} kVA)",
+      "power": "Moc",
+      "today": "Dzisiaj",
+      "index": "Indeks",
+      "cost": "Koszt",
+      "tariff": "Taryfa",
       "l1": "L1",
       "l2": "L2",
       "l3": "L3"
@@ -26906,7 +28175,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         ent('entity_power_l1', 'sensor'), ent('entity_power_l2', 'sensor'), ent('entity_power_l3', 'sensor'),
         { type: 'grid', name: '', schema: [num('subscribed_power', 0, 100, 0.5, 0, 'kVA')] },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_power'), bool('show_today'), bool('show_index'), bool('show_cost'), bool('show_tariff'), bool('show_phases'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
@@ -27146,6 +28415,37 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "duration": "Duur",
       "dur_default": "Standaard",
       "resume": "Terug naar schema"
+    },
+    "pl": {
+      "name": "Zawór grzejnikowy",
+      "idle": "Osiągnięto cel",
+      "heating": "Grzanie",
+      "off": "Wył.",
+      "window": "Okno otwarte",
+      "unavailable": "Niedostępny",
+      "window_alert": "Okno otwarte: ogrzewanie wstrzymane",
+      "target": "Cel",
+      "temperature": "Temperatura",
+      "valve": "Zawór",
+      "battery": "Bateria",
+      "open": "Otwarta",
+      "closed": "Zamknięta",
+      "model": "Model",
+      "model_trv": "Zawór grzejnikowy (Tado X)",
+      "model_netatmo": "Termostat Netatmo",
+      "model_nest": "Termostat Google Nest",
+      "model_tado": "Termostat ścienny Tado X",
+      "model_t6": "Termostat Honeywell Home T6",
+      "model_bht6000": "Termostat Tuya BHT6000 (okrągły, czarny ekran)",
+      "model_classic": "Zawór grzejnikowy (klasyczny)",
+      "model_netatmo_trv": "Zawór Netatmo (1. gen.)",
+      "model_netatmo_trv2": "Zawór Netatmo (nowy)",
+      "model_danfoss": "Zawór Danfoss Ally",
+      "model_shelly": "Zawór Shelly TRV",
+      "model_somfy": "Zawór Somfy io",
+      "duration": "Czas trwania",
+      "dur_default": "Domyślny",
+      "resume": "Powrót do harmonogramu"
     },
     "ro": {
       "name": "Cap termostatic",
@@ -27397,18 +28697,18 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       <circle cx="150" cy="152" r="128" fill="#000" opacity=".12" filter="url(#tvsoft)"/>
       <circle cx="150" cy="150" r="128" fill="url(#tvbody)" stroke="#aeb4bb" stroke-width="3"/>
       <circle cx="150" cy="150" r="121" fill="none" stroke="#fff" stroke-width="2" opacity=".8"/>
-      <circle cx="132" cy="150" r="74" fill="url(#tvbht)"/>
-      <path d="M86 110 A74 74 0 0 1 178 92 L120 222 A74 74 0 0 1 86 110Z" fill="#fff" opacity=".05"/>
+      <circle cx="150" cy="150" r="70" fill="url(#tvbht)"/>
+      <path d="M104 110 A70 70 0 0 1 194 94 L138 222 A70 70 0 0 1 104 110Z" fill="#fff" opacity=".05"/>
       <g fill="none" stroke="#9aa1a8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M224 82 a7 7 0 1 0 6 0 M227 77 v7"/><path d="M220 122 v-11 l7 7 l7 -7 v11"/>
-        <circle cx="227" cy="150" r="7"/><path d="M227 146 v4 l3 2"/><path d="M220 188 l7 -9 l7 9"/><path d="M220 213 l7 9 l7 -9"/></g>
+        <path d="M234 82 a7 7 0 1 0 6 0 M237 77 v7"/><path d="M230 122 v-11 l7 7 l7 -7 v11"/>
+        <circle cx="237" cy="150" r="7"/><path d="M237 146 v4 l3 2"/><path d="M230 188 l7 -9 l7 9"/><path d="M230 213 l7 9 l7 -9"/></g>
       <g class="tv-heat tv-waves" fill="none" stroke="#ff9a2e" stroke-width="2.6" stroke-linecap="round">
-        ${[0, 1, 2].map((i) => `<path class="tv-w tv-w${i + 1}" d="M${122 + i * 9} 104 q-4 -5 0 -10 q4 -5 0 -10"/>`).join('')}</g>
-      <text class="tv-txt tv-big" id="tvbig" x="128" y="166" text-anchor="middle" font-size="46" font-weight="500" letter-spacing="-1">--</text>
-      <text class="tv-txt" x="176" y="132" font-size="13" opacity=".9">°C</text>
-      <text class="tv-txt" id="tvsmall" x="132" y="192" text-anchor="middle" font-size="15" opacity=".8">--</text>
-      <text class="tv-txt" id="tvclock" x="132" y="213" text-anchor="middle" font-size="13" opacity=".6" letter-spacing="1"></text>
-      ${SNOW(96, 128, 16, '#7cc4ff')}` },
+        ${[0, 1, 2].map((i) => `<path class="tv-w tv-w${i + 1}" d="M${140 + i * 9} 104 q-4 -5 0 -10 q4 -5 0 -10"/>`).join('')}</g>
+      <text class="tv-txt tv-big" id="tvbig" x="146" y="166" text-anchor="middle" font-size="44" font-weight="500" letter-spacing="-1">--</text>
+      <text class="tv-txt" x="190" y="132" font-size="12" opacity=".9">°C</text>
+      <text class="tv-txt" id="tvsmall" x="150" y="192" text-anchor="middle" font-size="15" opacity=".8">--</text>
+      <text class="tv-txt" id="tvclock" x="150" y="213" text-anchor="middle" font-size="13" opacity=".6" letter-spacing="1"></text>
+      ${SNOW(114, 128, 16, '#7cc4ff')}` },
   };
   // arc du Nest : 270°, de 135° (bas gauche) à 45° (bas droite), rayon 150
   const ARC = (() => { const c = 199, r = 150, a0 = 135 * Math.PI / 180, a1 = 405 * Math.PI / 180, p = (a) => `${(c + r * Math.cos(a)).toFixed(1)} ${(c + r * Math.sin(a)).toFixed(1)}`; return `M${p(a0)} A${r} ${r} 0 1 1 ${p(a1)}`; })();
@@ -27763,7 +29063,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         { type: 'grid', name: '', schema: [{ name: 'header', selector: { select: { mode: 'dropdown', options: ['name', 'icon', 'both'] } } }, { name: 'icon', selector: { icon: {} } }] },
         { name: 'big_value', selector: { select: { mode: 'dropdown', options: ['target', 'current'] } } },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_hvac_modes'), bool('show_temperature'), bool('show_valve'), bool('show_battery'), bool('show_window'), bool('show_humidity'), { name: 'minimal', selector: { boolean: {} } }, bool('animations')] },
       ];
       // « model » : libellé propre à la carte (le libellé partagé de l'éditeur parle d'un modèle de détecteur)
@@ -28317,6 +29617,81 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "previous": "Vorige periode",
       "fan_mode": "Ventilatormodus",
       "preset_mode": "Voorinstelling"
+    },
+    "pl": {
+      "name": "Klimat pomieszczenia",
+      "comfort": "Komfortowo",
+      "cool": "Chłodno",
+      "warm": "Ciepło",
+      "humid": "Wilgotno",
+      "dry": "Sucho",
+      "unavailable": "Niedostępny",
+      "too_hot": "Za gorąco",
+      "too_cold": "Za zimno",
+      "too_humid": "Za wilgotno",
+      "too_dry": "Za sucho",
+      "mold_risk": "Ryzyko pleśni",
+      "condensation_risk": "Ryzyko kondensacji",
+      "ventilate": "Przewietrz pomieszczenie",
+      "air_dry": "powietrze na zewnątrz jest suchsze",
+      "air_cool": "powietrze na zewnątrz jest chłodniejsze",
+      "window_open": "Okno otwarte",
+      "window_guess": "Okno otwarte? (nagły spadek temperatury)",
+      "window_drop_note": "Okno otwarte? −{n}° w 15 min",
+      "battery_low": "Niski poziom baterii",
+      "outdoor": "Na zewnątrz",
+      "dew_point": "Punkt rosy",
+      "trend_1h": "Zmiana w ostatniej godzinie",
+      "stable": "stabilnie",
+      "history": "Historia",
+      "close": "Zamknij",
+      "both": "Oba",
+      "temperature": "Temperatura",
+      "humidity": "Wilgotność",
+      "h24": "24 h",
+      "d7": "7 dni",
+      "d30": "30 dni",
+      "current": "Teraz",
+      "average": "Średnia",
+      "min": "Min",
+      "max": "Maks",
+      "loading": "Ładowanie…",
+      "no_history": "Brak dostępnej historii",
+      "ideal_zone": "Strefa idealna",
+      "avg_short": "Śr.",
+      "indoor": "Wewnątrz",
+      "st_standard": "Standardowy",
+      "st_gauge": "Wskaźnik",
+      "st_gradient": "Gradient",
+      "st_minimal": "Minimalistyczny",
+      "st_lcd": "Stacja pogodowa",
+      "st_tile": "Mini kafelek",
+      "st_thermometer": "Duży termometr",
+      "st_gradient_ring": "Pierścień gradientowy",
+      "st_double_ring": "Podwójny pierścień",
+      "st_dial": "Tarcza ze wskazówką",
+      "st_neon": "Neon",
+      "st_netatmo": "Netatmo",
+      "st_nest": "Google Nest",
+      "heating_now": "Grzanie",
+      "st_bars": "Słupki",
+      "lcd_auto": "Automatycznie (zielony w dzień, niebieski w trybie ciemnym)",
+      "lcd_green": "Zielony",
+      "lcd_blue": "Niebieski",
+      "lcd_amber": "Bursztynowy",
+      "tap_history": "Okno historii",
+      "tap_more_info": "Szczegóły encji",
+      "tap_navigate": "Otwórz stronę",
+      "tap_none": "Nic",
+      "target": "Cel",
+      "thermostat_off": "Termostat wyłączony",
+      "heating": "grzanie",
+      "cooling": "chłodzenie",
+      "compare": "Porównaj",
+      "yesterday": "Wczoraj",
+      "previous": "Poprzedni okres",
+      "fan_mode": "Tryb wentylatora",
+      "preset_mode": "Preset"
     },
     "ro": {
       "name": "Climat cameră",
@@ -29921,7 +31296,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
         ...((this._c && (this._c.variant || this._c.style)) === 'lcd' ? [sel('lcd_color', [['auto', 'lcd_auto'], ['green', 'lcd_green'], ['blue', 'lcd_blue'], ['amber', 'lcd_amber']])] : []),
         { type: 'grid', name: '', schema: [color('color_comfort'), color('color_cool'), color('color_warm'), color('color_humidity'), color('color_dry'), color('color_alert')] },
         window.applianceTempField,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'labels', selector: { object: {} } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_outdoor'), bool('show_dew_point'), bool('show_advice'), bool('show_graph'), bool('show_trend'), bool('animations'), { name: 'transparent', selector: { boolean: {} } }] },
@@ -30186,6 +31561,39 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "last_open": "Laatst geopend",
       "model_standard": "Gewone brievenbus",
       "model_boks": "BOKS (pakketbox)"
+    },
+    "pl": {
+      "name": "Skrzynka pocztowa",
+      "empty": "Pusty",
+      "mail": "Poczta",
+      "parcel": "Paczka",
+      "both": "Poczta + paczka",
+      "open": "Drzwi otwarte",
+      "door_front": "Przód",
+      "door_back": "Tył",
+      "open_front": "Przednie drzwiczki otwarte",
+      "open_back": "Tylne drzwiczki otwarte",
+      "open_both": "Drzwiczki otwarte",
+      "closed": "Zamknięta",
+      "open_short": "Otwarta",
+      "unavailable": "Niedostępny",
+      "collect": "Oznacz jako odebrane",
+      "last": "Dostarczono",
+      "count": "Listy",
+      "battery": "Bateria",
+      "color_anthracite": "Antracyt",
+      "color_black": "Czarny",
+      "color_grey": "Szary",
+      "color_white": "Biały",
+      "color_green": "Zielony",
+      "color_red": "Czerwony",
+      "color_blue": "Niebieski",
+      "color_yellow": "Żółty",
+      "color_brown": "Brązowy",
+      "open_door": "Otwórz drzwi",
+      "last_open": "Ostatnio otwarto",
+      "model_standard": "Standardowa skrzynka pocztowa",
+      "model_boks": "BOKS (skrzynka na paczki)"
     },
     "ro": {
       "name": "Cutie poștală",
@@ -30688,7 +32096,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         { type: 'grid', name: '', schema: [{ name: 'mail_states', selector: { text: {} } }, { name: 'parcel_states', selector: { text: {} } }] },
         ...(boks ? [] : [{ name: 'box_color', selector: { select: { mode: 'dropdown', custom_value: true, options: Object.keys(COLORS).map((value) => ({ value, label: tr['color_' + value] || value })) } } }]),
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_since'), bool('show_count'), bool('show_battery'), bool('show_buttons'), bool('show_doors'), bool('show_last_open'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
@@ -30932,6 +32340,37 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       "level": "Gasniveau",
       "open_valve": "Klep openen",
       "close_valve": "Klep sluiten"
+    },
+    "pl": {
+      "name": "Czujnik dymu",
+      "ok": "OK",
+      "alarm": "Dym!",
+      "co": "Tlenek węgla",
+      "test": "Test",
+      "fault": "Usterka",
+      "low_battery": "Niski poziom baterii",
+      "unavailable": "Niedostępny",
+      "alarm_at": "Dym wykryty o {t}",
+      "co_ppm": "Tlenek węgla: {n} ppm, przewietrz!",
+      "co_detected": "Wykryto tlenek węgla, przewietrz!",
+      "co_detected_short": "Wykryto",
+      "fault_detail": "Czujnik zgłasza usterkę",
+      "test_button": "Test",
+      "silence": "Wycisz alarm",
+      "since": "Ostatnia zmiana",
+      "alarm_tile": "Alarm",
+      "co_level": "CO",
+      "battery": "Bateria",
+      "temperature": "Temperatura",
+      "low": "Niski",
+      "model_cylinder": "Kompaktowy walec",
+      "model_round": "Okrągły",
+      "gas_name": "Czujnik gazu",
+      "gas_alarm": "Gaz!",
+      "gas_alarm_at": "Gaz wykryty o {t}",
+      "level": "Poziom gazu",
+      "open_valve": "Otwórz zawór",
+      "close_valve": "Zamknij zawór"
     },
     "ro": {
       "name": "Detector de fum",
@@ -31373,7 +32812,7 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
         ent('entity_temperature', 'sensor'),
         window.applianceTempField,
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_since'), bool('show_co'), bool('show_battery'), bool('show_temperature'), bool('show_level'), bool('show_buttons'), bool('animations')] },
       ].filter(Boolean);
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
@@ -31619,6 +33058,37 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
       "ok": "OK",
       "door": "Deur",
       "since": "Sinds"
+    },
+    "pl": {
+      "name": "Inteligentny zamek",
+      "model_nuki_3_pro": "Nuki Smart Lock 3.0 Pro",
+      "model_nuki_pro_5": "Nuki Smart Lock Pro (5. gen.)",
+      "locked": "Zamknięty",
+      "unlocked": "Odblokowany",
+      "locking": "Zamykanie",
+      "unlocking": "Odblokowywanie",
+      "open": "Otwarto zamek",
+      "opening": "Otwieranie zamka",
+      "jammed": "Zablokowany",
+      "unknown": "Nieznany",
+      "unavailable": "Niedostępny",
+      "door_open": "Drzwi otwarte",
+      "door_closed": "Zamknięta",
+      "door_opened": "Otwarta",
+      "jammed_detail": "Silnik jest zablokowany: sprawdź drzwi i klucz",
+      "battery_critical": "Bateria krytyczna: wymień lub naładuj",
+      "btn_lock": "Zamknij",
+      "btn_unlock": "Odblokuj",
+      "btn_open": "Otwórz zamek",
+      "btn_confirm": "Potwierdzić?",
+      "btn_lock_n_go": "Lock 'n' Go",
+      "btn_lock_n_go_unlatch": "Lock 'n' Go + otwarcie zamka",
+      "battery": "Bateria",
+      "charging": "Ładowanie",
+      "critical": "Krytyczna",
+      "ok": "OK",
+      "door": "Drzwi",
+      "since": "Od"
     },
     "ro": {
       "name": "Încuietoare inteligentă",
@@ -32091,7 +33561,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         { name: 'battery_low', default: 20, selector: { number: { min: 1, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
         ent('entity_door', ['binary_sensor', 'sensor']),
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('confirm_open'), bool('show_status'), bool('show_buttons'), bool('show_battery'), bool('show_door'), bool('show_since'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'lock_model' : s.name, this._hass);
@@ -32264,6 +33734,30 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "on": "Aan",
       "off": "Uit",
       "low": "Laag",
+      "ok": "OK"
+    },
+    "pl": {
+      "name": "Klapka dla kota",
+      "mode_unlocked": "Otwarta",
+      "mode_locked_all": "Zamknięty",
+      "mode_locked_in": "Tylko wejście",
+      "mode_locked_out": "Tylko wyjście",
+      "mode_curfew": "Godzina policyjna",
+      "mode_unknown": "Nieznany",
+      "mode_unavailable": "Niedostępny",
+      "curfew": "Godzina policyjna",
+      "inside": "W środku",
+      "outside": "Na zewnątrz",
+      "unknown": "Nieznany",
+      "went_in": "{n} wszedł",
+      "went_out": "{n} wyszedł",
+      "intruder_detail": "Nieznane zwierzę przy klapce",
+      "battery_low": "Niski poziom baterii: wymień baterie",
+      "battery": "Bateria",
+      "since": "Ostatnie przejście",
+      "on": "Wł.",
+      "off": "Wył.",
+      "low": "Niski",
       "ok": "OK"
     }
   };
@@ -32656,7 +34150,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         ent('entity_battery', ['sensor', 'binary_sensor']),
         { name: 'battery_low', default: 20, selector: { number: { min: 1, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski', cs: 'Čeština' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski', cs: 'Čeština' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_pets'), bool('show_buttons'), bool('show_inside'), bool('show_outside'), bool('show_battery'), bool('show_curfew'), bool('show_since'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
@@ -32926,6 +34420,46 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "ok": "OK",
       "to_change": "Vervangen",
       "to_clean": "Schoonmaken"
+    },
+    "pl": {
+      "name": "Poidełko dla zwierząt",
+      "state_flowing": "Płynie",
+      "state_drinking": "Pije",
+      "state_low": "Mało wody",
+      "state_empty": "Pusty",
+      "state_off": "Wył.",
+      "state_unavailable": "Niedostępny",
+      "alert_empty": "Zbiornik pusty: napełnij poidełko",
+      "alert_low": "Niski poziom wody",
+      "alert_filter": "Wymień filtr",
+      "alert_clean": "Czas na czyszczenie",
+      "battery_low": "Niski poziom baterii",
+      "btn_turn_on": "Włącz",
+      "btn_turn_off": "Wyłącz",
+      "btn_light": "Światło",
+      "btn_filter_reset": "Reset filtra",
+      "btn_clean_reset": "Wyczyszczono",
+      "btn_confirm": "Potwierdzić?",
+      "mode_continuous": "Ciągły",
+      "mode_intermittent": "Przerywany",
+      "mode_sensor": "Czujnik",
+      "mode_smart": "Inteligentny",
+      "mode_normal": "Norma",
+      "mode_flowing": "Płynie",
+      "mode_night": "Noc",
+      "mode_eco": "Eko",
+      "level": "Woda",
+      "filter": "Filtr",
+      "today": "Dzisiaj",
+      "drink": "Ostatnie picie",
+      "clean": "Czyszczenie",
+      "power": "Moc",
+      "battery": "Bateria",
+      "days": "d",
+      "low": "Niski",
+      "ok": "OK",
+      "to_change": "Do wymiany",
+      "to_clean": "Do wyczyszczenia"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
@@ -33310,7 +34844,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         num('filter_low', 10, 100, '%'),
         num('battery_low', 20, 100, '%'),
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski', cs: 'Čeština' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski', cs: 'Čeština' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_buttons'), bool('show_level'), bool('show_filter'), bool('show_today'), bool('show_drink'), bool('show_clean'), bool('show_power'), bool('show_battery'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
@@ -33510,6 +35044,31 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "temperature": "Temperatuur",
       "humidity": "Luchtvochtigheid",
       "low": "Laag",
+      "ok": "OK"
+    },
+    "pl": {
+      "name": "Czujnik wycieku",
+      "dry": "Sucho",
+      "leak": "Wyciek!",
+      "leak_valve_closed": "Wyciek, zawór zamknięty",
+      "freeze": "Ryzyko zamarznięcia",
+      "low_battery": "Niski poziom baterii",
+      "unavailable": "Niedostępny",
+      "leak_at": "Woda wykryta o {t}",
+      "leak_where": "Wyciek: {names}",
+      "water_off": "dopływ wody odcięty",
+      "freeze_alert": "Ryzyko zamarznięcia: zabezpiecz rury",
+      "open_valve": "Otwórz zawór",
+      "close_valve": "Zamknij zawór",
+      "silence": "Wycisz syrenę",
+      "since": "Ostatnia zmiana",
+      "leak_tile": "Wyciek",
+      "probes": "Sondy",
+      "battery": "Bateria",
+      "battery_min": "Najniższa bateria",
+      "temperature": "Temperatura",
+      "humidity": "Wilgotność",
+      "low": "Niski",
       "ok": "OK"
     },
     "ro": {
@@ -33877,7 +35436,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         window.applianceTempField,
         ent('entity_humidity', 'sensor'),
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_since'), bool('show_probes'), bool('show_battery'), bool('show_temperature'), bool('show_humidity'), bool('show_buttons'), bool('animations')] },
       ].filter(Boolean);
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
@@ -34050,6 +35609,27 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "overheating": "Oververhitting",
       "disk_full": "Schijf bijna vol",
       "ram_full": "Geheugen vol",
+      "d": "d"
+    },
+    "pl": {
+      "name": "Mini PC",
+      "off": "Wył.",
+      "idle": "Bezczynny",
+      "running": "Pracuje",
+      "busy": "Zajęty",
+      "hot": "Przegrzanie",
+      "unavailable": "Niedostępny",
+      "cpu": "CPU",
+      "temp": "Temp. CPU",
+      "ram": "RAM",
+      "disk": "Dysk",
+      "down": "Pobieranie",
+      "up": "Wysyłanie",
+      "uptime": "Czas działania",
+      "power": "Moc",
+      "overheating": "Przegrzanie",
+      "disk_full": "Dysk prawie pełny",
+      "ram_full": "Pamięć przepełniona",
       "d": "d"
     },
     "ro": {
@@ -34474,7 +36054,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { type: 'grid', name: '', schema: [num('cpu_busy', 10, 100, 1, 70, '%'), num('temp_max', 40, 110, 1, 85, '°'), num('ram_max', 10, 100, 1, 90, '%'), num('disk_max', 10, 100, 1, 90, '%')] },
         window.applianceTempField,
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('compact', false), bool('show_cpu'), bool('show_temp'), bool('show_ram'), bool('show_disk'), bool('show_down'), bool('show_up'), bool('show_uptime'), bool('show_power'), bool('animations'),
         ] },
@@ -34672,6 +36252,30 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "volume_full": "Volume bijna vol",
       "security": "Beveiligingswaarschuwing",
       "update": "⬆ DSM-update beschikbaar"
+    },
+    "pl": {
+      "name": "NAS",
+      "off": "Wył.",
+      "idle": "Bezczynny",
+      "running": "Pracuje",
+      "busy": "Czynna",
+      "warning": "Ostrzeżenie",
+      "unavailable": "Niedostępny",
+      "volume": "Głośność",
+      "cpu": "CPU",
+      "ram": "RAM",
+      "temp": "Temperatura",
+      "disks": "Dyski",
+      "disk": "Dysk",
+      "down": "Pobieranie",
+      "up": "Wysyłanie",
+      "power": "Moc",
+      "volume_alert": "Wolumin uszkodzony",
+      "drive_alert": "Dysk {n}: problem",
+      "hot": "Przegrzanie",
+      "volume_full": "Wolumin prawie pełny",
+      "security": "Ostrzeżenie bezpieczeństwa",
+      "update": "⬆ Dostępna aktualizacja DSM"
     },
     "ro": {
       "name": "NAS",
@@ -35143,7 +36747,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { type: 'grid', name: '', schema: [num('cpu_busy', 10, 100, 1, 60, '%'), num('volume_max', 10, 100, 1, 85, '%'), num('temp_max', 30, 100, 1, 60, '°'), num('disk_temp_max', 30, 80, 1, 50, '°')] },
         window.applianceTempField,
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('compact', false), bool('show_volume'), bool('show_cpu'), bool('show_ram'), bool('show_temp'), bool('show_disks'), bool('show_down'), bool('show_up'), bool('show_power'), bool('animations'),
         ] },
@@ -35336,6 +36940,29 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "vol_up": "Harder",
       "mute": "Dempen",
       "home": "Start"
+    },
+    "pl": {
+      "name": "Dekoder TV",
+      "off": "Wył.",
+      "standby": "Czuwanie",
+      "idle": "Bezczynny",
+      "on": "Wł.",
+      "playing": "Odtwarzanie",
+      "paused": "Wstrzymano",
+      "buffering": "Ładowanie",
+      "unavailable": "Niedostępny",
+      "app": "Aplikacja",
+      "volume": "Głośność",
+      "power": "Moc",
+      "muted": "Wyciszono",
+      "play": "Odtwarzaj",
+      "pause": "Pauza",
+      "previous": "Poprzedni",
+      "next": "Następny",
+      "vol_down": "Ciszej",
+      "vol_up": "Głośniej",
+      "mute": "Wycisz",
+      "home": "Ekran główny"
     },
     "ro": {
       "name": "TV box",
@@ -35838,7 +37465,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ent('entity', 'media_player'), ent('entity_remote', 'remote'), ent('entity_power', 'sensor'),
         { name: 'volume_step', default: 0.05, selector: { number: { min: 0.01, max: 0.2, step: 0.01, mode: 'box' } } },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('compact', false), bool('show_controls'), bool('show_artwork'), bool('show_app'), bool('show_volume'), bool('show_power'), bool('animations')] },
         // boutons de la télécommande, un par un
         { type: 'grid', name: '', schema: BTN_KEYS.map((k) => bool(`show_btn_${k}`)) },
@@ -36049,6 +37676,32 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "normal": "Normaal",
       "over": "Over",
       "obese": "Obesitas"
+    },
+    "pl": {
+      "name": "Inteligentna waga",
+      "weight": "Waga",
+      "fat": "Tkanka tłuszczowa",
+      "fat_mass": "Masa tłuszczu",
+      "muscle": "Mięśnie",
+      "bone": "Kości",
+      "water": "Woda",
+      "visceral": "Tłuszcz trzewny",
+      "pulse": "Tętno",
+      "goal": "Cel",
+      "battery": "Bateria",
+      "bmi": "BMI",
+      "goal_reached": "Cel osiągnięty",
+      "last": "Zważono",
+      "just_now": "przed chwilą",
+      "min_ago": "{n} min temu",
+      "h_ago": "{n} godz. temu",
+      "d_ago": "{n} d temu",
+      "unavailable": "Niedostępny",
+      "trend": "{n} dni",
+      "under": "Niedowaga",
+      "normal": "Norma",
+      "over": "Nadwaga",
+      "obese": "Otyłość"
     },
     "ro": {
       "name": "Cântar inteligent",
@@ -36569,7 +38222,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ent('entity_visceral_fat'), ent('entity_heart_pulse'), ent('entity_weight_goal'), ent('entity_battery'), ent('entity_bmi'),
         { type: 'grid', name: '', schema: [num('height', 50, 250, 1, undefined, 'cm'), num('recent_minutes', 1, 120, 1, 5, 'min'), num('trend_days', 7, 365, 1, 30)] },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('compact', false), bool('show_bmi'), bool('show_trend'), bool('animations')] },
         // une case par tuile
         { type: 'grid', name: '', schema: TILES.map((t) => bool(t[3])) },
@@ -36584,6 +38237,276 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Balance Withings en photo 3D : pesée animée (empreintes, chiffres qui défilent, ondes), jauge IMC, courbe 30 jours et objectif (Withings).', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
+  });
+})();
+
+/* Carte « Chauffe-eau thermodynamique » — custom:appliance-thermo-heater-card
+ * Ballon à pompe à chaleur (type Ariston Nuos) : photo détourée + écorché du ballon (dessin proposé par Ppatou, #268).
+ * Le ballon se remplit du bleu (froid) au rouge (chaud) selon la réserve d'eau chaude, le ventilateur tourne en modes
+ * Éco (green) et Boost, la résistance rougit en Boost. Modes : off / pause / green / boost, lus sur l'entité (water_heater,
+ * select…) ou déduits de la puissance. Tuiles : énergie, puissance, mode, température, consigne, eau chaude.
+ */
+(() => {
+  const TAG = 'appliance-thermo-heater-card';
+  if (customElements.get(TAG)) return;
+
+  const T = {
+    "en": {
+      "name": "Thermodynamic water heater",
+      "mode_off": "Off",
+      "mode_pause": "Pause",
+      "mode_green": "Green",
+      "mode_boost": "Boost",
+      "mode_unavailable": "Unavailable",
+      "energy": "Energy",
+      "power": "Power",
+      "mode": "Mode",
+      "temp": "Temperature",
+      "target": "Target",
+      "reserve": "Hot water"
+    },
+    "fr": {
+      "name": "Chauffe-eau thermodynamique",
+      "mode_off": "Arrêt",
+      "mode_pause": "Pause",
+      "mode_green": "Vert (éco)",
+      "mode_boost": "Boost",
+      "mode_unavailable": "Indisponible",
+      "energy": "Énergie",
+      "power": "Puissance",
+      "mode": "Mode",
+      "temp": "Température",
+      "target": "Consigne",
+      "reserve": "Eau chaude"
+    },
+    "pl": {
+      "name": "Termodynamiczny podgrzewacz wody",
+      "mode_off": "Wył.",
+      "mode_pause": "Pauza",
+      "mode_green": "Eko",
+      "mode_boost": "Boost",
+      "mode_unavailable": "Niedostępny",
+      "energy": "Energia",
+      "power": "Moc",
+      "mode": "Tryb",
+      "temp": "Temperatura",
+      "target": "Cel",
+      "reserve": "Ciepła woda"
+    }
+  };
+  const asList = (v) => (Array.isArray(v) ? v : v ? [v] : []);
+
+  const CSS = `
+:host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--th-ok:var(--appliance-ok-color,#43a047);--th-heat:var(--appliance-heat-color,#ff8a00);
+  --th-alert:var(--appliance-alert-color,#db4437);--spd:2s}
+.head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
+.green .badge{background:color-mix(in srgb,var(--th-ok) 22%,transparent);color:var(--th-ok)}
+.boost .badge{background:color-mix(in srgb,var(--th-heat) 22%,transparent);color:var(--th-heat)}
+.body{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:4px}
+svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px * var(--illus-scale,1));max-width:100%;height:auto;margin:0 auto;cursor:pointer}
+.tiles{flex:1 1 130px;display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:6px;min-width:0}
+.tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
+.tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
+.tile .l span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tile .l ha-icon{--mdc-icon-size:13px;flex:none}
+.tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
+.tile.hide{display:none}
+/* ---- illustration ---- */
+.th-fan{transform-box:fill-box;transform-origin:50% 50%}
+.green .th-fan,.boost .th-fan{animation:thspin var(--spd) linear infinite}
+.boost .th-fan{animation-duration:calc(var(--spd) * .55)}
+.th-elem path{fill:#8d8d8d;transition:fill .4s}
+.boost .th-elem path{fill:#ff1a1a;animation:thglow 1.2s ease-in-out infinite alternate}
+.th-water{transition:filter .4s}
+.off .th-water,.unavailable .th-water{filter:grayscale(.85) opacity(.6)}
+.unavailable svg{filter:grayscale(.7) opacity(.7)}
+.noanim .th-fan,.noanim .th-elem path{animation:none}
+@keyframes thspin{to{transform:rotate(360deg)}}
+@keyframes thglow{from{opacity:.65}to{opacity:1}}
+`;
+
+  // Photo détourée (480 × 1088) et ventilateur découpé (disque tournant), en pixels de la photo d'origine 738 × 1674.
+  const PHOTO = 'data:image/webp;base64,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';
+  const FAN = 'data:image/webp;base64,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';
+  // Écorché : coordonnées du dessin d'origine (photo placée en 94, 255, 935 × 2120) → groupe mis à l'échelle de la photo.
+  const SVG = (label) => `<svg viewBox="0 0 738 1674" role="img" aria-label="${label}"><defs>
+    <radialGradient id="th2" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.00056481 1.02047 -0.0256174 -0.00127952 225 884)" cx="198" cy="1084" r="329" fx="198" fy="1084"> <stop offset="0" stop-color="#FEFEFE"/> <stop offset="0.870588" stop-color="#AF9E9D"/> <stop offset="1" stop-color="#613E3D"/> </radialGradient><radialGradient id="th3" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-1.02038 0.00265846 0.00127951 -0.120586 579 594)" cx="287" cy="530" r="100" fx="287" fy="530"> <stop offset="0" stop-color="#FEFEFE"/> <stop offset="0.870588" stop-color="#AF9E9D"/> <stop offset="1" stop-color="#613E3D"/> </radialGradient><radialGradient id="th4" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-1.02038 0.00322753 0.00127951 -0.1464 612 782)" cx="303" cy="683" r="82" fx="303" fy="683"> <stop offset="0" stop-color="#FEFEFE"/> <stop offset="0.870588" stop-color="#AF9E9D"/> <stop offset="1" stop-color="#613E3D"/> </radialGradient><radialGradient id="th5" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.000385681 1.02047 -0.0174928 -0.00127952 181 961)" cx="161" cy="1124" r="485" fx="161" fy="1124"> <stop offset="0" stop-color="#FEFEFE"/> <stop offset="0.870588" stop-color="#AF9E9D"/> <stop offset="1" stop-color="#613E3D"/> </radialGradient><radialGradient id="th6" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.16276 -0.0828705 0.00170577 0.0456112 -94 1502)" cx="561" cy="1526" r="223" fx="561" fy="1526"> <stop offset="0" stop-color="#FEFEFE"/> <stop offset="0.870588" stop-color="#AF9E9D"/> <stop offset="1" stop-color="#613E3D"/> </radialGradient><radialGradient id="th7" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.21902 0.0236432 -0.006381 0.0364952 -106 1434)" cx="528" cy="1501" r="240" fx="528" fy="1501"> <stop offset="0" stop-color="#FEFEFE"/> <stop offset="0.870588" stop-color="#AF9E9D"/> <stop offset="1" stop-color="#613E3D"/> </radialGradient><radialGradient id="th8" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.19047 -0.0579431 -0.000574884 0.0524797 -97 1648)" cx="516" cy="1708" r="169" fx="516" fy="1708"> <stop offset="0" stop-color="#FEFEFE"/> <stop offset="0.870588" stop-color="#AF9E9D"/> <stop offset="1" stop-color="#613E3D"/> </radialGradient><radialGradient id="th9" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.16276 -0.0828705 0.00170577 0.0456112 -94 1563)" cx="562" cy="1589" r="223" fx="562" fy="1589"> <stop offset="0" stop-color="#FEFEFE"/> <stop offset="0.870588" stop-color="#AF9E9D"/> <stop offset="1" stop-color="#613E3D"/> </radialGradient><radialGradient id="th10" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.16276 -0.0828705 0.00170577 0.0456112 -95 1623)" cx="564" cy="1652" r="223" fx="564" fy="1652"> <stop offset="0" stop-color="#FEFEFE"/> <stop offset="0.870588" stop-color="#AF9E9D"/> <stop offset="1" stop-color="#613E3D"/> </radialGradient><radialGradient id="th11" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.16199 0.065115 -0.00857217 0.0450657 -78 1450)" cx="561" cy="1557" r="224" fx="561" fy="1557"> <stop offset="0" stop-color="#FEFEFE"/> <stop offset="0.870588" stop-color="#AF9E9D"/> <stop offset="1" stop-color="#613E3D"/> </radialGradient><radialGradient id="th12" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.16199 0.065115 -0.00857217 0.0450657 -77 1510)" cx="563" cy="1620" r="224" fx="563" fy="1620"> <stop offset="0" stop-color="#FEFEFE"/> <stop offset="0.870588" stop-color="#AF9E9D"/> <stop offset="1" stop-color="#613E3D"/> </radialGradient><radialGradient id="th13" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.16199 0.065115 -0.00857217 0.0450657 -77 1570)" cx="564" cy="1683" r="224" fx="564" fy="1683"> <stop offset="0" stop-color="#FEFEFE"/> <stop offset="0.870588" stop-color="#AF9E9D"/> <stop offset="1" stop-color="#613E3D"/> </radialGradient>
+    <linearGradient id="thtank" gradientUnits="userSpaceOnUse" x1="506" y1="2157" x2="506" y2="867"><stop id="thg0" offset="0" stop-color="#000dc4"/><stop id="thg1" offset=".5" stop-color="#7f0762"/><stop offset="1" stop-color="#ff0000"/></linearGradient></defs>
+    <image href="${PHOTO}" x="0" y="0" width="738" height="1674"/>
+    <g class="th-fan"><image href="${FAN}" x="198" y="102" width="280" height="280"/></g>
+    <g transform="scale(.78935) translate(-94 -255)">
+      <g class="th-water"><path fill="url(#thtank)" stroke="#2b2a29" stroke-width="3" d="M923 2093c-208,92 -477,87 -699,0l1 -1145c232,-106 446,-119 699,0l-1 1145z"/></g>
+      <path fill="url(#th2)" d="M208 708l0 753c0,5 -4,9 -10,9l0 0c-5,0 -12,-4 -12,-9l1 -753c0,-5 5,-9 11,-9l0 0c5,0 10,4 10,9z"/><path fill="url(#th3)" d="M381 543l-188 0c-4,0 -8,-5 -8,-11l0 0c0,-6 4,-13 8,-13l188 1c4,0 8,6 8,12l0 0c0,6 -4,11 -8,11z"/><path fill="url(#th4)" d="M379 695l-152 0c-4,0 -8,-5 -8,-11l0 0c0,-6 4,-13 8,-13l152 1c4,0 8,6 8,12l0 0c0,6 -4,11 -8,11z"/><path fill="url(#th5)" d="M174 566l0 1116c0,5 -5,9 -12,9l0 0c-7,0 -14,-4 -14,-9l2 -1116c0,-5 6,-9 13,-9l0 0c7,0 12,4 12,9z"/><path fill="url(#th6)" d="M311 1533l499 -36c6,0 10,4 11,9l0 0c0,6 -4,11 -10,11l-499 36c-6,0 -10,-4 -11,-9l0 0c0,-6 4,-11 10,-11z"/><path fill="url(#th7)" d="M246 1485l567 12c5,0 8,5 8,10l0 0c-1,6 -5,10 -10,10l-567 -12c-5,0 -8,-5 -7,-10l0 0c1,-6 5,-10 10,-10z"/><path fill="url(#th8)" d="M221 1709l590 -21c7,0 13,4 13,10l0 0c0,6 -6,11 -14,11l-590 21c-7,0 -13,-4 -13,-10l0 0c0,-6 6,-11 14,-11z"/><path fill="url(#th9)" d="M312 1596l499 -36c6,0 10,4 11,9l0 0c0,6 -4,11 -10,11l-499 36c-6,0 -10,-4 -11,-9l0 0c0,-6 4,-11 10,-11z"/><path fill="url(#th10)" d="M314 1659l499 -36c6,0 10,4 11,9l0 0c0,6 -4,11 -10,11l-499 36c-6,0 -10,-4 -11,-9l0 0c0,-6 4,-11 10,-11z"/><path fill="url(#th11)" d="M313 1533l500 28c6,0 9,5 8,11l0 0c-1,6 -6,10 -12,10l-500 -28c-6,0 -9,-5 -8,-11l0 0c1,-6 6,-10 12,-10z"/><path fill="url(#th12)" d="M315 1596l500 28c6,0 9,5 8,11l0 0c-1,6 -6,10 -12,10l-500 -28c-6,0 -9,-5 -8,-11l0 0c1,-6 6,-10 12,-10z"/><path fill="url(#th13)" d="M316 1659l500 28c6,0 9,5 8,11l0 0c-1,6 -6,10 -12,10l-500 -28c-6,0 -9,-5 -8,-11l0 0c1,-6 6,-10 12,-10z"/>
+      <path fill="#825F5D" d="M247 1505l-34 -1c-12,0 -26,-12 -26,-25l0 -20 21 0 0 16c0,5 5,7 9,7l29 2 0 20z"/><path fill="#825F5D" d="M221 1729l-40 1c-16,0 -33,-11 -33,-24l0 -24 27 0 0 16c0,5 6,11 12,11l33 -1 1 21z"/><path fill="#825F5D" d="M195 518l-15 0c-14,0 -30,12 -30,24l0 20 25 0 0 -12c0,-4 6,-8 11,-8l9 0 0 -25z"/><path fill="#825F5D" d="M229 670l-11 0c-14,0 -30,12 -30,24l0 20 21 0 0 -12c0,-4 6,-8 11,-8l9 0 0 -25z"/>
+      <g class="th-elem"><path d="M563 1779l0 368c0,5 -5,9 -12,9l0 0c-7,0 -14,-4 -14,-9l2 -368c0,-5 6,-9 13,-9l0 0c7,0 12,4 12,9z"/><path d="M595 1779l0 369c0,5 5,9 12,9l0 0c7,0 14,-4 14,-9l-2 -369c0,-5 -6,-9 -13,-9l0 0c-7,0 -12,4 -12,9z"/><path d="M583 1732l-15 0c-14,0 -30,12 -30,24l0 20 25 0 0 -12c0,-4 6,-8 11,-8l9 0 0 -24z"/><path d="M575 1731l15 0c14,0 30,12 30,24l0 20 -25 0 0 -12c0,-4 -6,-8 -11,-9l-9 0 0 -24z"/></g>
+      <rect fill="#d3d2d8" stroke="#2b2a29" x="524" y="2124" width="34" height="38"/><rect fill="#d3d2d8" stroke="#2b2a29" x="599" y="2124" width="34" height="38"/><rect fill="#7f7e75" stroke="#2b2a29" x="550" y="2124" width="49" height="38"/>
+    </g>
+  </svg>`;
+
+  const TILES = [['energy', 'mdi:lightning-bolt-outline', 'show_energy'], ['power', 'mdi:flash', 'show_power'], ['mode', 'mdi:cog-sync', 'show_mode'],
+    ['temp', 'mdi:thermometer', 'show_temp'], ['target', 'mdi:target', 'show_target'], ['reserve', 'mdi:gauge', 'show_reserve']];
+  // mode lu sur l'entité ; les états reconnus (dans toutes les langues courantes) priment sur la puissance
+  const RE_OFF = /^(off|unavailable|unknown|none|aus|arr[êe]t|spento|uit|av|oprit)$/i;
+  const RE_BOOST = /boost|perform|turbo|electric|[ée]lectri|force|high.?demand|forc[ée]|intensiv|rapid|comfort/i;
+  const RE_GREEN = /eco|green|vert|heat.?pump|thermodyn|pompe|auto|energy.?sav|smart|normal|w[äa]rmepumpe/i;
+  const RE_PAUSE = /pause|idle|away|vacation|holiday|standby|absence|urlaub|veille|hors.?gel/i;
+
+  class ApplianceThermoHeaterCard extends HTMLElement {
+    get _config() { return this._c; }
+    static getConfigElement() { return document.createElement(TAG + '-editor'); }
+    static getStubConfig(hass) {
+      const ids = Object.keys((hass && hass.states) || {});
+      return { entity: ids.find((i) => i.startsWith('water_heater.')) || '' };
+    }
+    setConfig(c) {
+      if (window.applianceSize) window.applianceSize(this, c);
+      if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
+      this._c = { show_energy: true, show_power: true, show_mode: true, show_temp: true, show_target: true, show_reserve: true, boost_above: 1000, running_above: 20, ...c };
+      this._built = false;
+      if (this._hass) this._render();
+    }
+    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    getCardSize() { return 5; }
+    getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+
+    _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
+    _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
+    _st(id) { return id && this._hass.states[id]; }
+    _ok(s) { return !!s && !/^(unavailable|unknown)$/i.test(String(s.state)); }
+    _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
+    _unit(id, d) { const s = this._st(id); return String((s && s.attributes && s.attributes.unit_of_measurement) || d).trim(); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
+
+    _build() {
+      const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
+      root.innerHTML = `<style>${CSS}</style><ha-card>
+        <div class="head"><div class="title" id="thtitle"></div><div class="badge" id="thbadge"></div></div>
+        <div class="body">${SVG((this._c.name || this._t('name')).replace(/"/g, ''))}
+          <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
+        </div>
+      </ha-card>`;
+      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity || this._c.entity_power));
+      root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
+        const c = this._c; this._more({ energy: c.entity_energy, power: c.entity_power, mode: c.entity_mode || c.entity, temp: c.entity_temp || c.entity, target: c.entity_target || c.entity, reserve: c.entity_reserve }[el.dataset.k]);
+      }));
+      this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
+    }
+
+    _compute() {
+      const c = this._c, e = this._st(c.entity), a = (e && e.attributes) || {};
+      const power = this._num(c.entity_power);
+      const temp = !isNaN(this._num(c.entity_temp)) ? this._num(c.entity_temp) : parseFloat(a.current_temperature);
+      const target = !isNaN(this._num(c.entity_target)) ? this._num(c.entity_target) : parseFloat(a.temperature);
+      const reserve = this._num(c.entity_reserve);
+      const mS = this._st(c.entity_mode);
+      const known = [c.entity, c.entity_mode, c.entity_power, c.entity_temp].some((i) => this._ok(this._st(i)));
+      const raw = String((this._ok(mS) ? mS.state : a.operation_mode || (e && e.state)) || '');
+      let mode;
+      if (!known) mode = 'unavailable';
+      else if (e && /^off$/i.test(String(e.state)) || (this._ok(mS) && RE_OFF.test(raw))) mode = 'off';
+      else if (RE_BOOST.test(raw)) mode = 'boost';
+      else if (RE_PAUSE.test(raw)) mode = 'pause';
+      else if (RE_GREEN.test(raw) || (e && /^(on|heat|heating)$/i.test(String(e.state)))) mode = 'green';
+      else mode = null; // inconnu : déduit de la puissance
+      if (mode == null || mode === 'green' || mode === 'pause') {
+        // puissance : repli si le mode est inconnu, ou signale un chauffage appoint (résistance) malgré un mode éco
+        if (!isNaN(power)) {
+          if (power >= Number(c.boost_above)) mode = 'boost';
+          else if (mode == null || mode === 'green') mode = power >= Number(c.running_above) ? 'green' : 'pause'; // éco sans consommation = en attente
+        } else if (mode == null) mode = 'green';
+      }
+      return { mode, power, temp, target, reserve };
+    }
+
+    _render() {
+      if (!this._built) this._build();
+      const c = this._c, r = this._root, card = this._card;
+      const { mode, power, temp, target, reserve } = this._compute();
+      card.className = `${mode}${c.animations === false ? ' noanim' : ''}`;
+      // vitesse du ventilateur : plus la puissance est élevée, plus il tourne vite (bornée)
+      const spd = isNaN(power) ? 2 : Math.max(.7, Math.min(3, 3 - power / 500));
+      card.style.setProperty('--spd', `${spd.toFixed(2)}s`);
+      // réserve d'eau chaude (%), graduation du dégradé du ballon selon les dessins de Ppatou (10, 25, 50, 75, 90 %) ; sans capteur, déduite de la température / consigne
+      let lvl = reserve;
+      if (isNaN(lvl) && !isNaN(temp) && !isNaN(target) && target > 15) lvl = Math.max(0, Math.min(100, (temp - 15) / (target - 15) * 100));
+      if (isNaN(lvl)) lvl = mode === 'off' ? 0 : 60;
+      const f = Math.max(0, Math.min(1, lvl / 100));
+      r.getElementById('thg0').setAttribute('offset', '0');
+      r.getElementById('thg1').setAttribute('offset', String(Math.max(.02, Math.min(.98, f)).toFixed(3))); // comme les dessins de Ppatou : l'étape violette est placée au % de réserve (90 % → à 0,9 du bas)
+
+      r.getElementById('thtitle').textContent = c.name || this._t('name');
+      const badge = r.getElementById('thbadge');
+      badge.textContent = this._t(`mode_${mode}`);
+      badge.style.display = c.show_status === false ? 'none' : '';
+
+      const eu = this._unit(c.entity_energy, 'kWh'), tu = this._unit(c.entity_temp || c.entity, '°C'), ru = this._unit(c.entity_reserve, '%');
+      const V = {
+        energy: [c.entity_energy, this._fmt(this._num(c.entity_energy), 2), eu],
+        power: [c.entity_power, this._fmt(power, 0), this._unit(c.entity_power, 'W')],
+        mode: [c.entity_mode || c.entity || c.entity_power, this._t(`mode_${mode}`), ''],
+        temp: [c.entity_temp || c.entity, this._fmt(temp, 1), tu === '%' ? '°C' : (tu || '°C')],
+        target: [c.entity_target || c.entity, this._fmt(target, 0), tu === '%' ? '°C' : (tu || '°C')],
+        reserve: [c.entity_reserve, this._fmt(reserve, 0), ru],
+      };
+      TILES.forEach(([k, , opt]) => {
+        const el = r.querySelector(`.tile[data-k="${k}"]`); const [show, val, unit] = V[k];
+        const has = !!show && (k === 'mode' || k === 'energy' || k === 'power' || k === 'reserve' ? true : val !== '--');
+        el.classList.toggle('hide', !has || c[opt] === false);
+        el.querySelector('.lbl').textContent = this._l(k);
+        const small = document.createElement('small'); small.textContent = unit ?? '';
+        el.querySelector('.v').replaceChildren(String(val ?? ''), small);
+      });
+    }
+  }
+  customElements.define(TAG, ApplianceThermoHeaterCard);
+
+  /* ---- éditeur visuel ---- */
+  class ApplianceThermoHeaterCardEditor extends HTMLElement {
+    setConfig(c) { this._c = c; this._draw(); }
+    set hass(h) { this._hass = h; if (this._form) this._form.hass = h; }
+    _draw() {
+      if (!this._form) {
+        this._form = document.createElement('ha-form');
+        this._form.addEventListener('value-changed', (e) => {
+          this._c = e.detail.value;
+          this.dispatchEvent(new CustomEvent('config-changed', { detail: { config: this._c }, bubbles: true, composed: true }));
+        });
+        this.appendChild(this._form);
+      }
+      const ent = (name, domain) => ({ name, selector: { entity: domain ? { domain } : {} } });
+      const num = (name, min, max, step, def, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
+      const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
+      this._form.hass = this._hass;
+      this._form.data = this._c;
+      this._form.schema = [
+        { name: 'name', selector: { text: {} } },
+        { name: 'labels', selector: { object: {} } },
+        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
+        { name: 'transparent', selector: { boolean: {} } },
+        ent('entity', ['water_heater', 'climate', 'switch']), ent('entity_mode', ['select', 'input_select', 'sensor']),
+        ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'), ent('entity_temp', 'sensor'), ent('entity_target', ['sensor', 'number', 'input_number']),
+        ent('entity_reserve', 'sensor'),
+        { type: 'grid', name: '', schema: [num('running_above', 0, 2000, 1, 20, 'W'), num('boost_above', 100, 5000, 10, 1000, 'W')] },
+        ...window.applianceActionFields,
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_energy'), bool('show_power'), bool('show_mode'), bool('show_temp'), bool('show_target'), bool('show_reserve'), bool('animations')] },
+      ];
+      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
+    }
+  }
+  customElements.define(TAG + '-editor', ApplianceThermoHeaterCardEditor);
+
+  window.customCards = window.customCards || [];
+  window.customCards.push({
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
+    description: 'Chauffe-eau thermodynamique animé : ballon écorché (réserve d\'eau chaude), ventilateur, résistance, modes off / pause / green / boost.', preview: true,
+    documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/thermo-heater.md',
   });
 })();
 

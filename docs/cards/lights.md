@@ -39,7 +39,7 @@ With a `light` entity the card shows **On / Off** (and **Colour** on the colour 
 - `tap_action` / `hold_action` (tap / hold 0.5 s on the illustration): `more-info`, `toggle`, `navigate`, `url`, `perform-action`, `none`. Default: tap opens the more-info of `entity`
 - `compact` (default false): smaller paddings, title and buttons, and the illustration area fills the remaining height; `illustration_size` below 100 % shrinks the drawing inside it (the area keeps its place, so the layout does not move). For small fixed slots (e.g. Drag and Drop Card)
 - `animations`, `show_status`, `show_controls`, `show_button_labels` (default true; false = icons only), `show_brightness`, `show_power`, `show_energy`
-- `language: fr|en|de|it|nb|nl|ro|ru|sr|sr-Latn`
+- `language: fr|en|de|it|nb|nl|pl|ro|ru|sr|sr-Latn`
 
 ## Example
 

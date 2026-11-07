@@ -576,7 +576,8 @@
     "btn_open": "Open",
     "btn_stop": "Stop",
     "btn_close": "Close",
-    "btn_command": "Command"
+    "btn_command": "Command",
+    "btn_pedestrian": "Pedestrian"
   },
   "sauna": {
     "name": "Sauna",
@@ -702,6 +703,7 @@
     "entity_charge": "Battery charge",
     "entity_compressor": "Compressor",
     "entity_control": "Control (button / switch)",
+    "entity_pedestrian": "Pedestrian opening (button / script)",
     "entity_cop": "COP",
     "entity_cost": "Cost",
     "entity_energy": "Energy",
@@ -1068,7 +1070,13 @@
     "show_drink": "Show last drink",
     "show_clean": "Show cleaning",
     "entity_locked_in": "Lock \"In only\" (Sure Petcare)",
-    "entity_locked_out": "Lock \"Out only\" (Sure Petcare)"
+    "entity_locked_out": "Lock \"Out only\" (Sure Petcare)",
+    "entity_target": "Target temperature",
+    "entity_reserve": "Hot water reserve (%)",
+    "boost_above": "Boost above (W)",
+    "running_above": "Running above (W)",
+    "show_target": "Show target",
+    "show_reserve": "Show hot water"
   },
   "light": {
     "light_bulb": "Bulb",
@@ -1163,7 +1171,9 @@
     "flow": "Flow",
     "today": "Today",
     "index": "Index",
-    "cost": "Cost"
+    "cost": "Cost",
+    "variant_classic": "Classic (yellow bellows meter)",
+    "variant_modern": "Modern (grey meter, yellow pipe)"
   },
   "electric_meter": {
     "name": "Electric meter",
@@ -1564,5 +1574,19 @@
     "ok": "OK",
     "to_change": "To replace",
     "to_clean": "To clean"
+  },
+  "thermo": {
+    "name": "Thermodynamic water heater",
+    "mode_off": "Off",
+    "mode_pause": "Pause",
+    "mode_green": "Green",
+    "mode_boost": "Boost",
+    "mode_unavailable": "Unavailable",
+    "energy": "Energy",
+    "power": "Power",
+    "mode": "Mode",
+    "temp": "Temperature",
+    "target": "Target",
+    "reserve": "Hot water"
   }
 }

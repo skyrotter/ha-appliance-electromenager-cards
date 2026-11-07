@@ -560,7 +560,8 @@
     "btn_open": "Öffnen",
     "btn_stop": "Stopp",
     "btn_close": "Schließen",
-    "btn_command": "Befehl"
+    "btn_command": "Befehl",
+    "btn_pedestrian": "Fußgänger"
   },
   "sauna": {
     "name": "Sauna",
@@ -686,6 +687,7 @@
     "entity_charge": "Akkuladung",
     "entity_compressor": "Verdichter",
     "entity_control": "Steuerung (Taste / Schalter)",
+    "entity_pedestrian": "Fußgängeröffnung (Taste / Skript)",
     "entity_cop": "COP",
     "entity_cost": "Kosten",
     "entity_energy": "Energie",
@@ -1147,7 +1149,9 @@
     "flow": "Durchfluss",
     "today": "Heute",
     "index": "Zählerstand",
-    "cost": "Kosten"
+    "cost": "Kosten",
+    "variant_classic": "Klassisch (gelber Balgengaszähler)",
+    "variant_modern": "Modern (grauer Zähler, gelbes Rohr)"
   },
   "electric_meter": {
     "name": "Stromzähler",

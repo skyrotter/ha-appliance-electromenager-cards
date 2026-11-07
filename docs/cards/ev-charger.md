@@ -8,7 +8,7 @@
 
 ## Options
 
-Every value tile can be hidden with its `show_…` option, and `language: fr|en|de|it|nb|nl|ro|ru|sr|sr-Latn` forces the language.
+Every value tile can be hidden with its `show_…` option, and `language: fr|en|de|it|nb|nl|pl|ro|ru|sr|sr-Latn` forces the language.
 
 - `entity_power`
 - `entity_session_energy`

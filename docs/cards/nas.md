@@ -10,13 +10,14 @@ States: off, idle, running, very active (CPU above `cpu_busy` or high throughput
 
 ## Options
 
-Every value tile can be hidden with its `show_…` option, and `language: fr|en|de|it|nb|nl|ro|ru|sr|sr-Latn` forces the language.
+Every value tile can be hidden with its `show_…` option, and `language: fr|en|de|it|nb|nl|pl|ro|ru|sr|sr-Latn` forces the language.
 
 - `entity` (optional on / off: ping, switch)
 - `entity_volume` (volume status), `entity_volume_used` (%)
 - `entity_cpu` (%), `entity_ram` (%), `entity_temp` (system temperature)
 - `entity_net_down`, `entity_net_up` (DSM gives kB/s, shown as kB/s or MB/s)
 - `entity_drive_1` … `entity_drive_4` (disk status), `entity_drive_1_temp` … `entity_drive_4_temp`
+  All four disks, and each temperature, are optional: fill in only the entities your integration provides (DSM does not always report every disk temperature). The disks tile counts only the disks you set (`OK / known`) and shows the highest temperature among those that have one.
 - `entity_security` (binary_sensor, on = problem), `entity_update` (update entity), `entity_power` (W)
 - `cpu_busy` (default 60 %), `volume_max` (default 85 %), `temp_max` (default 60 °), `disk_temp_max` (default 50 °), `temperature_unit`
 - `animations` (default true)

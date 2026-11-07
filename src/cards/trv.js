@@ -140,18 +140,18 @@
       <circle cx="150" cy="152" r="128" fill="#000" opacity=".12" filter="url(#tvsoft)"/>
       <circle cx="150" cy="150" r="128" fill="url(#tvbody)" stroke="#aeb4bb" stroke-width="3"/>
       <circle cx="150" cy="150" r="121" fill="none" stroke="#fff" stroke-width="2" opacity=".8"/>
-      <circle cx="132" cy="150" r="74" fill="url(#tvbht)"/>
-      <path d="M86 110 A74 74 0 0 1 178 92 L120 222 A74 74 0 0 1 86 110Z" fill="#fff" opacity=".05"/>
+      <circle cx="150" cy="150" r="70" fill="url(#tvbht)"/>
+      <path d="M104 110 A70 70 0 0 1 194 94 L138 222 A70 70 0 0 1 104 110Z" fill="#fff" opacity=".05"/>
       <g fill="none" stroke="#9aa1a8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M224 82 a7 7 0 1 0 6 0 M227 77 v7"/><path d="M220 122 v-11 l7 7 l7 -7 v11"/>
-        <circle cx="227" cy="150" r="7"/><path d="M227 146 v4 l3 2"/><path d="M220 188 l7 -9 l7 9"/><path d="M220 213 l7 9 l7 -9"/></g>
+        <path d="M234 82 a7 7 0 1 0 6 0 M237 77 v7"/><path d="M230 122 v-11 l7 7 l7 -7 v11"/>
+        <circle cx="237" cy="150" r="7"/><path d="M237 146 v4 l3 2"/><path d="M230 188 l7 -9 l7 9"/><path d="M230 213 l7 9 l7 -9"/></g>
       <g class="tv-heat tv-waves" fill="none" stroke="#ff9a2e" stroke-width="2.6" stroke-linecap="round">
-        ${[0, 1, 2].map((i) => `<path class="tv-w tv-w${i + 1}" d="M${122 + i * 9} 104 q-4 -5 0 -10 q4 -5 0 -10"/>`).join('')}</g>
-      <text class="tv-txt tv-big" id="tvbig" x="128" y="166" text-anchor="middle" font-size="46" font-weight="500" letter-spacing="-1">--</text>
-      <text class="tv-txt" x="176" y="132" font-size="13" opacity=".9">°C</text>
-      <text class="tv-txt" id="tvsmall" x="132" y="192" text-anchor="middle" font-size="15" opacity=".8">--</text>
-      <text class="tv-txt" id="tvclock" x="132" y="213" text-anchor="middle" font-size="13" opacity=".6" letter-spacing="1"></text>
-      ${SNOW(96, 128, 16, '#7cc4ff')}` },
+        ${[0, 1, 2].map((i) => `<path class="tv-w tv-w${i + 1}" d="M${140 + i * 9} 104 q-4 -5 0 -10 q4 -5 0 -10"/>`).join('')}</g>
+      <text class="tv-txt tv-big" id="tvbig" x="146" y="166" text-anchor="middle" font-size="44" font-weight="500" letter-spacing="-1">--</text>
+      <text class="tv-txt" x="190" y="132" font-size="12" opacity=".9">°C</text>
+      <text class="tv-txt" id="tvsmall" x="150" y="192" text-anchor="middle" font-size="15" opacity=".8">--</text>
+      <text class="tv-txt" id="tvclock" x="150" y="213" text-anchor="middle" font-size="13" opacity=".6" letter-spacing="1"></text>
+      ${SNOW(114, 128, 16, '#7cc4ff')}` },
   };
   // arc du Nest : 270°, de 135° (bas gauche) à 45° (bas droite), rayon 150
   const ARC = (() => { const c = 199, r = 150, a0 = 135 * Math.PI / 180, a1 = 405 * Math.PI / 180, p = (a) => `${(c + r * Math.cos(a)).toFixed(1)} ${(c + r * Math.sin(a)).toFixed(1)}`; return `M${p(a0)} A${r} ${r} 0 1 1 ${p(a1)}`; })();
@@ -506,7 +506,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         { type: 'grid', name: '', schema: [{ name: 'header', selector: { select: { mode: 'dropdown', options: ['name', 'icon', 'both'] } } }, { name: 'icon', selector: { icon: {} } }] },
         { name: 'big_value', selector: { select: { mode: 'dropdown', options: ['target', 'current'] } } },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_hvac_modes'), bool('show_temperature'), bool('show_valve'), bool('show_battery'), bool('show_window'), bool('show_humidity'), { name: 'minimal', selector: { boolean: {} } }, bool('animations')] },
       ];
       // « model » : libellé propre à la carte (le libellé partagé de l'éditeur parle d'un modèle de détecteur)

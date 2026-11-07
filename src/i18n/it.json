@@ -560,7 +560,8 @@
     "btn_open": "Apri",
     "btn_stop": "Stop",
     "btn_close": "Chiudi",
-    "btn_command": "Comando"
+    "btn_command": "Comando",
+    "btn_pedestrian": "Pedonale"
   },
   "sauna": {
     "name": "Sauna",
@@ -686,6 +687,7 @@
     "entity_charge": "Carica della batteria",
     "entity_compressor": "Compressore",
     "entity_control": "Comando (pulsante / interruttore)",
+    "entity_pedestrian": "Apertura pedonale (pulsante / script)",
     "entity_cop": "COP",
     "entity_cost": "Costo",
     "entity_energy": "Energia",
@@ -1147,7 +1149,9 @@
     "flow": "Portata",
     "today": "Oggi",
     "index": "Indice",
-    "cost": "Costo"
+    "cost": "Costo",
+    "variant_classic": "Classico (contatore a soffietto giallo)",
+    "variant_modern": "Moderno (contatore grigio, tubo giallo)"
   },
   "electric_meter": {
     "name": "Contatore elettrico",
