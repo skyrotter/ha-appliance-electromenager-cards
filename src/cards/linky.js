@@ -82,7 +82,7 @@ class ApplianceLinkyCard extends HTMLElement {
     // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
     const l = this._config && (this._config.language || lang(hass));
     if (l && l !== this._lng) { this._lng = l; this._hass = hass; this._built = false; this._build(); }
-    this._hass = hass; this._update(); }
+    this._hass = hass; if (window.applianceChanged(this, hass, this._config)) this._update(); }
   getCardSize() { return 5; }
   getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
   _t(k) { return (I18N_LINKY[this._config.language || lang(this._hass)] || I18N_LINKY.en)[k] ?? I18N_LINKY.en[k] ?? k; }

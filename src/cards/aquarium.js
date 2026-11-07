@@ -74,7 +74,7 @@ class ApplianceAquariumCard extends HTMLElement {
     if (l && l !== this._lng) { this._lng = l; this._hass = hass; this._built = false; this._build(); }
    
     this._hass = hass;
-    this._update();
+    if (window.applianceChanged(this, hass, this._config)) this._update();
   }
 
   getCardSize() { return 5; }
