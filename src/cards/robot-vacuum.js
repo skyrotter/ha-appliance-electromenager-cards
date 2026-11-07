@@ -11,7 +11,7 @@ window.customCards = window.customCards || [];
  */
 const I18N_VAC = /*@i18n robot_vacuum*/{};
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
-const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
+const lang = (h) => window.applianceLang(I18N_VAC, null, h);
 const ICONS_VAC = {
   start: '<path d="M8 5v14l11-7z"/>',
   pause: '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>',

@@ -42,6 +42,13 @@ const SEL = {
   zone_2: { entity: { domain: ["sensor", "number", "select", "input_number"] } },
   zone_3: { entity: { domain: ["sensor", "number", "select", "input_number"] } },
   zone_4: { entity: { domain: ["sensor", "number", "select", "input_number"] } },
+  // piscine : analyses de l'eau et pression du filtre
+  ph: { entity: { domain: ["sensor", "number", "input_number"] } },
+  orp: { entity: { domain: ["sensor", "number", "input_number"] } },
+  pressure: { entity: { domain: ["sensor", "number", "input_number"] } },
+  tds: { entity: { domain: ["sensor", "number", "input_number"] } },
+  salt: { entity: { domain: ["sensor", "number", "input_number"] } },
+  chlorine: { entity: { domain: ["sensor", "number", "input_number"] } },
   speed: { entity: { domain: ["sensor", "number", "input_number", "select"] } },
   target_humidity: { entity: { domain: ["sensor", "number", "input_number", "humidifier"] } },
   tank_full: { entity: { domain: ["binary_sensor", "input_boolean", "sensor"] } },
@@ -66,11 +73,14 @@ function buildForm(kind) {
             { name: "spin_power", selector: { number: { min: 50, max: 2000, step: 25, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
           ...(["chest_freezer", "drawer_freezer"].includes(kind) ? [
-            { name: "freezer_max_temperature", selector: { number: { min: -30, max: 0, step: 0.5, mode: "box" } } },
+            { name: "temperature_unit", selector: { select: { mode: "dropdown", options: [{ value: "C", label: "°C" }, { value: "F", label: "°F" }] } } },
+            { name: "freezer_max_temperature", selector: { number: { min: -30, max: 32, step: 0.5, mode: "box" } } },
           ] : []),
           ...(kind === "wine_cooler" ? [
-            { name: "max_temperature", selector: { number: { min: 5, max: 25, step: 0.5, mode: "box" } } },
-            { name: "max_temperature_2", selector: { number: { min: 3, max: 25, step: 0.5, mode: "box" } } },
+            { name: "temperature_unit", selector: { select: { mode: "dropdown", options: [{ value: "C", label: "°C" }, { value: "F", label: "°F" }] } } },
+            { name: "max_temperature", selector: { number: { min: 5, max: 80, step: 0.5, mode: "box" } } },
+            { name: "max_temperature_2", selector: { number: { min: 3, max: 80, step: 0.5, mode: "box" } } },
+            { name: "humidity_max", selector: { number: { min: 40, max: 100, step: 1, mode: "box", unit_of_measurement: "%" } } },
           ] : []),
           ...(kind === "fridge" ? [
             { name: "style", selector: { select: { mode: "dropdown", options: [
@@ -78,9 +88,11 @@ function buildForm(kind) {
               { value: "bottom_door", label: "Combiné, porte en bas / Bottom freezer door" },
               { value: "french", label: "French door" }, { value: "four_door", label: "4 portes / 4-door" }, { value: "american", label: "Américain / Side-by-side" }, { value: "single", label: "Une porte / Single door" }] } } },
             { name: "finish", selector: { select: { mode: "dropdown", options: [{ value: "inox", label: "Inox / Stainless steel" }, { value: "white", label: "Blanc / White" }, { value: "black", label: "Noir / Black" }] } } },
-            { name: "max_temperature", selector: { number: { min: 0, max: 15, step: 0.5, mode: "box" } } },
-            { name: "freezer_max_temperature", selector: { number: { min: -30, max: 0, step: 0.5, mode: "box" } } },
-            { name: "flex_max_temperature", selector: { number: { min: -30, max: 15, step: 0.5, mode: "box" } } },
+            { name: "temperature_unit", selector: { select: { mode: "dropdown", options: [{ value: "C", label: "°C" }, { value: "F", label: "°F" }] } } },
+            // bornes larges : les seuils sont saisis dans l'unité choisie (°C ou °F)
+            { name: "max_temperature", selector: { number: { min: 0, max: 60, step: 0.5, mode: "box" } } },
+            { name: "freezer_max_temperature", selector: { number: { min: -30, max: 32, step: 0.5, mode: "box" } } },
+            { name: "flex_max_temperature", selector: { number: { min: -30, max: 60, step: 0.5, mode: "box" } } },
           ] : []),
           ...(["washer", "dryer", "dishwasher"].includes(kind) ? [
             { name: "last_cycle", selector: { boolean: {} } },
@@ -195,6 +207,11 @@ function buildForm(kind) {
               { value: "filtre", label: "Filtre / Drip" }, { value: "dosette", label: "Dosettes / Pods" }, { value: "expresso", label: "Expresso / Bean-to-cup" }] } } },
             { name: "warm_threshold", selector: { number: { min: 0, max: 300, step: 1, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
+          ...(kind === "cookeo" ? [
+            { name: "style", selector: { select: { mode: "dropdown", options: [{ value: "photo", label: "Photo" }, { value: "drawing", label: "Dessin / Drawing" }] } } },
+            { name: "standby_threshold", selector: { number: { min: 0, max: 20, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
+            { name: "heat_threshold", selector: { number: { min: 200, max: 1500, step: 10, mode: "box", unit_of_measurement: "W" } } },
+          ] : []),
           ...(kind === "thermomix" ? [
             { name: "model", selector: { select: { mode: "dropdown", options: [{ value: "tm6", label: "TM6 (blanc / white)" }, { value: "tm7", label: "TM7 (noir / black)" }] } } },
             { name: "standby_threshold", selector: { number: { min: 0, max: 20, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
@@ -248,13 +265,15 @@ function buildForm(kind) {
             { name: "sun_entity", selector: { entity: { domain: "sun" } } },
           ] : []),
           ...(kind === "pool_pump" ? [
+            // mesures affichées en tuiles : chacune se coche / décoche (affichée si le capteur est renseigné)
+            ...["temperature", "ph", "orp", "pressure", "tds", "salt", "chlorine"].map((k) => ({ name: `show_${k}`, selector: { boolean: {} }, default: true })),
             { name: "max_power", selector: { number: { min: 100, max: 3000, step: 10, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
           ...(kind === "pellet_stove" ? [
             { name: "ignition_threshold", selector: { number: { min: 50, max: 1000, step: 10, mode: "box", unit_of_measurement: "W" } } },
             { name: "pellet_alert", selector: { number: { min: 0, max: 50, step: 1, mode: "box", unit_of_measurement: "%" } } },
           ] : []),
-          ...(["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "chest_freezer", "drawer_freezer", "desktop_pc", "server_rack", "ps5", "thermomix"].includes(kind) ? [{ name: "confirm_off", selector: { boolean: {} }, default: true }] : []),
+          ...(["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "chest_freezer", "drawer_freezer", "desktop_pc", "server_rack", "ps5", "thermomix", "cookeo"].includes(kind) ? [{ name: "confirm_off", selector: { boolean: {} }, default: true }] : []),
           // case à cocher : 2e clic obligatoire dès que la prise est allumée, quel que soit l'appareil
           ...(d.fields.includes("switch") || kind === "power_strip" ? [{ name: "confirm_always", selector: { boolean: {} } }] : []),
           { name: "tap_action", selector: { ui_action: { actions: ["more-info", "toggle", "navigate", "url", "perform-action", "none"] } } },
@@ -263,7 +282,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "fridge" && s.name === "finish" ? "f_fridge_finish" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "cookeo" && s.name === "style" ? "f_cookeo_style" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "fridge" && s.name === "finish" ? "f_fridge_finish" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
   };
 }
 
@@ -292,11 +311,11 @@ function stubFor(kind, hass) {
   if (power) cfg.power = power;
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "thermomix", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;
-  if (temp && ["kettle", "fridge", "water_heater", "oven", "air_fryer", "beer_tap", "pellet_stove", "pool_pump", "printer_3d", "chest_freezer", "drawer_freezer", "radiator", "towel_dryer", "server_rack", "wine_cooler"].includes(kind)) cfg.temperature = temp;
+  if (temp && ["kettle", "cookeo", "fridge", "water_heater", "oven", "air_fryer", "beer_tap", "pellet_stove", "pool_pump", "printer_3d", "chest_freezer", "drawer_freezer", "radiator", "towel_dryer", "server_rack", "wine_cooler"].includes(kind)) cfg.temperature = temp;
   if (kind === "dehumidifier") {
     const hum = pick((i, st) => i.startsWith("sensor.") && dc(st) === "humidity");
     const tank = pick((i) => i.startsWith("binary_sensor.") && /(tank|bac|reservoir|full|plein)/.test(i));

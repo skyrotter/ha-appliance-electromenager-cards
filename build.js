@@ -42,11 +42,11 @@ const CSS_FILES = [
   "card", "illustration-shared", "washer-dryer", "dishwasher", "water-heater", "oven-microwave",
   "radiator", "cooktop", "vmc", "solar", "freezers", "printer-3d", "pool-pump", "pellet-stove",
   "fridge", "air-fryer", "coffee-maker", "tv", "range-hood", "ac-split", "heat-pump",
-  "towel-dryer", "server-rack", "desktop-pc", "laptop", "wine-cooler", "beer-tap", "av-receiver", "smart-speaker", "fan", "generic", "tool-charger", "ceiling-fan", "dehumidifier", "monitor", "kettle-toaster", "plugs-piano-garland", "wet-vacuum", "ps5", "thermomix",
+  "towel-dryer", "server-rack", "desktop-pc", "laptop", "wine-cooler", "beer-tap", "av-receiver", "smart-speaker", "fan", "generic", "tool-charger", "ceiling-fan", "dehumidifier", "monitor", "kettle-toaster", "plugs-piano-garland", "wet-vacuum", "ps5", "thermomix", "cookeo",
 ].map((n) => `core/style/${n}.css`);
 /* Self-contained cards, each in its own IIFE. */
 const CARD_FILES = [
-  "editor-labels", "aquarium", "linky", "battery", "ev-charger", "robot-vacuum", "robot-mower", "pellet-boiler", "gas-boiler", "water-heat-pump", "diesel-heater", "jacuzzi", "access", "sauna", "pumps", "pool-robot", "ups", "underfloor-heating", "lights", "shutters", "water-meter", "gas-meter", "electric-meter", "trv", "room-climate", "mailbox", "smoke-detector", "smart-lock", "cat-flap", "pet-fountain", "leak-detector", "mini-pc", "nas", "tv-box", "scale", "picker",
+  "card-helpers", "editor-labels", "aquarium", "linky", "battery", "ev-charger", "robot-vacuum", "robot-mower", "pellet-boiler", "gas-boiler", "water-heat-pump", "diesel-heater", "jacuzzi", "access", "sauna", "pumps", "pool-robot", "ups", "underfloor-heating", "lights", "shutters", "water-meter", "gas-meter", "electric-meter", "trv", "room-climate", "mailbox", "smoke-detector", "smart-lock", "cat-flap", "pet-fountain", "leak-detector", "mini-pc", "nas", "tv-box", "scale", "picker",
 ].map((n) => `cards/${n}.js`);
 
 const read = (p) => fs.readFileSync(p, "utf8").replace(/\r\n/g, "\n");

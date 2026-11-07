@@ -13,6 +13,7 @@ It works with the `climate` entity of any smart radiator valve (Zigbee2MQTT, ZHA
 | `entity_valve_position` | valve opening in % (`sensor` / `number`). Without it, the `pi_heating_demand` / `valve_position` attribute is used |
 | `show_hvac_modes` | mode buttons (off, heat, auto…), only the modes the valve offers (default `true`) |
 | `entity_humidity`, `show_humidity` | Nest model: humidity (droplet) at the bottom of the screen, from this sensor or the thermostat's `current_humidity` attribute |
+| `big_value` | `target` or `current`: which value is shown in large digits on models that display both (Nest, Netatmo, Tado, T6…). Default: the model's own choice |
 | `override`, `override_durations` | temporary target (Netatmo), see below. `override` is on by default for Netatmo entities; `false` hides it, `true` forces it. `override_durations`: durations in minutes (default `[45, 180, 720]`) |
 | `header` | `name` (default), `icon` or `both`: what the header shows. The icon is `icon` (default `mdi:thermostat`) |
 | `minimal` | `true` shows only the header and the dial (no badge, buttons or tiles). Combine with `tap_action: navigate` to open a page or pop-up with all the details |

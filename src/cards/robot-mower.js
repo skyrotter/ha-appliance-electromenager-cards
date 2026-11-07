@@ -12,7 +12,7 @@ window.customCards = window.customCards || [];
  */
 const I18N_MOW = /*@i18n robot_mower*/{};
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
-const lang = (h) => { const l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2); return l === 'no' || l === 'nn' ? 'nb' : l; };
+const lang = (h) => window.applianceLang(I18N_MOW, null, h);
 const ICONS_MOW = {
   start: '<path d="M8 5v14l11-7z"/>',
   pause: '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>',
@@ -115,7 +115,7 @@ class ApplianceRobotMowerCard extends HTMLElement {
     let next = null; const ns = this._st(c.entity_next_start);
     if (ns && !['unavailable', 'unknown'].includes(ns.state)) {
       const d = new Date(ns.state);
-      next = isNaN(d) ? ns.state : d.toLocaleString(c.language === 'en' ? 'en-GB' : 'fr-FR', { weekday: 'short', hour: '2-digit', minute: '2-digit' });
+      next = isNaN(d) ? ns.state : d.toLocaleString(window.applianceLocale(c, this._hass, true).replace(/^en$/, 'en-GB'), { weekday: 'short', hour: '2-digit', minute: '2-digit' });
     }
     const it = [], compact = c.layout === 'compact';
     const stTxt = raining && st !== 'mowing' ? `${this._t(st)} · ${this._t('rain')}` : this._t(st);

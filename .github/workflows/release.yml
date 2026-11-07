@@ -13,7 +13,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: dist/ est à jour et porte la version du tag
         run: |
           v="${GITHUB_REF_NAME#v}"
@@ -30,7 +30,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Attacher dist/ha-appliance-electromenager-cards.js à la pré-release
         env:
           GH_TOKEN: ${{ github.token }}
