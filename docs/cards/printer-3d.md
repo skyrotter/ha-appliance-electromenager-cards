@@ -8,6 +8,9 @@ An open-frame, bed-slinger style printer (Bambu Lab A1, Prusa MK, Ender…). The
 - Set `filament_color` to match your spool (default orange).
 - **Printer photo** (`model`, "Printer" in the visual editor): `neptune4pro` (Elegoo Neptune 4 Pro), `kobrax` (Anycubic Kobra X) or `a1` (Bambu Lab A1) shows a photo of that printer instead of the drawing, with the same states: the nozzle glows (red while heating, yellow while printing), heat rises from the bed, the part grows on the bed with `progress` and a bright dot sweeps its top layer, the screen goes dark when off and flashes red on error. Leave empty for the drawing.
 - **Bambu Lab A1 photo** extras: the toolhead ring spins while printing and glows by state (yellow, orange heating, green done, red error), the hotend block glows while heating, the screen shows a progress bar, and the toolhead light casts a beam on the bed. Set `light` to your light entity (e.g. `light.a1_chamber_light`); without it the light is on while heating and printing.
+
+![Bambu Lab A1 card: off, heating, printing, done](https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/printer-3d-a1.gif)
+
 - If you set `switch:`, cutting power while printing or paused needs a second click.
 
 ```yaml
