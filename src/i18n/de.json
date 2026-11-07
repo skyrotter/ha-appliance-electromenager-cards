@@ -1084,7 +1084,9 @@
     "entity_timer": "Timer (Restzeit)",
     "show_chlorine": "Chlor anzeigen",
     "show_cover": "Abdeckung anzeigen",
-    "show_timer": "Timer anzeigen"
+    "show_timer": "Timer anzeigen",
+    "switch_low": "Schalter niedrige Stufe",
+    "switch_high": "Schalter hohe Stufe"
   },
   "light": {
     "light_bulb": "Glühbirne",

@@ -6968,7 +6968,7 @@ const DEF = {
     fields: ["power", "energy", "cost", "entity"],
     keys: ["solaire", "solar", "pv", "photovolta", "onduleur", "inverter"] },
   vmc: { accent: "active", threshold: 5,
-    fields: ["entity", "power", "energy", "cost", "speed", "humidity", "switch"],
+    fields: ["entity", "power", "energy", "cost", "speed", "humidity", "switch", "switch_low", "switch_high"],
     keys: ["vmc", "ventilation", "extracteur", "mvhr", "hrv"] },
   hob: { accent: "heat", threshold: 50,
     fields: ["entity", "power", "energy", "cost", "zone_1", "zone_2", "zone_3", "zone_4"],
@@ -7181,7 +7181,7 @@ class ApplianceCardBase extends HTMLElement {
     if (!config) throw new Error("Invalid configuration");
     if (window.applianceSize) window.applianceSize(this, config);
     // multiprise : les prises commandées (outlets) suffisent, sans entité globale (ex. Lidl TS011F, un switch par prise)
-    if (!["entity", "power", "power_solar", "switch", "temperature", "zone_1"].some((f) => config[f]) && !(Array.isArray(config.outlets) && config.outlets.some((i) => typeof i === "string" && i))) {
+    if (!["entity", "power", "power_solar", "switch", "switch_low", "switch_high", "temperature", "zone_1"].some((f) => config[f]) && !(Array.isArray(config.outlets) && config.outlets.some((i) => typeof i === "string" && i))) {
       throw new Error(tr(undefined, "err_need_entity"));
     }
     this._config = { ...config };
@@ -7243,7 +7243,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "power_level", "pellet_level", "ph", "orp", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "switch_low", "switch_high", "power_level", "pellet_level", "ph", "orp", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -7492,7 +7492,7 @@ class ApplianceCardBase extends HTMLElement {
     }
 
     const ref = main || sw;
-    const mainIds = ["entity", "power", "power_solar", "switch", "temperature", "zone_1", "zone_2", "zone_3", "zone_4"].map((k) => c[k]).filter(Boolean)
+    const mainIds = ["entity", "power", "power_solar", "switch", "switch_low", "switch_high", "temperature", "zone_1", "zone_2", "zone_3", "zone_4"].map((k) => c[k]).filter(Boolean)
       .concat(kind === "power_strip" && Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : []); // multiprise : les prises comptent
     const usable = mainIds.some((i) => hass.states[i] && !BAD.includes(String(hass.states[i].state).toLowerCase()));
     if (!usable) { m.status = "unavailable"; return m; }
@@ -7626,7 +7626,11 @@ class ApplianceCardBase extends HTMLElement {
       // entité fan : preset_mode (texte) puis percentage, si aucun capteur `speed` n'est fourni
       const isFan = !m.speed && main && domainOf(c.entity) === "fan";
       const fPre = isFan ? String(main.attributes.preset_mode || "").toLowerCase() : "", fPct = isFan ? Number(main.attributes.percentage) : NaN;
-      if (base === "off" || base === "unavailable") m.status = base;
+      // VMC simple flux à deux interrupteurs (petite / grande vitesse) : grande vitesse allumée = vitesse 2, petite = vitesse 1
+      const swL = c.switch_low ? hass.states[c.switch_low] : null, swH = c.switch_high ? hass.states[c.switch_high] : null;
+      if (swL || swH) {
+        m.status = swH && isOn(swH) ? "speed2" : swL && isOn(swL) ? "speed1" : [swL, swH].every((s) => !s || BAD.includes(String(s.state).toLowerCase())) ? "unavailable" : "off";
+      } else if (base === "off" || base === "unavailable") m.status = base;
       else if (isFan && /boost|grande|high|max|rapide|fast|gv/.test(fPre)) m.status = "speed2";
       else if (isFan && /petite|low|eco|lente|slow|min|pv|auto|normal/.test(fPre)) m.status = "speed1";
       else if (isFan && Number.isFinite(fPct) && fPct > 0) m.status = fPct > 60 ? "speed2" : "speed1";
@@ -8008,6 +8012,18 @@ class ApplianceCardBase extends HTMLElement {
       }
       if ((st.attributes.preset_modes || []).includes(opt)) hass.callService("climate", "set_preset_mode", { entity_id: id, preset_mode: opt });
     }
+  }
+
+  // VMC à deux interrupteurs : allumer une vitesse coupe l'autre ; un second clic sur la vitesse active l'éteint
+  _setVmcSpeed(which) {
+    const c = this._config, hass = this._hass;
+    if (!hass) return;
+    const ids = { low: c.switch_low, high: c.switch_high }, target = ids[which], other = ids[which === "low" ? "high" : "low"];
+    if (!target) return;
+    const call = (id, svc) => hass.callService(["switch", "input_boolean", "light", "fan"].includes(domainOf(id)) ? domainOf(id) : "homeassistant", svc, { entity_id: id });
+    if (isOn(hass.states[target])) { call(target, "turn_off"); return; }
+    if (other && isOn(hass.states[other])) call(other, "turn_off");
+    call(target, "turn_on");
   }
 
   // pré-réglages du poêle à granulés : l'option exacte de l'entité `mode` (select) ou du climate (preset_mode)
@@ -8463,6 +8479,14 @@ class ApplianceCardBase extends HTMLElement {
         return `<button class="mode-btn ${on ? "on" : ""}" data-preset="${esc(o)}" data-mode="${key}" aria-pressed="${on}"${m.status === "unavailable" ? " disabled" : ""}><ha-icon icon="${MODE_ICON[key] || "mdi:tune-variant"}"></ha-icon>${esc(cap(o))}</button>`;
       }).join("");
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._setPreset(b.dataset.preset); }; });
+    } else if (kind === "vmc" && (c.switch_low || c.switch_high) && c.show_modes !== false) {
+      // VMC à deux interrupteurs : un bouton par vitesse configurée, celui de la vitesse active est allumé
+      const sp = [["low", c.switch_low, "mdi:fan-speed-1", "speed1"], ["high", c.switch_high, "mdi:fan-speed-3", "speed2"]].filter((x) => x[1]);
+      modesEl.innerHTML = sp.map(([k, id, icon, lbl]) => {
+        const st = hass.states[id], on = m.status === lbl, dis = !st || BAD.includes(String(st.state).toLowerCase());
+        return `<button class="mode-btn ${on ? "on" : ""}" data-vmc="${k}" title="${esc(tr(hass, lbl))}" aria-label="${esc(tr(hass, lbl))}" aria-pressed="${on}"${dis ? " disabled" : ""}><ha-icon icon="${icon}"></ha-icon>${esc(tr(hass, lbl))}</button>`;
+      }).join("");
+      modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._setVmcSpeed(b.dataset.vmc); }; });
     } else if (kind === "smart_speaker" && c.show_controls !== false && domainOf(c.entity) === "media_player" && hass.states[c.entity]) {
       // enceinte : marche / arrêt, volume −, lecture / pause, volume +, sourdine (selon les fonctions annoncées par l'entité)
       const sf = Number(hass.states[c.entity].attributes.supported_features);
@@ -8702,6 +8726,8 @@ const SEL = {
   door: { entity: { domain: "binary_sensor" } },
   freezer_door: { entity: { domain: "binary_sensor" } },
   switch: { entity: { domain: ["switch", "input_boolean", "light"] } },
+  switch_low: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
+  switch_high: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
   // climate / water_heater acceptés : la carte lit alors current_temperature / temperature (pas l'état, qui est un mode)
   temperature: { entity: { filter: [{ domain: ["sensor", "input_number"], device_class: "temperature" }, { domain: ["climate", "water_heater"] }] } },
   target_temperature: { entity: { domain: ["sensor", "input_number", "number", "climate", "water_heater"] } },
@@ -11020,7 +11046,9 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_timer": "Timer (remaining)",
       "show_chlorine": "Show chlorine",
       "show_cover": "Show cover",
-      "show_timer": "Show timer"
+      "show_timer": "Show timer",
+      "switch_low": "Low speed switch",
+      "switch_high": "High speed switch"
     },
     "cs": {
       "animations": "Animace",
@@ -11797,7 +11825,9 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_timer": "Timer (Restzeit)",
       "show_chlorine": "Chlor anzeigen",
       "show_cover": "Abdeckung anzeigen",
-      "show_timer": "Timer anzeigen"
+      "show_timer": "Timer anzeigen",
+      "switch_low": "Schalter niedrige Stufe",
+      "switch_high": "Schalter hohe Stufe"
     },
     "fr": {
       "animations": "Animations",
@@ -12241,7 +12271,9 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_timer": "Minuterie (restant)",
       "show_chlorine": "Afficher le chlore",
       "show_cover": "Afficher le couvercle",
-      "show_timer": "Afficher la minuterie"
+      "show_timer": "Afficher la minuterie",
+      "switch_low": "Interrupteur petite vitesse",
+      "switch_high": "Interrupteur grande vitesse"
     },
     "it": {
       "animations": "Animazioni",
@@ -12658,7 +12690,9 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_timer": "Timer (rimanente)",
       "show_chlorine": "Mostra cloro",
       "show_cover": "Mostra copertura",
-      "show_timer": "Mostra timer"
+      "show_timer": "Mostra timer",
+      "switch_low": "Interruttore bassa velocità",
+      "switch_high": "Interruttore alta velocità"
     },
     "nb": {
       "illustration_size": "Størrelse på illustrasjonen",
@@ -13461,7 +13495,9 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_timer": "Timer (resterend)",
       "show_chlorine": "Chloor tonen",
       "show_cover": "Deksel tonen",
-      "show_timer": "Timer tonen"
+      "show_timer": "Timer tonen",
+      "switch_low": "Schakelaar lage stand",
+      "switch_high": "Schakelaar hoge stand"
     },
     "pl": {
       "animations": "Animacje",
