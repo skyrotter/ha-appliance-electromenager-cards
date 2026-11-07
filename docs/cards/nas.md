@@ -53,20 +53,22 @@ Unraid names disks by pool, not by slot: map each bay to the pool it holds. The 
 ```yaml
 type: custom:appliance-nas-card
 model: ugreen_idx6011_pro
-entity_volume_used:
-  - sensor.unraid_array_usage
-  - sensor.unraid_disk_apps_usage
-entity_drive_1: binary_sensor.unraid_disk_daten_health
+entity_volume: sensor.controlroom_unraid_idx_array_state
+entity_volume_used:              # the ring follows the fullest one
+  - sensor.controlroom_unraid_idx_array_usage
+  - sensor.controlroom_unraid_idx_disk_daten_usage
+  - sensor.controlroom_unraid_idx_disk_sicherung_usage
+entity_drive_1: binary_sensor.controlroom_unraid_idx_disk_daten_health
 entity_drive_1_temp: sensor.unraid_disk_daten_temperature
-entity_drive_2: binary_sensor.unraid_disk_daten2_health
+entity_drive_2: binary_sensor.controlroom_unraid_idx_disk_daten2_health
 entity_drive_2_temp: sensor.unraid_disk_daten2_temperature
-entity_drive_3: binary_sensor.unraid_disk_daten3_health
+entity_drive_3: binary_sensor.controlroom_unraid_idx_disk_daten3_health
 entity_drive_3_temp: sensor.unraid_disk_daten3_temperature
-entity_drive_4: binary_sensor.unraid_disk_sicherung_health
+entity_drive_4: binary_sensor.controlroom_unraid_idx_disk_sicherung_health
 entity_drive_4_temp: sensor.unraid_disk_sicherung_temperature
-entity_nvme_1: binary_sensor.unraid_disk_apps_health
+entity_nvme_1: binary_sensor.controlroom_unraid_idx_disk_apps_health
 entity_nvme_1_temp: sensor.unraid_disk_apps_temperature
-entity_nvme_2: binary_sensor.unraid_disk_vms_health
+entity_nvme_2: binary_sensor.controlroom_unraid_idx_disk_vms_health
 entity_nvme_2_temp: sensor.unraid_disk_vms_temperature
 ```
 
