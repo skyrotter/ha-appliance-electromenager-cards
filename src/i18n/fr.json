@@ -1044,7 +1044,9 @@
     "filter_low_days": "Alerte filtre (jours restants)",
     "filter_low": "Alerte filtre (% restant)",
     "show_drink": "Afficher la dernière gorgée",
-    "show_clean": "Afficher le nettoyage"
+    "show_clean": "Afficher le nettoyage",
+    "entity_locked_in": "Lock « Entrée seule » (Sure Petcare)",
+    "entity_locked_out": "Lock « Sortie seule » (Sure Petcare)"
   },
   "light": {
     "light_bulb": "Ampoule",

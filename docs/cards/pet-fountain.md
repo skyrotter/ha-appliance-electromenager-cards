@@ -14,6 +14,8 @@ Water level: a sensor in % (or in mL / L with `capacity`), or a text state (`low
 
 Buttons: **Turn on / off**, **Light**, **Filter reset** and **Cleaned** (second click within 4 s to confirm), and one button per option of `entity_mode` (continuous, intermittent, sensor…).
 
+When the card is added from the card picker, the entities are found automatically from the fountain's name prefix (`petlibro_dockstream_…`, `fountain_…`, `fontaine_…`, `petkit_…`, `catit_…`): pump switch, water level, low water, filter, water today, light, mode, reset buttons, power and battery.
+
 Tiles: water level, filter, water drunk today, last drink, cleaning, power, battery.
 
 ```yaml

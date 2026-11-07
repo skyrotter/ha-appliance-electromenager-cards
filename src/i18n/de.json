@@ -1028,7 +1028,9 @@
     "filter_low_days": "Filterwarnung (Resttage)",
     "filter_low": "Filterwarnung (% Rest)",
     "show_drink": "Letzten Schluck anzeigen",
-    "show_clean": "Reinigung anzeigen"
+    "show_clean": "Reinigung anzeigen",
+    "entity_locked_in": "Schloss „Nur rein“ (Sure Petcare)",
+    "entity_locked_out": "Schloss „Nur raus“ (Sure Petcare)"
   },
   "light": {
     "light_bulb": "Glühbirne",

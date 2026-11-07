@@ -1044,7 +1044,9 @@
     "filter_low_days": "Filter alert (days left)",
     "filter_low": "Filter alert (% left)",
     "show_drink": "Show last drink",
-    "show_clean": "Show cleaning"
+    "show_clean": "Show cleaning",
+    "entity_locked_in": "Lock \"In only\" (Sure Petcare)",
+    "entity_locked_out": "Lock \"Out only\" (Sure Petcare)"
   },
   "light": {
     "light_bulb": "Bulb",

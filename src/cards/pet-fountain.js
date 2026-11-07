@@ -144,15 +144,33 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
     get _config() { return this._c; }
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
+    // détection automatique : préfixe commun des entités de la fontaine (Petlibro, Petkit, Xiaomi / Mijia, Catit, Tuya…),
+    // puis chaque entité par son nom (niveau, filtre, eau du jour, lumière, mode, boutons de remise à zéro…)
     static getStubConfig(hass) {
-      const ids = Object.keys((hass && hass.states) || {}), has = (re, dom) => ids.find((i) => (!dom || i.startsWith(dom + '.')) && re.test(i)) || '';
-      const base = ids.find((i) => /^(switch|sensor)\./.test(i) && /fontaine|fountain|petlibro|dockstream/i.test(i)) || '';
-      const dev = (base.split('.')[1] || '\u0000').replace(/_(power|water.*|filter.*|switch|light|pump)$/, '');
-      const near = (re, dom) => ids.find((i) => i.startsWith(dom + '.') && i.includes(dev) && re.test(i)) || '';
+      const st = (hass && hass.states) || {}, ids = Object.keys(st), at = (i) => st[i].attributes || {};
+      const KEY = /fontaine|fountain|petlibro|dockstream|eversweet|petkit|catit|drinking_?(fountain|station)|water_?dispenser|trinkbrunnen|fontanella|drinkfontein|drikkefontene/i;
+      const ref = ids.find((i) => /^(sensor|switch)\./.test(i) && KEY.test(i)) || ids.find((i) => KEY.test(i)) || '';
+      // préfixe = nom jusqu'au dernier mot-clé (petlibro_dockstream_water_level → petlibro_dockstream)
+      const o = ref.split('.')[1] || '', ms = [...o.matchAll(new RegExp(KEY.source, 'gi'))], m = ms[ms.length - 1], pre = m ? o.slice(0, m.index + m[0].length) : '\u0000';
+      const mine = (d) => ids.filter((i) => i.startsWith(d + '.') && i.split('.')[1].startsWith(pre));
+      const near = (doms, re, not) => doms.flatMap(mine).find((i) => re.test(i.split('.')[1].slice(pre.length)) && !(not && not.test(i))) || '';
+      const dc = (d, cls) => mine(d).find((i) => at(i).device_class === cls) || '';
+      const pick = (k, v) => (v ? { [k]: v } : {});
       return {
-        entity: base.startsWith('switch.') ? base : near(/pump|power|switch/i, 'switch'),
-        entity_water_level: near(/water.*(level|niveau)|level|niveau/i, 'sensor') || has(/fontaine.*niveau|fountain.*level/i, 'sensor'),
-        entity_filter: near(/filter|filtre/i, 'sensor'),
+        entity: near(['switch'], /^$|pump|power|switch|on_?off|enable/, /light|led|lamp|indicator|display|child|lock|sound|buzzer/i),
+        entity_water_level: near(['sensor'], /water_?level|niveau|level|remaining_?water|water_?volume/, /filter/i),
+        ...pick('entity_low_water', near(['binary_sensor'], /low_?water|water_?(shortage|lack)|lack_?water|no_?water|eau_?basse|empty/)),
+        entity_filter: near(['sensor', 'binary_sensor'], /filter|filtre/, /reset/i),
+        ...pick('entity_water_today', near(['sensor'], /today|daily|consumption|drink.*amount|amount|purified|drunk|bue/, /time|count|last/i)),
+        ...pick('entity_drinking', near(['binary_sensor'], /drink|pet_?(present|detected)|motion|occupancy|presence/)),
+        ...pick('entity_last_drink', near(['sensor'], /last_?drink|last_?(use|visit)|derni/)),
+        ...pick('entity_clean', near(['binary_sensor', 'sensor'], /clean|wash|nettoy|machine_?cleaning/, /reset/i)),
+        ...pick('entity_light', near(['light', 'switch'], /light|led|lamp|indicator|lumi/)),
+        ...pick('entity_mode', near(['select'], /mode|modus|flow/)),
+        ...pick('entity_filter_reset', near(['button'], /filter|filtre/)),
+        ...pick('entity_clean_reset', near(['button'], /clean|wash|nettoy/)),
+        ...pick('entity_power', dc('sensor', 'power')),
+        ...pick('entity_battery', dc('sensor', 'battery')),
       };
     }
     setConfig(c) {

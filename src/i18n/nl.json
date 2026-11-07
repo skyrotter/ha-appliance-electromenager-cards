@@ -1028,7 +1028,9 @@
     "filter_low_days": "Filterwaarschuwing (dagen over)",
     "filter_low": "Filterwaarschuwing (% over)",
     "show_drink": "Laatste slok tonen",
-    "show_clean": "Reiniging tonen"
+    "show_clean": "Reiniging tonen",
+    "entity_locked_in": "Slot 'Alleen in' (Sure Petcare)",
+    "entity_locked_out": "Slot 'Alleen uit' (Sure Petcare)"
   },
   "light": {
     "light_bulb": "Lamp",

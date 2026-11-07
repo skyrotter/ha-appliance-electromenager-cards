@@ -3,7 +3,8 @@
  * Quand un animal passe (changement dedans / dehors d'un des animaux, ou capteur de mouvement), le volet se soulève,
  * une tête de chat traverse, les ondes de la puce RFID se propagent depuis la bande d'antenne.
  * Verrouillage : l'entité lock (verrouillée / déverrouillée) et/ou une entité select (unlocked, locked_in, locked_out,
- * locked_all…) dont les options deviennent des boutons. Les flèches « entrée » / « sortie » se barrent selon le mode.
+ * locked_all…) dont les options deviennent des boutons, ou trois entités lock (Sure Petcare : « verrouillée », « entrée seule »,
+ * « sortie seule » → entity, entity_locked_in, entity_locked_out). Les flèches « entrée » / « sortie » se barrent selon le mode.
  * Animaux : liste pets [{ entity, name, picture }] ; l'état de chaque entité (home / not_home, on / off, inside / outside…)
  * dit s'il est dedans ou dehors. Facultatifs : batterie, couvre-feu, détection d'un intrus, mouvement du volet.
  */
@@ -153,14 +154,30 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
     get _config() { return this._c; }
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
+    // détection automatique : Sure Petcare (3 locks par chatière, un binary_sensor « présence » par animal), select de mode,
+    // ou toute entité dont le nom évoque une chatière ; animaux = présence / device_tracker au nom d'animal, ou attribut where
     static getStubConfig(hass) {
-      const ids = Object.keys((hass && hass.states) || {}), dc = (i) => (hass.states[i].attributes || {}).device_class;
-      const lock = ids.find((i) => i.startsWith('lock.') && /chati|cat|flap|sureflap|petcare|pet/i.test(i)) || ids.find((i) => /^(lock|select)\./.test(i) && /chati|catflap|cat_flap|sureflap/i.test(i)) || '';
-      const dev = lock.split('.')[1] || '\u0000';
+      const st = (hass && hass.states) || {}, ids = Object.keys(st), at = (i) => st[i].attributes || {};
+      const FLAP = /chati[eè]re|cat_?flap|pet_?door|dog_?door|sure_?flap|petcare|flap|katzenklappe|gattaiola|kattenluik|katteluke/i;
+      const key = (i) => { const o = i.split('.')[1], ms = [...o.matchAll(new RegExp(FLAP.source, 'gi'))], m = ms[ms.length - 1]; return m ? o.slice(0, m.index + m[0].length) : ''; };
+      const dom = (d) => ids.filter((i) => i.startsWith(d + '.'));
+      const locks = dom('lock').filter((i) => FLAP.test(i) || FLAP.test(at(i).friendly_name || ''));
+      const sel = dom('select').find((i) => (FLAP.test(i) || /lock.*mode|locking/i.test(i)) && (at(i).options || []).some((o) => /lock|in|out/i.test(o)));
+      const ref = locks[0] || sel || ids.find((i) => FLAP.test(i)) || '';
+      const pre = key(ref) || (ref.split('.')[1] || '\u0000').replace(/_(locked_(in|out|all)|lock|mode|locking_mode)$/, '');
+      const near = (d, re) => dom(d).find((i) => i.split('.')[1].startsWith(pre) && re.test(i)) || '';
+      const lIn = locks.find((i) => /locked_in|lock_in|in_only/i.test(i)) || '', lOut = locks.find((i) => /locked_out|lock_out|out_only/i.test(i)) || '';
+      const lAll = locks.find((i) => i !== lIn && i !== lOut && (/locked_all|lock_all|_all$/i.test(i) || !/_in$|_out$/.test(i))) || '';
+      const pets = ids.filter((i) => /^(binary_sensor|device_tracker)\./.test(i) && !FLAP.test(i) && !/battery|connect|online|problem|motion/i.test(i)
+        && (at(i).where != null || (/^(presence|occupancy)$/.test(at(i).device_class || '') && /chat|cat|minou|pet|dog|chien/i.test(i + (at(i).friendly_name || ''))) || (i.startsWith('device_tracker.') && /chat|cat|minou|dog|chien/i.test(i))));
       return {
-        entity: lock,
-        entity_battery: ids.find((i) => i.startsWith('sensor.') && dc(i) === 'battery' && i.includes(dev)) || '',
-        pets: ids.filter((i) => /^(binary_sensor|device_tracker)\./.test(i) && /chat|cat|minou|pet/i.test(i) && !/flap|chati/i.test(i)).slice(0, 2).map((entity) => ({ entity })),
+        entity: lAll || (sel ? '' : locks[0] || ''),
+        ...(lIn ? { entity_locked_in: lIn } : {}),
+        ...(lOut ? { entity_locked_out: lOut } : {}),
+        ...(sel ? { entity_mode: sel } : {}),
+        entity_battery: near('sensor', /batter/i) || dom('sensor').find((i) => at(i).device_class === 'battery' && FLAP.test(i)) || '',
+        ...(near('binary_sensor', /curfew|couvre/i) ? { entity_curfew: near('binary_sensor', /curfew|couvre/i) } : {}),
+        pets: pets.slice(0, 4).map((entity) => ({ entity })),
       };
     }
     setConfig(c) {
@@ -202,6 +219,14 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     }
     _call(id, option) {
       if (!this._hass || !id) return;
+      // trois locks (Sure Petcare) : verrouiller celui du mode choisi, « ouverte » déverrouille ceux qui sont verrouillés
+      if (id === 'multi') {
+        const c = this._c, L = { locked_all: c.entity, locked_in: c.entity_locked_in, locked_out: c.entity_locked_out };
+        if (option !== 'unlocked') return L[option] && this._hass.callService('lock', 'lock', { entity_id: L[option] });
+        const on = Object.values(L).filter((e) => e && this._st(e) && this._st(e).state === 'locked');
+        if (on.length) this._hass.callService('lock', 'unlock', { entity_id: on });
+        return;
+      }
       const d = id.split('.')[0];
       if (d === 'select' || d === 'input_select') this._hass.callService(d, 'select_option', { entity_id: id, option });
       else if (d === 'lock') this._hass.callService('lock', option === 'unlocked' ? 'unlock' : 'lock', { entity_id: id });
@@ -210,9 +235,13 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     _compute() {
       const c = this._c, lockS = this._st(c.entity), modeS = this._st(c.entity_mode);
       // le select (modes fins) prime sur le lock (verrouillé / déverrouillé)
-      const src = c.entity_mode && this._ok(modeS) ? modeS : lockS;
-      const dead = !src || /^unavailable$/i.test(String(src.state));
-      const kind = dead ? 'unavailable' : kindOf(src.state);
+      const src = c.entity_mode && this._ok(modeS) ? modeS : lockS || (!c.entity_mode && this._st(c.entity_locked_in || c.entity_locked_out));
+      const dead = !src ? !(c.entity_locked_in || c.entity_locked_out) || !this._ok(this._st(c.entity_locked_in || c.entity_locked_out)) : /^unavailable$/i.test(String(src.state));
+      const multi = !c.entity_mode && (c.entity_locked_in || c.entity_locked_out);
+      const lk = (e) => { const x = this._st(e); return !!x && String(x.state) === 'locked'; };
+      const kind = dead ? 'unavailable' : multi && src === lockS
+        ? (lk(c.entity) || (lk(c.entity_locked_in) && lk(c.entity_locked_out)) ? 'locked_all' : lk(c.entity_locked_in) ? 'locked_in' : lk(c.entity_locked_out) ? 'locked_out' : 'unlocked')
+        : kindOf(src.state);
       const bS = this._st(c.entity_battery), bat = this._num(bS), batBinary = !!bS && /^binary_sensor\./.test(c.entity_battery);
       const low = (batBinary && this._on(bS)) || (!isNaN(bat) && bat < Number(c.battery_low));
       const curfewS = this._st(c.entity_curfew), curfew = this._on(curfewS) || kind === 'curfew';
@@ -292,6 +321,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       // boutons : une par option du select de mode, sinon Verrouiller / Déverrouiller du lock
       const ctl = r.getElementById('cfctl'), modeS = this._st(c.entity_mode);
       const opts = c.entity_mode && modeS && Array.isArray(modeS.attributes.options) ? modeS.attributes.options.map((o) => ({ id: c.entity_mode, option: o, kind: kindOf(o), label: null }))
+        : c.entity_locked_in || c.entity_locked_out ? ['unlocked', c.entity_locked_in && 'locked_in', c.entity_locked_out && 'locked_out', c.entity && 'locked_all'].filter(Boolean).map((k) => ({ id: 'multi', option: k, kind: k }))
         : c.entity ? [{ id: c.entity, option: 'locked_all', kind: 'locked_all' }, { id: c.entity, option: 'unlocked', kind: 'unlocked' }] : [];
       const sig = opts.map((o) => o.option).join('|');
       if (this._sig !== sig) {
@@ -309,7 +339,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       ctl.querySelectorAll('button').forEach((b, i) => {
         const o = opts[i]; if (!o) return;
         b.querySelector('span').textContent = o.kind !== 'unknown' ? this._t(`mode_${o.kind}`) : human(o.option);
-        const cur = c.entity_mode ? modeS && modeS.state === o.option : (o.kind === 'unlocked' ? kind === 'unlocked' : kind !== 'unlocked' && kind !== 'unavailable' && kind !== 'unknown');
+        const cur = c.entity_mode ? modeS && modeS.state === o.option : o.id === 'multi' ? o.kind === kind : (o.kind === 'unlocked' ? kind === 'unlocked' : kind !== 'unlocked' && kind !== 'unavailable' && kind !== 'unknown');
         b.classList.toggle('on', !!cur); b.disabled = kind === 'unavailable' || !!cur;
       });
 
@@ -363,6 +393,8 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ent('entity', ['lock', 'select', 'input_select']),
+        ent('entity_locked_in', 'lock'),
+        ent('entity_locked_out', 'lock'),
         ent('entity_mode', ['select', 'input_select']),
         ent('entity_motion', 'binary_sensor'),
         ent('entity_curfew', ['binary_sensor', 'switch', 'input_boolean']),

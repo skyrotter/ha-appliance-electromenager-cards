@@ -1028,7 +1028,9 @@
 "filter_low_days": "Filtervarsel (dager igjen)",
 "filter_low": "Filtervarsel (% igjen)",
 "show_drink": "Vis siste slurk",
-"show_clean": "Vis rengjøring"
+"show_clean": "Vis rengjøring",
+"entity_locked_in": "Lås «Bare inn» (Sure Petcare)",
+"entity_locked_out": "Lås «Bare ut» (Sure Petcare)"
 },
 "light": {
 "light_bulb": "Lyspære",
