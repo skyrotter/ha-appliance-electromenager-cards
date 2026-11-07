@@ -576,7 +576,8 @@
     "btn_open": "Open",
     "btn_stop": "Stop",
     "btn_close": "Close",
-    "btn_command": "Command"
+    "btn_command": "Command",
+    "btn_pedestrian": "Pedestrian"
   },
   "sauna": {
     "name": "Sauna",
@@ -702,6 +703,7 @@
     "entity_charge": "Battery charge",
     "entity_compressor": "Compressor",
     "entity_control": "Control (button / switch)",
+    "entity_pedestrian": "Pedestrian opening (button / script)",
     "entity_cop": "COP",
     "entity_cost": "Cost",
     "entity_energy": "Energy",

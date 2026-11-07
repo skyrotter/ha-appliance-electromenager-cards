@@ -560,7 +560,8 @@
     "btn_open": "Openen",
     "btn_stop": "Stop",
     "btn_close": "Sluiten",
-    "btn_command": "Bediening"
+    "btn_command": "Bediening",
+    "btn_pedestrian": "Voetganger"
   },
   "sauna": {
     "name": "Sauna",
@@ -686,6 +687,7 @@
     "entity_charge": "Batterijlading",
     "entity_compressor": "Compressor",
     "entity_control": "Bediening (knop / schakelaar)",
+    "entity_pedestrian": "Voetgangersopening (knop / script)",
     "entity_cop": "COP",
     "entity_cost": "Kosten",
     "entity_energy": "Energie",
