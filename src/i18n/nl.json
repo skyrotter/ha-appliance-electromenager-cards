@@ -1149,7 +1149,9 @@
     "flow": "Debiet",
     "today": "Vandaag",
     "index": "Meterstand",
-    "cost": "Kosten"
+    "cost": "Kosten",
+    "variant_classic": "Klassiek (gele balggasmeter)",
+    "variant_modern": "Modern (grijze meter, gele leiding)"
   },
   "electric_meter": {
     "name": "Elektriciteitsmeter",

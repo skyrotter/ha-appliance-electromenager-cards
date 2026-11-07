@@ -1149,7 +1149,9 @@
     "flow": "Durchfluss",
     "today": "Heute",
     "index": "Zählerstand",
-    "cost": "Kosten"
+    "cost": "Kosten",
+    "variant_classic": "Klassisch (gelber Balgengaszähler)",
+    "variant_modern": "Modern (grauer Zähler, gelbes Rohr)"
   },
   "electric_meter": {
     "name": "Stromzähler",

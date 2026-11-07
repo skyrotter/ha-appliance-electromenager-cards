@@ -27269,7 +27269,9 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "flow": "Flow",
       "today": "Today",
       "index": "Index",
-      "cost": "Cost"
+      "cost": "Cost",
+      "variant_classic": "Classic (yellow bellows meter)",
+      "variant_modern": "Modern (grey meter, yellow pipe)"
     },
     "cs": {
       "name": "Plynoměr",
@@ -27301,7 +27303,9 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "flow": "Durchfluss",
       "today": "Heute",
       "index": "Zählerstand",
-      "cost": "Kosten"
+      "cost": "Kosten",
+      "variant_classic": "Klassisch (gelber Balgengaszähler)",
+      "variant_modern": "Modern (grauer Zähler, gelbes Rohr)"
     },
     "fr": {
       "name": "Compteur de gaz",
@@ -27317,7 +27321,9 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "flow": "Débit",
       "today": "Aujourd'hui",
       "index": "Index",
-      "cost": "Coût"
+      "cost": "Coût",
+      "variant_classic": "Classique (compteur à soufflet jaune)",
+      "variant_modern": "Moderne (compteur gris, tuyau jaune)"
     },
     "it": {
       "name": "Contatore del gas",
@@ -27333,7 +27339,9 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "flow": "Portata",
       "today": "Oggi",
       "index": "Indice",
-      "cost": "Costo"
+      "cost": "Costo",
+      "variant_classic": "Classico (contatore a soffietto giallo)",
+      "variant_modern": "Moderno (contatore grigio, tubo giallo)"
     },
     "nb": {
       "name": "Gassmåler",
@@ -27365,7 +27373,9 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "flow": "Debiet",
       "today": "Vandaag",
       "index": "Meterstand",
-      "cost": "Kosten"
+      "cost": "Kosten",
+      "variant_classic": "Klassiek (gele balggasmeter)",
+      "variant_modern": "Modern (grijze meter, gele leiding)"
     },
     "pl": {
       "name": "Gazomierz",
@@ -27381,7 +27391,9 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       "flow": "Zasilanie",
       "today": "Dzisiaj",
       "index": "Indeks",
-      "cost": "Koszt"
+      "cost": "Koszt",
+      "variant_classic": "Klasyczny (żółty gazomierz miechowy)",
+      "variant_modern": "Nowoczesny (szary gazomierz, żółta rura)"
     },
     "ro": {
       "name": "Contor de gaz",
@@ -27483,11 +27495,16 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 .gm-alert{opacity:0}.leak .gm-alert{opacity:1;animation:gmblink 1s ease-in-out infinite}
 .gm-valve{fill:#2b9af9;transition:transform .4s,fill .3s;transform-box:fill-box;transform-origin:50% 100%}
 .valve_closed .gm-valve{fill:#db4437;transform:rotate(90deg)}
+.gm-chev{fill:#887f17;transition:opacity .3s}
+.flowing .gm-chev,.moving .gm-chev{animation:gmchev calc(var(--spd) * 1.5) ease-in-out infinite}
+.gm-pv{fill:#db4437;opacity:0;transition:opacity .3s}.valve_closed .gm-pv{opacity:.75}
+.leak .gm-lcd{fill:#ffb4ab}
 .unavailable svg{filter:grayscale(.7) opacity(.7)}
-.noanim .gm-wheel,.noanim .gm-flame,.noanim .gm-alert{animation:none}
+.noanim .gm-wheel,.noanim .gm-flame,.noanim .gm-alert,.noanim .gm-chev{animation:none}
 @keyframes gmrot{to{transform:rotate(360deg)}}
 @keyframes gmflame{from{transform:scale(.85,.9)}to{transform:scale(1.05,1.1)}}
 @keyframes gmblink{50%{opacity:.3}}
+@keyframes gmchev{0%,100%{opacity:.25}50%{opacity:1}}
 `;
 
   const SVG = (label) => `<svg viewBox="0 22 120 104" role="img" aria-label="${esc(label)}"><defs>
@@ -27514,6 +27531,30 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     <g class="gm-flame"><path d="M78 112c-9-6-11-13-6-22 1 4 3 5 5 6-1-6 1-11 6-15 0 6 3 8 5 12 3 6 1 14-10 19z" fill="#ff7a00"/><path d="M79 112c-5-3-6-8-3-13 1 2 2 3 3 3 0-3 1-5 3-7 0 3 2 5 3 7 1 5-2 8-6 10z" fill="#ffd54f"/></g>
     <rect x="22" y="62" width="76" height="56" rx="4" fill="url(#gmglass)" opacity=".5"/>
     <g class="gm-alert"><circle cx="100" cy="46" r="9" fill="#e53935"/><path d="M100 40v7" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><circle cx="100" cy="51" r="1.3" fill="#fff"/></g>
+  </svg>`;
+
+  // variante « modern » : dessin de Ppatou (#267). Chevrons animés selon le débit, roue qui tourne, voile rouge sur le tuyau si la vanne est fermée
+  const chev = (x, y, i) => `<polygon class="gm-chev" style="animation-delay:calc(var(--spd) * ${(i * 0.25).toFixed(2)})" points="${[[163, 12], [0, 82], [0, 52], [129, -2], [0, -55], [0, -85], [163, -16]].map(([dx, dy]) => `${x + dx},${y + dy}`).join(' ')}"/>`;
+  const SVG_MODERN = (label) => `<svg viewBox="250 400 3000 2860" role="img" aria-label="${esc(label)}"><defs>
+    <radialGradient id="gmm0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1 0 0 .916467 0 84)" cx="1756" cy="1002" r="229"><stop offset="0" stop-color="#fefefe"/><stop offset="1" stop-color="#ebd600"/></radialGradient>
+    <radialGradient id="gmm1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1 0 0 .916464 0 84)" cx="858" cy="1002" r="229"><stop offset="0" stop-color="#fefefe"/><stop offset="1" stop-color="#ebd600"/></radialGradient>
+    <radialGradient id="gmm2" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1 0 0 .916464 0 84)" cx="2651" cy="1002" r="229"><stop offset="0" stop-color="#fefefe"/><stop offset="1" stop-color="#ebd600"/></radialGradient>
+    <radialGradient id="gmmsh"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
+    <ellipse cx="1760" cy="3190" rx="1100" ry="70" fill="url(#gmmsh)"/>
+    <polygon fill="gray" points="2231,1731 1359,1722 1312,1792 959,1792 711,1904 711,2879 825,3108 2676,3108 2803,2885 2812,1841 2723,1840 2701,1797 2281,1797"/>
+    <path fill="#ccc" d="M1026 1893l1483 0c144,402 133,803 0,1188l-1483 0c-167,-413 -163,-795 0,-1188z"/>
+    <rect fill="#4d4d4d" x="1004" y="2032" width="1490" height="383" rx="89" ry="48"/>
+    <text class="gm-lcd" x="1749" y="2316" text-anchor="middle" fill="#fff" font-size="256" font-family="Arial,Helvetica,sans-serif"></text>
+    <rect fill="#d3d2d8" x="1639" y="1393" width="306" height="219" rx="25"/><rect fill="#7f7e75" x="1396" y="1393" width="241" height="219" rx="20" ry="25"/>
+    <rect fill="#5d5956" x="1949" y="1393" width="175" height="219" rx="14" ry="25"/><rect fill="#a5a6a1" x="1450" y="1617" width="621" height="102" rx="8" ry="18"/>
+    <rect fill="#bcbcbe" x="1375" y="1338" width="770" height="56" rx="10"/>
+    <rect fill="url(#gmm0)" x="1400" y="675" width="712" height="652" rx="73"/>
+    <rect fill="url(#gmm1)" x="317" y="838" width="1082" height="326" rx="111" ry="36"/><rect fill="url(#gmm2)" x="2110" y="838" width="1082" height="326" rx="111" ry="36"/>
+    <rect class="gm-pv" x="317" y="838" width="1082" height="326" rx="111" ry="36"/>
+    ${[452, 791, 1131].map((x, i) => chev(x, 1000, i)).join('')}${[2247, 2586, 2925].map((x, i) => chev(x, 1000, i + 3)).join('')}
+    <circle fill="#fff" stroke="gray" stroke-width="29" cx="1704" cy="2727" r="218"/>
+    <g class="gm-wheel"><path fill="red" d="M1705 2729l-189 -109c39,-67 111,-109 189,-109l0 218z"/><path fill="red" d="M1704 2728l189 108c-39,68 -110,110 -188,110l-1 -218z"/></g>
+    <g class="gm-alert"><circle cx="2960" cy="560" r="170" fill="#e53935"/><path d="M2960 450v130" stroke="#fff" stroke-width="40" stroke-linecap="round"/><circle cx="2960" cy="650" r="24" fill="#fff"/></g>
   </svg>`;
 
   const TILES = [['flow', 'mdi:fire', 'show_flow'], ['today', 'mdi:calendar-today', 'show_today'], ['index', 'mdi:counter', 'show_index'], ['cost', 'mdi:cash', 'show_cost']];
@@ -27556,7 +27597,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="gmtitle"></div><div class="badge" id="gmbadge"></div></div>
-        ${SVG(this._c.name || this._t('name'))}
+        ${(this._c.variant === 'modern' ? SVG_MODERN : SVG)(this._c.name || this._t('name'))}
         <div class="alert" id="gmalert"></div>
         <div class="ctl" id="gmctl"><button><ha-icon icon="mdi:valve"></ha-icon><span></span></button></div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
@@ -27608,6 +27649,11 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       // totalisateur : 5 chiffres entiers et 3 décimales
       const base = isNaN(idx) ? 0 : Math.max(0, idx), whole = Math.floor(base);
       const ent = String(whole % 100000).padStart(5, '0'), dec = String(Math.floor((base - whole) * 1000)).padStart(3, '0');
+      const lcd = r.querySelector('.gm-lcd');
+      if (lcd) { // variante moderne : « 123,456 m³ », police réduite si le texte est long
+        const txt = `${base.toLocaleString(window.applianceLocale(c, this._hass), { minimumFractionDigits: 3, maximumFractionDigits: 3, useGrouping: false })} ${this._unit(c.entity_index, 'm³')}`.trim();
+        lcd.textContent = txt; lcd.setAttribute('font-size', String(Math.round(Math.min(256, 1400 / (txt.length * 0.56)))));
+      }
       r.querySelectorAll('.gm-d').forEach((el, i) => { el.textContent = ent[i]; });
       r.querySelectorAll('.gm-l').forEach((el, i) => { el.textContent = dec[i]; });
 
@@ -27661,10 +27707,13 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       const ent = (name, domain, extra) => ({ name, selector: { entity: { ...(domain ? { domain } : {}), ...(extra || {}) } } });
       const num = (name, min, max, step, def, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
       const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
+      const lang = (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en';
+      const tr = T[lang] || T[String(lang).slice(0, 2)] || T.en;
       this._form.hass = this._hass;
       this._form.data = { ...this._c, entity_leak: asList(this._c && this._c.entity_leak) }; // le form attend un array
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
+        { name: 'variant', selector: { select: { mode: 'dropdown', options: [{ value: 'classic', label: tr.variant_classic }, { value: 'modern', label: tr.variant_modern }] } } },
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },

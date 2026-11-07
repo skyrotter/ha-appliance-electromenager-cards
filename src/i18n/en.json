@@ -1165,7 +1165,9 @@
     "flow": "Flow",
     "today": "Today",
     "index": "Index",
-    "cost": "Cost"
+    "cost": "Cost",
+    "variant_classic": "Classic (yellow bellows meter)",
+    "variant_modern": "Modern (grey meter, yellow pipe)"
   },
   "electric_meter": {
     "name": "Electric meter",

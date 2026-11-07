@@ -1149,7 +1149,9 @@
     "flow": "Portata",
     "today": "Oggi",
     "index": "Indice",
-    "cost": "Costo"
+    "cost": "Costo",
+    "variant_classic": "Classico (contatore a soffietto giallo)",
+    "variant_modern": "Moderno (contatore grigio, tubo giallo)"
   },
   "electric_meter": {
     "name": "Contatore elettrico",

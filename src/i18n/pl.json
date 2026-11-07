@@ -1165,7 +1165,9 @@
     "flow": "Zasilanie",
     "today": "Dzisiaj",
     "index": "Indeks",
-    "cost": "Koszt"
+    "cost": "Koszt",
+    "variant_classic": "Klasyczny (żółty gazomierz miechowy)",
+    "variant_modern": "Nowoczesny (szary gazomierz, żółta rura)"
   },
   "electric_meter": {
     "name": "Licznik energii elektrycznej",

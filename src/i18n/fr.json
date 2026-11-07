@@ -1165,7 +1165,9 @@
     "flow": "Débit",
     "today": "Aujourd'hui",
     "index": "Index",
-    "cost": "Coût"
+    "cost": "Coût",
+    "variant_classic": "Classique (compteur à soufflet jaune)",
+    "variant_modern": "Moderne (compteur gris, tuyau jaune)"
   },
   "electric_meter": {
     "name": "Compteur électrique",
