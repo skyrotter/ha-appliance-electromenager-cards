@@ -10478,7 +10478,30 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_btn_mute": "Mute button",
       "show_btn_vol_up": "Volume + button",
       "override": "Temporary override (Netatmo)",
-      "override_durations": "Override durations (min)"
+      "override_durations": "Override durations (min)",
+      "pets": "Pets (list: entity, name, picture)",
+      "entity_motion": "Flap movement sensor",
+      "entity_curfew": "Curfew",
+      "entity_intruder": "Unknown animal detected",
+      "show_pets": "Show pets",
+      "show_inside": "Show inside",
+      "show_outside": "Show outside",
+      "show_curfew": "Show curfew",
+      "entity_low_water": "Low water alert",
+      "entity_water_today": "Water drunk today",
+      "entity_drinking": "Pet drinking sensor",
+      "entity_last_drink": "Last drink",
+      "entity_clean": "Cleaning (due / days)",
+      "entity_filter_reset": "Filter reset button",
+      "entity_clean_reset": "Cleaning reset button",
+      "capacity": "Tank capacity (same unit as the level, if not %)",
+      "level_low": "Low water level (%)",
+      "filter_low_days": "Filter alert (days left)",
+      "filter_low": "Filter alert (% left)",
+      "show_drink": "Show last drink",
+      "show_clean": "Show cleaning",
+      "entity_locked_in": "Lock \"In only\" (Sure Petcare)",
+      "entity_locked_out": "Lock \"Out only\" (Sure Petcare)"
     },
     "cs": {
       "animations": "Animace",
@@ -11201,7 +11224,30 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_btn_mute": "Stumm-Taste",
       "show_btn_vol_up": "Lauter-Taste",
       "override": "Zeitlich begrenzte Änderung (Netatmo)",
-      "override_durations": "Dauern (min)"
+      "override_durations": "Dauern (min)",
+      "pets": "Tiere (Liste: entity, name, picture)",
+      "entity_motion": "Bewegungssensor der Klappe",
+      "entity_curfew": "Ausgangssperre",
+      "entity_intruder": "Fremdes Tier erkannt",
+      "show_pets": "Tiere anzeigen",
+      "show_inside": "Drinnen anzeigen",
+      "show_outside": "Draußen anzeigen",
+      "show_curfew": "Ausgangssperre anzeigen",
+      "entity_low_water": "Warnung wenig Wasser",
+      "entity_water_today": "Heute getrunken",
+      "entity_drinking": "Sensor „Tier trinkt“",
+      "entity_last_drink": "Letzter Schluck",
+      "entity_clean": "Reinigung (fällig / Tage)",
+      "entity_filter_reset": "Taste Filter zurücksetzen",
+      "entity_clean_reset": "Taste Reinigung zurücksetzen",
+      "capacity": "Tankinhalt (gleiche Einheit wie der Füllstand, falls nicht %)",
+      "level_low": "Niedriger Wasserstand (%)",
+      "filter_low_days": "Filterwarnung (Resttage)",
+      "filter_low": "Filterwarnung (% Rest)",
+      "show_drink": "Letzten Schluck anzeigen",
+      "show_clean": "Reinigung anzeigen",
+      "entity_locked_in": "Schloss „Nur rein“ (Sure Petcare)",
+      "entity_locked_out": "Schloss „Nur raus“ (Sure Petcare)"
     },
     "fr": {
       "animations": "Animations",
@@ -11564,7 +11610,30 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_btn_mute": "Bouton muet",
       "show_btn_vol_up": "Bouton volume +",
       "override": "Dérogation temporaire (Netatmo)",
-      "override_durations": "Durées de dérogation (min)"
+      "override_durations": "Durées de dérogation (min)",
+      "pets": "Animaux (liste : entity, name, picture)",
+      "entity_motion": "Capteur de mouvement du volet",
+      "entity_curfew": "Couvre-feu",
+      "entity_intruder": "Animal inconnu détecté",
+      "show_pets": "Afficher les animaux",
+      "show_inside": "Afficher dedans",
+      "show_outside": "Afficher dehors",
+      "show_curfew": "Afficher le couvre-feu",
+      "entity_low_water": "Alerte eau basse",
+      "entity_water_today": "Eau bue aujourd'hui",
+      "entity_drinking": "Capteur « animal en train de boire »",
+      "entity_last_drink": "Dernière gorgée",
+      "entity_clean": "Nettoyage (à faire / jours)",
+      "entity_filter_reset": "Bouton RAZ filtre",
+      "entity_clean_reset": "Bouton RAZ nettoyage",
+      "capacity": "Capacité du réservoir (même unité que le niveau, si pas en %)",
+      "level_low": "Niveau d'eau bas (%)",
+      "filter_low_days": "Alerte filtre (jours restants)",
+      "filter_low": "Alerte filtre (% restant)",
+      "show_drink": "Afficher la dernière gorgée",
+      "show_clean": "Afficher le nettoyage",
+      "entity_locked_in": "Lock « Entrée seule » (Sure Petcare)",
+      "entity_locked_out": "Lock « Sortie seule » (Sure Petcare)"
     },
     "it": {
       "animations": "Animazioni",
@@ -11927,7 +11996,30 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_btn_mute": "Pulsante muto",
       "show_btn_vol_up": "Pulsante volume +",
       "override": "Deroga temporanea (Netatmo)",
-      "override_durations": "Durate della deroga (min)"
+      "override_durations": "Durate della deroga (min)",
+      "pets": "Animali (lista: entity, name, picture)",
+      "entity_motion": "Sensore di movimento",
+      "entity_curfew": "Coprifuoco",
+      "entity_intruder": "Animale sconosciuto rilevato",
+      "show_pets": "Mostra animali",
+      "show_inside": "Mostra dentro",
+      "show_outside": "Mostra fuori",
+      "show_curfew": "Mostra coprifuoco",
+      "entity_low_water": "Allarme acqua bassa",
+      "entity_water_today": "Acqua bevuta oggi",
+      "entity_drinking": "Sensore animale che beve",
+      "entity_last_drink": "Ultimo sorso",
+      "entity_clean": "Pulizia (da fare / giorni)",
+      "entity_filter_reset": "Pulsante reset filtro",
+      "entity_clean_reset": "Pulsante reset pulizia",
+      "capacity": "Capacità serbatoio (stessa unità del livello, se non %)",
+      "level_low": "Livello acqua basso (%)",
+      "filter_low_days": "Allarme filtro (giorni rimasti)",
+      "filter_low": "Allarme filtro (% rimasto)",
+      "show_drink": "Mostra ultimo sorso",
+      "show_clean": "Mostra pulizia",
+      "entity_locked_in": "Blocco «Solo entrata» (Sure Petcare)",
+      "entity_locked_out": "Blocco «Solo uscita» (Sure Petcare)"
     },
     "nb": {
       "illustration_size": "Størrelse på illustrasjonen",
@@ -12290,7 +12382,30 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_btn_mute": "Demp-knapp",
       "show_btn_vol_up": "Volum opp-knapp",
       "override": "Midlertidig overstyring (Netatmo)",
-      "override_durations": "Varigheter (min)"
+      "override_durations": "Varigheter (min)",
+      "pets": "Dyr (liste: entity, name, picture)",
+      "entity_motion": "Bevegelsessensor for luken",
+      "entity_curfew": "Portforbud",
+      "entity_intruder": "Ukjent dyr oppdaget",
+      "show_pets": "Vis dyr",
+      "show_inside": "Vis inne",
+      "show_outside": "Vis ute",
+      "show_curfew": "Vis portforbud",
+      "entity_low_water": "Varsel lite vann",
+      "entity_water_today": "Drukket i dag",
+      "entity_drinking": "Sensor dyr drikker",
+      "entity_last_drink": "Siste slurk",
+      "entity_clean": "Rengjøring (nødvendig / dager)",
+      "entity_filter_reset": "Knapp nullstill filter",
+      "entity_clean_reset": "Knapp nullstill rengjøring",
+      "capacity": "Tankkapasitet (samme enhet som nivået, hvis ikke %)",
+      "level_low": "Lavt vannivå (%)",
+      "filter_low_days": "Filtervarsel (dager igjen)",
+      "filter_low": "Filtervarsel (% igjen)",
+      "show_drink": "Vis siste slurk",
+      "show_clean": "Vis rengjøring",
+      "entity_locked_in": "Lås «Bare inn» (Sure Petcare)",
+      "entity_locked_out": "Lås «Bare ut» (Sure Petcare)"
     },
     "nl": {
       "animations": "Animaties",
@@ -12653,7 +12768,30 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_btn_mute": "Dempknop",
       "show_btn_vol_up": "Harder-knop",
       "override": "Tijdelijke afwijking (Netatmo)",
-      "override_durations": "Duur van de afwijking (min)"
+      "override_durations": "Duur van de afwijking (min)",
+      "pets": "Huisdieren (lijst: entity, name, picture)",
+      "entity_motion": "Bewegingssensor van het luik",
+      "entity_curfew": "Avondklok",
+      "entity_intruder": "Onbekend dier gedetecteerd",
+      "show_pets": "Huisdieren tonen",
+      "show_inside": "Binnen tonen",
+      "show_outside": "Buiten tonen",
+      "show_curfew": "Avondklok tonen",
+      "entity_low_water": "Waarschuwing weinig water",
+      "entity_water_today": "Vandaag gedronken",
+      "entity_drinking": "Sensor dier drinkt",
+      "entity_last_drink": "Laatste slok",
+      "entity_clean": "Reiniging (nodig / dagen)",
+      "entity_filter_reset": "Knop filter resetten",
+      "entity_clean_reset": "Knop reiniging resetten",
+      "capacity": "Inhoud reservoir (zelfde eenheid als niveau, indien niet %)",
+      "level_low": "Laag waterniveau (%)",
+      "filter_low_days": "Filterwaarschuwing (dagen over)",
+      "filter_low": "Filterwaarschuwing (% over)",
+      "show_drink": "Laatste slok tonen",
+      "show_clean": "Reiniging tonen",
+      "entity_locked_in": "Slot 'Alleen in' (Sure Petcare)",
+      "entity_locked_out": "Slot 'Alleen uit' (Sure Petcare)"
     },
     "ro": {
       "animations": "Animații",
@@ -31957,6 +32095,1225 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: 'Serrure connectée animée (Nuki 3.0 Pro, Nuki Pro 5e gén.) : verrouiller, déverrouiller, ouvrir, Lock \'n\' Go, batterie, porte.', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/smart-lock.md',
+  });
+})();
+
+/* Carte « Chatière connectée » — custom:appliance-cat-flap-card
+ * Chatière à puce (SureFlap / Sure Petcare, Petlibro, Cat Mate…) vue de face : cadre blanc, volet transparent articulé en haut.
+ * Quand un animal passe (changement dedans / dehors d'un des animaux, ou capteur de mouvement), le volet se soulève,
+ * une tête de chat traverse, les ondes de la puce RFID se propagent depuis la bande d'antenne.
+ * Verrouillage : l'entité lock (verrouillée / déverrouillée) et/ou une entité select (unlocked, locked_in, locked_out,
+ * locked_all…) dont les options deviennent des boutons, ou trois entités lock (Sure Petcare : « verrouillée », « entrée seule »,
+ * « sortie seule » → entity, entity_locked_in, entity_locked_out). Les flèches « entrée » / « sortie » se barrent selon le mode.
+ * Animaux : liste pets [{ entity, name, picture }] ; l'état de chaque entité (home / not_home, on / off, inside / outside…)
+ * dit s'il est dedans ou dehors. Facultatifs : batterie, couvre-feu, détection d'un intrus, mouvement du volet.
+ */
+(() => {
+  const TAG = 'appliance-cat-flap-card';
+  if (customElements.get(TAG)) return;
+
+  const T = {
+    "en": {
+      "name": "Cat flap",
+      "mode_unlocked": "Open",
+      "mode_locked_all": "Locked",
+      "mode_locked_in": "In only",
+      "mode_locked_out": "Out only",
+      "mode_curfew": "Curfew",
+      "mode_unknown": "Unknown",
+      "mode_unavailable": "Unavailable",
+      "curfew": "Curfew",
+      "inside": "Inside",
+      "outside": "Outside",
+      "unknown": "Unknown",
+      "went_in": "{n} came in",
+      "went_out": "{n} went out",
+      "intruder_detail": "Unknown animal at the flap",
+      "battery_low": "Low battery: replace the batteries",
+      "battery": "Battery",
+      "since": "Last pass",
+      "on": "On",
+      "off": "Off",
+      "low": "Low",
+      "ok": "OK"
+    },
+    "de": {
+      "name": "Katzenklappe",
+      "mode_unlocked": "Offen",
+      "mode_locked_all": "Gesperrt",
+      "mode_locked_in": "Nur rein",
+      "mode_locked_out": "Nur raus",
+      "mode_curfew": "Ausgangssperre",
+      "mode_unknown": "Unbekannt",
+      "mode_unavailable": "Nicht verfügbar",
+      "curfew": "Ausgangssperre",
+      "inside": "Drinnen",
+      "outside": "Draußen",
+      "unknown": "Unbekannt",
+      "went_in": "{n} ist reingekommen",
+      "went_out": "{n} ist rausgegangen",
+      "intruder_detail": "Fremdes Tier an der Klappe",
+      "battery_low": "Batterie schwach: bitte wechseln",
+      "battery": "Batterie",
+      "since": "Letzter Durchgang",
+      "on": "An",
+      "off": "Aus",
+      "low": "Schwach",
+      "ok": "OK"
+    },
+    "fr": {
+      "name": "Chatière",
+      "mode_unlocked": "Ouverte",
+      "mode_locked_all": "Verrouillée",
+      "mode_locked_in": "Entrée seule",
+      "mode_locked_out": "Sortie seule",
+      "mode_curfew": "Couvre-feu",
+      "mode_unknown": "Inconnu",
+      "mode_unavailable": "Indisponible",
+      "curfew": "Couvre-feu",
+      "inside": "Dedans",
+      "outside": "Dehors",
+      "unknown": "Inconnu",
+      "went_in": "{n} est rentré",
+      "went_out": "{n} est sorti",
+      "intruder_detail": "Animal inconnu devant la chatière",
+      "battery_low": "Piles faibles : à remplacer",
+      "battery": "Piles",
+      "since": "Dernier passage",
+      "on": "Actif",
+      "off": "Inactif",
+      "low": "Faible",
+      "ok": "OK"
+    },
+    "it": {
+      "name": "Gattaiola",
+      "mode_unlocked": "Aperta",
+      "mode_locked_all": "Bloccata",
+      "mode_locked_in": "Solo entrata",
+      "mode_locked_out": "Solo uscita",
+      "mode_curfew": "Coprifuoco",
+      "mode_unknown": "Sconosciuto",
+      "mode_unavailable": "Non disponibile",
+      "curfew": "Coprifuoco",
+      "inside": "Dentro",
+      "outside": "Fuori",
+      "unknown": "Sconosciuto",
+      "went_in": "{n} è rientrato",
+      "went_out": "{n} è uscito",
+      "intruder_detail": "Animale sconosciuto alla gattaiola",
+      "battery_low": "Batterie scariche: sostituirle",
+      "battery": "Batterie",
+      "since": "Ultimo passaggio",
+      "on": "Attivo",
+      "off": "Spento",
+      "low": "Scarica",
+      "ok": "OK"
+    },
+    "nb": {
+      "name": "Katteluke",
+      "mode_unlocked": "Åpen",
+      "mode_locked_all": "Låst",
+      "mode_locked_in": "Bare inn",
+      "mode_locked_out": "Bare ut",
+      "mode_curfew": "Portforbud",
+      "mode_unknown": "Ukjent",
+      "mode_unavailable": "Utilgjengelig",
+      "curfew": "Portforbud",
+      "inside": "Inne",
+      "outside": "Ute",
+      "unknown": "Ukjent",
+      "went_in": "{n} kom inn",
+      "went_out": "{n} gikk ut",
+      "intruder_detail": "Ukjent dyr ved luken",
+      "battery_low": "Lavt batteri: bytt batteriene",
+      "battery": "Batteri",
+      "since": "Siste passering",
+      "on": "På",
+      "off": "Av",
+      "low": "Lav",
+      "ok": "OK"
+    },
+    "nl": {
+      "name": "Kattenluik",
+      "mode_unlocked": "Open",
+      "mode_locked_all": "Vergrendeld",
+      "mode_locked_in": "Alleen in",
+      "mode_locked_out": "Alleen uit",
+      "mode_curfew": "Avondklok",
+      "mode_unknown": "Onbekend",
+      "mode_unavailable": "Niet beschikbaar",
+      "curfew": "Avondklok",
+      "inside": "Binnen",
+      "outside": "Buiten",
+      "unknown": "Onbekend",
+      "went_in": "{n} is binnengekomen",
+      "went_out": "{n} is naar buiten gegaan",
+      "intruder_detail": "Onbekend dier bij het luik",
+      "battery_low": "Batterij bijna leeg: vervangen",
+      "battery": "Batterij",
+      "since": "Laatste doorgang",
+      "on": "Aan",
+      "off": "Uit",
+      "low": "Laag",
+      "ok": "OK"
+    }
+  };
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
+
+  const IN_RE = /^(home|inside|in|indoor|indoors|present|on|true|yes|1|dedans|intérieur|interieur|drinnen|innen|thuis|binnen|inne|acasa|дома)$/i;
+  const OUT_RE = /^(not_home|away|outside|out|outdoor|outdoors|absent|off|false|no|0|dehors|extérieur|exterieur|draußen|draussen|aussen|außen|buiten|ute|afară|afara|вне)$/i;
+  // mode de verrouillage : valeur d'un select ou état d'un lock → locked_all / locked_in (reste dedans) / locked_out (reste dehors) / unlocked
+  const kindOf = (v) => {
+    const s = String(v ?? '').toLowerCase().replace(/[\s-]+/g, '_');
+    if (!s || /^(unavailable|unknown|none_selected)$/.test(s)) return 'unknown';
+    if (/^(unlocked|unlock|open|opened|none|off|free|ouvert|déverrouillé|deverrouille|entsperrt)/.test(s)) return 'unlocked';
+    if (/curfew|couvre|night/.test(s)) return 'curfew';
+    if (/locked_in|keep_in|lock_in|in_only|inside|^in$|enferm/.test(s)) return 'locked_in';
+    if (/locked_out|keep_out|lock_out|out_only|outside|^out$/.test(s)) return 'locked_out';
+    if (/lock|both|all|closed|ferm|verrouill|gesperrt/.test(s)) return 'locked_all';
+    return 'unknown';
+  };
+  const ICONS = { unlocked: 'mdi:lock-open-variant', locked_all: 'mdi:lock', locked_in: 'mdi:home-lock', locked_out: 'mdi:tree-outline', curfew: 'mdi:moon-waning-crescent', unknown: 'mdi:help-circle-outline' };
+
+  const CSS = `
+:host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--cf-ok:var(--appliance-ok-color,#43a047);--cf-alert:var(--appliance-alert-color,#db4437);
+  --cf-warn:var(--appliance-warn-color,#ffa000);--cf-cold:var(--appliance-cold-color,#2b9af9);--cf-c:#9aa3ad}
+.head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
+ha-card.unlocked{--cf-c:var(--cf-ok)}ha-card.locked_all{--cf-c:var(--cf-alert)}ha-card.locked_in,ha-card.locked_out{--cf-c:var(--cf-warn)}ha-card.curfew{--cf-c:var(--cf-cold)}
+.unlocked .badge,.locked_all .badge,.locked_in .badge,.locked_out .badge,.curfew .badge{background:color-mix(in srgb,var(--cf-c) 22%,transparent);color:var(--cf-c)}
+ha-card.intruder{box-shadow:0 0 0 1px color-mix(in srgb,var(--cf-alert) 60%,transparent),0 0 22px color-mix(in srgb,var(--cf-alert) 30%,transparent)}
+.alert{display:none;margin-top:2px;font-size:11px;color:var(--cf-alert);font-weight:500;text-align:center}
+.alert.on{display:block}.alert.warn{color:var(--cf-warn)}.alert.info{color:var(--secondary-text-color)}
+svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height:auto;margin:2px auto 0;cursor:pointer;overflow:visible}
+.pets{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:6px}.pets:empty{display:none}
+.pet{flex:1 1 92px;max-width:150px;display:flex;align-items:center;gap:6px;background:var(--secondary-background-color);border-radius:12px;padding:4px 8px 4px 4px;cursor:pointer;min-width:0}
+.pet .av{flex:none;width:30px;height:30px;border-radius:50%;background:color-mix(in srgb,var(--cf-pc,#9aa3ad) 25%,transparent);color:var(--cf-pc,#9aa3ad);display:flex;align-items:center;justify-content:center;overflow:hidden;--mdc-icon-size:18px}
+.pet .av img{width:100%;height:100%;object-fit:cover}
+.pet .tx{min-width:0;line-height:15px}.pet .n{font-size:12px;font-weight:600;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pet .s{font-size:10px;color:var(--cf-pc,var(--secondary-text-color));white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pet.in{--cf-pc:var(--cf-ok)}.pet.out{--cf-pc:var(--cf-cold)}.pet.unk{--cf-pc:#9aa3ad}
+.ctl{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:6px}.ctl.hide,.ctl button.hide{display:none}
+.ctl button{flex:1 1 74px;max-width:130px;display:flex;align-items:center;justify-content:center;gap:4px;border:0;border-radius:10px;padding:6px 8px;cursor:pointer;min-width:0;
+  background:var(--secondary-background-color);color:var(--primary-text-color);font:500 12px/16px var(--paper-font-body1_-_font-family,Roboto,sans-serif)}
+.ctl button span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ctl button ha-icon{--mdc-icon-size:16px;flex:none}
+.ctl button:hover{filter:brightness(1.12)}
+.ctl button:disabled{opacity:.4;cursor:default;filter:none}
+.ctl button.on{background:color-mix(in srgb,var(--cf-c) 28%,var(--secondary-background-color))}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(68px,1fr));gap:6px;margin-top:6px}
+.tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
+.tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
+.tile .l span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tile .l ha-icon{--mdc-icon-size:13px;flex:none}
+.tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
+.tile.hide{display:none}.tile.bad .v{color:var(--cf-alert)}.tile.warn .v{color:var(--cf-warn)}
+/* ---- illustration ---- */
+.cf-aura{opacity:.5;transition:opacity .6s}.unavailable .cf-aura,.unknown .cf-aura{opacity:0}
+.cf-auras{stop-color:var(--cf-c);transition:stop-color .4s}
+.cf-band{fill:color-mix(in srgb,var(--cf-c) 35%,#cfd5db);transition:fill .4s}
+.unlocked .cf-band,.locked_all .cf-band{animation:cfbeat 4s ease-in-out infinite}
+.cf-led{fill:var(--cf-c);transition:fill .4s}
+/* panneau : transparent, articulé en haut ; il se soulève au passage d'un animal */
+.cf-panel{transform-box:view-box;transform-origin:120px 44px}
+.pass-in .cf-panel,.pass-out .cf-panel{animation:cfswing 2.6s ease-in-out}
+.moving .cf-panel{animation:cfswing 1.8s ease-in-out infinite}
+.cf-cat{opacity:0;transform-box:view-box;transform-origin:120px 112px}
+.pass-in .cf-cat{animation:cfcat-in 2.6s ease-in-out both}.pass-out .cf-cat{animation:cfcat-out 2.6s ease-in-out both}
+.moving .cf-cat{animation:cfcat-in 1.8s ease-in-out infinite}
+/* ondes de la puce RFID */
+.cf-ring{fill:none;stroke:var(--cf-c);stroke-width:1.6;opacity:0;transform-box:fill-box;transform-origin:50% 50%}
+.pass-in .cf-ring,.pass-out .cf-ring,.moving .cf-ring{animation:cfscan 1.3s ease-out 2}.moving .cf-ring{animation-iteration-count:infinite}
+.cf-ring.r2{animation-delay:.3s!important}.cf-ring.r3{animation-delay:.6s!important}
+/* flèches entrée / sortie : barrées quand le mode les interdit */
+.cf-arrow{fill:none;stroke:var(--cf-ok);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;transition:stroke .4s}
+.no-in .cf-a-in,.no-out .cf-a-out{stroke:var(--cf-alert);opacity:.7}
+.cf-x{stroke:var(--cf-alert);stroke-width:2.2;stroke-linecap:round;opacity:0;transition:opacity .4s}
+.no-in .cf-x-in,.no-out .cf-x-out{opacity:1}
+.unavailable .cf-arrow,.unknown .cf-arrow{stroke:#9aa3ad}
+/* cadenas : verrouillage total */
+.cf-padlock{opacity:0;transition:opacity .5s}.locked_all .cf-padlock{opacity:1}
+.cf-shackle{fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round}
+/* couvre-feu (lune), intrus (alerte), batterie faible */
+.cf-moon,.cf-warn,.cf-bat{opacity:0}.curfew-on .cf-moon{opacity:1}
+.intruder .cf-warn{opacity:1;animation:cfblink 1s infinite}.lowbat .cf-bat{opacity:1;animation:cfblink 1.6s infinite}
+.unavailable svg{filter:grayscale(.8) opacity(.6)}
+.noanim *{animation:none!important;transition:none!important}
+@keyframes cfbeat{0%,100%{opacity:.7}50%{opacity:1}}
+@keyframes cfswing{0%,100%{transform:none}22%,68%{transform:scaleY(.2) skewX(-5deg)}}
+@keyframes cfcat-in{0%{opacity:0;transform:scale(.5) translateY(6px)}25%,62%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.35) translateY(-4px)}}
+@keyframes cfcat-out{0%{opacity:0;transform:scale(1.35) translateY(-4px)}25%,62%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.5) translateY(6px)}}
+@keyframes cfscan{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(2.4,3.2)}}
+@keyframes cfblink{50%{opacity:.15}}
+`;
+
+  const DEFS = `<radialGradient id="cfaurag"><stop offset="0" class="cf-auras" stop-opacity=".5"/><stop offset=".6" class="cf-auras" stop-opacity=".12"/><stop offset="1" class="cf-auras" stop-opacity="0"/></radialGradient>
+    <linearGradient id="cfbody" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dfe3e8"/></linearGradient>
+    <linearGradient id="cfview" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe0f2"/><stop offset=".62" stop-color="#d8ecf4"/><stop offset=".62" stop-color="#b9d79a"/><stop offset="1" stop-color="#8fb86e"/></linearGradient>
+    <linearGradient id="cfpanel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".75"/><stop offset=".5" stop-color="#e3f2fa" stop-opacity=".35"/><stop offset="1" stop-color="#ffffff" stop-opacity=".6"/></linearGradient>
+    <clipPath id="cfwin"><rect x="86" y="42" width="68" height="96" rx="5"/></clipPath>`;
+
+  const SVG = (label) => `<svg viewBox="0 0 240 180" role="img" aria-label="${esc(label)}"><defs>${DEFS}</defs>
+      <ellipse class="cf-aura" cx="120" cy="92" rx="108" ry="82" fill="url(#cfaurag)"/>
+      <ellipse cx="120" cy="171" rx="54" ry="5" fill="#000" fill-opacity=".16"/>
+      <!-- ondes de la puce, au-dessus de la bande d'antenne -->
+      ${['', ' r2', ' r3'].map((r) => `<ellipse class="cf-ring${r}" cx="120" cy="23" rx="22" ry="4"/>`).join('')}
+      <!-- cadre blanc, petits pieds, bande d'antenne -->
+      <rect x="92" y="161" width="14" height="6" rx="2" fill="#cfd4da"/><rect x="134" y="161" width="14" height="6" rx="2" fill="#cfd4da"/>
+      <rect x="62" y="12" width="116" height="152" rx="16" fill="url(#cfbody)" stroke="#cfd4da" stroke-width="1.5"/>
+      <rect class="cf-band" x="90" y="18" width="60" height="10" rx="4"/>
+      <circle class="cf-led" cx="80" cy="23" r="2.4"/><circle class="cf-led" cx="160" cy="23" r="2.4"/>
+      <rect x="77" y="34" width="86" height="114" rx="10" fill="#eceff2" stroke="#d0d5da"/>
+      <!-- fenêtre : on voit le jardin à travers -->
+      <rect x="86" y="42" width="68" height="96" rx="5" fill="url(#cfview)"/>
+      <g clip-path="url(#cfwin)">
+        <g class="cf-cat"><g transform="translate(120 104)">
+          <path d="M-17 -5 L-15 -25 L-5 -15 Q0 -17 5 -15 L15 -25 L17 -5 Q19 9 0 15 Q-19 9 -17 -5Z" fill="#33363d"/>
+          <ellipse cx="-6.5" cy="-3" rx="2.8" ry="3.4" fill="#ffd54f"/><ellipse cx="6.5" cy="-3" rx="2.8" ry="3.4" fill="#ffd54f"/>
+          <ellipse cx="-6.5" cy="-3" rx="1" ry="2.6" fill="#1b1d22"/><ellipse cx="6.5" cy="-3" rx="1" ry="2.6" fill="#1b1d22"/>
+          <path d="M-2 4 H2 L0 6.5Z" fill="#f4a3b0"/><path d="M-13 4 L-24 2 M-13 7 L-24 9 M13 4 L24 2 M13 7 L24 9" stroke="#8d939c" stroke-width="1" stroke-linecap="round"/>
+        </g></g>
+      </g>
+      <!-- volet transparent -->
+      <g class="cf-panel"><rect x="88" y="44" width="64" height="92" rx="4" fill="url(#cfpanel)" stroke="#9fb6c4" stroke-width="1.4"/>
+        <path d="M95 52 L110 52 L95 70Z" fill="#fff" fill-opacity=".45"/><rect x="88" y="44" width="64" height="5" rx="2" fill="#aebdc7"/></g>
+      <g class="cf-padlock"><circle cx="120" cy="92" r="19" fill="#db4437" fill-opacity=".92"/>
+        <path class="cf-shackle" d="M112 90 V85 A8 8 0 0 1 128 85 V90"/><rect x="109" y="89" width="22" height="16" rx="3.5" fill="#fff"/><circle cx="120" cy="97" r="2.2" fill="#db4437"/></g>
+      <!-- flèches sortie (←) et entrée (→) -->
+      <g class="cf-arrows">
+        <g><path class="cf-arrow cf-a-out" d="M112 155 H96 M101 150 L96 155 L101 160"/><path class="cf-x cf-x-out" d="M92 150 L116 160"/></g>
+        <g><path class="cf-arrow cf-a-in" d="M128 155 H144 M139 150 L144 155 L139 160"/><path class="cf-x cf-x-in" d="M124 150 L148 160"/></g>
+      </g>
+      <g class="cf-moon"><path d="M36 30 a14 14 0 1 0 14 18 a11 11 0 0 1 -14 -18Z" fill="var(--cf-cold)"/></g>
+      <g class="cf-warn"><path d="M212 18 L226 42 H198 Z" fill="#db4437"/><path d="M212 26 V34" stroke="#fff" stroke-width="2.4"/><circle cx="212" cy="38" r="1.4" fill="#fff"/></g>
+      <g class="cf-bat"><rect x="14" y="152" width="22" height="12" rx="2" fill="none" stroke="#ffa000" stroke-width="2"/><rect x="36" y="155" width="3" height="6" fill="#ffa000"/><path d="M17 155 h4 v6 h-4z" fill="#ffa000"/></g>
+    </svg>`;
+
+  const TILES = [['inside', 'mdi:home', 'show_inside'], ['outside', 'mdi:tree', 'show_outside'], ['battery', 'mdi:battery', 'show_battery'], ['curfew', 'mdi:moon-waning-crescent', 'show_curfew'], ['since', 'mdi:clock-outline', 'show_since']];
+
+  class ApplianceCatFlapCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+    get _config() { return this._c; }
+    static getConfigElement() { return document.createElement(TAG + '-editor'); }
+    // détection automatique : Sure Petcare (3 locks par chatière, un binary_sensor « présence » par animal), select de mode,
+    // ou toute entité dont le nom évoque une chatière ; animaux = présence / device_tracker au nom d'animal, ou attribut where
+    static getStubConfig(hass) {
+      const st = (hass && hass.states) || {}, ids = Object.keys(st), at = (i) => st[i].attributes || {};
+      const FLAP = /chati[eè]re|cat_?flap|pet_?door|dog_?door|sure_?flap|petcare|flap|katzenklappe|gattaiola|kattenluik|katteluke/i;
+      const key = (i) => { const o = i.split('.')[1], ms = [...o.matchAll(new RegExp(FLAP.source, 'gi'))], m = ms[ms.length - 1]; return m ? o.slice(0, m.index + m[0].length) : ''; };
+      const dom = (d) => ids.filter((i) => i.startsWith(d + '.'));
+      const locks = dom('lock').filter((i) => FLAP.test(i) || FLAP.test(at(i).friendly_name || ''));
+      const sel = dom('select').find((i) => (FLAP.test(i) || /lock.*mode|locking/i.test(i)) && (at(i).options || []).some((o) => /lock|in|out/i.test(o)));
+      const ref = locks[0] || sel || ids.find((i) => FLAP.test(i)) || '';
+      const pre = key(ref) || (ref.split('.')[1] || '\u0000').replace(/_(locked_(in|out|all)|lock|mode|locking_mode)$/, '');
+      const near = (d, re) => dom(d).find((i) => i.split('.')[1].startsWith(pre) && re.test(i)) || '';
+      const lIn = locks.find((i) => /locked_in|lock_in|in_only/i.test(i)) || '', lOut = locks.find((i) => /locked_out|lock_out|out_only/i.test(i)) || '';
+      const lAll = locks.find((i) => i !== lIn && i !== lOut && (/locked_all|lock_all|_all$/i.test(i) || !/_in$|_out$/.test(i))) || '';
+      const pets = ids.filter((i) => /^(binary_sensor|device_tracker)\./.test(i) && !FLAP.test(i) && !/battery|connect|online|problem|motion/i.test(i)
+        && (at(i).where != null || (/^(presence|occupancy)$/.test(at(i).device_class || '') && /chat|cat|minou|pet|dog|chien/i.test(i + (at(i).friendly_name || ''))) || (i.startsWith('device_tracker.') && /chat|cat|minou|dog|chien/i.test(i))));
+      return {
+        entity: lAll || (sel ? '' : locks[0] || ''),
+        ...(lIn ? { entity_locked_in: lIn } : {}),
+        ...(lOut ? { entity_locked_out: lOut } : {}),
+        ...(sel ? { entity_mode: sel } : {}),
+        entity_battery: near('sensor', /batter/i) || dom('sensor').find((i) => at(i).device_class === 'battery' && FLAP.test(i)) || '',
+        ...(near('binary_sensor', /curfew|couvre/i) ? { entity_curfew: near('binary_sensor', /curfew|couvre/i) } : {}),
+        pets: pets.slice(0, 4).map((entity) => ({ entity })),
+      };
+    }
+    setConfig(c) {
+      if (window.applianceSize) window.applianceSize(this, c);
+      if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
+      this._c = { battery_low: 20, show_status: true, show_buttons: true, show_pets: true, show_inside: true, show_outside: true, show_battery: true, show_curfew: true, show_since: true, ...c };
+      this._built = false; this._prev = null;
+      if (this._hass) this._render();
+    }
+    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    getCardSize() { return 6; }
+    getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+
+    _t(k, v) { let s = T[this._lang()][k] ?? T.en[k] ?? k; if (v) for (const [a, b] of Object.entries(v)) s = s.replace(`{${a}}`, b); return s; }
+    // libellé perso (option labels) sinon traduction
+    _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
+    _lang() { let l = this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en'; if (!T[l]) l = l.slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _st(id) { return id && this._hass.states[id]; }
+    _ok(s) { return !!s && !/^(unavailable|unknown)$/i.test(String(s.state)); }
+    _on(s) { return this._ok(s) && /^(on|true|open|opened|1|yes|low|detected|home)$/i.test(String(s.state)); }
+    _num(s) { if (!this._ok(s)) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
+    _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
+    _since(t) {
+      if (!t || !isFinite(t)) return '--';
+      const sec = Math.max(0, (Date.now() - t) / 1000);
+      const [n, u] = sec < 45 ? [0, 'second'] : sec < 3600 ? [Math.max(1, sec / 60), 'minute'] : sec < 86400 ? [sec / 3600, 'hour'] : [sec / 86400, 'day'];
+      try { return n ? new Intl.NumberFormat(this._lang(), { style: 'unit', unit: u, unitDisplay: 'short' }).format(Math.floor(n)) : new Intl.RelativeTimeFormat(this._lang(), { numeric: 'auto' }).format(0, 'second'); }
+      catch (e) { return `${Math.floor(n)} ${u[0]}`; }
+    }
+    // animaux : config pets (liste d'objets ou d'identifiants) → { id, name, picture, where: in | out | unk, s }
+    _pets() {
+      const raw = this._c.pets, list = Array.isArray(raw) ? raw : raw ? [raw] : [];
+      return list.map((p) => (typeof p === 'string' ? { entity: p } : p)).filter((p) => p && p.entity).map((p) => {
+        const s = this._st(p.entity), v = s ? String(s.state) : '';
+        const where = !this._ok(s) ? 'unk' : IN_RE.test(v) ? 'in' : OUT_RE.test(v) ? 'out' : 'unk';
+        const a = (s && s.attributes) || {};
+        return { id: p.entity, name: p.name || a.friendly_name || p.entity.split('.')[1], picture: p.picture || a.entity_picture || '', icon: p.icon, where, s };
+      });
+    }
+    _call(id, option) {
+      if (!this._hass || !id) return;
+      // trois locks (Sure Petcare) : verrouiller celui du mode choisi, « ouverte » déverrouille ceux qui sont verrouillés
+      if (id === 'multi') {
+        const c = this._c, L = { locked_all: c.entity, locked_in: c.entity_locked_in, locked_out: c.entity_locked_out };
+        if (option !== 'unlocked') return L[option] && this._hass.callService('lock', 'lock', { entity_id: L[option] });
+        const on = Object.values(L).filter((e) => e && this._st(e) && this._st(e).state === 'locked');
+        if (on.length) this._hass.callService('lock', 'unlock', { entity_id: on });
+        return;
+      }
+      const d = id.split('.')[0];
+      if (d === 'select' || d === 'input_select') this._hass.callService(d, 'select_option', { entity_id: id, option });
+      else if (d === 'lock') this._hass.callService('lock', option === 'unlocked' ? 'unlock' : 'lock', { entity_id: id });
+    }
+
+    _compute() {
+      const c = this._c, lockS = this._st(c.entity), modeS = this._st(c.entity_mode);
+      // le select (modes fins) prime sur le lock (verrouillé / déverrouillé)
+      const src = c.entity_mode && this._ok(modeS) ? modeS : lockS || (!c.entity_mode && this._st(c.entity_locked_in || c.entity_locked_out));
+      const dead = !src ? !(c.entity_locked_in || c.entity_locked_out) || !this._ok(this._st(c.entity_locked_in || c.entity_locked_out)) : /^unavailable$/i.test(String(src.state));
+      const multi = !c.entity_mode && (c.entity_locked_in || c.entity_locked_out);
+      const lk = (e) => { const x = this._st(e); return !!x && String(x.state) === 'locked'; };
+      const kind = dead ? 'unavailable' : multi && src === lockS
+        ? (lk(c.entity) || (lk(c.entity_locked_in) && lk(c.entity_locked_out)) ? 'locked_all' : lk(c.entity_locked_in) ? 'locked_in' : lk(c.entity_locked_out) ? 'locked_out' : 'unlocked')
+        : kindOf(src.state);
+      const bS = this._st(c.entity_battery), bat = this._num(bS), batBinary = !!bS && /^binary_sensor\./.test(c.entity_battery);
+      const low = (batBinary && this._on(bS)) || (!isNaN(bat) && bat < Number(c.battery_low));
+      const curfewS = this._st(c.entity_curfew), curfew = this._on(curfewS) || kind === 'curfew';
+      const intruder = this._on(this._st(c.entity_intruder));
+      const moving = this._on(this._st(c.entity_motion));
+      return { src, kind, bS, bat, batBinary, low, curfewS, curfew, intruder, moving };
+    }
+
+    // un animal vient de changer de côté : volet qui se soulève, tête de chat qui traverse (relance l'animation)
+    _pass(dir, name) {
+      const svg = this._root && this._root.querySelector('svg'); if (!svg) return;
+      svg.classList.remove('pass-in', 'pass-out'); void svg.getBoundingClientRect();
+      svg.classList.add(`pass-${dir}`);
+      clearTimeout(this._passTimer); this._passTimer = setTimeout(() => svg.classList.remove('pass-in', 'pass-out'), 2800);
+      this._last = { dir, name, t: Date.now() };
+    }
+
+    _build() {
+      const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
+      root.innerHTML = `<style>${CSS}</style><ha-card>
+        <div class="head"><div class="title" id="cftitle"></div><div class="badge" id="cfbadge"></div></div>
+        ${SVG(this._c.name || this._t('name'))}
+        <div class="alert" id="cfalert"></div>
+        <div class="pets" id="cfpets"></div>
+        <div class="ctl" id="cfctl"></div>
+        <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
+      </ha-card>`;
+      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity_mode || this._c.entity));
+      root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
+        const c = this._c, p = this._pets();
+        this._more({ inside: (p.find((x) => x.where === 'in') || p[0] || {}).id, outside: (p.find((x) => x.where === 'out') || p[0] || {}).id,
+          battery: c.entity_battery, curfew: c.entity_curfew, since: (this._lastPet || {}).id || c.entity }[el.dataset.k]);
+      }));
+      this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
+    }
+
+    _render() {
+      if (!this._built) this._build();
+      const c = this._c, r = this._root, card = this._card;
+      const { src, kind, bS, bat, batBinary, low, curfewS, curfew, intruder, moving } = this._compute();
+      const pets = this._pets();
+
+      // passage : un animal a changé de côté depuis le dernier rendu
+      if (this._prev) pets.forEach((p) => { const o = this._prev[p.id]; if (o && o !== 'unk' && p.where !== 'unk' && o !== p.where) this._pass(p.where === 'in' ? 'in' : 'out', p.name); });
+      this._prev = Object.fromEntries(pets.map((p) => [p.id, p.where]));
+
+      const noIn = kind === 'locked_all' || kind === 'locked_out', noOut = kind === 'locked_all' || kind === 'locked_in';
+      card.className = `${kind}${noIn ? ' no-in' : ''}${noOut ? ' no-out' : ''}${curfew ? ' curfew-on' : ''}${intruder ? ' intruder' : ''}${low ? ' lowbat' : ''}${c.animations === false ? ' noanim' : ''}`;
+      r.querySelector('svg').classList.toggle('moving', moving);
+      r.getElementById('cftitle').textContent = c.name || this._t('name');
+      const badge = r.getElementById('cfbadge');
+      badge.textContent = this._t(`mode_${kind}`) + (curfew && kind !== 'curfew' ? ` · ${this._t('curfew')}` : '');
+      badge.style.display = c.show_status === false ? 'none' : '';
+
+      // alerte : intrus, batterie faible, sinon dernier passage (10 min)
+      const al = r.getElementById('cfalert'), L = this._last;
+      al.textContent = intruder ? this._t('intruder_detail') : low ? this._t('battery_low') : L && Date.now() - L.t < 600000 ? this._t(`went_${L.dir}`, { n: L.name }) : '';
+      al.classList.toggle('on', !!al.textContent);
+      al.classList.toggle('warn', !intruder && low); al.classList.toggle('info', !intruder && !low);
+
+      // animaux : pastilles avatar + nom + dedans / dehors
+      const box = r.getElementById('cfpets');
+      box.style.display = c.show_pets === false ? 'none' : '';
+      box.replaceChildren(...pets.map((p) => {
+        const el = document.createElement('div'); el.className = `pet ${p.where}`;
+        const av = document.createElement('div'); av.className = 'av';
+        if (p.picture) { const im = document.createElement('img'); im.src = p.picture; im.alt = ''; av.appendChild(im); }
+        else { const ic = document.createElement('ha-icon'); ic.setAttribute('icon', p.icon || 'mdi:cat'); av.appendChild(ic); }
+        const tx = document.createElement('div'); tx.className = 'tx';
+        const n = document.createElement('div'); n.className = 'n'; n.textContent = p.name;
+        const s = document.createElement('div'); s.className = 's'; s.textContent = this._t(p.where === 'in' ? 'inside' : p.where === 'out' ? 'outside' : 'unknown');
+        tx.append(n, s); el.append(av, tx);
+        el.addEventListener('click', () => this._more(p.id));
+        return el;
+      }));
+
+      // boutons : une par option du select de mode, sinon Verrouiller / Déverrouiller du lock
+      const ctl = r.getElementById('cfctl'), modeS = this._st(c.entity_mode);
+      const opts = c.entity_mode && modeS && Array.isArray(modeS.attributes.options) ? modeS.attributes.options.map((o) => ({ id: c.entity_mode, option: o, kind: kindOf(o), label: null }))
+        : c.entity_locked_in || c.entity_locked_out ? ['unlocked', c.entity_locked_in && 'locked_in', c.entity_locked_out && 'locked_out', c.entity && 'locked_all'].filter(Boolean).map((k) => ({ id: 'multi', option: k, kind: k }))
+        : c.entity ? [{ id: c.entity, option: 'locked_all', kind: 'locked_all' }, { id: c.entity, option: 'unlocked', kind: 'unlocked' }] : [];
+      const sig = opts.map((o) => o.option).join('|');
+      if (this._sig !== sig) {
+        this._sig = sig;
+        ctl.replaceChildren(...opts.map((o) => {
+          const b = document.createElement('button'); b.dataset.o = o.option;
+          const ic = document.createElement('ha-icon'); ic.setAttribute('icon', ICONS[o.kind] || ICONS.unknown);
+          const sp = document.createElement('span'); b.append(ic, sp);
+          b.addEventListener('click', () => this._call(o.id, o.option));
+          return b;
+        }));
+      }
+      ctl.classList.toggle('hide', c.show_buttons === false || !opts.length);
+      const human = (o) => { const t = String(o).replace(/_/g, ' '); return t.charAt(0).toUpperCase() + t.slice(1); };
+      ctl.querySelectorAll('button').forEach((b, i) => {
+        const o = opts[i]; if (!o) return;
+        b.querySelector('span').textContent = o.kind !== 'unknown' ? this._t(`mode_${o.kind}`) : human(o.option);
+        const cur = c.entity_mode ? modeS && modeS.state === o.option : o.id === 'multi' ? o.kind === kind : (o.kind === 'unlocked' ? kind === 'unlocked' : kind !== 'unlocked' && kind !== 'unavailable' && kind !== 'unknown');
+        b.classList.toggle('on', !!cur); b.disabled = kind === 'unavailable' || !!cur;
+      });
+
+      // tuiles
+      const inside = pets.filter((p) => p.where === 'in'), outside = pets.filter((p) => p.where === 'out');
+      const times = pets.map((p) => Date.parse(p.s && p.s.last_changed)).filter((t) => isFinite(t));
+      const lastT = times.length ? Math.max(...times) : Date.parse(src && src.last_changed);
+      this._lastPet = pets.find((p) => Date.parse(p.s && p.s.last_changed) === lastT);
+      const names = (a) => a.map((p) => p.name).join(', ');
+      const V = {
+        inside: [pets.length, String(inside.length), '', '', names(inside)],
+        outside: [pets.length, String(outside.length), '', '', names(outside)],
+        battery: [c.entity_battery, !isNaN(bat) && !batBinary ? String(Math.round(bat)) : this._ok(bS) ? this._t(low ? 'low' : 'ok') : '--', !isNaN(bat) && !batBinary ? '%' : '', low ? 'warn' : '', ''],
+        curfew: [c.entity_curfew || kind === 'curfew', this._t(curfew ? 'on' : 'off'), '', '', ''],
+        since: [src || pets.length, this._since(lastT), '', '', ''],
+      };
+      r.querySelector('.tile[data-k="battery"] ha-icon').setAttribute('icon', low ? 'mdi:battery-alert' : 'mdi:battery');
+      TILES.forEach(([k, , opt]) => {
+        const el = r.querySelector(`.tile[data-k="${k}"]`); const [show, val, unit, cls, tip] = V[k];
+        el.classList.toggle('hide', !show || c[opt] === false);
+        el.classList.toggle('warn', cls === 'warn'); el.title = tip || '';
+        el.querySelector('.lbl').textContent = this._l(k);
+        const small = document.createElement('small'); small.textContent = unit ?? '';
+        el.querySelector('.v').replaceChildren(String(val ?? ''), small);
+      });
+    }
+  }
+  customElements.define(TAG, ApplianceCatFlapCard);
+
+  /* ---- éditeur visuel ---- */
+  class ApplianceCatFlapCardEditor extends HTMLElement {
+    setConfig(c) { this._c = c; this._draw(); }
+    set hass(h) { this._hass = h; if (this._form) this._form.hass = h; }
+    _draw() {
+      if (!this._form) {
+        this._form = document.createElement('ha-form');
+        this._form.addEventListener('value-changed', (e) => {
+          this._c = e.detail.value;
+          this.dispatchEvent(new CustomEvent('config-changed', { detail: { config: this._c }, bubbles: true, composed: true }));
+        });
+        this.appendChild(this._form);
+      }
+      const ent = (name, domain) => ({ name, selector: { entity: domain ? { domain } : {} } });
+      const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
+      this._form.hass = this._hass;
+      this._form.data = this._c;
+      this._form.schema = [
+        { name: 'name', selector: { text: {} } },
+        { name: 'pets', selector: { object: {} } },
+        { name: 'labels', selector: { object: {} } },
+        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
+        { name: 'transparent', selector: { boolean: {} } },
+        ent('entity', ['lock', 'select', 'input_select']),
+        ent('entity_locked_in', 'lock'),
+        ent('entity_locked_out', 'lock'),
+        ent('entity_mode', ['select', 'input_select']),
+        ent('entity_motion', 'binary_sensor'),
+        ent('entity_curfew', ['binary_sensor', 'switch', 'input_boolean']),
+        ent('entity_intruder', 'binary_sensor'),
+        ent('entity_battery', ['sensor', 'binary_sensor']),
+        { name: 'battery_low', default: 20, selector: { number: { min: 1, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
+        ...window.applianceActionFields,
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski', cs: 'Čeština' }[value] || value })) } } },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_pets'), bool('show_buttons'), bool('show_inside'), bool('show_outside'), bool('show_battery'), bool('show_curfew'), bool('show_since'), bool('animations')] },
+      ];
+      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
+    }
+  }
+  customElements.define(TAG + '-editor', ApplianceCatFlapCardEditor);
+
+  window.customCards = window.customCards || [];
+  window.customCards.push({
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
+    description: 'Chatière connectée animée (SureFlap, Sure Petcare…) : animaux dedans / dehors, passages, modes de verrouillage, batterie, couvre-feu.', preview: true,
+    documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/cat-flap.md',
+  });
+})();
+
+/* Carte « Fontaine à eau pour animaux » — custom:appliance-pet-fountain-card
+ * Fontaine connectée (Petlibro Dockstream, Catit, Xiaomi, Petkit…) : socle bois, corps blanc, bac en inox, cascade au centre.
+ * Animations : la nappe d'eau coule en continu et des ondes s'étendent dans le bac ; une bulle monte dans la fenêtre de niveau ;
+ * quand un animal boit (entity_drinking), un chat penche la tête vers le bac et des gouttes sautent ; niveau d'eau bas ou vide :
+ * la fenêtre clignote en rouge et la pompe s'arrête ; filtre à changer / nettoyage à faire : pictogrammes qui clignotent ;
+ * lumière : les voyants du socle s'allument.
+ * Tout est facultatif : entity (interrupteur / pompe), niveau d'eau (en % ou avec capacity), alerte eau basse, filtre (jours restants, %
+ * ou capteur binaire), consommation du jour, dernière gorgée, nettoyage, puissance, batterie. Boutons : marche / arrêt, lumière,
+ * modes de la fontaine (select), remise à zéro du filtre et du nettoyage (2e clic de confirmation).
+ */
+(() => {
+  const TAG = 'appliance-pet-fountain-card';
+  if (customElements.get(TAG)) return;
+
+  const T = {
+    "en": {
+      "name": "Pet fountain",
+      "state_flowing": "Flowing",
+      "state_drinking": "Drinking",
+      "state_low": "Low water",
+      "state_empty": "Empty",
+      "state_off": "Off",
+      "state_unavailable": "Unavailable",
+      "alert_empty": "Tank empty: refill the fountain",
+      "alert_low": "Water level low",
+      "alert_filter": "Replace the filter",
+      "alert_clean": "Cleaning due",
+      "battery_low": "Low battery",
+      "btn_turn_on": "Turn on",
+      "btn_turn_off": "Turn off",
+      "btn_light": "Light",
+      "btn_filter_reset": "Filter reset",
+      "btn_clean_reset": "Cleaned",
+      "btn_confirm": "Confirm?",
+      "mode_continuous": "Continuous",
+      "mode_intermittent": "Intermittent",
+      "mode_sensor": "Sensor",
+      "mode_smart": "Smart",
+      "mode_normal": "Normal",
+      "mode_flowing": "Flowing",
+      "mode_night": "Night",
+      "mode_eco": "Eco",
+      "level": "Water",
+      "filter": "Filter",
+      "today": "Today",
+      "drink": "Last drink",
+      "clean": "Cleaning",
+      "power": "Power",
+      "battery": "Battery",
+      "days": "d",
+      "low": "Low",
+      "ok": "OK",
+      "to_change": "To replace",
+      "to_clean": "To clean"
+    },
+    "de": {
+      "name": "Trinkbrunnen",
+      "state_flowing": "Läuft",
+      "state_drinking": "Trinkt",
+      "state_low": "Wenig Wasser",
+      "state_empty": "Leer",
+      "state_off": "Aus",
+      "state_unavailable": "Nicht verfügbar",
+      "alert_empty": "Tank leer: Brunnen auffüllen",
+      "alert_low": "Wasserstand niedrig",
+      "alert_filter": "Filter wechseln",
+      "alert_clean": "Reinigung fällig",
+      "battery_low": "Batterie schwach",
+      "btn_turn_on": "Einschalten",
+      "btn_turn_off": "Ausschalten",
+      "btn_light": "Licht",
+      "btn_filter_reset": "Filter zurücksetzen",
+      "btn_clean_reset": "Gereinigt",
+      "btn_confirm": "Bestätigen?",
+      "mode_continuous": "Dauerbetrieb",
+      "mode_intermittent": "Intervall",
+      "mode_sensor": "Sensor",
+      "mode_smart": "Smart",
+      "mode_normal": "Normal",
+      "mode_flowing": "Fließend",
+      "mode_night": "Nacht",
+      "mode_eco": "Eco",
+      "level": "Wasser",
+      "filter": "Filter",
+      "today": "Heute",
+      "drink": "Letzter Schluck",
+      "clean": "Reinigung",
+      "power": "Leistung",
+      "battery": "Batterie",
+      "days": "T",
+      "low": "Niedrig",
+      "ok": "OK",
+      "to_change": "Wechseln",
+      "to_clean": "Reinigen"
+    },
+    "fr": {
+      "name": "Fontaine à eau",
+      "state_flowing": "En marche",
+      "state_drinking": "Ça boit !",
+      "state_low": "Eau basse",
+      "state_empty": "Vide",
+      "state_off": "Arrêtée",
+      "state_unavailable": "Indisponible",
+      "alert_empty": "Réservoir vide : remplis la fontaine",
+      "alert_low": "Niveau d'eau bas",
+      "alert_filter": "Filtre à changer",
+      "alert_clean": "Nettoyage à faire",
+      "battery_low": "Batterie faible",
+      "btn_turn_on": "Allumer",
+      "btn_turn_off": "Éteindre",
+      "btn_light": "Lumière",
+      "btn_filter_reset": "RAZ filtre",
+      "btn_clean_reset": "Nettoyée",
+      "btn_confirm": "Confirmer ?",
+      "mode_continuous": "Continu",
+      "mode_intermittent": "Intermittent",
+      "mode_sensor": "Détection",
+      "mode_smart": "Intelligent",
+      "mode_normal": "Normal",
+      "mode_flowing": "Écoulement",
+      "mode_night": "Nuit",
+      "mode_eco": "Éco",
+      "level": "Eau",
+      "filter": "Filtre",
+      "today": "Aujourd'hui",
+      "drink": "Dernière gorgée",
+      "clean": "Nettoyage",
+      "power": "Puissance",
+      "battery": "Batterie",
+      "days": "j",
+      "low": "Bas",
+      "ok": "OK",
+      "to_change": "À changer",
+      "to_clean": "À nettoyer"
+    },
+    "it": {
+      "name": "Fontanella",
+      "state_flowing": "In funzione",
+      "state_drinking": "Sta bevendo",
+      "state_low": "Acqua bassa",
+      "state_empty": "Vuota",
+      "state_off": "Spenta",
+      "state_unavailable": "Non disponibile",
+      "alert_empty": "Serbatoio vuoto: riempi la fontanella",
+      "alert_low": "Livello dell'acqua basso",
+      "alert_filter": "Sostituire il filtro",
+      "alert_clean": "Pulizia da fare",
+      "battery_low": "Batteria scarica",
+      "btn_turn_on": "Accendi",
+      "btn_turn_off": "Spegni",
+      "btn_light": "Luce",
+      "btn_filter_reset": "Reset filtro",
+      "btn_clean_reset": "Pulita",
+      "btn_confirm": "Confermare?",
+      "mode_continuous": "Continuo",
+      "mode_intermittent": "Intermittente",
+      "mode_sensor": "Sensore",
+      "mode_smart": "Smart",
+      "mode_normal": "Normale",
+      "mode_flowing": "Flusso",
+      "mode_night": "Notte",
+      "mode_eco": "Eco",
+      "level": "Acqua",
+      "filter": "Filtro",
+      "today": "Oggi",
+      "drink": "Ultimo sorso",
+      "clean": "Pulizia",
+      "power": "Potenza",
+      "battery": "Batteria",
+      "days": "g",
+      "low": "Basso",
+      "ok": "OK",
+      "to_change": "Da cambiare",
+      "to_clean": "Da pulire"
+    },
+    "nb": {
+      "name": "Drikkefontene",
+      "state_flowing": "Renner",
+      "state_drinking": "Drikker",
+      "state_low": "Lite vann",
+      "state_empty": "Tom",
+      "state_off": "Av",
+      "state_unavailable": "Utilgjengelig",
+      "alert_empty": "Tanken er tom: fyll på fontenen",
+      "alert_low": "Lavt vannivå",
+      "alert_filter": "Bytt filteret",
+      "alert_clean": "Rengjøring nødvendig",
+      "battery_low": "Lavt batteri",
+      "btn_turn_on": "Slå på",
+      "btn_turn_off": "Slå av",
+      "btn_light": "Lys",
+      "btn_filter_reset": "Nullstill filter",
+      "btn_clean_reset": "Rengjort",
+      "btn_confirm": "Bekrefte?",
+      "mode_continuous": "Kontinuerlig",
+      "mode_intermittent": "Intervall",
+      "mode_sensor": "Sensor",
+      "mode_smart": "Smart",
+      "mode_normal": "Normal",
+      "mode_flowing": "Rennende",
+      "mode_night": "Natt",
+      "mode_eco": "Øko",
+      "level": "Vann",
+      "filter": "Filter",
+      "today": "I dag",
+      "drink": "Siste slurk",
+      "clean": "Rengjøring",
+      "power": "Effekt",
+      "battery": "Batteri",
+      "days": "d",
+      "low": "Lavt",
+      "ok": "OK",
+      "to_change": "Byttes",
+      "to_clean": "Rengjøres"
+    },
+    "nl": {
+      "name": "Drinkfontein",
+      "state_flowing": "Stroomt",
+      "state_drinking": "Drinkt",
+      "state_low": "Weinig water",
+      "state_empty": "Leeg",
+      "state_off": "Uit",
+      "state_unavailable": "Niet beschikbaar",
+      "alert_empty": "Reservoir leeg: vul de fontein bij",
+      "alert_low": "Waterniveau laag",
+      "alert_filter": "Filter vervangen",
+      "alert_clean": "Schoonmaken nodig",
+      "battery_low": "Batterij bijna leeg",
+      "btn_turn_on": "Aanzetten",
+      "btn_turn_off": "Uitzetten",
+      "btn_light": "Licht",
+      "btn_filter_reset": "Filter resetten",
+      "btn_clean_reset": "Schoongemaakt",
+      "btn_confirm": "Bevestigen?",
+      "mode_continuous": "Continu",
+      "mode_intermittent": "Intermitterend",
+      "mode_sensor": "Sensor",
+      "mode_smart": "Slim",
+      "mode_normal": "Normaal",
+      "mode_flowing": "Stromend",
+      "mode_night": "Nacht",
+      "mode_eco": "Eco",
+      "level": "Water",
+      "filter": "Filter",
+      "today": "Vandaag",
+      "drink": "Laatste slok",
+      "clean": "Reiniging",
+      "power": "Vermogen",
+      "battery": "Batterij",
+      "days": "d",
+      "low": "Laag",
+      "ok": "OK",
+      "to_change": "Vervangen",
+      "to_clean": "Schoonmaken"
+    }
+  };
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
+  const MODE_KEYS = ['continuous', 'intermittent', 'sensor', 'smart', 'normal', 'flowing', 'night', 'eco'];
+
+  const CSS = `
+:host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--pf-ok:var(--appliance-ok-color,#43a047);--pf-alert:var(--appliance-alert-color,#db4437);
+  --pf-warn:var(--appliance-warn-color,#ffa000);--pf-cold:var(--appliance-cold-color,#2b9af9);--pf-c:#9aa3ad;--lvl:.7}
+.head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
+ha-card.flowing{--pf-c:var(--pf-cold)}ha-card.drinking{--pf-c:var(--pf-ok)}ha-card.low{--pf-c:var(--pf-warn)}ha-card.empty{--pf-c:var(--pf-alert)}
+.flowing .badge,.drinking .badge,.low .badge,.empty .badge{background:color-mix(in srgb,var(--pf-c) 22%,transparent);color:var(--pf-c)}
+ha-card.empty{box-shadow:0 0 0 1px color-mix(in srgb,var(--pf-alert) 60%,transparent),0 0 22px color-mix(in srgb,var(--pf-alert) 30%,transparent)}
+.alert{display:none;margin-top:2px;font-size:11px;color:var(--pf-alert);font-weight:500;text-align:center}
+.alert.on{display:block}.alert.warn{color:var(--pf-warn)}
+svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height:auto;margin:2px auto 0;cursor:pointer;overflow:visible}
+.ctl{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:6px}.ctl.hide,.ctl button.hide{display:none}
+.ctl button{flex:1 1 74px;max-width:130px;display:flex;align-items:center;justify-content:center;gap:4px;border:0;border-radius:10px;padding:6px 8px;cursor:pointer;min-width:0;
+  background:var(--secondary-background-color);color:var(--primary-text-color);font:500 12px/16px var(--paper-font-body1_-_font-family,Roboto,sans-serif)}
+.ctl button span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ctl button ha-icon{--mdc-icon-size:16px;flex:none}
+.ctl button:hover{filter:brightness(1.12)}
+.ctl button:disabled{opacity:.4;cursor:default;filter:none}
+.ctl button.on{background:color-mix(in srgb,var(--pf-cold) 28%,var(--secondary-background-color))}
+.ctl button.confirm{background:color-mix(in srgb,var(--pf-warn) 35%,var(--secondary-background-color))}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(68px,1fr));gap:6px;margin-top:6px}
+.tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
+.tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
+.tile .l span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tile .l ha-icon{--mdc-icon-size:13px;flex:none}
+.tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
+.tile.hide{display:none}.tile.bad .v{color:var(--pf-alert)}.tile.warn .v{color:var(--pf-warn)}
+/* ---- illustration ---- */
+.pf-aura{opacity:.45;transition:opacity .6s}.off .pf-aura,.unavailable .pf-aura{opacity:0}
+.pf-auras{stop-color:var(--pf-c);transition:stop-color .4s}
+/* niveau d'eau : la hauteur de l'eau suit --lvl (0 à 1) */
+.pf-lvl{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(var(--lvl));transition:transform 1s ease}
+.pf-wave{transform:translateY(calc((1 - var(--lvl)) * 32px));transition:transform 1s ease}
+.low .pf-win,.empty .pf-win{animation:pfblink 1.2s infinite}.empty .pf-win{stroke:var(--pf-alert)}.low .pf-win{stroke:var(--pf-warn)}
+.pf-win{stroke:#b9c0c7;stroke-width:1.6}
+/* cascade : filets d'eau qui descendent, ondes dans le bac */
+.pf-flow{opacity:0;fill:none;stroke:#8fd0f5;stroke-width:3;stroke-linecap:round;stroke-dasharray:6 7}
+.flowing .pf-flow,.drinking .pf-flow{opacity:.95;animation:pfflow .7s linear infinite}.pf-flow.f2{animation-duration:.55s!important;stroke-width:2.2}.pf-flow.f3{animation-duration:.85s!important}
+.pf-sheet{opacity:0;fill:#aee0fa;transition:opacity .5s}.flowing .pf-sheet,.drinking .pf-sheet{opacity:.85}
+.pf-rip{fill:none;stroke:#fff;stroke-width:1.4;opacity:0;transform-box:fill-box;transform-origin:50% 50%}
+.flowing .pf-rip,.drinking .pf-rip{animation:pfrip 2.2s ease-out infinite}.pf-rip.r2{animation-delay:.7s!important}.pf-rip.r3{animation-delay:1.4s!important}
+.pf-surf{fill:#8fd0f5;transition:fill .6s}.off .pf-surf,.empty .pf-surf{fill:#cdd5db}
+/* bulles dans la fenêtre de niveau */
+.pf-bub{fill:#fff;opacity:0}.flowing .pf-bub,.drinking .pf-bub{animation:pfbub 3s ease-in infinite}.pf-bub.b2{animation-delay:1.1s!important}.pf-bub.b3{animation-delay:2s!important}
+/* chat qui boit : la tête descend vers le bac, gouttes qui sautent */
+.pf-cat{opacity:0;transition:opacity .5s}.drinking .pf-cat{opacity:1}
+.pf-head{transform-box:view-box;transform-origin:24px 96px}.drinking .pf-head{animation:pfdrink 1.5s ease-in-out infinite}
+.pf-drop{fill:#8fd0f5;opacity:0}.drinking .pf-drop{animation:pfdrop 1.5s ease-out infinite}.pf-drop.d2{animation-delay:.25s!important}.pf-drop.d3{animation-delay:.5s!important}
+/* voyants du socle : lumière allumée */
+.pf-led{fill:#c9ced3;transition:fill .4s}.lighton .pf-led{fill:#7fd4ff;filter:drop-shadow(0 0 3px #7fd4ff)}.lighton.flowing .pf-led,.lighton.drinking .pf-led{animation:pfglow 2.4s ease-in-out infinite}
+.pf-glow{opacity:0;transition:opacity .6s}.lighton .pf-glow{opacity:.5}
+/* alertes : eau basse, filtre, nettoyage */
+.pf-wl,.pf-wf,.pf-wc{opacity:0}.low .pf-wl,.empty .pf-wl{opacity:1;animation:pfblink 1.1s infinite}.filterdue .pf-wf{opacity:1;animation:pfblink 1.6s infinite}.cleandue .pf-wc{opacity:1;animation:pfblink 1.9s infinite}
+.pf-bat{opacity:0}.lowbat .pf-bat{opacity:1;animation:pfblink 1.6s infinite}
+.off svg .pf-body,.unavailable svg .pf-body{filter:saturate(.3)}.unavailable svg{filter:grayscale(.8) opacity(.6)}
+.noanim *{animation:none!important;transition:none!important}
+@keyframes pfflow{to{stroke-dashoffset:-13}}
+@keyframes pfrip{0%{opacity:.9;transform:scale(.3)}100%{opacity:0;transform:scale(2.6,1.9)}}
+@keyframes pfbub{0%{opacity:0;transform:translateY(0)}15%{opacity:.8}100%{opacity:0;transform:translateY(-26px)}}
+@keyframes pfdrink{0%,100%{transform:rotate(0)}45%{transform:rotate(9deg) translate(2px,2px)}}
+@keyframes pfdrop{0%{opacity:0;transform:translate(0,0)}20%{opacity:.9}100%{opacity:0;transform:translate(7px,-14px)}}
+@keyframes pfglow{50%{opacity:.55}}
+@keyframes pfblink{50%{opacity:.2}}
+`;
+
+  const DEFS = `<radialGradient id="pfaurag"><stop offset="0" class="pf-auras" stop-opacity=".5"/><stop offset=".6" class="pf-auras" stop-opacity=".12"/><stop offset="1" class="pf-auras" stop-opacity="0"/></radialGradient>
+    <linearGradient id="pfbody" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e3e6ea"/><stop offset=".35" stop-color="#ffffff"/><stop offset="1" stop-color="#d9dde2"/></linearGradient>
+    <linearGradient id="pfwood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2bd8c"/><stop offset="1" stop-color="#c9975f"/></linearGradient>
+    <linearGradient id="pfsteel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef0f2"/><stop offset=".5" stop-color="#b4bac1"/><stop offset="1" stop-color="#8e959c"/></linearGradient>
+    <linearGradient id="pfwater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fd0f5"/><stop offset="1" stop-color="#4aa9e0"/></linearGradient>
+    <radialGradient id="pfglowg"><stop offset="0" stop-color="#7fd4ff" stop-opacity=".7"/><stop offset="1" stop-color="#7fd4ff" stop-opacity="0"/></radialGradient>
+    <clipPath id="pfwinc"><rect x="62" y="98" width="26" height="36" rx="6"/></clipPath>
+    <clipPath id="pftray"><ellipse cx="120" cy="86" rx="62" ry="10"/></clipPath>`;
+
+  const SVG = (label) => `<svg viewBox="0 0 240 180" role="img" aria-label="${esc(label)}"><defs>${DEFS}</defs>
+      <ellipse class="pf-aura" cx="120" cy="96" rx="112" ry="78" fill="url(#pfaurag)"/>
+      <ellipse class="pf-glow" cx="120" cy="158" rx="84" ry="14" fill="url(#pfglowg)"/>
+      <ellipse cx="120" cy="165" rx="82" ry="6" fill="#000" fill-opacity=".16"/>
+      <g class="pf-body">
+        <!-- socle blanc, bandeau bois, corps blanc -->
+        <rect x="52" y="152" width="136" height="12" rx="6" fill="#f4f5f7" stroke="#d5d9de"/>
+        <rect x="46" y="140" width="148" height="14" rx="7" fill="url(#pfwood)"/>
+        <path d="M50 92 H190 V132 Q190 142 178 142 H62 Q50 142 50 132Z" fill="url(#pfbody)" stroke="#d0d5da" stroke-width="1.2"/>
+        <!-- bac en inox, eau -->
+        <ellipse cx="120" cy="88" rx="72" ry="14" fill="url(#pfsteel)"/>
+        <ellipse cx="120" cy="87" rx="65" ry="11" fill="#7d858c"/>
+        <ellipse class="pf-surf" cx="120" cy="86" rx="62" ry="10"/>
+        <g clip-path="url(#pftray)">${['', ' r2', ' r3'].map((r) => `<ellipse class="pf-rip${r}" cx="120" cy="88" rx="16" ry="3.6"/>`).join('')}</g>
+        <!-- cascade au centre : rampe blanche, nappe et filets d'eau -->
+        <path d="M96 76 Q96 56 112 54 H132 Q146 54 146 70 V82 H96Z" fill="#fdfdfe" stroke="#d5d9de"/>
+        <path d="M104 62 Q104 58 112 58 H126" fill="none" stroke="#e6e9ed" stroke-width="3" stroke-linecap="round"/>
+        <path class="pf-sheet" d="M100 78 H142 L140 87 H102Z"/>
+        <path class="pf-flow" d="M108 79 V88"/><path class="pf-flow f2" d="M121 79 V88"/><path class="pf-flow f3" d="M134 79 V88"/>
+        <!-- fenêtre de niveau d'eau -->
+        <rect class="pf-win" x="62" y="98" width="26" height="36" rx="6" fill="#eef3f6"/>
+        <g clip-path="url(#pfwinc)"><rect class="pf-lvl" x="62" y="98" width="26" height="36" fill="url(#pfwater)"/>
+          <g class="pf-wave"><path d="M62 98 q3.25 -3 6.5 0 t6.5 0 t6.5 0 t6.5 0 V106 H62Z" fill="#8fd0f5" opacity=".8"/></g>
+          <circle class="pf-bub" cx="70" cy="130" r="1.8"/><circle class="pf-bub b2" cx="78" cy="132" r="1.4"/><circle class="pf-bub b3" cx="83" cy="130" r="1.6"/></g>
+        <!-- voyants du socle -->
+        <g>${[112, 124, 136, 148, 160].map((x) => `<circle class="pf-led" cx="${x + 4}" cy="147" r="1.9"/>`).join('')}</g>
+        <path d="M100 118 h60" stroke="#e1e5e9" stroke-width="2" stroke-linecap="round"/><path d="M108 126 h44" stroke="#e1e5e9" stroke-width="2" stroke-linecap="round"/>
+      </g>
+      <!-- chat qui boit -->
+      <g class="pf-cat">
+        <path d="M2 160 Q-2 112 22 92 L36 100 Q26 126 30 160Z" fill="#33363d"/>
+        <g class="pf-head"><g transform="translate(32 80) rotate(28)">
+          <path d="M-13 -4 L-11 -20 L-3 -11 Q2 -13 7 -11 L15 -20 L17 -4 Q19 9 2 14 Q-15 9 -13 -4Z" fill="#33363d"/>
+          <ellipse cx="-4" cy="-2" rx="1.6" ry="2.2" fill="#ffd54f"/><ellipse cx="8" cy="-2" rx="1.6" ry="2.2" fill="#ffd54f"/></g>
+          <ellipse cx="50" cy="86" rx="3.2" ry="1.8" fill="#f4a3b0"/></g>
+        <circle class="pf-drop" cx="56" cy="84" r="1.8"/><circle class="pf-drop d2" cx="62" cy="82" r="1.4"/><circle class="pf-drop d3" cx="52" cy="85" r="1.6"/></g>
+      <!-- alertes -->
+      <g class="pf-wl"><path d="M212 18 q-12 16 -12 24 a12 12 0 0 0 24 0 q0 -8 -12 -24Z" fill="#db4437"/><path d="M212 28 V38" stroke="#fff" stroke-width="2.4"/><circle cx="212" cy="43" r="1.5" fill="#fff"/></g>
+      <g class="pf-wf"><rect x="16" y="20" width="26" height="22" rx="4" fill="none" stroke="#ffa000" stroke-width="2.2"/><path d="M21 26 h16 M21 31 h16 M21 36 h16" stroke="#ffa000" stroke-width="1.8" stroke-linecap="round"/></g>
+      <g class="pf-wc"><path d="M30 56 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3Z" fill="#ffa000"/><path d="M44 54 l1.5 3.5 3.5 1.5 -3.5 1.5 -1.5 3.5 -1.5 -3.5 -3.5 -1.5 3.5 -1.5Z" fill="#ffa000"/></g>
+      <g class="pf-bat"><rect x="192" y="152" width="22" height="12" rx="2" fill="none" stroke="#ffa000" stroke-width="2"/><rect x="214" y="155" width="3" height="6" fill="#ffa000"/><path d="M195 155 h4 v6 h-4z" fill="#ffa000"/></g>
+    </svg>`;
+
+  const TILES = [['level', 'mdi:water-percent', 'show_level'], ['filter', 'mdi:air-filter', 'show_filter'], ['today', 'mdi:cup-water', 'show_today'], ['drink', 'mdi:cat', 'show_drink'],
+    ['clean', 'mdi:broom', 'show_clean'], ['power', 'mdi:flash', 'show_power'], ['battery', 'mdi:battery', 'show_battery']];
+
+  class AppliancePetFountainCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+    get _config() { return this._c; }
+    static getConfigElement() { return document.createElement(TAG + '-editor'); }
+    // détection automatique : préfixe commun des entités de la fontaine (Petlibro, Petkit, Xiaomi / Mijia, Catit, Tuya…),
+    // puis chaque entité par son nom (niveau, filtre, eau du jour, lumière, mode, boutons de remise à zéro…)
+    static getStubConfig(hass) {
+      const st = (hass && hass.states) || {}, ids = Object.keys(st), at = (i) => st[i].attributes || {};
+      const KEY = /fontaine|fountain|petlibro|dockstream|eversweet|petkit|catit|drinking_?(fountain|station)|water_?dispenser|trinkbrunnen|fontanella|drinkfontein|drikkefontene/i;
+      const ref = ids.find((i) => /^(sensor|switch)\./.test(i) && KEY.test(i)) || ids.find((i) => KEY.test(i)) || '';
+      // préfixe = nom jusqu'au dernier mot-clé (petlibro_dockstream_water_level → petlibro_dockstream)
+      const o = ref.split('.')[1] || '', ms = [...o.matchAll(new RegExp(KEY.source, 'gi'))], m = ms[ms.length - 1], pre = m ? o.slice(0, m.index + m[0].length) : '\u0000';
+      const mine = (d) => ids.filter((i) => i.startsWith(d + '.') && i.split('.')[1].startsWith(pre));
+      const near = (doms, re, not) => doms.flatMap(mine).find((i) => re.test(i.split('.')[1].slice(pre.length)) && !(not && not.test(i))) || '';
+      const dc = (d, cls) => mine(d).find((i) => at(i).device_class === cls) || '';
+      const pick = (k, v) => (v ? { [k]: v } : {});
+      return {
+        entity: near(['switch'], /^$|pump|power|switch|on_?off|enable/, /light|led|lamp|indicator|display|child|lock|sound|buzzer/i),
+        entity_water_level: near(['sensor'], /water_?level|niveau|level|remaining_?water|water_?volume/, /filter/i),
+        ...pick('entity_low_water', near(['binary_sensor'], /low_?water|water_?(shortage|lack)|lack_?water|no_?water|eau_?basse|empty/)),
+        entity_filter: near(['sensor', 'binary_sensor'], /filter|filtre/, /reset/i),
+        ...pick('entity_water_today', near(['sensor'], /today|daily|consumption|drink.*amount|amount|purified|drunk|bue/, /time|count|last/i)),
+        ...pick('entity_drinking', near(['binary_sensor'], /drink|pet_?(present|detected)|motion|occupancy|presence/)),
+        ...pick('entity_last_drink', near(['sensor'], /last_?drink|last_?(use|visit)|derni/)),
+        ...pick('entity_clean', near(['binary_sensor', 'sensor'], /clean|wash|nettoy|machine_?cleaning/, /reset/i)),
+        ...pick('entity_light', near(['light', 'switch'], /light|led|lamp|indicator|lumi/)),
+        ...pick('entity_mode', near(['select'], /mode|modus|flow/)),
+        ...pick('entity_filter_reset', near(['button'], /filter|filtre/)),
+        ...pick('entity_clean_reset', near(['button'], /clean|wash|nettoy/)),
+        ...pick('entity_power', dc('sensor', 'power')),
+        ...pick('entity_battery', dc('sensor', 'battery')),
+      };
+    }
+    setConfig(c) {
+      if (window.applianceSize) window.applianceSize(this, c);
+      if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
+      this._c = { level_low: 20, battery_low: 20, filter_low_days: 7, filter_low: 10, show_status: true, show_buttons: true, show_level: true, show_filter: true, show_today: true, show_drink: true, show_clean: true, show_power: true, show_battery: true, ...c };
+      this._built = false;
+      if (this._hass) this._render();
+    }
+    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    getCardSize() { return 6; }
+    getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+
+    _t(k, v) { let s = T[this._lang()][k] ?? T.en[k] ?? k; if (v) for (const [a, b] of Object.entries(v)) s = s.replace(`{${a}}`, b); return s; }
+    // libellé perso (option labels) sinon traduction
+    _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
+    _lang() { let l = this._c.language || (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en'; if (!T[l]) l = l.slice(0, 2); if (l === 'no' || l === 'nn') l = 'nb'; return T[l] ? l : 'en'; }
+    _st(id) { return id && this._hass.states[id]; }
+    _ok(s) { return !!s && !/^(unavailable|unknown)$/i.test(String(s.state)); }
+    _on(s) { return this._ok(s) && /^(on|true|open|opened|1|yes|low|detected|drinking|problem)$/i.test(String(s.state)); }
+    _num(s) { if (!this._ok(s)) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
+    _unit(s) { return String((s && s.attributes && s.attributes.unit_of_measurement) || ''); }
+    _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
+    _since(s) {
+      const raw = s && this._ok(s) ? (/^\d{4}-\d\d-\d\d/.test(s.state) ? s.state : s.last_changed) : null, t = raw && Date.parse(raw);
+      if (!t) return '--';
+      const sec = Math.max(0, (Date.now() - t) / 1000);
+      const [n, u] = sec < 45 ? [0, 'second'] : sec < 3600 ? [Math.max(1, sec / 60), 'minute'] : sec < 86400 ? [sec / 3600, 'hour'] : [sec / 86400, 'day'];
+      try { return n ? new Intl.NumberFormat(this._lang(), { style: 'unit', unit: u, unitDisplay: 'short' }).format(Math.floor(n)) : new Intl.RelativeTimeFormat(this._lang(), { numeric: 'auto' }).format(0, 'second'); }
+      catch (e) { return `${Math.floor(n)} ${u[0]}`; }
+    }
+    // bouton : entité button / script ; interrupteur : toggle du domaine
+    _press(id) {
+      if (!this._hass || !id) return;
+      const [dom, svc] = { button: ['button', 'press'], input_button: ['input_button', 'press'], script: ['script', 'turn_on'] }[id.split('.')[0]] || ['homeassistant', 'turn_on'];
+      this._hass.callService(dom, svc, { entity_id: id });
+    }
+    _toggle(id) { if (this._hass && id) this._hass.callService('homeassistant', 'toggle', { entity_id: id }); }
+
+    _compute() {
+      const c = this._c, pS = this._st(c.entity), lS = this._st(c.entity_water_level);
+      const wS = this._st(c.entity_power), w = this._num(wS);
+      // niveau d'eau : % (ou volume / capacity), sinon texte (low / ok / empty)
+      let level = this._num(lS);
+      if (!isNaN(level) && Number(c.capacity) > 0 && this._unit(lS) !== '%') level = level / Number(c.capacity) * 100;
+      if (isNaN(level) && this._ok(lS)) { const s = String(lS.state).toLowerCase(); level = /empty|vide|leer|none|0/.test(s) ? 0 : /low|bas|niedrig/.test(s) ? c.level_low / 2 : 70; }
+      const lowFlag = this._on(this._st(c.entity_low_water));
+      const empty = !isNaN(level) && level <= 3;
+      const low = lowFlag || empty || (!isNaN(level) && level < Number(c.level_low));
+      const drinking = this._on(this._st(c.entity_drinking));
+      // marche : interrupteur / pompe, sinon puissance mesurée, sinon allumée
+      const dead = (c.entity && !pS) || (pS && /^unavailable$/i.test(String(pS.state)));
+      const off = !dead && (pS && this._ok(pS) ? /^(off|false|0|standby|idle|closed)$/i.test(String(pS.state)) : !isNaN(w) && !c.entity ? w < Number(c.power_on ?? 0.5) : false);
+      const state = dead ? 'unavailable' : off ? 'off' : empty ? 'empty' : drinking ? 'drinking' : low ? 'low' : 'flowing';
+      // filtre : jours restants, % restant ou capteur binaire « à changer »
+      const fS = this._st(c.entity_filter), fv = this._num(fS), fu = this._unit(fS).toLowerCase();
+      const fBinary = !!fS && /^binary_sensor\./.test(c.entity_filter);
+      const filterDue = fBinary ? this._on(fS) : !isNaN(fv) && (fu === '%' ? fv < Number(c.filter_low) : /^(d|j|day|days|jour|jours|tag|tage)/.test(fu) ? fv < Number(c.filter_low_days) : /^h/.test(fu) ? fv < Number(c.filter_low_days) * 24 : fv <= 0);
+      const cS = this._st(c.entity_clean), cleanDue = !!cS && /^binary_sensor\./.test(c.entity_clean) && this._on(cS);
+      const bS = this._st(c.entity_battery), bat = this._num(bS), batBinary = !!bS && /^binary_sensor\./.test(c.entity_battery);
+      const lowbat = (batBinary && this._on(bS)) || (!isNaN(bat) && bat < Number(c.battery_low));
+      const light = this._on(this._st(c.entity_light));
+      return { pS, lS, wS, w, level, low, empty, drinking, state, fS, fv, fu, fBinary, filterDue, cS, cleanDue, bS, bat, batBinary, lowbat, light };
+    }
+
+    _build() {
+      const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
+      root.innerHTML = `<style>${CSS}</style><ha-card>
+        <div class="head"><div class="title" id="pftitle"></div><div class="badge" id="pfbadge"></div></div>
+        ${SVG(this._c.name || this._t('name'))}
+        <div class="alert" id="pfalert"></div>
+        <div class="ctl" id="pfctl"></div>
+        <div class="ctl" id="pfmodes"></div>
+        <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
+      </ha-card>`;
+      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity || this._c.entity_water_level));
+      root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
+        const c = this._c; this._more({ level: c.entity_water_level || c.entity_low_water, filter: c.entity_filter, today: c.entity_water_today, drink: c.entity_last_drink || c.entity_drinking,
+          clean: c.entity_clean, power: c.entity_power, battery: c.entity_battery }[el.dataset.k]);
+      }));
+      this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
+    }
+
+    // 2e clic dans les 4 s pour les remises à zéro (filtre, nettoyage)
+    _action(a) {
+      const c = this._c;
+      if (a === 'power') return this._toggle(c.entity);
+      if (a === 'light') return this._toggle(c.entity_light);
+      const id = a === 'filter_reset' ? c.entity_filter_reset : c.entity_clean_reset;
+      if (this._confirmId !== a || Date.now() > this._confirmUntil) {
+        this._confirmId = a; this._confirmUntil = Date.now() + 4000;
+        clearTimeout(this._confirmTimer); this._confirmTimer = setTimeout(() => { this._confirmId = null; this._render(); }, 4000);
+        this._render(); return;
+      }
+      this._confirmId = null; clearTimeout(this._confirmTimer);
+      this._press(id); this._render();
+    }
+
+    _render() {
+      if (!this._built) this._build();
+      const c = this._c, r = this._root, card = this._card;
+      const { pS, level, low, empty, state, fS, fv, fu, fBinary, filterDue, cS, cleanDue, wS, w, bS, bat, batBinary, lowbat, light } = this._compute();
+      card.className = `${state}${light ? ' lighton' : ''}${filterDue ? ' filterdue' : ''}${cleanDue ? ' cleandue' : ''}${lowbat ? ' lowbat' : ''}${c.animations === false ? ' noanim' : ''}`;
+      card.style.setProperty('--lvl', String(isNaN(level) ? 0.7 : Math.max(0, Math.min(1, level / 100)).toFixed(3)));
+      r.getElementById('pftitle').textContent = c.name || this._t('name');
+      const badge = r.getElementById('pfbadge');
+      badge.textContent = this._t(`state_${state}`);
+      badge.style.display = c.show_status === false ? 'none' : '';
+
+      const al = r.getElementById('pfalert');
+      const msgs = [empty ? this._t('alert_empty') : low ? this._t('alert_low') : '', filterDue ? this._t('alert_filter') : '', cleanDue ? this._t('alert_clean') : '', lowbat ? this._t('battery_low') : ''].filter(Boolean);
+      al.textContent = msgs.join(' · ');
+      al.classList.toggle('on', !!msgs.length); al.classList.toggle('warn', !empty);
+
+      // boutons : marche / arrêt, lumière, remises à zéro
+      const BTN = [['power', 'mdi:power', c.entity, state === 'unavailable'], ['light', 'mdi:lightbulb', c.entity_light, false],
+        ['filter_reset', 'mdi:air-filter', c.entity_filter_reset, false], ['clean_reset', 'mdi:broom', c.entity_clean_reset, false]].filter((b) => b[2]);
+      const ctl = r.getElementById('pfctl'), sig = BTN.map((b) => b[0]).join('|');
+      if (this._sig !== sig) {
+        this._sig = sig;
+        ctl.replaceChildren(...BTN.map(([a, ic]) => {
+          const b = document.createElement('button'); b.dataset.a = a;
+          const i = document.createElement('ha-icon'); i.setAttribute('icon', ic); b.append(i, document.createElement('span'));
+          b.addEventListener('click', () => this._action(a)); return b;
+        }));
+      }
+      ctl.classList.toggle('hide', c.show_buttons === false || !BTN.length);
+      const confirming = (a) => this._confirmId === a && Date.now() < this._confirmUntil;
+      ctl.querySelectorAll('button').forEach((b) => {
+        const a = b.dataset.a;
+        b.querySelector('span').textContent = confirming(a) ? this._t('btn_confirm') : a === 'power' ? this._t(state === 'off' ? 'btn_turn_on' : 'btn_turn_off') : this._t(`btn_${a}`);
+        b.classList.toggle('on', (a === 'power' && state !== 'off' && state !== 'unavailable') || (a === 'light' && light));
+        b.classList.toggle('confirm', confirming(a));
+        b.disabled = state === 'unavailable' && a !== 'power';
+      });
+      // modes de la fontaine : une pastille par option du select
+      const mS = this._st(c.entity_mode), opts = mS && Array.isArray(mS.attributes.options) ? mS.attributes.options : [];
+      const mbox = r.getElementById('pfmodes'), msig = opts.join('|');
+      if (this._msig !== msig) {
+        this._msig = msig;
+        const human = (o) => { const t = String(o).replace(/_/g, ' '); return t.charAt(0).toUpperCase() + t.slice(1); };
+        mbox.replaceChildren(...opts.map((o) => {
+          const b = document.createElement('button'); b.dataset.o = o;
+          const key = String(o).toLowerCase().replace(/[\s-]+/g, '_');
+          const i = document.createElement('ha-icon'); i.setAttribute('icon', 'mdi:water-sync');
+          const sp = document.createElement('span'); sp.textContent = MODE_KEYS.includes(key) ? this._t(`mode_${key}`) : human(o);
+          b.append(i, sp);
+          b.addEventListener('click', () => this._hass.callService(c.entity_mode.split('.')[0], 'select_option', { entity_id: c.entity_mode, option: o }));
+          return b;
+        }));
+      }
+      mbox.classList.toggle('hide', c.show_buttons === false || !opts.length);
+      mbox.querySelectorAll('button').forEach((b) => { const cur = !!mS && mS.state === b.dataset.o; b.classList.toggle('on', cur); b.disabled = cur || state === 'unavailable'; });
+
+      // tuiles
+      const num = (v, d = 0) => (isNaN(v) ? '--' : v.toLocaleString(this._lang(), { maximumFractionDigits: d }));
+      const tS = this._st(c.entity_water_today), tv = this._num(tS), dS = this._st(c.entity_last_drink);
+      const dState = dS && this._ok(dS) && !/^\d{4}-\d\d-\d\d/.test(dS.state) && isNaN(this._num(dS)) && !/^(on|off)$/i.test(dS.state) ? dS.state : null;
+      const clv = this._num(cS);
+      const V = {
+        level: [c.entity_water_level || c.entity_low_water, !isNaN(level) ? num(level) : this._t(low ? 'low' : 'ok'), !isNaN(level) ? '%' : '', empty ? 'bad' : low ? 'warn' : ''],
+        filter: [c.entity_filter, fBinary ? this._t(filterDue ? 'to_change' : 'ok') : num(fv, fu === '%' ? 0 : 1), fBinary ? '' : this._unit(fS) === 'd' ? this._t('days') : this._unit(fS), filterDue ? 'warn' : ''],
+        today: [c.entity_water_today, num(tv, Math.abs(tv) < 10 ? 1 : 0), this._unit(tS), ''],
+        drink: [c.entity_last_drink || c.entity_drinking, dState || this._since(dS || this._st(c.entity_drinking)), '', ''],
+        clean: [c.entity_clean, /^binary_sensor\./.test(c.entity_clean || '') ? this._t(cleanDue ? 'to_clean' : 'ok') : num(clv, 0), /^binary_sensor\./.test(c.entity_clean || '') ? '' : this._unit(cS), cleanDue ? 'warn' : ''],
+        power: [c.entity_power, num(w, w < 10 ? 1 : 0), this._unit(wS) || 'W', ''],
+        battery: [c.entity_battery, !isNaN(bat) && !batBinary ? num(bat) : this._ok(bS) ? this._t(lowbat ? 'low' : 'ok') : '--', !isNaN(bat) && !batBinary ? '%' : '', lowbat ? 'warn' : ''],
+      };
+      r.querySelector('.tile[data-k="battery"] ha-icon').setAttribute('icon', lowbat ? 'mdi:battery-alert' : 'mdi:battery');
+      TILES.forEach(([k, , opt]) => {
+        const el = r.querySelector(`.tile[data-k="${k}"]`); const [show, val, unit, cls] = V[k];
+        el.classList.toggle('hide', !show || c[opt] === false);
+        el.classList.toggle('bad', cls === 'bad'); el.classList.toggle('warn', cls === 'warn');
+        el.querySelector('.lbl').textContent = this._l(k);
+        const small = document.createElement('small'); small.textContent = unit ?? '';
+        el.querySelector('.v').replaceChildren(String(val ?? ''), small);
+      });
+    }
+  }
+  customElements.define(TAG, AppliancePetFountainCard);
+
+  /* ---- éditeur visuel ---- */
+  class AppliancePetFountainCardEditor extends HTMLElement {
+    setConfig(c) { this._c = c; this._draw(); }
+    set hass(h) { this._hass = h; if (this._form) this._form.hass = h; }
+    _draw() {
+      if (!this._form) {
+        this._form = document.createElement('ha-form');
+        this._form.addEventListener('value-changed', (e) => {
+          this._c = e.detail.value;
+          this.dispatchEvent(new CustomEvent('config-changed', { detail: { config: this._c }, bubbles: true, composed: true }));
+        });
+        this.appendChild(this._form);
+      }
+      const ent = (name, domain) => ({ name, selector: { entity: domain ? { domain } : {} } });
+      const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
+      const num = (name, def, max, unit) => ({ name, default: def, selector: { number: { min: 0, max, step: 1, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
+      this._form.hass = this._hass;
+      this._form.data = this._c;
+      this._form.schema = [
+        { name: 'name', selector: { text: {} } },
+        { name: 'labels', selector: { object: {} } },
+        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
+        { name: 'transparent', selector: { boolean: {} } },
+        ent('entity', ['switch', 'input_boolean', 'binary_sensor', 'sensor']),
+        ent('entity_water_level', ['sensor', 'input_number']),
+        ent('entity_low_water', 'binary_sensor'),
+        ent('entity_filter', ['sensor', 'binary_sensor']),
+        ent('entity_water_today', 'sensor'),
+        ent('entity_drinking', 'binary_sensor'),
+        ent('entity_last_drink', ['sensor', 'binary_sensor']),
+        ent('entity_clean', ['sensor', 'binary_sensor']),
+        ent('entity_light', ['switch', 'light', 'input_boolean']),
+        ent('entity_mode', ['select', 'input_select']),
+        ent('entity_filter_reset', ['button', 'input_button', 'script']),
+        ent('entity_clean_reset', ['button', 'input_button', 'script']),
+        ent('entity_power', 'sensor'),
+        ent('entity_battery', ['sensor', 'binary_sensor']),
+        num('capacity', 0, 10000),
+        num('level_low', 20, 100, '%'),
+        num('filter_low_days', 7, 365),
+        num('filter_low', 10, 100, '%'),
+        num('battery_low', 20, 100, '%'),
+        ...window.applianceActionFields,
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski', cs: 'Čeština' }[value] || value })) } } },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_buttons'), bool('show_level'), bool('show_filter'), bool('show_today'), bool('show_drink'), bool('show_clean'), bool('show_power'), bool('show_battery'), bool('animations')] },
+      ];
+      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
+    }
+  }
+  customElements.define(TAG + '-editor', AppliancePetFountainCardEditor);
+
+  window.customCards = window.customCards || [];
+  window.customCards.push({
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
+    description: 'Fontaine à eau connectée animée pour chats et chiens (Petlibro…) : niveau d\'eau, filtre, consommation, lumière, modes, nettoyage.', preview: true,
+    documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/pet-fountain.md',
   });
 })();
 

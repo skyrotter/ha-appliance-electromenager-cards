@@ -831,6 +831,27 @@ const SCEN = [
       range(ctl, 'Batterie', 'sensor.smoke_battery', 0, 100, 1, 92, '%', { unit_of_measurement: '%', device_class: 'battery' });
       set('sensor.smoke_temp', 20.5, T); set('button.smoke_test', 'unknown'); set('siren.smoke', 'off');
     } },
+  { kind: 'cat-flap', title: 'Chatière connectée', lang: true,
+    cfg: { name: 'Chatière', entity: 'lock.cat_flap', entity_mode: 'select.cat_flap_mode', entity_battery: 'sensor.cat_flap_battery', entity_curfew: 'binary_sensor.cat_flap_curfew', entity_motion: 'binary_sensor.cat_flap_motion', entity_intruder: 'binary_sensor.cat_flap_intruder', pets: ['binary_sensor.felix', 'binary_sensor.luna'] },
+    build(ctl) {
+      set('lock.cat_flap', 'unlocked');
+      select(ctl, 'Mode', 'select.cat_flap_mode', [['unlocked', 'Ouverte'], ['locked_in', 'Entrée seule'], ['locked_out', 'Sortie seule'], ['locked_all', 'Verrouillée']], 'unlocked');
+      states['select.cat_flap_mode'].attributes = { options: ['unlocked', 'locked_in', 'locked_out', 'locked_all'] };
+      set('binary_sensor.felix', 'on', { friendly_name: 'Félix' }); set('binary_sensor.luna', 'off', { friendly_name: 'Luna' });
+      checks(ctl, [['Félix dedans', 'binary_sensor.felix', true], ['Luna dedans', 'binary_sensor.luna', false], ['Volet en mouvement', 'binary_sensor.cat_flap_motion', false], ['Couvre-feu', 'binary_sensor.cat_flap_curfew', false], ['Intrus', 'binary_sensor.cat_flap_intruder', false]]);
+      states['binary_sensor.felix'].attributes = { friendly_name: 'Félix' }; states['binary_sensor.luna'].attributes = { friendly_name: 'Luna' };
+      range(ctl, 'Piles', 'sensor.cat_flap_battery', 0, 100, 1, 80, '%', { unit_of_measurement: '%', device_class: 'battery' });
+    } },
+  { kind: 'pet-fountain', title: 'Fontaine à eau pour animaux', lang: true,
+    cfg: { name: 'Fontaine', entity: 'switch.fountain', entity_water_level: 'sensor.fountain_level', entity_filter: 'sensor.fountain_filter', entity_water_today: 'sensor.fountain_today', entity_drinking: 'binary_sensor.fountain_drinking', entity_light: 'switch.fountain_light', entity_mode: 'select.fountain_mode', entity_filter_reset: 'button.fountain_filter_reset', entity_clean: 'binary_sensor.fountain_clean' },
+    build(ctl) {
+      checks(ctl, [['Pompe', 'switch.fountain', true], ['Chat qui boit', 'binary_sensor.fountain_drinking', false], ['Lumière', 'switch.fountain_light', true], ['Nettoyage à faire', 'binary_sensor.fountain_clean', false]]);
+      range(ctl, 'Niveau', 'sensor.fountain_level', 0, 100, 1, 70, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Filtre', 'sensor.fountain_filter', 0, 30, 1, 21, 'j', { unit_of_measurement: 'd' });
+      set('sensor.fountain_today', 184, { unit_of_measurement: 'mL' }); set('button.fountain_filter_reset', 'unknown');
+      select(ctl, 'Mode', 'select.fountain_mode', [['continuous', 'Continu'], ['intermittent', 'Intermittent'], ['sensor', 'Détection']], 'continuous');
+      states['select.fountain_mode'].attributes = { options: ['continuous', 'intermittent', 'sensor'] };
+    } },
   { kind: 'leak-detector', title: "Détecteur de fuite d'eau", lang: true,
     cfg: { name: "Sous l'évier", entity_leak: 'binary_sensor.leak_sink', entity_valve: 'valve.water_main_leak', entity_siren: 'siren.leak', entity_battery: 'sensor.leak_battery', entity_temperature: 'sensor.leak_temp' },
     build(ctl) {
