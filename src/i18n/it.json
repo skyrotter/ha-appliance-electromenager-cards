@@ -1084,7 +1084,9 @@
     "entity_timer": "Timer (rimanente)",
     "show_chlorine": "Mostra cloro",
     "show_cover": "Mostra copertura",
-    "show_timer": "Mostra timer"
+    "show_timer": "Mostra timer",
+    "switch_low": "Interruttore bassa velocità",
+    "switch_high": "Interruttore alta velocità"
   },
   "light": {
     "light_bulb": "Lampadina",

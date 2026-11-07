@@ -1084,7 +1084,9 @@
     "entity_timer": "Timer (resterend)",
     "show_chlorine": "Chloor tonen",
     "show_cover": "Deksel tonen",
-    "show_timer": "Timer tonen"
+    "show_timer": "Timer tonen",
+    "switch_low": "Schakelaar lage stand",
+    "switch_high": "Schakelaar hoge stand"
   },
   "light": {
     "light_bulb": "Lamp",

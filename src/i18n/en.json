@@ -1127,7 +1127,9 @@
     "entity_timer": "Timer (remaining)",
     "show_chlorine": "Show chlorine",
     "show_cover": "Show cover",
-    "show_timer": "Show timer"
+    "show_timer": "Show timer",
+    "switch_low": "Low speed switch",
+    "switch_high": "High speed switch"
   },
   "light": {
     "light_bulb": "Bulb",

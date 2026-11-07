@@ -597,6 +597,22 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c=card('inflatable-spa',{...F,compact:true,transparent:true},S('off','on','off','off')); ok('spa compact + transparent',/compact/.test(hc(c))&&c.sr.host.style.getPropertyValue('--ha-card-background')==='transparent',hc(c));
  document.querySelectorAll('appliance-inflatable-spa-card').forEach((e)=>e.remove());
 }
+// VMC simple flux à deux interrupteurs (petite / grande vitesse) : état, boutons, une vitesse à la fois
+{const V=(cfg,st)=>card('vmc',cfg,st), sw=(l,h)=>[mk('switch.pv',l),mk('switch.gv',h)], K={switch_low:'switch.pv',switch_high:'switch.gv'}, B=(c,k)=>c.sr.querySelector(`.mode-btn[data-vmc="${k}"]`);
+ let c=V(K,sw('on','off')); ok('vmc 2 switches: low on = speed1',has(c,'st-speed1'),c.wrap.className);
+ c=V(K,sw('off','on')); ok('vmc 2 switches: high on = speed2',has(c,'st-speed2'),c.wrap.className);
+ c=V(K,sw('on','on')); ok('vmc 2 switches: high wins when both on',has(c,'st-speed2'),c.wrap.className);
+ c=V(K,sw('off','off')); ok('vmc 2 switches: both off = off',has(c,'st-off'),c.wrap.className);
+ c=V(K,sw('unavailable','unavailable')); ok('vmc 2 switches: unavailable',has(c,'st-unavailable'),c.wrap.className);
+ c=V({switch_high:'switch.gv'},[mk('switch.gv','on')]); ok('vmc only the high switch configured',has(c,'st-speed2')&&!!B(c,'high')&&!B(c,'low'),c.wrap.className);
+ c=V(K,sw('on','off')); ok('vmc speed buttons: active one is lit',B(c,'low').classList.contains('on')&&!B(c,'high').classList.contains('on')&&/Petite/.test(B(c,'low').textContent),c.sr.getElementById('modes').innerHTML);
+ c=V(K,sw('on','off')); B(c,'high').click(); ok('vmc: high turns low off then high on',JSON.stringify(c.h.calls)===JSON.stringify([['switch','turn_off',{entity_id:'switch.pv'}],['switch','turn_on',{entity_id:'switch.gv'}]]),JSON.stringify(c.h.calls));
+ c=V(K,sw('on','off')); B(c,'low').click(); ok('vmc: second click on the active speed turns it off',JSON.stringify(c.h.calls)===JSON.stringify([['switch','turn_off',{entity_id:'switch.pv'}]]),JSON.stringify(c.h.calls));
+ c=V(K,sw('off','off')); B(c,'low').click(); ok('vmc: from off, one click turns the speed on',JSON.stringify(c.h.calls)===JSON.stringify([['switch','turn_on',{entity_id:'switch.pv'}]]),JSON.stringify(c.h.calls));
+ c=V({...K,show_modes:false},sw('on','off')); ok('vmc show_modes false hides the speed buttons',!B(c,'low'));
+ c=V({entity:'sensor.v',power:'sensor.p'},[mk('sensor.v','on'),mk('sensor.p',20,W)]); ok('vmc without switches: no speed buttons, behaviour unchanged',!c.sr.querySelector('[data-vmc]')&&has(c,'st-speed1'),c.wrap.className);
+ document.querySelectorAll('appliance-vmc-card').forEach((e)=>e.remove());
+}
 // pluviomètre : intensité, niveaux, unités, tuiles désactivables
 {const hc=(c)=>c.sr.querySelector('ha-card').className, bd=(c)=>c.sr.getElementById('rgbadge').textContent, vis=(c,k)=>!c.sr.querySelector(`.tile[data-k="${k}"]`).classList.contains('hide');
  let c=card('rain-gauge',{entity:'sensor.r'},[mk('sensor.r',0,{unit_of_measurement:'mm/h'})]); ok('rain dry',/^dry/.test(hc(c))&&bd(c)==='Sec',hc(c)+bd(c));

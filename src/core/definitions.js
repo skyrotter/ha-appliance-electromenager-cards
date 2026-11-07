@@ -129,7 +129,7 @@ const DEF = {
     fields: ["power", "energy", "cost", "entity"],
     keys: ["solaire", "solar", "pv", "photovolta", "onduleur", "inverter"] },
   vmc: { accent: "active", threshold: 5,
-    fields: ["entity", "power", "energy", "cost", "speed", "humidity", "switch"],
+    fields: ["entity", "power", "energy", "cost", "speed", "humidity", "switch", "switch_low", "switch_high"],
     keys: ["vmc", "ventilation", "extracteur", "mvhr", "hrv"] },
   hob: { accent: "heat", threshold: 50,
     fields: ["entity", "power", "energy", "cost", "zone_1", "zone_2", "zone_3", "zone_4"],

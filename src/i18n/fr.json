@@ -1127,7 +1127,9 @@
     "entity_timer": "Minuterie (restant)",
     "show_chlorine": "Afficher le chlore",
     "show_cover": "Afficher le couvercle",
-    "show_timer": "Afficher la minuterie"
+    "show_timer": "Afficher la minuterie",
+    "switch_low": "Interrupteur petite vitesse",
+    "switch_high": "Interrupteur grande vitesse"
   },
   "light": {
     "light_bulb": "Ampoule",
