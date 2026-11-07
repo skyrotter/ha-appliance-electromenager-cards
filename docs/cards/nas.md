@@ -4,7 +4,7 @@
 
 <p align="center"><img src="../home-tech.gif" width="720" alt="Mini PC, NAS, TV box and smart scale cards"></p>
 
-**NAS** (cut-out photo of the Synology DS423+, 4 bays), made for the **Synology DSM** integration. The STATUS and DISK LEDs of the photo come alive: the disk LEDs blink faster with the activity, a read beam sweeps across the bays, data packets fly to the volume ring (upload) or leave it (download), a failing disk blinks orange and its bay pulses red, the STATUS LED blinks orange on any alert, the power button breathes in blue and heat rises above the case when too hot. On the side: a volume ring (red above `volume_max`), download / upload bars and a temperature bar.
+**NAS** (cut-out photos, 4 bays), made for the **Synology DSM** and **TerraMaster TNAS (TOS)** integrations. Four models with `model`: `synology_ds423` (default, DS423+), `synology_ds925` (DS925+), `terramaster_f4_423` and `terramaster_f4_425`. The STATUS and DISK LEDs of the photo come alive: the disk LEDs blink faster with the activity, a read beam sweeps across the bays, data packets fly to the volume ring (upload) or leave it (download), a failing disk blinks orange and its bay pulses red, the STATUS LED blinks orange on any alert, the power button breathes in blue and heat rises above the case when too hot. On the side: a volume ring (red above `volume_max`), download / upload bars and a temperature bar.
 
 States: off, idle, running, very active (CPU above `cpu_busy` or high throughput), warning and unavailable. Alerts: volume degraded or crashed, disk N problem (DSM status or temperature above `disk_temp_max`), overheating, volume almost full, security warning. A "DSM update available" line shows when `entity_update` is on. Click a bay to open its disk.
 
@@ -13,10 +13,11 @@ States: off, idle, running, very active (CPU above `cpu_busy` or high throughput
 Every value tile can be hidden with its `show_…` option, and `language: fr|en|de|it|nb|nl|pl|ro|ru|sr|sr-Latn` forces the language.
 
 - `entity` (optional on / off: ping, switch)
-- `entity_volume` (volume status), `entity_volume_used` (%)
+- `entity_volume` (volume status), `entity_volume_used` (%). **Both accept a list for several volumes**: the ring and the alert follow the fullest one (`volume_max`)
 - `entity_cpu` (%), `entity_ram` (%), `entity_temp` (system temperature)
 - `entity_net_down`, `entity_net_up` (DSM gives kB/s, shown as kB/s or MB/s)
-- `entity_drive_1` … `entity_drive_4` (disk status), `entity_drive_1_temp` … `entity_drive_4_temp`
+- `entity_drive_1` … `entity_drive_4` (disk status: a text sensor for DSM, or the `binary_sensor` « problem » of TerraMaster, on = fault), `entity_drive_1_temp` … `entity_drive_4_temp`
+- `entity_nvme_1`, `entity_nvme_2` (SSD NVMe status or `binary_sensor` « problem »), `entity_nvme_1_temp`, `entity_nvme_2_temp`: counted in the disks tile and in the alerts (« SSD N: problem »), they have no bay on the photo
   All four disks, and each temperature, are optional: fill in only the entities your integration provides (DSM does not always report every disk temperature). The disks tile counts only the disks you set (`OK / known`) and shows the highest temperature among those that have one.
 - `entity_security` (binary_sensor, on = problem), `entity_update` (update entity), `entity_power` (W)
 - `cpu_busy` (default 60 %), `volume_max` (default 85 %), `temp_max` (default 60 °), `disk_temp_max` (default 50 °), `temperature_unit`
@@ -24,7 +25,26 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `compact: true` (small fixed slots: smaller title, tiles and buttons, the illustration takes the remaining height), `transparent: true` (no card background), `illustration_size` (%)
 - One checkbox per tile in the visual editor: `show_status`, `show_volume`, `show_cpu`, `show_ram`, `show_temp`, `show_disks`, `show_down`, `show_up`, `show_power` (`show_network: false` hides both network tiles)
 
-## Example
+## TerraMaster example (TNAS integration)
+
+```yaml
+type: custom:appliance-nas-card
+model: terramaster_f4_423
+entity_cpu: sensor.cpu_usage
+entity_ram: sensor.memory_usage
+entity_temp: sensor.system_temperature
+entity_volume_used:            # one or several volumes
+  - sensor.volume_1_usage
+  - sensor.volume_2_usage
+entity_drive_1: binary_sensor.hdd_1_problem
+entity_drive_1_temp: sensor.hdd_1_temperature
+entity_drive_2: binary_sensor.hdd_2_problem
+entity_drive_2_temp: sensor.hdd_2_temperature
+entity_nvme_1: binary_sensor.nvme_1_problem
+entity_nvme_1_temp: sensor.nvme_1_temperature
+```
+
+## Synology example
 
 ```yaml
 type: custom:appliance-nas-card
