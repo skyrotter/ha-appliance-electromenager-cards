@@ -57,6 +57,16 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 .freeze .wv-frost{opacity:1}.rain .wv-rain{opacity:1}.rain .wv-rd{animation:wvrain .9s linear infinite}.rain .wv-rd.d2{animation-delay:.3s}.rain .wv-rd.d3{animation-delay:.6s}
 .unavailable svg{filter:grayscale(.8) opacity(.6)}
 .noanim *{animation:none!important}
+/* ---- compact : petits emplacements fixes ; l'illustration prend la hauteur restante (comme les autres cartes) ---- */
+.stage{display:block}
+ha-card.compact{display:flex;flex-direction:column;padding:6px}
+.compact .head{flex:none;gap:4px}.compact .title{font-size:12px;line-height:16px}.compact .badge{font-size:10px;padding:0 6px}
+.compact .stage{flex:1 1 auto;min-height:0;width:100%;margin-top:3px;display:flex;align-items:center;justify-content:center}
+.compact svg{width:calc(100% * min(1,var(--illus-scale,1)));height:calc(100% * min(1,var(--illus-scale,1)));max-width:none;margin:0}
+.compact .alert{flex:none;font-size:10px;margin-top:2px}
+.compact .ctl{flex:none;gap:4px;margin-top:4px}.compact .ctl button{padding:3px 8px;border-radius:8px;font-size:11px;line-height:14px}.compact .ctl button ha-icon{--mdc-icon-size:14px}
+.compact .tiles{flex:none;gap:4px;margin-top:4px;grid-template-columns:repeat(auto-fit,minmax(56px,1fr))}
+.compact .tile{padding:2px 5px;border-radius:8px}.compact .tile .l ha-icon{--mdc-icon-size:12px}.compact .tile .v{font-size:12px;line-height:15px;margin-top:0}
 @keyframes wvflow{to{stroke-dashoffset:-13}}
 @keyframes wvrip{0%{opacity:.9;transform:scale(.3)}100%{opacity:0;transform:scale(1.2)}}
 @keyframes wvsplash{0%{opacity:.9;transform:translate(0,0)}100%{opacity:0;transform:translate(var(--sx,6px),-9px)}}
@@ -256,7 +266,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' }), m = this.constructor.META;
       root.innerHTML = `<style>${COMMON_CSS}${m.css}</style><ha-card>
         <div class="head"><div class="title" id="title"></div><div class="badge" id="badge"></div></div>
-        ${m.svg(this._c.name || this._t('name'))}
+        <div class="stage">${m.svg(this._c.name || this._t('name'))}</div>
         <div class="alert" id="alert"></div>
         <div class="ctl" id="ctl">
           <button data-act="open" id="b-open"><ha-icon icon="mdi:water"></ha-icon><span></span></button>
@@ -307,7 +317,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card, m = this.constructor.META;
       const x = this._compute();
-      card.className = `${x.sCls} ${x.alert}${c.animations === false ? ' noanim' : ''}`.trim();
+      card.className = `${x.sCls} ${x.alert}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`.trim();
       card.style.setProperty('--pos', String(x.frac));
       card.style.setProperty('--spd', String(isNaN(x.flow) ? 1 : Math.max(0.6, Math.min(3, 0.6 + x.flow / 10))));
       r.getElementById('title').textContent = c.name || this._t('name');
@@ -414,7 +424,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         ent('entity_pressure', 'sensor'), ent('entity_power', 'sensor'), ent('entity_cost', ['sensor', 'input_number']),
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(m.T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
-        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_buttons'), ...m.tiles.map((k) => bool('show_' + k)), bool('animations')] },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('compact', false), bool('show_buttons'), ...m.tiles.map((k) => bool('show_' + k)), bool('animations')] },
       ].filter(Boolean);
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
