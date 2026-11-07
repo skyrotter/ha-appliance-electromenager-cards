@@ -105,6 +105,7 @@ Clique sur une carte pour ses options et ses exemples (pages en anglais).
 | [VMC de salle de bain](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/vmc.md) | `custom:appliance-vmc-card` |
 | [Climat de la pièce (température, humidité, historique, 12 styles)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/room-climate.md) | `custom:appliance-room-climate-card` |
 | [Déshumidificateur](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/dehumidifier.md) | `custom:appliance-dehumidifier-card` |
+| [Purificateur d'air](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/air-purifier.md) | `custom:appliance-air-purifier-card` |
 
 ### Énergie, piscine, spa et aquarium
 
