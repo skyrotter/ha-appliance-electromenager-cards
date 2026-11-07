@@ -25,7 +25,9 @@ Every entity is optional. Without `entity`, the tap counts as open when `entity_
 | `entity_signal` | link quality (0–255 LQI, % or dBm) shown in % |
 | `entity_temperature` | temperature; freezing alert below `freeze_temp` (3 °C) |
 | `entity_pressure`, `entity_cost` | extra tiles |
-| `quick_times`, `moisture_low`, `show_status`, `show_buttons`, `show_flow`, `show_volume`, `show_remaining`, `show_today`, `show_total`, `show_next`, `show_moisture`, `show_mode`, `show_battery`, `show_signal`, `show_temperature`, `show_pressure`, `show_cost`, `animations`, `labels`, `language`, `illustration_size`, `transparent`, `tap_action`, `hold_action`, `temperature_unit` | |
+| `compact`, `quick_times`, `moisture_low`, `show_status`, `show_buttons`, `show_flow`, `show_volume`, `show_remaining`, `show_today`, `show_total`, `show_next`, `show_moisture`, `show_mode`, `show_battery`, `show_signal`, `show_temperature`, `show_pressure`, `show_cost`, `animations`, `labels`, `language`, `illustration_size`, `transparent`, `tap_action`, `hold_action`, `temperature_unit` | |
+
+`compact: true` is for small fixed slots (smaller title, buttons and tiles, the illustration takes the remaining height); `transparent: true` removes the card background; `illustration_size` scales the drawing (%).
 
 ```yaml
 type: custom:appliance-smart-tap-card
