@@ -10441,6 +10441,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
  *                                        sur la langue ; dates = true l'ignore.
  * window.applianceNum(st)              → valeur numérique d'un état (climate / water_heater : current_temperature), sinon NaN.
  * window.applianceWatts(st)            → puissance en W (kW et MW convertis), sinon NaN.
+ * window.applianceChanged(el, hass, cfg) → faut-il redessiner la carte ? (entités de la config, langue, format, 30 s)
  */
 (() => {
   const haLang = (cfg, hass) => {
@@ -10473,6 +10474,29 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
     if (/^(climate|water_heater)\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.current_temperature); return s.attributes && s.attributes.current_temperature != null && isFinite(t) ? t : NaN; }
     const v = parseFloat(String(s.state).replace(',', '.'));
     return isFinite(v) ? v : NaN;
+  };
+  // Redessiner ? Home Assistant passe un nouveau hass à chaque changement d'une entité quelconque de la maison :
+  // on ne redessine que si une entité citée dans la configuration (listes comprises), la langue, le format des
+  // nombres, la config HA, le registre des entités ou la configuration de la carte ont changé, et au moins toutes
+  // les 30 s (textes relatifs à l'heure : « il y a 5 min »). Les états de HA sont immuables : comparer les objets suffit.
+  const ENTITY_RE = /^[a-z][a-z0-9_]*\.[a-z0-9_]+$/;
+  const idsOf = (v, out = new Set()) => {
+    if (typeof v === 'string') { if (ENTITY_RE.test(v)) out.add(v); }
+    else if (Array.isArray(v)) v.forEach((x) => idsOf(x, out));
+    else if (v && typeof v === 'object') Object.values(v).forEach((x) => idsOf(x, out));
+    return out;
+  };
+  // réglages de HA lus par les cartes (langue, formats, unité de température, devise), comparés par valeur
+  const settings = (h) => [h.language, h.locale?.language, h.locale?.number_format, h.locale?.time_format,
+    h.config?.unit_system?.temperature, h.config?.currency].join('|');
+  window.applianceChanged = (el, hass, cfg) => {
+    const p = el._applianceSeen, now = Date.now();
+    if (!p || p.cfg !== cfg) el._applianceIds = [...idsOf(cfg)];
+    const set = hass ? settings(hass) : '';
+    const changed = !p || !hass || p.cfg !== cfg || now - p.at >= 30000 || p.set !== set || p.hass.entities !== hass.entities
+      || el._applianceIds.some((i) => p.hass.states[i] !== hass.states[i]);
+    if (changed && hass) el._applianceSeen = { hass, set, cfg, at: now };
+    return changed;
   };
   window.applianceWatts = (s) => {
     const v = window.applianceNum(s); if (isNaN(v)) return NaN;
@@ -15339,7 +15363,7 @@ class ApplianceAquariumCard extends HTMLElement {
     if (l && l !== this._lng) { this._lng = l; this._hass = hass; this._built = false; this._build(); }
    
     this._hass = hass;
-    this._update();
+    if (window.applianceChanged(this, hass, this._config)) this._update();
   }
 
   getCardSize() { return 5; }
@@ -15827,7 +15851,7 @@ class ApplianceLinkyCard extends HTMLElement {
     // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
     const l = this._config && (this._config.language || lang(hass));
     if (l && l !== this._lng) { this._lng = l; this._hass = hass; this._built = false; this._build(); }
-    this._hass = hass; this._update(); }
+    this._hass = hass; if (window.applianceChanged(this, hass, this._config)) this._update(); }
   getCardSize() { return 5; }
   getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
   _t(k) { return (I18N_LINKY[this._config.language || lang(this._hass)] || I18N_LINKY.en)[k] ?? I18N_LINKY.en[k] ?? k; }
@@ -16323,7 +16347,7 @@ class ApplianceBatteryCard extends HTMLElement {
     // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
     const l = this._config.language || lang(h);
     if (l !== this._lng) { this._lng = l; this._built = false; this._build(); }
-    this._update();
+    if (window.applianceChanged(this, h, this._config)) this._update();
   }
   getCardSize() { return 5; }
   getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
@@ -16694,7 +16718,7 @@ class ApplianceEvChargerCard extends HTMLElement {
     // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
     const l = this._config.language || lang(h);
     if (l !== this._lng) { this._lng = l; this._built = false; this._build(); }
-    this._update();
+    if (window.applianceChanged(this, h, this._config)) this._update();
   }
   getCardSize() { return 5; }
   getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
@@ -17181,7 +17205,7 @@ class ApplianceRobotVacuumCard extends HTMLElement {
     // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
     const l = this._config && (this._config.language || lang(h));
     if (l && l !== this._lng) { this._lng = l; this._hass = h; this._built = false; this._build(); }
-    this._hass = h; this._update(); }
+    this._hass = h; if (window.applianceChanged(this, h, this._config)) this._update(); }
   getCardSize() { return this._config && this._config.layout === 'compact' ? 3 : 6; }
   getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
   _t(k) { return (I18N_VAC[this._config.language || lang(this._hass)] || I18N_VAC.en)[k] ?? I18N_VAC.en[k] ?? k; }
@@ -17694,7 +17718,7 @@ class ApplianceRobotMowerCard extends HTMLElement {
     // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
     const l = this._config && (this._config.language || lang(h));
     if (l && l !== this._lng) { this._lng = l; this._hass = h; this._built = false; this._build(); }
-    this._hass = h; this._update(); }
+    this._hass = h; if (window.applianceChanged(this, h, this._config)) this._update(); }
   getCardSize() { return this._config && this._config.layout === 'compact' ? 3 : 6; }
   getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
   _t(k) { return (I18N_MOW[this._config.language || lang(this._hass)] || I18N_MOW.en)[k] ?? I18N_MOW.en[k] ?? k; }
@@ -18150,7 +18174,7 @@ class AppliancePelletBoilerCard extends HTMLElement {
     // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
     const l = this._config && (this._config.language || lang(h));
     if (l && l !== this._lng) { this._lng = l; this._hass = h; this._built = false; this._build(); }
-    this._hass = h; this._update(); }
+    this._hass = h; if (window.applianceChanged(this, h, this._config)) this._update(); }
   getCardSize() { return 6; }
   getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
   _t(k) { return (I18N_PB[this._config.language || lang(this._hass)] || I18N_PB.en)[k] ?? I18N_PB.en[k] ?? k; }
@@ -18766,7 +18790,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 5; }
     getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
@@ -19411,7 +19435,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 5; }
     disconnectedCallback() { clearTimeout(this._dt); this._dt = null; }
     // Chauffage seulement si la puissance reste au-dessus du seuil pendant heating_delay secondes
@@ -20001,7 +20025,7 @@ svg{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));height
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 5; }
     getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
@@ -20564,7 +20588,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 5; }
     getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
@@ -21305,7 +21329,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
       this._built = false; this._pos = null;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 5; }
     getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
@@ -21905,7 +21929,7 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 5; }
     getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
@@ -22783,7 +22807,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 5; }
     getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
@@ -23484,7 +23508,7 @@ svg{display:block;width:100%;max-width:calc(280px * var(--illus-scale,1));height
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 6; }
     getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
@@ -24069,7 +24093,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 5; }
     getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
@@ -24589,7 +24613,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 5; }
     getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
@@ -25349,7 +25373,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 5; }
     getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
@@ -26398,7 +26422,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 6; }
     getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
@@ -27098,7 +27122,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     connectedCallback() { this._tick = setInterval(() => { if (this._hass && this._c) this._render(); }, 20000); }
     disconnectedCallback() { clearInterval(this._tick); }
     getCardSize() { return 5; }
@@ -27614,7 +27638,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     connectedCallback() { this._tick = setInterval(() => { if (this._hass && this._c) this._render(); }, 20000); }
     disconnectedCallback() { clearInterval(this._tick); }
     getCardSize() { return 5; }
@@ -28067,7 +28091,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     connectedCallback() { this._tick = setInterval(() => { if (this._hass && this._c) this._render(); }, 20000); }
     disconnectedCallback() { clearInterval(this._tick); }
     getCardSize() { return 5; }
@@ -28846,7 +28870,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     // horloge de l'écran (BHT6000) : rafraîchie chaque minute
     connectedCallback() { this._tick = setInterval(() => { if (this._hass && this._c && this._model() === 'bht6000') this._render(); }, 30000); }
     disconnectedCallback() { clearInterval(this._tick); }
@@ -31910,7 +31934,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     connectedCallback() { this._tick = setInterval(() => { if (this._hass && this._c) this._render(); }, 60000); }
     disconnectedCallback() { clearInterval(this._tick); }
     getCardSize() { return 5; }
@@ -32658,7 +32682,7 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 5; }
     getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
@@ -33393,7 +33417,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 6; }
     getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
@@ -35301,7 +35325,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 5; }
     getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
@@ -35926,7 +35950,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 5; }
     getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
@@ -36626,7 +36650,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 5; }
     getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
@@ -37323,7 +37347,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     connectedCallback() { if (!this._tick) this._tick = setInterval(() => this._progress(), 1000); }
     disconnectedCallback() { clearInterval(this._tick); this._tick = null; clearTimeout(this._osdT); }
     getCardSize() { return 6; }
@@ -38050,7 +38074,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     disconnectedCallback() { cancelAnimationFrame(this._raf); clearInterval(this._cyc); clearTimeout(this._wt); }
     connectedCallback() { if (this._built && this._hass) this._render(); }
     getCardSize() { return 5; }

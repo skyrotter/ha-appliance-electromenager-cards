@@ -67,7 +67,7 @@ class ApplianceRobotMowerCard extends HTMLElement {
     // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
     const l = this._config && (this._config.language || lang(h));
     if (l && l !== this._lng) { this._lng = l; this._hass = h; this._built = false; this._build(); }
-    this._hass = h; this._update(); }
+    this._hass = h; if (window.applianceChanged(this, h, this._config)) this._update(); }
   getCardSize() { return this._config && this._config.layout === 'compact' ? 3 : 6; }
   getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
   _t(k) { return (I18N_MOW[this._config.language || lang(this._hass)] || I18N_MOW.en)[k] ?? I18N_MOW.en[k] ?? k; }

@@ -114,7 +114,7 @@ const hass = () => ({
     if (cur && domain === 'homeassistant' && service !== 'toggle') { set(data.entity_id, service === 'turn_off' ? 'off' : 'on'); refresh(); }
     if (cur && domain === 'climate') {
       if (service === 'set_hvac_mode') { set(data.entity_id, data.hvac_mode); cur.attributes.hvac_action = data.hvac_mode === 'off' ? 'off' : 'heating'; }
-      if (service === 'set_temperature') cur.attributes.temperature = data.temperature;
+      if (service === 'set_temperature') set(data.entity_id, states[data.entity_id].state, { ...states[data.entity_id].attributes, temperature: data.temperature }); // nouvel objet, comme Home Assistant
       refresh();
     }
   },
