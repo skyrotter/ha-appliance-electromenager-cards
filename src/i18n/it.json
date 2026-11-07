@@ -1620,5 +1620,32 @@
     "signal": "Segnale",
     "cost": "Costo",
     "low": "Bassa"
+  },
+  "softener": {
+    "name": "Addolcitore d'acqua",
+    "service": "In servizio",
+    "backwash": "Controlavaggio",
+    "brine": "Aspirazione salamoia",
+    "rinse": "Risciacquo",
+    "idle": "Pronto",
+    "lowsalt": "Sale basso",
+    "off": "Spento",
+    "unavailable": "Non disponibile",
+    "lcd_service": "SERVIZIO",
+    "lcd_backwash": "CONTROLAV.",
+    "lcd_brine": "SALAMOIA",
+    "lcd_rinse": "RISCIAC.",
+    "lcd_idle": "PRONTO",
+    "lcd_lowsalt": "AGG. SALE",
+    "lcd_off": "OFF",
+    "lcd_unavailable": "- - -",
+    "flow": "Portata",
+    "capacity": "Capacità residua",
+    "salt": "Sale",
+    "hardness": "Durezza",
+    "today": "Oggi",
+    "regen": "Prossima rigen.",
+    "power": "Potenza",
+    "days": "g"
   }
 }

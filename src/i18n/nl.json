@@ -1620,5 +1620,32 @@
     "signal": "Signaal",
     "cost": "Kosten",
     "low": "Laag"
+  },
+  "softener": {
+    "name": "Waterontharder",
+    "service": "In bedrijf",
+    "backwash": "Terugspoelen",
+    "brine": "Pekelzuiging",
+    "rinse": "Spoelen",
+    "idle": "Gereed",
+    "lowsalt": "Zout laag",
+    "off": "Uit",
+    "unavailable": "Niet beschikbaar",
+    "lcd_service": "BEDRIJF",
+    "lcd_backwash": "TERUGSP.",
+    "lcd_brine": "PEKEL",
+    "lcd_rinse": "SPOELEN",
+    "lcd_idle": "GEREED",
+    "lcd_lowsalt": "ZOUT BIJ",
+    "lcd_off": "UIT",
+    "lcd_unavailable": "- - -",
+    "flow": "Debiet",
+    "capacity": "Resterende capaciteit",
+    "salt": "Zout",
+    "hardness": "Hardheid",
+    "today": "Vandaag",
+    "regen": "Volgende regen.",
+    "power": "Vermogen",
+    "days": "d"
   }
 }

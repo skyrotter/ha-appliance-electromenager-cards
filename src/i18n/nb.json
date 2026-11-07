@@ -1616,5 +1616,32 @@
 "signal": "Signal",
 "cost": "Kostnad",
 "low": "Lavt"
+},
+"softener": {
+"name": "Vannmyker",
+"service": "I drift",
+"backwash": "Tilbakespyling",
+"brine": "Saltvannssuging",
+"rinse": "Skylling",
+"idle": "Klar",
+"lowsalt": "Lite salt",
+"off": "Av",
+"unavailable": "Utilgjengelig",
+"lcd_service": "DRIFT",
+"lcd_backwash": "TILB.SPYL",
+"lcd_brine": "SALTVANN",
+"lcd_rinse": "SKYLLING",
+"lcd_idle": "KLAR",
+"lcd_lowsalt": "FYLL SALT",
+"lcd_off": "AV",
+"lcd_unavailable": "- - -",
+"flow": "Vannmengde",
+"capacity": "Gjenstående kapasitet",
+"salt": "Salt",
+"hardness": "Hardhet",
+"today": "I dag",
+"regen": "Neste regen.",
+"power": "Effekt",
+"days": "d"
 }
 }

@@ -1087,7 +1087,17 @@
     "entity_nvme_1": "SSD 1 (NVMe)",
     "entity_nvme_1_temp": "SSD 1 temperature",
     "entity_nvme_2": "SSD 2 (NVMe)",
-    "entity_nvme_2_temp": "SSD 2 temperature"
+    "entity_nvme_2_temp": "SSD 2 temperature",
+    "entity_capacity": "Capacity left",
+    "entity_salt": "Salt level",
+    "entity_hardness_in": "Hardness in (raw water)",
+    "entity_hardness_out": "Hardness out (softened)",
+    "entity_regen_days": "Days to next regeneration",
+    "salt_low": "Low salt alert (%)",
+    "show_capacity": "Show capacity",
+    "show_salt": "Show salt",
+    "show_hardness": "Show hardness",
+    "show_regen": "Show next regeneration"
   },
   "light": {
     "light_bulb": "Bulb",
@@ -1677,5 +1687,32 @@
     "signal": "Signal",
     "cost": "Cost",
     "low": "Low"
+  },
+  "softener": {
+    "name": "Water softener",
+    "service": "Service",
+    "backwash": "Backwash",
+    "brine": "Brine draw",
+    "rinse": "Rinse",
+    "idle": "Standby",
+    "lowsalt": "Low salt",
+    "off": "Off",
+    "unavailable": "Unavailable",
+    "lcd_service": "SERVICE",
+    "lcd_backwash": "BACKWASH",
+    "lcd_brine": "BRINE",
+    "lcd_rinse": "RINSE",
+    "lcd_idle": "READY",
+    "lcd_lowsalt": "ADD SALT",
+    "lcd_off": "OFF",
+    "lcd_unavailable": "- - -",
+    "flow": "Flow",
+    "capacity": "Capacity left",
+    "salt": "Salt",
+    "hardness": "Hardness",
+    "today": "Today",
+    "regen": "Next regen.",
+    "power": "Power",
+    "days": "d"
   }
 }

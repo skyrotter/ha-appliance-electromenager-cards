@@ -19,7 +19,7 @@ const has=(c,cls)=>c.wrap.classList.contains(cls);
 const tags=['thermomix','cookeo','washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','smart-speaker','fan','generic','tool-charger','ceiling-fan','dehumidifier','monitor','kettle','toaster','power-strip','phone-charger','piano','garland','wet-vacuum','ps5'];
 tags.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 // card picker: every core card and every self-contained card listed exactly once
-const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','ceiling-spot','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','water-meter','gas-meter','electric-meter','trv','room-climate','mailbox','smoke-detector','leak-detector','mini-pc','nas','tv-box','scale','smart-lock','cat-flap','pet-fountain','thermo-heater','smart-tap','water-valve'];
+const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','ceiling-spot','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','water-meter','gas-meter','electric-meter','trv','room-climate','mailbox','smoke-detector','leak-detector','mini-pc','nas','tv-box','scale','smart-lock','cat-flap','pet-fountain','thermo-heater','smart-tap','water-valve','water-softener'];
 solo.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 const picked=window.customCards.map(c=>c.type), wanted=[...tags,...solo].map(t=>`appliance-${t}-card`).concat('appliance-card'); // + the single card (picker.js)
 ok(`customCards = ${wanted.length}`,picked.length===wanted.length&&wanted.every(t=>picked.filter(p=>p===t).length===1),
@@ -514,6 +514,21 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c=card('mailbox',{entity_mail:'binary_sensor.m',entity_door:'binary_sensor.d'},[mk('binary_sensor.m','off'),mk('binary_sensor.d','off')]);
  ok('mailbox without box_model keeps the drawing',!!c.sr.querySelector('.mb-door')&&!c.sr.querySelector('.bk-door')&&/^empty/.test(cls(c)),cls(c));
  document.querySelectorAll('appliance-mailbox-card').forEach((e)=>e.remove());
+}
+// adoucisseur d'eau : phases de régénération, sel bas, dureté, compact
+{const hc=(c)=>c.sr.querySelector('ha-card').className, bd=(c)=>c.sr.getElementById('wsbadge').textContent, lcd=(c)=>c.sr.getElementById('wslcd').textContent, tl=(c,k)=>c.sr.querySelector(`.tile[data-k=${k}]`);
+ let c=card('water-softener',{entity:'sensor.s'},[mk('sensor.s','idle')]); ok('softener idle',/^idle/.test(hc(c))&&bd(c)==='Veille'||/^idle/.test(hc(c)),hc(c)+bd(c));
+ c=card('water-softener',{entity:'sensor.s',entity_flow:'sensor.f'},[mk('sensor.s','idle'),mk('sensor.f',12,{unit_of_measurement:'L/min'})]); ok('softener service from flow',/^service/.test(hc(c)),hc(c));
+ c=card('water-softener',{entity:'sensor.s'},[mk('sensor.s','Contre-lavage')]); ok('softener backwash',/^backwash/.test(hc(c)),hc(c));
+ c=card('water-softener',{entity:'sensor.s'},[mk('sensor.s','brine draw')]); ok('softener brine',/^brine/.test(hc(c)),hc(c));
+ c=card('water-softener',{entity:'sensor.s'},[mk('sensor.s','rinse')]); ok('softener rinse',/^rinse/.test(hc(c)),hc(c));
+ c=card('water-softener',{entity:'switch.s'},[mk('switch.s','off')]); ok('softener off',/^off/.test(hc(c)),hc(c));
+ c=card('water-softener',{entity:'sensor.s'},[mk('sensor.s','unavailable')]); ok('softener unavailable',/^unavailable/.test(hc(c)),hc(c));
+ c=card('water-softener',{entity:'sensor.s',entity_salt:'sensor.salt'},[mk('sensor.s','idle'),mk('sensor.salt',10,{unit_of_measurement:'%'})]); ok('softener low salt',/lowsalt/.test(hc(c))&&tl(c,'salt').classList.contains('bad'),hc(c));
+ c=card('water-softener',{entity:'sensor.s',entity_salt:'sensor.salt',salt_low:5},[mk('sensor.s','idle'),mk('sensor.salt',10,{unit_of_measurement:'%'})]); ok('softener salt_low option',!/lowsalt/.test(hc(c)),hc(c));
+ c=card('water-softener',{entity:'sensor.s',entity_hardness_in:'sensor.hi',entity_hardness_out:'sensor.ho'},[mk('sensor.s','idle'),mk('sensor.hi',32,{unit_of_measurement:'°f'}),mk('sensor.ho',2,{unit_of_measurement:'°f'})]); ok('softener hardness in -> out',/32\s*→\s*2/.test(tl(c,'hardness').textContent),tl(c,'hardness').textContent);
+ c=card('water-softener',{entity:'sensor.s',compact:true},[mk('sensor.s','idle')]); ok('softener compact',/compact/.test(hc(c)),hc(c));
+ document.querySelectorAll('appliance-water-softener-card').forEach((e)=>e.remove());
 }
 // robinet connecté et vanne motorisée
 {const hc=(c)=>c.sr.querySelector('ha-card').className, bd=(c)=>c.sr.getElementById('badge').textContent, tl=(c,k)=>c.sr.querySelector(`.tile[data-k=${k}]`), hid=(c,id)=>c.sr.getElementById(id).classList.contains('hide');

@@ -14,7 +14,7 @@ Dieses Projekt ist kostenlos und Open Source und entsteht in meiner Freizeit. We
 
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/79-cartes.png" width="560" alt="79 animierte Gerätekarten für Home Assistant"></p>
 
-**94 Lovelace-Karten für Haushaltsgeräte**, jede mit einer realistischen animierten Illustration: eine rotierende Waschmaschinentrommel, eine flackernde Pelletofen-Flamme, eine Dieselheizung mit blauer Brennerkrone, ein Whirlpool mit sprudelnden Düsen, ein Saugroboter, ein Linky-Zähler, ein Heimspeicher … Sie zeigen Status, Leistung, Energie und Kosten live an, folgen deinem Home-Assistant-Theme (hell/dunkel) und sprechen Englisch, Französisch, Deutsch, Norwegisch, Niederländisch, Rumänisch, Russisch, Serbisch und Italienisch.
+**95 Lovelace-Karten für Haushaltsgeräte**, jede mit einer realistischen animierten Illustration: eine rotierende Waschmaschinentrommel, eine flackernde Pelletofen-Flamme, eine Dieselheizung mit blauer Brennerkrone, ein Whirlpool mit sprudelnden Düsen, ein Saugroboter, ein Linky-Zähler, ein Heimspeicher … Sie zeigen Status, Leistung, Energie und Kosten live an, folgen deinem Home-Assistant-Theme (hell/dunkel) und sprechen Englisch, Französisch, Deutsch, Norwegisch, Niederländisch, Rumänisch, Russisch, Serbisch und Italienisch.
 
 Eine einfache smarte Steckdose mit Leistungsmessung genügt. Vernetzte Geräte können zusätzlich Programm, Restzeit, Fortschritt, Tür, Temperaturen … anzeigen.
 
