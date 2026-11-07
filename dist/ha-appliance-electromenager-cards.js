@@ -38432,13 +38432,13 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       // vitesse du ventilateur : plus la puissance est élevée, plus il tourne vite (bornée)
       const spd = isNaN(power) ? 2 : Math.max(.7, Math.min(3, 3 - power / 500));
       card.style.setProperty('--spd', `${spd.toFixed(2)}s`);
-      // réserve d'eau chaude : proportion du ballon passée au chaud ; sans capteur, déduite de la température / consigne
+      // réserve d'eau chaude (%), graduation du dégradé du ballon selon les dessins de Ppatou (10, 25, 50, 75, 90 %) ; sans capteur, déduite de la température / consigne
       let lvl = reserve;
       if (isNaN(lvl) && !isNaN(temp) && !isNaN(target) && target > 15) lvl = Math.max(0, Math.min(100, (temp - 15) / (target - 15) * 100));
       if (isNaN(lvl)) lvl = mode === 'off' ? 0 : 60;
       const f = Math.max(0, Math.min(1, lvl / 100));
       r.getElementById('thg0').setAttribute('offset', '0');
-      r.getElementById('thg1').setAttribute('offset', String((1 - f * 0.9).toFixed(3)));
+      r.getElementById('thg1').setAttribute('offset', String(Math.max(.02, Math.min(.98, f)).toFixed(3))); // comme les dessins de Ppatou : l'étape violette est placée au % de réserve (90 % → à 0,9 du bas)
 
       r.getElementById('thtitle').textContent = c.name || this._t('name');
       const badge = r.getElementById('thbadge');
