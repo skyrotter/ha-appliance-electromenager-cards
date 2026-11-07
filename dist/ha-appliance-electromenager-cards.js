@@ -31749,8 +31749,12 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
 
   const CSS = `
 :host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
-ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sl-ok:var(--appliance-ok-color,#43a047);--sl-alert:var(--appliance-alert-color,#db4437);
+ha-card{position:relative;display:block;padding:10px 12px 12px;overflow:hidden;--sl-ok:var(--appliance-ok-color,#43a047);--sl-alert:var(--appliance-alert-color,#db4437);
   --sl-warn:var(--appliance-warn-color,#ffa000);--sl-cold:var(--appliance-cold-color,#2b9af9);--sl-c:#9aa3ad}
+/* repère couleur (option color) : barre sur le bord gauche + point devant le titre, pour distinguer plusieurs serrures */
+.idbar{display:none;position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--sl-id)}
+.iddot{display:none;flex:none;width:9px;height:9px;border-radius:50%;background:var(--sl-id);margin-right:6px}
+ha-card.hasid .idbar{display:block}ha-card.hasid .iddot{display:inline-block}
 .head{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
@@ -31945,8 +31949,8 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 
     _build() {
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
-      root.innerHTML = `<style>${CSS}</style><ha-card>
-        <div class="head"><div class="title" id="sltitle"></div><div class="badge" id="slbadge"></div></div>
+      root.innerHTML = `<style>${CSS}</style><ha-card><div class="idbar"></div>
+        <div class="head"><div class="title"><span class="iddot"></span><span id="sltitle"></span></div><div class="badge" id="slbadge"></div></div>
         ${SVG(this._c.model, this._c.name || this._t('name'))}
         <div class="alert" id="slalert"></div>
         <div class="ctl" id="slctl">
@@ -31993,7 +31997,11 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card;
       const { st, s, bS, bat, batBinary, crit, low, charging, dS, door } = this._compute();
-      card.className = `${st}${door ? ' door' : ''}${low ? ' lowbat' : ''}${crit ? ' critbat' : ''}${c.animations === false ? ' noanim' : ''}`;
+      // color : [r,g,b] (éditeur) ou texte CSS (#hex, rgb(), nom)
+      const col = Array.isArray(c.color) && c.color.length >= 3 ? `rgb(${c.color.slice(0, 3).map((x) => Math.round(Number(x) || 0)).join(',')})`
+        : typeof c.color === 'string' && /^[#a-z0-9(),.%\s-]+$/i.test(c.color.trim()) ? c.color.trim() : '';
+      if (col) card.style.setProperty('--sl-id', col); else card.style.removeProperty('--sl-id');
+      card.className = `${col ? 'hasid ' : ''}${st}${door ? ' door' : ''}${low ? ' lowbat' : ''}${crit ? ' critbat' : ''}${c.animations === false ? ' noanim' : ''}`;
       r.getElementById('sltitle').textContent = c.name || this._t('name');
       const badge = r.getElementById('slbadge');
       badge.textContent = this._t(st) + (door ? ` · ${this._t('door_open')}` : '');
@@ -32069,6 +32077,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
         { name: 'model', selector: { select: { mode: 'dropdown', options: [{ value: 'nuki_3_pro', label: tr.model_nuki_3_pro }, { value: 'nuki_pro_5', label: tr.model_nuki_pro_5 }] } } },
+        { name: 'color', selector: { color_rgb: {} } },
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
