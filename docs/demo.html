@@ -852,6 +852,27 @@ const SCEN = [
       select(ctl, 'Mode', 'select.fountain_mode', [['continuous', 'Continu'], ['intermittent', 'Intermittent'], ['sensor', 'Détection']], 'continuous');
       states['select.fountain_mode'].attributes = { options: ['continuous', 'intermittent', 'sensor'] };
     } },
+  { kind: 'smart-tap', title: 'Robinet connecté', lang: true,
+    cfg: { name: 'Robinet jardin', entity: 'valve.garden_tap', entity_flow: 'sensor.tap_flow', entity_today: 'sensor.tap_today', entity_remaining: 'sensor.tap_left', entity_duration: 'number.tap_duration', entity_schedule: 'switch.tap_schedule', entity_rain: 'binary_sensor.tap_rain', entity_moisture: 'sensor.tap_moisture', entity_battery: 'sensor.tap_battery', entity_signal: 'sensor.tap_lqi' },
+    build(ctl) {
+      select(ctl, 'Vanne', 'valve.garden_tap', [['closed', 'Fermée / Closed'], ['open', 'Ouverte / Open']], 'open');
+      range(ctl, 'Débit', 'sensor.tap_flow', 0, 30, 0.5, 8, 'L/min', { unit_of_measurement: 'L/min' });
+      range(ctl, 'Humidité du sol', 'sensor.tap_moisture', 0, 100, 1, 42, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Batterie', 'sensor.tap_battery', 0, 100, 1, 86, '%', { unit_of_measurement: '%', device_class: 'battery' });
+      checks(ctl, [['Pluie', 'binary_sensor.tap_rain', false], ['Programme', 'switch.tap_schedule', true]]);
+      set('sensor.tap_today', 128, { unit_of_measurement: 'L' }); set('sensor.tap_left', 12, { unit_of_measurement: 'min' }); set('number.tap_duration', 15, { unit_of_measurement: 'min' }); set('sensor.tap_lqi', 180);
+    } },
+  { kind: 'water-valve', title: 'Vanne motorisée', lang: true,
+    cfg: { name: "Arrivée d'eau", entity: 'valve.water_main', entity_flow: 'sensor.main_flow', entity_total: 'sensor.main_total', entity_leak: 'binary_sensor.main_leak', entity_battery: 'sensor.main_battery', entity_temperature: 'sensor.main_temp', entity_pressure: 'sensor.main_pressure' },
+    build(ctl) {
+      select(ctl, 'Vanne', 'valve.water_main', [['open', 'Ouverte / Open'], ['closed', 'Fermée / Closed'], ['opening', 'Ouverture'], ['closing', 'Fermeture']], 'open');
+      range(ctl, 'Position', 'sensor.main_position', 0, 100, 1, 100, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Débit', 'sensor.main_flow', 0, 3, 0.1, 0.8, 'm³/h', { unit_of_measurement: 'm³/h' });
+      range(ctl, 'Température', 'sensor.main_temp', -5, 30, 0.5, 14, '°C', T);
+      checks(ctl, [['Fuite', 'binary_sensor.main_leak', false]]);
+      range(ctl, 'Batterie', 'sensor.main_battery', 0, 100, 1, 72, '%', { unit_of_measurement: '%', device_class: 'battery' });
+      set('sensor.main_total', 312, { unit_of_measurement: 'm³' }); set('sensor.main_pressure', 3.1, { unit_of_measurement: 'bar' });
+    } },
   { kind: 'leak-detector', title: "Détecteur de fuite d'eau", lang: true,
     cfg: { name: "Sous l'évier", entity_leak: 'binary_sensor.leak_sink', entity_valve: 'valve.water_main_leak', entity_siren: 'siren.leak', entity_battery: 'sensor.leak_battery', entity_temperature: 'sensor.leak_temp' },
     build(ctl) {
