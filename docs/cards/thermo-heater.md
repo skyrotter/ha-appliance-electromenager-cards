@@ -2,6 +2,8 @@
 
 `custom:appliance-thermo-heater-card`
 
+<p align="center"><img src="../thermo-heater.gif" width="376" alt="Thermodynamic water heater card: Green, Boost, Pause and Off modes"></p>
+
 Heat-pump water heater (Ariston Nuos type): cut-out photo with a cut-away of the tank. The tank goes from blue (cold) to red (hot) with the hot water reserve, the **fan spins** in Green and Boost modes (faster in Boost) and the **electric element turns red** in Boost. Drawing by Ppatou.
 
 Every entity is optional. **Modes**: `off`, `pause` (on but not heating), `green` (heat pump) and `boost` (electric element). The mode is read from the entity (`water_heater` operation mode, `select`…): `eco`, `heat_pump`, `green`, `auto`… count as Green; `performance`, `electric`, `boost`, `turbo`… as Boost. Without a recognised mode it is **deduced from the power**: above `boost_above` (1000 W) it is Boost, above `running_above` (20 W) Green, below that Pause. A Green mode drawing more than `boost_above` switches to Boost (the element is on).
