@@ -81,7 +81,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "power_level", "pellet_level", "ph", "orp", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "power_level", "pellet_level", "ph", "orp", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -291,7 +291,7 @@ class ApplianceCardBase extends HTMLElement {
       level: num(S(c.power_level)), pellets: num(S(c.pellet_level)),
       pool: kind === "pool_pump" ? Object.fromEntries(["ph", "orp", "pressure", "tds", "salt", "chlorine"].map((k) => [k, S(c[k])])) : null,
       runtime: parseRemaining(S(c.runtime)), usage: parseRemaining(S(c.usage_time)), speed: S(c.speed), bedTemp: num(S(c.bed_temperature)), humidity: num(S(c.humidity)), mode: S(c.mode), window: S(c.window), light: S(c.light), keg: num(S(c.keg_level)), pouring: S(c.pouring), batt: num(S(c.battery_level)), zone2: num(S(c.zone2_temperature)), zone2Ent: S(c.zone2_temperature),
-      lampE: S(c.lamp_hours), picMode: S(c.picture_mode), tank: S(c.tank_full), fanSpeed: S(c.fan_speed), targetHum: S(c.target_humidity), cleanW: S(c.clean_water), dirtyW: S(c.dirty_water),
+      lampE: S(c.lamp_hours), picMode: S(c.picture_mode), tank: S(c.tank_full), fanSpeed: S(c.fan_speed), targetHum: S(c.target_humidity), cleanW: S(c.clean_water), dirtyW: S(c.dirty_water), pm25: S(c.pm25), filterE: S(c.filter),
       status: "idle", phase: null, alerts: [],
     };
     if (main && ["water_heater", "climate"].includes(domainOf(c.entity))) {
@@ -521,6 +521,34 @@ class ApplianceCardBase extends HTMLElement {
         m.lights = isOn(m.light);
         if (m.lights && m.status === "off" && base !== "unavailable") m.status = "lights";
       }
+    } else if (kind === "air_purifier") {
+      // vitesse : entité fan (pourcentage), sinon la puissance de la prise (FÖRNUFTIG : bouton 3 vitesses, pas d'entité)
+      const isFan = main && domainOf(c.entity) === "fan", fs = isFan ? String(main.state).toLowerCase() : "";
+      const fromPct = (p) => (p <= 34 ? 1 : p <= 67 ? 2 : 3);
+      let lvl = 0, st = null;
+      if (isFan && !BAD.includes(fs)) {
+        if (fs === "on") { const p = Number(main.attributes.percentage); lvl = Number.isFinite(p) && p > 0 ? fromPct(p) : 2; m.pct = Number.isFinite(p) ? p : null; }
+      } else if (["off", "unavailable"].includes(base)) st = base;
+      else if (watts !== null) lvl = watts > (c.high_threshold ?? 9) ? 3 : watts > (c.mid_threshold ?? 5) ? 2 : powered ? 1 : 0;
+      else lvl = ["running", "on"].includes(base) ? 2 : 0;
+      // fan_speed (select 1 / 2 / 3, nuit, turbo…, nombre ou %) prime sur l'estimation par la puissance
+      const sp = m.fanSpeed, spTxt = sp && !BAD.includes(String(sp.state).toLowerCase()) ? String(sp.state).toLowerCase() : "";
+      if (lvl && spTxt) {
+        const spDom = domainOf(c.fan_speed), spPct = spDom === "fan" ? Number(sp.attributes.percentage) : num(sp) ?? NaN;
+        if (Number.isFinite(spPct)) lvl = spPct > 3 || spDom === "fan" ? fromPct(spPct) : Math.max(1, Math.min(3, Math.round(spPct)));
+        else if (/silen|quiet|sleep|night|nuit|low|bas|faible|min|eco/.test(spTxt)) lvl = 1;
+        else if (/high|haut|fort|max|turbo|boost/.test(spTxt)) lvl = 3;
+      }
+      m.status = st || (lvl ? `fan_${lvl}` : "off");
+      if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
+      // qualité de l'air (PM2.5, µg/m³) et filtre (% de vie restante, ou binary_sensor « à remplacer »)
+      m.pm = num(m.pm25);
+      if (m.pm != null && m.pm > (c.pm25_max ?? 35)) m.alerts.push("air_poor");
+      const fv = m.filterE && !BAD.includes(String(m.filterE.state).toLowerCase()) ? m.filterE : null;
+      m.filterBin = !!fv && ["binary_sensor", "input_boolean"].includes(domainOf(c.filter));
+      m.filterPct = fv && !m.filterBin ? num(fv) : null;
+      m.filterBad = !!fv && (m.filterBin ? isOn(fv) : m.filterPct != null ? m.filterPct <= (c.filter_alert ?? 10) : /replace|remplac|wechsel|change|expired/.test(String(fv.state).toLowerCase()));
+      if (m.filterBad && m.status !== "unavailable") m.alerts.push("replace_filter");
     } else if (kind === "beer_tap") {
       if (["off", "unavailable"].includes(base)) m.status = base;
       else if (isOn(m.pouring)) m.status = "pouring";
@@ -1106,6 +1134,10 @@ class ApplianceCardBase extends HTMLElement {
       $("wrap").style.setProperty("--spd", String(m.spd ?? 1));
       $("wrap").classList.toggle("tank-full", !!m.tankFull);
     }
+    if (kind === "air_purifier") {
+      $("wrap").classList.toggle("air-poor", m.alerts.includes("air_poor"));
+      $("wrap").classList.toggle("filter-bad", !!m.filterBad);
+    }
     if (kind === "server_rack") $("wrap").style.setProperty("--load", (m.load ?? 0.4).toFixed(2));
     if (kind === "solar") $("wrap").style.setProperty("--sun", (m.frac || 0).toFixed(2));
     if (kind === "radiator" || kind === "towel_dryer") {
@@ -1177,7 +1209,7 @@ class ApplianceCardBase extends HTMLElement {
       if (![...OFF_STATES, ...DONE_STATES, "on", "running", "run"].includes(raw)) statusTxt = stateText(hass, m.main);
     }
     if ((kind === "radiator" || kind === "towel_dryer") && m.radMode && m.radMode !== "off" && m.status !== "off" && m.status !== "unavailable") statusTxt += ` · ${tr(hass, m.radMode === "none" ? "mode_none" : m.radMode)}`;
-    if ((kind === "fan" || kind === "ceiling_fan") && m.pct != null && /^fan_/.test(m.status)) statusTxt += ` · ${Math.round(m.pct)} %`;
+    if ((kind === "fan" || kind === "ceiling_fan" || kind === "air_purifier") && m.pct != null && /^fan_/.test(m.status)) statusTxt += ` · ${Math.round(m.pct)} %`;
     if (kind === "av_receiver" && m.vol != null && ["playing", "paused"].includes(m.status)) statusTxt += ` · Vol ${Math.round(m.vol * 100)} %`;
     if (kind === "av_receiver" && m.source && ["playing", "paused", "muted"].includes(m.status)) statusTxt += ` · ${m.source}`;
     if (kind === "tv" && c.show_media !== false && m.status === "screen_on" && m.main && domainOf(c.entity) === "media_player") {
@@ -1402,6 +1434,10 @@ class ApplianceCardBase extends HTMLElement {
       if (m.tank) tile(m.tankFull ? "mdi:cup-water" : "mdi:cup-outline", tr(hass, m.tankFull ? "tank_full_short" : "tank_ok"), lb("tank"), c.tank_full, m.tankFull ? "warn" : "");
       if (m.fanSpeed && !BAD.includes(String(m.fanSpeed.state).toLowerCase())) tile("mdi:fan", domainOf(c.fan_speed) === "fan" ? `${fmtNum(hass, Number(m.fanSpeed.attributes.percentage) || 0, 0)} %` : stateText(hass, m.fanSpeed), lb("fan_speed"), c.fan_speed);
       if (m.dhMode) tile("mdi:tune-variant", m.dhMode, lb("mode"), c.mode || c.entity);
+    } else if (kind === "air_purifier") {
+      if (m.pm != null) tile("mdi:blur", `${fmtNum(hass, m.pm, 0)} µg/m³`, lb("pm25"), c.pm25, m.alerts.includes("air_poor") ? "warn" : "");
+      if (m.fanSpeed && !BAD.includes(String(m.fanSpeed.state).toLowerCase())) tile("mdi:fan", domainOf(c.fan_speed) === "fan" ? `${fmtNum(hass, Number(m.fanSpeed.attributes.percentage) || 0, 0)} %` : stateText(hass, m.fanSpeed), lb("fan_speed"), c.fan_speed);
+      if (m.filterE && !BAD.includes(String(m.filterE.state).toLowerCase())) tile("mdi:air-filter", m.filterPct != null ? `${fmtNum(hass, m.filterPct, 0)} %` : tr(hass, m.filterBad ? "replace_short" : "tank_ok"), lb("filter"), c.filter, m.filterBad ? "warn" : "");
     } else if (kind === "wet_vacuum") {
       if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0)} %`, lb("battery"), c.battery_level, m.battLow ? "warn" : "");
       const tank = (pct, alert, okKey, badKey) => (pct != null ? `${fmtNum(hass, pct, 0)} %` : tr(hass, alert ? badKey : okKey));

@@ -39,6 +39,10 @@ const DEF = {
   dehumidifier: { accent: "cold", threshold: 50,
     fields: ["entity", "power", "energy", "cost", "humidity", "target_humidity", "temperature", "tank_full", "fan_speed", "mode", "switch"],
     keys: ["deshumidificateur", "deshumidifier", "dehumidifier", "dehumidificateur", "absorbeur", "midea_dehum", "dehum"] },
+  // purificateur d'air (IKEA FÖRNUFTIG, STARKVIND…) : prise connectée (W) ou entité fan ; vitesse 1 à 3, PM2.5 et filtre si disponibles
+  air_purifier: { accent: "cold", threshold: 1,
+    fields: ["entity", "power", "energy", "cost", "pm25", "fan_speed", "filter", "switch"],
+    keys: ["purificateur", "purifier", "air_purifier", "luftreiniger", "fornuftig", "starkvind", "uppatvind", "purificatore", "depurador"] },
   wet_vacuum: { accent: "cold", threshold: 3,
     fields: ["entity", "power", "energy", "cost", "battery_level", "clean_water", "dirty_water", "mode", "switch"],
     keys: ["aspirateur_laveur", "aspirateur_lavant", "nettoyeur_sol", "wet_vacuum", "wet_dry", "floor_washer", "floor_one", "tineco", "laveur"] },
