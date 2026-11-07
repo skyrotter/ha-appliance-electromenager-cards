@@ -20,6 +20,20 @@ Une simple prise connectée avec un capteur de puissance suffit. Les appareils c
 
 **▶ [Essayer en ligne](https://skyrotter.github.io/ha-appliance-electromenager-cards/docs/demo.html)** (données simulées, sans Home Assistant) · [Voir la vidéo](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/electromenager-51-cartes-facebook.mp4) · [Tests automatiques](https://skyrotter.github.io/ha-appliance-electromenager-cards/docs/tests.html)
 
+## Galerie
+
+Rendus réels des cartes, regroupés par thème (données simulées).
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-latest.png" width="860" alt="Dernières cartes : spa gonflable, chauffage soufflant, imprimante Bambu Lab A1, pluviomètre"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/smart-speaker.png" width="860" alt="Enceintes connectées et assistants vocaux : Amazon Echo, Google Nest, Sonos, Devialet, Apple HomePod"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-heating.png" width="860" alt="Chauffage et eau chaude : radiateur, poêle à granulés, chaudières, pompe à chaleur, chauffe-eau, plancher chauffant"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-outdoor.png" width="860" alt="Robots et extérieur : aspirateur, tondeuse, robot de piscine, portails, aquarium, jacuzzi, sauna"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-kitchen.png" width="860" alt="Cuisine et maison : lave-linge, sèche-linge, lave-vaisselle, four, micro-ondes, airfryer, cafetière, frigo"></p>
+
 ## Installation
 
 **HACS (recommandé)**
