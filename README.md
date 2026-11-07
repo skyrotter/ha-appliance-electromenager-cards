@@ -20,6 +20,20 @@ A simple smart plug with a power sensor is enough. Connected appliances can add 
 
 **▶ [Try it online](https://skyrotter.github.io/ha-appliance-electromenager-cards/docs/demo.html)** (simulated data, no Home Assistant needed) · [Watch the video](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/electromenager-51-cartes-facebook.mp4) · [Automated tests](https://skyrotter.github.io/ha-appliance-electromenager-cards/docs/tests.html)
 
+## Gallery
+
+Live renders of the cards, grouped by theme (simulated data).
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-latest.png" width="860" alt="Latest cards: inflatable spa, fan heater, Bambu Lab A1 printer, rain gauge"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/smart-speaker.png" width="860" alt="Smart speakers and voice assistants: Amazon Echo, Google Nest, Sonos, Devialet, Apple HomePod"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-heating.png" width="860" alt="Heating and hot water: radiator, pellet stove, boilers, heat pump, water heater, underfloor heating"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-outdoor.png" width="860" alt="Robots and outdoor: robot vacuum, mower, pool robot, gates, aquarium, hot tub, sauna"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-kitchen.png" width="860" alt="Kitchen and home: washer, dryer, dishwasher, oven, microwave, air fryer, coffee maker, fridge"></p>
+
 ## Installation
 
 **HACS (recommended)**

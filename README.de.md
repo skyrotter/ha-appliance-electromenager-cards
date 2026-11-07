@@ -20,6 +20,20 @@ Eine einfache smarte Steckdose mit Leistungsmessung genügt. Vernetzte Geräte k
 
 **▶ [Online ausprobieren](https://skyrotter.github.io/ha-appliance-electromenager-cards/docs/demo.html)** (simulierte Daten, kein Home Assistant nötig) · [Video ansehen](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/electromenager-51-cartes-facebook.mp4) · [Automatisierte Tests](https://skyrotter.github.io/ha-appliance-electromenager-cards/docs/tests.html)
 
+## Galerie
+
+Echte Darstellungen der Karten, nach Themen gruppiert (simulierte Daten).
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-latest.png" width="860" alt="Neueste Karten: aufblasbarer Whirlpool, Heizlüfter, Bambu Lab A1, Regenmesser"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/smart-speaker.png" width="860" alt="Smart Speaker und Sprachassistenten: Amazon Echo, Google Nest, Sonos, Devialet, Apple HomePod"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-heating.png" width="860" alt="Heizung und Warmwasser: Heizkörper, Pelletofen, Heizkessel, Wärmepumpe, Boiler, Fußbodenheizung"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-outdoor.png" width="860" alt="Roboter und Außenbereich: Saugroboter, Mähroboter, Poolroboter, Tore, Aquarium, Whirlpool, Sauna"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-kitchen.png" width="860" alt="Küche und Haushalt: Waschmaschine, Trockner, Geschirrspüler, Backofen, Mikrowelle, Heißluftfritteuse, Kaffeemaschine, Kühlschrank"></p>
+
 ## Installation
 
 **HACS (empfohlen)**
