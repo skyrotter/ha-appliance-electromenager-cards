@@ -1620,5 +1620,32 @@
     "signal": "Signal",
     "cost": "Kosten",
     "low": "Schwach"
+  },
+  "softener": {
+    "name": "Wasserenthärter",
+    "service": "Betrieb",
+    "backwash": "Rückspülung",
+    "brine": "Soleansaugung",
+    "rinse": "Spülung",
+    "idle": "Bereit",
+    "lowsalt": "Salz niedrig",
+    "off": "Aus",
+    "unavailable": "Nicht verfügbar",
+    "lcd_service": "BETRIEB",
+    "lcd_backwash": "RÜCKSPÜL.",
+    "lcd_brine": "SOLE",
+    "lcd_rinse": "SPÜLEN",
+    "lcd_idle": "BEREIT",
+    "lcd_lowsalt": "SALZ NACH",
+    "lcd_off": "AUS",
+    "lcd_unavailable": "- - -",
+    "flow": "Durchfluss",
+    "capacity": "Restkapazität",
+    "salt": "Salz",
+    "hardness": "Härte",
+    "today": "Heute",
+    "regen": "Nächste Regen.",
+    "power": "Leistung",
+    "days": "T"
   }
 }

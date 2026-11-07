@@ -852,6 +852,15 @@ const SCEN = [
       select(ctl, 'Mode', 'select.fountain_mode', [['continuous', 'Continu'], ['intermittent', 'Intermittent'], ['sensor', 'Détection']], 'continuous');
       states['select.fountain_mode'].attributes = { options: ['continuous', 'intermittent', 'sensor'] };
     } },
+  { kind: 'water-softener', title: "Adoucisseur d'eau", lang: true,
+    cfg: { name: 'Adoucisseur Culligan', entity: 'select.softener_state', entity_flow: 'sensor.softener_flow', entity_capacity: 'sensor.softener_capacity', entity_salt: 'sensor.softener_salt', entity_hardness_in: 'sensor.softener_hin', entity_hardness_out: 'sensor.softener_hout', entity_today: 'sensor.softener_today', entity_regen_days: 'sensor.softener_regen', entity_power: 'sensor.softener_power' },
+    build(ctl) {
+      select(ctl, 'Phase', 'select.softener_state', [['service', 'Service'], ['backwash', 'Contre-lavage'], ['brine', 'Saumure'], ['rinse', 'Rinçage'], ['idle', 'Veille'], ['off', 'Arrêt']], 'service');
+      range(ctl, 'Débit', 'sensor.softener_flow', 0, 30, 0.5, 12, 'L/min', { unit_of_measurement: 'L/min' });
+      range(ctl, 'Sel', 'sensor.softener_salt', 0, 100, 1, 65, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Capacité restante', 'sensor.softener_capacity', 0, 100, 1, 72, '%', { unit_of_measurement: '%' });
+      set('sensor.softener_hin', 32, { unit_of_measurement: '°f' }); set('sensor.softener_hout', 2, { unit_of_measurement: '°f' }); set('sensor.softener_today', 286, { unit_of_measurement: 'L' }); set('sensor.softener_regen', 3, { unit_of_measurement: 'd' }); set('sensor.softener_power', 4, { unit_of_measurement: 'W' });
+    } },
   { kind: 'smart-tap', title: 'Robinet connecté', lang: true,
     cfg: { name: 'Robinet jardin', entity: 'valve.garden_tap', entity_flow: 'sensor.tap_flow', entity_today: 'sensor.tap_today', entity_remaining: 'sensor.tap_left', entity_duration: 'number.tap_duration', entity_schedule: 'switch.tap_schedule', entity_rain: 'binary_sensor.tap_rain', entity_moisture: 'sensor.tap_moisture', entity_battery: 'sensor.tap_battery', entity_signal: 'sensor.tap_lqi' },
     build(ctl) {
