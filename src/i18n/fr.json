@@ -1472,6 +1472,8 @@
     "model_synology_ds925": "Synology DS925+ (4 baies)",
     "model_terramaster_f4_423": "TerraMaster F4-423 (4 baies)",
     "model_terramaster_f4_425": "TerraMaster F4-425 (4 baies)",
+    "model_ugreen_dxp4800_plus": "UGREEN DXP4800 Plus (4 baies)",
+    "model_ugreen_idx6011_pro": "UGREEN iDX6011 Pro (6 baies)",
     "nvme_alert": "SSD {n} : problème"
   },
   "tv_box": {
