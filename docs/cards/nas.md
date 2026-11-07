@@ -4,6 +4,8 @@
 
 <p align="center"><img src="../home-tech.gif" width="720" alt="Mini PC, NAS, TV box and smart scale cards"></p>
 
+<p align="center"><img src="../nas-models.gif" width="376" alt="NAS card: Synology DS423+, DS925+, TerraMaster F4-423 and F4-425"></p>
+
 **NAS** (cut-out photos, 4 bays), made for the **Synology DSM** and **TerraMaster TNAS (TOS)** integrations. Four models with `model`: `synology_ds423` (default, DS423+), `synology_ds925` (DS925+), `terramaster_f4_423` and `terramaster_f4_425`. The STATUS and DISK LEDs of the photo come alive: the disk LEDs blink faster with the activity, a read beam sweeps across the bays, data packets fly to the volume ring (upload) or leave it (download), a failing disk blinks orange and its bay pulses red, the STATUS LED blinks orange on any alert, the power button breathes in blue and heat rises above the case when too hot. On the side: a volume ring (red above `volume_max`), download / upload bars and a temperature bar.
 
 States: off, idle, running, very active (CPU above `cpu_busy` or high throughput), warning and unavailable. Alerts: volume degraded or crashed, disk N problem (DSM status or temperature above `disk_temp_max`), overheating, volume almost full, security warning. A "DSM update available" line shows when `entity_update` is on. Click a bay to open its disk.
