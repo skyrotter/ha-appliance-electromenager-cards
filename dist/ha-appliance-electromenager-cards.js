@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.88.0";
+const VERSION = "1.89.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -9781,6 +9781,9 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-server_rack .lcd { font-size: 5.6px; fill: #24404f; }
 .k-server_rack.active .lcd { fill: var(--ac-lcd); }
 @keyframes rk-blink { 0% { opacity: 1; } 20% { opacity: .25; } 35% { opacity: 1; } 62% { opacity: .35; } 78% { opacity: 1; } 100% { opacity: 1; } }
+/* tuiles lisibles aussi en mode transparent (comme mini-pc / NAS) : fond opaque du thème au lieu d'un gris à 9 % */
+.k-server_rack .tile { background: var(--secondary-background-color, rgba(127,127,127,.2)); }
+.k-server_rack .tile:hover { background: color-mix(in srgb, var(--primary-text-color) 8%, var(--secondary-background-color, rgba(127,127,127,.2))); }
 
 /* ---------- desktop PC ---------- */
 .pc-screen, .lp-screen { opacity: 0; transition: opacity .5s; }
@@ -10901,8 +10904,10 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_locked_out": "Lock \"Out only\" (Sure Petcare)",
       "entity_target": "Target temperature",
       "entity_reserve": "Hot water reserve (%)",
+      "entity_temp_bottom": "Bottom temperature entity",
       "boost_above": "Boost above (W)",
       "running_above": "Running above (W)",
+      "green_above": "Eco (green) above (W)",
       "show_target": "Show target",
       "show_reserve": "Show hot water",
       "nas_model": "NAS model",
@@ -12046,8 +12051,10 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_locked_out": "Lock « Sortie seule » (Sure Petcare)",
       "entity_target": "Température de consigne",
       "entity_reserve": "Réserve d'eau chaude (%)",
+      "entity_temp_bottom": "Température du bas (entité)",
       "boost_above": "Boost au-dessus de (W)",
       "running_above": "En marche au-dessus de (W)",
+      "green_above": "Éco (vert) au-dessus de (W)",
       "show_target": "Afficher la consigne",
       "show_reserve": "Afficher l'eau chaude",
       "nas_model": "Modèle de NAS",
@@ -13604,8 +13611,10 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_locked_out": "Blokada „Tylko wyjście” (Sure Petcare)",
       "entity_target": "Temperatura docelowa",
       "entity_reserve": "Zapas ciepłej wody (%)",
+      "entity_temp_bottom": "Temperatura dołu (encja)",
       "boost_above": "Boost powyżej (W)",
       "running_above": "Praca powyżej (W)",
+      "green_above": "Eco (zielony) powyżej (W)",
       "show_target": "Pokaż temperaturę docelową",
       "show_reserve": "Pokaż ciepłą wodę",
       "nas_model": "Model NAS",
@@ -38348,6 +38357,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "mode": "Mode",
       "temp": "Temperature",
       "target": "Target",
+      "bottom": "Bottom",
       "reserve": "Hot water"
     },
     "fr": {
@@ -38362,6 +38372,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "mode": "Mode",
       "temp": "Température",
       "target": "Consigne",
+      "bottom": "Bas du ballon",
       "reserve": "Eau chaude"
     },
     "pl": {
@@ -38376,6 +38387,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "mode": "Tryb",
       "temp": "Temperatura",
       "target": "Cel",
+      "bottom": "Dół",
       "reserve": "Ciepła woda"
     }
   };
@@ -38392,7 +38404,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--th-ok:var(--appli
 .boost .badge{background:color-mix(in srgb,var(--th-heat) 22%,transparent);color:var(--th-heat)}
 .body{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:4px}
 svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px * var(--illus-scale,1));max-width:100%;height:auto;margin:0 auto;cursor:pointer}
-.tiles{flex:1 1 130px;display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:6px;min-width:0}
+.tiles{flex:1 1 130px;display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:6px;min-width:0}
 .tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
 .tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
 .tile .l span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -38433,7 +38445,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
   </svg>`;
 
   const TILES = [['energy', 'mdi:lightning-bolt-outline', 'show_energy'], ['power', 'mdi:flash', 'show_power'], ['mode', 'mdi:cog-sync', 'show_mode'],
-    ['temp', 'mdi:thermometer', 'show_temp'], ['target', 'mdi:target', 'show_target'], ['reserve', 'mdi:gauge', 'show_reserve']];
+    ['temp', 'mdi:thermometer', 'show_temp'], ['bottom', 'mdi:thermometer-low', 'show_bottom'], ['target', 'mdi:target', 'show_target'], ['reserve', 'mdi:gauge', 'show_reserve']];
   // mode lu sur l'entité ; les états reconnus (dans toutes les langues courantes) priment sur la puissance
   const RE_OFF = /^(off|unavailable|unknown|none|aus|arr[êe]t|spento|uit|av|oprit)$/i;
   const RE_BOOST = /boost|perform|turbo|electric|[ée]lectri|force|high.?demand|forc[ée]|intensiv|rapid|comfort/i;
@@ -38450,7 +38462,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { show_energy: true, show_power: true, show_mode: true, show_temp: true, show_target: true, show_reserve: true, boost_above: 1000, running_above: 20, ...c };
+      this._c = { show_energy: true, show_power: true, show_mode: true, show_temp: true, show_target: true, show_reserve: true, show_bottom: true, boost_above: 1000, green_above: c.running_above != null && c.green_above == null ? c.running_above : 150, ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -38478,7 +38490,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       </ha-card>`;
       window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity || this._c.entity_power));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
-        const c = this._c; this._more({ energy: c.entity_energy, power: c.entity_power, mode: c.entity_mode || c.entity, temp: c.entity_temp || c.entity, target: c.entity_target || c.entity, reserve: c.entity_reserve }[el.dataset.k]);
+        const c = this._c; this._more({ energy: c.entity_energy, power: c.entity_power, mode: c.entity_mode || c.entity, temp: c.entity_temp || c.entity, bottom: c.entity_temp_bottom, target: c.entity_target || c.entity, reserve: c.entity_reserve }[el.dataset.k]);
       }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
@@ -38488,9 +38500,9 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       const power = this._num(c.entity_power);
       const temp = !isNaN(this._num(c.entity_temp)) ? this._num(c.entity_temp) : parseFloat(a.current_temperature);
       const target = !isNaN(this._num(c.entity_target)) ? this._num(c.entity_target) : parseFloat(a.temperature);
-      const reserve = this._num(c.entity_reserve);
+      const reserve = this._num(c.entity_reserve), bottom = this._num(c.entity_temp_bottom);
       const mS = this._st(c.entity_mode);
-      const known = [c.entity, c.entity_mode, c.entity_power, c.entity_temp].some((i) => this._ok(this._st(i)));
+      const known = [c.entity, c.entity_mode, c.entity_power, c.entity_temp, c.entity_temp_bottom].some((i) => this._ok(this._st(i)));
       const raw = String((this._ok(mS) ? mS.state : a.operation_mode || (e && e.state)) || '');
       let mode;
       if (!known) mode = 'unavailable';
@@ -38503,16 +38515,16 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
         // puissance : repli si le mode est inconnu, ou signale un chauffage appoint (résistance) malgré un mode éco
         if (!isNaN(power)) {
           if (power >= Number(c.boost_above)) mode = 'boost';
-          else if (mode == null || mode === 'green') mode = power >= Number(c.running_above) ? 'green' : 'pause'; // éco sans consommation = en attente
+          else if (mode == null || mode === 'green') mode = power >= Number(c.green_above) ? 'green' : 'pause'; // éco sans consommation = en attente
         } else if (mode == null) mode = 'green';
       }
-      return { mode, power, temp, target, reserve };
+      return { mode, power, temp, bottom, target, reserve };
     }
 
     _render() {
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card;
-      const { mode, power, temp, target, reserve } = this._compute();
+      const { mode, power, temp, bottom, target, reserve } = this._compute();
       card.className = `${mode}${c.animations === false ? ' noanim' : ''}`;
       // vitesse du ventilateur : plus la puissance est élevée, plus il tourne vite (bornée)
       const spd = isNaN(power) ? 2 : Math.max(.7, Math.min(3, 3 - power / 500));
@@ -38536,6 +38548,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
         power: [c.entity_power, this._fmt(power, 0), this._unit(c.entity_power, 'W')],
         mode: [c.entity_mode || c.entity || c.entity_power, this._t(`mode_${mode}`), ''],
         temp: [c.entity_temp || c.entity, this._fmt(temp, 1), tu === '%' ? '°C' : (tu || '°C')],
+        bottom: [c.entity_temp_bottom, this._fmt(bottom, 1), tu === '%' ? '°C' : (tu || '°C')],
         target: [c.entity_target || c.entity, this._fmt(target, 0), tu === '%' ? '°C' : (tu || '°C')],
         reserve: [c.entity_reserve, this._fmt(reserve, 0), ru],
       };
@@ -38576,11 +38589,11 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
         { name: 'transparent', selector: { boolean: {} } },
         ent('entity', ['water_heater', 'climate', 'switch']), ent('entity_mode', ['select', 'input_select', 'sensor']),
         ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'), ent('entity_temp', 'sensor'), ent('entity_target', ['sensor', 'number', 'input_number']),
-        ent('entity_reserve', 'sensor'),
-        { type: 'grid', name: '', schema: [num('running_above', 0, 2000, 1, 20, 'W'), num('boost_above', 100, 5000, 10, 1000, 'W')] },
+        ent('entity_temp_bottom', 'sensor'), ent('entity_reserve', 'sensor'),
+        { type: 'grid', name: '', schema: [num('green_above', 0, 2000, 1, 150, 'W'), num('boost_above', 100, 5000, 10, 1000, 'W')] },
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
-        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_energy'), bool('show_power'), bool('show_mode'), bool('show_temp'), bool('show_target'), bool('show_reserve'), bool('animations')] },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_energy'), bool('show_power'), bool('show_mode'), bool('show_temp'), bool('show_bottom'), bool('show_target'), bool('show_reserve'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }

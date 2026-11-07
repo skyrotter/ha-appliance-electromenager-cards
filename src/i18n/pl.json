@@ -1073,8 +1073,10 @@
     "entity_locked_out": "Blokada „Tylko wyjście” (Sure Petcare)",
     "entity_target": "Temperatura docelowa",
     "entity_reserve": "Zapas ciepłej wody (%)",
+    "entity_temp_bottom": "Temperatura dołu (encja)",
     "boost_above": "Boost powyżej (W)",
     "running_above": "Praca powyżej (W)",
+    "green_above": "Eco (zielony) powyżej (W)",
     "show_target": "Pokaż temperaturę docelową",
     "show_reserve": "Pokaż ciepłą wodę",
     "nas_model": "Model NAS",
@@ -1597,6 +1599,7 @@
     "mode": "Tryb",
     "temp": "Temperatura",
     "target": "Cel",
+    "bottom": "Dół",
     "reserve": "Ciepła woda"
   }
 }

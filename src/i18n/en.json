@@ -1073,8 +1073,10 @@
     "entity_locked_out": "Lock \"Out only\" (Sure Petcare)",
     "entity_target": "Target temperature",
     "entity_reserve": "Hot water reserve (%)",
+    "entity_temp_bottom": "Bottom temperature entity",
     "boost_above": "Boost above (W)",
     "running_above": "Running above (W)",
+    "green_above": "Eco (green) above (W)",
     "show_target": "Show target",
     "show_reserve": "Show hot water",
     "nas_model": "NAS model",
@@ -1597,6 +1599,7 @@
     "mode": "Mode",
     "temp": "Temperature",
     "target": "Target",
+    "bottom": "Bottom",
     "reserve": "Hot water"
   }
 }
