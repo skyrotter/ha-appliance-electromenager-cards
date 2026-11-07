@@ -1070,7 +1070,13 @@
     "show_drink": "Afficher la dernière gorgée",
     "show_clean": "Afficher le nettoyage",
     "entity_locked_in": "Lock « Entrée seule » (Sure Petcare)",
-    "entity_locked_out": "Lock « Sortie seule » (Sure Petcare)"
+    "entity_locked_out": "Lock « Sortie seule » (Sure Petcare)",
+    "entity_target": "Température de consigne",
+    "entity_reserve": "Réserve d'eau chaude (%)",
+    "boost_above": "Boost au-dessus de (W)",
+    "running_above": "En marche au-dessus de (W)",
+    "show_target": "Afficher la consigne",
+    "show_reserve": "Afficher l'eau chaude"
   },
   "light": {
     "light_bulb": "Ampoule",
@@ -1568,5 +1574,19 @@
     "ok": "OK",
     "to_change": "À changer",
     "to_clean": "À nettoyer"
+  },
+  "thermo": {
+    "name": "Chauffe-eau thermodynamique",
+    "mode_off": "Arrêt",
+    "mode_pause": "Pause",
+    "mode_green": "Vert (éco)",
+    "mode_boost": "Boost",
+    "mode_unavailable": "Indisponible",
+    "energy": "Énergie",
+    "power": "Puissance",
+    "mode": "Mode",
+    "temp": "Température",
+    "target": "Consigne",
+    "reserve": "Eau chaude"
   }
 }

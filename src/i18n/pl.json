@@ -1070,7 +1070,13 @@
     "show_drink": "Pokaż ostatnie picie",
     "show_clean": "Pokaż czyszczenie",
     "entity_locked_in": "Blokada „Tylko wejście” (Sure Petcare)",
-    "entity_locked_out": "Blokada „Tylko wyjście” (Sure Petcare)"
+    "entity_locked_out": "Blokada „Tylko wyjście” (Sure Petcare)",
+    "entity_target": "Temperatura docelowa",
+    "entity_reserve": "Zapas ciepłej wody (%)",
+    "boost_above": "Boost powyżej (W)",
+    "running_above": "Praca powyżej (W)",
+    "show_target": "Pokaż temperaturę docelową",
+    "show_reserve": "Pokaż ciepłą wodę"
   },
   "light": {
     "light_bulb": "Żarówka",
@@ -1568,5 +1574,19 @@
     "ok": "OK",
     "to_change": "Do wymiany",
     "to_clean": "Do wyczyszczenia"
+  },
+  "thermo": {
+    "name": "Termodynamiczny podgrzewacz wody",
+    "mode_off": "Wył.",
+    "mode_pause": "Pauza",
+    "mode_green": "Eko",
+    "mode_boost": "Boost",
+    "mode_unavailable": "Niedostępny",
+    "energy": "Energia",
+    "power": "Moc",
+    "mode": "Tryb",
+    "temp": "Temperatura",
+    "target": "Cel",
+    "reserve": "Ciepła woda"
   }
 }
