@@ -230,6 +230,28 @@ entity_day: sensor.pluviometre_pluie_24h
 entity_battery: sensor.pluviometre_batterie
 ```
 
+**Chauffage soufflant** (`custom:appliance-fan-heater-card`) : petit radiateur soufflant blanc à grille ronde en biais. Marche : le voyant rouge s'allume, l'hélice tourne derrière la grille, la résistance rougeoie et de l'air chaud sort sur le côté (air bleu en simple ventilation). Trois états : ventilation, chauffe faible (~1000 W) et chauffe forte (~2000 W) ; sans entité d'état, la puissance suffit. Facultatifs : énergie, coût, température de la pièce, consigne, allure, minuterie, alarme renversement / surchauffe, bouton marche / arrêt. Détail : [docs/cards/fan-heater.md](cards/fan-heater.md).
+
+```yaml
+type: custom:appliance-fan-heater-card
+name: Soufflant bureau
+entity_status: switch.soufflant_bureau
+entity_power: sensor.soufflant_bureau_puissance
+entity_temp: sensor.bureau_temperature
+```
+
+**Spa gonflable** (`custom:appliance-inflatable-spa-card`) : spa rond type Lay-Z-Spa (paroi grise effet bois, bloc pompe avec écran de température). Chaque fonction agit seule : chauffage (eau chaude, vapeur), filtration (rides), bulles, jets, lumière LED (couleur `rgb_color`), couvercle fermé. Un bouton par entité renseignée, tuiles désactivables : eau, consigne, puissance, énergie, coût, pH, chlore, minuterie, couvercle. Alertes pH, eau trop chaude et code défaut (`Err`). Détail : [docs/cards/inflatable-spa.md](cards/inflatable-spa.md).
+
+```yaml
+type: custom:appliance-inflatable-spa-card
+name: Spa jardin
+entity_status: climate.spa
+entity_heater: switch.spa_chauffage
+entity_filter: switch.spa_filtre
+entity_bubbles: switch.spa_bulles
+entity_temp: sensor.spa_temperature_eau
+```
+
 **Sauna** : `custom:appliance-sauna-card`, cabine en lames de bois vue de face avec porte vitrée teintée (banquettes, poêle et pierres visibles), thermomètre mural, panneau de commande et conduit de ventilation. États : arrêt, chauffe, prêt (à `ready_margin` = 3 °C de la consigne), refroidissement (éteint mais au-dessus de 40 °C) et défaut. La lueur du poêle et les braises suivent la température, les ondes de chaleur montent au-dessus des pierres, la vapeur sort du conduit, le thermomètre se remplit ; alerte au-dessus de `temp_max` (110 °C). Avec une entité `climate`, la température et la consigne viennent de ses attributs et les boutons **− / Allumer-Éteindre / +** pilotent le thermostat. Tuiles : température, consigne, humidité, puissance du poêle, énergie, coût. Options : voir [sauna.md](cards/sauna.md).
 
 ```yaml
