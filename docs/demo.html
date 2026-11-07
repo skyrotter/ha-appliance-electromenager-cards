@@ -870,6 +870,26 @@ const SCEN = [
       set('sensor.rain_1h', 3.2, { unit_of_measurement: 'mm' }); set('sensor.rain_week', 31.5, { unit_of_measurement: 'mm' }); set('sensor.rain_month', 88, { unit_of_measurement: 'mm' }); set('sensor.rain_year', 640, { unit_of_measurement: 'mm' });
       set('sensor.rain_last', new Date(Date.now() - 3 * 3600e3).toISOString(), { device_class: 'timestamp' }); set('sensor.rain_signal', 72, { unit_of_measurement: '%' });
     } },
+  { kind: 'fan-heater', title: 'Chauffage soufflant', lang: true,
+    cfg: { name: 'Soufflant bureau', entity_status: 'switch.fh_status', entity_power: 'sensor.fh_power', entity_energy: 'sensor.fh_energy', price_per_kwh: 0.25, entity_temp: 'sensor.fh_room', entity_target_temp: 'number.fh_target', entity_timer: 'sensor.fh_timer', entity_alarm: 'binary_sensor.fh_alarm' },
+    build(ctl) {
+      select(ctl, 'Marche', 'switch.fh_status', [['on', 'Marche / On'], ['off', 'Arrêt / Off']], 'on');
+      range(ctl, 'Puissance', 'sensor.fh_power', 0, 2200, 10, 2000, 'W', { unit_of_measurement: 'W', device_class: 'power' });
+      range(ctl, 'Pièce', 'sensor.fh_room', 5, 30, 0.5, 18.5, '°C', T);
+      checks(ctl, [['Alarme', 'binary_sensor.fh_alarm', false]]);
+      set('sensor.fh_energy', 3.4, { unit_of_measurement: 'kWh' }); set('number.fh_target', 21, { unit_of_measurement: '°C' }); set('sensor.fh_timer', 75, { unit_of_measurement: 'min' });
+    } },
+  { kind: 'inflatable-spa', title: 'Spa gonflable', lang: true,
+    cfg: { name: 'Spa jardin', entity_status: 'climate.spa_inf', entity_heater: 'switch.spa_heat', entity_filter: 'switch.spa_filt', entity_bubbles: 'switch.spa_bub', entity_jets: 'switch.spa_jet', entity_light: 'light.spa_led', entity_cover: 'cover.spa_lid', entity_power: 'sensor.spa_pw', entity_energy: 'sensor.spa_en', price_per_kwh: 0.25, entity_temp: 'sensor.spa_tw', entity_target_temp: 'climate.spa_inf', entity_ph: 'sensor.inf_ph', entity_chlorine: 'sensor.spa_cl', entity_timer: 'sensor.spa_tm' },
+    build(ctl) {
+      checks(ctl, [['Chauffage', 'switch.spa_heat', true], ['Filtre', 'switch.spa_filt', true], ['Bulles', 'switch.spa_bub', false], ['Jets', 'switch.spa_jet', false], ['Lumière', 'light.spa_led', false]]);
+      select(ctl, 'Couvercle', 'cover.spa_lid', [['open', 'Ouvert / Open'], ['closed', 'Fermé / Closed']], 'open');
+      range(ctl, 'Eau', 'sensor.spa_tw', 10, 45, 0.5, 34, '°C', T);
+      range(ctl, 'Puissance', 'sensor.spa_pw', 0, 2600, 10, 2050, 'W', { unit_of_measurement: 'W', device_class: 'power' });
+      range(ctl, 'pH', 'sensor.inf_ph', 6, 8.5, 0.1, 7.4, '', {});
+      set('climate.spa_inf', 'heat', { temperature: 38, hvac_action: 'heating' });
+      set('sensor.spa_en', 12.5, { unit_of_measurement: 'kWh' }); set('sensor.spa_cl', 1.8, { unit_of_measurement: 'mg/L' }); set('sensor.spa_tm', 140, { unit_of_measurement: 'min' });
+    } },
   { kind: 'smart-tap', title: 'Robinet connecté', lang: true,
     cfg: { name: 'Robinet jardin', entity: 'valve.garden_tap', entity_flow: 'sensor.tap_flow', entity_today: 'sensor.tap_today', entity_remaining: 'sensor.tap_left', entity_duration: 'number.tap_duration', entity_schedule: 'switch.tap_schedule', entity_rain: 'binary_sensor.tap_rain', entity_moisture: 'sensor.tap_moisture', entity_battery: 'sensor.tap_battery', entity_signal: 'sensor.tap_lqi' },
     build(ctl) {
