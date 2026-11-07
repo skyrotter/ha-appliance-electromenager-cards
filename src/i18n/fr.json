@@ -1598,5 +1598,32 @@
     "temp": "Température",
     "target": "Consigne",
     "reserve": "Eau chaude"
+  },
+  "softener": {
+    "name": "Adoucisseur d'eau",
+    "service": "En service",
+    "backwash": "Contre-lavage",
+    "brine": "Aspiration saumure",
+    "rinse": "Rinçage",
+    "idle": "Veille",
+    "lowsalt": "Sel bas",
+    "off": "Arrêt",
+    "unavailable": "Indisponible",
+    "lcd_service": "SERVICE",
+    "lcd_backwash": "CONTRE-LAV",
+    "lcd_brine": "SAUMURE",
+    "lcd_rinse": "RINCAGE",
+    "lcd_idle": "PRET",
+    "lcd_lowsalt": "AJOUTER SEL",
+    "lcd_off": "ARRET",
+    "lcd_unavailable": "- - -",
+    "flow": "Débit",
+    "capacity": "Capacité restante",
+    "salt": "Sel",
+    "hardness": "Dureté",
+    "today": "Aujourd'hui",
+    "regen": "Prochaine régén.",
+    "power": "Puissance",
+    "days": "j"
   }
 }

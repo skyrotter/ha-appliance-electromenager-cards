@@ -1598,5 +1598,32 @@
     "temp": "Temperature",
     "target": "Target",
     "reserve": "Hot water"
+  },
+  "softener": {
+    "name": "Water softener",
+    "service": "Service",
+    "backwash": "Backwash",
+    "brine": "Brine draw",
+    "rinse": "Rinse",
+    "idle": "Standby",
+    "lowsalt": "Low salt",
+    "off": "Off",
+    "unavailable": "Unavailable",
+    "lcd_service": "SERVICE",
+    "lcd_backwash": "BACKWASH",
+    "lcd_brine": "BRINE",
+    "lcd_rinse": "RINSE",
+    "lcd_idle": "READY",
+    "lcd_lowsalt": "ADD SALT",
+    "lcd_off": "OFF",
+    "lcd_unavailable": "- - -",
+    "flow": "Flow",
+    "capacity": "Capacity left",
+    "salt": "Salt",
+    "hardness": "Hardness",
+    "today": "Today",
+    "regen": "Next regen.",
+    "power": "Power",
+    "days": "d"
   }
 }
