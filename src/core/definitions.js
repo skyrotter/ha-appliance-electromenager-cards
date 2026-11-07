@@ -138,6 +138,6 @@ const DEF = {
     fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "humidity", "mode", "window", "switch"],
     keys: ["radiateur", "radiator", "chauffage", "heater", "convecteur"] },
   printer_3d: { accent: "active", threshold: 40,
-    fields: ["entity", "power", "energy", "cost", "progress", "remaining", "program", "temperature", "bed_temperature", "switch"],
+    fields: ["entity", "power", "energy", "cost", "progress", "remaining", "program", "temperature", "bed_temperature", "light", "switch"],
     keys: ["imprimante", "printer", "3d", "bambu", "prusa", "octoprint", "klipper", "moonraker"] },
 };

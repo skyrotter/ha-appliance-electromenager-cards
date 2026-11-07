@@ -120,7 +120,7 @@ function buildForm(kind) {
           ...(kind === "printer_3d" ? [
             // model : photo de l'imprimante (vide = dessin d'origine)
             { name: "model", selector: { select: { mode: "dropdown", options: [
-              { value: "", label: tr(null, "printer_drawing") }, { value: "neptune4pro", label: "Elegoo Neptune 4 Pro" }, { value: "kobrax", label: "Anycubic Kobra X" }] } } },
+              { value: "", label: tr(null, "printer_drawing") }, { value: "neptune4pro", label: "Elegoo Neptune 4 Pro" }, { value: "kobrax", label: "Anycubic Kobra X" }, { value: "a1", label: "Bambu Lab A1" }] } } },
             { name: "nozzle_temperatures", selector: { entity: { multiple: true, domain: "sensor" } } },
             { name: "filament_color", selector: { text: {} } },
           ] : []),

@@ -874,6 +874,7 @@ ok('printer object height follows progress',Math.abs(parseFloat(c.wrap.style.get
  ok('printer photo: object follows progress',Math.abs(parseFloat(cl.getAttribute('height'))-7)<0.01&&Math.abs(parseFloat(cl.getAttribute('y'))-(parseFloat(cl.dataset.b)-7))<0.01,cl.getAttribute('y')+' '+cl.getAttribute('height'));
  c=P('kobrax','heating',0); ok('printer photo kobrax + heating',!!c.sr.querySelector('.p3-kobrax image')&&has(c,'st-heating'));
  c=P('Kobra X','finished',null); ok('printer photo: model name tolerant, finished = full object',!!c.sr.querySelector('.p3-kobrax')&&parseFloat(c.sr.querySelector('.objclip').getAttribute('height'))===14);
+ c=P('Bambu Lab A1','printing',50); ok('printer photo a1: ring, beam, screen bar',!!c.sr.querySelector('.p3-a1 .p3-gear-spin')&&!!c.sr.querySelector('.p3-bar-fill')&&has(c,'lights-on')&&c.wrap.style.getPropertyValue('--pr')==='0.500',c.wrap.className);
  c=P('','printing',30); ok('printer without model keeps the drawing',!!c.sr.querySelector('.gantry')&&!c.sr.querySelector('.p3'));}
 ok('printer head moves while printing',getComputedStyle(c.sr.querySelector('.head')).animationName==='ac-printx',getComputedStyle(c.sr.querySelector('.head')).animationName);
 ok('printer progress bar',c.sr.getElementById('bar').style.display!=='none'&&c.sr.getElementById('barfill').style.width==='40%');
