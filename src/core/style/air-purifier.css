@@ -1,0 +1,27 @@
+/* ---------- air purifier ---------- */
+/* bouton rotatif : 0 (arrêt) → 1 → 2 → 3 ; poussières aspirées par la façade, air propre soufflé par le haut */
+.k-air_purifier svg { overflow: visible; }
+.k-air_purifier { --apspd: 1; }
+.k-air_purifier.st-fan_1 { --apspd: .6; } .k-air_purifier.st-fan_2 { --apspd: 1; } .k-air_purifier.st-fan_3 { --apspd: 1.6; }
+.ap-knob { transform-box: view-box; transform-origin: 74px 30px; transform: rotate(-111deg); transition: transform .6s cubic-bezier(.3, 1.4, .6, 1); }
+.k-air_purifier.st-fan_1 .ap-knob { transform: rotate(-56deg); }
+.k-air_purifier.st-fan_2 .ap-knob { transform: rotate(0deg); }
+.k-air_purifier.st-fan_3 .ap-knob { transform: rotate(56deg); }
+/* poussières : glissent vers la façade et disparaissent dans le filtre */
+.ap-dust circle { fill: #9aa3ac; opacity: 0; }
+.k-air_purifier.active .ap-dust circle { animation: ap-dust calc(2.6s / var(--apspd)) ease-in infinite; }
+.ap-dust circle:nth-child(2) { animation-delay: -.5s !important; } .ap-dust circle:nth-child(3) { animation-delay: -1s !important; }
+.ap-dust circle:nth-child(4) { animation-delay: -1.5s !important; } .ap-dust circle:nth-child(5) { animation-delay: -2s !important; }
+.ap-dust circle:nth-child(6) { animation-delay: -2.3s !important; }
+.k-air_purifier.air-poor .ap-dust circle { fill: #c9a27a; }
+/* air aspiré à travers le textile, puis air propre soufflé par la grille du haut */
+.ap-flow path { stroke: #bfe3f7; stroke-width: 1.2; stroke-dasharray: 3 7; opacity: 0; transition: opacity .6s; }
+.k-air_purifier.active .ap-flow path { opacity: .35; animation: ap-up calc(1.8s / var(--apspd)) linear infinite; }
+.ap-flow path:nth-child(2) { animation-delay: -.45s !important; } .ap-flow path:nth-child(3) { animation-delay: -.9s !important; } .ap-flow path:nth-child(4) { animation-delay: -1.35s !important; }
+.ap-out path { stroke: #bfe3f7; stroke-width: 1.5; stroke-dasharray: 3 5; opacity: 0; transition: opacity .6s; }
+.k-air_purifier.active .ap-out path { opacity: .75; animation: hd-up calc(1.4s / var(--apspd)) linear infinite; }
+.ap-out path:nth-child(2) { animation-delay: -.35s !important; } .ap-out path:nth-child(3) { animation-delay: -.7s !important; } .ap-out path:nth-child(4) { animation-delay: -1.05s !important; }
+/* filtre à remplacer : le bouton s'entoure d'orange */
+.k-air_purifier.filter-bad .ap-knob circle { stroke: var(--ac-heat); stroke-width: 1; filter: drop-shadow(0 0 1.4px var(--ac-heat)); }
+@keyframes ap-dust { 0% { opacity: 0; transform: translateX(0); } 20% { opacity: .9; } 80% { opacity: .6; } 100% { opacity: 0; transform: translateX(26px); } }
+@keyframes ap-up { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -20; } }

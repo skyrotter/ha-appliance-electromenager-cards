@@ -111,6 +111,7 @@ Klicke auf eine Karte für ihre Optionen und Beispiele.
 | [Badlüfter / Wohnraumlüftung (VMC)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/vmc.md) | `custom:appliance-vmc-card` |
 | [Raumklima (Temperatur, Luftfeuchtigkeit, Verlauf, 12 Stile)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/room-climate.md) | `custom:appliance-room-climate-card` |
 | [Luftentfeuchter](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/dehumidifier.md) | `custom:appliance-dehumidifier-card` |
+| [Luftreiniger](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/air-purifier.md) | `custom:appliance-air-purifier-card` |
 
 ### Energie, Pool, Spa und Aquarium
 

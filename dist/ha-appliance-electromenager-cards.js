@@ -344,6 +344,16 @@ const STRINGS = {
     "f_sockets": "Number of sockets",
     "f_multicolor": "Multicolour (rainbow)",
     "dehumidifier": "Dehumidifier",
+    "air_purifier": "Air purifier",
+    "pm25": "PM2.5",
+    "air_poor": "Poor air quality",
+    "filter": "Filter",
+    "replace_filter": "Replace the filter",
+    "replace_short": "Replace",
+    "f_pm25": "PM2.5 sensor (µg/m³)",
+    "f_filter": "Filter (% life left, or replace-filter sensor)",
+    "f_pm25_max": "Air quality alert above (µg/m³)",
+    "f_filter_alert": "Filter alert below (%)",
     "drying": "Drying",
     "tank_full": "Tank full",
     "empty_tank": "Empty the tank",
@@ -712,6 +722,16 @@ const STRINGS = {
     "f_sockets": "Počet zásuvek",
     "f_multicolor": "Vícebarevný (duha)",
     "dehumidifier": "Odvlhčovač",
+    "air_purifier": "Čistička vzduchu",
+    "pm25": "PM2,5",
+    "air_poor": "Špatná kvalita vzduchu",
+    "filter": "Filtr",
+    "replace_filter": "Vyměňte filtr",
+    "replace_short": "Vyměnit",
+    "f_pm25": "Senzor PM2,5 (µg/m³)",
+    "f_filter": "Filtr (% zbývající životnosti nebo senzor výměny filtru)",
+    "f_pm25_max": "Upozornění na kvalitu vzduchu nad (µg/m³)",
+    "f_filter_alert": "Upozornění na filtr pod (%)",
     "drying": "Vysoušení",
     "tank_full": "Plná nádržka",
     "empty_tank": "Vyprázdněte nádržku",
@@ -1065,6 +1085,16 @@ const STRINGS = {
     "f_sockets": "Anzahl der Steckdosen",
     "f_multicolor": "Mehrfarbig (Regenbogen)",
     "dehumidifier": "Luftentfeuchter",
+    "air_purifier": "Luftreiniger",
+    "pm25": "PM2,5",
+    "air_poor": "Schlechte Luftqualität",
+    "filter": "Filter",
+    "replace_filter": "Filter wechseln",
+    "replace_short": "Wechseln",
+    "f_pm25": "PM2,5-Sensor (µg/m³)",
+    "f_filter": "Filter (% Restlaufzeit oder Filterwechsel-Sensor)",
+    "f_pm25_max": "Luftqualitätsalarm über (µg/m³)",
+    "f_filter_alert": "Filteralarm unter (%)",
     "drying": "Entfeuchtung",
     "tank_full": "Tank voll",
     "empty_tank": "Tank leeren",
@@ -1434,6 +1464,16 @@ const STRINGS = {
     "f_sockets": "Nombre de prises",
     "f_multicolor": "Multicolore (arc-en-ciel)",
     "dehumidifier": "Déshumidificateur",
+    "air_purifier": "Purificateur d'air",
+    "pm25": "PM2,5",
+    "air_poor": "Air de mauvaise qualité",
+    "filter": "Filtre",
+    "replace_filter": "Remplacer le filtre",
+    "replace_short": "À changer",
+    "f_pm25": "Capteur PM2,5 (µg/m³)",
+    "f_filter": "Filtre (% de vie restante, ou capteur « filtre à changer »)",
+    "f_pm25_max": "Alerte qualité de l’air au-dessus de (µg/m³)",
+    "f_filter_alert": "Alerte filtre en dessous de (%)",
     "drying": "Déshumidification",
     "tank_full": "Bac plein",
     "empty_tank": "Videz le bac",
@@ -1787,6 +1827,16 @@ const STRINGS = {
     "f_sockets": "Numero di prese",
     "f_multicolor": "Multicolore (arcobaleno)",
     "dehumidifier": "Deumidificatore",
+    "air_purifier": "Purificatore d'aria",
+    "pm25": "PM2,5",
+    "air_poor": "Qualità dell'aria scarsa",
+    "filter": "Filtro",
+    "replace_filter": "Sostituire il filtro",
+    "replace_short": "Da sostituire",
+    "f_pm25": "Sensore PM2,5 (µg/m³)",
+    "f_filter": "Filtro (% di vita residua o sensore « filtro da sostituire »)",
+    "f_pm25_max": "Avviso qualità dell'aria sopra (µg/m³)",
+    "f_filter_alert": "Avviso filtro sotto (%)",
     "drying": "Asciugatura",
     "tank_full": "Serbatoio pieno",
     "empty_tank": "Svuota il serbatoio",
@@ -1857,6 +1907,16 @@ const STRINGS = {
     "f_sockets": "Antall uttak",
     "f_multicolor": "Flerfarget (regnbue)",
     "dehumidifier": "Avfukter",
+    "air_purifier": "Luftrenser",
+    "pm25": "PM2,5",
+    "air_poor": "Dårlig luftkvalitet",
+    "filter": "Filter",
+    "replace_filter": "Bytt filteret",
+    "replace_short": "Bytt",
+    "f_pm25": "PM2,5-sensor (µg/m³)",
+    "f_filter": "Filter (% gjenværende levetid, eller sensor for filterbytte)",
+    "f_pm25_max": "Varsel om luftkvalitet over (µg/m³)",
+    "f_filter_alert": "Filtervarsel under (%)",
     "drying": "Avfukting",
     "tank_full": "Tanken er full",
     "empty_tank": "Tøm tanken",
@@ -2493,6 +2553,16 @@ const STRINGS = {
     "f_sockets": "Aantal stopcontacten",
     "f_multicolor": "Meerkleurig (regenboog)",
     "dehumidifier": "Luchtontvochtiger",
+    "air_purifier": "Luchtreiniger",
+    "pm25": "PM2,5",
+    "air_poor": "Slechte luchtkwaliteit",
+    "filter": "Filter",
+    "replace_filter": "Filter vervangen",
+    "replace_short": "Vervangen",
+    "f_pm25": "PM2,5-sensor (µg/m³)",
+    "f_filter": "Filter (% resterende levensduur of sensor « filter vervangen »)",
+    "f_pm25_max": "Luchtkwaliteitsmelding boven (µg/m³)",
+    "f_filter_alert": "Filtermelding onder (%)",
     "drying": "Ontvochtigen",
     "tank_full": "Reservoir vol",
     "empty_tank": "Leeg het reservoir",
@@ -2862,6 +2932,16 @@ const STRINGS = {
     "f_sockets": "Liczba gniazd",
     "f_multicolor": "Wielokolorowy (tęcza)",
     "dehumidifier": "Osuszacz powietrza",
+    "air_purifier": "Oczyszczacz powietrza",
+    "pm25": "PM2,5",
+    "air_poor": "Zła jakość powietrza",
+    "filter": "Filtr",
+    "replace_filter": "Wymień filtr",
+    "replace_short": "Do wymiany",
+    "f_pm25": "Czujnik PM2,5 (µg/m³)",
+    "f_filter": "Filtr (% pozostałej żywotności lub czujnik wymiany filtra)",
+    "f_pm25_max": "Alarm jakości powietrza powyżej (µg/m³)",
+    "f_filter_alert": "Alarm filtra poniżej (%)",
     "drying": "Osuszanie",
     "tank_full": "Zbiornik pełny",
     "empty_tank": "Opróżnij zbiornik",
@@ -3215,6 +3295,16 @@ const STRINGS = {
     "f_sockets": "Număr de prize",
     "f_multicolor": "Multicolor (curcubeu)",
     "dehumidifier": "Dezumidificator",
+    "air_purifier": "Purificator de aer",
+    "pm25": "PM2,5",
+    "air_poor": "Calitate slabă a aerului",
+    "filter": "Filtru",
+    "replace_filter": "Înlocuiți filtrul",
+    "replace_short": "De înlocuit",
+    "f_pm25": "Senzor PM2,5 (µg/m³)",
+    "f_filter": "Filtru (% durată rămasă sau senzor de înlocuire a filtrului)",
+    "f_pm25_max": "Alertă calitatea aerului peste (µg/m³)",
+    "f_filter_alert": "Alertă filtru sub (%)",
     "drying": "Dezumidificare",
     "tank_full": "Rezervor plin",
     "empty_tank": "Goliți rezervorul",
@@ -3568,6 +3658,16 @@ const STRINGS = {
     "f_sockets": "Количество розеток",
     "f_multicolor": "Разноцветная (радуга)",
     "dehumidifier": "Осушитель",
+    "air_purifier": "Очиститель воздуха",
+    "pm25": "PM2,5",
+    "air_poor": "Плохое качество воздуха",
+    "filter": "Фильтр",
+    "replace_filter": "Замените фильтр",
+    "replace_short": "Заменить",
+    "f_pm25": "Датчик PM2,5 (мкг/м³)",
+    "f_filter": "Фильтр (% оставшегося ресурса или датчик замены фильтра)",
+    "f_pm25_max": "Оповещение о качестве воздуха выше (мкг/м³)",
+    "f_filter_alert": "Оповещение о фильтре ниже (%)",
     "drying": "Осушение",
     "tank_full": "Бак полон",
     "empty_tank": "Опорожните бак",
@@ -3937,6 +4037,16 @@ const STRINGS = {
     "f_sockets": "Број утичница",
     "f_multicolor": "Вишебојно (дуга)",
     "dehumidifier": "Одвлаживач ваздуха",
+    "air_purifier": "Пречишћивач ваздуха",
+    "pm25": "PM2,5",
+    "air_poor": "Лош квалитет ваздуха",
+    "filter": "Филтер",
+    "replace_filter": "Замените филтер",
+    "replace_short": "Заменити",
+    "f_pm25": "Сензор PM2,5 (µg/m³)",
+    "f_filter": "Филтер (% преосталог века или сензор замене филтера)",
+    "f_pm25_max": "Упозорење о квалитету ваздуха изнад (µg/m³)",
+    "f_filter_alert": "Упозорење о филтеру испод (%)",
     "drying": "Сушење",
     "tank_full": "Резервоар је пун",
     "empty_tank": "Испуните резервоар",
@@ -4306,6 +4416,16 @@ const STRINGS = {
     "f_sockets": "Broj utičnica",
     "f_multicolor": "Višebojno (duga)",
     "dehumidifier": "Odvlaživač vazduha",
+    "air_purifier": "Prečišćivač vazduha",
+    "pm25": "PM2,5",
+    "air_poor": "Loš kvalitet vazduha",
+    "filter": "Filter",
+    "replace_filter": "Zamenite filter",
+    "replace_short": "Zameniti",
+    "f_pm25": "Senzor PM2,5 (µg/m³)",
+    "f_filter": "Filter (% preostalog veka ili senzor zamene filtera)",
+    "f_pm25_max": "Upozorenje o kvalitetu vazduha iznad (µg/m³)",
+    "f_filter_alert": "Upozorenje o filteru ispod (%)",
     "drying": "Sušenje",
     "tank_full": "Rezervoar je pun",
     "empty_tank": "Ispraznite rezervoar",
@@ -4509,6 +4629,31 @@ ${lcd(46, 33, 28, 11)}
 <path d="M20 98.5h27M73 98.5h27" stroke="#fff" stroke-opacity=".14" stroke-width="1" stroke-linecap="round"/>
 <rect x="29" y="105" width="9" height="2.2" rx="1.1" fill="#59616b"/><rect x="82" y="105" width="9" height="2.2" rx="1.1" fill="#59616b"/>
 <path d="M11 55l14-1M64 55l14-1" stroke="#fff" stroke-opacity=".5" stroke-width=".8" stroke-linecap="round"/>`;
+
+/* purificateur d'air colonne (type IKEA FÖRNUFTIG) : façade textile, grille de sortie en haut, bouton rotatif 0-1-2-3 */
+SVG.air_purifier = () => `
+<defs>${DEFS}
+<linearGradient id="ID-apbody" x1="0" x2="1"><stop offset="0" stop-color="#d9dee3"/><stop offset=".45" stop-color="#f7f8f9"/><stop offset="1" stop-color="#c3cad1"/></linearGradient>
+<linearGradient id="ID-apfab" x1="0" x2="1"><stop offset="0" stop-color="#4a5159"/><stop offset=".5" stop-color="#5d656e"/><stop offset="1" stop-color="#434a52"/></linearGradient>
+<pattern id="ID-apweave" width="2.4" height="2.4" patternUnits="userSpaceOnUse"><path d="M0 1.2h2.4M1.2 0v2.4" stroke="#fff" stroke-opacity=".07" stroke-width=".5"/></pattern>
+<radialGradient id="ID-apknob" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#ffffff"/><stop offset=".7" stop-color="#d4d9de"/><stop offset="1" stop-color="#9aa3ac"/></radialGradient>
+<clipPath id="ID-apfront"><rect x="37" y="34" width="46" height="86" rx="3"/></clipPath></defs>
+<ellipse cx="60" cy="133" rx="34" ry="3.5" fill="url(#ID-shadow)"/>
+<g class="ap-out" fill="none" stroke-linecap="round"><path d="M44 12q-3-5 0-10"/><path d="M53 12q3-5 0-10"/><path d="M67 12q-3-5 0-10"/><path d="M76 12q3-5 0-10"/></g>
+<g class="ap-dust"><circle cx="10" cy="50" r="1.3"/><circle cx="16" cy="72" r="1.1"/><circle cx="8" cy="92" r="1.4"/><circle cx="18" cy="108" r="1"/><circle cx="12" cy="62" r=".9"/><circle cx="14" cy="84" r="1.2"/></g>
+<rect x="32" y="14" width="56" height="114" rx="6" fill="url(#ID-apbody)" stroke="#9aa3ac" stroke-width=".6"/>
+<rect x="35" y="16.5" width="50" height="9" rx="2" fill="#d1d7dc"/>
+<g stroke="#69727c" stroke-width="1" stroke-linecap="round"><path d="M38 19h44M38 21h44M38 23h44"/></g>
+<rect x="37" y="34" width="46" height="86" rx="3" fill="url(#ID-apfab)"/>
+<rect x="37" y="34" width="46" height="86" rx="3" fill="url(#ID-apweave)"/>
+<g clip-path="url(#ID-apfront)"><g class="ap-flow" fill="none" stroke-linecap="round">
+  <path d="M42 112q6 -24 0 -48t0 -26"/><path d="M52 116q-6 -26 0 -52t0 -26"/><path d="M68 116q6 -26 0 -52t0 -26"/><path d="M78 112q-6 -24 0 -48t0 -26"/></g></g>
+<path d="M39 37v80" stroke="#fff" stroke-opacity=".12" stroke-width="1.2"/>
+<circle cx="74" cy="30" r="5" fill="#b8c0c7"/>
+<g class="ap-knob"><circle cx="74" cy="30" r="4.2" fill="url(#ID-apknob)" stroke="#8b949d" stroke-width=".4"/>
+  <path d="M74 30v-3.4" stroke="#3a424b" stroke-width="1.1" stroke-linecap="round"/></g>
+<g class="ap-ticks" fill="#6c757e"><circle cx="68.8" cy="32" r=".55"/><circle cx="69.6" cy="27" r=".55"/><circle cx="74" cy="24.4" r=".55"/><circle cx="78.4" cy="27" r=".55"/></g>
+<rect x="34" y="124" width="52" height="5" rx="2" fill="#3a3f45"/>`;
 
 SVG.av_receiver = () => `
 <defs>${DEFS}
@@ -6878,6 +7023,10 @@ const DEF = {
   dehumidifier: { accent: "cold", threshold: 50,
     fields: ["entity", "power", "energy", "cost", "humidity", "target_humidity", "temperature", "tank_full", "fan_speed", "mode", "switch"],
     keys: ["deshumidificateur", "deshumidifier", "dehumidifier", "dehumidificateur", "absorbeur", "midea_dehum", "dehum"] },
+  // purificateur d'air (IKEA FÖRNUFTIG, STARKVIND…) : prise connectée (W) ou entité fan ; vitesse 1 à 3, PM2.5 et filtre si disponibles
+  air_purifier: { accent: "cold", threshold: 1,
+    fields: ["entity", "power", "energy", "cost", "pm25", "fan_speed", "filter", "switch"],
+    keys: ["purificateur", "purifier", "air_purifier", "luftreiniger", "fornuftig", "starkvind", "uppatvind", "purificatore", "depurador"] },
   wet_vacuum: { accent: "cold", threshold: 3,
     fields: ["entity", "power", "energy", "cost", "battery_level", "clean_water", "dirty_water", "mode", "switch"],
     keys: ["aspirateur_laveur", "aspirateur_lavant", "nettoyeur_sol", "wet_vacuum", "wet_dry", "floor_washer", "floor_one", "tineco", "laveur"] },
@@ -7243,7 +7392,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "switch_low", "switch_high", "power_level", "pellet_level", "ph", "orp", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "switch_low", "switch_high", "power_level", "pellet_level", "ph", "orp", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -7453,7 +7602,7 @@ class ApplianceCardBase extends HTMLElement {
       level: num(S(c.power_level)), pellets: num(S(c.pellet_level)),
       pool: kind === "pool_pump" ? Object.fromEntries(["ph", "orp", "pressure", "tds", "salt", "chlorine"].map((k) => [k, S(c[k])])) : null,
       runtime: parseRemaining(S(c.runtime)), usage: parseRemaining(S(c.usage_time)), speed: S(c.speed), bedTemp: num(S(c.bed_temperature)), humidity: num(S(c.humidity)), mode: S(c.mode), window: S(c.window), light: S(c.light), keg: num(S(c.keg_level)), pouring: S(c.pouring), batt: num(S(c.battery_level)), zone2: num(S(c.zone2_temperature)), zone2Ent: S(c.zone2_temperature),
-      lampE: S(c.lamp_hours), picMode: S(c.picture_mode), tank: S(c.tank_full), fanSpeed: S(c.fan_speed), targetHum: S(c.target_humidity), cleanW: S(c.clean_water), dirtyW: S(c.dirty_water),
+      lampE: S(c.lamp_hours), picMode: S(c.picture_mode), tank: S(c.tank_full), fanSpeed: S(c.fan_speed), targetHum: S(c.target_humidity), cleanW: S(c.clean_water), dirtyW: S(c.dirty_water), pm25: S(c.pm25), filterE: S(c.filter),
       status: "idle", phase: null, alerts: [],
     };
     if (main && ["water_heater", "climate"].includes(domainOf(c.entity))) {
@@ -7687,6 +7836,34 @@ class ApplianceCardBase extends HTMLElement {
         m.lights = isOn(m.light);
         if (m.lights && m.status === "off" && base !== "unavailable") m.status = "lights";
       }
+    } else if (kind === "air_purifier") {
+      // vitesse : entité fan (pourcentage), sinon la puissance de la prise (FÖRNUFTIG : bouton 3 vitesses, pas d'entité)
+      const isFan = main && domainOf(c.entity) === "fan", fs = isFan ? String(main.state).toLowerCase() : "";
+      const fromPct = (p) => (p <= 34 ? 1 : p <= 67 ? 2 : 3);
+      let lvl = 0, st = null;
+      if (isFan && !BAD.includes(fs)) {
+        if (fs === "on") { const p = Number(main.attributes.percentage); lvl = Number.isFinite(p) && p > 0 ? fromPct(p) : 2; m.pct = Number.isFinite(p) ? p : null; }
+      } else if (["off", "unavailable"].includes(base)) st = base;
+      else if (watts !== null) lvl = watts > (c.high_threshold ?? 9) ? 3 : watts > (c.mid_threshold ?? 5) ? 2 : powered ? 1 : 0;
+      else lvl = ["running", "on"].includes(base) ? 2 : 0;
+      // fan_speed (select 1 / 2 / 3, nuit, turbo…, nombre ou %) prime sur l'estimation par la puissance
+      const sp = m.fanSpeed, spTxt = sp && !BAD.includes(String(sp.state).toLowerCase()) ? String(sp.state).toLowerCase() : "";
+      if (lvl && spTxt) {
+        const spDom = domainOf(c.fan_speed), spPct = spDom === "fan" ? Number(sp.attributes.percentage) : num(sp) ?? NaN;
+        if (Number.isFinite(spPct)) lvl = spPct > 3 || spDom === "fan" ? fromPct(spPct) : Math.max(1, Math.min(3, Math.round(spPct)));
+        else if (/silen|quiet|sleep|night|nuit|low|bas|faible|min|eco/.test(spTxt)) lvl = 1;
+        else if (/high|haut|fort|max|turbo|boost/.test(spTxt)) lvl = 3;
+      }
+      m.status = st || (lvl ? `fan_${lvl}` : "off");
+      if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
+      // qualité de l'air (PM2.5, µg/m³) et filtre (% de vie restante, ou binary_sensor « à remplacer »)
+      m.pm = num(m.pm25);
+      if (m.pm != null && m.pm > (c.pm25_max ?? 35)) m.alerts.push("air_poor");
+      const fv = m.filterE && !BAD.includes(String(m.filterE.state).toLowerCase()) ? m.filterE : null;
+      m.filterBin = !!fv && ["binary_sensor", "input_boolean"].includes(domainOf(c.filter));
+      m.filterPct = fv && !m.filterBin ? num(fv) : null;
+      m.filterBad = !!fv && (m.filterBin ? isOn(fv) : m.filterPct != null ? m.filterPct <= (c.filter_alert ?? 10) : /replace|remplac|wechsel|change|expired/.test(String(fv.state).toLowerCase()));
+      if (m.filterBad && m.status !== "unavailable") m.alerts.push("replace_filter");
     } else if (kind === "beer_tap") {
       if (["off", "unavailable"].includes(base)) m.status = base;
       else if (isOn(m.pouring)) m.status = "pouring";
@@ -8284,6 +8461,10 @@ class ApplianceCardBase extends HTMLElement {
       $("wrap").style.setProperty("--spd", String(m.spd ?? 1));
       $("wrap").classList.toggle("tank-full", !!m.tankFull);
     }
+    if (kind === "air_purifier") {
+      $("wrap").classList.toggle("air-poor", m.alerts.includes("air_poor"));
+      $("wrap").classList.toggle("filter-bad", !!m.filterBad);
+    }
     if (kind === "server_rack") $("wrap").style.setProperty("--load", (m.load ?? 0.4).toFixed(2));
     if (kind === "solar") $("wrap").style.setProperty("--sun", (m.frac || 0).toFixed(2));
     if (kind === "radiator" || kind === "towel_dryer") {
@@ -8355,7 +8536,7 @@ class ApplianceCardBase extends HTMLElement {
       if (![...OFF_STATES, ...DONE_STATES, "on", "running", "run"].includes(raw)) statusTxt = stateText(hass, m.main);
     }
     if ((kind === "radiator" || kind === "towel_dryer") && m.radMode && m.radMode !== "off" && m.status !== "off" && m.status !== "unavailable") statusTxt += ` · ${tr(hass, m.radMode === "none" ? "mode_none" : m.radMode)}`;
-    if ((kind === "fan" || kind === "ceiling_fan") && m.pct != null && /^fan_/.test(m.status)) statusTxt += ` · ${Math.round(m.pct)} %`;
+    if ((kind === "fan" || kind === "ceiling_fan" || kind === "air_purifier") && m.pct != null && /^fan_/.test(m.status)) statusTxt += ` · ${Math.round(m.pct)} %`;
     if (kind === "av_receiver" && m.vol != null && ["playing", "paused"].includes(m.status)) statusTxt += ` · Vol ${Math.round(m.vol * 100)} %`;
     if (kind === "av_receiver" && m.source && ["playing", "paused", "muted"].includes(m.status)) statusTxt += ` · ${m.source}`;
     if (kind === "tv" && c.show_media !== false && m.status === "screen_on" && m.main && domainOf(c.entity) === "media_player") {
@@ -8588,6 +8769,10 @@ class ApplianceCardBase extends HTMLElement {
       if (m.tank) tile(m.tankFull ? "mdi:cup-water" : "mdi:cup-outline", tr(hass, m.tankFull ? "tank_full_short" : "tank_ok"), lb("tank"), c.tank_full, m.tankFull ? "warn" : "");
       if (m.fanSpeed && !BAD.includes(String(m.fanSpeed.state).toLowerCase())) tile("mdi:fan", domainOf(c.fan_speed) === "fan" ? `${fmtNum(hass, Number(m.fanSpeed.attributes.percentage) || 0, 0)} %` : stateText(hass, m.fanSpeed), lb("fan_speed"), c.fan_speed);
       if (m.dhMode) tile("mdi:tune-variant", m.dhMode, lb("mode"), c.mode || c.entity);
+    } else if (kind === "air_purifier") {
+      if (m.pm != null) tile("mdi:blur", `${fmtNum(hass, m.pm, 0)} µg/m³`, lb("pm25"), c.pm25, m.alerts.includes("air_poor") ? "warn" : "");
+      if (m.fanSpeed && !BAD.includes(String(m.fanSpeed.state).toLowerCase())) tile("mdi:fan", domainOf(c.fan_speed) === "fan" ? `${fmtNum(hass, Number(m.fanSpeed.attributes.percentage) || 0, 0)} %` : stateText(hass, m.fanSpeed), lb("fan_speed"), c.fan_speed);
+      if (m.filterE && !BAD.includes(String(m.filterE.state).toLowerCase())) tile("mdi:air-filter", m.filterPct != null ? `${fmtNum(hass, m.filterPct, 0)} %` : tr(hass, m.filterBad ? "replace_short" : "tank_ok"), lb("filter"), c.filter, m.filterBad ? "warn" : "");
     } else if (kind === "wet_vacuum") {
       if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0)} %`, lb("battery"), c.battery_level, m.battLow ? "warn" : "");
       const tank = (pct, alert, okKey, badKey) => (pct != null ? `${fmtNum(hass, pct, 0)} %` : tr(hass, alert ? badKey : okKey));
@@ -8769,6 +8954,8 @@ const SEL = {
   clean_water: { entity: { domain: ["sensor", "binary_sensor", "number", "input_number"] } },
   dirty_water: { entity: { domain: ["sensor", "binary_sensor", "number", "input_number"] } },
   fan_speed: { entity: { domain: ["select", "input_select", "sensor", "number", "input_number", "fan"] } },
+  pm25: { entity: { domain: ["sensor", "number", "input_number"] } },
+  filter: { entity: { domain: ["sensor", "binary_sensor", "number", "input_number", "input_boolean"] } },
 };
 function buildForm(kind) {
   const d = DEF[kind];
@@ -8850,6 +9037,12 @@ function buildForm(kind) {
             { name: "oscillating", selector: { boolean: {} }, default: true },
             { name: "mid_threshold", selector: { number: { min: 5, max: 200, step: 1, mode: "box", unit_of_measurement: "W" } } },
             { name: "high_threshold", selector: { number: { min: 5, max: 300, step: 1, mode: "box", unit_of_measurement: "W" } } },
+          ] : []),
+          ...(kind === "air_purifier" ? [
+            { name: "mid_threshold", selector: { number: { min: 1, max: 200, step: 0.5, mode: "box", unit_of_measurement: "W" } } },
+            { name: "high_threshold", selector: { number: { min: 1, max: 300, step: 0.5, mode: "box", unit_of_measurement: "W" } } },
+            { name: "pm25_max", selector: { number: { min: 5, max: 500, step: 1, mode: "box", unit_of_measurement: "µg/m³" } } },
+            { name: "filter_alert", selector: { number: { min: 0, max: 50, step: 1, mode: "box", unit_of_measurement: "%" } } },
           ] : []),
           ...(kind === "tool_charger" ? [
             { name: "standby_threshold", selector: { number: { min: 0, max: 20, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
@@ -9016,7 +9209,7 @@ function stubFor(kind, hass) {
   const cost = pick((i) => i.startsWith("sensor.") && /(cout|cost|prix)/.test(i) && /(jour|daily|today|day)/.test(i))
     || pick((i, st) => i.startsWith("sensor.") && dc(st) === "monetary");
   const sw = pick((i) => i.startsWith("switch.") && !/(child_lock|lock|led|indicator)/.test(i));
-  const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : ["tv", "av_receiver", "ps5", "smart_speaker"].includes(kind) ? pick((i) => i.startsWith("media_player.")) : ["fan", "ceiling_fan"].includes(kind) ? pick((i) => i.startsWith("fan.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : kind === "dehumidifier" ? pick((i) => i.startsWith("humidifier.")) : null;
+  const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : ["tv", "av_receiver", "ps5", "smart_speaker"].includes(kind) ? pick((i) => i.startsWith("media_player.")) : ["fan", "ceiling_fan", "air_purifier"].includes(kind) ? pick((i) => i.startsWith("fan.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : kind === "dehumidifier" ? pick((i) => i.startsWith("humidifier.")) : null;
   const temp = pick((i, st) => i.startsWith("sensor.") && dc(st) === "temperature");
   const flag = ["washer", "dryer", "dishwasher", "microwave"].includes(kind)
     ? pick((i) => /^(input_boolean|binary_sensor)\./.test(i) && /(running|en_cours|marche|cycle)/.test(i)) : null;
@@ -9025,7 +9218,7 @@ function stubFor(kind, hass) {
   if (power) cfg.power = power;
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;
@@ -9036,6 +9229,12 @@ function stubFor(kind, hass) {
     if (hum) cfg.humidity = hum;
     if (tank) cfg.tank_full = tank;
     if (temp) cfg.temperature = temp;
+  }
+  if (kind === "air_purifier") {
+    const pm = pick((i, st) => i.startsWith("sensor.") && (dc(st) === "pm25" || /pm2_?5/.test(i)));
+    const flt = pick((i) => /^(sensor|binary_sensor)\./.test(i) && /(filter|filtre)/.test(i));
+    if (pm) cfg.pm25 = pm;
+    if (flt) cfg.filter = flt;
   }
   if (kind === "wet_vacuum") {
     // statut (vacuum ou capteur texte), réservoirs et mode
@@ -10222,6 +10421,34 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 @keyframes dh-mist { 0% { opacity: 0; transform: scale(1.35); } 30% { opacity: .9; } 100% { opacity: 0; transform: scale(.4); } }
 @keyframes dh-wave { from { transform: translateX(0); } to { transform: translateX(-12px); } }
 @keyframes dh-drop { 0% { opacity: 0; transform: translateY(0); } 15% { opacity: .95; } 100% { opacity: 0; transform: translateY(calc((1 - var(--lvl, .35)) * 20px)); } }
+
+/* ---------- air purifier ---------- */
+/* bouton rotatif : 0 (arrêt) → 1 → 2 → 3 ; poussières aspirées par la façade, air propre soufflé par le haut */
+.k-air_purifier svg { overflow: visible; }
+.k-air_purifier { --apspd: 1; }
+.k-air_purifier.st-fan_1 { --apspd: .6; } .k-air_purifier.st-fan_2 { --apspd: 1; } .k-air_purifier.st-fan_3 { --apspd: 1.6; }
+.ap-knob { transform-box: view-box; transform-origin: 74px 30px; transform: rotate(-111deg); transition: transform .6s cubic-bezier(.3, 1.4, .6, 1); }
+.k-air_purifier.st-fan_1 .ap-knob { transform: rotate(-56deg); }
+.k-air_purifier.st-fan_2 .ap-knob { transform: rotate(0deg); }
+.k-air_purifier.st-fan_3 .ap-knob { transform: rotate(56deg); }
+/* poussières : glissent vers la façade et disparaissent dans le filtre */
+.ap-dust circle { fill: #9aa3ac; opacity: 0; }
+.k-air_purifier.active .ap-dust circle { animation: ap-dust calc(2.6s / var(--apspd)) ease-in infinite; }
+.ap-dust circle:nth-child(2) { animation-delay: -.5s !important; } .ap-dust circle:nth-child(3) { animation-delay: -1s !important; }
+.ap-dust circle:nth-child(4) { animation-delay: -1.5s !important; } .ap-dust circle:nth-child(5) { animation-delay: -2s !important; }
+.ap-dust circle:nth-child(6) { animation-delay: -2.3s !important; }
+.k-air_purifier.air-poor .ap-dust circle { fill: #c9a27a; }
+/* air aspiré à travers le textile, puis air propre soufflé par la grille du haut */
+.ap-flow path { stroke: #bfe3f7; stroke-width: 1.2; stroke-dasharray: 3 7; opacity: 0; transition: opacity .6s; }
+.k-air_purifier.active .ap-flow path { opacity: .35; animation: ap-up calc(1.8s / var(--apspd)) linear infinite; }
+.ap-flow path:nth-child(2) { animation-delay: -.45s !important; } .ap-flow path:nth-child(3) { animation-delay: -.9s !important; } .ap-flow path:nth-child(4) { animation-delay: -1.35s !important; }
+.ap-out path { stroke: #bfe3f7; stroke-width: 1.5; stroke-dasharray: 3 5; opacity: 0; transition: opacity .6s; }
+.k-air_purifier.active .ap-out path { opacity: .75; animation: hd-up calc(1.4s / var(--apspd)) linear infinite; }
+.ap-out path:nth-child(2) { animation-delay: -.35s !important; } .ap-out path:nth-child(3) { animation-delay: -.7s !important; } .ap-out path:nth-child(4) { animation-delay: -1.05s !important; }
+/* filtre à remplacer : le bouton s'entoure d'orange */
+.k-air_purifier.filter-bad .ap-knob circle { stroke: var(--ac-heat); stroke-width: 1; filter: drop-shadow(0 0 1.4px var(--ac-heat)); }
+@keyframes ap-dust { 0% { opacity: 0; transform: translateX(0); } 20% { opacity: .9; } 80% { opacity: .6; } 100% { opacity: 0; transform: translateX(26px); } }
+@keyframes ap-up { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -20; } }
 
 /* ---------- écrans PC ---------- */
 .mn-screen { opacity: 0; transition: opacity .5s; }

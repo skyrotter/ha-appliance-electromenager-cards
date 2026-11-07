@@ -57,6 +57,8 @@ const SEL = {
   clean_water: { entity: { domain: ["sensor", "binary_sensor", "number", "input_number"] } },
   dirty_water: { entity: { domain: ["sensor", "binary_sensor", "number", "input_number"] } },
   fan_speed: { entity: { domain: ["select", "input_select", "sensor", "number", "input_number", "fan"] } },
+  pm25: { entity: { domain: ["sensor", "number", "input_number"] } },
+  filter: { entity: { domain: ["sensor", "binary_sensor", "number", "input_number", "input_boolean"] } },
 };
 function buildForm(kind) {
   const d = DEF[kind];
@@ -138,6 +140,12 @@ function buildForm(kind) {
             { name: "oscillating", selector: { boolean: {} }, default: true },
             { name: "mid_threshold", selector: { number: { min: 5, max: 200, step: 1, mode: "box", unit_of_measurement: "W" } } },
             { name: "high_threshold", selector: { number: { min: 5, max: 300, step: 1, mode: "box", unit_of_measurement: "W" } } },
+          ] : []),
+          ...(kind === "air_purifier" ? [
+            { name: "mid_threshold", selector: { number: { min: 1, max: 200, step: 0.5, mode: "box", unit_of_measurement: "W" } } },
+            { name: "high_threshold", selector: { number: { min: 1, max: 300, step: 0.5, mode: "box", unit_of_measurement: "W" } } },
+            { name: "pm25_max", selector: { number: { min: 5, max: 500, step: 1, mode: "box", unit_of_measurement: "µg/m³" } } },
+            { name: "filter_alert", selector: { number: { min: 0, max: 50, step: 1, mode: "box", unit_of_measurement: "%" } } },
           ] : []),
           ...(kind === "tool_charger" ? [
             { name: "standby_threshold", selector: { number: { min: 0, max: 20, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
@@ -304,7 +312,7 @@ function stubFor(kind, hass) {
   const cost = pick((i) => i.startsWith("sensor.") && /(cout|cost|prix)/.test(i) && /(jour|daily|today|day)/.test(i))
     || pick((i, st) => i.startsWith("sensor.") && dc(st) === "monetary");
   const sw = pick((i) => i.startsWith("switch.") && !/(child_lock|lock|led|indicator)/.test(i));
-  const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : ["tv", "av_receiver", "ps5", "smart_speaker"].includes(kind) ? pick((i) => i.startsWith("media_player.")) : ["fan", "ceiling_fan"].includes(kind) ? pick((i) => i.startsWith("fan.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : kind === "dehumidifier" ? pick((i) => i.startsWith("humidifier.")) : null;
+  const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : ["tv", "av_receiver", "ps5", "smart_speaker"].includes(kind) ? pick((i) => i.startsWith("media_player.")) : ["fan", "ceiling_fan", "air_purifier"].includes(kind) ? pick((i) => i.startsWith("fan.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : kind === "dehumidifier" ? pick((i) => i.startsWith("humidifier.")) : null;
   const temp = pick((i, st) => i.startsWith("sensor.") && dc(st) === "temperature");
   const flag = ["washer", "dryer", "dishwasher", "microwave"].includes(kind)
     ? pick((i) => /^(input_boolean|binary_sensor)\./.test(i) && /(running|en_cours|marche|cycle)/.test(i)) : null;
@@ -313,7 +321,7 @@ function stubFor(kind, hass) {
   if (power) cfg.power = power;
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;
@@ -324,6 +332,12 @@ function stubFor(kind, hass) {
     if (hum) cfg.humidity = hum;
     if (tank) cfg.tank_full = tank;
     if (temp) cfg.temperature = temp;
+  }
+  if (kind === "air_purifier") {
+    const pm = pick((i, st) => i.startsWith("sensor.") && (dc(st) === "pm25" || /pm2_?5/.test(i)));
+    const flt = pick((i) => /^(sensor|binary_sensor)\./.test(i) && /(filter|filtre)/.test(i));
+    if (pm) cfg.pm25 = pm;
+    if (flt) cfg.filter = flt;
   }
   if (kind === "wet_vacuum") {
     // statut (vacuum ou capteur texte), réservoirs et mode
