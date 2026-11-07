@@ -7001,10 +7001,13 @@ function modeOf(m, main, c) {
   return modeKey(raw);
 }
 const loc = (hass) => hass?.locale?.language || hass?.language || undefined;
+// nombres : format du profil HA (number_format) s'il est réglé, sinon la langue ; même règle que les cartes autonomes
+// (window.applianceLocale, src/cards/card-helpers.js, chargé après le cœur mais avant tout rendu)
+const numLoc = (hass) => (window.applianceLocale ? window.applianceLocale(null, hass) : loc(hass));
 
 function fmtNum(hass, n, digits, minDigits = 0) {
   try {
-    return new Intl.NumberFormat(loc(hass), { maximumFractionDigits: digits, minimumFractionDigits: minDigits }).format(n);
+    return new Intl.NumberFormat(numLoc(hass), { maximumFractionDigits: digits, minimumFractionDigits: minDigits }).format(n);
   } catch (e) { return n.toFixed(digits); }
 }
 const powerW = (st) => { const v = num(st); if (v === null) return null; return st.attributes.unit_of_measurement === "kW" ? v * 1000 : v; };
@@ -7397,7 +7400,7 @@ class ApplianceCardBase extends HTMLElement {
     const key = this._ids().map((i) => {
       const s = hass.states[i];
       return s ? `${s.state}|${s.attributes.temperature ?? ""}|${s.attributes.current_temperature ?? ""}|${s.attributes.current_humidity ?? ""}|${s.attributes.humidity ?? ""}|${s.attributes.action ?? ""}|${s.attributes.mode ?? ""}|${s.attributes.percentage ?? ""}|${s.attributes.volume_level ?? ""}|${s.attributes.is_volume_muted ?? ""}|${s.attributes.media_title ?? ""}` : "x";
-    }).join(";") + "|" + lang(hass) + "|" + Math.floor(Date.now() / 30000);
+    }).join(";") + "|" + lang(hass) + "|" + numLoc(hass) + "|" + Math.floor(Date.now() / 30000);
     if (!force && key === this._lastKey) return;
     this._lastKey = key;
     this._render(this._compute());
@@ -8602,7 +8605,7 @@ class ApplianceCardBase extends HTMLElement {
     const showKwh = !(c.display === "cost" && hasPr), showCost = hasPr && c.display !== "energy";
     const money = (x) => {
       const cur = (hass.config && hass.config.currency) || "EUR";
-      try { return new Intl.NumberFormat(loc(hass), { style: "currency", currency: cur, minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x); }
+      try { return new Intl.NumberFormat(numLoc(hass), { style: "currency", currency: cur, minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x); }
       catch (e) { return `${fmtNum(hass, x, 2, 2)} ${cur}`; }
     };
     const per = PERIODS.includes(c.energy_period) && this._perKwh != null ? c.energy_period : null;

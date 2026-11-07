@@ -267,7 +267,7 @@ class ApplianceCardBase extends HTMLElement {
     const key = this._ids().map((i) => {
       const s = hass.states[i];
       return s ? `${s.state}|${s.attributes.temperature ?? ""}|${s.attributes.current_temperature ?? ""}|${s.attributes.current_humidity ?? ""}|${s.attributes.humidity ?? ""}|${s.attributes.action ?? ""}|${s.attributes.mode ?? ""}|${s.attributes.percentage ?? ""}|${s.attributes.volume_level ?? ""}|${s.attributes.is_volume_muted ?? ""}|${s.attributes.media_title ?? ""}` : "x";
-    }).join(";") + "|" + lang(hass) + "|" + Math.floor(Date.now() / 30000);
+    }).join(";") + "|" + lang(hass) + "|" + numLoc(hass) + "|" + Math.floor(Date.now() / 30000);
     if (!force && key === this._lastKey) return;
     this._lastKey = key;
     this._render(this._compute());
@@ -1472,7 +1472,7 @@ class ApplianceCardBase extends HTMLElement {
     const showKwh = !(c.display === "cost" && hasPr), showCost = hasPr && c.display !== "energy";
     const money = (x) => {
       const cur = (hass.config && hass.config.currency) || "EUR";
-      try { return new Intl.NumberFormat(loc(hass), { style: "currency", currency: cur, minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x); }
+      try { return new Intl.NumberFormat(numLoc(hass), { style: "currency", currency: cur, minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x); }
       catch (e) { return `${fmtNum(hass, x, 2, 2)} ${cur}`; }
     };
     const per = PERIODS.includes(c.energy_period) && this._perKwh != null ? c.energy_period : null;
