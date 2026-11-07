@@ -1080,6 +1080,10 @@
     "show_target": "Afficher la consigne",
     "show_reserve": "Afficher l'eau chaude",
     "nas_model": "Modèle de NAS",
+    "entity_parity": "Parité valide (binary_sensor, off = invalide)",
+    "entity_flash": "Santé de la clé USB flash (binary_sensor, on = problème)",
+    "show_parity": "Afficher l'alerte parité",
+    "show_flash": "Afficher l'alerte clé flash",
     "entity_nvme_1": "SSD 1 (NVMe)",
     "entity_nvme_1_temp": "Température SSD 1",
     "entity_nvme_2": "SSD 2 (NVMe)",
@@ -1474,6 +1478,8 @@
     "model_terramaster_f4_425": "TerraMaster F4-425 (4 baies)",
     "model_ugreen_dxp4800_plus": "UGREEN DXP4800 Plus (4 baies)",
     "model_ugreen_idx6011_pro": "UGREEN iDX6011 Pro (6 baies)",
+    "parity_alert": "Parité invalide",
+    "flash_alert": "Clé USB flash : problème",
     "nvme_alert": "SSD {n} : problème"
   },
   "tv_box": {

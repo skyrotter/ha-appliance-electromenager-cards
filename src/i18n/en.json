@@ -1080,6 +1080,10 @@
     "show_target": "Show target",
     "show_reserve": "Show hot water",
     "nas_model": "NAS model",
+    "entity_parity": "Parity valid (binary_sensor, off = invalid)",
+    "entity_flash": "USB flash health (binary_sensor, on = problem)",
+    "show_parity": "Show parity alert",
+    "show_flash": "Show flash alert",
     "entity_nvme_1": "SSD 1 (NVMe)",
     "entity_nvme_1_temp": "SSD 1 temperature",
     "entity_nvme_2": "SSD 2 (NVMe)",
@@ -1474,6 +1478,8 @@
     "model_terramaster_f4_425": "TerraMaster F4-425 (4 bays)",
     "model_ugreen_dxp4800_plus": "UGREEN DXP4800 Plus (4 bays)",
     "model_ugreen_idx6011_pro": "UGREEN iDX6011 Pro (6 bays)",
+    "parity_alert": "Parity invalid",
+    "flash_alert": "USB flash: problem",
     "nvme_alert": "SSD {n}: problem"
   },
   "tv_box": {
