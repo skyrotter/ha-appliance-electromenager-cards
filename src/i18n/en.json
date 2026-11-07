@@ -1076,7 +1076,12 @@
     "boost_above": "Boost above (W)",
     "running_above": "Running above (W)",
     "show_target": "Show target",
-    "show_reserve": "Show hot water"
+    "show_reserve": "Show hot water",
+    "nas_model": "NAS model",
+    "entity_nvme_1": "SSD 1 (NVMe)",
+    "entity_nvme_1_temp": "SSD 1 temperature",
+    "entity_nvme_2": "SSD 2 (NVMe)",
+    "entity_nvme_2_temp": "SSD 2 temperature"
   },
   "light": {
     "light_bulb": "Bulb",
@@ -1460,7 +1465,12 @@
     "hot": "Overheating",
     "volume_full": "Volume almost full",
     "security": "Security warning",
-    "update": "⬆ DSM update available"
+    "update": "⬆ DSM update available",
+    "model_synology_ds423": "Synology DS423+ (4 bays)",
+    "model_synology_ds925": "Synology DS925+ (4 bays)",
+    "model_terramaster_f4_423": "TerraMaster F4-423 (4 bays)",
+    "model_terramaster_f4_425": "TerraMaster F4-425 (4 bays)",
+    "nvme_alert": "SSD {n}: problem"
   },
   "tv_box": {
     "name": "TV box",
