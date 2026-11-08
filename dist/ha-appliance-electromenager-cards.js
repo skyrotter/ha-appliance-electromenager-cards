@@ -420,7 +420,20 @@ const STRINGS = {
     "f_presence": "Presence detector (someone in or around the pool)",
     "f_low_water": "Low water alert (sensor, door sensor...)",
     "dosing_pump": "Dosing pump (pH+ / pH-)",
-    "dosing": "Dosing"
+    "dosing": "Dosing",
+    "elliptical": "Cross trainer (elliptical)",
+    "exercise_bike": "Exercise bike",
+    "rowing_machine": "Rowing machine",
+    "in_use": "In use",
+    "cadence": "Cadence",
+    "stroke_rate": "Stroke rate",
+    "distance": "Distance",
+    "heart_rate": "Heart rate",
+    "calories": "Calories",
+    "f_cadence": "Cadence sensor (rpm, or strokes/min for the rower)",
+    "f_distance": "Distance sensor",
+    "f_heart_rate": "Heart rate sensor",
+    "f_calories": "Calories sensor"
   },
   "cs": {
     "washer": "Pračka",
@@ -1179,7 +1192,20 @@ const STRINGS = {
     "f_presence": "Anwesenheitsmelder (jemand im oder am Pool)",
     "f_low_water": "Wassermangel-Alarm (Sensor, Türsensor...)",
     "dosing_pump": "Dosierpumpe (pH+ / pH-)",
-    "dosing": "Dosierung"
+    "dosing": "Dosierung",
+    "elliptical": "Crosstrainer",
+    "exercise_bike": "Heimtrainer",
+    "rowing_machine": "Rudergerät",
+    "in_use": "In Benutzung",
+    "cadence": "Trittfrequenz",
+    "stroke_rate": "Schläge/min",
+    "distance": "Strecke",
+    "heart_rate": "Herzfrequenz",
+    "calories": "Kalorien",
+    "f_cadence": "Trittfrequenz-Sensor (U/min, beim Rudergerät Schläge/min)",
+    "f_distance": "Streckensensor",
+    "f_heart_rate": "Herzfrequenz-Sensor",
+    "f_calories": "Kalorien-Sensor"
   },
   "fr": {
     "washer": "Lave-linge",
@@ -1587,7 +1613,20 @@ const STRINGS = {
     "f_presence": "Témoin de présence (quelqu'un dans la piscine ou autour)",
     "f_low_water": "Alerte manque d'eau (capteur, détecteur de porte...)",
     "dosing_pump": "Pompe doseuse (pH+ / pH-)",
-    "dosing": "Dosage"
+    "dosing": "Dosage",
+    "elliptical": "Vélo elliptique",
+    "exercise_bike": "Vélo d'appartement",
+    "rowing_machine": "Rameur",
+    "in_use": "En utilisation",
+    "cadence": "Cadence",
+    "stroke_rate": "Coups/min",
+    "distance": "Distance",
+    "heart_rate": "Fréquence cardiaque",
+    "calories": "Calories",
+    "f_cadence": "Capteur de cadence (tr/min, ou coups/min pour le rameur)",
+    "f_distance": "Capteur de distance",
+    "f_heart_rate": "Capteur de fréquence cardiaque",
+    "f_calories": "Capteur de calories"
   },
   "it": {
     "washer": "Lavatrice",
@@ -1968,7 +2007,20 @@ const STRINGS = {
     "f_presence": "Sensore di presenza (qualcuno in piscina o intorno)",
     "f_low_water": "Allarme acqua bassa (sensore, sensore porta...)",
     "dosing_pump": "Pompa dosatrice (pH+ / pH-)",
-    "dosing": "Dosaggio"
+    "dosing": "Dosaggio",
+    "elliptical": "Ellittica",
+    "exercise_bike": "Cyclette",
+    "rowing_machine": "Vogatore",
+    "in_use": "In uso",
+    "cadence": "Cadenza",
+    "stroke_rate": "Colpi/min",
+    "distance": "Distanza",
+    "heart_rate": "Frequenza cardiaca",
+    "calories": "Calorie",
+    "f_cadence": "Sensore di cadenza (giri/min, colpi/min per il vogatore)",
+    "f_distance": "Sensore di distanza",
+    "f_heart_rate": "Sensore di frequenza cardiaca",
+    "f_calories": "Sensore di calorie"
   },
   "nb": {
     "f_illustration_size": "Størrelse på illustrasjonen",
@@ -2712,7 +2764,20 @@ const STRINGS = {
     "f_presence": "Aanwezigheidsmelder (iemand in of rond het zwembad)",
     "f_low_water": "Waterpeilalarm (sensor, deursensor...)",
     "dosing_pump": "Doseerpomp (pH+ / pH-)",
-    "dosing": "Dosering"
+    "dosing": "Dosering",
+    "elliptical": "Crosstrainer",
+    "exercise_bike": "Hometrainer",
+    "rowing_machine": "Roeitrainer",
+    "in_use": "In gebruik",
+    "cadence": "Trapfrequentie",
+    "stroke_rate": "Slagen/min",
+    "distance": "Afstand",
+    "heart_rate": "Hartslag",
+    "calories": "Calorieën",
+    "f_cadence": "Cadanssensor (tpm, slagen/min bij de roeitrainer)",
+    "f_distance": "Afstandssensor",
+    "f_heart_rate": "Hartslagsensor",
+    "f_calories": "Caloriesensor"
   },
   "pl": {
     "washer": "Pralka",
@@ -5372,6 +5437,74 @@ SVG.dryer = () => `
   <path d="M28 116.5h64M28 118.5h64M28 120.5h64" stroke="#b7bec6" stroke-width=".6"/>
 </g>`;
 
+/* Vélo elliptique (vue de côté) : volant d'inertie à l'avant, deux pédales qui décrivent une ellipse, deux bras mobiles en opposition */
+SVG.elliptical = () => `
+<defs>${DEFS}
+<linearGradient id="ID-fxbody" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a525b"/><stop offset="1" stop-color="#1d2228"/></linearGradient></defs>
+<ellipse cx="60" cy="130" rx="52" ry="4" fill="url(#ID-shadow)"/>
+<rect x="8" y="123" width="30" height="5" rx="2.5" fill="#1d2228"/><rect x="74" y="123" width="38" height="5" rx="2.5" fill="#1d2228"/>
+<rect x="14" y="116" width="86" height="8" rx="4" fill="url(#ID-fxbody)"/>
+<g class="fx-b">
+  <g class="fx-pa"><g class="fx-pb">
+    <rect x="30" y="107" width="64" height="3.4" rx="1.7" fill="#9aa3ad"/>
+    <rect x="22" y="101" width="24" height="6" rx="2.5" fill="#59616b"/>
+  </g></g>
+  <g class="fx-armb"><path d="M80 24L99 58L90 96" fill="none" stroke="#59616b" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="80" cy="24" r="3.2" fill="#3a424b"/></g>
+</g>
+<circle cx="97" cy="108" r="17" fill="url(#ID-fxbody)" stroke="#12161a" stroke-width="1"/>
+<g class="fx-fly">
+  <circle cx="97" cy="108" r="12" fill="#2b3138" stroke="#7d858e" stroke-width=".8"/>
+  <path d="M97 98v20M87 108h20M90 101l14 14M104 101l-14 14" stroke="#7d858e" stroke-width="1.1"/>
+  <circle cx="97" cy="98.6" r="2.2" fill="#e5484d"/>
+  <circle cx="97" cy="108" r="3" fill="url(#ID-chrome)"/>
+</g>
+<path d="M102 94L106 34" stroke="url(#ID-fxbody)" stroke-width="7" stroke-linecap="round"/>
+<g class="fx-a">
+  <g class="fx-pa"><g class="fx-pb">
+    <rect x="30" y="107" width="64" height="3.4" rx="1.7" fill="#dfe4e9"/>
+    <rect x="22" y="101" width="24" height="6" rx="2.5" fill="#2b3138"/><path d="M26 103h16" stroke="#7d858e" stroke-width=".8" stroke-dasharray="1.6 2"/>
+  </g></g>
+  <g class="fx-arma"><path d="M80 24L99 58L90 96" fill="none" stroke="#2b3138" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="80" cy="24" r="3.4" fill="#e5484d"/></g>
+</g>
+<circle cx="99" cy="58" r="3.4" fill="url(#ID-chrome)" stroke="#7d858e" stroke-width=".5"/>
+<rect x="84" y="8" width="36" height="22" rx="5" fill="url(#ID-fxbody)" stroke="#12161a" stroke-width=".8"/>
+${lcd(88, 11, 28, 12)}
+<circle class="fx-led" cx="92" cy="27" r="1.3"/><circle class="fx-led" cx="98" cy="27" r="1.3"/><circle class="fx-led" cx="104" cy="27" r="1.3"/>`;
+
+/* Vélo d'appartement (vue de côté) : volant d'inertie à l'avant, pédalier avec pédales qui restent à plat, selle et guidon */
+SVG.exercise_bike = () => `
+<defs>${DEFS}
+<linearGradient id="ID-bkbody" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a525b"/><stop offset="1" stop-color="#1d2228"/></linearGradient></defs>
+<ellipse cx="60" cy="130" rx="52" ry="4" fill="url(#ID-shadow)"/>
+<rect x="6" y="123" width="34" height="5" rx="2.5" fill="#1d2228"/><rect x="76" y="123" width="38" height="5" rx="2.5" fill="#1d2228"/>
+<path d="M24 124L40 100M96 124L66 104" stroke="#2b3138" stroke-width="5" stroke-linecap="round"/>
+<path d="M40 98L54 106" stroke="#2b3138" stroke-width="5" stroke-linecap="round"/>
+<path d="M54 106L90 54" stroke="url(#ID-bkbody)" stroke-width="6" stroke-linecap="round"/>
+<rect x="70" y="46" width="30" height="8" rx="4" fill="#2b3138" stroke="#12161a" stroke-width=".8"/><path d="M74 49h22" stroke="#e5484d" stroke-width="1.4" stroke-linecap="round"/>
+<path d="M88 52L86 60" stroke="#9aa3ad" stroke-width="3" stroke-linecap="round"/>
+<path d="M40 98L26 44" stroke="url(#ID-bkbody)" stroke-width="6.5" stroke-linecap="round"/>
+<path d="M14 38q12-8 24 0" fill="none" stroke="#2b3138" stroke-width="4.2" stroke-linecap="round"/>
+<path d="M16 38q-5 3-4 8M36 38q5 2 4 8" fill="none" stroke="#e5484d" stroke-width="3" stroke-linecap="round"/>
+<rect x="14" y="14" width="34" height="20" rx="5" fill="url(#ID-bkbody)" stroke="#12161a" stroke-width=".8"/>
+${lcd(18, 17, 26, 11)}
+<circle class="bk-led" cx="24" cy="31" r="1.3"/><circle class="bk-led" cx="30" cy="31" r="1.3"/><circle class="bk-led" cx="36" cy="31" r="1.3"/>
+<circle cx="38" cy="98" r="19" fill="url(#ID-bkbody)" stroke="#12161a" stroke-width="1"/>
+<g class="bk-fly">
+  <circle cx="38" cy="98" r="13" fill="#2b3138" stroke="#7d858e" stroke-width=".8"/>
+  <path d="M38 87v22M27 98h22M30 90l16 16M46 90l-16 16" stroke="#7d858e" stroke-width="1.1"/>
+  <circle cx="38" cy="87.8" r="2.2" fill="#e5484d"/>
+</g>
+<circle cx="38" cy="98" r="3" fill="url(#ID-chrome)"/>
+<path d="M38 98L58 110" stroke="#3a424b" stroke-width="1.2" opacity=".8"/>
+<circle cx="58" cy="110" r="6.5" fill="url(#ID-chrome)" stroke="#7d858e" stroke-width=".6"/>
+<g class="bk-crank">
+  <path d="M58 110V128" stroke="#8d959f" stroke-width="3" stroke-linecap="round"/>
+  <path d="M58 110V92" stroke="#c4ccd5" stroke-width="3" stroke-linecap="round"/>
+  <g class="bk-ped" style="transform-origin:58px 128px"><rect x="50" y="127" width="16" height="4.4" rx="2" fill="#2b3138"/></g>
+  <g class="bk-ped" style="transform-origin:58px 92px"><rect x="50" y="90" width="16" height="4.4" rx="2" fill="#59616b"/></g>
+</g>
+<circle cx="58" cy="110" r="2.2" fill="#e5484d"/>`;
+
 SVG.fan = () => `
 <defs>${DEFS}
 <radialGradient id="ID-cage" cx=".5" cy=".5" r=".5"><stop offset=".82" stop-color="#cfe6f5" stop-opacity=".1"/><stop offset="1" stop-color="#cfe6f5" stop-opacity=".25"/></radialGradient>
@@ -6545,6 +6678,42 @@ SVG.range_hood = () => `
 <ellipse class="hd-zone" cx="60" cy="119.5" rx="17" ry="1.3"/>
 <ellipse cx="88" cy="121" rx="10" ry="1.2" fill="none" stroke="#3a424b" stroke-width=".6"/>`;
 
+/* Rameur à air (vue de côté) : volant à ailettes à l'avant, rail incliné, siège qui coulisse, poignée tirée par la sangle */
+SVG.rowing_machine = () => `
+<defs>${DEFS}
+<linearGradient id="ID-rwbody" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a525b"/><stop offset="1" stop-color="#1d2228"/></linearGradient>
+<clipPath id="ID-rwclip"><circle cx="28" cy="88" r="22"/></clipPath></defs>
+<ellipse cx="62" cy="130" rx="56" ry="4" fill="url(#ID-shadow)"/>
+<rect x="4" y="122" width="40" height="5" rx="2.5" fill="#1d2228"/><rect x="92" y="122" width="26" height="5" rx="2.5" fill="#1d2228"/>
+<path d="M106 112V122" stroke="#2b3138" stroke-width="6" stroke-linecap="round"/>
+<path d="M34 112L112 112" stroke="#3a424b" stroke-width="2" opacity=".25"/>
+<rect x="34" y="106" width="80" height="7" rx="3.5" fill="url(#ID-rwbody)" stroke="#12161a" stroke-width=".6"/>
+<path d="M40 109.5H110" stroke="#9aa3ad" stroke-width="1.2" opacity=".55"/>
+<rect class="rw-strap" x="30" y="86.4" width="60" height="1.6" fill="#e5484d" style="transform-origin:30px 87px"/>
+<circle cx="28" cy="88" r="25" fill="url(#ID-rwbody)" stroke="#12161a" stroke-width="1"/>
+<circle cx="28" cy="88" r="22" fill="#12161a"/>
+<g clip-path="url(#ID-rwclip)"><g class="rw-fan">
+  ${[0, 36, 72, 108, 144].map((a) => `<path d="M28 88V66" stroke="#59616b" stroke-width="4.2" stroke-linecap="round" transform="rotate(${a} 28 88)"/><path d="M28 88V66" stroke="#59616b" stroke-width="4.2" stroke-linecap="round" transform="rotate(${a + 180} 28 88)"/>`).join("")}
+  <circle cx="28" cy="88" r="14" fill="none" stroke="#7d858e" stroke-width=".8" stroke-dasharray="3 3"/>
+  <circle cx="28" cy="67.5" r="2.2" fill="#e5484d"/>
+</g></g>
+<circle cx="28" cy="88" r="5" fill="url(#ID-chrome)" stroke="#7d858e" stroke-width=".6"/>
+<path d="M28 62V40" stroke="#3a424b" stroke-width="4" stroke-linecap="round"/>
+<rect x="8" y="18" width="40" height="23" rx="5" fill="url(#ID-rwbody)" stroke="#12161a" stroke-width=".8"/>
+${lcd(12, 21, 32, 13)}
+<circle class="rw-led" cx="18" cy="37.5" r="1.3"/><circle class="rw-led" cx="25" cy="37.5" r="1.3"/><circle class="rw-led" cx="32" cy="37.5" r="1.3"/>
+<path d="M50 112L58 96" stroke="#2b3138" stroke-width="4" stroke-linecap="round"/>
+<rect x="50" y="94" width="14" height="3.6" rx="1.8" fill="#59616b" transform="rotate(-62 57 96)"/>
+<g class="rw-seat">
+  <circle cx="60" cy="108.5" r="2.6" fill="#7d858e"/><circle cx="76" cy="108.5" r="2.6" fill="#7d858e"/>
+  <rect x="55" y="100" width="26" height="6.4" rx="3.2" fill="#2b3138" stroke="#12161a" stroke-width=".6"/><path d="M60 102h16" stroke="#e5484d" stroke-width="1.2" stroke-linecap="round"/>
+</g>
+<g class="rw-handle"><g transform="translate(24 0)">
+  <rect x="35" y="79" width="3" height="16" rx="1.5" fill="#9aa3ad"/>
+  <rect x="31.5" y="82" width="10" height="9" rx="4.5" fill="#2b3138" stroke="#12161a" stroke-width=".6"/>
+  <rect x="33.2" y="84" width="6.6" height="2.2" rx="1.1" fill="#e5484d"/>
+</g></g>`;
+
 SVG.server_rack = () => `
 <defs>${DEFS}
 <linearGradient id="ID-rkframe" x1="0" x2="1"><stop offset="0" stop-color="#2a2f35"/><stop offset=".5" stop-color="#14171b"/><stop offset="1" stop-color="#262b31"/></linearGradient>
@@ -7559,6 +7728,17 @@ const DEF = {
   printer_3d: { accent: "active", threshold: 40,
     fields: ["entity", "power", "energy", "cost", "progress", "remaining", "program", "temperature", "bed_temperature", "light", "switch"],
     keys: ["imprimante", "printer", "3d", "bambu", "prusa", "octoprint", "klipper", "moonraker"] },
+  // appareils de fitness sur prise connectée (W) : vélo elliptique, vélo d'appartement, rameur.
+  // En marche au-dessus de threshold ; capteurs optionnels (vitesse, cadence, distance, cœur, calories)
+  elliptical: { accent: "active", threshold: 10,
+    fields: ["entity", "power", "energy", "cost", "speed", "cadence", "distance", "heart_rate", "calories", "usage_time", "switch"],
+    keys: ["velo_elliptique", "elliptique", "elliptical", "cross_trainer", "crosstrainer", "orbitrek"] },
+  exercise_bike: { accent: "active", threshold: 10,
+    fields: ["entity", "power", "energy", "cost", "speed", "cadence", "distance", "heart_rate", "calories", "usage_time", "switch"],
+    keys: ["velo_appartement", "velo_d_appartement", "velo_salon", "velo_de_salon", "exercise_bike", "spinning", "spin_bike", "ergometre", "heimtrainer"] },
+  rowing_machine: { accent: "active", threshold: 10,
+    fields: ["entity", "power", "energy", "cost", "speed", "cadence", "distance", "heart_rate", "calories", "usage_time", "switch"],
+    keys: ["rameur", "rowing", "rower", "concept2", "waterrower", "ruderger"] },
 };
 
 /* ------------------------------------------------------------------ */
@@ -7749,7 +7929,9 @@ let SEQ = 0;
 const ROLLING = { "24h": 1, "7d": 7, "30d": 30 };
 const PERIODS = ["day", "week", "month", ...Object.keys(ROLLING)];
 // cartes avec la tuile « durée d'utilisation du jour » (capteur usage_time, sinon calcul depuis l'historique)
-const USAGE_KINDS = ["tv", "monitor", "ps5", "desktop_pc", "laptop"];
+// fitness (vélo elliptique, vélo d'appartement, rameur) : allure de l'animation et tuiles de séance
+const FIT_KINDS = ["elliptical", "exercise_bike", "rowing_machine"];
+const USAGE_KINDS = ["tv", "monitor", "ps5", "desktop_pc", "laptop", ...FIT_KINDS];
 const USAGE_ON = ["on", "playing", "paused", "idle", "buffering", "home"];
 
 // piscine : équipements commandables [option, icône, clé de libellé]
@@ -8042,6 +8224,7 @@ class ApplianceCardBase extends HTMLElement {
       ftemp: S(c.freezer_temperature), fdoor: S(c.freezer_door), flex: S(c.flex_temperature),
       level: num(S(c.power_level)), pellets: num(S(c.pellet_level)),
       pool: kind === "pool_pump" || kind === "dosing_pump" ? Object.fromEntries(["ph", "orp", "pressure", "tds", "salt", "chlorine"].map((k) => [k, S(c[k])])) : null,
+      fit: FIT_KINDS.includes(kind) ? { cadence: S(c.cadence), distance: S(c.distance), hr: S(c.heart_rate), kcal: S(c.calories) } : null,
       runtime: parseRemaining(S(c.runtime)), usage: parseRemaining(S(c.usage_time)), speed: S(c.speed), bedTemp: num(S(c.bed_temperature)), humidity: num(S(c.humidity)), mode: S(c.mode), window: S(c.window), light: S(c.light), keg: num(S(c.keg_level)), pouring: S(c.pouring), batt: num(S(c.battery_level)), zone2: num(S(c.zone2_temperature)), zone2Ent: S(c.zone2_temperature),
       lampE: S(c.lamp_hours), picMode: S(c.picture_mode), tank: S(c.tank_full), fanSpeed: S(c.fan_speed), targetHum: S(c.target_humidity), cleanW: S(c.clean_water), dirtyW: S(c.dirty_water), pm25: S(c.pm25), filterE: S(c.filter),
       status: "idle", phase: null, alerts: [],
@@ -8151,6 +8334,8 @@ class ApplianceCardBase extends HTMLElement {
       if (m.pellets != null && m.pellets < (c.pellet_alert ?? 15)) m.alerts.push("pellets_low");
     } else if (kind === "dosing_pump") {
       m.status = base === "running" ? "dosing" : base;
+    } else if (FIT_KINDS.includes(kind)) {
+      m.status = base === "running" ? "in_use" : base;
     } else if (kind === "pool_pump") {
       m.status = base === "running" ? "filtering" : base;
       // piscine : manque d'eau (capteur ou détecteur de porte) = alerte rouge ; présence = tuile
@@ -8711,7 +8896,7 @@ class ApplianceCardBase extends HTMLElement {
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
     const hass = this._hass, kind = this._kind;
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "in_use", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
@@ -8818,7 +9003,7 @@ class ApplianceCardBase extends HTMLElement {
   _render(m) {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "in_use", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
     this._fetchCycle(active);
     const hideWouldApply = this._applyHide(active, m.alerts.length > 0);
     $("wrap").className = [
@@ -8967,6 +9152,17 @@ class ApplianceCardBase extends HTMLElement {
       wrap.style.setProperty("--h-obj", hh.toFixed(2));
       wrap.style.setProperty("--pr", (frac ?? 1).toFixed(3)); // barre de progression sur l'écran (modèles en photo)
       wrap.style.setProperty("--fil", c.filament_color || "#ff8a1f");
+    }
+    if (FIT_KINDS.includes(kind)) {
+      // durée d'un tour de pédalier (ou d'un coup de rame) : cadence si elle est fournie, sinon la puissance (max_power = effort maximal)
+      const cad = num(m.fit.cadence), rower = kind === "rowing_machine";
+      let per;
+      if (cad != null && cad > 0) per = 60 / cad;
+      else {
+        const f = m.watts != null ? Math.max(0, Math.min(1, m.watts / (c.max_power || 250))) : 0.4;
+        per = rower ? 3.4 - 1.6 * f : 2.2 - 1.5 * f;
+      }
+      $("wrap").style.setProperty("--fp", `${Math.max(0.35, Math.min(4, per)).toFixed(2)}s`);
     }
     if (kind === "pool_pump") {
       const sp = num(m.speed), u = String(m.speed?.attributes.unit_of_measurement || "").toLowerCase();
@@ -9283,6 +9479,13 @@ class ApplianceCardBase extends HTMLElement {
     } else if (kind === "smart_speaker") {
       if (m.vol != null && !["off", "standby", "unavailable"].includes(m.status)) tile(m.muted ? "mdi:volume-off" : "mdi:volume-high", `${Math.round(m.vol * 100)} %`, lb("volume"), c.entity, m.muted ? "warn" : "");
       if (spOn && m.app) tile("mdi:music-box-outline", m.app, lb("source"), c.entity);
+    } else if (FIT_KINDS.includes(kind)) {
+      const f = m.fit, rower = kind === "rowing_machine";
+      if (m.speed) tile("mdi:speedometer", fmtUnit(hass, m.speed, 1), lb("speed"), c.speed);
+      if (f.cadence) tile(rower ? "mdi:rowing" : "mdi:rotate-right", fmtUnit(hass, f.cadence, 0), lb(rower ? "stroke_rate" : "cadence"), c.cadence);
+      if (f.distance) tile("mdi:map-marker-distance", fmtUnit(hass, f.distance, 2), lb("distance"), c.distance);
+      if (f.hr) tile("mdi:heart-pulse", fmtUnit(hass, f.hr, 0), lb("heart_rate"), c.heart_rate);
+      if (f.kcal) tile("mdi:fire", fmtUnit(hass, f.kcal, 0), lb("calories"), c.calories);
     } else if (kind === "dosing_pump") {
       if (m.pool && m.pool.ph) tile("mdi:ph", fmtUnit(hass, m.pool.ph, 2), lb("ph"), c.ph);
     } else if (kind === "pool_pump") {
@@ -9434,6 +9637,11 @@ const SEL = {
   salt: { entity: { domain: ["sensor", "number", "input_number"] } },
   chlorine: { entity: { domain: ["sensor", "number", "input_number"] } },
   speed: { entity: { domain: ["sensor", "number", "input_number", "select"] } },
+  // fitness : cadence (tr/min ou coups/min), distance, fréquence cardiaque, calories
+  cadence: { entity: { domain: ["sensor", "number", "input_number"] } },
+  distance: { entity: { domain: ["sensor", "number", "input_number"] } },
+  heart_rate: { entity: { domain: ["sensor", "number", "input_number"] } },
+  calories: { entity: { domain: ["sensor", "number", "input_number"] } },
   target_humidity: { entity: { domain: ["sensor", "number", "input_number", "humidifier"] } },
   tank_full: { entity: { domain: ["binary_sensor", "input_boolean", "sensor"] } },
   clean_water: { entity: { domain: ["sensor", "binary_sensor", "number", "input_number"] } },
@@ -9620,6 +9828,9 @@ function buildForm(kind) {
           { name: "hide_zero_power", selector: { boolean: {} }, default: true },
           ...(["radiator", "towel_dryer", "pellet_stove"].includes(kind) ? [{ name: "show_modes", selector: { boolean: {} }, default: true }] : []),
           ...(USAGE_KINDS.includes(kind) ? [{ name: "show_usage_time", selector: { boolean: {} }, default: true }] : []),
+          ...(FIT_KINDS.includes(kind) ? [
+            { name: "max_power", selector: { number: { min: 20, max: 1000, step: 5, mode: "box", unit_of_measurement: "W" } } },
+          ] : []),
           ...(kind === "server_rack" ? [
             { name: "max_power", selector: { number: { min: 50, max: 3000, step: 10, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
@@ -9720,7 +9931,7 @@ function stubFor(kind, hass) {
   if (power) cfg.power = power;
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "dosing_pump", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "smart_plug", "printer", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "dosing_pump", "elliptical", "exercise_bike", "rowing_machine", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "smart_plug", "printer", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;
@@ -11203,6 +11414,47 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .dp-led { fill: #b7bfc9; transition: fill .3s; }
 .k-dosing_pump.st-dosing .dp-led.dp-on { fill: #3ddc84; filter: drop-shadow(0 0 1.6px #3ddc84); animation: ac-pulse 1.6s ease-in-out infinite; }
 .k-dosing_pump.st-idle .dp-led.dp-on, .k-dosing_pump.st-standby .dp-led.dp-on { fill: #f5a300; }
+
+/* ---------- fitness : vélo elliptique, vélo d'appartement, rameur ----------
+   --fp (posé par la carte) : durée d'un tour de pédalier / d'un coup de rame, selon la cadence ou la puissance */
+.k-elliptical, .k-exercise_bike, .k-rowing_machine { --fp: 1.4s; }
+.k-elliptical svg, .k-exercise_bike svg, .k-rowing_machine svg { overflow: visible; }
+.fx-led, .bk-led, .rw-led { fill: #3a424b; transition: fill .3s; }
+.k-elliptical.active .fx-led, .k-exercise_bike.active .bk-led, .k-rowing_machine.active .rw-led { fill: #3ddc84; filter: drop-shadow(0 0 1.4px #3ddc84); }
+.k-elliptical.st-standby .fx-led:first-of-type, .k-exercise_bike.st-standby .bk-led:first-of-type, .k-rowing_machine.st-standby .rw-led:first-of-type { fill: #f5a300; }
+
+/* vélo elliptique : pédales en ellipse (x et y déphasés d'un quart de tour), bras en opposition, volant */
+.fx-fly { transform-box: view-box; transform-origin: 97px 108px; }
+.k-elliptical.active .fx-fly { animation: ac-rot var(--fp) linear infinite; }
+.k-elliptical.active .fx-pa { animation: fx-x calc(var(--fp) / 2) ease-in-out infinite alternate; }
+.k-elliptical.active .fx-pb { animation: fx-y calc(var(--fp) / 2) ease-in-out infinite alternate; animation-delay: calc(var(--fp) / -4); }
+.k-elliptical.active .fx-b .fx-pa, .k-elliptical.active .fx-b .fx-pb { animation-delay: calc(var(--fp) / -2); }
+.k-elliptical.active .fx-b .fx-pb { animation-delay: calc(var(--fp) / -4 - var(--fp) / 2); }
+.fx-arma, .fx-armb { transform-box: view-box; transform-origin: 99px 58px; }
+.k-elliptical.active .fx-arma { animation: fx-arm calc(var(--fp) / 2) ease-in-out infinite alternate; }
+.k-elliptical.active .fx-armb { animation: fx-arm calc(var(--fp) / 2) ease-in-out infinite alternate-reverse; }
+@keyframes fx-x { from { transform: translateX(-9px); } to { transform: translateX(9px); } }
+@keyframes fx-y { from { transform: translateY(-5px); } to { transform: translateY(5px); } }
+@keyframes fx-arm { from { transform: rotate(-13deg); } to { transform: rotate(13deg); } }
+
+/* vélo d'appartement : pédalier et volant tournent, les pédales restent à plat */
+.bk-crank { transform-box: view-box; transform-origin: 58px 110px; }
+.bk-fly { transform-box: view-box; transform-origin: 38px 98px; }
+.bk-ped { transform-box: view-box; }
+.k-exercise_bike.active .bk-crank { animation: ac-rot var(--fp) linear infinite; }
+.k-exercise_bike.active .bk-ped { animation: ac-rot var(--fp) linear infinite reverse; }
+.k-exercise_bike.active .bk-fly { animation: ac-rot calc(var(--fp) / 2.4) linear infinite; }
+
+/* rameur : le volant tourne, la sangle s'allonge, la poignée et le siège coulissent (poussée rapide, retour lent) */
+.rw-fan { transform-box: view-box; transform-origin: 28px 88px; }
+.k-rowing_machine.active .rw-fan { animation: ac-rot calc(var(--fp) / 2) linear infinite; }
+.rw-strap { transform: scaleX(.5); }
+.k-rowing_machine.active .rw-strap { animation: rw-strap var(--fp) ease-in-out infinite; }
+.k-rowing_machine.active .rw-handle { animation: rw-handle var(--fp) ease-in-out infinite; }
+.k-rowing_machine.active .rw-seat { animation: rw-seat var(--fp) ease-in-out infinite; }
+@keyframes rw-seat { 0%, 100% { transform: translateX(0); } 38% { transform: translateX(30px); } }
+@keyframes rw-handle { 0%, 100% { transform: translateX(0); } 38% { transform: translateX(28px); } }
+@keyframes rw-strap { 0%, 100% { transform: scaleX(.5); } 38% { transform: scaleX(.97); } }
 
 /* ---------- PlayStation 5 ---------- */
 /* bandeaux : gris éteinte, orange qui respire en mode repos, blanc allumée, balayage bleu au démarrage */

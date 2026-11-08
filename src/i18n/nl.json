@@ -378,7 +378,20 @@
     "f_presence": "Aanwezigheidsmelder (iemand in of rond het zwembad)",
     "f_low_water": "Waterpeilalarm (sensor, deursensor...)",
     "dosing_pump": "Doseerpomp (pH+ / pH-)",
-    "dosing": "Dosering"
+    "dosing": "Dosering",
+    "elliptical": "Crosstrainer",
+    "exercise_bike": "Hometrainer",
+    "rowing_machine": "Roeitrainer",
+    "in_use": "In gebruik",
+    "cadence": "Trapfrequentie",
+    "stroke_rate": "Slagen/min",
+    "distance": "Afstand",
+    "heart_rate": "Hartslag",
+    "calories": "Calorieën",
+    "f_cadence": "Cadanssensor (tpm, slagen/min bij de roeitrainer)",
+    "f_distance": "Afstandssensor",
+    "f_heart_rate": "Hartslagsensor",
+    "f_calories": "Caloriesensor"
   },
   "aquarium": {
     "power": "Vermogen",

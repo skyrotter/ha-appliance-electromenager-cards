@@ -378,7 +378,20 @@
     "f_presence": "Sensore di presenza (qualcuno in piscina o intorno)",
     "f_low_water": "Allarme acqua bassa (sensore, sensore porta...)",
     "dosing_pump": "Pompa dosatrice (pH+ / pH-)",
-    "dosing": "Dosaggio"
+    "dosing": "Dosaggio",
+    "elliptical": "Ellittica",
+    "exercise_bike": "Cyclette",
+    "rowing_machine": "Vogatore",
+    "in_use": "In uso",
+    "cadence": "Cadenza",
+    "stroke_rate": "Colpi/min",
+    "distance": "Distanza",
+    "heart_rate": "Frequenza cardiaca",
+    "calories": "Calorie",
+    "f_cadence": "Sensore di cadenza (giri/min, colpi/min per il vogatore)",
+    "f_distance": "Sensore di distanza",
+    "f_heart_rate": "Sensore di frequenza cardiaca",
+    "f_calories": "Sensore di calorie"
   },
   "aquarium": {
     "power": "Potenza",

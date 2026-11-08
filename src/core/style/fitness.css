@@ -1,0 +1,40 @@
+/* ---------- fitness : vélo elliptique, vélo d'appartement, rameur ----------
+   --fp (posé par la carte) : durée d'un tour de pédalier / d'un coup de rame, selon la cadence ou la puissance */
+.k-elliptical, .k-exercise_bike, .k-rowing_machine { --fp: 1.4s; }
+.k-elliptical svg, .k-exercise_bike svg, .k-rowing_machine svg { overflow: visible; }
+.fx-led, .bk-led, .rw-led { fill: #3a424b; transition: fill .3s; }
+.k-elliptical.active .fx-led, .k-exercise_bike.active .bk-led, .k-rowing_machine.active .rw-led { fill: #3ddc84; filter: drop-shadow(0 0 1.4px #3ddc84); }
+.k-elliptical.st-standby .fx-led:first-of-type, .k-exercise_bike.st-standby .bk-led:first-of-type, .k-rowing_machine.st-standby .rw-led:first-of-type { fill: #f5a300; }
+
+/* vélo elliptique : pédales en ellipse (x et y déphasés d'un quart de tour), bras en opposition, volant */
+.fx-fly { transform-box: view-box; transform-origin: 97px 108px; }
+.k-elliptical.active .fx-fly { animation: ac-rot var(--fp) linear infinite; }
+.k-elliptical.active .fx-pa { animation: fx-x calc(var(--fp) / 2) ease-in-out infinite alternate; }
+.k-elliptical.active .fx-pb { animation: fx-y calc(var(--fp) / 2) ease-in-out infinite alternate; animation-delay: calc(var(--fp) / -4); }
+.k-elliptical.active .fx-b .fx-pa, .k-elliptical.active .fx-b .fx-pb { animation-delay: calc(var(--fp) / -2); }
+.k-elliptical.active .fx-b .fx-pb { animation-delay: calc(var(--fp) / -4 - var(--fp) / 2); }
+.fx-arma, .fx-armb { transform-box: view-box; transform-origin: 99px 58px; }
+.k-elliptical.active .fx-arma { animation: fx-arm calc(var(--fp) / 2) ease-in-out infinite alternate; }
+.k-elliptical.active .fx-armb { animation: fx-arm calc(var(--fp) / 2) ease-in-out infinite alternate-reverse; }
+@keyframes fx-x { from { transform: translateX(-9px); } to { transform: translateX(9px); } }
+@keyframes fx-y { from { transform: translateY(-5px); } to { transform: translateY(5px); } }
+@keyframes fx-arm { from { transform: rotate(-13deg); } to { transform: rotate(13deg); } }
+
+/* vélo d'appartement : pédalier et volant tournent, les pédales restent à plat */
+.bk-crank { transform-box: view-box; transform-origin: 58px 110px; }
+.bk-fly { transform-box: view-box; transform-origin: 38px 98px; }
+.bk-ped { transform-box: view-box; }
+.k-exercise_bike.active .bk-crank { animation: ac-rot var(--fp) linear infinite; }
+.k-exercise_bike.active .bk-ped { animation: ac-rot var(--fp) linear infinite reverse; }
+.k-exercise_bike.active .bk-fly { animation: ac-rot calc(var(--fp) / 2.4) linear infinite; }
+
+/* rameur : le volant tourne, la sangle s'allonge, la poignée et le siège coulissent (poussée rapide, retour lent) */
+.rw-fan { transform-box: view-box; transform-origin: 28px 88px; }
+.k-rowing_machine.active .rw-fan { animation: ac-rot calc(var(--fp) / 2) linear infinite; }
+.rw-strap { transform: scaleX(.5); }
+.k-rowing_machine.active .rw-strap { animation: rw-strap var(--fp) ease-in-out infinite; }
+.k-rowing_machine.active .rw-handle { animation: rw-handle var(--fp) ease-in-out infinite; }
+.k-rowing_machine.active .rw-seat { animation: rw-seat var(--fp) ease-in-out infinite; }
+@keyframes rw-seat { 0%, 100% { transform: translateX(0); } 38% { transform: translateX(30px); } }
+@keyframes rw-handle { 0%, 100% { transform: translateX(0); } 38% { transform: translateX(28px); } }
+@keyframes rw-strap { 0%, 100% { transform: scaleX(.5); } 38% { transform: scaleX(.97); } }
