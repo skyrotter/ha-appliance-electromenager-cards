@@ -1302,6 +1302,8 @@
     "model_tado": "Thermostat mural Tado X",
     "model_t6": "Thermostat Honeywell Home T6",
     "model_bht6000": "Thermostat Tuya BHT6000 (rond, écran noir)",
+    "model_atlantic_io": "Thermostat Atlantic io (carré, Zone Control)",
+    "model_atlantic_io2": "Thermostat Atlantic io (vertical, molette)",
     "model_classic": "Tête thermostatique (classique)",
     "model_netatmo_trv": "Tête Netatmo (1re génération)",
     "model_netatmo_trv2": "Tête Netatmo (nouvelle)",

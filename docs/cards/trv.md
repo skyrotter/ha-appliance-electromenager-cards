@@ -7,7 +7,7 @@ It works with the `climate` entity of any smart radiator valve (Zigbee2MQTT, ZHA
 | Option | What it does |
 |---|---|
 | `entity` | the `climate` entity of the valve: current temperature, target, `hvac_action`, `hvac_modes` |
-| `model` | `trv` (default, Tado X radiator valve), another radiator valve: `classic` (generic head, drawn), `netatmo_trv` (Netatmo, 1st gen.), `netatmo_trv2` (Netatmo, new), `danfoss` (Danfoss Ally), `shelly` (Shelly TRV), `somfy` (Somfy io), or a wall thermostat: `netatmo`, `nest` (Google Nest), `tado` (Tado X wall thermostat), `t6` (Honeywell Home T6), `bht6000` (Tuya BHT6000 and similar round black-screen thermostats, drawn). The screen is drawn live |
+| `model` | `trv` (default, Tado X radiator valve), another radiator valve: `classic` (generic head, drawn), `netatmo_trv` (Netatmo, 1st gen.), `netatmo_trv2` (Netatmo, new), `danfoss` (Danfoss Ally), `shelly` (Shelly TRV), `somfy` (Somfy io), or a wall thermostat: `netatmo`, `nest` (Google Nest), `tado` (Tado X wall thermostat), `t6` (Honeywell Home T6), `bht6000` (Tuya BHT6000 and similar round black-screen thermostats, drawn), `atlantic_io` and `atlantic_io2` (Atlantic io / Zone Control thermostats, Overkiz). The screen is drawn live |
 | `entity_temperature` | room temperature sensor (`sensor`) shown instead of the valve's own measurement, e.g. the external sensor a Danfoss Ally regulates on. Used for the screen, the tile and the heating guess; without it (or when unavailable), the `current_temperature` of the valve is used |
 | `entity_window` | window sensor (`binary_sensor`). Without it, the `window_open` attribute of the valve is used when it has one |
 | `entity_battery` | battery (`sensor` %, or a low-battery `binary_sensor`). Without it, the `battery` attribute of the valve is used |
@@ -52,6 +52,8 @@ With `model`, the same card shows a wall thermostat, with its screen drawn live 
 - **Tado X wall thermostat**: dot-matrix digits, orange heat waves while heating.
 - **Honeywell Home T6**: blue LCD, measured temperature, `Target: …` line, flame while heating.
 - **Tuya BHT6000** (`bht6000`): drawn round thermostat with a black screen, measured temperature, `SET` target, clock and touch keys; heat waves while heating.
+- **Atlantic io, square** (`atlantic_io`): wall thermostat of the Atlantic Zone Control (Overkiz), turquoise LCD: measured temperature at the top left, target in large digits (always with one decimal), radiator icon while heating.
+- **Atlantic io, vertical** (`atlantic_io2`): Atlantic io remote with a dial, turquoise LCD with a central circle: target in large digits, measured temperature (thermometer), live time and date at the top, sun badge (flame while heating).
 
 Some thermostats (e.g. Tuya BHT6000) report the temperature and target but no HVAC mode: their state stays `unknown`. The card still shows the values and the **− / +** buttons work; without `hvac_action`, heating is assumed when the temperature is at least 0.5 °C below the target.
 
