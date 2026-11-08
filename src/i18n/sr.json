@@ -1055,7 +1055,11 @@
     "show_btn_mute": "Дугме утишај",
     "show_btn_vol_up": "Дугме гласније",
     "override": "Привремена измена (Netatmo)",
-    "override_durations": "Трајања (мин)"
+    "override_durations": "Трајања (мин)",
+    "entity_lux": "Сензор осветљености (лукс)",
+    "wind_max": "Праг јаког ветра (km/h)",
+    "show_lux": "Прикажи осветљеност",
+    "fabric_color": "Боја платна"
   },
   "light": {
     "light_bulb": "Сијалица",
@@ -1113,7 +1117,19 @@
     "rw_position": "Отварање",
     "blind": "Застор (Роло жалузина)",
     "blind_down": "Застор спуштен",
-    "btn_blind": "Застор"
+    "btn_blind": "Застор",
+    "awning": "Тенда",
+    "aw_open": "Развучена",
+    "aw_closed": "Увучена",
+    "aw_partial": "Развучена",
+    "aw_opening": "Развлачи се",
+    "aw_closing": "Увлачи се",
+    "aw_position": "Извлачење",
+    "aw_btn_open": "Развуци",
+    "aw_btn_close": "Увуци",
+    "aw_wind_alert": "Јак ветар",
+    "lux": "Осветљеност",
+    "temperature": "Температура"
   },
   "water_meter": {
     "name": "Водомер",

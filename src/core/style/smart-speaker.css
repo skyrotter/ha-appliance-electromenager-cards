@@ -56,3 +56,23 @@
 .k-smart_speaker.st-playing .sp-siri { animation: sp-siri 3s ease-in-out infinite; }
 .k-smart_speaker.st-paused .sp-siri, .k-smart_speaker.st-idle .sp-siri, .k-smart_speaker.st-muted .sp-siri { opacity: .3; }
 @keyframes sp-siri { 0%, 100% { opacity: .55; transform: scaleX(.9); filter: blur(1.5px) hue-rotate(0deg); } 50% { opacity: 1; transform: scaleX(1.05); filter: blur(1.5px) hue-rotate(90deg); } }
+/* Samsung HW-Q800C : caisson de basses qui pompe, haut-parleurs qui pulsent, afficheur, ondes Atmos vers le plafond */
+.spk-samsung { --sp-wave: #4fb8ff; }
+.k-smart_speaker.st-playing .sb-sub { animation: sb-sub calc(.9s - var(--amp, .5) * .35s) ease-in-out infinite; }
+@keyframes sb-sub { 0%, 100% { transform: scale(1); } 14% { transform: scale(calc(1.008 + var(--amp, .5) * .02), calc(1.006 + var(--amp, .5) * .016)); } }
+.k-smart_speaker.st-playing .sb-cone { animation: sb-cone calc(.9s - var(--amp, .5) * .35s) ease-in-out infinite; }
+@keyframes sb-cone { 0%, 100% { transform: scale(1); } 14% { transform: scale(calc(1.04 + var(--amp, .5) * .1)); } }
+.sb-drv { opacity: 0; mix-blend-mode: screen; transform-box: fill-box; transform-origin: 50% 50%; }
+.k-smart_speaker.st-playing .sb-drv { animation: sb-drv calc(1s - var(--amp, .5) * .4s) ease-in-out infinite; }
+.k-smart_speaker.st-paused .sb-drv, .k-smart_speaker.st-idle .sb-drv, .k-smart_speaker.st-muted .sb-drv { opacity: .12; }
+@keyframes sb-drv { 0%, 100% { opacity: .08; transform: scale(.8); } 30% { opacity: calc(.35 + var(--amp, .5) * .5); transform: scale(1.12); } }
+.sb-eq rect { fill: #5fd0ff; opacity: 0; transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(.3); filter: drop-shadow(0 0 1px #2bb6f9); }
+.k-smart_speaker.st-playing .sb-eq rect { opacity: .95; animation: sp-eq .8s ease-in-out infinite alternate; }
+.sb-eq rect:nth-child(2) { animation-delay: -.3s !important; } .sb-eq rect:nth-child(3) { animation-delay: -.55s !important; }
+.sb-eq rect:nth-child(4) { animation-delay: -.15s !important; } .sb-eq rect:nth-child(5) { animation-delay: -.42s !important; }
+.k-smart_speaker.st-paused .sb-eq rect, .k-smart_speaker.st-idle .sb-eq rect, .k-smart_speaker.st-muted .sb-eq rect { opacity: .5; }
+.sb-up path { stroke: #7fd6ff; opacity: 0; }
+.k-smart_speaker.st-playing .sb-up path { animation: sb-up 1.6s ease-out infinite; }
+@keyframes sb-up { 0% { opacity: 0; transform: translateY(2px); } 30% { opacity: .85; } 100% { opacity: 0; transform: translateY(-9px); } }
+.k-smart_speaker.st-playing .sb-up.px path { animation-name: sb-upx; }
+@keyframes sb-upx { 0% { opacity: 0; transform: translateY(6px); } 30% { opacity: .85; } 100% { opacity: 0; transform: translateY(-32px); } }

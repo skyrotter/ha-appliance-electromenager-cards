@@ -1051,7 +1051,11 @@
     "show_btn_next": "Tlačítko Další",
     "show_btn_vol_down": "Tlačítko Hlasitost −",
     "show_btn_mute": "Tlačítko Ztlumit",
-    "show_btn_vol_up": "Tlačítko Hlasitost +"
+    "show_btn_vol_up": "Tlačítko Hlasitost +",
+    "entity_lux": "Čidlo osvětlení (lux)",
+    "wind_max": "Hranice silného větru (km/h)",
+    "show_lux": "Zobrazit osvětlení",
+    "fabric_color": "Barva plátna"
   },
   "light": {
     "light_bulb": "Žárovka",
@@ -1109,7 +1113,19 @@
     "rw_position": "Otevření",
     "blind": "Žaluzie",
     "blind_down": "Žaluzie stažená",
-    "btn_blind": "Žaluzie"
+    "btn_blind": "Žaluzie",
+    "awning": "Markýza",
+    "aw_open": "Vysunutá",
+    "aw_closed": "Zasunutá",
+    "aw_partial": "Vysunutá",
+    "aw_opening": "Vysouvá se",
+    "aw_closing": "Zasouvá se",
+    "aw_position": "Vysunutí",
+    "aw_btn_open": "Vysunout",
+    "aw_btn_close": "Zasunout",
+    "aw_wind_alert": "Silný vítr",
+    "lux": "Osvit",
+    "temperature": "Teplota"
   },
   "water_meter": {
     "name": "Vodoměr",

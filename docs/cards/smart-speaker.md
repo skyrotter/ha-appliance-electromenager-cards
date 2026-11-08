@@ -2,7 +2,7 @@
 
 ![Smart speaker cards](../smart-speaker.png)
 
-`custom:appliance-smart-speaker-card`: a smart speaker drawn from a **real product photo**, picked with `model` in the visual editor. 27 models:
+`custom:appliance-smart-speaker-card`: a smart speaker drawn from a **real product photo**, picked with `model` in the visual editor. 29 models:
 
 | Brand | `model` |
 |---|---|
@@ -10,6 +10,7 @@
 | Google Nest | `nest_mini`, `nest_audio`, `nest_hub` (7"), `nest_hub_2` (2nd gen), `nest_hub_max` |
 | Sonos | `sonos_one`, `sonos_one_sl`, `sonos_era_100`, `sonos_era_300`, `sonos_beam` (Beam / Arc), `sonos_sub_mini`, `sonos_sub` |
 | Devialet | `devialet_phantom` (1st gen), `devialet_phantom_reactor`, `devialet_phantom_i`, `devialet_phantom_ii`, `devialet_phantom_ultimate`: `finish` `white` (default) or `black` |
+| Samsung | `samsung_hw_q800c` (HW-Q800C soundbar with its wireless subwoofer, photo), `samsung_hw_q800c_svg` (same, drawing): the subwoofer pumps with the bass, the front speakers pulse, the small display shows an equaliser and waves rise towards the ceiling (Atmos) |
 | Apple | `homepod` (2nd gen): `finish` `midnight` (default) or `white`; `homepod_mini` (mini 2): `white` (default), `pink`, `green`, `blue` or `midnight` |
 
 Without `model`, the card guesses from the entity id: `sonos` → Sonos One, `homepod` → HomePod (or HomePod mini), `devialet` / `phantom` → Phantom II, `nest` / `google` → Nest Mini, otherwise Echo Dot. `style` is accepted as an alias of `model`.

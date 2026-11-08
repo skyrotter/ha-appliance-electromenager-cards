@@ -1039,7 +1039,11 @@
     "show_btn_mute": "Кнопка «Без звука»",
     "show_btn_vol_up": "Кнопка «Громче»",
     "override": "Временное изменение (Netatmo)",
-    "override_durations": "Длительности (мин)"
+    "override_durations": "Длительности (мин)",
+    "entity_lux": "Датчик освещённости (лк)",
+    "wind_max": "Порог сильного ветра (км/ч)",
+    "show_lux": "Показывать освещённость",
+    "fabric_color": "Цвет полотна"
   },
   "light": {
     "light_bulb": "Лампа",
@@ -1097,7 +1101,19 @@
     "rw_position": "Открытие",
     "blind": "Рольставня",
     "blind_down": "Рольставня опущена",
-    "btn_blind": "Ставня"
+    "btn_blind": "Ставня",
+    "awning": "Маркиза",
+    "aw_open": "Раскрыта",
+    "aw_closed": "Убрана",
+    "aw_partial": "Раскрыта",
+    "aw_opening": "Раскрывается",
+    "aw_closing": "Убирается",
+    "aw_position": "Вылет",
+    "aw_btn_open": "Раскрыть",
+    "aw_btn_close": "Убрать",
+    "aw_wind_alert": "Сильный ветер",
+    "lux": "Освещённость",
+    "temperature": "Температура"
   },
   "water_meter": {
     "name": "Счётчик воды",

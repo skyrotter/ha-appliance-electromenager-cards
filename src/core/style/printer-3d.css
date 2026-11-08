@@ -70,3 +70,13 @@
 .k-printer_3d.indeterminate.st-printing .p3-bar-fill { transform: none; animation: ac-pulse 1.4s ease-in-out infinite; }
 .k-printer_3d.st-paused .p3-bar-fill { fill: #ffb347; animation: ac-pulse 1s steps(2) infinite; }
 .k-printer_3d.st-heating .p3-bar-fill { fill: #ff8a3d; }
+/* Bambu Lab X1 Carbon / H2D : photo (model x1c, h2d) et dessin (x1c_svg, h2d_svg) */
+.k-printer_3d.indeterminate .p3-x1c .objclip { y: 96.8px; height: 14px; }
+.k-printer_3d.indeterminate .p3-h2d .objclip { y: 92.6px; height: 14px; }
+/* dessin : la bobine active de l'AMS défile pendant l'impression, la lampe de la chambre s'allume */
+.k-printer_3d.st-printing .ams-roll { animation: bam-roll .9s linear infinite; }
+@keyframes bam-roll { from { transform: translateY(0); } to { transform: translateY(5px); } }
+.p3-lamp-svg { opacity: 0; mix-blend-mode: screen; transition: opacity .6s; }
+.k-printer_3d.st-printing .p3-lamp-svg, .k-printer_3d.st-heating .p3-lamp-svg, .k-printer_3d.st-paused .p3-lamp-svg { opacity: .8; }
+.ams-side rect:last-child { transition: opacity .4s; }
+.k-printer_3d.st-printing .ams-side rect:last-child { animation: ac-pulse 2.4s ease-in-out infinite; }
