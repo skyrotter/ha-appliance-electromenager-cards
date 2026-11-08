@@ -102,6 +102,11 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 @keyframes ltspin{to{transform:rotate(360deg)}}
 .spot .lit{transition-delay:var(--d,0s)}
 .noanim *{animation:none!important}
+/* image perso (option image) : éteinte = assombrie, allumée = lumineuse avec une lueur de la couleur de l'ampoule, l'intensité suit --b */
+.uimg{filter:brightness(.6) saturate(.7);transition:filter .3s}
+.on .uimg{filter:brightness(calc(.8 + .3 * var(--b))) drop-shadow(0 0 calc(10px * var(--b)) var(--lc))}
+.uglow{fill:var(--lc);opacity:0;filter:blur(16px);transition:opacity .3s}
+.on .uglow{opacity:calc(.4 * var(--b))}
 `;
 
   // ---- dessins (viewBox 0 0 200 180), gradients préfixés par la sorte pour rester uniques ----
@@ -320,9 +325,10 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     _build() {
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
       const color = this.kind === 'color_bulb';
+      const img = String(this._c.image || '').trim(); // option image : ta photo remplace le dessin
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="lttitle"></div><div class="badge" id="ltbadge"></div></div>
-        <div class="stage${this.kind === 'ceiling_spot' ? ' ceil' : ''}"><svg viewBox="0 0 200 180" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${SVGS[this.kind](this._c)}</svg></div>
+        <div class="stage${this.kind === 'ceiling_spot' ? ' ceil' : ''}"><svg viewBox="0 0 200 180" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${img ? `<ellipse class="uglow" cx="100" cy="90" rx="80" ry="60"/><image class="uimg" href="${esc(img)}" width="200" height="180" preserveAspectRatio="xMidYMid meet"/>` : `${DEFS}${SVGS[this.kind](this._c)}`}</svg></div>
         <div class="ctl" id="ltctl">
           <button data-a="on"><ha-icon icon="mdi:lightbulb-on"></ha-icon><span></span></button>
           ${color ? '<button data-a="color"><ha-icon icon="mdi:palette"></ha-icon><span></span></button>' : ''}
@@ -496,6 +502,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'tap_action', selector: { ui_action: { actions: ['more-info', 'toggle', 'navigate', 'url', 'perform-action', 'none'] } } },
         { name: 'hold_action', selector: { ui_action: { actions: ['more-info', 'toggle', 'navigate', 'url', 'perform-action', 'none'] } } },
         { name: 'color', selector: { color_rgb: {} } },
+        { name: 'image', selector: { text: {} } },
         { type: 'grid', name: '', schema: [
           bool('follow_light_color'),
           bool('brightness_slider', this.kind === 'ceiling_spot'),

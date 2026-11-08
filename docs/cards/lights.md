@@ -32,6 +32,7 @@ With a `light` entity the card shows **On / Off** (and **Colour** on the colour 
 - `entity_power`, `entity_energy`
 - `color` (RGB, e.g. `[255, 180, 90]`, or a CSS colour)
 - `follow_light_color` (default true)
+- `image`: your own picture of the light (`/local/my-lamp.png` or an `https://` URL) instead of the drawing. Use a cut-out PNG with a transparent background, about 400 × 360 px (it is fitted in a 200 × 180 area, nothing is cropped). Dimmed when the light is off; when on, brighter and surrounded by a glow in the bulb colour, both following the brightness
 - `color_cycle` (colour bulb, default false)
 - `presets` (colour bulb: list of RGB colours for the Colour button)
 - `multicolor` (Christmas tree, default true)
