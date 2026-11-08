@@ -339,13 +339,16 @@ class ApplianceCardBase extends HTMLElement {
     const ref = main || sw;
     const mainIds = ["entity", "power", "power_solar", "switch", "switch_low", "switch_high", "temperature", "zone_1", "zone_2", "zone_3", "zone_4"].map((k) => c[k]).filter(Boolean)
       .concat(kind === "power_strip" && Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : []); // multiprise : les prises comptent
-    const usable = mainIds.some((i) => hass.states[i] && !BAD.includes(String(hass.states[i].state).toLowerCase()));
+    // lave-linge / sèche-linge / lave-vaisselle : « none » (SmartThings job_state au repos) est un état valide = au repos, pas « indisponible »
+    const noneIdle = ["washer", "dryer", "dishwasher"].includes(kind);
+    const usable = mainIds.some((i) => hass.states[i] && (!BAD.includes(String(hass.states[i].state).toLowerCase()) || (noneIdle && String(hass.states[i].state).toLowerCase() === "none")));
     if (!usable) { m.status = "unavailable"; return m; }
     let base = null;
     if (ref) {
       const s = String(ref.state).toLowerCase();
       const dom = domainOf(main ? c.entity : c.switch);
-      if (BAD.includes(s)) base = null;
+      if (noneIdle && s === "none") base = "idle";
+      else if (BAD.includes(s)) base = null;
       else if (DONE_STATES.includes(s)) base = "finished";
       else if (OFF_STATES.includes(s)) {
         base = ["standby", "veille"].includes(s) ? "standby"
