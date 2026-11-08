@@ -20,10 +20,10 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--lc:#ffb347;--b:1;
 .badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
 .on .badge{background:color-mix(in srgb,var(--lc) 26%,transparent);color:color-mix(in srgb,var(--lc) 75%,var(--primary-text-color))}
 .stage.ph{background:none;border-radius:0}
-/* image perso (option image) : la photo remplace le dessin ; éclairée selon la luminosité (--b), avec une lueur de la couleur de l'ampoule */
+/* image perso (option image) : la photo remplace le dessin ; éclairée selon la luminosité (--pb = --b x image_max, lueur --gb = --b x glow_max), avec une lueur de la couleur de l'ampoule */
 .uph{position:relative;display:flex;align-items:center;justify-content:center;padding:6px 0}
-.uph .glow{position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle,var(--lc,#ffd98a) 0%,transparent 68%);opacity:calc(var(--b,0) * .75);filter:blur(16px);transition:opacity .4s}
-.uph img{position:relative;display:block;max-width:100%;max-height:220px;object-fit:contain;filter:brightness(calc(.4 + var(--b,0) * .6)) saturate(calc(.55 + var(--b,0) * .45)) drop-shadow(0 0 calc(var(--b,0) * 12px) var(--lc,#ffd98a));transition:filter .4s}
+.uph .glow{position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle,var(--lc,#ffd98a) 0%,transparent 68%);opacity:calc(var(--gb,0) * .75);filter:blur(16px);transition:opacity .4s}
+.uph img{position:relative;display:block;max-width:100%;max-height:220px;object-fit:contain;filter:brightness(calc(.4 + var(--pb,0) * .6)) saturate(calc(.55 + var(--pb,0) * .45)) drop-shadow(0 0 calc(var(--gb,0) * 12px) var(--lc,#ffd98a));transition:filter .4s}
 .compact .uph{height:100%}
 .stage.ceil{background:radial-gradient(ellipse at 50% 45%,#4a5058,#2c3137 80%)}
 .stage{position:relative;margin:4px auto 0;max-width:calc(240px * var(--illus-scale,1));border-radius:14px;background:radial-gradient(ellipse at 50% 55%,#1d232b,#12161b 75%);overflow:hidden;cursor:pointer}
@@ -425,6 +425,10 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       card.className = `${st}${cycle ? ' cycle' : ''} ${c.animations === false ? 'noanim' : ''}${c.compact === true ? ' compact' : ''}`;
       card.style.setProperty('--lc', col);
       card.style.setProperty('--b', (st === 'on' ? bri : 0).toFixed(3));
+      // photo perso : plafond de l'éclairage de la photo (image_max) et de la lueur (glow_max), en % de la luminosité de la lampe
+      const cap = (v) => (isFinite(Number(v)) && v !== '' && v !== null ? Math.max(0, Math.min(100, Number(v))) / 100 : 1);
+      card.style.setProperty('--pb', (st === 'on' ? bri * cap(c.image_max) : 0).toFixed(3));
+      card.style.setProperty('--gb', (st === 'on' ? bri * cap(c.glow_max) : 0).toFixed(3));
       // sapin : guirlande d'une seule couleur si multicolor: false
       if (this.kind === 'christmas_tree') r.querySelectorAll('.xb').forEach((el, i) => {
         const multi = c.multicolor !== false, cc = multi ? el.getAttribute('fill') : col;
@@ -497,6 +501,10 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
         { name: 'image', selector: { text: {} } },
+        ...(String(this._c.image || '').trim() ? [
+          { name: 'image_max', selector: { number: { min: 0, max: 100, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
+          { name: 'glow_max', selector: { number: { min: 0, max: 100, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
+        ] : []),
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ent('entity'), ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'),
