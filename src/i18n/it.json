@@ -376,7 +376,9 @@
     "f_switch_heat_pump": "Pompa di calore piscina (on/off)",
     "f_switch_shower": "Doccia (on/off, stato)",
     "f_presence": "Sensore di presenza (qualcuno in piscina o intorno)",
-    "f_low_water": "Allarme acqua bassa (sensore, sensore porta...)"
+    "f_low_water": "Allarme acqua bassa (sensore, sensore porta...)",
+    "dosing_pump": "Pompa dosatrice (pH+ / pH-)",
+    "dosing": "Dosaggio"
   },
   "aquarium": {
     "power": "Potenza",
