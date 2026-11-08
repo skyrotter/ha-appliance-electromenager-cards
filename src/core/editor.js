@@ -16,6 +16,13 @@ const SEL = {
   switch: { entity: { domain: ["switch", "input_boolean", "light"] } },
   switch_low: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
   switch_high: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
+  switch_ph_plus: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
+  switch_ph_minus: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
+  switch_electrolysis: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
+  switch_heat_pump: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
+  switch_shower: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
+  presence: { entity: { domain: ["binary_sensor", "input_boolean"] } },
+  low_water: { entity: { domain: ["binary_sensor", "input_boolean", "switch"] } },
   // climate / water_heater acceptés : la carte lit alors current_temperature / temperature (pas l'état, qui est un mode)
   temperature: { entity: { filter: [{ domain: ["sensor", "input_number"], device_class: "temperature" }, { domain: ["climate", "water_heater"] }] } },
   target_temperature: { entity: { domain: ["sensor", "input_number", "number", "climate", "water_heater"] } },
