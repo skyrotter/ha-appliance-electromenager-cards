@@ -86,6 +86,8 @@ hold_action:
 
 **Prise connectée** (`custom:appliance-smart-plug-card`) : variante de la multiprise, une seule prise française. Allumée (puissance au-dessus de 1 W ou `switch` allumé) : voyant, éclair, anneau, halo et courant dans le câble s'animent. `switch` allumé sans consommation : « Veille ». `indicators` choisit parmi `led`, `bolt`, `ring`, `glow`, `flow` (défaut `led` et `bolt`). `image` (URL) et / ou `icon` (`mdi:...`) affichent l'appareil branché dans une pastille au-dessus (l'image prime), grisé quand la prise est coupée.
 
+**Imprimante / scanner** (`custom:appliance-printer-card`) : imprimante laser ou multifonction (ex. Samsung Xpress C480W) sur une prise connectée, sans intégration imprimante : l'état vient de la `power` de la prise. Au-dessus de `threshold` (100 W) : « Impression » (une feuille sort, l'écran s'allume, le voyant bleu clignote) ; au-dessus de `scan_threshold` (45 W) : « Numérisation » (un trait de lumière balaie le couvercle) ; au-dessus de `standby_threshold` (1 W) : « Veille » ; sinon éteinte. Sans capteur de puissance, `switch` allumé = veille. Une `entity` dont l'état contient `print`, `scan` ou `error` (capteur IPP) prime sur la puissance. `model` : vide = dessin SVG, `samsung_c480` = photo de la Samsung Xpress C480W.
+
 **Chargeur de téléphone** (`custom:appliance-phone-charger-card`) : smartphone sur un socle à induction. Au-dessus de 2 W : « En charge », l'anneau pulse en bleu, l'écran affiche l'heure et la batterie qui se remplit (`battery_level`). Entre 0,3 W et le seuil, ou à 100 % : « Chargée », anneau vert.
 
 **Piano numérique** (`custom:appliance-piano-card`) : au-dessus de 3 W l'écran s'allume, les touches jouent et des notes s'envolent ; veille entre 0,3 W et le seuil.

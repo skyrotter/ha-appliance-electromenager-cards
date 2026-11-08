@@ -145,6 +145,10 @@ const DEF = {
   radiator: { accent: "heat", threshold: 50,
     fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "humidity", "mode", "window", "switch"],
     keys: ["radiateur", "radiator", "chauffage", "heater", "convecteur"] },
+  // Imprimante / scanner (ex. Samsung C480W) sur prise connectée : état déduit de la puissance (impression, numérisation, veille)
+  printer: { accent: "active", threshold: 100,
+    fields: ["entity", "power", "energy", "cost", "switch"],
+    keys: ["imprimante", "printer", "scanner", "multifonction", "samsung", "xpress", "c480", "laser", "drucker"] },
   printer_3d: { accent: "active", threshold: 40,
     fields: ["entity", "power", "energy", "cost", "progress", "remaining", "program", "temperature", "bed_temperature", "light", "switch"],
     keys: ["imprimante", "printer", "3d", "bambu", "prusa", "octoprint", "klipper", "moonraker"] },
