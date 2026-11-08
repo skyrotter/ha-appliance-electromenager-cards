@@ -18,6 +18,8 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 
 - `entity` (optional on / off: ping, switch)
 - `entity_volume` (volume status), `entity_volume_used` (%). **Both accept a list for several volumes**: the ring and the alert follow the fullest one (`volume_max`)
+- `entity_volume_free` (free space of the volume, e.g. `sensor.nas_free_space_volume_1`, in B, kB, MB, GB, TB, KiB, MiB, GiB or TiB: shown in GB or TB next to the percentage; **a list of several volumes** shows the total free space)
+- `entity_uptime` (uptime: a timestamp sensor « last boot », or a duration in s, min, h or d)
 - `entity_cpu` (%), `entity_ram` (%), `entity_temp` (system temperature)
 - `entity_net_down`, `entity_net_up` (DSM gives kB/s, shown as kB/s or MB/s)
 - `entity_drive_1` … `entity_drive_4` (`entity_drive_6` on the 6-bay iDX6011 Pro) (disk status: a text sensor for DSM, or the `binary_sensor` « problem » of TerraMaster, on = fault), `entity_drive_1_temp` … `entity_drive_4_temp` (up to `_6_temp`)
@@ -28,7 +30,7 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `cpu_busy` (default 60 %), `volume_max` (default 85 %), `temp_max` (default 60 °), `disk_temp_max` (default 50 °), `temperature_unit`
 - `animations` (default true)
 - `compact: true` (small fixed slots: smaller title, tiles and buttons, the illustration takes the remaining height), `transparent: true` (no card background), `illustration_size` (%)
-- One checkbox per tile in the visual editor: `show_status`, `show_volume`, `show_cpu`, `show_ram`, `show_temp`, `show_disks`, `show_down`, `show_up`, `show_power` (`show_network: false` hides both network tiles)
+- One checkbox per tile in the visual editor: `show_status`, `show_volume`, `show_free`, `show_cpu`, `show_ram`, `show_temp`, `show_disks`, `show_down`, `show_up`, `show_uptime`, `show_power` (`show_network: false` hides both network tiles)
 
 ## TerraMaster example (TNAS integration)
 
