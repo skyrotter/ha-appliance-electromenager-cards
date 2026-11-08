@@ -1097,7 +1097,11 @@
     "entity_nvme_1": "SSD 1 (NVMe)",
     "entity_nvme_1_temp": "Temperatura SSD 1",
     "entity_nvme_2": "SSD 2 (NVMe)",
-    "entity_nvme_2_temp": "Temperatura SSD 2"
+    "entity_nvme_2_temp": "Temperatura SSD 2",
+    "entity_lux": "Czujnik natężenia światła (lx)",
+    "wind_max": "Próg silnego wiatru (km/h)",
+    "show_lux": "Pokaż natężenie światła",
+    "fabric_color": "Kolor tkaniny"
   },
   "light": {
     "light_bulb": "Żarówka",
@@ -1155,7 +1159,19 @@
     "rw_position": "Otwieranie",
     "blind": "Roleta",
     "blind_down": "Roleta opuszczona",
-    "btn_blind": "Roleta"
+    "btn_blind": "Roleta",
+    "awning": "Markiza",
+    "aw_open": "Rozwinięta",
+    "aw_closed": "Zwinięta",
+    "aw_partial": "Rozwinięta",
+    "aw_opening": "Rozwija się",
+    "aw_closing": "Zwija się",
+    "aw_position": "Rozwinięcie",
+    "aw_btn_open": "Rozwiń",
+    "aw_btn_close": "Zwiń",
+    "aw_wind_alert": "Silny wiatr",
+    "lux": "Nasłonecznienie",
+    "temperature": "Temperatura"
   },
   "water_meter": {
     "name": "Wodomierz",

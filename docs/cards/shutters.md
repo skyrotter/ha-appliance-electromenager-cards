@@ -1,10 +1,10 @@
 # Shutters and blinds
 
-`custom:appliance-roller-shutter-card · custom:appliance-venetian-blind-card · custom:appliance-swing-shutter-card · custom:appliance-pergola-card · custom:appliance-roof-window-card`
+`custom:appliance-roller-shutter-card · custom:appliance-venetian-blind-card · custom:appliance-swing-shutter-card · custom:appliance-pergola-card · custom:appliance-roof-window-card · custom:appliance-awning-card`
 
 <p align="center"><img src="../shutters.gif" width="600" alt="Animated shutter cards"></p>
 
-Three window coverings, a bioclimatic pergola and a roof window driven by a `cover` entity. The view through the window follows the sun: day sky with the sun, or night sky with the moon and stars when `sun.sun` is below the horizon.
+Three window coverings, a bioclimatic pergola, a roof window and a retractable awning driven by a `cover` entity. The view through the window follows the sun: day sky with the sun, or night sky with the moon and stars when `sun.sun` is below the horizon.
 
 | Card | Animation |
 |---|---|
@@ -51,6 +51,40 @@ entity_rain: binary_sensor.rain
 entity_light: light.pergola_led
 entity_wind: sensor.wind_speed
 travel_time: 25
+```
+
+## Retractable awning
+
+<p align="center"><img src="../awning.gif" width="420" alt="Animated retractable awning card: unrolling, strong wind, night with LED"></p>
+
+`custom:appliance-awning-card`: a retractable (folding-arm) awning on the front of a house, above a wooden terrace with garden furniture. The fabric unrolls with `current_position` (0 = retracted in its box, 100 = fully extended), the articulated arms follow, and the shade on the terrace grows with it. If the cover reports `current_tilt_position`, it sets the pitch of the fabric (a **Tilt** slider and tile). Buttons **Extend / Stop / Retract**. By default `open` means extended; if your motor reports the opposite, use `invert: true`.
+
+| Option | Effect |
+|---|---|
+| `entity_wind` + `wind_max` (km/h, default 40) | **Wind** tile; above the threshold the badge shows **Strong wind**, the fabric flutters and the tile turns orange. Sensors in m/s, mph or knots are converted |
+| `entity_rain` | rain, grey sky, wet fabric, **Rain** tile |
+| `entity_light` | **LED** button, light strip under the front bar and a pool of light on the terrace at night |
+| `entity_lux` | **Sunlight** tile (lux sensor) |
+| `entity_temperature` | outdoor **Temperature** tile |
+| `entity_power` | **Motor** tile (W) |
+| `color` | fabric colour (default sand taupe `#b3a086`) |
+| `show_tilt`, `show_rain`, `show_wind`, `show_lux`, `show_temperature`, `show_power`, `show_since` | hide a tile |
+
+Like every card: `name`, `illustration_size`, `transparent`, `travel_time`, `invert`, `labels`, `language`, `animations: false`, tap actions.
+
+```yaml
+type: custom:appliance-awning-card
+entity: cover.terrace_awning
+entity_wind: sensor.wind_speed
+wind_max: 35
+entity_rain: binary_sensor.rain
+entity_light: light.awning_led
+entity_lux: sensor.sunlight
+entity_temperature: sensor.outdoor_temperature
+entity_power: sensor.awning_motor_power
+color: "#a88f6a"
+transparent: true
+illustration_size: 80
 ```
 
 ## Roof window

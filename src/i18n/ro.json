@@ -1039,7 +1039,11 @@
     "show_btn_mute": "Buton fără sunet",
     "show_btn_vol_up": "Buton volum +",
     "override": "Derogare temporară (Netatmo)",
-    "override_durations": "Durate derogare (min)"
+    "override_durations": "Durate derogare (min)",
+    "entity_lux": "Senzor de luminozitate (lux)",
+    "wind_max": "Prag vânt puternic (km/h)",
+    "show_lux": "Afișează luminozitatea",
+    "fabric_color": "Culoarea pânzei"
   },
   "light": {
     "light_bulb": "Bec",
@@ -1097,7 +1101,19 @@
     "rw_position": "Deschidere",
     "blind": "Rulou",
     "blind_down": "Rulou coborât",
-    "btn_blind": "Rulou"
+    "btn_blind": "Rulou",
+    "awning": "Copertină retractabilă",
+    "aw_open": "Desfăcută",
+    "aw_closed": "Strânsă",
+    "aw_partial": "Desfăcută",
+    "aw_opening": "Se desface",
+    "aw_closing": "Se strânge",
+    "aw_position": "Desfacere",
+    "aw_btn_open": "Desface",
+    "aw_btn_close": "Strânge",
+    "aw_wind_alert": "Vânt puternic",
+    "lux": "Luminozitate",
+    "temperature": "Temperatură"
   },
   "water_meter": {
     "name": "Contor de apă",

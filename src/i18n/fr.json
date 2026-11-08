@@ -1139,7 +1139,11 @@
     "show_cover": "Afficher le couvercle",
     "show_timer": "Afficher la minuterie",
     "switch_low": "Interrupteur petite vitesse",
-    "switch_high": "Interrupteur grande vitesse"
+    "switch_high": "Interrupteur grande vitesse",
+    "entity_lux": "Capteur de luminosité (lux)",
+    "wind_max": "Seuil de vent fort (km/h)",
+    "show_lux": "Afficher la luminosité",
+    "fabric_color": "Couleur de la toile"
   },
   "light": {
     "light_bulb": "Ampoule",
@@ -1197,7 +1201,19 @@
     "rw_position": "Ouverture",
     "blind": "Volet",
     "blind_down": "Volet baissé",
-    "btn_blind": "Volet"
+    "btn_blind": "Volet",
+    "awning": "Store banne",
+    "aw_open": "Déployé",
+    "aw_closed": "Rentré",
+    "aw_partial": "Déployé",
+    "aw_opening": "Déploiement",
+    "aw_closing": "Rentrée",
+    "aw_position": "Déploiement",
+    "aw_btn_open": "Déployer",
+    "aw_btn_close": "Rentrer",
+    "aw_wind_alert": "Vent fort",
+    "lux": "Ensoleillement",
+    "temperature": "Température"
   },
   "water_meter": {
     "name": "Compteur d'eau",

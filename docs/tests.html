@@ -19,7 +19,7 @@ const has=(c,cls)=>c.wrap.classList.contains(cls);
 const tags=['thermomix','cookeo','washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','smart-speaker','fan','generic','tool-charger','ceiling-fan','dehumidifier','air-purifier','monitor','kettle','toaster','power-strip','phone-charger','piano','garland','wet-vacuum','ps5'];
 tags.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 // card picker: every core card and every self-contained card listed exactly once
-const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','ceiling-spot','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','water-meter','gas-meter','electric-meter','trv','room-climate','mailbox','smoke-detector','leak-detector','mini-pc','nas','tv-box','scale','smart-lock','cat-flap','pet-fountain','thermo-heater','smart-tap','water-valve','water-softener','rain-gauge','fan-heater','inflatable-spa'];
+const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','ceiling-spot','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','awning','water-meter','gas-meter','electric-meter','trv','room-climate','mailbox','smoke-detector','leak-detector','mini-pc','nas','tv-box','scale','smart-lock','cat-flap','pet-fountain','thermo-heater','smart-tap','water-valve','water-softener','rain-gauge','fan-heater','inflatable-spa'];
 solo.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 const picked=window.customCards.map(c=>c.type), wanted=[...tags,...solo].map(t=>`appliance-${t}-card`).concat('appliance-card'); // + the single card (picker.js)
 ok(`customCards = ${wanted.length}`,picked.length===wanted.length&&wanted.every(t=>picked.filter(p=>p===t).length===1),
@@ -293,6 +293,9 @@ c=card('av-receiver',{power:'sensor.p'},[mk('sensor.p',0,W)]); ok('avr off',has(
  c=SP('playing',{},{model:'nest_mini'}); ok('speaker nest mini: 4 dots',c.sr.querySelectorAll('.sp-dots circle').length===4);
  c=SP('playing',{},{model:'sonos_sub'}); ok('speaker sonos sub: bass pump',!!c.sr.querySelector('.spk-sonos.sp-sub .sp-pump'));
  c=SP('playing',{},{style:'show-8'}); ok('speaker style alias show-8',!!c.sr.querySelector('.m-echo_show_8'));
+ c=card('smart-speaker',{entity:'media_player.q',model:'samsung_hw_q800c'},[mk('media_player.q','playing',{volume_level:0.6})]); ok('soundbar Samsung HW-Q800C photo: sub, drivers, display, Atmos',has(c,'st-playing')&&!!c.sr.querySelector('.m-samsung_hw_q800c .sb-sub')&&c.sr.querySelectorAll('.sb-drv').length===2&&c.sr.querySelectorAll('.sb-eq rect').length===5&&!!c.sr.querySelector('.sb-up'),c.wrap.className);
+ c=card('smart-speaker',{entity:'media_player.q',model:'samsung_hw_q800c_svg'},[mk('media_player.q','playing',{volume_level:0.6})]); ok('soundbar Samsung HW-Q800C SVG drawing',has(c,'st-playing')&&!!c.sr.querySelector('.m-samsung_hw_q800c_svg .sb-cone')&&c.sr.querySelectorAll('.sb-drv').length===2,c.wrap.className);
+ c=card('smart-speaker',{entity:'media_player.samsung_q800c'},[mk('media_player.samsung_q800c','idle')]); ok('speaker model guessed from entity (samsung soundbar)',!!c.sr.querySelector('.m-samsung_hw_q800c'));
  c=card('smart-speaker',{entity:'media_player.sonos_salon'},[mk('media_player.sonos_salon','playing')]); ok('speaker model guessed from entity (sonos)',!!c.sr.querySelector('.m-sonos_one'));
  c=card('smart-speaker',{entity:'media_player.nest_cuisine'},[mk('media_player.nest_cuisine','idle')]); ok('speaker model guessed from entity (nest)',!!c.sr.querySelector('.m-nest_mini'));
  c=SP('playing',{},{model:'devialet_phantom_ii',finish:'black'}); ok('speaker devialet phantom II black',!!c.sr.querySelector('.spk-devialet.m-devialet_phantom_ii.f-black.sp-bass .sp-pump'));
@@ -969,6 +972,12 @@ const pr=(cfg,st,lang)=>card('printer-3d',cfg,st,lang);
 c=pr({entity:'sensor.s',progress:'sensor.pg'},[mk('sensor.s','running'),mk('sensor.pg',40,{unit_of_measurement:'%'})]);
 ok('printer running (Bambu)',has(c,'st-printing')&&c.lcd()==='40%'&&/Impression/.test(c.txt()),c.wrap.className+' '+c.lcd()+' '+c.txt());
 ok('printer object height follows progress',Math.abs(parseFloat(c.wrap.style.getPropertyValue('--h'))-15.2)<0.01&&parseFloat(c.sr.querySelector('.objclip').getAttribute('height'))===15.2,c.wrap.style.getPropertyValue('--h'));
+// Bambu Lab X1 Carbon et H2D : photo (x1c, h2d) et dessin SVG (x1c_svg, h2d_svg)
+{for(const m of ['x1c','h2d']){
+ const a=pr({entity:'sensor.s',progress:'sensor.pg',model:m},[mk('sensor.s','running'),mk('sensor.pg',50,{unit_of_measurement:'%'})]);
+ ok(`printer ${m} photo: running, object rises`,has(a,'st-printing')&&!!a.sr.querySelector(`.p3-${m} .p3-photo image`)&&parseFloat(a.sr.querySelector('.objclip').getAttribute('height'))===7&&!!a.sr.querySelector('.p3-lamp')&&!!a.sr.querySelector('.p3-bar'),a.wrap.className);
+ const b=pr({entity:'sensor.s',progress:'sensor.pg',model:m+'_svg'},[mk('sensor.s','running'),mk('sensor.pg',50,{unit_of_measurement:'%'})]);
+ ok(`printer ${m}_svg drawing: AMS, gantry, object, screen`,has(b,'st-printing')&&!!b.sr.querySelector('.ams-roll')&&!!b.sr.querySelector('.gantry')&&!!b.sr.querySelector('.object')&&b.lcd()==='50%'&&parseFloat(b.sr.querySelector('.objclip').getAttribute('height'))===19,b.wrap.className+' '+b.lcd());}}
 // imprimante en photo (model) : Neptune 4 Pro / Kobra X, objet qui monte avec la progression
 {const P=(model,st,pg)=>pr({entity:'sensor.ps',progress:'sensor.pg',model},[mk('sensor.ps',st),mk('sensor.pg',pg,{unit_of_measurement:'%'})]);
  let c=P('neptune4pro','printing',50); const cl=c.sr.querySelector('.objclip');
@@ -1526,6 +1535,23 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
  c=card('pergola',{entity:'cover.p',entity_rain:'binary_sensor.r',entity_light:'light.l',entity_wind:'sensor.w'},[mk('cover.p','closing',{current_position:30}),mk('binary_sensor.r','on'),mk('light.l','on'),mk('sensor.w',24,{unit_of_measurement:'km/h'}),mk('sun.sun','below_horizon')]);
  {const st=c.sr.querySelector('.tiles').textContent; ok('pergola rain + leds + wind + night',/rain/.test(cls(c))&&/leds/.test(cls(c))&&/isnight/.test(cls(c))&&/closing/.test(cls(c))&&/Oui/.test(st)&&/24/.test(st)&&badge(c)==='Fermeture… 30 %',cls(c)+' '+st+' '+badge(c));}
  c.sr.querySelector('[data-a=light]').click(); ok('pergola LED button toggles light',JSON.stringify(c.h.calls[0])==='["homeassistant","toggle",{"entity_id":"light.l"}]',JSON.stringify(c.h.calls));
+
+ // store banne : déploiement, inclinaison, vent fort, pluie, LED, commandes
+ c=card('awning',{entity:'cover.s',entity_wind:'sensor.w',entity_rain:'binary_sensor.r',entity_light:'light.l',entity_lux:'sensor.lx',entity_temperature:'sensor.t',wind_max:40},[mk('cover.s','open',{current_position:60,current_tilt_position:30,supported_features:255}),mk('sensor.w',12,{unit_of_measurement:'km/h'}),mk('binary_sensor.r','off'),mk('light.l','off'),mk('sensor.lx',54000,{unit_of_measurement:'lx'}),mk('sensor.t',24.3,{unit_of_measurement:'°C'}),mk('sun.sun','above_horizon')]);
+ ok('awning 60 % deployed',/partial/.test(cls(c))&&!/windy/.test(cls(c))&&/Déployé 60 %/.test(badge(c))&&c.sr.querySelectorAll('.aw-dyn polygon').length>10&&v(c,'--a')==='60.0',cls(c)+' '+badge(c)+' '+v(c,'--a'));
+ {const st=c.sr.querySelector('.tiles').textContent; ok('awning tiles: tilt, wind, lux, temperature',/30/.test(st)&&/12/.test(st)&&/54/.test(st)&&/24,3/.test(st),st);}
+ ok('awning has tilt slider, extend / retract / LED buttons',!c.sr.querySelector('#shtilt').classList.contains('hide')&&!c.sr.querySelector('[data-a=light]').classList.contains('hide')&&c.sr.querySelector('[data-a=open] span').textContent==='Déployer'&&c.sr.querySelector('[data-a=close] span').textContent==='Rentrer');
+ c.sr.querySelector('[data-a=light]').click(); ok('awning LED button toggles light',JSON.stringify(c.h.calls[0])==='["homeassistant","toggle",{"entity_id":"light.l"}]',JSON.stringify(c.h.calls));
+ c=card('awning',{entity:'cover.s',entity_wind:'sensor.w',wind_max:30},[mk('cover.s','open',{current_position:100,supported_features:15}),mk('sensor.w',50,{unit_of_measurement:'km/h'})]);
+ ok('awning strong wind alert',/windy/.test(cls(c))&&/Vent fort/.test(badge(c))&&c.sr.querySelector('.tile[data-k=wind]').classList.contains('warn'),cls(c)+' '+badge(c));
+ c=card('awning',{entity:'cover.s',entity_wind:'sensor.w'},[mk('cover.s','open',{current_position:100,supported_features:15}),mk('sensor.w',10,{unit_of_measurement:'m/s'})]);
+ ok('awning wind in m/s converted to km/h (10 m/s = 36 km/h, below 40)',!/windy/.test(cls(c)));
+ c=card('awning',{entity:'cover.s',entity_wind:'sensor.w'},[mk('cover.s','open',{current_position:100,supported_features:15}),mk('sensor.w',12,{unit_of_measurement:'m/s'})]);
+ ok('awning wind 12 m/s = 43 km/h -> alert',/windy/.test(cls(c)));
+ c=card('awning',{entity:'cover.s',entity_rain:'binary_sensor.r'},[mk('cover.s','closed',{current_position:0,supported_features:15}),mk('binary_sensor.r','on'),mk('sun.sun','below_horizon')]);
+ ok('awning retracted, rain, night',/closed/.test(cls(c))&&/rain/.test(cls(c))&&/isnight/.test(cls(c))&&badge(c)==='Rentré'&&v(c,'--a')==='0.0',cls(c)+' '+badge(c));
+ c=card('awning',{entity:'cover.s',invert:true},[mk('cover.s','open',{current_position:0,supported_features:15})]); ok('awning invert: reported 0 -> deployed 100',v(c,'--a')==='100.0',cls(c)+' '+v(c,'--a'));
+ document.querySelectorAll('appliance-awning-card').forEach((e)=>e.remove());
  // fenêtre de toit : ouvrant, volet extérieur, pluie
  c=card('roof-window',{entity:'cover.w',entity_blind:'cover.b',entity_rain:'binary_sensor.r'},[mk('cover.w','open',{current_position:60,supported_features:15}),mk('cover.b','open',{current_position:100}),mk('binary_sensor.r','off')]);
  ok('roof window open 60 %',/partial/.test(cls(c))&&badge(c)==='Ouverte à 60 %'&&c.sr.querySelector('.rw-sash').getAttribute('transform').includes('scale(1 0.'),cls(c)+' '+badge(c));

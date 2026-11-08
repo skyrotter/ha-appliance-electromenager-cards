@@ -1096,7 +1096,11 @@
     "show_cover": "Mostra copertura",
     "show_timer": "Mostra timer",
     "switch_low": "Interruttore bassa velocità",
-    "switch_high": "Interruttore alta velocità"
+    "switch_high": "Interruttore alta velocità",
+    "entity_lux": "Sensore di luminosità (lux)",
+    "wind_max": "Soglia vento forte (km/h)",
+    "show_lux": "Mostra luminosità",
+    "fabric_color": "Colore del telo"
   },
   "light": {
     "light_bulb": "Lampadina",
@@ -1154,7 +1158,19 @@
     "rw_position": "Apertura",
     "blind": "Tenda",
     "blind_down": "Tenda abbassata",
-    "btn_blind": "Tenda"
+    "btn_blind": "Tenda",
+    "awning": "Tenda da sole",
+    "aw_open": "Aperta",
+    "aw_closed": "Chiusa",
+    "aw_partial": "Aperta",
+    "aw_opening": "In apertura",
+    "aw_closing": "In chiusura",
+    "aw_position": "Estensione",
+    "aw_btn_open": "Apri",
+    "aw_btn_close": "Chiudi",
+    "aw_wind_alert": "Vento forte",
+    "lux": "Luminosità",
+    "temperature": "Temperatura"
   },
   "water_meter": {
     "name": "Contatore dell'acqua",

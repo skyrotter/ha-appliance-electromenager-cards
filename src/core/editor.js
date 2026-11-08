@@ -124,7 +124,9 @@ function buildForm(kind) {
           ...(kind === "printer_3d" ? [
             // model : photo de l'imprimante (vide = dessin d'origine)
             { name: "model", selector: { select: { mode: "dropdown", options: [
-              { value: "", label: tr(null, "printer_drawing") }, { value: "neptune4pro", label: "Elegoo Neptune 4 Pro" }, { value: "kobrax", label: "Anycubic Kobra X" }, { value: "a1", label: "Bambu Lab A1" }] } } },
+              { value: "", label: tr(null, "printer_drawing") }, { value: "neptune4pro", label: "Elegoo Neptune 4 Pro" }, { value: "kobrax", label: "Anycubic Kobra X" }, { value: "a1", label: "Bambu Lab A1" },
+              { value: "x1c", label: "Bambu Lab X1 Carbon (photo)" }, { value: "x1c_svg", label: "Bambu Lab X1 Carbon (SVG)" },
+              { value: "h2d", label: "Bambu Lab H2D (photo)" }, { value: "h2d_svg", label: "Bambu Lab H2D (SVG)" }] } } },
             { name: "nozzle_temperatures", selector: { entity: { multiple: true, domain: "sensor" } } },
             { name: "filament_color", selector: { text: {} } },
           ] : []),
@@ -169,6 +171,7 @@ function buildForm(kind) {
               { value: "devialet_phantom", label: "Devialet Phantom (1re gén. / 1st gen)" }, { value: "devialet_phantom_reactor", label: "Devialet Phantom Reactor" },
               { value: "devialet_phantom_i", label: "Devialet Phantom I" }, { value: "devialet_phantom_ii", label: "Devialet Phantom II" },
               { value: "devialet_phantom_ultimate", label: "Devialet Phantom Ultimate" },
+              { value: "samsung_hw_q800c", label: "Samsung HW-Q800C (photo)" }, { value: "samsung_hw_q800c_svg", label: "Samsung HW-Q800C (SVG)" },
               { value: "homepod", label: "Apple HomePod (2e gén. / 2nd gen)" }, { value: "homepod_mini", label: "Apple HomePod mini 2" }] } } },
             // finish : couleur de l'enceinte (Devialet : blanc / noir ; HomePod : minuit / blanc ; HomePod mini : 5 couleurs)
             { name: "finish", selector: { select: { mode: "dropdown", options: [

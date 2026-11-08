@@ -1062,7 +1062,11 @@
 "show_drink": "Vis siste slurk",
 "show_clean": "Vis rengjøring",
 "entity_locked_in": "Lås «Bare inn» (Sure Petcare)",
-"entity_locked_out": "Lås «Bare ut» (Sure Petcare)"
+"entity_locked_out": "Lås «Bare ut» (Sure Petcare)",
+"entity_lux": "Lyssensor (lux)",
+"wind_max": "Grense for sterk vind (km/t)",
+"show_lux": "Vis lysnivå",
+"fabric_color": "Duk-farge"
 },
 "light": {
 "light_bulb": "Lyspære",
@@ -1120,7 +1124,19 @@
 "rw_position": "Åpning",
 "blind": "Rullegardin",
 "blind_down": "Rullegardin nede",
-"btn_blind": "Rullegardin"
+"btn_blind": "Rullegardin",
+"awning": "Markise",
+"aw_open": "Utfelt",
+"aw_closed": "Inntrukket",
+"aw_partial": "Utfelt",
+"aw_opening": "Trekker ut",
+"aw_closing": "Trekker inn",
+"aw_position": "Utfelling",
+"aw_btn_open": "Trekk ut",
+"aw_btn_close": "Trekk inn",
+"aw_wind_alert": "Sterk vind",
+"lux": "Sollys",
+"temperature": "Temperatur"
 },
 "water_meter": {
 "name": "Vannmåler",

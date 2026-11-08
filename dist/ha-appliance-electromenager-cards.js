@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.91.0";
+const VERSION = "1.92.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -6126,6 +6126,131 @@ SVG.printer_3d = (c) => {
 </g>`;
 };
 
+/* Bambu Lab X1 Carbon (+ AMS 2 Pro) et Bambu Lab H2D (+ AMS 2), option model :
+     x1c, h2d          photo détourée + calques animés (mêmes calques que l'A1 : buse, plateau chauffant, objet qui monte,
+                       tête lumineuse, lampe de la chambre, barre de progression sur l'écran)
+     x1c_svg, h2d_svg  dessin SVG animé : chambre fermée, portique qui monte avec l'objet, AMS dont la bobine active tourne
+   Chargé après printer_3d_photos.js (ordre alphabétique) : il complète P3D_PHOTO / P3D_ALIAS et enveloppe SVG.printer_3d.
+   Coordonnées des photos dans le repère 120 × 140 de la carte (voir printer_3d_photos.js). */
+Object.assign(P3D_PHOTO, {
+  x1c: { img: "data:image/webp;base64,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", x: 10.15, w: 99.7, tip: [61.5, 77.5], bed: [46, 110.8], hw: 22, hb: [61.5, 77.5], lamp: [47.9, 59, 109],
+    scr: "15.4,42.4 37.3,40.5 35.8,53.4 16.2,54.5", bar: [15.4, 42.4, 21.9, -1.9, 0.8, 12.1] },
+  h2d: { img: "data:image/webp;base64,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", x: 9.95, w: 100.1, tip: [52.6, 70.7], bed: [46.2, 106.6], hw: 22, hb: [52.6, 70.7], lamp: [46.2, 49, 105],
+    scr: "15.6,37.9 31.9,37.9 31.9,46.6 15.6,46.6", bar: [15.6, 37.9, 16.3, 0, 0, 8.7] },
+});
+Object.assign(P3D_ALIAS, {
+  x1carbon: "x1c", bambux1c: "x1c", bambux1carbon: "x1c", bambulabx1c: "x1c", bambulabx1carbon: "x1c", x1: "x1c",
+  bambuh2d: "h2d", bambulabh2d: "h2d",
+});
+
+/* ---- dessins SVG ---- */
+const BAMBU_DEFS = `
+<linearGradient id="ID-frame" x1="0" x2="1"><stop offset="0" stop-color="#2a2e33"/><stop offset=".5" stop-color="#4a5058"/><stop offset="1" stop-color="#23272b"/></linearGradient>
+<linearGradient id="ID-alu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f1f3f5"/><stop offset=".5" stop-color="#b9c0c7"/><stop offset="1" stop-color="#8d959e"/></linearGradient>
+<linearGradient id="ID-pei" x1="0" x2="1"><stop offset="0" stop-color="#3a3326"/><stop offset=".5" stop-color="#6b5a3a"/><stop offset="1" stop-color="#3a3326"/></linearGradient>
+<linearGradient id="ID-fil" x1="0" x2="1"><stop offset="0" style="stop-color:var(--fil)" stop-opacity=".75"/><stop offset=".45" style="stop-color:var(--fil)"/><stop offset="1" style="stop-color:var(--fil)" stop-opacity=".7"/></linearGradient>
+<pattern id="ID-layers" width="4" height="1.3" patternUnits="userSpaceOnUse"><rect width="4" height=".55" fill="#000" opacity=".18"/></pattern>
+<linearGradient id="ID-silver" x1="0" x2="1"><stop offset="0" stop-color="#e6e9ec"/><stop offset=".55" stop-color="#c6cbd0"/><stop offset="1" stop-color="#a5abb2"/></linearGradient>
+<linearGradient id="ID-graph" x1="0" x2="1"><stop offset="0" stop-color="#7d8389"/><stop offset=".5" stop-color="#9aa0a6"/><stop offset="1" stop-color="#6c7278"/></linearGradient>
+<linearGradient id="ID-gl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a3037"/><stop offset="1" stop-color="#0c0e11"/></linearGradient>
+<linearGradient id="ID-dome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#cfd5db" stop-opacity=".15"/></linearGradient>
+<linearGradient id="ID-refl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".2"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<radialGradient id="ID-led" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff6dc" stop-opacity=".9"/><stop offset="1" stop-color="#ffe9a8" stop-opacity="0"/></radialGradient>`;
+
+// AMS posé sur l'imprimante : dôme transparent avec 4 bobines (la 1re est la bobine active, couleur du filament) et socle sombre
+const bambuAms = (x0, x1, y0, label) => {
+  const n = 4, wd = (x1 - x0 - 10) / n, cols = ["var(--fil)", "#2f6fd6", "#2fb34a", "#e0402f"];
+  let sp = "", feed = "";
+  for (let i = 0; i < n; i++) {
+    const sx = x0 + 5 + i * wd;
+    sp += `<rect x="${sx.toFixed(1)}" y="${y0 + 3}" width="${(wd - 1.8).toFixed(1)}" height="19" rx="1.2" style="fill:${cols[i]}"/>
+<rect x="${sx.toFixed(1)}" y="${y0 + 3}" width="${(wd - 1.8).toFixed(1)}" height="19" rx="1.2" fill="url(#ID-layers)" opacity=".7"/>
+<rect x="${sx.toFixed(1)}" y="${y0 + 3}" width="${(wd - 1.8).toFixed(1)}" height="2.2" fill="#000" opacity=".25"/><rect x="${sx.toFixed(1)}" y="${y0 + 19.8}" width="${(wd - 1.8).toFixed(1)}" height="2.2" fill="#000" opacity=".25"/>`;
+    feed += `<rect x="${(sx + wd / 2 - 3.1).toFixed(1)}" y="${y0 + 24.5}" width="5" height="7" rx="1.4" fill="#15181b"/><circle cx="${(sx + wd / 2 - .6).toFixed(1)}" cy="${y0 + 27}" r="1" fill="#e08a2b"/>`;
+  }
+  const w0 = wd - 1.8;
+  return `<clipPath id="ID-sp0"><rect x="${(x0 + 5).toFixed(1)}" y="${y0 + 5.2}" width="${w0.toFixed(1)}" height="14.6"/></clipPath>
+<g>${sp}</g>
+<g clip-path="url(#ID-sp0)"><g class="ams-roll">${[0, 1, 2, 3, 4, 5].map((k) => `<rect x="${(x0 + 5).toFixed(1)}" y="${y0 + 5 + k * 5}" width="${w0.toFixed(1)}" height="1.1" fill="#fff" opacity=".4"/>`).join("")}</g></g>
+<path d="M${x0 + 2} ${y0 + 24}V${y0 + 12}Q${x0 + 2} ${y0} ${x0 + 12} ${y0}H${x1 - 12}Q${x1 - 2} ${y0} ${x1 - 2} ${y0 + 12}V${y0 + 24}Z" fill="url(#ID-dome)" stroke="#9aa1a8" stroke-width=".6"/>
+<path d="M${x0 + 6} ${y0 + 4}H${x1 - 14}" stroke="#fff" stroke-opacity=".7" stroke-width="1" stroke-linecap="round"/>
+<rect x="${x0}" y="${y0 + 23}" width="${x1 - x0}" height="16" rx="2.6" fill="url(#ID-frame)" stroke="#16181b" stroke-width=".6"/>
+<rect x="${x0 + 1}" y="${y0 + 23.6}" width="${x1 - x0 - 2}" height="1.4" rx=".7" fill="#fff" opacity=".14"/>${feed}
+<text x="${x1 - 5}" y="${y0 + 36}" text-anchor="end" font-size="3.2" font-weight="700" fill="#aeb4ba" letter-spacing=".2">${label}</text>`;
+};
+
+// mécanisme de l'imprimante : portique qui monte, tête, plateau, objet (mêmes classes que le dessin d'origine)
+const bambuMech = () => `
+<rect x="19" y="56" width="4" height="62" rx="1.4" fill="url(#ID-frame)"/><rect x="20" y="58" width="1.4" height="58" fill="url(#ID-alu)" opacity=".8"/>
+<rect x="95" y="56" width="4" height="62" rx="1.4" fill="url(#ID-frame)"/><rect x="96" y="58" width="1.4" height="58" fill="url(#ID-alu)" opacity=".8"/>
+<rect x="28" y="108" width="64" height="5" rx="1.4" fill="#4a5058"/>
+<rect x="32" y="108.5" width="56" height="4" rx="1" fill="#5d646c"/>
+<g class="bedheat"><path d="M40 101q-2-3 0-6t0-6"/><path d="M54 101q-2-3 0-6t0-6"/><path d="M66 101q-2-3 0-6t0-6"/><path d="M80 101q-2-3 0-6t0-6"/></g>
+<rect x="30" y="104" width="60" height="4.5" rx="1" fill="url(#ID-pei)" stroke="#1c1a15" stroke-width=".5"/>
+<g clip-path="url(#ID-obj)"><g class="object">
+  <path d="M49 104C47 96 45 88 48 80C50 74 52 70 52 66H68C68 70 70 74 72 80C75 88 73 96 71 104Z" fill="url(#ID-fil)"/>
+  <path d="M49 104C47 96 45 88 48 80C50 74 52 70 52 66H68C68 70 70 74 72 80C75 88 73 96 71 104Z" fill="url(#ID-layers)"/>
+  <path d="M53 101C52 94 51 88 53 82" stroke="#fff" stroke-opacity=".35" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+</g></g>
+<g class="gantry">
+  <rect x="21" y="82" width="78" height="5" rx="1.5" fill="url(#ID-alu)" stroke="#7d858e" stroke-width=".4"/>
+  <g class="head">
+    <rect x="51" y="78" width="18" height="21" rx="3" fill="#e4e6e8" stroke="#a7afb7" stroke-width=".6"/>
+    <rect x="51" y="78" width="18" height="5" rx="2" fill="#2b2f34"/>
+    <circle cx="60" cy="90" r="4.2" fill="#2b2f34"/>
+    <g class="hfan"><path d="M60 90l0-3.4M60 90l2.9 1.7M60 90l-2.9 1.7" stroke="#8d959e" stroke-width="1.3" stroke-linecap="round"/></g>
+    <path d="M57.5 99h5l-1.6 4h-1.8z" fill="#c9a43a" stroke="#8a6d1f" stroke-width=".4"/>
+    <path d="M69 81q12-4 24-24" fill="none" stroke="#e9ecef" stroke-opacity=".7" stroke-width="1.5" stroke-linecap="round"/>
+    <circle class="tip" cx="60" cy="103.4" r="1.2"/>
+  </g>
+</g>`;
+
+const bambuSvg = (h2d) => {
+  // chambre vitrée : X1C = porte pleine largeur ; H2D = porte vitrée à gauche + panneau argent à droite avec hublot
+  const gx = h2d ? 12 : 14, gw = h2d ? 76 : 92, bx = h2d ? 9 : 8, bw = h2d ? 102 : 104;
+  const mech = h2d ? `<g transform="translate(-2 10.4) scale(.9)">${bambuMech()}</g>` : bambuMech();
+  const ams = h2d ? bambuAms(28, 92, 10, "AMS 2") : bambuAms(34, 108, 8, "AMS 2 PRO");
+  const top = h2d ? 50 : 48;
+  const body = h2d
+    ? `<rect x="${bx}" y="${top}" width="${bw}" height="80" rx="3.5" fill="url(#ID-gl)" stroke="#16181b" stroke-width=".6"/>
+<rect x="90" y="${top - 3}" width="21" height="83" rx="3.5" fill="url(#ID-graph)" stroke="#5a6066" stroke-width=".6"/>
+<rect x="90" y="${top - 3}" width="21" height="2.4" rx="1.2" fill="#fff" opacity=".35"/>
+<rect x="94" y="62" width="13" height="42" rx="3" fill="#15181b"/><rect x="94" y="62" width="13" height="42" rx="3" fill="url(#ID-refl)"/>
+<g class="ams-side"><rect x="97" y="66" width="7" height="34" rx="1.6" fill="#2b3036"/><rect x="98.4" y="69" width="4.2" height="28" rx="1" style="fill:var(--fil)" opacity=".8"/></g>
+<rect x="${gx}" y="${top + 8}" width="${gw}" height="64" rx="2" fill="url(#ID-gl)"/>
+<rect x="${gx}" y="${top + 1}" width="${gw}" height="7" fill="#15181b"/><text x="${gx + gw - 3}" y="${top + 5.3}" text-anchor="end" font-size="3.4" font-weight="700" fill="#cfd5db">H2D</text>`
+    : `<rect x="${bx}" y="${top}" width="${bw}" height="80" rx="4" fill="url(#ID-silver)" stroke="#8d949b" stroke-width=".6"/>
+<rect x="${bx}" y="${top}" width="${bw}" height="2.6" rx="1.3" fill="#fff" opacity=".55"/>
+<rect x="${gx}" y="${top + 10}" width="${gw}" height="62" rx="2" fill="url(#ID-gl)"/>
+<text x="${bx + bw - 4}" y="${top + 77.5}" text-anchor="end" font-size="3.4" font-weight="700" fill="#6a7178" letter-spacing=".3">Bambu Lab</text>
+<text x="70" y="${top + 6.5}" text-anchor="middle" font-size="3.4" font-weight="700" fill="#6a7178" letter-spacing=".3">X1 Carbon</text>`;
+  const lamp = `<ellipse class="p3-lamp-svg" cx="${gx + gw / 2}" cy="${top + 11}" rx="${gw / 2 - 6}" ry="4" fill="url(#ID-led)"/>`;
+  const scr = h2d
+    ? `<rect x="12" y="${top + 1.2}" width="26" height="6.6" rx="1.2" fill="#0c1720"/><text class="lcd" x="25" y="${top + 4.6}" text-anchor="middle" dominant-baseline="central" fill="#7ec8e3" style="font-size:5px !important">OFF</text><circle class="led l1" cx="41" cy="${top + 4.5}" r="1.2"/>`
+    : `<g transform="rotate(-4 24 50)"><rect x="9" y="42" width="30" height="14" rx="2.4" fill="#d9dde1" stroke="#9aa1a8" stroke-width=".5"/>${lcd(11, 43.6, 26, 10)}</g><circle class="led l1" cx="43" cy="${top + 3}" r="1.3"/>`;
+  return `<defs>${DEFS}${BAMBU_DEFS}
+<clipPath id="ID-ch"><rect x="${gx}" y="${top + (h2d ? 8 : 10)}" width="${gw}" height="${h2d ? 64 : 62}" rx="2"/></clipPath>
+<clipPath id="ID-obj"><rect class="objclip" x="40" y="66" width="40" height="38"/></clipPath></defs>
+<ellipse cx="60" cy="133" rx="52" ry="4.5" fill="url(#ID-shadow)"/>
+${ams}
+${body}
+<g clip-path="url(#ID-ch)">${mech}
+  ${lamp}
+  <rect class="bam-glow" x="${gx}" y="${top + 8}" width="${gw}" height="64" fill="url(#ID-refl)"/>
+</g>
+<path d="M${gx + 6} ${top + 72}L${gx + 24} ${top + 12}h7L${gx + 13} ${top + 72}z" fill="#fff" opacity=".07"/>
+<rect x="${bx + 8}" y="${top + 82}" width="12" height="4" rx="1.4" fill="#2a2e33"/><rect x="${bx + bw - 20}" y="${top + 82}" width="12" height="4" rx="1.4" fill="#2a2e33"/>
+${scr}`;
+};
+
+const P3D_BEFORE_BAMBU = SVG.printer_3d;
+SVG.printer_3d = (c) => {
+  const k = String((c && c.model) || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+  if (k === "x1csvg" || k === "x1carbonsvg" || k === "bambux1csvg") return bambuSvg(false);
+  if (k === "h2dsvg" || k === "bambuh2dsvg") return bambuSvg(true);
+  return P3D_BEFORE_BAMBU(c);
+};
+
 /* PlayStation 5 : console debout sur son socle, vue de trois quarts (grande face blanche galbée, cœur noir,
    bandeaux lumineux le long du cœur, ouïes en haut) et manette posée au pied, reliée par un câble en mode repos.
    Silhouette seulement : aucun logo ni symbole de boutons. */
@@ -6388,7 +6513,7 @@ function spkModel(c) {
   if (SPK_GEO[`echo_${raw}`]) return `echo_${raw}`;
   const e = String((c && c.entity) || "").toLowerCase();
   return /sonos/.test(e) ? "sonos_one" : /homepod/.test(e) ? (/mini/.test(e) ? "homepod_mini" : "homepod")
-    : /devialet|phantom/.test(e) ? "devialet_phantom_ii" : /nest|google|home_mini|chromecast/.test(e) ? "nest_mini" : "echo_dot";
+    : /devialet|phantom/.test(e) ? "devialet_phantom_ii" : /nest|google|home_mini|chromecast/.test(e) ? "nest_mini" : /q800|hw_q|samsung/.test(e) ? "samsung_hw_q800c" : "echo_dot";
 }
 // photo : modèle seul, ou modèle__couleur (couleur inconnue → la première)
 function spkKey(c, md) {
@@ -6509,6 +6634,69 @@ SVG.solar = () => `
 ${lcd(93, 71, 18, 8)}
 <circle class="led l1" cx="96" cy="83" r="1.3"/>
 <path d="M104 80l-2 4h3l-2 4" stroke="#ffb400" stroke-width=".9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+
+/* Barre de son Samsung HW-Q800C (3.1.2 Dolby Atmos, caisson sans fil + télécommande), option model de la carte enceinte :
+     samsung_hw_q800c       photo détourée + calques animés
+     samsung_hw_q800c_svg   dessin SVG animé
+   Calques : ondes sonores (vitesse suivant le volume), caisson de basses qui « pompe », haut-parleurs avant qui pulsent,
+   petit afficheur avec égaliseur, ondes Atmos vers le plafond. Chargé après smart_speaker.js (ordre alphabétique). */
+SPK_IMG.samsung_hw_q800c = "data:image/webp;base64,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";
+SPK_MODELS.push("samsung_hw_q800c", "samsung_hw_q800c_svg");
+// photo 389 × 200 : caisson (x 156-236, y 0-156), haut-parleurs ronds de la barre, afficheur central
+const SB = { w: 389, h: 200, sub: [156, 0, 80, 156], drv: [[51, 186, 10], [336, 186, 10]], disp: [196, 171] };
+const sbEq = (cx, cy, n, du, h) => Array.from({ length: n }, (_, i) => `<rect x="${(cx + (i - (n - 1) / 2) * du - du * 0.3).toFixed(2)}" y="${(cy - h).toFixed(2)}" width="${(du * 0.6).toFixed(2)}" height="${h}" rx=".3"/>`).join("");
+const sbUp = (xs, y, k = 1) => xs.map((x, i) => `<path d="M${x - 9 * k} ${y}q${9 * k} ${-6 * k} ${18 * k} 0" style="animation-delay:${(i * 0.5).toFixed(1)}s"/><path d="M${x - 6 * k} ${y - 5 * k}q${6 * k} ${-4 * k} ${12 * k} 0" style="animation-delay:${(i * 0.5 + 0.25).toFixed(2)}s"/>`).join("");
+const sbWaves = (cx, cy, r) => [0, 1, 2].map((i) => `<ellipse cx="${cx}" cy="${cy}" rx="${r}" ry="${(r / 3).toFixed(2)}" style="animation-delay:${i * 0.5}s"/>`).join("");
+const SB_SPK = SVG.smart_speaker;
+SVG.smart_speaker = (c) => {
+  const md = spkModel(c);
+  if (md !== "samsung_hw_q800c" && md !== "samsung_hw_q800c_svg") return SB_SPK(c);
+  const f = (n) => +n.toFixed(2);
+  if (md === "samsung_hw_q800c") {
+    const s = Math.min(112 / SB.w, 124 / SB.h), W = SB.w * s, H = SB.h * s, x0 = 60 - W / 2, y0 = 134 - H;
+    const [sx, sy, sw, sh] = SB.sub, [dx, dy] = SB.disp;
+    return `<defs>${DEFS}<clipPath id="ID-sub"><rect x="${sx}" y="${sy}" width="${sw}" height="${sh}"/></clipPath>
+<radialGradient id="ID-drv"><stop offset="0" stop-color="#7fd6ff" stop-opacity=".95"/><stop offset=".6" stop-color="#2bb6f9" stop-opacity=".5"/><stop offset="1" stop-color="#2bb6f9" stop-opacity="0"/></radialGradient></defs>
+<g class="spk spk-samsung m-samsung_hw_q800c">
+<ellipse cx="60" cy="135" rx="${f(Math.min(50, W * 0.42))}" ry="3" fill="url(#ID-shadow)"/>
+<g class="sp-waves">${sbWaves(60, f(y0 + H * 0.72), f(W * 0.46))}</g>
+<g transform="translate(${f(x0)} ${f(y0)}) scale(${+s.toFixed(4)})">
+<image class="sp-photo" href="${SPK_IMG.samsung_hw_q800c}" width="${SB.w}" height="${SB.h}" preserveAspectRatio="none"/>
+<g class="sb-sub" style="transform-origin:${sx + sw / 2}px ${sy + sh}px" clip-path="url(#ID-sub)"><image class="sp-photo" href="${SPK_IMG.samsung_hw_q800c}" width="${SB.w}" height="${SB.h}" preserveAspectRatio="none"/></g>
+${SB.drv.map(([x, y, r]) => `<circle class="sb-drv" cx="${x}" cy="${y}" r="${r * 1.5}" fill="url(#ID-drv)"/>`).join("")}
+<g class="sb-eq">${sbEq(dx, dy + 4, 5, 3.4, 8)}</g>
+<g class="sb-up px" fill="none" stroke-linecap="round" stroke-width="2.4">${sbUp([100, 290], 158, 2.4)}</g>
+</g></g>`;
+  }
+  // dessin SVG : barre (haut-parleurs ronds, afficheur, évents Atmos sur le dessus), caisson avec son haut-parleur, télécommande
+  return `<defs>${DEFS}
+<linearGradient id="ID-sbb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b3f45"/><stop offset=".25" stop-color="#1d2024"/><stop offset="1" stop-color="#0b0c0e"/></linearGradient>
+<linearGradient id="ID-sbs" x1="0" x2="1"><stop offset="0" stop-color="#17191c"/><stop offset=".5" stop-color="#2a2d32"/><stop offset="1" stop-color="#101214"/></linearGradient>
+<radialGradient id="ID-cone" cx=".45" cy=".4" r=".65"><stop offset="0" stop-color="#4a4f57"/><stop offset=".6" stop-color="#23262a"/><stop offset="1" stop-color="#0d0e10"/></radialGradient>
+<radialGradient id="ID-drv"><stop offset="0" stop-color="#7fd6ff" stop-opacity=".95"/><stop offset=".6" stop-color="#2bb6f9" stop-opacity=".5"/><stop offset="1" stop-color="#2bb6f9" stop-opacity="0"/></radialGradient>
+<pattern id="ID-sbg" width="2.6" height="2.6" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r=".55" fill="#5a5f67" opacity=".7"/></pattern></defs>
+<g class="spk spk-samsung m-samsung_hw_q800c_svg">
+<ellipse cx="60" cy="133" rx="54" ry="4" fill="url(#ID-shadow)"/>
+<g class="sp-waves">${sbWaves(60, 108, 52)}</g>
+<g class="sb-up" fill="none" stroke-linecap="round" stroke-width=".9">${sbUp([22, 98], 107)}</g>
+<g class="sb-sub" style="transform-origin:60px 100px">
+  <rect x="44" y="50" width="32" height="52" rx="3.5" fill="url(#ID-sbs)" stroke="#000" stroke-width=".6"/>
+  <rect x="45" y="50.6" width="30" height="2.2" rx="1.1" fill="#fff" opacity=".18"/>
+  <rect x="47" y="55" width="26" height="43" rx="2" fill="url(#ID-sbg)"/>
+  <g class="sb-cone" style="transform-origin:60px 80px"><circle cx="60" cy="80" r="11.5" fill="#101214" stroke="#3a3e44" stroke-width=".8"/><circle cx="60" cy="80" r="9" fill="url(#ID-cone)"/><circle cx="60" cy="80" r="3.2" fill="#15171a" stroke="#4a4f57" stroke-width=".5"/></g>
+  <rect x="53" y="94" width="14" height="1.6" rx=".8" fill="#0a0b0c"/>
+</g>
+<rect x="82" y="84" width="6.5" height="18" rx="1.6" fill="#17191c" stroke="#3a3e44" stroke-width=".4"/>
+<circle cx="85.25" cy="88" r="1.2" fill="#3a3e44"/><circle cx="85.25" cy="92" r=".9" fill="#2bb6f9" opacity=".8"/><rect x="83.6" y="95" width="3.3" height="4.4" rx=".6" fill="#2a2d32"/>
+<rect x="12" y="124" width="9" height="3" rx="1" fill="#0b0c0e"/><rect x="99" y="124" width="9" height="3" rx="1" fill="#0b0c0e"/>
+<rect x="4" y="108.5" width="112" height="16.5" rx="3.2" fill="url(#ID-sbb)" stroke="#000" stroke-width=".6"/>
+<path d="M5.5 111h109" stroke="#fff" stroke-opacity=".2" stroke-width=".9" stroke-linecap="round"/>
+<rect x="8" y="112.2" width="104" height="9.4" rx="2" fill="url(#ID-sbg)" opacity=".8"/>
+${[[20, 117], [100, 117]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="5.4" fill="#0a0b0d" stroke="#454a52" stroke-width=".7"/><circle class="sb-drv" cx="${x}" cy="${y}" r="7.5" fill="url(#ID-drv)"/><circle cx="${x}" cy="${y}" r="3.1" fill="url(#ID-cone)" stroke="#1d2024" stroke-width=".4"/>`).join("")}
+<rect x="52" y="114.2" width="16" height="6" rx="1.4" fill="#06090c" stroke="#2c3138" stroke-width=".4"/>
+<g class="sb-eq">${sbEq(60, 119.2, 5, 2.6, 3.6)}</g>
+</g>`;
+};
 
 /* Thermomix TM6 / TM7 : photo détourée (fond transparent) + calques animés par-dessus.
    option model : "tm6" (blanc, par défaut) ou "tm7" (noir).
@@ -9021,7 +9209,9 @@ function buildForm(kind) {
           ...(kind === "printer_3d" ? [
             // model : photo de l'imprimante (vide = dessin d'origine)
             { name: "model", selector: { select: { mode: "dropdown", options: [
-              { value: "", label: tr(null, "printer_drawing") }, { value: "neptune4pro", label: "Elegoo Neptune 4 Pro" }, { value: "kobrax", label: "Anycubic Kobra X" }, { value: "a1", label: "Bambu Lab A1" }] } } },
+              { value: "", label: tr(null, "printer_drawing") }, { value: "neptune4pro", label: "Elegoo Neptune 4 Pro" }, { value: "kobrax", label: "Anycubic Kobra X" }, { value: "a1", label: "Bambu Lab A1" },
+              { value: "x1c", label: "Bambu Lab X1 Carbon (photo)" }, { value: "x1c_svg", label: "Bambu Lab X1 Carbon (SVG)" },
+              { value: "h2d", label: "Bambu Lab H2D (photo)" }, { value: "h2d_svg", label: "Bambu Lab H2D (SVG)" }] } } },
             { name: "nozzle_temperatures", selector: { entity: { multiple: true, domain: "sensor" } } },
             { name: "filament_color", selector: { text: {} } },
           ] : []),
@@ -9066,6 +9256,7 @@ function buildForm(kind) {
               { value: "devialet_phantom", label: "Devialet Phantom (1re gén. / 1st gen)" }, { value: "devialet_phantom_reactor", label: "Devialet Phantom Reactor" },
               { value: "devialet_phantom_i", label: "Devialet Phantom I" }, { value: "devialet_phantom_ii", label: "Devialet Phantom II" },
               { value: "devialet_phantom_ultimate", label: "Devialet Phantom Ultimate" },
+              { value: "samsung_hw_q800c", label: "Samsung HW-Q800C (photo)" }, { value: "samsung_hw_q800c_svg", label: "Samsung HW-Q800C (SVG)" },
               { value: "homepod", label: "Apple HomePod (2e gén. / 2nd gen)" }, { value: "homepod_mini", label: "Apple HomePod mini 2" }] } } },
             // finish : couleur de l'enceinte (Devialet : blanc / noir ; HomePod : minuit / blanc ; HomePod mini : 5 couleurs)
             { name: "finish", selector: { select: { mode: "dropdown", options: [
@@ -9767,6 +9958,16 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-printer_3d.indeterminate.st-printing .p3-bar-fill { transform: none; animation: ac-pulse 1.4s ease-in-out infinite; }
 .k-printer_3d.st-paused .p3-bar-fill { fill: #ffb347; animation: ac-pulse 1s steps(2) infinite; }
 .k-printer_3d.st-heating .p3-bar-fill { fill: #ff8a3d; }
+/* Bambu Lab X1 Carbon / H2D : photo (model x1c, h2d) et dessin (x1c_svg, h2d_svg) */
+.k-printer_3d.indeterminate .p3-x1c .objclip { y: 96.8px; height: 14px; }
+.k-printer_3d.indeterminate .p3-h2d .objclip { y: 92.6px; height: 14px; }
+/* dessin : la bobine active de l'AMS défile pendant l'impression, la lampe de la chambre s'allume */
+.k-printer_3d.st-printing .ams-roll { animation: bam-roll .9s linear infinite; }
+@keyframes bam-roll { from { transform: translateY(0); } to { transform: translateY(5px); } }
+.p3-lamp-svg { opacity: 0; mix-blend-mode: screen; transition: opacity .6s; }
+.k-printer_3d.st-printing .p3-lamp-svg, .k-printer_3d.st-heating .p3-lamp-svg, .k-printer_3d.st-paused .p3-lamp-svg { opacity: .8; }
+.ams-side rect:last-child { transition: opacity .4s; }
+.k-printer_3d.st-printing .ams-side rect:last-child { animation: ac-pulse 2.4s ease-in-out infinite; }
 
 /* ---------- pool pump ---------- */
 .k-pool_pump { --spd: 1; }
@@ -10268,6 +10469,26 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-smart_speaker.st-playing .sp-siri { animation: sp-siri 3s ease-in-out infinite; }
 .k-smart_speaker.st-paused .sp-siri, .k-smart_speaker.st-idle .sp-siri, .k-smart_speaker.st-muted .sp-siri { opacity: .3; }
 @keyframes sp-siri { 0%, 100% { opacity: .55; transform: scaleX(.9); filter: blur(1.5px) hue-rotate(0deg); } 50% { opacity: 1; transform: scaleX(1.05); filter: blur(1.5px) hue-rotate(90deg); } }
+/* Samsung HW-Q800C : caisson de basses qui pompe, haut-parleurs qui pulsent, afficheur, ondes Atmos vers le plafond */
+.spk-samsung { --sp-wave: #4fb8ff; }
+.k-smart_speaker.st-playing .sb-sub { animation: sb-sub calc(.9s - var(--amp, .5) * .35s) ease-in-out infinite; }
+@keyframes sb-sub { 0%, 100% { transform: scale(1); } 14% { transform: scale(calc(1.008 + var(--amp, .5) * .02), calc(1.006 + var(--amp, .5) * .016)); } }
+.k-smart_speaker.st-playing .sb-cone { animation: sb-cone calc(.9s - var(--amp, .5) * .35s) ease-in-out infinite; }
+@keyframes sb-cone { 0%, 100% { transform: scale(1); } 14% { transform: scale(calc(1.04 + var(--amp, .5) * .1)); } }
+.sb-drv { opacity: 0; mix-blend-mode: screen; transform-box: fill-box; transform-origin: 50% 50%; }
+.k-smart_speaker.st-playing .sb-drv { animation: sb-drv calc(1s - var(--amp, .5) * .4s) ease-in-out infinite; }
+.k-smart_speaker.st-paused .sb-drv, .k-smart_speaker.st-idle .sb-drv, .k-smart_speaker.st-muted .sb-drv { opacity: .12; }
+@keyframes sb-drv { 0%, 100% { opacity: .08; transform: scale(.8); } 30% { opacity: calc(.35 + var(--amp, .5) * .5); transform: scale(1.12); } }
+.sb-eq rect { fill: #5fd0ff; opacity: 0; transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(.3); filter: drop-shadow(0 0 1px #2bb6f9); }
+.k-smart_speaker.st-playing .sb-eq rect { opacity: .95; animation: sp-eq .8s ease-in-out infinite alternate; }
+.sb-eq rect:nth-child(2) { animation-delay: -.3s !important; } .sb-eq rect:nth-child(3) { animation-delay: -.55s !important; }
+.sb-eq rect:nth-child(4) { animation-delay: -.15s !important; } .sb-eq rect:nth-child(5) { animation-delay: -.42s !important; }
+.k-smart_speaker.st-paused .sb-eq rect, .k-smart_speaker.st-idle .sb-eq rect, .k-smart_speaker.st-muted .sb-eq rect { opacity: .5; }
+.sb-up path { stroke: #7fd6ff; opacity: 0; }
+.k-smart_speaker.st-playing .sb-up path { animation: sb-up 1.6s ease-out infinite; }
+@keyframes sb-up { 0% { opacity: 0; transform: translateY(2px); } 30% { opacity: .85; } 100% { opacity: 0; transform: translateY(-9px); } }
+.k-smart_speaker.st-playing .sb-up.px path { animation-name: sb-upx; }
+@keyframes sb-upx { 0% { opacity: 0; transform: translateY(6px); } 30% { opacity: .85; } 100% { opacity: 0; transform: translateY(-32px); } }
 
 /* ---------- fan ---------- */
 .k-fan svg { overflow: visible; }
@@ -11275,7 +11496,11 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_cover": "Show cover",
       "show_timer": "Show timer",
       "switch_low": "Low speed switch",
-      "switch_high": "High speed switch"
+      "switch_high": "High speed switch",
+      "entity_lux": "Light level sensor (lux)",
+      "wind_max": "Strong wind threshold (km/h)",
+      "show_lux": "Show light level",
+      "fabric_color": "Fabric colour"
     },
     "cs": {
       "animations": "Animace",
@@ -11635,7 +11860,11 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_btn_next": "Tlačítko Další",
       "show_btn_vol_down": "Tlačítko Hlasitost −",
       "show_btn_mute": "Tlačítko Ztlumit",
-      "show_btn_vol_up": "Tlačítko Hlasitost +"
+      "show_btn_vol_up": "Tlačítko Hlasitost +",
+      "entity_lux": "Čidlo osvětlení (lux)",
+      "wind_max": "Hranice silného větru (km/h)",
+      "show_lux": "Zobrazit osvětlení",
+      "fabric_color": "Barva plátna"
     },
     "de": {
       "animations": "Animationen",
@@ -12054,7 +12283,11 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_cover": "Abdeckung anzeigen",
       "show_timer": "Timer anzeigen",
       "switch_low": "Schalter niedrige Stufe",
-      "switch_high": "Schalter hohe Stufe"
+      "switch_high": "Schalter hohe Stufe",
+      "entity_lux": "Helligkeitssensor (Lux)",
+      "wind_max": "Schwelle für starken Wind (km/h)",
+      "show_lux": "Helligkeit anzeigen",
+      "fabric_color": "Stofffarbe"
     },
     "fr": {
       "animations": "Animations",
@@ -12500,7 +12733,11 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_cover": "Afficher le couvercle",
       "show_timer": "Afficher la minuterie",
       "switch_low": "Interrupteur petite vitesse",
-      "switch_high": "Interrupteur grande vitesse"
+      "switch_high": "Interrupteur grande vitesse",
+      "entity_lux": "Capteur de luminosité (lux)",
+      "wind_max": "Seuil de vent fort (km/h)",
+      "show_lux": "Afficher la luminosité",
+      "fabric_color": "Couleur de la toile"
     },
     "it": {
       "animations": "Animazioni",
@@ -12919,7 +13156,11 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_cover": "Mostra copertura",
       "show_timer": "Mostra timer",
       "switch_low": "Interruttore bassa velocità",
-      "switch_high": "Interruttore alta velocità"
+      "switch_high": "Interruttore alta velocità",
+      "entity_lux": "Sensore di luminosità (lux)",
+      "wind_max": "Soglia vento forte (km/h)",
+      "show_lux": "Mostra luminosità",
+      "fabric_color": "Colore del telo"
     },
     "nb": {
       "illustration_size": "Størrelse på illustrasjonen",
@@ -13305,7 +13546,11 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_drink": "Vis siste slurk",
       "show_clean": "Vis rengjøring",
       "entity_locked_in": "Lås «Bare inn» (Sure Petcare)",
-      "entity_locked_out": "Lås «Bare ut» (Sure Petcare)"
+      "entity_locked_out": "Lås «Bare ut» (Sure Petcare)",
+      "entity_lux": "Lyssensor (lux)",
+      "wind_max": "Grense for sterk vind (km/t)",
+      "show_lux": "Vis lysnivå",
+      "fabric_color": "Duk-farge"
     },
     "nl": {
       "animations": "Animaties",
@@ -13724,7 +13969,11 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_cover": "Deksel tonen",
       "show_timer": "Timer tonen",
       "switch_low": "Schakelaar lage stand",
-      "switch_high": "Schakelaar hoge stand"
+      "switch_high": "Schakelaar hoge stand",
+      "entity_lux": "Lichtsensor (lux)",
+      "wind_max": "Drempel harde wind (km/u)",
+      "show_lux": "Toon lichtniveau",
+      "fabric_color": "Kleur van het doek"
     },
     "pl": {
       "animations": "Animacje",
@@ -14128,7 +14377,11 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_nvme_1": "SSD 1 (NVMe)",
       "entity_nvme_1_temp": "Temperatura SSD 1",
       "entity_nvme_2": "SSD 2 (NVMe)",
-      "entity_nvme_2_temp": "Temperatura SSD 2"
+      "entity_nvme_2_temp": "Temperatura SSD 2",
+      "entity_lux": "Czujnik natężenia światła (lx)",
+      "wind_max": "Próg silnego wiatru (km/h)",
+      "show_lux": "Pokaż natężenie światła",
+      "fabric_color": "Kolor tkaniny"
     },
     "ro": {
       "animations": "Animații",
@@ -14491,7 +14744,11 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_btn_mute": "Buton fără sunet",
       "show_btn_vol_up": "Buton volum +",
       "override": "Derogare temporară (Netatmo)",
-      "override_durations": "Durate derogare (min)"
+      "override_durations": "Durate derogare (min)",
+      "entity_lux": "Senzor de luminozitate (lux)",
+      "wind_max": "Prag vânt puternic (km/h)",
+      "show_lux": "Afișează luminozitatea",
+      "fabric_color": "Culoarea pânzei"
     },
     "ru": {
       "animations": "Анимации",
@@ -14854,7 +15111,11 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_btn_mute": "Кнопка «Без звука»",
       "show_btn_vol_up": "Кнопка «Громче»",
       "override": "Временное изменение (Netatmo)",
-      "override_durations": "Длительности (мин)"
+      "override_durations": "Длительности (мин)",
+      "entity_lux": "Датчик освещённости (лк)",
+      "wind_max": "Порог сильного ветра (км/ч)",
+      "show_lux": "Показывать освещённость",
+      "fabric_color": "Цвет полотна"
     },
     "sr": {
       "animations": "Анимације",
@@ -15217,7 +15478,11 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_btn_mute": "Дугме утишај",
       "show_btn_vol_up": "Дугме гласније",
       "override": "Привремена измена (Netatmo)",
-      "override_durations": "Трајања (мин)"
+      "override_durations": "Трајања (мин)",
+      "entity_lux": "Сензор осветљености (лукс)",
+      "wind_max": "Праг јаког ветра (km/h)",
+      "show_lux": "Прикажи осветљеност",
+      "fabric_color": "Боја платна"
     },
     "sr-Latn": {
       "animations": "Animacije",
@@ -15580,7 +15845,11 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_btn_mute": "Dugme utišaj",
       "show_btn_vol_up": "Dugme glasnije",
       "override": "Privremena izmena (Netatmo)",
-      "override_durations": "Trajanja (min)"
+      "override_durations": "Trajanja (min)",
+      "entity_lux": "Senzor osvetljenosti (luks)",
+      "wind_max": "Prag jakog vetra (km/h)",
+      "show_lux": "Prikaži osvetljenost",
+      "fabric_color": "Boja platna"
     }
   };
   const lang = (hass) => {
@@ -26166,7 +26435,19 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "rw_position": "Opening",
       "blind": "Blind",
       "blind_down": "Blind down",
-      "btn_blind": "Blind"
+      "btn_blind": "Blind",
+      "awning": "Retractable awning",
+      "aw_open": "Extended",
+      "aw_closed": "Retracted",
+      "aw_partial": "Extended",
+      "aw_opening": "Extending",
+      "aw_closing": "Retracting",
+      "aw_position": "Extension",
+      "aw_btn_open": "Extend",
+      "aw_btn_close": "Retract",
+      "aw_wind_alert": "Strong wind",
+      "lux": "Sunlight",
+      "temperature": "Temperature"
     },
     "cs": {
       "roller_shutter": "Venkovní roleta",
@@ -26202,7 +26483,19 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "rw_position": "Otevření",
       "blind": "Žaluzie",
       "blind_down": "Žaluzie stažená",
-      "btn_blind": "Žaluzie"
+      "btn_blind": "Žaluzie",
+      "awning": "Markýza",
+      "aw_open": "Vysunutá",
+      "aw_closed": "Zasunutá",
+      "aw_partial": "Vysunutá",
+      "aw_opening": "Vysouvá se",
+      "aw_closing": "Zasouvá se",
+      "aw_position": "Vysunutí",
+      "aw_btn_open": "Vysunout",
+      "aw_btn_close": "Zasunout",
+      "aw_wind_alert": "Silný vítr",
+      "lux": "Osvit",
+      "temperature": "Teplota"
     },
     "de": {
       "roller_shutter": "Rollladen",
@@ -26238,7 +26531,19 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "rw_position": "Öffnung",
       "blind": "Rollladen",
       "blind_down": "Rollladen unten",
-      "btn_blind": "Rollladen"
+      "btn_blind": "Rollladen",
+      "awning": "Markise",
+      "aw_open": "Ausgefahren",
+      "aw_closed": "Eingefahren",
+      "aw_partial": "Ausgefahren",
+      "aw_opening": "Fährt aus",
+      "aw_closing": "Fährt ein",
+      "aw_position": "Ausfahrweite",
+      "aw_btn_open": "Ausfahren",
+      "aw_btn_close": "Einfahren",
+      "aw_wind_alert": "Starker Wind",
+      "lux": "Sonnenlicht",
+      "temperature": "Temperatur"
     },
     "fr": {
       "roller_shutter": "Volet roulant",
@@ -26274,7 +26579,19 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "rw_position": "Ouverture",
       "blind": "Volet",
       "blind_down": "Volet baissé",
-      "btn_blind": "Volet"
+      "btn_blind": "Volet",
+      "awning": "Store banne",
+      "aw_open": "Déployé",
+      "aw_closed": "Rentré",
+      "aw_partial": "Déployé",
+      "aw_opening": "Déploiement",
+      "aw_closing": "Rentrée",
+      "aw_position": "Déploiement",
+      "aw_btn_open": "Déployer",
+      "aw_btn_close": "Rentrer",
+      "aw_wind_alert": "Vent fort",
+      "lux": "Ensoleillement",
+      "temperature": "Température"
     },
     "it": {
       "roller_shutter": "Tapparella",
@@ -26310,7 +26627,19 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "rw_position": "Apertura",
       "blind": "Tenda",
       "blind_down": "Tenda abbassata",
-      "btn_blind": "Tenda"
+      "btn_blind": "Tenda",
+      "awning": "Tenda da sole",
+      "aw_open": "Aperta",
+      "aw_closed": "Chiusa",
+      "aw_partial": "Aperta",
+      "aw_opening": "In apertura",
+      "aw_closing": "In chiusura",
+      "aw_position": "Estensione",
+      "aw_btn_open": "Apri",
+      "aw_btn_close": "Chiudi",
+      "aw_wind_alert": "Vento forte",
+      "lux": "Luminosità",
+      "temperature": "Temperatura"
     },
     "nb": {
       "roller_shutter": "Rullegardin",
@@ -26346,7 +26675,19 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "rw_position": "Åpning",
       "blind": "Rullegardin",
       "blind_down": "Rullegardin nede",
-      "btn_blind": "Rullegardin"
+      "btn_blind": "Rullegardin",
+      "awning": "Markise",
+      "aw_open": "Utfelt",
+      "aw_closed": "Inntrukket",
+      "aw_partial": "Utfelt",
+      "aw_opening": "Trekker ut",
+      "aw_closing": "Trekker inn",
+      "aw_position": "Utfelling",
+      "aw_btn_open": "Trekk ut",
+      "aw_btn_close": "Trekk inn",
+      "aw_wind_alert": "Sterk vind",
+      "lux": "Sollys",
+      "temperature": "Temperatur"
     },
     "nl": {
       "roller_shutter": "Rolluik",
@@ -26382,7 +26723,19 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "rw_position": "Opening",
       "blind": "Rolluik",
       "blind_down": "Rolluik dicht",
-      "btn_blind": "Rolluik"
+      "btn_blind": "Rolluik",
+      "awning": "Zonnescherm",
+      "aw_open": "Uitgerold",
+      "aw_closed": "Ingerold",
+      "aw_partial": "Uitgerold",
+      "aw_opening": "Rolt uit",
+      "aw_closing": "Rolt in",
+      "aw_position": "Uitrolling",
+      "aw_btn_open": "Uitrollen",
+      "aw_btn_close": "Inrollen",
+      "aw_wind_alert": "Harde wind",
+      "lux": "Zonlicht",
+      "temperature": "Temperatuur"
     },
     "pl": {
       "roller_shutter": "Roleta zewnętrzna",
@@ -26418,7 +26771,19 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "rw_position": "Otwieranie",
       "blind": "Roleta",
       "blind_down": "Roleta opuszczona",
-      "btn_blind": "Roleta"
+      "btn_blind": "Roleta",
+      "awning": "Markiza",
+      "aw_open": "Rozwinięta",
+      "aw_closed": "Zwinięta",
+      "aw_partial": "Rozwinięta",
+      "aw_opening": "Rozwija się",
+      "aw_closing": "Zwija się",
+      "aw_position": "Rozwinięcie",
+      "aw_btn_open": "Rozwiń",
+      "aw_btn_close": "Zwiń",
+      "aw_wind_alert": "Silny wiatr",
+      "lux": "Nasłonecznienie",
+      "temperature": "Temperatura"
     },
     "ro": {
       "roller_shutter": "Rulou exterior",
@@ -26454,7 +26819,19 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "rw_position": "Deschidere",
       "blind": "Rulou",
       "blind_down": "Rulou coborât",
-      "btn_blind": "Rulou"
+      "btn_blind": "Rulou",
+      "awning": "Copertină retractabilă",
+      "aw_open": "Desfăcută",
+      "aw_closed": "Strânsă",
+      "aw_partial": "Desfăcută",
+      "aw_opening": "Se desface",
+      "aw_closing": "Se strânge",
+      "aw_position": "Desfacere",
+      "aw_btn_open": "Desface",
+      "aw_btn_close": "Strânge",
+      "aw_wind_alert": "Vânt puternic",
+      "lux": "Luminozitate",
+      "temperature": "Temperatură"
     },
     "ru": {
       "roller_shutter": "Рольставни",
@@ -26490,7 +26867,19 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "rw_position": "Открытие",
       "blind": "Рольставня",
       "blind_down": "Рольставня опущена",
-      "btn_blind": "Ставня"
+      "btn_blind": "Ставня",
+      "awning": "Маркиза",
+      "aw_open": "Раскрыта",
+      "aw_closed": "Убрана",
+      "aw_partial": "Раскрыта",
+      "aw_opening": "Раскрывается",
+      "aw_closing": "Убирается",
+      "aw_position": "Вылет",
+      "aw_btn_open": "Раскрыть",
+      "aw_btn_close": "Убрать",
+      "aw_wind_alert": "Сильный ветер",
+      "lux": "Освещённость",
+      "temperature": "Температура"
     },
     "sr": {
       "roller_shutter": "Ролетна",
@@ -26526,7 +26915,19 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "rw_position": "Отварање",
       "blind": "Застор (Роло жалузина)",
       "blind_down": "Застор спуштен",
-      "btn_blind": "Застор"
+      "btn_blind": "Застор",
+      "awning": "Тенда",
+      "aw_open": "Развучена",
+      "aw_closed": "Увучена",
+      "aw_partial": "Развучена",
+      "aw_opening": "Развлачи се",
+      "aw_closing": "Увлачи се",
+      "aw_position": "Извлачење",
+      "aw_btn_open": "Развуци",
+      "aw_btn_close": "Увуци",
+      "aw_wind_alert": "Јак ветар",
+      "lux": "Осветљеност",
+      "temperature": "Температура"
     },
     "sr-Latn": {
       "roller_shutter": "Roletna",
@@ -26562,7 +26963,19 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "rw_position": "Otvaranje",
       "blind": "Zastor (Rolo žaluzina)",
       "blind_down": "Zastor spušten",
-      "btn_blind": "Zastor"
+      "btn_blind": "Zastor",
+      "awning": "Tenda",
+      "aw_open": "Razvučena",
+      "aw_closed": "Uvučena",
+      "aw_partial": "Razvučena",
+      "aw_opening": "Razvlači se",
+      "aw_closing": "Uvlači se",
+      "aw_position": "Izvlačenje",
+      "aw_btn_open": "Razvuci",
+      "aw_btn_close": "Uvuci",
+      "aw_wind_alert": "Jak vetar",
+      "lux": "Osvetljenost",
+      "temperature": "Temperatura"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
@@ -26671,7 +27084,20 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
 .rw-blind{transform:translateY(calc((var(--bl,0) - 100) * .96px));transition:transform 1.2s ease-in-out}
 .rw-in{transition:fill .8s}.isnight .rw-in{fill:#ffcf7a}.isnight .rw-in2{fill:#e9a85a}
 .noanim .rw-blind{transition:none}
-.noanim .pg-water path,.noanim .pg-ray,.noanim .pg-candle circle,.noanim .pg-drops line,.noanim .pg-drain circle{animation:none}
+/* ---- store banne : ombre portée, éclairage LED, vent fort (la toile flotte), pluie ---- */
+.aw-shadow{opacity:.24;transition:opacity .8s}.rain .aw-shadow{opacity:.1}.isnight .aw-shadow{opacity:0}
+.aw-dyn{transition:filter .8s}.rain .aw-dyn{filter:brightness(.84) saturate(.8)}.isnight .aw-dyn{filter:brightness(.45)}.isnight.rain .aw-dyn{filter:brightness(.4) saturate(.8)}
+.aw-strip,.aw-pool{opacity:0;transition:opacity .6s}.leds .aw-strip{opacity:1;filter:drop-shadow(0 0 2px #ffd27a)}.isnight.leds .aw-pool{opacity:1}
+.aw-flap{transform-box:view-box;transform-origin:120px 38px}
+.windy .aw-flap{animation:awflap .55s ease-in-out infinite alternate}
+@keyframes awflap{from{transform:skewX(-1.6deg) translateY(-.6px)}to{transform:skewX(1.6deg) translateY(1px)}}
+.aw-wind{opacity:0;transition:opacity .4s}.windy .aw-wind{opacity:.85}.windy .aw-wind path{animation:awgust 1.1s ease-in-out infinite}
+.aw-wind path:nth-child(2){animation-delay:-.35s!important}.aw-wind path:nth-child(3){animation-delay:-.7s!important}
+@keyframes awgust{from{transform:translateX(-6px);opacity:.3}to{transform:translateX(10px);opacity:1}}
+.tile.warn{background:color-mix(in srgb,var(--sh-move) 30%,var(--secondary-background-color))}
+.windy .badge{background:color-mix(in srgb,var(--sh-move) 28%,transparent);color:var(--sh-move)}
+.noanim .aw-flap,.noanim .aw-wind path{animation:none}
+.noanim .pg-water path,.noanim .windy .aw-flap,.noanim .pg-ray,.noanim .pg-candle circle,.noanim .pg-drops line,.noanim .pg-drain circle{animation:none}
 `;
 
   // ciel et paysage vus par la fenêtre (x0..x1, y0..y1), en version jour et nuit
@@ -26855,6 +27281,92 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       <circle class="led" cx="${FL[0] + 8}" cy="${FL[1]}" r="1.8"/>${ARROW(FR[0] + 16, FR[1] - 14)}`;
   };
 
+  /* ---- store banne : repère 240 × 180, vue de face (maison, terrasse en bois, pelouse) ; la toile, les bras et l'ombre sont
+     redessinés image par image (awDyn) selon le déploiement (0-100) et l'inclinaison (0-100) ---- */
+  const AW = { BL: [22, 38], BR: [218, 38], GY: 118 };
+  const awDyn = (p, t) => {
+    const e = Math.max(0, Math.min(1, p / 100)), tt = isNaN(t) ? 45 : t, { BL, BR, GY } = AW;
+    const drop = e * (34 + tt * .28), grow = e * 14;
+    const FL = [BL[0] - grow, BL[1] + 2 + drop], FR = [BR[0] + grow, BR[1] + 2 + drop], N = 10;
+    let fab = '';
+    if (e > .02) {
+      for (let i = 0; i < N; i++) {
+        const q = [lerp(BL, BR, i / N), lerp(BL, BR, (i + 1) / N), lerp(FL, FR, (i + 1) / N), lerp(FL, FR, i / N)];
+        fab += `<polygon points="${pts(q)}" fill="var(--sc)"/>${i % 2 ? `<polygon points="${pts(q)}" fill="#fff" opacity=".14"/>` : ''}<polygon points="${pts(q)}" fill="none" stroke="#000" stroke-opacity=".1" stroke-width=".4"/>`;
+      }
+      fab += `<polygon points="${pts([BL, BR, FR, FL])}" fill="url(#ID-awfab)"/>`;
+      // lambrequin festonné sous la barre de charge
+      const y0 = FL[1] + 5, n = 16, w = FR[0] - FL[0];
+      let d = `M${FL[0].toFixed(1)} ${y0.toFixed(1)}H${FR[0].toFixed(1)}`;
+      for (let i = n - 1; i >= 0; i--) d += `Q${(FL[0] + w * (i + .5) / n).toFixed(1)} ${(y0 + 9).toFixed(1)} ${(FL[0] + w * i / n).toFixed(1)} ${y0.toFixed(1)}`;
+      fab += `<path d="${d}Z" fill="var(--sc)"/><path d="${d}Z" fill="#000" opacity=".1"/>`;
+    }
+    fab += `<path d="M${FL[0].toFixed(1)} ${FL[1].toFixed(1)}H${FR[0].toFixed(1)}V${(FR[1] + 5).toFixed(1)}H${FL[0].toFixed(1)}Z" fill="#3b4047"/>
+      <path d="M${FL[0].toFixed(1)} ${(FL[1] + .6).toFixed(1)}H${FR[0].toFixed(1)}" stroke="#9aa2aa" stroke-width="1"/>
+      <circle cx="${FL[0].toFixed(1)}" cy="${(FL[1] + 2.5).toFixed(1)}" r="3" fill="#2c3136"/><circle cx="${FR[0].toFixed(1)}" cy="${(FR[1] + 2.5).toFixed(1)}" r="3" fill="#2c3136"/>`;
+    // bras articulés : coude qui descend un peu quand le store est replié
+    const arm = (A, F, side) => {
+      const M = lerp(A, F, .5), E = [M[0] + side * 3 * (1 - e), M[1] + 7 + 9 * (1 - e)], P = pts([A, E, F]);
+      return `<polyline points="${P}" fill="none" stroke="#2c3136" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
+        <polyline points="${P}" fill="none" stroke="#8a929a" stroke-width=".9" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${E[0].toFixed(1)}" cy="${E[1].toFixed(1)}" r="1.9" fill="#1e2226"/>`;
+    };
+    const arms = arm([BL[0] + 9, BL[1] + 3], [FL[0] + 8, FL[1] + 3], 1) + arm([BR[0] - 9, BR[1] + 3], [FR[0] - 8, FR[1] + 3], -1);
+    const sy = GY + e * 46, sh = `<polygon points="${pts([[BL[0] - 6, GY], [BR[0] + 6, GY], [BR[0] + 6 + grow + 8, sy], [BL[0] - 6 - grow - 8, sy]])}"/>`;
+    const led = e > .05 ? `<line x1="${(FL[0] + 7).toFixed(1)}" y1="${(FL[1] + 5.6).toFixed(1)}" x2="${(FR[0] - 7).toFixed(1)}" y2="${(FR[1] + 5.6).toFixed(1)}" stroke="#ffe08a" stroke-width="1.6" stroke-dasharray="3 2.2" class="aw-strip"/>
+      <ellipse class="aw-pool" cx="120" cy="${(GY + e * 30 + 12).toFixed(1)}" rx="${(34 + e * 52).toFixed(1)}" ry="${(7 + e * 4).toFixed(1)}" fill="url(#ID-awpool)"/>` : '';
+    return [`<g class="aw-flap">${fab}</g>${arms}`, sh, led];
+  };
+  const AWNING = () => {
+    const { BL, BR, GY } = AW;
+    const chair = (x, y, f) => `<g transform="translate(${x} ${y}) scale(${f} 1)"><rect x="-1" y="-11" width="3" height="11" rx="1" fill="#efece6" stroke="#cfc8b8" stroke-width=".4"/><rect x="-1" y="-11" width="12" height="3" rx="1.2" fill="#efece6" stroke="#cfc8b8" stroke-width=".4"/><rect x="-1" y="-3" width="12" height="3.2" rx="1.2" fill="#efece6" stroke="#cfc8b8" stroke-width=".4"/><rect x="0" y="0" width="1.6" height="7" fill="#b7ae9e"/><rect x="8" y="0" width="1.6" height="7" fill="#b7ae9e"/></g>`;
+    const planks = [0, 1, 2, 3, 4].map((k) => `<path d="M0 ${GY + 6 + k * (6 + k * 1.4)}H240" stroke="#8a6338" stroke-width=".6" opacity=".7"/>`).join('')
+      + [...Array(16)].map((_, k) => `<path d="M${(k * 31 + (k % 3) * 9) % 240} ${GY + 6 + (k % 4) * 8}v${5 + (k % 3)}" stroke="#8a6338" stroke-width=".5" opacity=".6"/>`).join('');
+    const lantern = (x, y) => `<g><rect x="${x - 2.6}" y="${y - 7}" width="5.2" height="7" rx="1.4" fill="none" stroke="#2a2f35" stroke-width=".8"/><path d="M${x - 2.6} ${y - 3.5}h5.2M${x} ${y - 7}v7" stroke="#2a2f35" stroke-width=".5"/><circle class="pg-glow" cx="${x}" cy="${y - 3.5}" r="5" fill="#ffcf6a"/></g>`;
+    const drops = [...Array(32)].map((_, k) => { const x = (k * 37.3) % 250, y = (k * 23) % 40; return `<line x1="${x.toFixed(1)}" y1="${y}" x2="${(x - 2).toFixed(1)}" y2="${y + 8}"/>`; }).join('');
+    return `<defs>
+      <linearGradient id="ID-awglass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3e5466"/><stop offset=".5" stop-color="#6f8ba0"/><stop offset="1" stop-color="#2f4252"/></linearGradient>
+      <linearGradient id="ID-awwarm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd08a"/><stop offset="1" stop-color="#e8954a"/></linearGradient>
+      <linearGradient id="ID-awfab" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".3"/><stop offset=".45" stop-color="#000" stop-opacity=".05"/><stop offset="1" stop-color="#fff" stop-opacity=".12"/></linearGradient>
+      <radialGradient id="ID-awpool" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffd27a" stop-opacity=".75"/><stop offset="1" stop-color="#ffd27a" stop-opacity="0"/></radialGradient>
+      <clipPath id="ID-awg"><rect x="0" y="${GY}" width="240" height="${180 - GY}"/></clipPath></defs>
+      <g class="day"><rect width="240" height="${GY}" fill="url(#shskyd)"/><g class="pg-sun"><circle cx="34" cy="7" r="13" fill="#ffe17a" opacity=".3"/><circle cx="34" cy="7" r="7" fill="#ffe17a"/></g></g>
+      <g class="night"><rect width="240" height="${GY}" fill="url(#shskyn)"/><circle cx="206" cy="6" r="4.5" fill="#f4f1d0"/><circle cx="208" cy="4.6" r="3.8" fill="#0b1430"/>${[[50, 5], [90, 3], [140, 6], [170, 3]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r=".8" fill="#fff"/>`).join('')}</g>
+      <g class="pg-cloud"><rect width="240" height="14" fill="#8d99a8"/><ellipse cx="60" cy="5" rx="38" ry="8" fill="#7d8896"/><ellipse cx="170" cy="4" rx="46" ry="8" fill="#86919f"/></g>
+      <!-- maison : enduit clair, toit plat, baie vitrée coulissante, fenêtres, appliques -->
+      <rect x="0" y="16" width="240" height="${GY - 16}" fill="#e9e3d6"/><rect x="0" y="${GY - 6}" width="240" height="6" fill="#cfc7b6"/>
+      <rect x="-2" y="10" width="244" height="8" fill="#3a3f46"/><rect x="-2" y="10" width="244" height="1.5" fill="#5b626b"/>
+      <rect x="88" y="50" width="92" height="${GY - 56}" fill="#2b3036"/>
+      <rect x="91" y="53" width="41" height="${GY - 62}" fill="url(#ID-awglass)"/><rect x="136" y="53" width="41" height="${GY - 62}" fill="url(#ID-awglass)"/>
+      <path d="M95 ${GY - 12}l16 -${GY - 70}h9l-16 ${GY - 70}zM140 ${GY - 12}l14 -${GY - 70}h6l-14 ${GY - 70}z" fill="#fff" opacity=".13"/>
+      <rect x="14" y="60" width="46" height="40" fill="#f6f3ec" stroke="#cfc7b6" stroke-width=".8"/><rect x="17" y="63" width="40" height="34" fill="url(#ID-awglass)"/><path d="M37 63v34M17 80h40" stroke="#f6f3ec" stroke-width="1.6"/>
+      <rect x="196" y="60" width="30" height="40" fill="#f6f3ec" stroke="#cfc7b6" stroke-width=".8"/><rect x="199" y="63" width="24" height="34" fill="url(#ID-awglass)"/><path d="M211 63v34" stroke="#f6f3ec" stroke-width="1.6"/>
+      <g class="night"><rect x="91" y="53" width="41" height="${GY - 62}" fill="url(#ID-awwarm)" opacity=".85"/><rect x="136" y="53" width="41" height="${GY - 62}" fill="url(#ID-awwarm)" opacity=".85"/>
+        <rect x="17" y="63" width="40" height="34" fill="url(#ID-awwarm)" opacity=".8"/><rect x="199" y="63" width="24" height="34" fill="url(#ID-awwarm)" opacity=".8"/></g>
+      ${lantern(76, 84)}${lantern(192, 84)}
+      <!-- terrasse en bois, pelouse, salon de jardin -->
+      <rect x="0" y="${GY}" width="240" height="${180 - GY}" fill="#6fae58"/>
+      <path d="M0 ${GY + 38}H240V180H0Z" fill="#5ea552" opacity=".55"/>
+      <polygon points="0,${GY} 240,${GY} 240,${GY + 40} 0,${GY + 40}" fill="#b88a5c"/>${planks}
+      <rect x="0" y="${GY + 40}" width="240" height="3" fill="#8f6a40"/>
+      <g transform="translate(0 6)"><ellipse cx="120" cy="${GY + 28}" rx="30" ry="3.5" fill="#000" opacity=".16"/>
+        ${chair(84, GY + 22, 1)}${chair(156, GY + 22, -1)}${chair(103, GY + 29, 1)}${chair(137, GY + 29, -1)}
+        <rect x="118.4" y="${GY + 9}" width="3.2" height="17" fill="#cfc8b8"/><ellipse cx="120" cy="${GY + 26.5}" rx="9" ry="1.8" fill="#cfc8b8"/>
+        <ellipse cx="120" cy="${GY + 9}" rx="24" ry="5.4" fill="#efece6" stroke="#cfc8b8" stroke-width=".6"/></g>
+      <g transform="translate(212 ${GY - 12})"><path d="M-5 8h10l-1.4 12h-7.2z" fill="#5b5f66"/><circle cx="0" cy="2" r="8" fill="#5f8a55"/><circle cx="-3.5" cy="-2" r="4.5" fill="#6f9c63"/><circle cx="4.5" cy="-1.5" r="4.5" fill="#557d4c"/></g>
+      <g clip-path="url(#ID-awg)"><g class="aw-shadow" fill="#000"></g></g>
+      <rect class="pg-dim" x="0" y="0" width="240" height="180" fill="#0a1020"/>
+      <g class="night"><circle cx="76" cy="80.5" r="6" fill="#ffcf6a" opacity=".45"/><circle cx="192" cy="80.5" r="6" fill="#ffcf6a" opacity=".45"/></g>
+      <!-- caisson du store, toile et bras (redessinés par awDyn) -->
+      <g class="aw-wind" fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity=".0"><path d="M2 54q14 -5 30 0t26 -2"/><path d="M0 70q12 -4 24 0t22 -2"/><path d="M4 86q10 -3 20 0t18 -1"/></g>
+      <g class="aw-dyn"></g>
+      <rect x="${BL[0] - 6}" y="26" width="${BR[0] - BL[0] + 12}" height="13" rx="3.2" fill="#3b4047"/><rect x="${BL[0] - 6}" y="26" width="${BR[0] - BL[0] + 12}" height="13" rx="3.2" fill="url(#shrelief)"/>
+      <rect x="${BL[0] - 6}" y="26" width="${BR[0] - BL[0] + 12}" height="2" rx="1" fill="#fff" opacity=".28"/>
+      <rect x="${BL[0] - 9}" y="24" width="5" height="17" rx="1.6" fill="#2c3136"/><rect x="${BR[0] + 4}" y="24" width="5" height="17" rx="1.6" fill="#2c3136"/>
+      <g class="aw-leds"></g>
+      <g class="pg-drops" stroke="#dfeeff" stroke-width="1" opacity=".8">${drops}</g>
+      <circle class="led" cx="${BR[0] + 10}" cy="32" r="1.9"/>${ARROW(BR[0] + 6, 58)}`;
+  };
+
   /* ---- fenêtre de toit : pan de toit en tuiles, ouvrant à rotation (transform posé par JS), volet roulant extérieur ---- */
   const RW = { X: 58, Y: 40, W: 84, H: 96 };
   // ouvrant pour une ouverture a (0 à 100) : il pivote sur son axe médian, le bas sort vers l'extérieur
@@ -26911,10 +27423,11 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
     venetian_blind: { color: '#ece2cf', re: /venitien|vénitien|venetian|blind|jalousie|lamel|store/i, icon: 'mdi:blinds-horizontal' },
     swing_shutter: { color: '#4f7d5c', re: /volet|shutter|battant|persienne|swing/i, icon: 'mdi:window-shutter-open' },
     pergola: { color: '#d5dae0', re: /pergola|bioclim|lame|louvre|lamelle/i, icon: 'mdi:pergola' },
+    awning: { color: '#b3a086', re: /store_banne|banne|awning|markise|toldo|tenda|luifel|markiza|markyza|store/i, icon: 'mdi:awning-outline' },
     roof_window: { color: '#4b525b', re: /velux|fenetre_toit|fenetre_de_toit|roof|skylight|dachfenster|tabatiere|fakro/i, icon: 'mdi:window-open-variant' },
   };
   const TILES = [['position', 'mdi:arrow-expand-vertical', 'show_position'], ['tilt', 'mdi:rotate-3d-variant', 'show_tilt'],
-    ['power', 'mdi:flash', 'show_power'], ['blind', 'mdi:window-shutter', 'show_blind'], ['rain', 'mdi:weather-pouring', 'show_rain'], ['wind', 'mdi:weather-windy', 'show_wind'], ['since', 'mdi:history', 'show_since']];
+    ['power', 'mdi:flash', 'show_power'], ['blind', 'mdi:window-shutter', 'show_blind'], ['rain', 'mdi:weather-pouring', 'show_rain'], ['wind', 'mdi:weather-windy', 'show_wind'], ['lux', 'mdi:white-balance-sunny', 'show_lux'], ['temperature', 'mdi:thermometer', 'show_temperature'], ['since', 'mdi:history', 'show_since']];
 
   class ApplianceShutterCard extends HTMLElement {
 
@@ -26925,7 +27438,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { show_status: true, show_controls: true, show_slider: true, show_position: true, show_tilt: true, show_power: true, show_since: true,
-        show_rain: true, show_wind: true, show_blind: true, sun_entity: 'sun.sun', ...c };
+        show_rain: true, show_wind: true, show_blind: true, show_lux: true, show_temperature: true, sun_entity: 'sun.sun', ...c };
       // volet extérieur = la fenêtre elle-même : sans objet, on l'ignore (sinon bouton et tuile « Volet » en double)
       if (this._c.entity_blind && this._c.entity_blind === this._c.entity) delete this._c.entity_blind;
       // fenêtre de toit sans ouvrant motorisé, seulement un volet roulant (Velux solaire…) : les commandes pilotent le volet
@@ -26944,7 +27457,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
 
     _t(k) {
       // pergola : libellés au féminin (« Ouverte », « Fermée ») et « Lames » au lieu de « Position »
-      const L = T[this._lang()], pre = { pergola: 'pg_', roof_window: 'rw_' }[this.kind], pk = pre ? `${pre}${k}` : null;
+      const L = T[this._lang()], pre = { pergola: 'pg_', roof_window: 'rw_', awning: 'aw_' }[this.kind], pk = pre ? `${pre}${k}` : null;
       return (pk && (L[pk] ?? T.en[pk])) ?? L[k] ?? T.en[k] ?? k;
     }
     // libellé perso (option labels) sinon traduction
@@ -26955,6 +27468,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
     _watts(id) { const v = this._num(id); return /^kw$/i.test(this._unit(id, 'W')) ? v * 1000 : v; }
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
     _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    // vitesse du vent en km/h, quelle que soit l'unité du capteur (m/s, mph, nœuds)
+    _windKmh() {
+      const id = this._c.entity_wind, v = this._num(id); if (isNaN(v)) return NaN;
+      const u = String(this._unit(id, 'km/h')).toLowerCase().replace(/\s/g, '');
+      return /^(m\/s|ms)$/.test(u) ? v * 3.6 : /mph|mi\/h/.test(u) ? v * 1.609 : /^(kn|kt|kts|knots?)$/.test(u) ? v * 1.852 : v;
+    }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
     _since(s) {
       const t = s && Date.parse(s.last_changed); if (!t) return '--';
@@ -26967,10 +27486,10 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
 
     _build() {
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
-      const swing = this.kind === 'swing_shutter', pergola = this.kind === 'pergola', roof = this.kind === 'roof_window';
+      const swing = this.kind === 'swing_shutter', pergola = this.kind === 'pergola', roof = this.kind === 'roof_window', awning = this.kind === 'awning';
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="shtitle"></div><div class="badge" id="shbadge"></div></div>
-        <div class="scene${swing ? ' sw' : pergola ? ' pg' : ''}"><svg viewBox="${pergola ? '0 0 240 180' : '0 0 200 172'}" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${pergola ? PERGOLA() : roof ? ROOF() : SVGS[this.kind]()}</svg>
+        <div class="scene${swing ? ' sw' : pergola || awning ? ' pg' : ''}"><svg viewBox="${pergola || awning ? '0 0 240 180' : '0 0 200 172'}" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${pergola ? PERGOLA() : awning ? AWNING() : roof ? ROOF() : SVGS[this.kind]()}</svg>
           ${swing ? `<div class="leaf l mv">${LEAF(false)}</div><div class="leaf r mv">${LEAF(true)}</div>` : ''}</div>
         <div class="rng ps" id="shpos"><span></span><input type="range" min="0" max="100" step="1"></div>
         <div class="rng tl" id="shtilt"><span></span><input type="range" min="0" max="100" step="1"></div>
@@ -26981,10 +27500,10 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
           <button data-k="close" data-a="close_cover_tilt"><ha-icon icon="mdi:blinds-horizontal-closed"></ha-icon><span></span></button>
         </div>
         <div class="ctl" id="shctl">
-          <button data-a="open"><ha-icon icon="mdi:arrow-up"></ha-icon><span></span></button>
+          <button data-a="open"><ha-icon icon="${awning ? 'mdi:arrow-expand-down' : 'mdi:arrow-up'}"></ha-icon><span></span></button>
           <button data-a="stop"><ha-icon icon="mdi:stop"></ha-icon><span></span></button>
-          <button data-a="close"><ha-icon icon="mdi:arrow-down"></ha-icon><span></span></button>
-          ${pergola ? '<button data-a="light"><ha-icon icon="mdi:led-strip-variant"></ha-icon><span></span></button>' : ''}
+          <button data-a="close"><ha-icon icon="${awning ? 'mdi:arrow-collapse-up' : 'mdi:arrow-down'}"></ha-icon><span></span></button>
+          ${pergola || awning ? '<button data-a="light"><ha-icon icon="mdi:led-strip-variant"></ha-icon><span></span></button>' : ''}
           ${roof ? '<button data-a="blind"><ha-icon icon="mdi:window-shutter"></ha-icon><span></span></button>' : ''}
         </div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
@@ -27018,7 +27537,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         this._setTilt(Number(e.target.value));
       });
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
-        const k = el.dataset.k; this._more({ power: this._c.entity_power, rain: this._c.entity_rain, wind: this._c.entity_wind, blind: this._c.entity_blind }[k] || this._c.entity);
+        const k = el.dataset.k; this._more({ power: this._c.entity_power, rain: this._c.entity_rain, wind: this._c.entity_wind, blind: this._c.entity_blind, lux: this._c.entity_lux, temperature: this._c.entity_temperature }[k] || this._c.entity);
       }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true; this._pos = null; this._ang = null;
     }
@@ -27084,6 +27603,14 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       const draw = (a) => {
         this._ang = a;
         if (this.kind === 'roof_window') { this._root.querySelector('.rw-sash').setAttribute('transform', rwSash(a)); return; }
+        if (this.kind === 'awning') {
+          const [dyn, sh, led] = awDyn(a, this._awTilt);
+          this._root.querySelector('.aw-dyn').innerHTML = dyn;
+          this._root.querySelector('.aw-shadow').innerHTML = sh;
+          this._root.querySelector('.aw-leds').innerHTML = led;
+          card.style.setProperty('--a', a.toFixed(1));
+          return;
+        }
         const [bl, sh] = pgBlades(a);
         this._root.querySelector('.pg-blades').innerHTML = bl;
         this._root.querySelector('.pg-shadow').innerHTML = sh;
@@ -27105,7 +27632,8 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       const sun = this._st(c.sun_entity), night = !!sun && sun.state === 'below_horizon';
       const rainS = this._st(c.entity_rain), rain = !!rainS && (/^(on|true|wet|rain|pluie|raining)$/i.test(String(rainS.state)) || this._num(c.entity_rain) > 0);
       const lightS = this._st(c.entity_light), leds = !!lightS && /^on$/i.test(String(lightS.state));
-      card.className = `${st}${night ? ' isnight' : ''}${c.animations === false ? ' noanim' : ''}${this._tiltOnly ? ' tonly' : ''}${rain ? ' rain' : ''}${leds ? ' leds' : ''}`;
+      const wk = this.kind === 'awning' ? this._windKmh() : NaN, windy = !isNaN(wk) && wk >= (Number(c.wind_max) > 0 ? Number(c.wind_max) : 40);
+      card.className = `${st}${windy ? ' windy' : ''}${night ? ' isnight' : ''}${c.animations === false ? ' noanim' : ''}${this._tiltOnly ? ' tonly' : ''}${rain ? ' rain' : ''}${leds ? ' leds' : ''}`;
       const blS = this._st(c.entity_blind), blA = (blS && blS.attributes) || {};
       const blPos = blS ? (isFinite(Number(blA.current_position)) && blA.current_position != null ? Number(blA.current_position) : /^(closed|closing)$/i.test(blS.state) ? 0 : 100) : 100;
       this._blindDown = 100 - Math.max(0, Math.min(100, blPos));
@@ -27118,8 +27646,13 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         card.style.setProperty('--sh-d', `${dur.toFixed(2)}s`);
         // avec un temps de course, la cover envoie sa position par paliers : mouvement linéaire pour enchaîner sans à-coups
         card.style.setProperty('--sh-e', tt > 0 ? 'linear' : 'ease-in-out');
-        if (this.kind === 'pergola' || this.kind === 'roof_window') this._tween(pos, c.animations === false ? 0 : dur, tt > 0);
+        if (this.kind === 'pergola' || this.kind === 'roof_window' || this.kind === 'awning') this._tween(pos, c.animations === false ? 0 : dur, tt > 0);
         this._pos = pos;
+      }
+      // store banne : l'inclinaison change l'angle de la toile, sans déplacer le store
+      if (this.kind === 'awning') {
+        const aw = isNaN(tilt) ? NaN : tilt;
+        if (aw !== this._awTilt && !(isNaN(aw) && isNaN(this._awTilt))) { this._awTilt = aw; if (this._ang != null) this._tween(this._ang, 0); }
       }
       card.style.setProperty('--p', String(pos));
       card.style.setProperty('--t', String(isNaN(tilt) ? (st === 'closed' ? 0 : 100) : tilt));
@@ -27137,6 +27670,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       const moving = st === 'opening' || st === 'closing';
       badge.textContent = st === 'partial' ? `${this._t('partial')} ${Math.round(pos)} %` : moving && known ? `${this._t(st)}… ${Math.round(pos)} %` : this._t(st);
       if (this.kind === 'roof_window' && this._blindDown >= 100 && !moving && !this._blindOnly) badge.textContent += ` · ${this._t('blind_down')}`;
+      if (windy && st !== 'unavailable') badge.textContent += ` · ${this._t('wind_alert')}`;
       // volet seul : le badge donne l'état du volet (libellés sans le préfixe rw_ de la fenêtre)
       // état du volet en mode « volet seul » ; ouvert à moins de 100 % = partiel, comme pour la fenêtre (Ouvrir et Fermer restent actifs)
       let bst = this._blindOnly && blS ? String(blS.state).toLowerCase() : st;
@@ -27186,21 +27720,24 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       };
       rng('shpos', isCover && !this._tiltOnly && known && (this._tiltDriven ? has(128) : has(4)) && c.show_slider !== false && st !== 'unavailable', this._blindOnly ? this._l('blind') : this._l('position'), this._blindOnly ? blPos : pos);
       // en inclinaison seule le curseur reste affiché même si la cover ne remonte pas current_tilt_position
-      rng('shtilt', isCover && this.kind === 'venetian_blind' && (this._tiltOnly || !isNaN(tilt)) && (this._tiltOnly ? tiltSet : has(128)) && c.show_slider !== false && st !== 'unavailable', this._l('tilt'), isNaN(tilt) ? 0 : tilt);
+      rng('shtilt', isCover && (this.kind === 'venetian_blind' || this.kind === 'awning') && (this._tiltOnly || !isNaN(tilt)) && (this._tiltOnly ? tiltSet : has(128)) && c.show_slider !== false && st !== 'unavailable', this._l('tilt'), isNaN(tilt) ? 0 : tilt);
 
       const pw = this._watts(c.entity_power);
       const V = {
         position: [known && st !== 'unavailable' && !this._blindOnly && !this._tiltOnly, this._fmt(pos, 0), '%'],
-        tilt: [this.kind === 'venetian_blind' && !isNaN(tilt), this._fmt(tilt, 0), '%'],
+        tilt: [(this.kind === 'venetian_blind' || this.kind === 'awning') && !isNaN(tilt), this._fmt(tilt, 0), '%'],
         power: [c.entity_power, isNaN(pw) ? '--' : this._fmt(pw, 0), isNaN(pw) ? '' : 'W'],
         blind: [this.kind === 'roof_window' && blS, this._fmt(blPos, 0), '%'],
-        rain: [['pergola', 'roof_window'].includes(this.kind) && rainS, this._t(rain ? 'yes' : 'no'), ''],
-        wind: [this.kind === 'pergola' && c.entity_wind, this._fmt(this._num(c.entity_wind), 0), this._unit(c.entity_wind, 'km/h')],
+        rain: [['pergola', 'roof_window', 'awning'].includes(this.kind) && rainS, this._t(rain ? 'yes' : 'no'), ''],
+        wind: [(this.kind === 'pergola' || this.kind === 'awning') && c.entity_wind, this._fmt(this._num(c.entity_wind), 0), this._unit(c.entity_wind, 'km/h')],
+        lux: [this.kind === 'awning' && c.entity_lux, this._fmt(this._num(c.entity_lux), 0), this._unit(c.entity_lux, 'lx')],
+        temperature: [this.kind === 'awning' && c.entity_temperature, this._fmt(this._num(c.entity_temperature), 1), this._unit(c.entity_temperature, '°C')],
         since: [s, this._since(s), ''],
       };
       TILES.forEach(([k, , opt]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`); const [show, val, unit] = V[k];
         el.classList.toggle('hide', !show || c[opt] === false);
+        el.classList.toggle('warn', k === 'wind' && windy);
         el.querySelector('.lbl').textContent = this._l(k);
         const small = document.createElement('small'); small.textContent = unit ?? '';
         el.querySelector('.v').replaceChildren(String(val ?? ''), small);
@@ -27232,6 +27769,8 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         { name: 'transparent', selector: { boolean: {} } },
         ent('entity', 'cover'), ent('entity_power', 'sensor'), ent('sun_entity', 'sun'),
         ...(this.kind === 'pergola' ? [ent('entity_rain'), ent('entity_light'), ent('entity_wind', 'sensor')] : []),
+        ...(this.kind === 'awning' ? [ent('entity_wind', 'sensor'), ent('entity_rain'), ent('entity_light'), ent('entity_lux', 'sensor'), ent('entity_temperature', 'sensor'),
+          { name: 'wind_max', selector: { number: { min: 5, max: 120, step: 1, mode: 'box', unit_of_measurement: 'km/h' } } }] : []),
         ...(this.kind === 'roof_window' ? [ent('entity_blind', 'cover'), ent('entity_rain')] : []),
         { type: 'grid', name: '', schema: [
           { name: 'color', selector: { text: {} } },
@@ -27243,13 +27782,14 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_controls'), bool('show_slider'), bool('show_position'),
-          ...(this.kind === 'venetian_blind' ? [bool('show_tilt')] : []), bool('show_power'),
+          ...(this.kind === 'venetian_blind' || this.kind === 'awning' ? [bool('show_tilt')] : []), bool('show_power'),
           ...(this.kind === 'pergola' ? [bool('show_rain'), bool('show_wind')] : []),
+          ...(this.kind === 'awning' ? [bool('show_rain'), bool('show_wind'), bool('show_lux'), bool('show_temperature')] : []),
           ...(this.kind === 'roof_window' ? [bool('show_blind'), bool('show_rain')] : []), bool('show_since'), bool('animations'),
         ] },
       ];
       // « color » a le libellé « couleur de la lumière » pour les lampes : ici, couleur du volet
-      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'color' ? (this.kind === 'pergola' ? 'louvre_color' : 'shutter_color') : s.name === 'invert' ? 'invert_position' : s.name, this._hass);
+      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'color' ? (this.kind === 'pergola' ? 'louvre_color' : this.kind === 'awning' ? 'fabric_color' : 'shutter_color') : s.name === 'invert' ? 'invert_position' : s.name, this._hass);
     }
   }
 
@@ -27267,7 +27807,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
     });
     customElements.define(tag + '-editor', class extends ApplianceShutterCardEditor { get kind() { return kind; } });
     window.customCards.push({ type: tag, name: `Appliance – ${T.en[kind]} / ${T.fr[kind]}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l][kind]])), preview: true,
-      description: kind === 'roof_window' ? `${T.fr[kind]} animée : ouvrant à rotation, volet roulant extérieur, pluie et vue jour / nuit.` : kind === 'pergola' ? `${T.fr[kind]} animée : lames orientables, pluie, éclairage LED et vue jour / nuit.` : `${T.fr[kind]} animé : position, inclinaison, mouvement et vue jour / nuit.`,
+      description: kind === 'awning' ? `${T.fr[kind]} animé : toile qui se déploie, bras articulés, ombre sur la terrasse, vent fort, pluie, éclairage LED et vue jour / nuit.` : kind === 'roof_window' ? `${T.fr[kind]} animée : ouvrant à rotation, volet roulant extérieur, pluie et vue jour / nuit.` : kind === 'pergola' ? `${T.fr[kind]} animée : lames orientables, pluie, éclairage LED et vue jour / nuit.` : `${T.fr[kind]} animé : position, inclinaison, mouvement et vue jour / nuit.`,
       documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards' });
   }
 })();

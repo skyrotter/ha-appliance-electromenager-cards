@@ -1096,7 +1096,11 @@
     "show_cover": "Deksel tonen",
     "show_timer": "Timer tonen",
     "switch_low": "Schakelaar lage stand",
-    "switch_high": "Schakelaar hoge stand"
+    "switch_high": "Schakelaar hoge stand",
+    "entity_lux": "Lichtsensor (lux)",
+    "wind_max": "Drempel harde wind (km/u)",
+    "show_lux": "Toon lichtniveau",
+    "fabric_color": "Kleur van het doek"
   },
   "light": {
     "light_bulb": "Lamp",
@@ -1154,7 +1158,19 @@
     "rw_position": "Opening",
     "blind": "Rolluik",
     "blind_down": "Rolluik dicht",
-    "btn_blind": "Rolluik"
+    "btn_blind": "Rolluik",
+    "awning": "Zonnescherm",
+    "aw_open": "Uitgerold",
+    "aw_closed": "Ingerold",
+    "aw_partial": "Uitgerold",
+    "aw_opening": "Rolt uit",
+    "aw_closing": "Rolt in",
+    "aw_position": "Uitrolling",
+    "aw_btn_open": "Uitrollen",
+    "aw_btn_close": "Inrollen",
+    "aw_wind_alert": "Harde wind",
+    "lux": "Zonlicht",
+    "temperature": "Temperatuur"
   },
   "water_meter": {
     "name": "Watermeter",

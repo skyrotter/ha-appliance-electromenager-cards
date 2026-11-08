@@ -99,7 +99,7 @@ function spkModel(c) {
   if (SPK_GEO[`echo_${raw}`]) return `echo_${raw}`;
   const e = String((c && c.entity) || "").toLowerCase();
   return /sonos/.test(e) ? "sonos_one" : /homepod/.test(e) ? (/mini/.test(e) ? "homepod_mini" : "homepod")
-    : /devialet|phantom/.test(e) ? "devialet_phantom_ii" : /nest|google|home_mini|chromecast/.test(e) ? "nest_mini" : "echo_dot";
+    : /devialet|phantom/.test(e) ? "devialet_phantom_ii" : /nest|google|home_mini|chromecast/.test(e) ? "nest_mini" : /q800|hw_q|samsung/.test(e) ? "samsung_hw_q800c" : "echo_dot";
 }
 // photo : modèle seul, ou modèle__couleur (couleur inconnue → la première)
 function spkKey(c, md) {

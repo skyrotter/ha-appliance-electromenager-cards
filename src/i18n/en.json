@@ -1139,7 +1139,11 @@
     "show_cover": "Show cover",
     "show_timer": "Show timer",
     "switch_low": "Low speed switch",
-    "switch_high": "High speed switch"
+    "switch_high": "High speed switch",
+    "entity_lux": "Light level sensor (lux)",
+    "wind_max": "Strong wind threshold (km/h)",
+    "show_lux": "Show light level",
+    "fabric_color": "Fabric colour"
   },
   "light": {
     "light_bulb": "Bulb",
@@ -1197,7 +1201,19 @@
     "rw_position": "Opening",
     "blind": "Blind",
     "blind_down": "Blind down",
-    "btn_blind": "Blind"
+    "btn_blind": "Blind",
+    "awning": "Retractable awning",
+    "aw_open": "Extended",
+    "aw_closed": "Retracted",
+    "aw_partial": "Extended",
+    "aw_opening": "Extending",
+    "aw_closing": "Retracting",
+    "aw_position": "Extension",
+    "aw_btn_open": "Extend",
+    "aw_btn_close": "Retract",
+    "aw_wind_alert": "Strong wind",
+    "lux": "Sunlight",
+    "temperature": "Temperature"
   },
   "water_meter": {
     "name": "Water meter",

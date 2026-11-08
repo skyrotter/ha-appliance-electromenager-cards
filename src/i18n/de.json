@@ -1096,7 +1096,11 @@
     "show_cover": "Abdeckung anzeigen",
     "show_timer": "Timer anzeigen",
     "switch_low": "Schalter niedrige Stufe",
-    "switch_high": "Schalter hohe Stufe"
+    "switch_high": "Schalter hohe Stufe",
+    "entity_lux": "Helligkeitssensor (Lux)",
+    "wind_max": "Schwelle für starken Wind (km/h)",
+    "show_lux": "Helligkeit anzeigen",
+    "fabric_color": "Stofffarbe"
   },
   "light": {
     "light_bulb": "Glühbirne",
@@ -1154,7 +1158,19 @@
     "rw_position": "Öffnung",
     "blind": "Rollladen",
     "blind_down": "Rollladen unten",
-    "btn_blind": "Rollladen"
+    "btn_blind": "Rollladen",
+    "awning": "Markise",
+    "aw_open": "Ausgefahren",
+    "aw_closed": "Eingefahren",
+    "aw_partial": "Ausgefahren",
+    "aw_opening": "Fährt aus",
+    "aw_closing": "Fährt ein",
+    "aw_position": "Ausfahrweite",
+    "aw_btn_open": "Ausfahren",
+    "aw_btn_close": "Einfahren",
+    "aw_wind_alert": "Starker Wind",
+    "lux": "Sonnenlicht",
+    "temperature": "Temperatur"
   },
   "water_meter": {
     "name": "Wasserzähler",

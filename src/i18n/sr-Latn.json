@@ -1055,7 +1055,11 @@
     "show_btn_mute": "Dugme utišaj",
     "show_btn_vol_up": "Dugme glasnije",
     "override": "Privremena izmena (Netatmo)",
-    "override_durations": "Trajanja (min)"
+    "override_durations": "Trajanja (min)",
+    "entity_lux": "Senzor osvetljenosti (luks)",
+    "wind_max": "Prag jakog vetra (km/h)",
+    "show_lux": "Prikaži osvetljenost",
+    "fabric_color": "Boja platna"
   },
   "light": {
     "light_bulb": "Sijalica",
@@ -1113,7 +1117,19 @@
     "rw_position": "Otvaranje",
     "blind": "Zastor (Rolo žaluzina)",
     "blind_down": "Zastor spušten",
-    "btn_blind": "Zastor"
+    "btn_blind": "Zastor",
+    "awning": "Tenda",
+    "aw_open": "Razvučena",
+    "aw_closed": "Uvučena",
+    "aw_partial": "Razvučena",
+    "aw_opening": "Razvlači se",
+    "aw_closing": "Uvlači se",
+    "aw_position": "Izvlačenje",
+    "aw_btn_open": "Razvuci",
+    "aw_btn_close": "Uvuci",
+    "aw_wind_alert": "Jak vetar",
+    "lux": "Osvetljenost",
+    "temperature": "Temperatura"
   },
   "water_meter": {
     "name": "Vodomer",
