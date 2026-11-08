@@ -2,6 +2,8 @@
 
 <p align="center"><img src="../plugs-piano-garland.gif" width="600" alt="Animated power strip, phone charger, piano and string lights cards"></p>
 
+<p align="center"><img src="../smart-plug.gif" width="600" alt="Animated smart plug card: icon, image, standby and off"></p>
+
 Five cards driven by a smart plug (`power`), with an optional `switch`.
 
 - **Power strip** (`custom:appliance-power-strip-card`): a 3/4 view of a French power strip. When it is on (power above `threshold`, 1 W, `switch` on, or one of the outlets on) the switch glows red and current flows in the cord. `outlets`: one `switch` entity per socket; each one draws a plug, with a blue LED ring when that outlet is on, and gets a numbered button under the card that toggles it (entity name as tooltip). `outlets` alone is enough when the strip has no global entity (e.g. Lidl TS011F, one `switch` per socket): the strip is on when one outlet is on, and the power button turns all outlets off (one on) or on (all off). Without `outlets`, all sockets but one have a plug. `sockets` (2 to 6) sets the number of sockets.
