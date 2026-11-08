@@ -428,7 +428,8 @@
     "idle": "Idle",
     "full": "Full in",
     "empty": "Empty in",
-    "low": "Low battery"
+    "low": "Low battery",
+    "calibration": "Next calibration"
   },
   "ev_charger": {
     "name": "EV charger",
@@ -1154,7 +1155,9 @@
     "entity_lux": "Light level sensor (lux)",
     "wind_max": "Strong wind threshold (km/h)",
     "show_lux": "Show light level",
-    "fabric_color": "Fabric colour"
+    "fabric_color": "Fabric colour",
+    "entity_calibration": "Next calibration sensor",
+    "show_calibration": "Show next calibration"
   },
   "light": {
     "light_bulb": "Bulb",

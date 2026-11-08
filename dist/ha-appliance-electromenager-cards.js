@@ -11708,7 +11708,9 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_lux": "Light level sensor (lux)",
       "wind_max": "Strong wind threshold (km/h)",
       "show_lux": "Show light level",
-      "fabric_color": "Fabric colour"
+      "fabric_color": "Fabric colour",
+      "entity_calibration": "Next calibration sensor",
+      "show_calibration": "Show next calibration"
     },
     "cs": {
       "animations": "Animace",
@@ -12945,7 +12947,9 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_lux": "Capteur de luminosité (lux)",
       "wind_max": "Seuil de vent fort (km/h)",
       "show_lux": "Afficher la luminosité",
-      "fabric_color": "Couleur de la toile"
+      "fabric_color": "Couleur de la toile",
+      "entity_calibration": "Capteur de prochaine calibration",
+      "show_calibration": "Afficher la prochaine calibration"
     },
     "it": {
       "animations": "Animazioni",
@@ -17140,7 +17144,8 @@ const I18N_BAT = {
     "idle": "Idle",
     "full": "Full in",
     "empty": "Empty in",
-    "low": "Low battery"
+    "low": "Low battery",
+    "calibration": "Next calibration"
   },
   "cs": {
     "name": "Solární baterie",
@@ -17179,7 +17184,8 @@ const I18N_BAT = {
     "idle": "Repos",
     "full": "Plein dans",
     "empty": "Vide dans",
-    "low": "Batterie faible"
+    "low": "Batterie faible",
+    "calibration": "Prochaine calibration"
   },
   "it": {
     "name": "Batteria domestica",
@@ -17307,6 +17313,8 @@ class ApplianceBatteryCard extends HTMLElement {
         { name: 'invert_power', selector: { boolean: {} } },
         { name: 'entity_energy', selector: { entity: { domain: 'sensor', device_class: 'energy' } } },
         { name: 'entity_temperature', selector: { entity: { domain: 'sensor', device_class: 'temperature' } } },
+        { name: 'entity_calibration', selector: { entity: { domain: 'sensor', device_class: 'timestamp' } } },
+        { name: 'hc_ranges', selector: { text: {} } },
         { type: 'grid', name: '', schema: [
           { name: 'capacity_kwh', selector: { number: { min: 1, max: 100, step: 0.1, mode: 'box', unit_of_measurement: 'kWh' } } },
           { name: 'max_power', selector: { number: { min: 500, max: 20000, step: 100, mode: 'box', unit_of_measurement: 'W' } } },
@@ -17317,6 +17325,7 @@ class ApplianceBatteryCard extends HTMLElement {
           { name: 'show_energy', selector: { boolean: {} }, default: true },
           { name: 'show_temperature', selector: { boolean: {} }, default: true },
           { name: 'show_time', selector: { boolean: {} }, default: true },
+          { name: 'show_calibration', selector: { boolean: {} }, default: true },
         ] },
         window.applianceTempField,
         { name: 'layout', selector: { select: { mode: 'dropdown', options: ['default', 'split'] } } },
@@ -17331,7 +17340,7 @@ class ApplianceBatteryCard extends HTMLElement {
   setConfig(config) {
     if (window.applianceSize) window.applianceSize(this, config);
     // Convention : puissance > 0 = charge (inverser avec invert_power si ton capteur est l'inverse)
-    this._config = { show_power: true, show_energy: true, show_temperature: true, show_time: true,
+    this._config = { show_power: true, show_energy: true, show_temperature: true, show_time: true, show_calibration: true, hc_ranges: '',
       capacity_kwh: 10, max_power: 5000, low_threshold: 15, invert_power: false, status_position: 'auto', layout: 'default', ...config };
     this._built = false; this._build();
   }
@@ -17480,7 +17489,18 @@ class ApplianceBatteryCard extends HTMLElement {
     if (c.show_energy) it.push([this._l('energy'), f(energy !== null ? energy : (soc === null ? null : c.capacity_kwh * pct / 100), 1, 'kWh'), c.entity_energy || c.entity_soc]);
     if (c.show_temperature) it.push([this._l('temp'), f(temp, 0, tc.unit), c.entity_temperature]);
     if (time) it.push(['⏱', time, c.entity_soc]);
-    r.getElementById('stats').innerHTML = it.map(([l, v, id]) => `<div class="stat"${window.applianceTileAttrs(id)}><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
+    // prochaine calibration (ex. Zendure Hyper 2000) : date et heure, en orange si elle tombe hors heures creuses (hc_ranges)
+    if (c.show_calibration && c.entity_calibration) {
+      const cs = this._hass.states[c.entity_calibration], d = cs && new Date(cs.state);
+      if (d && Number.isFinite(d.getTime())) {
+        let txt; try { txt = d.toLocaleString((this._hass.locale && this._hass.locale.language) || this._hass.language, { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); } catch (e) { txt = d.toLocaleString(); }
+        const m = d.getHours() * 60 + d.getMinutes(), ranges = String(c.hc_ranges || '').split(',').map((x) => x.trim().split('-')).filter((x) => x.length === 2 && x[0] && x[1]);
+        const mn = (x) => { const [h, mi] = x.split(':').map(Number); return h * 60 + (mi || 0); };
+        const hp = ranges.length > 0 && !ranges.some(([a, b]) => (mn(a) <= mn(b) ? m >= mn(a) && m < mn(b) : m >= mn(a) || m < mn(b)));
+        it.push([this._l('calibration'), txt, c.entity_calibration, hp]);
+      } else it.push([this._l('calibration'), '—', c.entity_calibration]);
+    }
+    r.getElementById('stats').innerHTML = it.map(([l, v, id, warn]) => `<div class="stat"${window.applianceTileAttrs(id)}><div class="v"${warn ? ' style="color:#fb8c00"' : ''}>${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
     window.applianceLinkTiles(r.getElementById('stats'), this);
   }
 }

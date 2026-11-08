@@ -14,6 +14,8 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `entity_power` (positive = charging, `invert_power: true` if yours is reversed)
 - `entity_energy`
 - `entity_temperature`
+- `entity_calibration`: sensor (`timestamp`) of the next calibration, e.g. `sensor.hyper_2000_next_calibration` (Zendure). Shows the day and time in a tile
+- `hc_ranges`: off-peak hours, e.g. `22:00-06:00,13:00-15:00`. If set, the calibration time turns orange when it falls outside these hours
 - `capacity_kwh` (default 10)
 - `max_power`
 - `low_threshold` (default 15 %)
@@ -21,6 +23,7 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `show_energy`
 - `show_temperature`
 - `show_time`
+- `show_calibration`
 - `layout`: `default` or `split` (illustration on the left, name, status and values on the right; useful in narrow or 2-column grids)
 - `status_position`: `auto` (default, status moves below the illustration on narrow cards), `inside` or `below`
 

@@ -428,7 +428,8 @@
     "idle": "Repos",
     "full": "Plein dans",
     "empty": "Vide dans",
-    "low": "Batterie faible"
+    "low": "Batterie faible",
+    "calibration": "Prochaine calibration"
   },
   "ev_charger": {
     "name": "Borne de recharge",
@@ -1154,7 +1155,9 @@
     "entity_lux": "Capteur de luminosité (lux)",
     "wind_max": "Seuil de vent fort (km/h)",
     "show_lux": "Afficher la luminosité",
-    "fabric_color": "Couleur de la toile"
+    "fabric_color": "Couleur de la toile",
+    "entity_calibration": "Capteur de prochaine calibration",
+    "show_calibration": "Afficher la prochaine calibration"
   },
   "light": {
     "light_bulb": "Ampoule",
