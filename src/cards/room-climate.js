@@ -301,6 +301,11 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
 .st-gradient .cmodes,.st-lcd .cmodes,.st-neon .cmodes,.st-gradient .csel label,.st-lcd .csel label,.st-neon .csel label{background:rgba(255,255,255,.12);color:#e9edf1}
 .st-gradient .cmodes button.on,.st-lcd .cmodes button.on,.st-neon .cmodes button.on,.st-gradient .csel select,.st-lcd .csel select,.st-neon .csel select{color:#fff}
 .st-tile .cmodes,.st-tile .csel{display:none!important}
+/* liste de ventilation dans la ligne du thermostat */
+.clim .cfan{display:flex;flex:0 1 auto;min-width:0;margin:0}.clim .cfan[hidden]{display:none}
+.clim .cfan label{height:26px;border-radius:13px;padding:0 6px;background:rgba(127,127,127,.14)}
+.clim .cfan ha-icon{animation:none;color:inherit}
+.clim .cfan select{max-width:96px;font-size:12px}
 .st-gradient .crow{position:relative}
 .st-double_ring .crow{order:1}
 .noanim *,.noanim *::before,.noanim *::after{animation:none!important}
@@ -352,9 +357,9 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
   const VH = '<div class="vh"><ha-icon icon="mdi:water-percent"></ha-icon><span id="h"></span><span class="trend" id="trend"></span></div>';
   const META = '<div class="meta" id="meta"></div><div class="meta" id="meta2"></div>', NOTES = '<div class="notes" id="notes"></div>';
   const SPARK = '<svg class="spark hide" id="spark" viewBox="0 0 300 30" preserveAspectRatio="none" aria-hidden="true"><path class="a" d=""/><path class="l" d=""/></svg>';
-  const CLIM = '<div class="clim" id="clim" hidden><ha-icon id="cico" icon="mdi:thermostat"></ha-icon><span class="cl" id="cl"></span><button id="cm" type="button">−</button><b id="ct"></b><button id="cp" type="button">+</button></div>'
+  const CLIM = '<div class="clim" id="clim" hidden><ha-icon id="cico" icon="mdi:thermostat"></ha-icon><span class="cl" id="cl"></span><button id="cm" type="button">−</button><b id="ct"></b><button id="cp" type="button">+</button><div class="csel cfan" id="cfan" hidden><label id="lfan"><ha-icon icon="mdi:fan"></ha-icon><select id="sfan"></select></label></div></div>'
     + '<div class="crow"><div class="cmodes" id="cmodes" role="group" hidden></div>'
-    + '<div class="csel" id="csel" hidden><label id="lfan"><ha-icon icon="mdi:fan"></ha-icon><select id="sfan"></select></label><label id="lpre"><ha-icon icon="mdi:tune-variant"></ha-icon><select id="spre"></select></label></div></div>';
+    + '<div class="csel" id="csel" hidden><label id="lpre"><ha-icon icon="mdi:tune-variant"></ha-icon><select id="spre"></select></label></div></div>';
   // icônes des modes (mêmes icônes que Home Assistant)
   const HVAC_ICON = { off: 'mdi:power', heat: 'mdi:fire', cool: 'mdi:snowflake', heat_cool: 'mdi:sun-snowflake-variant', auto: 'mdi:thermostat-auto', dry: 'mdi:water-percent', fan_only: 'mdi:fan' };
   const HVAC_ORDER = ['off', 'fan_only', 'dry', 'cool', 'heat', 'heat_cool', 'auto'];
@@ -932,7 +937,9 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       const lfan = r.getElementById('lfan'), lpre = r.getElementById('lpre');
       fill(lfan, r.getElementById('sfan'), 'fan_mode', a.fan_modes, a.fan_mode, c.show_fan_modes === true);
       fill(lpre, r.getElementById('spre'), 'preset_mode', a.preset_modes, a.preset_mode, c.show_preset_modes === true);
-      r.getElementById('csel').hidden = lfan.hidden && lpre.hidden;
+      // ventilation sur la ligne du thermostat (ligne 1), préréglage seul sur la ligne des modes (ligne 2)
+      r.getElementById('cfan').hidden = lfan.hidden;
+      r.getElementById('csel').hidden = lpre.hidden;
     }
     // − / + : la consigne change tout de suite à l'écran, l'appel part 0,8 s après le dernier clic
     _setTarget(dir) {
