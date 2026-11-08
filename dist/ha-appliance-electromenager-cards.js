@@ -335,6 +335,14 @@ const STRINGS = {
     "power_strip": "Power strip",
     "phone_charger": "Phone charger",
     "piano": "Digital piano",
+    "smart_plug": "Smart plug",
+    "f_icon": "Icon of the connected device (mdi:...)",
+    "f_indicators": "Status indicators",
+    "ind_led": "LED",
+    "ind_bolt": "Lightning bolt",
+    "ind_ring": "Ring around the socket",
+    "ind_glow": "Glow",
+    "ind_flow": "Current in the cable",
     "garland": "LED string lights",
     "powered": "On",
     "lit": "Lit",
@@ -1455,6 +1463,14 @@ const STRINGS = {
     "power_strip": "Multiprise",
     "phone_charger": "Chargeur de téléphone",
     "piano": "Piano numérique",
+    "smart_plug": "Prise connectée",
+    "f_icon": "Icône de l'appareil branché (mdi:...)",
+    "f_indicators": "Indicateurs d'état",
+    "ind_led": "Voyant",
+    "ind_bolt": "Éclair",
+    "ind_ring": "Anneau autour de la prise",
+    "ind_glow": "Halo",
+    "ind_flow": "Courant dans le câble",
     "garland": "Guirlande LED",
     "powered": "En marche",
     "lit": "Allumée",
@@ -6412,6 +6428,38 @@ SVG.server_rack = () => `
 <path d="M18 130v4M102 130v4" stroke="#14171b" stroke-width="4" stroke-linecap="round"/>
 <path d="M20 6h80" stroke="#fff" stroke-opacity=".25" stroke-width="1"/>`;
 
+/* Prise connectée : variante de la multiprise, une seule prise murale française.
+ * Option `image` (URL) et/ou `icon` (mdi:...) : l'appareil branché derrière la prise, affiché dans une pastille
+ * au-dessus (l'image prime sur l'icône). Sans les deux : la prise seule, centrée et agrandie. */
+SVG.smart_plug = (c = {}) => {
+  const img = String((c && c.image) || "").trim(), ico = String((c && c.icon) || "").trim();
+  const dev = !!(img || ico);
+  const badge = !dev ? "" : `
+  <g class="sp-dev">
+    <circle cx="60" cy="34" r="27" fill="url(#ID-mstop)" stroke="#c4cad1" stroke-width=".8"/>
+    ${img
+      ? `<image class="sp-img" href="${esc(img)}" x="38" y="12" width="44" height="44" preserveAspectRatio="xMidYMid meet"/>`
+      : `<foreignObject x="39" y="13" width="42" height="42"><div xmlns="http://www.w3.org/1999/xhtml" class="sp-ico"><ha-icon icon="${esc(ico)}"></ha-icon></div></foreignObject>`}
+  </g>
+  <path d="M60 80 V61" stroke="#d5dae0" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+  <path class="sp-flow" d="M60 80 V61" stroke="#38a8ff" stroke-width="1.6" fill="none"/>`;
+  // sans appareil : la prise seule, centrée et agrandie
+  const tf = dev ? "" : ` transform="translate(60 72) scale(1.25) translate(-60 -105)"`;
+  return `
+<defs>${DEFS}<linearGradient id="ID-mstop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e6e9ed"/></linearGradient></defs>
+<g${tf}>
+  <ellipse cx="60" cy="134" rx="32" ry="4.5" fill="url(#ID-shadow)"/>
+  ${badge}
+  <ellipse class="sp-glow" cx="60" cy="106" rx="34" ry="32" fill="#38a8ff"/>
+  <rect x="34" y="80" width="52" height="52" rx="14" fill="url(#ID-mstop)" stroke="#c4cad1" stroke-width=".8"/>
+  <circle class="sp-ring" cx="60" cy="106" r="19" fill="none" stroke-width="1.6"/>
+  <circle cx="60" cy="106" r="16" fill="#eef1f4" stroke="#bfc6ce" stroke-width=".8"/>
+  <circle cx="53.5" cy="107" r="2.1" fill="#5b6168"/><circle cx="66.5" cy="107" r="2.1" fill="#5b6168"/><rect x="58.8" y="94" width="2.4" height="5.5" rx="1" fill="#9aa2ab"/>
+  <circle class="sp-led" cx="60" cy="125.5" r="3"/>
+  <g class="sp-bolt-b"><circle cx="79" cy="88" r="7.5"/><path class="sp-bolt" d="M80.4 82.8 L76 89.2 H79 L77.8 93.6 L82.6 87 H79.6 Z"/></g>
+</g>`;
+};
+
 /* Enceinte connectée (option model) : photo détourée + calques animés.
    Amazon Echo (Pop, Dot, Show 5 / 8 / 10 / 11 / 15, Spot), Google Nest (Mini, Audio, Hub, Hub 2e gén., Hub Max),
    Sonos (One, One SL, Era 100, Era 300, Beam, Sub Mini, Sub).
@@ -7257,6 +7305,10 @@ const DEF = {
   power_strip: { accent: "active", threshold: 1,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["multiprise", "power_strip", "powerstrip", "steckdosenleiste", "bloc_prise"] },
+  // Prise connectée : variante de la multiprise (une prise), image / icône de l'appareil branché et voyants configurables
+  smart_plug: { accent: "active", threshold: 1,
+    fields: ["entity", "power", "energy", "cost", "switch"],
+    keys: ["smartplug", "smart_plug", "prise_connectee", "prise", "plug", "steckdose", "socket"] },
   phone_charger: { accent: "active", threshold: 2,
     fields: ["entity", "power", "energy", "cost", "battery_level", "switch"],
     keys: ["chargeur_tel", "chargeur_telephone", "phone_charger", "telephone", "phone", "iphone", "smartphone", "pixel", "galaxy"] },
@@ -7582,6 +7634,13 @@ class ApplianceCardBase extends HTMLElement {
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
       "switch_low", "switch_high", "power_level", "pellet_level", "ph", "orp", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
+  }
+
+  // prise connectée : voyants d'état choisis (option indicators : led, bolt, ring, glow, flow), par défaut led + bolt
+  _indClasses() {
+    const l = this._config.indicators;
+    const list = Array.isArray(l) ? l : typeof l === "string" && l ? [l] : ["led", "bolt"];
+    return list.filter((k) => ["led", "bolt", "ring", "glow", "flow"].includes(k)).map((k) => `ind-${k}`).join(" ");
   }
 
   // guirlande : une couleur choisie autre que blanc chaud → unicolore ; sinon arc-en-ciel
@@ -8163,6 +8222,11 @@ class ApplianceCardBase extends HTMLElement {
       const md = m.mode && !BAD.includes(String(m.mode.state).toLowerCase()) ? m.mode : null;
       const attrTxt = (st, k) => { try { if (hass.formatEntityAttributeValue) return hass.formatEntityAttributeValue(st, k); } catch (e) { /* ignore */ } return String(st.attributes[k]); };
       m.dhMode = md ? stateText(hass, md) : isHum && main.attributes.mode ? attrTxt(main, "mode") : null;
+    } else if (kind === "smart_plug") {
+      // prise allumée (interrupteur) ou qui consomme : « On » ; interrupteur allumé mais rien ne consomme : « Veille »
+      const swOn = isOn(sw) || (!sw && base === "on");
+      const draws = watts !== null ? powered : base === "running";
+      m.status = base === "off" || base === "unavailable" ? base : draws ? "powered" : swOn && watts !== null ? "standby" : swOn ? "powered" : "off";
     } else if (kind === "power_strip") {
       // sous tension si la prise / l'interrupteur est allumé, si ça consomme, ou si une des prises commandées est allumée
       const outs = (Array.isArray(c.outlets) ? c.outlets : []).map((i) => hass.states[i]);
@@ -8549,7 +8613,7 @@ class ApplianceCardBase extends HTMLElement {
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
       active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
       m.alerts.length ? "alert" : "", isOn(m.door) ? "door-open" : "", isOn(m.fdoor) ? "fz-open" : "",
-      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", m.solarHeat ? "solar-heat" : "", hideWouldApply ? "would-hide" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "",
+      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", kind === "smart_plug" ? this._indClasses() : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", m.solarHeat ? "solar-heat" : "", hideWouldApply ? "would-hide" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "",
     ].filter(Boolean).join(" ");
 
     // illustration dynamic parts
@@ -9337,6 +9401,14 @@ function buildForm(kind) {
             { name: "outlets", selector: { entity: { multiple: true, domain: ["switch", "light", "input_boolean"] } } },
             { name: "sockets", selector: { number: { min: 2, max: 6, step: 1, mode: "box" } } },
           ] : []),
+          ...(kind === "smart_plug" ? [
+            // appareil branché derrière la prise : image (URL) et / ou icône ; voyants d'état au choix
+            { name: "image", selector: { text: {} } },
+            { name: "icon", selector: { icon: {} } },
+            { name: "indicators", selector: { select: { multiple: true, mode: "list", options: [
+              { value: "led", label: tr(null, "ind_led") }, { value: "bolt", label: tr(null, "ind_bolt") }, { value: "ring", label: tr(null, "ind_ring") },
+              { value: "glow", label: tr(null, "ind_glow") }, { value: "flow", label: tr(null, "ind_flow") }] } } },
+          ] : []),
           ...(["phone_charger", "piano"].includes(kind) ? [
             { name: "standby_threshold", selector: { number: { min: 0, max: 10, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
@@ -9409,7 +9481,7 @@ function stubFor(kind, hass) {
   if (power) cfg.power = power;
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "smart_plug", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;
@@ -10749,6 +10821,35 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .ms-plug { opacity: 0; transform: translateY(-14px); transition: transform .5s, opacity .5s; }
 .ms-s.plug .ms-plug { opacity: 1; transform: none; }
 @keyframes ms-flow { to { stroke-dashoffset: -9; } }
+/* ---------- prise connectée (variante multiprise) : voyants configurables via les classes ind-* ---------- */
+.k-smart_plug .illus { overflow: hidden; }
+.sp-led { fill: #8a2d2d; transition: fill .3s; }
+.k-smart_plug.ind-led.st-powered .sp-led { fill: #43c07a; filter: drop-shadow(0 0 3px #43c07a); animation: ac-pulse 2s ease-in-out infinite; }
+.k-smart_plug.ind-led.st-standby .sp-led { fill: #ffb020; filter: drop-shadow(0 0 2px #ffb020); }
+.k-smart_plug:not(.ind-led) .sp-led { display: none; }
+.sp-ring { stroke: transparent; transition: stroke .3s; }
+.k-smart_plug.ind-ring.st-powered .sp-ring { stroke: #38a8ff; filter: drop-shadow(0 0 2px #38a8ff); animation: ac-pulse 1.6s ease-in-out infinite; }
+.k-smart_plug.ind-ring.st-standby .sp-ring { stroke: #ffb020; opacity: .7; }
+.sp-glow { opacity: 0; filter: blur(5px); transition: opacity .4s; }
+.k-smart_plug.ind-glow.st-powered .sp-glow { opacity: .3; animation: sp-breathe 2.4s ease-in-out infinite; }
+.sp-bolt-b { opacity: 0; transition: opacity .3s; }
+.sp-bolt-b circle { fill: #3a414b; transition: fill .3s; }
+.sp-bolt { fill: #6b737c; transition: fill .3s; }
+.k-smart_plug.ind-bolt .sp-bolt-b { opacity: 1; }
+.k-smart_plug.ind-bolt.st-powered .sp-bolt-b circle { fill: #ffc933; filter: drop-shadow(0 0 3px #ffc933); }
+.k-smart_plug.ind-bolt.st-powered .sp-bolt { fill: #3a2a00; }
+.k-smart_plug.ind-bolt.st-powered .sp-bolt-b { transform-box: fill-box; transform-origin: center; animation: sp-zap 1.2s ease-in-out infinite; }
+.sp-flow { stroke-dasharray: 3 6; opacity: 0; }
+.k-smart_plug.ind-flow.st-powered .sp-flow { opacity: 1; animation: ms-flow .8s linear infinite; }
+/* appareil branché : grisé quand la prise est coupée, en couleur sinon */
+.sp-dev { transition: opacity .4s, filter .4s; }
+.k-smart_plug:not(.st-powered):not(.st-standby) .sp-dev { opacity: .55; filter: grayscale(1); }
+.sp-ico { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #6b737c; transition: color .4s; }
+.sp-ico ha-icon { --mdc-icon-size: 100%; width: 100%; height: 100%; display: block; }
+.k-smart_plug.st-powered .sp-ico { color: var(--c); }
+.k-smart_plug.st-standby .sp-ico { color: #ffb020; }
+@keyframes sp-zap { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.18); } }
+@keyframes sp-breathe { 0%, 100% { opacity: .1; } 50% { opacity: .3; } }
 /* ---------- chargeur de téléphone ---------- */
 .phn-ring { stroke: #38a8ff; opacity: .15; }
 .k-phone_charger.st-charging .phn-ring { opacity: 1; animation: ac-pulse 1.6s ease-in-out infinite; }

@@ -85,6 +85,10 @@ const DEF = {
   power_strip: { accent: "active", threshold: 1,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["multiprise", "power_strip", "powerstrip", "steckdosenleiste", "bloc_prise"] },
+  // Prise connectée : variante de la multiprise (une prise), image / icône de l'appareil branché et voyants configurables
+  smart_plug: { accent: "active", threshold: 1,
+    fields: ["entity", "power", "energy", "cost", "switch"],
+    keys: ["smartplug", "smart_plug", "prise_connectee", "prise", "plug", "steckdose", "socket"] },
   phone_charger: { accent: "active", threshold: 2,
     fields: ["entity", "power", "energy", "cost", "battery_level", "switch"],
     keys: ["chargeur_tel", "chargeur_telephone", "phone_charger", "telephone", "phone", "iphone", "smartphone", "pixel", "galaxy"] },

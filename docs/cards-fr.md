@@ -84,6 +84,8 @@ hold_action:
 
 **Multiprise** (`custom:appliance-power-strip-card`) : multiprise française vue de trois quarts. Sous tension (puissance au-dessus de 1 W, `switch` allumé ou une prise commandée allumée), l'interrupteur rougeoie et le courant circule dans le cordon. `outlets` : une entité `switch` par prise, chacune dessine une fiche avec un anneau LED bleu quand elle est allumée, et un bouton numéroté sous la carte la bascule (nom de l'entité en infobulle). `outlets` seul suffit si la multiprise n'a pas d'entité globale (ex. Lidl TS011F, un `switch` par prise) : elle est allumée dès qu'une prise l'est, et le bouton marche / arrêt coupe toutes les prises (si une est allumée) ou les allume toutes. `sockets` (2 à 6) règle le nombre de prises.
 
+**Prise connectée** (`custom:appliance-smart-plug-card`) : variante de la multiprise, une seule prise française. Allumée (puissance au-dessus de 1 W ou `switch` allumé) : voyant, éclair, anneau, halo et courant dans le câble s'animent. `switch` allumé sans consommation : « Veille ». `indicators` choisit parmi `led`, `bolt`, `ring`, `glow`, `flow` (défaut `led` et `bolt`). `image` (URL) et / ou `icon` (`mdi:...`) affichent l'appareil branché dans une pastille au-dessus (l'image prime), grisé quand la prise est coupée.
+
 **Chargeur de téléphone** (`custom:appliance-phone-charger-card`) : smartphone sur un socle à induction. Au-dessus de 2 W : « En charge », l'anneau pulse en bleu, l'écran affiche l'heure et la batterie qui se remplit (`battery_level`). Entre 0,3 W et le seuil, ou à 100 % : « Chargée », anneau vert.
 
 **Piano numérique** (`custom:appliance-piano-card`) : au-dessus de 3 W l'écran s'allume, les touches jouent et des notes s'envolent ; veille entre 0,3 W et le seuil.

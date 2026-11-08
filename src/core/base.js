@@ -85,6 +85,13 @@ class ApplianceCardBase extends HTMLElement {
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
+  // prise connectée : voyants d'état choisis (option indicators : led, bolt, ring, glow, flow), par défaut led + bolt
+  _indClasses() {
+    const l = this._config.indicators;
+    const list = Array.isArray(l) ? l : typeof l === "string" && l ? [l] : ["led", "bolt"];
+    return list.filter((k) => ["led", "bolt", "ring", "glow", "flow"].includes(k)).map((k) => `ind-${k}`).join(" ");
+  }
+
   // guirlande : une couleur choisie autre que blanc chaud → unicolore ; sinon arc-en-ciel
   _glSingle(m) { return !/^rgb\(255,\s*2[0-9]{2},\s*1[0-9]{2}\)$|^rgb\(255,255,255\)$/.test(String(m.glColor).replace(/ /g, "")); }
 
@@ -664,6 +671,11 @@ class ApplianceCardBase extends HTMLElement {
       const md = m.mode && !BAD.includes(String(m.mode.state).toLowerCase()) ? m.mode : null;
       const attrTxt = (st, k) => { try { if (hass.formatEntityAttributeValue) return hass.formatEntityAttributeValue(st, k); } catch (e) { /* ignore */ } return String(st.attributes[k]); };
       m.dhMode = md ? stateText(hass, md) : isHum && main.attributes.mode ? attrTxt(main, "mode") : null;
+    } else if (kind === "smart_plug") {
+      // prise allumée (interrupteur) ou qui consomme : « On » ; interrupteur allumé mais rien ne consomme : « Veille »
+      const swOn = isOn(sw) || (!sw && base === "on");
+      const draws = watts !== null ? powered : base === "running";
+      m.status = base === "off" || base === "unavailable" ? base : draws ? "powered" : swOn && watts !== null ? "standby" : swOn ? "powered" : "off";
     } else if (kind === "power_strip") {
       // sous tension si la prise / l'interrupteur est allumé, si ça consomme, ou si une des prises commandées est allumée
       const outs = (Array.isArray(c.outlets) ? c.outlets : []).map((i) => hass.states[i]);
@@ -1050,7 +1062,7 @@ class ApplianceCardBase extends HTMLElement {
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
       active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
       m.alerts.length ? "alert" : "", isOn(m.door) ? "door-open" : "", isOn(m.fdoor) ? "fz-open" : "",
-      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", m.solarHeat ? "solar-heat" : "", hideWouldApply ? "would-hide" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "",
+      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", kind === "smart_plug" ? this._indClasses() : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", m.solarHeat ? "solar-heat" : "", hideWouldApply ? "would-hide" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "",
     ].filter(Boolean).join(" ");
 
     // illustration dynamic parts

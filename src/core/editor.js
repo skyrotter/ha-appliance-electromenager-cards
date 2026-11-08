@@ -252,6 +252,14 @@ function buildForm(kind) {
             { name: "outlets", selector: { entity: { multiple: true, domain: ["switch", "light", "input_boolean"] } } },
             { name: "sockets", selector: { number: { min: 2, max: 6, step: 1, mode: "box" } } },
           ] : []),
+          ...(kind === "smart_plug" ? [
+            // appareil branché derrière la prise : image (URL) et / ou icône ; voyants d'état au choix
+            { name: "image", selector: { text: {} } },
+            { name: "icon", selector: { icon: {} } },
+            { name: "indicators", selector: { select: { multiple: true, mode: "list", options: [
+              { value: "led", label: tr(null, "ind_led") }, { value: "bolt", label: tr(null, "ind_bolt") }, { value: "ring", label: tr(null, "ind_ring") },
+              { value: "glow", label: tr(null, "ind_glow") }, { value: "flow", label: tr(null, "ind_flow") }] } } },
+          ] : []),
           ...(["phone_charger", "piano"].includes(kind) ? [
             { name: "standby_threshold", selector: { number: { min: 0, max: 10, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
@@ -324,7 +332,7 @@ function stubFor(kind, hass) {
   if (power) cfg.power = power;
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "smart_plug", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;
