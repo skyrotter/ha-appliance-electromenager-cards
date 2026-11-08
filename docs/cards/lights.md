@@ -31,6 +31,8 @@ With a `light` entity the card shows **On / Off** (and **Colour** on the colour 
 - `entity` (light, switch or input_boolean)
 - `entity_power`, `entity_energy`
 - `image` (URL of your own photo, e.g. `/local/my-lamp.png`, ideally a cut-out PNG with a transparent background): replaces the drawing. It is dimmed when off, lit according to the light brightness when on, with a glow in the bulb colour
+- `image_max` (0-100, default 100): caps how much the photo is lit, as a % of the light level (e.g. `60` = the photo never gets brighter than at 60 %)
+- `glow_max` (0-100, default 100): same for the glow around the photo (`0` = no glow)
 - `color` (RGB, e.g. `[255, 180, 90]`, or a CSS colour)
 - `follow_light_color` (default true)
 - `color_cycle` (colour bulb, default false)

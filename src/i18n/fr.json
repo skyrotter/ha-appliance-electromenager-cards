@@ -156,6 +156,8 @@
     "f_bed_temperature": "Capteur de température du plateau",
     "f_filament_color": "Couleur du filament (CSS)",
     "f_image": "URL de l'image (ex. /local/mon-appareil.png)",
+    "f_image_max": "Éclairage max de la photo (% du niveau de la lampe)",
+    "f_glow_max": "Lueur max (% du niveau de la lampe)",
     "f_nozzle_temperatures": "Capteurs de température des buses (T0, T1…)",
     "filtering": "Filtration",
     "water": "Eau",
