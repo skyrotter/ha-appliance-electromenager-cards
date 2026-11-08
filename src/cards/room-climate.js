@@ -280,6 +280,9 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
 .st-tile .clim{display:none!important}
 .st-double_ring .clim{order:1;margin:6px 0 2px}.st-double_ring .bg9{order:2}
 /* commandes du thermostat (show_hvac_modes / show_fan_modes / show_preset_modes) : boutons de mode, listes ventilation et préréglage */
+.crow{display:flex;flex-wrap:wrap;align-items:stretch;gap:6px;margin-top:6px}
+.crow:not(:has(> :not([hidden]))){display:none}
+.crow .cmodes{flex:1 1 auto;margin-top:0}.crow .csel{flex:1 1 150px;margin-top:0}
 .cmodes{display:flex;gap:4px;margin-top:6px;padding:4px;border-radius:12px;background:rgba(127,127,127,.09);cursor:default}
 .cmodes button{flex:1;min-width:0;height:34px;border:none;border-radius:9px;background:transparent;color:var(--secondary-text-color);cursor:pointer;display:grid;place-items:center;padding:0;transition:background .2s,color .2s}
 .cmodes button ha-icon{--mdc-icon-size:18px}
@@ -298,8 +301,8 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
 .st-gradient .cmodes,.st-lcd .cmodes,.st-neon .cmodes,.st-gradient .csel label,.st-lcd .csel label,.st-neon .csel label{background:rgba(255,255,255,.12);color:#e9edf1}
 .st-gradient .cmodes button.on,.st-lcd .cmodes button.on,.st-neon .cmodes button.on,.st-gradient .csel select,.st-lcd .csel select,.st-neon .csel select{color:#fff}
 .st-tile .cmodes,.st-tile .csel{display:none!important}
-.st-gradient .cmodes,.st-gradient .csel{position:relative}
-.st-double_ring .cmodes,.st-double_ring .csel{order:1}
+.st-gradient .crow{position:relative}
+.st-double_ring .crow{order:1}
 .noanim *,.noanim *::before,.noanim *::after{animation:none!important}
 @media (prefers-reduced-motion:reduce){ha-card *,ha-card *::before{animation:none!important}}
 @keyframes rcbreathe{50%{transform:scale(1.15);opacity:.7}}
@@ -347,11 +350,11 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
   const HEAD = (chip = true) => `<div class="head">${RIC}<span class="name" id="name"></span>${ICONS}${chip ? '<span class="chip" id="chip"></span>' : ''}</div>`;
   const VT = '<div class="vt"><span id="t">--</span><small id="tu"></small></div>';
   const VH = '<div class="vh"><ha-icon icon="mdi:water-percent"></ha-icon><span id="h"></span><span class="trend" id="trend"></span></div>';
-  const META = '<div class="meta" id="meta"></div>', NOTES = '<div class="notes" id="notes"></div>';
+  const META = '<div class="meta" id="meta"></div><div class="meta" id="meta2"></div>', NOTES = '<div class="notes" id="notes"></div>';
   const SPARK = '<svg class="spark hide" id="spark" viewBox="0 0 300 30" preserveAspectRatio="none" aria-hidden="true"><path class="a" d=""/><path class="l" d=""/></svg>';
   const CLIM = '<div class="clim" id="clim" hidden><ha-icon id="cico" icon="mdi:thermostat"></ha-icon><span class="cl" id="cl"></span><button id="cm" type="button">−</button><b id="ct"></b><button id="cp" type="button">+</button></div>'
-    + '<div class="cmodes" id="cmodes" role="group" hidden></div>'
-    + '<div class="csel" id="csel" hidden><label id="lfan"><ha-icon icon="mdi:fan"></ha-icon><select id="sfan"></select></label><label id="lpre"><ha-icon icon="mdi:tune-variant"></ha-icon><select id="spre"></select></label></div>';
+    + '<div class="crow"><div class="cmodes" id="cmodes" role="group" hidden></div>'
+    + '<div class="csel" id="csel" hidden><label id="lfan"><ha-icon icon="mdi:fan"></ha-icon><select id="sfan"></select></label><label id="lpre"><ha-icon icon="mdi:tune-variant"></ha-icon><select id="spre"></select></label></div></div>';
   // icônes des modes (mêmes icônes que Home Assistant)
   const HVAC_ICON = { off: 'mdi:power', heat: 'mdi:fire', cool: 'mdi:snowflake', heat_cool: 'mdi:sun-snowflake-variant', auto: 'mdi:thermostat-auto', dry: 'mdi:water-percent', fan_only: 'mdi:fan' };
   const HVAC_ORDER = ['off', 'fan_only', 'dry', 'cool', 'heat', 'heat_cool', 'auto'];
@@ -722,8 +725,9 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       // ligne d'infos : extérieur et point de rosée
       const meta = [];
       if (c.show_outdoor !== false && (fin(s.tOut) || fin(s.hOut))) meta.push(`${this._l('outdoor')} ${[fin(s.tOut) ? `${this._fmt(s.tOut)}°` : '', fin(s.hOut) ? `${this._fmt(s.hOut, 0)} %` : ''].filter(Boolean).join(' · ')}`);
-      if (c.show_dew_point !== false && fin(s.dp)) meta.push(`${this._l('dew_point')} ${this._fmt(s.dp)}°`);
       html('meta', meta.map((m) => `<span>${esc(m)}</span>`).join(''));
+      // le point de rosée est celui de la pièce (température et humidité intérieures) : ligne à part, pour ne pas le lire comme celui de l'extérieur
+      html('meta2', c.show_dew_point !== false && fin(s.dp) ? `<span>${esc(`${this._l('dew_point_room')} ${this._fmt(s.dp)}°`)}</span>` : '');
       // icônes : fenêtre ouverte, batterie faible
       const win = $('win'), bat = $('bat');
       win.hidden = !(s.winOpen || s.winGuess);

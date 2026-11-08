@@ -30414,7 +30414,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "mold_risk": "Mould risk",
       "condensation_risk": "Condensation risk",
       "ventilate": "Air the room",
-      "air_dry": "outside air is drier",
+      "air_dry": "outside air holds less water (absolute humidity)",
       "air_cool": "outside air is cooler",
       "window_open": "Window open",
       "window_guess": "Window open? (sudden temperature drop)",
@@ -30422,6 +30422,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "battery_low": "Low battery",
       "outdoor": "Outside",
       "dew_point": "Dew point",
+      "dew_point_room": "Room dew point",
       "trend_1h": "Change over the last hour",
       "stable": "stable",
       "history": "History",
@@ -30489,7 +30490,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "mold_risk": "Riziko plísně",
       "condensation_risk": "Riziko kondenzace",
       "ventilate": "Vyvětrejte",
-      "air_dry": "venkovní vzduch je sušší",
+      "air_dry": "venkovní vzduch obsahuje méně vody (absolutní vlhkost)",
       "air_cool": "venkovní vzduch je chladnější",
       "window_open": "Otevřené okno",
       "window_guess": "Otevřené okno? (náhlý pokles teploty)",
@@ -30497,6 +30498,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "battery_low": "Slabá baterie",
       "outdoor": "Venku",
       "dew_point": "Rosný bod",
+      "dew_point_room": "Rosný bod místnosti",
       "trend_1h": "Změna za poslední hodinu",
       "stable": "stabilní",
       "history": "Historie",
@@ -30564,7 +30566,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "mold_risk": "Schimmelgefahr",
       "condensation_risk": "Kondensationsgefahr",
       "ventilate": "Lüften",
-      "air_dry": "Außenluft ist trockener",
+      "air_dry": "Außenluft enthält weniger Wasser (absolute Feuchte)",
       "air_cool": "Außenluft ist kühler",
       "window_open": "Fenster offen",
       "window_guess": "Fenster offen? (plötzlicher Temperaturabfall)",
@@ -30572,6 +30574,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "battery_low": "Batterie schwach",
       "outdoor": "Außen",
       "dew_point": "Taupunkt",
+      "dew_point_room": "Taupunkt Raum",
       "trend_1h": "Änderung in der letzten Stunde",
       "stable": "stabil",
       "history": "Verlauf",
@@ -30639,7 +30642,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "mold_risk": "Risque de moisissure",
       "condensation_risk": "Risque de condensation",
       "ventilate": "Aérer",
-      "air_dry": "l'air extérieur est plus sec",
+      "air_dry": "l'air extérieur contient moins d'eau (humidité absolue)",
       "air_cool": "l'air extérieur est plus frais",
       "window_open": "Fenêtre ouverte",
       "window_guess": "Fenêtre ouverte ? (chute brutale de température)",
@@ -30647,6 +30650,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "battery_low": "Batterie faible",
       "outdoor": "Ext.",
       "dew_point": "Rosée",
+      "dew_point_room": "Rosée de la pièce",
       "trend_1h": "Évolution sur la dernière heure",
       "stable": "stable",
       "history": "Historique",
@@ -30714,7 +30718,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "mold_risk": "Rischio muffa",
       "condensation_risk": "Rischio condensa",
       "ventilate": "Arieggia",
-      "air_dry": "l'aria esterna è più secca",
+      "air_dry": "l'aria esterna contiene meno acqua (umidità assoluta)",
       "air_cool": "l'aria esterna è più fresca",
       "window_open": "Finestra aperta",
       "window_guess": "Finestra aperta? (calo improvviso di temperatura)",
@@ -30722,6 +30726,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "battery_low": "Batteria scarica",
       "outdoor": "Est.",
       "dew_point": "Rugiada",
+      "dew_point_room": "Rugiada della stanza",
       "trend_1h": "Andamento nell'ultima ora",
       "stable": "stabile",
       "history": "Storico",
@@ -30789,7 +30794,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "mold_risk": "Fare for mugg",
       "condensation_risk": "Fare for kondens",
       "ventilate": "Luft ut",
-      "air_dry": "uteluften er tørrere",
+      "air_dry": "uteluften inneholder mindre vann (absolutt fuktighet)",
       "air_cool": "uteluften er kjøligere",
       "window_open": "Vindu åpent",
       "window_guess": "Vindu åpent? (brått temperaturfall)",
@@ -30797,6 +30802,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "battery_low": "Lavt batteri",
       "outdoor": "Ute",
       "dew_point": "Duggpunkt",
+      "dew_point_room": "Duggpunkt rom",
       "trend_1h": "Endring siste time",
       "stable": "stabil",
       "history": "Historikk",
@@ -30864,7 +30870,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "mold_risk": "Schimmelrisico",
       "condensation_risk": "Condensrisico",
       "ventilate": "Ventileer",
-      "air_dry": "buitenlucht is droger",
+      "air_dry": "buitenlucht bevat minder water (absolute vochtigheid)",
       "air_cool": "buitenlucht is koeler",
       "window_open": "Raam open",
       "window_guess": "Raam open? (plotselinge temperatuurdaling)",
@@ -30872,6 +30878,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "battery_low": "Batterij bijna leeg",
       "outdoor": "Buiten",
       "dew_point": "Dauwpunt",
+      "dew_point_room": "Dauwpunt kamer",
       "trend_1h": "Verandering in het laatste uur",
       "stable": "stabiel",
       "history": "Geschiedenis",
@@ -30939,7 +30946,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "mold_risk": "Ryzyko pleśni",
       "condensation_risk": "Ryzyko kondensacji",
       "ventilate": "Przewietrz pomieszczenie",
-      "air_dry": "powietrze na zewnątrz jest suchsze",
+      "air_dry": "powietrze na zewnątrz zawiera mniej wody (wilgotność bezwzględna)",
       "air_cool": "powietrze na zewnątrz jest chłodniejsze",
       "window_open": "Okno otwarte",
       "window_guess": "Okno otwarte? (nagły spadek temperatury)",
@@ -30947,6 +30954,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "battery_low": "Niski poziom baterii",
       "outdoor": "Na zewnątrz",
       "dew_point": "Punkt rosy",
+      "dew_point_room": "Punkt rosy pokoju",
       "trend_1h": "Zmiana w ostatniej godzinie",
       "stable": "stabilnie",
       "history": "Historia",
@@ -31014,7 +31022,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "mold_risk": "Risc de mucegai",
       "condensation_risk": "Risc de condens",
       "ventilate": "Aerisiți",
-      "air_dry": "aerul de afară este mai uscat",
+      "air_dry": "aerul de afară conține mai puțină apă (umiditate absolută)",
       "air_cool": "aerul de afară este mai răcoros",
       "window_open": "Fereastră deschisă",
       "window_guess": "Fereastră deschisă? (scădere bruscă a temperaturii)",
@@ -31022,6 +31030,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "battery_low": "Baterie descărcată",
       "outdoor": "Afară",
       "dew_point": "Punct de rouă",
+      "dew_point_room": "Punct de rouă cameră",
       "trend_1h": "Variație în ultima oră",
       "stable": "stabil",
       "history": "Istoric",
@@ -31089,7 +31098,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "mold_risk": "Риск плесени",
       "condensation_risk": "Риск конденсата",
       "ventilate": "Проветрите",
-      "air_dry": "снаружи воздух суше",
+      "air_dry": "в уличном воздухе меньше воды (абсолютная влажность)",
       "air_cool": "снаружи воздух прохладнее",
       "window_open": "Окно открыто",
       "window_guess": "Окно открыто? (резкое падение температуры)",
@@ -31097,6 +31106,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "battery_low": "Батарея разряжена",
       "outdoor": "Снаружи",
       "dew_point": "Точка росы",
+      "dew_point_room": "Точка росы в комнате",
       "trend_1h": "Изменение за последний час",
       "stable": "стабильно",
       "history": "История",
@@ -31164,7 +31174,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "mold_risk": "Ризик од буђи",
       "condensation_risk": "Ризик од кондензације",
       "ventilate": "Проветрите собу",
-      "air_dry": "спољашњи ваздух је сувљи",
+      "air_dry": "спољашњи ваздух садржи мање воде (апсолутна влажност)",
       "air_cool": "спољашњи ваздух је свежији",
       "window_open": "Прозор је отворен",
       "window_guess": "Прозор је отворен? (нагли пад температуре)",
@@ -31172,6 +31182,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "battery_low": "Батерија је ниска",
       "outdoor": "Споља",
       "dew_point": "Тачка росе",
+      "dew_point_room": "Тачка росе просторије",
       "trend_1h": "Промена током последњег сата",
       "stable": "стабилно",
       "history": "Историја",
@@ -31239,7 +31250,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "mold_risk": "Rizik od buđi",
       "condensation_risk": "Rizik od kondenzacije",
       "ventilate": "Provetrite sobu",
-      "air_dry": "spoljašnji vazduh je suvlji",
+      "air_dry": "spoljašnji vazduh sadrži manje vode (apsolutna vlažnost)",
       "air_cool": "spoljašnji vazduh je svežiji",
       "window_open": "Prozor je otvoren",
       "window_guess": "Prozor je otvoren? (nagli pad temperature)",
@@ -31247,6 +31258,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       "battery_low": "Baterija je niska",
       "outdoor": "Spolja",
       "dew_point": "Tačka rose",
+      "dew_point_room": "Tačka rose prostorije",
       "trend_1h": "Promena tokom poslednjeg sata",
       "stable": "stabilno",
       "history": "Istorija",
@@ -31569,6 +31581,9 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
 .st-tile .clim{display:none!important}
 .st-double_ring .clim{order:1;margin:6px 0 2px}.st-double_ring .bg9{order:2}
 /* commandes du thermostat (show_hvac_modes / show_fan_modes / show_preset_modes) : boutons de mode, listes ventilation et préréglage */
+.crow{display:flex;flex-wrap:wrap;align-items:stretch;gap:6px;margin-top:6px}
+.crow:not(:has(> :not([hidden]))){display:none}
+.crow .cmodes{flex:1 1 auto;margin-top:0}.crow .csel{flex:1 1 150px;margin-top:0}
 .cmodes{display:flex;gap:4px;margin-top:6px;padding:4px;border-radius:12px;background:rgba(127,127,127,.09);cursor:default}
 .cmodes button{flex:1;min-width:0;height:34px;border:none;border-radius:9px;background:transparent;color:var(--secondary-text-color);cursor:pointer;display:grid;place-items:center;padding:0;transition:background .2s,color .2s}
 .cmodes button ha-icon{--mdc-icon-size:18px}
@@ -31587,8 +31602,8 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
 .st-gradient .cmodes,.st-lcd .cmodes,.st-neon .cmodes,.st-gradient .csel label,.st-lcd .csel label,.st-neon .csel label{background:rgba(255,255,255,.12);color:#e9edf1}
 .st-gradient .cmodes button.on,.st-lcd .cmodes button.on,.st-neon .cmodes button.on,.st-gradient .csel select,.st-lcd .csel select,.st-neon .csel select{color:#fff}
 .st-tile .cmodes,.st-tile .csel{display:none!important}
-.st-gradient .cmodes,.st-gradient .csel{position:relative}
-.st-double_ring .cmodes,.st-double_ring .csel{order:1}
+.st-gradient .crow{position:relative}
+.st-double_ring .crow{order:1}
 .noanim *,.noanim *::before,.noanim *::after{animation:none!important}
 @media (prefers-reduced-motion:reduce){ha-card *,ha-card *::before{animation:none!important}}
 @keyframes rcbreathe{50%{transform:scale(1.15);opacity:.7}}
@@ -31636,11 +31651,11 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
   const HEAD = (chip = true) => `<div class="head">${RIC}<span class="name" id="name"></span>${ICONS}${chip ? '<span class="chip" id="chip"></span>' : ''}</div>`;
   const VT = '<div class="vt"><span id="t">--</span><small id="tu"></small></div>';
   const VH = '<div class="vh"><ha-icon icon="mdi:water-percent"></ha-icon><span id="h"></span><span class="trend" id="trend"></span></div>';
-  const META = '<div class="meta" id="meta"></div>', NOTES = '<div class="notes" id="notes"></div>';
+  const META = '<div class="meta" id="meta"></div><div class="meta" id="meta2"></div>', NOTES = '<div class="notes" id="notes"></div>';
   const SPARK = '<svg class="spark hide" id="spark" viewBox="0 0 300 30" preserveAspectRatio="none" aria-hidden="true"><path class="a" d=""/><path class="l" d=""/></svg>';
   const CLIM = '<div class="clim" id="clim" hidden><ha-icon id="cico" icon="mdi:thermostat"></ha-icon><span class="cl" id="cl"></span><button id="cm" type="button">−</button><b id="ct"></b><button id="cp" type="button">+</button></div>'
-    + '<div class="cmodes" id="cmodes" role="group" hidden></div>'
-    + '<div class="csel" id="csel" hidden><label id="lfan"><ha-icon icon="mdi:fan"></ha-icon><select id="sfan"></select></label><label id="lpre"><ha-icon icon="mdi:tune-variant"></ha-icon><select id="spre"></select></label></div>';
+    + '<div class="crow"><div class="cmodes" id="cmodes" role="group" hidden></div>'
+    + '<div class="csel" id="csel" hidden><label id="lfan"><ha-icon icon="mdi:fan"></ha-icon><select id="sfan"></select></label><label id="lpre"><ha-icon icon="mdi:tune-variant"></ha-icon><select id="spre"></select></label></div></div>';
   // icônes des modes (mêmes icônes que Home Assistant)
   const HVAC_ICON = { off: 'mdi:power', heat: 'mdi:fire', cool: 'mdi:snowflake', heat_cool: 'mdi:sun-snowflake-variant', auto: 'mdi:thermostat-auto', dry: 'mdi:water-percent', fan_only: 'mdi:fan' };
   const HVAC_ORDER = ['off', 'fan_only', 'dry', 'cool', 'heat', 'heat_cool', 'auto'];
@@ -32011,8 +32026,9 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       // ligne d'infos : extérieur et point de rosée
       const meta = [];
       if (c.show_outdoor !== false && (fin(s.tOut) || fin(s.hOut))) meta.push(`${this._l('outdoor')} ${[fin(s.tOut) ? `${this._fmt(s.tOut)}°` : '', fin(s.hOut) ? `${this._fmt(s.hOut, 0)} %` : ''].filter(Boolean).join(' · ')}`);
-      if (c.show_dew_point !== false && fin(s.dp)) meta.push(`${this._l('dew_point')} ${this._fmt(s.dp)}°`);
       html('meta', meta.map((m) => `<span>${esc(m)}</span>`).join(''));
+      // le point de rosée est celui de la pièce (température et humidité intérieures) : ligne à part, pour ne pas le lire comme celui de l'extérieur
+      html('meta2', c.show_dew_point !== false && fin(s.dp) ? `<span>${esc(`${this._l('dew_point_room')} ${this._fmt(s.dp)}°`)}</span>` : '');
       // icônes : fenêtre ouverte, batterie faible
       const win = $('win'), bat = $('bat');
       win.hidden = !(s.winOpen || s.winGuess);
