@@ -30184,14 +30184,16 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         if (b && !b.disabled && this._hass) this._hass.callService('climate', 'set_hvac_mode', { entity_id: this._c.entity, hvac_mode: b.dataset.m });
       });
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
-        const c = this._c; this._more({ temperature: c.entity, valve: c.entity_valve_position || c.entity, battery: c.entity_battery || c.entity, window: c.entity_window || c.entity }[el.dataset.k]);
+        const c = this._c; this._more({ temperature: c.entity_temperature || c.entity, valve: c.entity_valve_position || c.entity, battery: c.entity_battery || c.entity, window: c.entity_window || c.entity }[el.dataset.k]);
       }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
 
     _compute() {
       const c = this._c, cs = this._st(c.entity), a = (cs && cs.attributes) || {};
-      const cur = this._num(a.current_temperature), target = this._num(a.temperature);
+      // température mesurée : capteur externe (entity_temperature) si renseigné et lisible, sinon celle de la tête (current_temperature)
+      const xs = this._st(c.entity_temperature), xv = xs ? this._num(xs.state) : NaN;
+      const cur = fin(xv) ? xv : this._num(a.current_temperature), target = this._num(a.temperature);
       // état « unknown » : certains thermostats (Tuya BHT6000…) ne remontent pas leur mode mais bien la température
       // et la consigne ; la carte reste alors pilotable. Indisponible seulement si rien n'est lisible.
       const dead = !cs || /^unavailable$/i.test(String(cs.state)) || (/^unknown$/i.test(String(cs.state)) && !fin(cur) && !fin(target));
@@ -30364,7 +30366,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
-        ent('entity_window', ['binary_sensor', 'input_boolean']), ent('entity_humidity', 'sensor'), ent('entity_battery', ['sensor', 'binary_sensor']), ent('entity_valve_position', ['sensor', 'number']),
+        ent('entity_temperature', 'sensor'), ent('entity_window', ['binary_sensor', 'input_boolean']), ent('entity_humidity', 'sensor'), ent('entity_battery', ['sensor', 'binary_sensor']), ent('entity_valve_position', ['sensor', 'number']),
         { type: 'grid', name: '', schema: [{ name: 'override', selector: { boolean: {} } }, { name: 'override_durations', selector: { object: {} } }] },
         { type: 'grid', name: '', schema: [{ name: 'header', selector: { select: { mode: 'dropdown', options: ['name', 'icon', 'both'] } } }, { name: 'icon', selector: { icon: {} } }] },
         { name: 'big_value', selector: { select: { mode: 'dropdown', options: ['target', 'current'] } } },

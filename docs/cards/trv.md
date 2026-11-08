@@ -8,6 +8,7 @@ It works with the `climate` entity of any smart radiator valve (Zigbee2MQTT, ZHA
 |---|---|
 | `entity` | the `climate` entity of the valve: current temperature, target, `hvac_action`, `hvac_modes` |
 | `model` | `trv` (default, Tado X radiator valve), another radiator valve: `classic` (generic head, drawn), `netatmo_trv` (Netatmo, 1st gen.), `netatmo_trv2` (Netatmo, new), `danfoss` (Danfoss Ally), `shelly` (Shelly TRV), `somfy` (Somfy io), or a wall thermostat: `netatmo`, `nest` (Google Nest), `tado` (Tado X wall thermostat), `t6` (Honeywell Home T6), `bht6000` (Tuya BHT6000 and similar round black-screen thermostats, drawn). The screen is drawn live |
+| `entity_temperature` | room temperature sensor (`sensor`) shown instead of the valve's own measurement, e.g. the external sensor a Danfoss Ally regulates on. Used for the screen, the tile and the heating guess; without it (or when unavailable), the `current_temperature` of the valve is used |
 | `entity_window` | window sensor (`binary_sensor`). Without it, the `window_open` attribute of the valve is used when it has one |
 | `entity_battery` | battery (`sensor` %, or a low-battery `binary_sensor`). Without it, the `battery` attribute of the valve is used |
 | `entity_valve_position` | valve opening in % (`sensor` / `number`). Without it, the `pi_heating_demand` / `valve_position` attribute is used |
@@ -65,6 +66,7 @@ model: nest
 ```yaml
 type: custom:appliance-trv-card
 entity: climate.bedroom_valve
+entity_temperature: sensor.bedroom_temperature  # optional: external sensor instead of the valve's measurement
 entity_window: binary_sensor.bedroom_window     # optional
 entity_battery: sensor.bedroom_valve_battery    # optional
 ```
