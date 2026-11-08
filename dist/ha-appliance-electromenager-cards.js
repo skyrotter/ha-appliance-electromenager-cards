@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.100.4";
+const VERSION = "1.101.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -402,7 +402,23 @@ const STRINGS = {
     "f_hide_when_inactive": "Hide when inactive (no cycle, no alert)",
     "f_hide_delay": "Keep visible after the end (min)",
     "f_cycle_gap": "Pause kept in the same cycle (min)",
-    "f_hide_zero_power": "Hide power when it is 0"
+    "f_hide_zero_power": "Hide power when it is 0",
+    "pool_ph_plus": "pH+ pump",
+    "pool_ph_minus": "pH- pump",
+    "electrolysis": "Electrolysis",
+    "pool_heat_pump": "Pool heat pump",
+    "shower": "Shower",
+    "presence": "Presence",
+    "presence_on": "Someone",
+    "presence_off": "Nobody",
+    "low_water": "Low water level",
+    "f_switch_ph_plus": "pH+ dosing pump (on/off)",
+    "f_switch_ph_minus": "pH- dosing pump (on/off)",
+    "f_switch_electrolysis": "Electrolysis (on/off)",
+    "f_switch_heat_pump": "Pool heat pump (on/off)",
+    "f_switch_shower": "Shower (on/off, status)",
+    "f_presence": "Presence detector (someone in or around the pool)",
+    "f_low_water": "Low water alert (sensor, door sensor...)"
   },
   "cs": {
     "washer": "Pračka",
@@ -1143,7 +1159,23 @@ const STRINGS = {
     "f_hide_when_inactive": "Ausblenden, wenn inaktiv (kein Zyklus, kein Alarm)",
     "f_hide_delay": "Nach dem Ende sichtbar lassen (min)",
     "f_cycle_gap": "Pause innerhalb eines Zyklus (min)",
-    "f_hide_zero_power": "Leistung bei 0 ausblenden"
+    "f_hide_zero_power": "Leistung bei 0 ausblenden",
+    "pool_ph_plus": "pH+-Pumpe",
+    "pool_ph_minus": "pH--Pumpe",
+    "electrolysis": "Elektrolyse",
+    "pool_heat_pump": "Pool-Wärmepumpe",
+    "shower": "Dusche",
+    "presence": "Anwesenheit",
+    "presence_on": "Jemand",
+    "presence_off": "Niemand",
+    "low_water": "Wasserstand niedrig",
+    "f_switch_ph_plus": "pH+-Dosierpumpe (Ein/Aus)",
+    "f_switch_ph_minus": "pH--Dosierpumpe (Ein/Aus)",
+    "f_switch_electrolysis": "Elektrolyse (Ein/Aus)",
+    "f_switch_heat_pump": "Pool-Wärmepumpe (Ein/Aus)",
+    "f_switch_shower": "Dusche (Ein/Aus, Status)",
+    "f_presence": "Anwesenheitsmelder (jemand im oder am Pool)",
+    "f_low_water": "Wassermangel-Alarm (Sensor, Türsensor...)"
   },
   "fr": {
     "washer": "Lave-linge",
@@ -1533,7 +1565,23 @@ const STRINGS = {
     "f_hide_when_inactive": "Masquer quand l'appareil est inactif (ni cycle, ni alerte)",
     "f_hide_delay": "Garder visible après la fin (min)",
     "f_cycle_gap": "Pause tolérée dans un même cycle (min)",
-    "f_hide_zero_power": "Masquer la puissance quand elle est à 0"
+    "f_hide_zero_power": "Masquer la puissance quand elle est à 0",
+    "pool_ph_plus": "Pompe pH+",
+    "pool_ph_minus": "Pompe pH-",
+    "electrolysis": "Électrolyse",
+    "pool_heat_pump": "PAC piscine",
+    "shower": "Douche",
+    "presence": "Présence",
+    "presence_on": "Quelqu'un",
+    "presence_off": "Personne",
+    "low_water": "Niveau d'eau bas",
+    "f_switch_ph_plus": "Pompe doseuse pH+ (marche / arrêt)",
+    "f_switch_ph_minus": "Pompe doseuse pH- (marche / arrêt)",
+    "f_switch_electrolysis": "Électrolyse (marche / arrêt)",
+    "f_switch_heat_pump": "PAC de piscine (marche / arrêt)",
+    "f_switch_shower": "Douche (marche / arrêt, statut)",
+    "f_presence": "Témoin de présence (quelqu'un dans la piscine ou autour)",
+    "f_low_water": "Alerte manque d'eau (capteur, détecteur de porte...)"
   },
   "it": {
     "washer": "Lavatrice",
@@ -1896,7 +1944,23 @@ const STRINGS = {
     "f_hide_when_inactive": "Nascondi quando inattivo (nessun ciclo, nessun avviso)",
     "f_hide_delay": "Resta visibile dopo la fine (min)",
     "f_cycle_gap": "Pausa mantenuta nello stesso ciclo (min)",
-    "f_hide_zero_power": "Nascondi la potenza quando è 0"
+    "f_hide_zero_power": "Nascondi la potenza quando è 0",
+    "pool_ph_plus": "Pompa pH+",
+    "pool_ph_minus": "Pompa pH-",
+    "electrolysis": "Elettrolisi",
+    "pool_heat_pump": "Pompa di calore piscina",
+    "shower": "Doccia",
+    "presence": "Presenza",
+    "presence_on": "Qualcuno",
+    "presence_off": "Nessuno",
+    "low_water": "Livello dell'acqua basso",
+    "f_switch_ph_plus": "Pompa dosatrice pH+ (on/off)",
+    "f_switch_ph_minus": "Pompa dosatrice pH- (on/off)",
+    "f_switch_electrolysis": "Elettrolisi (on/off)",
+    "f_switch_heat_pump": "Pompa di calore piscina (on/off)",
+    "f_switch_shower": "Doccia (on/off, stato)",
+    "f_presence": "Sensore di presenza (qualcuno in piscina o intorno)",
+    "f_low_water": "Allarme acqua bassa (sensore, sensore porta...)"
   },
   "nb": {
     "f_illustration_size": "Størrelse på illustrasjonen",
@@ -2622,7 +2686,23 @@ const STRINGS = {
     "f_hide_when_inactive": "Verbergen als inactief (geen cyclus, geen alarm)",
     "f_hide_delay": "Zichtbaar houden na het einde (min)",
     "f_cycle_gap": "Pauze binnen dezelfde cyclus (min)",
-    "f_hide_zero_power": "Vermogen verbergen als het 0 is"
+    "f_hide_zero_power": "Vermogen verbergen als het 0 is",
+    "pool_ph_plus": "pH+-pomp",
+    "pool_ph_minus": "pH--pomp",
+    "electrolysis": "Elektrolyse",
+    "pool_heat_pump": "Zwembadwarmtepomp",
+    "shower": "Douche",
+    "presence": "Aanwezigheid",
+    "presence_on": "Iemand",
+    "presence_off": "Niemand",
+    "low_water": "Laag waterpeil",
+    "f_switch_ph_plus": "pH+-doseerpomp (aan/uit)",
+    "f_switch_ph_minus": "pH--doseerpomp (aan/uit)",
+    "f_switch_electrolysis": "Elektrolyse (aan/uit)",
+    "f_switch_heat_pump": "Zwembadwarmtepomp (aan/uit)",
+    "f_switch_shower": "Douche (aan/uit, status)",
+    "f_presence": "Aanwezigheidsmelder (iemand in of rond het zwembad)",
+    "f_low_water": "Waterpeilalarm (sensor, deursensor...)"
   },
   "pl": {
     "washer": "Pralka",
@@ -7411,7 +7491,7 @@ const DEF = {
     fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "power_level", "pellet_level", "mode", "switch"],
     keys: ["poele", "pellet", "granule", "stove"] },
   pool_pump: { accent: "active", threshold: 50,
-    fields: ["entity", "power", "energy", "cost", "temperature", "ph", "orp", "pressure", "tds", "salt", "chlorine", "runtime", "speed", "switch"],
+    fields: ["entity", "power", "energy", "cost", "temperature", "ph", "orp", "pressure", "tds", "salt", "chlorine", "runtime", "speed", "switch", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water"],
     keys: ["piscine", "pool", "filtration", "pompe"] },
   chest_freezer: { accent: "cold", threshold: 20,
     fields: ["entity", "power", "energy", "cost", "temperature", "door", "switch"],
@@ -7631,6 +7711,9 @@ const PERIODS = ["day", "week", "month", ...Object.keys(ROLLING)];
 const USAGE_KINDS = ["tv", "monitor", "ps5", "desktop_pc", "laptop"];
 const USAGE_ON = ["on", "playing", "paused", "idle", "buffering", "home"];
 
+// piscine : équipements commandables [option, icône, clé de libellé]
+const POOL_CTL = [["switch_ph_plus", "mdi:plus-circle-outline", "pool_ph_plus"], ["switch_ph_minus", "mdi:minus-circle-outline", "pool_ph_minus"],
+  ["switch_electrolysis", "mdi:flash", "electrolysis"], ["switch_heat_pump", "mdi:heat-pump", "pool_heat_pump"], ["switch_shower", "mdi:shower-head", "shower"]];
 class ApplianceCardBase extends HTMLElement {
   static get kind() { return "washer"; }
   static getConfigForm() { return buildForm(this.kind); }
@@ -7702,7 +7785,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "switch_low", "switch_high", "power_level", "pellet_level", "ph", "orp", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "switch_low", "switch_high", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water", "power_level", "pellet_level", "ph", "orp", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -8027,6 +8110,9 @@ class ApplianceCardBase extends HTMLElement {
       if (m.pellets != null && m.pellets < (c.pellet_alert ?? 15)) m.alerts.push("pellets_low");
     } else if (kind === "pool_pump") {
       m.status = base === "running" ? "filtering" : base;
+      // piscine : manque d'eau (capteur ou détecteur de porte) = alerte rouge ; présence = tuile
+      if (isOn(S(c.low_water))) m.alerts.push("low_water");
+      m.presence = S(c.presence);
     } else if (kind === "printer") {
       // imprimante / scanner sur prise connectée : puissance > print_threshold (100 W) = impression, > scan_threshold (45 W) = numérisation,
       // >= standby_threshold (1 W) = veille ; une entité d'état texte (IPP...) prime si elle le dit explicitement
@@ -9040,6 +9126,17 @@ class ApplianceCardBase extends HTMLElement {
         return `<button class="mode-btn sp-btn ${on ? "on" : ""}" data-sp="${k}" title="${esc(tr(hass, lbl))}" aria-label="${esc(tr(hass, lbl))}"${on != null ? ` aria-pressed="${on}"` : ""}${dis ? " disabled" : ""}><ha-icon icon="${icon}"></ha-icon></button>`;
       }).join("");
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._spkCmd(b.dataset.sp); }; });
+    } else if (kind === "pool_pump" && POOL_CTL.some(([k]) => c[k])) {
+      // piscine : un bouton par équipement commandé (doseuses pH+ / pH-, électrolyse, PAC, douche), clic = bascule, bouton allumé = en marche
+      modesEl.innerHTML = POOL_CTL.filter(([k]) => c[k]).map(([k, icon, lbl]) => {
+        const id = c[k], st = hass.states[id], on = isOn(st), name = tr(hass, lbl);
+        return `<button class="mode-btn outlet-btn ${on ? "on" : ""}" data-outlet="${esc(id)}" title="${esc(name)}" aria-label="${esc(name)}" aria-pressed="${on}" ${!st || st.state === "unavailable" ? "disabled" : ""}><ha-icon icon="${icon}"></ha-icon>${esc(name)}</button>`;
+      }).join("");
+      modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => {
+        ev.stopPropagation();
+        const id = b.dataset.outlet, dom = domainOf(id);
+        hass.callService(["switch", "input_boolean", "light", "fan"].includes(dom) ? dom : "homeassistant", "toggle", { entity_id: id });
+      }; });
     } else if (kind === "power_strip" && Array.isArray(c.outlets) && c.outlets.length) {
       // multiprise : un bouton par prise commandée (numéro, nom de l'entité en infobulle), clic = bascule
       modesEl.innerHTML = c.outlets.map((id, i) => {
@@ -9148,6 +9245,7 @@ class ApplianceCardBase extends HTMLElement {
       // analyses de l'eau : [clé, icône, décimales] ; chaque mesure se masque avec show_<clé>: false
       for (const [k, ic, dg] of [["ph", "mdi:ph", 2], ["orp", "mdi:flash-triangle-outline", 0], ["pressure", "mdi:gauge", 2], ["tds", "mdi:water-opacity", 0], ["salt", "mdi:shaker-outline", 1], ["chlorine", "mdi:flask-outline", 2]])
         if (c[`show_${k}`] !== false && m.pool && m.pool[k]) tile(ic, fmtUnit(hass, m.pool[k], dg), lb(k), c[k]);
+      if (m.presence && !BAD.includes(String(m.presence.state).toLowerCase())) tile(isOn(m.presence) ? "mdi:account-check" : "mdi:account-off-outline", tr(hass, isOn(m.presence) ? "presence_on" : "presence_off"), lb("presence"), c.presence);
       if (m.runtime != null) tile("mdi:timer-outline", fmtDuration(m.runtime), lb("today"), c.runtime);
       if (num(m.speed) != null) tile("mdi:speedometer", fmtUnit(hass, m.speed, 0), lb("speed"), c.speed);
     } else if (kind === "pellet_stove") {
@@ -9248,6 +9346,13 @@ const SEL = {
   switch: { entity: { domain: ["switch", "input_boolean", "light"] } },
   switch_low: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
   switch_high: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
+  switch_ph_plus: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
+  switch_ph_minus: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
+  switch_electrolysis: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
+  switch_heat_pump: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
+  switch_shower: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
+  presence: { entity: { domain: ["binary_sensor", "input_boolean"] } },
+  low_water: { entity: { domain: ["binary_sensor", "input_boolean", "switch"] } },
   // climate / water_heater acceptés : la carte lit alors current_temperature / temperature (pas l'état, qui est un mode)
   temperature: { entity: { filter: [{ domain: ["sensor", "input_number"], device_class: "temperature" }, { domain: ["climate", "water_heater"] }] } },
   target_temperature: { entity: { domain: ["sensor", "input_number", "number", "climate", "water_heater"] } },

@@ -10,6 +10,9 @@ const PERIODS = ["day", "week", "month", ...Object.keys(ROLLING)];
 const USAGE_KINDS = ["tv", "monitor", "ps5", "desktop_pc", "laptop"];
 const USAGE_ON = ["on", "playing", "paused", "idle", "buffering", "home"];
 
+// piscine : équipements commandables [option, icône, clé de libellé]
+const POOL_CTL = [["switch_ph_plus", "mdi:plus-circle-outline", "pool_ph_plus"], ["switch_ph_minus", "mdi:minus-circle-outline", "pool_ph_minus"],
+  ["switch_electrolysis", "mdi:flash", "electrolysis"], ["switch_heat_pump", "mdi:heat-pump", "pool_heat_pump"], ["switch_shower", "mdi:shower-head", "shower"]];
 class ApplianceCardBase extends HTMLElement {
   static get kind() { return "washer"; }
   static getConfigForm() { return buildForm(this.kind); }
@@ -81,7 +84,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "switch_low", "switch_high", "power_level", "pellet_level", "ph", "orp", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "switch_low", "switch_high", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water", "power_level", "pellet_level", "ph", "orp", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -406,6 +409,9 @@ class ApplianceCardBase extends HTMLElement {
       if (m.pellets != null && m.pellets < (c.pellet_alert ?? 15)) m.alerts.push("pellets_low");
     } else if (kind === "pool_pump") {
       m.status = base === "running" ? "filtering" : base;
+      // piscine : manque d'eau (capteur ou détecteur de porte) = alerte rouge ; présence = tuile
+      if (isOn(S(c.low_water))) m.alerts.push("low_water");
+      m.presence = S(c.presence);
     } else if (kind === "printer") {
       // imprimante / scanner sur prise connectée : puissance > print_threshold (100 W) = impression, > scan_threshold (45 W) = numérisation,
       // >= standby_threshold (1 W) = veille ; une entité d'état texte (IPP...) prime si elle le dit explicitement
@@ -1419,6 +1425,17 @@ class ApplianceCardBase extends HTMLElement {
         return `<button class="mode-btn sp-btn ${on ? "on" : ""}" data-sp="${k}" title="${esc(tr(hass, lbl))}" aria-label="${esc(tr(hass, lbl))}"${on != null ? ` aria-pressed="${on}"` : ""}${dis ? " disabled" : ""}><ha-icon icon="${icon}"></ha-icon></button>`;
       }).join("");
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._spkCmd(b.dataset.sp); }; });
+    } else if (kind === "pool_pump" && POOL_CTL.some(([k]) => c[k])) {
+      // piscine : un bouton par équipement commandé (doseuses pH+ / pH-, électrolyse, PAC, douche), clic = bascule, bouton allumé = en marche
+      modesEl.innerHTML = POOL_CTL.filter(([k]) => c[k]).map(([k, icon, lbl]) => {
+        const id = c[k], st = hass.states[id], on = isOn(st), name = tr(hass, lbl);
+        return `<button class="mode-btn outlet-btn ${on ? "on" : ""}" data-outlet="${esc(id)}" title="${esc(name)}" aria-label="${esc(name)}" aria-pressed="${on}" ${!st || st.state === "unavailable" ? "disabled" : ""}><ha-icon icon="${icon}"></ha-icon>${esc(name)}</button>`;
+      }).join("");
+      modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => {
+        ev.stopPropagation();
+        const id = b.dataset.outlet, dom = domainOf(id);
+        hass.callService(["switch", "input_boolean", "light", "fan"].includes(dom) ? dom : "homeassistant", "toggle", { entity_id: id });
+      }; });
     } else if (kind === "power_strip" && Array.isArray(c.outlets) && c.outlets.length) {
       // multiprise : un bouton par prise commandée (numéro, nom de l'entité en infobulle), clic = bascule
       modesEl.innerHTML = c.outlets.map((id, i) => {
@@ -1527,6 +1544,7 @@ class ApplianceCardBase extends HTMLElement {
       // analyses de l'eau : [clé, icône, décimales] ; chaque mesure se masque avec show_<clé>: false
       for (const [k, ic, dg] of [["ph", "mdi:ph", 2], ["orp", "mdi:flash-triangle-outline", 0], ["pressure", "mdi:gauge", 2], ["tds", "mdi:water-opacity", 0], ["salt", "mdi:shaker-outline", 1], ["chlorine", "mdi:flask-outline", 2]])
         if (c[`show_${k}`] !== false && m.pool && m.pool[k]) tile(ic, fmtUnit(hass, m.pool[k], dg), lb(k), c[k]);
+      if (m.presence && !BAD.includes(String(m.presence.state).toLowerCase())) tile(isOn(m.presence) ? "mdi:account-check" : "mdi:account-off-outline", tr(hass, isOn(m.presence) ? "presence_on" : "presence_off"), lb("presence"), c.presence);
       if (m.runtime != null) tile("mdi:timer-outline", fmtDuration(m.runtime), lb("today"), c.runtime);
       if (num(m.speed) != null) tile("mdi:speedometer", fmtUnit(hass, m.speed, 0), lb("speed"), c.speed);
     } else if (kind === "pellet_stove") {
