@@ -376,7 +376,9 @@
     "f_switch_heat_pump": "Zwembadwarmtepomp (aan/uit)",
     "f_switch_shower": "Douche (aan/uit, status)",
     "f_presence": "Aanwezigheidsmelder (iemand in of rond het zwembad)",
-    "f_low_water": "Waterpeilalarm (sensor, deursensor...)"
+    "f_low_water": "Waterpeilalarm (sensor, deursensor...)",
+    "dosing_pump": "Doseerpomp (pH+ / pH-)",
+    "dosing": "Dosering"
   },
   "aquarium": {
     "power": "Vermogen",

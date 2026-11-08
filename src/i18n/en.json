@@ -403,7 +403,9 @@
     "f_switch_heat_pump": "Pool heat pump (on/off)",
     "f_switch_shower": "Shower (on/off, status)",
     "f_presence": "Presence detector (someone in or around the pool)",
-    "f_low_water": "Low water alert (sensor, door sensor...)"
+    "f_low_water": "Low water alert (sensor, door sensor...)",
+    "dosing_pump": "Dosing pump (pH+ / pH-)",
+    "dosing": "Dosing"
   },
   "aquarium": {
     "power": "Power",

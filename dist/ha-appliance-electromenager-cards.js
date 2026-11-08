@@ -418,7 +418,9 @@ const STRINGS = {
     "f_switch_heat_pump": "Pool heat pump (on/off)",
     "f_switch_shower": "Shower (on/off, status)",
     "f_presence": "Presence detector (someone in or around the pool)",
-    "f_low_water": "Low water alert (sensor, door sensor...)"
+    "f_low_water": "Low water alert (sensor, door sensor...)",
+    "dosing_pump": "Dosing pump (pH+ / pH-)",
+    "dosing": "Dosing"
   },
   "cs": {
     "washer": "Pračka",
@@ -1175,7 +1177,9 @@ const STRINGS = {
     "f_switch_heat_pump": "Pool-Wärmepumpe (Ein/Aus)",
     "f_switch_shower": "Dusche (Ein/Aus, Status)",
     "f_presence": "Anwesenheitsmelder (jemand im oder am Pool)",
-    "f_low_water": "Wassermangel-Alarm (Sensor, Türsensor...)"
+    "f_low_water": "Wassermangel-Alarm (Sensor, Türsensor...)",
+    "dosing_pump": "Dosierpumpe (pH+ / pH-)",
+    "dosing": "Dosierung"
   },
   "fr": {
     "washer": "Lave-linge",
@@ -1581,7 +1585,9 @@ const STRINGS = {
     "f_switch_heat_pump": "PAC de piscine (marche / arrêt)",
     "f_switch_shower": "Douche (marche / arrêt, statut)",
     "f_presence": "Témoin de présence (quelqu'un dans la piscine ou autour)",
-    "f_low_water": "Alerte manque d'eau (capteur, détecteur de porte...)"
+    "f_low_water": "Alerte manque d'eau (capteur, détecteur de porte...)",
+    "dosing_pump": "Pompe doseuse (pH+ / pH-)",
+    "dosing": "Dosage"
   },
   "it": {
     "washer": "Lavatrice",
@@ -1960,7 +1966,9 @@ const STRINGS = {
     "f_switch_heat_pump": "Pompa di calore piscina (on/off)",
     "f_switch_shower": "Doccia (on/off, stato)",
     "f_presence": "Sensore di presenza (qualcuno in piscina o intorno)",
-    "f_low_water": "Allarme acqua bassa (sensore, sensore porta...)"
+    "f_low_water": "Allarme acqua bassa (sensore, sensore porta...)",
+    "dosing_pump": "Pompa dosatrice (pH+ / pH-)",
+    "dosing": "Dosaggio"
   },
   "nb": {
     "f_illustration_size": "Størrelse på illustrasjonen",
@@ -2702,7 +2710,9 @@ const STRINGS = {
     "f_switch_heat_pump": "Zwembadwarmtepomp (aan/uit)",
     "f_switch_shower": "Douche (aan/uit, status)",
     "f_presence": "Aanwezigheidsmelder (iemand in of rond het zwembad)",
-    "f_low_water": "Waterpeilalarm (sensor, deursensor...)"
+    "f_low_water": "Waterpeilalarm (sensor, deursensor...)",
+    "dosing_pump": "Doseerpomp (pH+ / pH-)",
+    "dosing": "Dosering"
   },
   "pl": {
     "washer": "Pralka",
@@ -5274,6 +5284,33 @@ SVG.dishwasher = () => `
   <rect x="14" y="118" width="92" height="10" rx="2" fill="#2b3036"/>
 </g>`;
 
+/* Pompe doseuse péristaltique (pH+ / pH-) : boîtier bleu, tête transparente, rotor à galets qui tourne, tuyau beige, raccords noirs */
+SVG.dosing_pump = () => `
+<defs>${DEFS}
+<linearGradient id="ID-dpblue" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#3b86e0"/><stop offset="1" stop-color="#1b55a6"/></linearGradient>
+<linearGradient id="ID-dpwin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f7fb"/><stop offset="1" stop-color="#cfd8e2"/></linearGradient>
+<clipPath id="ID-dpclip"><rect x="26" y="40" width="68" height="58" rx="8"/></clipPath></defs>
+<ellipse cx="60" cy="126" rx="44" ry="4" fill="url(#ID-shadow)"/>
+<rect x="18" y="4" width="84" height="108" rx="10" fill="url(#ID-dpblue)" stroke="#143f7c" stroke-width="1"/>
+<rect x="26" y="10" width="68" height="26" rx="6" fill="#eef1f5" stroke="#c4ccd6" stroke-width=".8"/>
+<circle cx="37" cy="23" r="6" fill="#fff" stroke="#c4ccd6" stroke-width=".8"/><circle cx="83" cy="23" r="6" fill="#fff" stroke="#c4ccd6" stroke-width=".8"/>
+${[0, 1, 2, 3, 4].map((k) => `<circle class="dp-led${k === 2 ? " dp-on" : ""}" cx="${48 + k * 6}" cy="20" r="1.7"/>`).join("")}
+<rect x="26" y="40" width="68" height="58" rx="8" fill="url(#ID-dpwin)" stroke="#aeb9c6" stroke-width=".8"/>
+<g clip-path="url(#ID-dpclip)">
+  <path d="M44 100V66a16 16 0 0 1 32 0V100" fill="none" stroke="#e6d6a1" stroke-width="5.4" stroke-linecap="round"/>
+  <path class="dp-flow" d="M44 100V66a16 16 0 0 1 32 0V100" fill="none" stroke="#5db4ff" stroke-width="2.4" stroke-dasharray="3 5"/>
+  <g class="dp-rotor">
+    <path d="M60 66 L60 52 M60 66 L48 73 M60 66 L72 73" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="60" cy="66" r="13" fill="#fff" stroke="#cdd5de" stroke-width="1"/>
+    <circle cx="60" cy="52" r="3.3" fill="#9aa5b2"/><circle cx="48" cy="73" r="3.3" fill="#9aa5b2"/><circle cx="72" cy="73" r="3.3" fill="#9aa5b2"/>
+    <circle cx="60" cy="66" r="4" fill="#c4ccd5" stroke="#aab3be" stroke-width=".8"/>
+  </g>
+  <path d="M38 88l-5 7h3v6h4v-6h3z" fill="#2b3036"/><path d="M82 101l-5-7h3v-6h4v6h3z" fill="#2b3036"/>
+</g>
+<path d="M30 46q0-4 6-4" stroke="#fff" stroke-width="2" fill="none" opacity=".7" stroke-linecap="round"/>
+<rect x="36" y="108" width="16" height="14" rx="3" fill="#1f2328"/><rect x="68" y="108" width="16" height="14" rx="3" fill="#1f2328"/>
+<rect x="39" y="120" width="10" height="3" rx="1" fill="#14171a"/><rect x="71" y="120" width="10" height="3" rx="1" fill="#14171a"/>`;
+
 SVG.drawer_freezer = () => `
 <defs>${DEFS}
 <linearGradient id="ID-in" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dfeaf3"/></linearGradient></defs>
@@ -7493,6 +7530,10 @@ const DEF = {
   pool_pump: { accent: "active", threshold: 50,
     fields: ["entity", "power", "energy", "cost", "temperature", "ph", "orp", "pressure", "tds", "salt", "chlorine", "runtime", "speed", "switch", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water"],
     keys: ["piscine", "pool", "filtration", "pompe"] },
+  // pompe doseuse péristaltique (pH+ / pH-) sur prise ou interrupteur : tourne quand elle injecte
+  dosing_pump: { accent: "active", threshold: 3,
+    fields: ["entity", "power", "energy", "cost", "ph", "switch"],
+    keys: ["doseuse", "dosing", "peristaltique", "ph_plus", "ph_moins", "ph_minus"] },
   chest_freezer: { accent: "cold", threshold: 20,
     fields: ["entity", "power", "energy", "cost", "temperature", "door", "switch"],
     keys: ["congelateur_coffre", "coffre", "chest", "bahut"] },
@@ -8000,7 +8041,7 @@ class ApplianceCardBase extends HTMLElement {
       temp: S(c.temperature), target: S(c.target_temperature),
       ftemp: S(c.freezer_temperature), fdoor: S(c.freezer_door), flex: S(c.flex_temperature),
       level: num(S(c.power_level)), pellets: num(S(c.pellet_level)),
-      pool: kind === "pool_pump" ? Object.fromEntries(["ph", "orp", "pressure", "tds", "salt", "chlorine"].map((k) => [k, S(c[k])])) : null,
+      pool: kind === "pool_pump" || kind === "dosing_pump" ? Object.fromEntries(["ph", "orp", "pressure", "tds", "salt", "chlorine"].map((k) => [k, S(c[k])])) : null,
       runtime: parseRemaining(S(c.runtime)), usage: parseRemaining(S(c.usage_time)), speed: S(c.speed), bedTemp: num(S(c.bed_temperature)), humidity: num(S(c.humidity)), mode: S(c.mode), window: S(c.window), light: S(c.light), keg: num(S(c.keg_level)), pouring: S(c.pouring), batt: num(S(c.battery_level)), zone2: num(S(c.zone2_temperature)), zone2Ent: S(c.zone2_temperature),
       lampE: S(c.lamp_hours), picMode: S(c.picture_mode), tank: S(c.tank_full), fanSpeed: S(c.fan_speed), targetHum: S(c.target_humidity), cleanW: S(c.clean_water), dirtyW: S(c.dirty_water), pm25: S(c.pm25), filterE: S(c.filter),
       status: "idle", phase: null, alerts: [],
@@ -8108,6 +8149,8 @@ class ApplianceCardBase extends HTMLElement {
       else if (watts !== null) m.status = base === "idle" && !powered ? "off" : byPower();
       else m.status = base === "running" ? "heating" : base === "standby" ? "standby" : "off";
       if (m.pellets != null && m.pellets < (c.pellet_alert ?? 15)) m.alerts.push("pellets_low");
+    } else if (kind === "dosing_pump") {
+      m.status = base === "running" ? "dosing" : base;
     } else if (kind === "pool_pump") {
       m.status = base === "running" ? "filtering" : base;
       // piscine : manque d'eau (capteur ou détecteur de porte) = alerte rouge ; présence = tuile
@@ -8668,7 +8711,7 @@ class ApplianceCardBase extends HTMLElement {
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
     const hass = this._hass, kind = this._kind;
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
@@ -8775,7 +8818,7 @@ class ApplianceCardBase extends HTMLElement {
   _render(m) {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
     this._fetchCycle(active);
     const hideWouldApply = this._applyHide(active, m.alerts.length > 0);
     $("wrap").className = [
@@ -9240,6 +9283,8 @@ class ApplianceCardBase extends HTMLElement {
     } else if (kind === "smart_speaker") {
       if (m.vol != null && !["off", "standby", "unavailable"].includes(m.status)) tile(m.muted ? "mdi:volume-off" : "mdi:volume-high", `${Math.round(m.vol * 100)} %`, lb("volume"), c.entity, m.muted ? "warn" : "");
       if (spOn && m.app) tile("mdi:music-box-outline", m.app, lb("source"), c.entity);
+    } else if (kind === "dosing_pump") {
+      if (m.pool && m.pool.ph) tile("mdi:ph", fmtUnit(hass, m.pool.ph, 2), lb("ph"), c.ph);
     } else if (kind === "pool_pump") {
       if (m.tempVal != null && c.show_temperature !== false) tile("mdi:thermometer-water", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("water"), tEntity);
       // analyses de l'eau : [clé, icône, décimales] ; chaque mesure se masque avec show_<clé>: false
@@ -9675,7 +9720,7 @@ function stubFor(kind, hass) {
   if (power) cfg.power = power;
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "smart_plug", "printer", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "dosing_pump", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "smart_plug", "printer", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;
@@ -11149,6 +11194,15 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 @keyframes wv-bub { 0% { opacity: 0; transform: translateY(2px); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(-9px); } }
 @keyframes wv-spin { 0% { stroke-dasharray: 20 80; stroke-dashoffset: 0; } 100% { stroke-dasharray: 20 80; stroke-dashoffset: -100; } }
 @keyframes wv-air { 0% { opacity: 0; transform: translateY(4px); } 30% { opacity: .9; } 100% { opacity: 0; transform: translateY(-10px); } }
+
+/* ---------- pompe doseuse péristaltique ---------- */
+.dp-rotor { transform-box: view-box; transform-origin: 60px 66px; }
+.k-dosing_pump.st-dosing .dp-rotor { animation: ac-rot 1.6s linear infinite; }
+.dp-flow { opacity: 0; transition: opacity .5s; }
+.k-dosing_pump.st-dosing .dp-flow { opacity: .95; animation: ac-flow .9s linear infinite; }
+.dp-led { fill: #b7bfc9; transition: fill .3s; }
+.k-dosing_pump.st-dosing .dp-led.dp-on { fill: #3ddc84; filter: drop-shadow(0 0 1.6px #3ddc84); animation: ac-pulse 1.6s ease-in-out infinite; }
+.k-dosing_pump.st-idle .dp-led.dp-on, .k-dosing_pump.st-standby .dp-led.dp-on { fill: #f5a300; }
 
 /* ---------- PlayStation 5 ---------- */
 /* bandeaux : gris éteinte, orange qui respire en mode repos, blanc allumée, balayage bleu au démarrage */

@@ -1,0 +1,8 @@
+/* ---------- pompe doseuse péristaltique ---------- */
+.dp-rotor { transform-box: view-box; transform-origin: 60px 66px; }
+.k-dosing_pump.st-dosing .dp-rotor { animation: ac-rot 1.6s linear infinite; }
+.dp-flow { opacity: 0; transition: opacity .5s; }
+.k-dosing_pump.st-dosing .dp-flow { opacity: .95; animation: ac-flow .9s linear infinite; }
+.dp-led { fill: #b7bfc9; transition: fill .3s; }
+.k-dosing_pump.st-dosing .dp-led.dp-on { fill: #3ddc84; filter: drop-shadow(0 0 1.6px #3ddc84); animation: ac-pulse 1.6s ease-in-out infinite; }
+.k-dosing_pump.st-idle .dp-led.dp-on, .k-dosing_pump.st-standby .dp-led.dp-on { fill: #f5a300; }

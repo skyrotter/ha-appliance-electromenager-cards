@@ -403,7 +403,9 @@
     "f_switch_heat_pump": "PAC de piscine (marche / arrêt)",
     "f_switch_shower": "Douche (marche / arrêt, statut)",
     "f_presence": "Témoin de présence (quelqu'un dans la piscine ou autour)",
-    "f_low_water": "Alerte manque d'eau (capteur, détecteur de porte...)"
+    "f_low_water": "Alerte manque d'eau (capteur, détecteur de porte...)",
+    "dosing_pump": "Pompe doseuse (pH+ / pH-)",
+    "dosing": "Dosage"
   },
   "aquarium": {
     "power": "Puissance",

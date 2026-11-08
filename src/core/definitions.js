@@ -127,6 +127,10 @@ const DEF = {
   pool_pump: { accent: "active", threshold: 50,
     fields: ["entity", "power", "energy", "cost", "temperature", "ph", "orp", "pressure", "tds", "salt", "chlorine", "runtime", "speed", "switch", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water"],
     keys: ["piscine", "pool", "filtration", "pompe"] },
+  // pompe doseuse péristaltique (pH+ / pH-) sur prise ou interrupteur : tourne quand elle injecte
+  dosing_pump: { accent: "active", threshold: 3,
+    fields: ["entity", "power", "energy", "cost", "ph", "switch"],
+    keys: ["doseuse", "dosing", "peristaltique", "ph_plus", "ph_moins", "ph_minus"] },
   chest_freezer: { accent: "cold", threshold: 20,
     fields: ["entity", "power", "energy", "cost", "temperature", "door", "switch"],
     keys: ["congelateur_coffre", "coffre", "chest", "bahut"] },

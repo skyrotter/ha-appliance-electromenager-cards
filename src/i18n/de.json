@@ -376,7 +376,9 @@
     "f_switch_heat_pump": "Pool-Wärmepumpe (Ein/Aus)",
     "f_switch_shower": "Dusche (Ein/Aus, Status)",
     "f_presence": "Anwesenheitsmelder (jemand im oder am Pool)",
-    "f_low_water": "Wassermangel-Alarm (Sensor, Türsensor...)"
+    "f_low_water": "Wassermangel-Alarm (Sensor, Türsensor...)",
+    "dosing_pump": "Dosierpumpe (pH+ / pH-)",
+    "dosing": "Dosierung"
   },
   "aquarium": {
     "power": "Leistung",
