@@ -1,9 +1,10 @@
-/* Prise connectée : variante de la multiprise, une seule prise murale française.
+/* Prise connectée : variante de la multiprise, une seule prise murale (française par défaut ; `plug_type: us` = prise nord-américaine NEMA 5-15 :
+ * deux fentes verticales et un trou de terre rond).
  * Option `image` (URL) et/ou `icon` (mdi:...) : l'appareil branché derrière la prise, affiché dans une pastille
  * au-dessus (l'image prime sur l'icône). Sans les deux : la prise seule, centrée et agrandie. */
 SVG.smart_plug = (c = {}) => {
   const img = String((c && c.image) || "").trim(), ico = String((c && c.icon) || "").trim();
-  const dev = !!(img || ico);
+  const dev = !!(img || ico), us = String((c && c.plug_type) || "").toLowerCase() === "us";
   const badge = !dev ? "" : `
   <g class="sp-dev">
     <circle cx="60" cy="34" r="27" fill="url(#ID-mstop)" stroke="#c4cad1" stroke-width=".8"/>
@@ -22,10 +23,14 @@ SVG.smart_plug = (c = {}) => {
   ${badge}
   <ellipse class="sp-glow" cx="60" cy="106" rx="34" ry="32" fill="#38a8ff"/>
   <rect x="34" y="80" width="52" height="52" rx="14" fill="url(#ID-mstop)" stroke="#c4cad1" stroke-width=".8"/>
-  <circle class="sp-ring" cx="60" cy="106" r="19" fill="none" stroke-width="1.6"/>
+  ${us ? `<rect class="sp-ring" x="43" y="83" width="34" height="39" rx="11" fill="none" stroke-width="1.6"/>
+  <rect x="45.5" y="85.5" width="29" height="34" rx="9" fill="#eef1f4" stroke="#bfc6ce" stroke-width=".8"/>
+  <rect x="52.2" y="91" width="2.8" height="11.5" rx="1.1" fill="#5b6168"/><rect x="65" y="92.6" width="2.8" height="8.5" rx="1.1" fill="#5b6168"/>
+  <circle cx="60" cy="111.6" r="3.2" fill="#5b6168"/>`
+  : `<circle class="sp-ring" cx="60" cy="106" r="19" fill="none" stroke-width="1.6"/>
   <circle cx="60" cy="106" r="16" fill="#eef1f4" stroke="#bfc6ce" stroke-width=".8"/>
-  <circle cx="53.5" cy="107" r="2.1" fill="#5b6168"/><circle cx="66.5" cy="107" r="2.1" fill="#5b6168"/><rect x="58.8" y="94" width="2.4" height="5.5" rx="1" fill="#9aa2ab"/>
-  <circle class="sp-led" cx="60" cy="125.5" r="3"/>
+  <circle cx="53.5" cy="107" r="2.1" fill="#5b6168"/><circle cx="66.5" cy="107" r="2.1" fill="#5b6168"/><rect x="58.8" y="94" width="2.4" height="5.5" rx="1" fill="#9aa2ab"/>`}
+  <circle class="sp-led" cx="60" cy="${us ? 127 : 125.5}" r="${us ? 2.6 : 3}"/>
   <g class="sp-bolt-b"><circle cx="79" cy="88" r="7.5"/><path class="sp-bolt" d="M80.4 82.8 L76 89.2 H79 L77.8 93.6 L82.6 87 H79.6 Z"/></g>
 </g>`;
 };

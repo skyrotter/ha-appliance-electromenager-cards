@@ -277,6 +277,8 @@ function buildForm(kind) {
             // appareil branché derrière la prise : image (URL) et / ou icône ; voyants d'état au choix
             { name: "image", selector: { text: {} } },
             { name: "icon", selector: { icon: {} } },
+            { name: "plug_type", selector: { select: { mode: "dropdown", options: [
+              { value: "eu", label: tr(null, "plug_eu") }, { value: "us", label: tr(null, "plug_us") }] } } },
             { name: "indicators", selector: { select: { multiple: true, mode: "list", options: [
               { value: "led", label: tr(null, "ind_led") }, { value: "bolt", label: tr(null, "ind_bolt") }, { value: "ring", label: tr(null, "ind_ring") },
               { value: "glow", label: tr(null, "ind_glow") }, { value: "flow", label: tr(null, "ind_flow") }] } } },
