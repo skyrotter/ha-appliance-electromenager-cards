@@ -185,12 +185,14 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 
   const TILES = [
     ['volume', 'mdi:database', 'show_volume', 'entity_volume_used'],
+    ['free', 'mdi:database-outline', 'show_free', 'entity_volume_free'],
     ['cpu', 'mdi:cpu-64-bit', 'show_cpu', 'entity_cpu'],
     ['ram', 'mdi:memory', 'show_ram', 'entity_ram'],
     ['temp', 'mdi:thermometer', 'show_temp', 'entity_temp'],
     ['disks', 'mdi:harddisk', 'show_disks', '_disks'],
     ['down', 'mdi:download-network', 'show_down', 'entity_net_down'],
     ['up', 'mdi:upload-network', 'show_up', 'entity_net_up'],
+    ['uptime', 'mdi:timer-outline', 'show_uptime', 'entity_uptime'],
     ['power', 'mdi:flash', 'show_power', 'entity_power'],
   ];
 
@@ -259,6 +261,28 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
     _watts(id) { const v = this._num(id); if (isNaN(v)) return NaN; return this._unit(id, 'W').toLowerCase() === 'kw' ? v * 1000 : v; }
+    // temps écoulé depuis le démarrage : capteur horodaté (« Last boot ») ou durée (s, min, h, d) ; même logique que la carte mini PC
+    _uptimeSec(id) {
+      const s = this._st(id); if (!s) return NaN;
+      const raw = String(s.state);
+      if (/^\d{4}-\d\d-\d\d/.test(raw)) { const t = Date.parse(raw); return isNaN(t) ? NaN : Math.max(0, (Date.now() - t) / 1000); }
+      const v = this._num(id); if (isNaN(v)) return NaN;
+      const u = this._unit(id, 's').toLowerCase();
+      return v * (/^d/.test(u) ? 86400 : /^h/.test(u) ? 3600 : /^min/.test(u) ? 60 : 1);
+    }
+    _dur(sec) {
+      if (isNaN(sec)) return '--';
+      const d = Math.floor(sec / 86400), h = Math.floor((sec % 86400) / 3600), m = Math.floor((sec % 3600) / 60);
+      return d ? `${d} ${this._t('d')} ${h} h` : h ? `${h} h ${String(m).padStart(2, '0')}` : `${m} min`;
+    }
+    // espace libre : somme des volumes, chaque capteur dans son unité (o / B, ko, Mo, Go, To, Kio...), affichée en Go ou To
+    _freeBytes(ids) {
+      const f = { '': 1, b: 1, o: 1, kb: 1e3, ko: 1e3, mb: 1e6, mo: 1e6, gb: 1e9, go: 1e9, tb: 1e12, to: 1e12, pb: 1e15, po: 1e15,
+        kib: 1024, mib: 1024 ** 2, gib: 1024 ** 3, tib: 1024 ** 4, kio: 1024, mio: 1024 ** 2, gio: 1024 ** 3, tio: 1024 ** 4 };
+      let tot = 0, n = 0;
+      ids.forEach((id) => { const v = this._num(id); if (isNaN(v)) return; const k = f[this._unit(id, 'GB').toLowerCase().replace(/\s/g, '')]; if (k) { tot += v * k; n++; } });
+      return n ? tot : NaN;
+    }
     _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _more(id) { if (window.applianceMore) window.applianceMore(this, id); }
     _temp(id) {
@@ -378,12 +402,15 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const upd = this._st(c.entity_update);
       const info = r.getElementById('nsinfo'); info.textContent = this._t('update'); info.classList.toggle('on', !!upd && upd.state === 'on');
 
+      const freeB = this._freeBytes(asList(c.entity_volume_free));
       const fmtNet = (id) => fmtRate(this._num(id), this._unit(id, ''), window.applianceLocale(this._c, this._hass));
       const known = drives.filter((d) => d.known && !d.empty), ok = known.filter((d) => !d.bad).length;
       const temps = drives.map((d) => d.tp.v).filter((v) => !isNaN(v));
       const V = {
         volume: [this._fmt(vol, 0), '%'], cpu: [this._fmt(cpu, 0), '%'], ram: [this._fmt(ram, 0), '%'], temp: [this._fmt(tp.v, 0), tp.unit],
         disks: known.length ? [`${ok}/${known.length}`, temps.length ? `${this._fmt(Math.max(...temps), 0)}${tp.unit}` : ''] : ['--', ''],
+        free: isNaN(freeB) ? ['--', ''] : freeB >= 1e12 ? [this._fmt(freeB / 1e12, 1), this._t('to')] : [this._fmt(freeB / 1e9, freeB >= 1e11 ? 0 : 1), this._t('go')],
+        uptime: [this._dur(this._uptimeSec(c.entity_uptime)), ''],
         down: fmtNet(c.entity_net_down), up: fmtNet(c.entity_net_up), power: [this._fmt(pw, 0), 'W'],
       };
       const bad = { volume: !isNaN(vol) && vol >= Number(c.volume_max), temp: hot, disks: ok < known.length };
@@ -427,8 +454,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         { name: 'model', selector: { select: { mode: 'dropdown', options: Object.keys(MODELS).map((value) => ({ value, label: tr[`model_${value}`] || value })) } } },
-        ent('entity'), ent('entity_volume', 'sensor', true), ent('entity_volume_used', 'sensor', true), ent('entity_cpu', 'sensor'), ent('entity_ram', 'sensor'), ent('entity_temp', 'sensor'),
-        ent('entity_net_down', 'sensor'), ent('entity_net_up', 'sensor'),
+        ent('entity'), ent('entity_volume', 'sensor', true), ent('entity_volume_used', 'sensor', true), ent('entity_volume_free', 'sensor', true), ent('entity_cpu', 'sensor'), ent('entity_ram', 'sensor'), ent('entity_temp', 'sensor'),
+        ent('entity_net_down', 'sensor'), ent('entity_net_up', 'sensor'), ent('entity_uptime', 'sensor'),
         { type: 'grid', name: '', schema: [...Array(modelOf(this._c).bays.length).keys()].map((n) => n + 1).flatMap((i) => [ent(`entity_drive_${i}`, ['sensor', 'binary_sensor']), ent(`entity_drive_${i}_temp`, 'sensor')]) },
         { type: 'grid', name: '', schema: [1, 2].flatMap((i) => [ent(`entity_nvme_${i}`, ['sensor', 'binary_sensor']), ent(`entity_nvme_${i}_temp`, 'sensor')]) },
         ent('entity_parity', 'binary_sensor'), ent('entity_flash', 'binary_sensor'),
@@ -438,7 +465,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
-          bool('show_status'), bool('compact', false), bool('show_volume'), bool('show_cpu'), bool('show_ram'), bool('show_temp'), bool('show_disks'), bool('show_down'), bool('show_up'), bool('show_power'), bool('show_parity'), bool('show_flash'), bool('animations'),
+          bool('show_status'), bool('compact', false), bool('show_volume'), bool('show_free'), bool('show_cpu'), bool('show_ram'), bool('show_temp'), bool('show_disks'), bool('show_down'), bool('show_up'), bool('show_uptime'), bool('show_power'), bool('show_parity'), bool('show_flash'), bool('animations'),
         ] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'nas_model' : s.name, this._hass);
