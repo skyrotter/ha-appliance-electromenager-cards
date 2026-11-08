@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.105.0";
+const VERSION = "1.106.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -171,6 +171,7 @@ const STRINGS = {
     "f_bed_temperature": "Bed temperature sensor",
     "f_filament_color": "Filament color (CSS)",
     "f_image": "Image URL (e.g. /local/my-device.png)",
+    "f_image_min": "Min photo brightness when on (%)",
     "f_image_max": "Max photo brightness (% of the light level)",
     "f_glow_max": "Max glow (% of the light level)",
     "f_nozzle_temperatures": "Nozzle temperature sensors (T0, T1…)",
@@ -1369,6 +1370,7 @@ const STRINGS = {
     "f_bed_temperature": "Capteur de température du plateau",
     "f_filament_color": "Couleur du filament (CSS)",
     "f_image": "URL de l'image (ex. /local/mon-appareil.png)",
+    "f_image_min": "Éclairage min de la photo allumée (%)",
     "f_image_max": "Éclairage max de la photo (% du niveau de la lampe)",
     "f_glow_max": "Lueur max (% du niveau de la lampe)",
     "f_nozzle_temperatures": "Capteurs de température des buses (T0, T1…)",
@@ -26514,7 +26516,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--lc:#ffb347;--b:1;
 .badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
 .on .badge{background:color-mix(in srgb,var(--lc) 26%,transparent);color:color-mix(in srgb,var(--lc) 75%,var(--primary-text-color))}
 .stage.ph{background:none;border-radius:0}
-/* image perso (option image) : la photo remplace le dessin ; éclairée selon la luminosité (--pb = --b x image_max, lueur --gb = --b x glow_max), avec une lueur de la couleur de l'ampoule */
+/* image perso (option image) : la photo remplace le dessin ; éclairée selon la luminosité (--pb = image_min + (image_max - image_min) x --b, lueur --gb = --b x glow_max), avec une lueur de la couleur de l'ampoule */
 .uph{position:relative;display:flex;align-items:center;justify-content:center;padding:6px 0}
 .uph .glow{position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle,var(--lc,#ffd98a) 0%,transparent 68%);opacity:calc(var(--gb,0) * .75);filter:blur(16px);transition:opacity .4s}
 .uph img{position:relative;display:block;max-width:100%;max-height:220px;object-fit:contain;filter:brightness(calc(.4 + var(--pb,0) * .6)) saturate(calc(.55 + var(--pb,0) * .45)) drop-shadow(0 0 calc(var(--gb,0) * 12px) var(--lc,#ffd98a));transition:filter .4s}
@@ -26920,8 +26922,10 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       card.style.setProperty('--lc', col);
       card.style.setProperty('--b', (st === 'on' ? bri : 0).toFixed(3));
       // photo perso : plafond de l'éclairage de la photo (image_max) et de la lueur (glow_max), en % de la luminosité de la lampe
-      const cap = (v) => (isFinite(Number(v)) && v !== '' && v !== null ? Math.max(0, Math.min(100, Number(v))) / 100 : 1);
-      card.style.setProperty('--pb', (st === 'on' ? bri * cap(c.image_max) : 0).toFixed(3));
+      const cap = (v, d = 1) => (isFinite(Number(v)) && v !== '' && v !== null ? Math.max(0, Math.min(100, Number(v))) / 100 : d);
+      // image_min : plancher d'éclairage de la photo quand la lampe est allumée (évite une photo trop sombre à faible dimmer)
+      const pMax = cap(c.image_max), pMin = Math.min(cap(c.image_min, 0), pMax);
+      card.style.setProperty('--pb', (st === 'on' ? pMin + (pMax - pMin) * bri : 0).toFixed(3));
       card.style.setProperty('--gb', (st === 'on' ? bri * cap(c.glow_max) : 0).toFixed(3));
       // sapin : guirlande d'une seule couleur si multicolor: false
       if (this.kind === 'christmas_tree') r.querySelectorAll('.xb').forEach((el, i) => {
@@ -26996,6 +27000,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'labels', selector: { object: {} } },
         { name: 'image', selector: { text: {} } },
         ...(String(this._c.image || '').trim() ? [
+          { name: 'image_min', selector: { number: { min: 0, max: 100, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
           { name: 'image_max', selector: { number: { min: 0, max: 100, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
           { name: 'glow_max', selector: { number: { min: 0, max: 100, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         ] : []),

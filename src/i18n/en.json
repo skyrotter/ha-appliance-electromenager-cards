@@ -156,6 +156,7 @@
     "f_bed_temperature": "Bed temperature sensor",
     "f_filament_color": "Filament color (CSS)",
     "f_image": "Image URL (e.g. /local/my-device.png)",
+    "f_image_min": "Min photo brightness when on (%)",
     "f_image_max": "Max photo brightness (% of the light level)",
     "f_glow_max": "Max glow (% of the light level)",
     "f_nozzle_temperatures": "Nozzle temperature sensors (T0, T1…)",
