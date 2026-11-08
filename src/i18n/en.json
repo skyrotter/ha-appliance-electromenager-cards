@@ -405,7 +405,20 @@
     "f_presence": "Presence detector (someone in or around the pool)",
     "f_low_water": "Low water alert (sensor, door sensor...)",
     "dosing_pump": "Dosing pump (pH+ / pH-)",
-    "dosing": "Dosing"
+    "dosing": "Dosing",
+    "elliptical": "Cross trainer (elliptical)",
+    "exercise_bike": "Exercise bike",
+    "rowing_machine": "Rowing machine",
+    "in_use": "In use",
+    "cadence": "Cadence",
+    "stroke_rate": "Stroke rate",
+    "distance": "Distance",
+    "heart_rate": "Heart rate",
+    "calories": "Calories",
+    "f_cadence": "Cadence sensor (rpm, or strokes/min for the rower)",
+    "f_distance": "Distance sensor",
+    "f_heart_rate": "Heart rate sensor",
+    "f_calories": "Calories sensor"
   },
   "aquarium": {
     "power": "Power",

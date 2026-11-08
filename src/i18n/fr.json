@@ -405,7 +405,20 @@
     "f_presence": "Témoin de présence (quelqu'un dans la piscine ou autour)",
     "f_low_water": "Alerte manque d'eau (capteur, détecteur de porte...)",
     "dosing_pump": "Pompe doseuse (pH+ / pH-)",
-    "dosing": "Dosage"
+    "dosing": "Dosage",
+    "elliptical": "Vélo elliptique",
+    "exercise_bike": "Vélo d'appartement",
+    "rowing_machine": "Rameur",
+    "in_use": "En utilisation",
+    "cadence": "Cadence",
+    "stroke_rate": "Coups/min",
+    "distance": "Distance",
+    "heart_rate": "Fréquence cardiaque",
+    "calories": "Calories",
+    "f_cadence": "Capteur de cadence (tr/min, ou coups/min pour le rameur)",
+    "f_distance": "Capteur de distance",
+    "f_heart_rate": "Capteur de fréquence cardiaque",
+    "f_calories": "Capteur de calories"
   },
   "aquarium": {
     "power": "Puissance",

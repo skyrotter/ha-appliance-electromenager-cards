@@ -378,7 +378,20 @@
     "f_presence": "Anwesenheitsmelder (jemand im oder am Pool)",
     "f_low_water": "Wassermangel-Alarm (Sensor, Türsensor...)",
     "dosing_pump": "Dosierpumpe (pH+ / pH-)",
-    "dosing": "Dosierung"
+    "dosing": "Dosierung",
+    "elliptical": "Crosstrainer",
+    "exercise_bike": "Heimtrainer",
+    "rowing_machine": "Rudergerät",
+    "in_use": "In Benutzung",
+    "cadence": "Trittfrequenz",
+    "stroke_rate": "Schläge/min",
+    "distance": "Strecke",
+    "heart_rate": "Herzfrequenz",
+    "calories": "Kalorien",
+    "f_cadence": "Trittfrequenz-Sensor (U/min, beim Rudergerät Schläge/min)",
+    "f_distance": "Streckensensor",
+    "f_heart_rate": "Herzfrequenz-Sensor",
+    "f_calories": "Kalorien-Sensor"
   },
   "aquarium": {
     "power": "Leistung",

@@ -156,4 +156,15 @@ const DEF = {
   printer_3d: { accent: "active", threshold: 40,
     fields: ["entity", "power", "energy", "cost", "progress", "remaining", "program", "temperature", "bed_temperature", "light", "switch"],
     keys: ["imprimante", "printer", "3d", "bambu", "prusa", "octoprint", "klipper", "moonraker"] },
+  // appareils de fitness sur prise connectée (W) : vélo elliptique, vélo d'appartement, rameur.
+  // En marche au-dessus de threshold ; capteurs optionnels (vitesse, cadence, distance, cœur, calories)
+  elliptical: { accent: "active", threshold: 10,
+    fields: ["entity", "power", "energy", "cost", "speed", "cadence", "distance", "heart_rate", "calories", "usage_time", "switch"],
+    keys: ["velo_elliptique", "elliptique", "elliptical", "cross_trainer", "crosstrainer", "orbitrek"] },
+  exercise_bike: { accent: "active", threshold: 10,
+    fields: ["entity", "power", "energy", "cost", "speed", "cadence", "distance", "heart_rate", "calories", "usage_time", "switch"],
+    keys: ["velo_appartement", "velo_d_appartement", "velo_salon", "velo_de_salon", "exercise_bike", "spinning", "spin_bike", "ergometre", "heimtrainer"] },
+  rowing_machine: { accent: "active", threshold: 10,
+    fields: ["entity", "power", "energy", "cost", "speed", "cadence", "distance", "heart_rate", "calories", "usage_time", "switch"],
+    keys: ["rameur", "rowing", "rower", "concept2", "waterrower", "ruderger"] },
 };

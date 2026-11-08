@@ -59,6 +59,11 @@ const SEL = {
   salt: { entity: { domain: ["sensor", "number", "input_number"] } },
   chlorine: { entity: { domain: ["sensor", "number", "input_number"] } },
   speed: { entity: { domain: ["sensor", "number", "input_number", "select"] } },
+  // fitness : cadence (tr/min ou coups/min), distance, fréquence cardiaque, calories
+  cadence: { entity: { domain: ["sensor", "number", "input_number"] } },
+  distance: { entity: { domain: ["sensor", "number", "input_number"] } },
+  heart_rate: { entity: { domain: ["sensor", "number", "input_number"] } },
+  calories: { entity: { domain: ["sensor", "number", "input_number"] } },
   target_humidity: { entity: { domain: ["sensor", "number", "input_number", "humidifier"] } },
   tank_full: { entity: { domain: ["binary_sensor", "input_boolean", "sensor"] } },
   clean_water: { entity: { domain: ["sensor", "binary_sensor", "number", "input_number"] } },
@@ -245,6 +250,9 @@ function buildForm(kind) {
           { name: "hide_zero_power", selector: { boolean: {} }, default: true },
           ...(["radiator", "towel_dryer", "pellet_stove"].includes(kind) ? [{ name: "show_modes", selector: { boolean: {} }, default: true }] : []),
           ...(USAGE_KINDS.includes(kind) ? [{ name: "show_usage_time", selector: { boolean: {} }, default: true }] : []),
+          ...(FIT_KINDS.includes(kind) ? [
+            { name: "max_power", selector: { number: { min: 20, max: 1000, step: 5, mode: "box", unit_of_measurement: "W" } } },
+          ] : []),
           ...(kind === "server_rack" ? [
             { name: "max_power", selector: { number: { min: 50, max: 3000, step: 10, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
@@ -345,7 +353,7 @@ function stubFor(kind, hass) {
   if (power) cfg.power = power;
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "dosing_pump", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "smart_plug", "printer", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "dosing_pump", "elliptical", "exercise_bike", "rowing_machine", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "smart_plug", "printer", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;
