@@ -19,6 +19,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--lc:#ffb347;--b:1;
 .title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
 .on .badge{background:color-mix(in srgb,var(--lc) 26%,transparent);color:color-mix(in srgb,var(--lc) 75%,var(--primary-text-color))}
+.stage.ph{background:none;border-radius:0}
+/* image perso (option image) : la photo remplace le dessin ; éclairée selon la luminosité (--b), avec une lueur de la couleur de l'ampoule */
+.uph{position:relative;display:flex;align-items:center;justify-content:center;padding:6px 0}
+.uph .glow{position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle,var(--lc,#ffd98a) 0%,transparent 68%);opacity:calc(var(--b,0) * .75);filter:blur(16px);transition:opacity .4s}
+.uph img{position:relative;display:block;max-width:100%;max-height:220px;object-fit:contain;filter:brightness(calc(.4 + var(--b,0) * .6)) saturate(calc(.55 + var(--b,0) * .45)) drop-shadow(0 0 calc(var(--b,0) * 12px) var(--lc,#ffd98a));transition:filter .4s}
+.compact .uph{height:100%}
 .stage.ceil{background:radial-gradient(ellipse at 50% 45%,#4a5058,#2c3137 80%)}
 .stage{position:relative;margin:4px auto 0;max-width:calc(240px * var(--illus-scale,1));border-radius:14px;background:radial-gradient(ellipse at 50% 55%,#1d232b,#12161b 75%);overflow:hidden;cursor:pointer}
 svg{display:block;width:100%;height:auto;overflow:visible}
@@ -319,10 +325,10 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 
     _build() {
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
-      const color = this.kind === 'color_bulb';
+      const color = this.kind === 'color_bulb', img = String(this._c.image || '').trim();
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="lttitle"></div><div class="badge" id="ltbadge"></div></div>
-        <div class="stage${this.kind === 'ceiling_spot' ? ' ceil' : ''}"><svg viewBox="0 0 200 180" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${SVGS[this.kind](this._c)}</svg></div>
+        <div class="stage${img ? ' ph' : this.kind === 'ceiling_spot' ? ' ceil' : ''}">${img ? `<div class="uph"><div class="glow"></div><img src="${esc(img)}" alt="${esc(this._c.name || this._t(this.kind))}"></div>` : `<svg viewBox="0 0 200 180" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${SVGS[this.kind](this._c)}</svg>`}</div>
         <div class="ctl" id="ltctl">
           <button data-a="on"><ha-icon icon="mdi:lightbulb-on"></ha-icon><span></span></button>
           ${color ? '<button data-a="color"><ha-icon icon="mdi:palette"></ha-icon><span></span></button>' : ''}
@@ -490,6 +496,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
+        { name: 'image', selector: { text: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ent('entity'), ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'),
