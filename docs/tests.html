@@ -1744,6 +1744,8 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
 {const cls=(c)=>c.sr.querySelector('ha-card').className.trim().split(' ')[0];
  const P={unit_of_measurement:'%'};
  let c=card('mini-pc',{entity:'binary_sensor.p',entity_cpu:'sensor.c'},[mk('binary_sensor.p','off'),mk('sensor.c',3,P)]); ok('mini-pc ping off -> off',cls(c)==='off',cls(c));
+ {const a=card('mini-pc',{entity_cpu:'sensor.c'},[mk('sensor.c',30,P)]), g=card('mini-pc',{model:'home_assistant_green',entity_cpu:'sensor.c'},[mk('sensor.c',30,P)]);
+  ok('mini-pc: model home_assistant_green has its own photo and no power ring, default keeps the BMAX with its ring',g.sr.querySelector('image.photo').getAttribute('href')!==a.sr.querySelector('image.photo').getAttribute('href')&&!g.sr.querySelector('.pwr')&&!!a.sr.querySelector('.pwr'),'');}
  c=card('mini-pc',{entity_cpu:'sensor.c'},[mk('sensor.c',3,P)]); ok('mini-pc cpu 3 % -> idle',cls(c)==='idle',cls(c));
  c=card('mini-pc',{entity_cpu:'sensor.c'},[mk('sensor.c',85,P)]); ok('mini-pc cpu 85 % -> busy',cls(c)==='busy',cls(c));
  c=card('mini-pc',{entity_cpu:'sensor.c',entity_cpu_temp:'sensor.t',entity_disk:'sensor.d'},[mk('sensor.c',30,P),mk('sensor.t',92,T),mk('sensor.d',95,P)]);
