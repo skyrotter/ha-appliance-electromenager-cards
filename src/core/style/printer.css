@@ -1,0 +1,20 @@
+/* ---------- imprimante / scanner (photo + calques) ---------- */
+.k-printer .illus { overflow: hidden; }
+.pr-lcd-off { opacity: 0; transition: opacity .4s; }
+.k-printer.st-off .pr-lcd-off, .k-printer.st-unavailable .pr-lcd-off { opacity: .92; }
+.pr-lcd-on { opacity: 0; mix-blend-mode: screen; transition: opacity .4s; }
+.k-printer.st-standby .pr-lcd-on { opacity: .12; }
+.k-printer.st-printing .pr-lcd-on, .k-printer.st-scanning .pr-lcd-on { animation: pr-lcd 1.4s ease-in-out infinite; }
+.pr-led { opacity: 0; transition: opacity .3s; }
+.k-printer.st-standby .pr-led { opacity: .55; }
+.k-printer.st-printing .pr-led { animation: pr-blink 1s ease-in-out infinite; }
+.k-printer.st-scanning .pr-led { animation: pr-blink .6s ease-in-out infinite; }
+.k-printer.st-failed .pr-led { opacity: 1; filter: hue-rotate(150deg) saturate(3); animation: pr-blink .5s steps(1) infinite; }
+.pr-scan { stroke-dasharray: 16 120; stroke-dashoffset: 16; opacity: 0; filter: drop-shadow(0 0 5px #7fe9ff); }
+.k-printer.st-scanning .pr-scan { opacity: 1; animation: pr-scan 1.8s linear infinite; }
+.pr-sheet { transform: translateY(var(--sh0, -70px)); }
+.k-printer.st-printing .pr-sheet { animation: pr-feed 3.2s ease-in-out infinite; }
+@keyframes pr-feed { 0% { transform: translateY(var(--sh0, -70px)); } 70%, 82% { transform: translateY(var(--sh1, 6px)); } 100% { transform: translateY(var(--sh1, 6px)); opacity: 0; } }
+@keyframes pr-scan { to { stroke-dashoffset: -100; } }
+@keyframes pr-lcd { 0%, 100% { opacity: .15; } 50% { opacity: .5; } }
+@keyframes pr-blink { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }

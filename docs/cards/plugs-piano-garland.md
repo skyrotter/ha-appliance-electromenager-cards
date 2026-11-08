@@ -1,15 +1,24 @@
-# Power strip, phone charger, digital piano and LED string lights
+# Power strip, smart plug, phone charger, digital piano and LED string lights
 
 <p align="center"><img src="../plugs-piano-garland.gif" width="600" alt="Animated power strip, phone charger, piano and string lights cards"></p>
 
-Four cards driven by a smart plug (`power`), with an optional `switch`.
+<p align="center"><img src="../smart-plug.gif" width="600" alt="Animated smart plug card: icon, image, standby and off"></p>
+
+Five cards driven by a smart plug (`power`), with an optional `switch`.
 
 - **Power strip** (`custom:appliance-power-strip-card`): a 3/4 view of a French power strip. When it is on (power above `threshold`, 1 W, `switch` on, or one of the outlets on) the switch glows red and current flows in the cord. `outlets`: one `switch` entity per socket; each one draws a plug, with a blue LED ring when that outlet is on, and gets a numbered button under the card that toggles it (entity name as tooltip). `outlets` alone is enough when the strip has no global entity (e.g. Lidl TS011F, one `switch` per socket): the strip is on when one outlet is on, and the power button turns all outlets off (one on) or on (all off). Without `outlets`, all sockets but one have a plug. `sockets` (2 to 6) sets the number of sockets.
+- **Smart plug** (`custom:appliance-smart-plug-card`): a variant of the power strip with a single French socket. On (power above `threshold`, 1 W, or `switch` on): the LED, the lightning bolt, the ring around the socket, the glow and the current in the cable light up. `switch` on but no consumption: **Standby** (orange LED). `indicators` picks which of `led`, `bolt`, `ring`, `glow`, `flow` are shown (default `led` and `bolt`). `image` (URL, e.g. `/local/vacuum.png`) and/or `icon` (`mdi:...`) show the device plugged behind the plug in a bubble above it (the image wins over the icon): it is greyed out when the plug is off. Without them, the plug is drawn alone.
 - **Phone charger** (`custom:appliance-phone-charger-card`): a smartphone on a wireless charging stand. Above `threshold` (2 W): **Charging**, the ring pulses blue, the screen shows the time and the battery filling up (`battery_level`, else a looping gauge). Between `standby_threshold` (0.3 W) and the threshold, or at `full_level` (100 %): **Charged**, green ring.
 - **Digital piano** (`custom:appliance-piano-card`): above `threshold` (3 W) the screen lights up, keys are played and notes float up. Between `standby_threshold` (0.3 W) and the threshold: standby.
 - **LED string lights** (`custom:appliance-garland-card`): festoon globes under a terrace beam. With a `light` entity (or a plug above 1 W) the scene turns to night and the globes glow in a rainbow loop. A colour picked on the light (other than warm white) without an effect lights them in that colour; `brightness` dims the glow; the current `effect` is shown in a tile. `multicolor: false` always uses the light colour. The power button toggles the light.
 
 ```yaml
+type: custom:appliance-smart-plug-card
+switch: switch.vacuum_plug
+power: sensor.vacuum_plug_power
+icon: mdi:vacuum
+indicators: [led, bolt, ring]
+---
 type: custom:appliance-power-strip-card
 switch: switch.power_strip
 power: sensor.power_strip_power

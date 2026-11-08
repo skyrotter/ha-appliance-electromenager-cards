@@ -85,6 +85,13 @@ class ApplianceCardBase extends HTMLElement {
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
+  // prise connectée : voyants d'état choisis (option indicators : led, bolt, ring, glow, flow), par défaut led + bolt
+  _indClasses() {
+    const l = this._config.indicators;
+    const list = Array.isArray(l) ? l : typeof l === "string" && l ? [l] : ["led", "bolt"];
+    return list.filter((k) => ["led", "bolt", "ring", "glow", "flow"].includes(k)).map((k) => `ind-${k}`).join(" ");
+  }
+
   // guirlande : une couleur choisie autre que blanc chaud → unicolore ; sinon arc-en-ciel
   _glSingle(m) { return !/^rgb\(255,\s*2[0-9]{2},\s*1[0-9]{2}\)$|^rgb\(255,255,255\)$/.test(String(m.glColor).replace(/ /g, "")); }
 
@@ -396,6 +403,16 @@ class ApplianceCardBase extends HTMLElement {
       if (m.pellets != null && m.pellets < (c.pellet_alert ?? 15)) m.alerts.push("pellets_low");
     } else if (kind === "pool_pump") {
       m.status = base === "running" ? "filtering" : base;
+    } else if (kind === "printer") {
+      // imprimante / scanner sur prise connectée : puissance > print_threshold (100 W) = impression, > scan_threshold (45 W) = numérisation,
+      // >= standby_threshold (1 W) = veille ; une entité d'état texte (IPP...) prime si elle le dit explicitement
+      const raw = main && !["switch", "light", "input_boolean", "binary_sensor"].includes(domainOf(c.entity)) ? String(main.state).toLowerCase() : "";
+      if (base === "unavailable" || base === "off" || (sw && !isOn(sw))) m.status = base === "unavailable" ? base : "off";
+      else if (/error|erreur|jam|bourrage|fault|d[eé]faut/.test(raw)) m.status = "failed";
+      else if (/scan|num[eé]ris/.test(raw)) m.status = "scanning";
+      else if (/print|impress|processing|busy/.test(raw)) m.status = "printing";
+      else if (watts !== null) m.status = watts > (c.print_threshold ?? c.threshold ?? 100) ? "printing" : watts > (c.scan_threshold ?? 45) ? "scanning" : watts >= (c.standby_threshold ?? 1) ? "standby" : "off";
+      else m.status = base === "running" || base === "on" ? "standby" : "off";
     } else if (kind === "printer_3d") {
       const raw = main ? `${main.state}`.toLowerCase() : "";
       if (/fail|error|erreur|[eé]chec/.test(raw)) m.status = "failed";
@@ -664,6 +681,11 @@ class ApplianceCardBase extends HTMLElement {
       const md = m.mode && !BAD.includes(String(m.mode.state).toLowerCase()) ? m.mode : null;
       const attrTxt = (st, k) => { try { if (hass.formatEntityAttributeValue) return hass.formatEntityAttributeValue(st, k); } catch (e) { /* ignore */ } return String(st.attributes[k]); };
       m.dhMode = md ? stateText(hass, md) : isHum && main.attributes.mode ? attrTxt(main, "mode") : null;
+    } else if (kind === "smart_plug") {
+      // prise allumée (interrupteur) ou qui consomme : « On » ; interrupteur allumé mais rien ne consomme : « Veille »
+      const swOn = isOn(sw) || (!sw && base === "on");
+      const draws = watts !== null ? powered : base === "running";
+      m.status = base === "off" || base === "unavailable" ? base : draws ? "powered" : swOn && watts !== null ? "standby" : swOn ? "powered" : "off";
     } else if (kind === "power_strip") {
       // sous tension si la prise / l'interrupteur est allumé, si ça consomme, ou si une des prises commandées est allumée
       const outs = (Array.isArray(c.outlets) ? c.outlets : []).map((i) => hass.states[i]);
@@ -936,7 +958,7 @@ class ApplianceCardBase extends HTMLElement {
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
     const hass = this._hass, kind = this._kind;
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
@@ -1043,14 +1065,14 @@ class ApplianceCardBase extends HTMLElement {
   _render(m) {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
     this._fetchCycle(active);
     const hideWouldApply = this._applyHide(active, m.alerts.length > 0);
     $("wrap").className = [
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
       active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
       m.alerts.length ? "alert" : "", isOn(m.door) ? "door-open" : "", isOn(m.fdoor) ? "fz-open" : "",
-      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", m.solarHeat ? "solar-heat" : "", hideWouldApply ? "would-hide" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "",
+      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", kind === "smart_plug" ? this._indClasses() : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", m.solarHeat ? "solar-heat" : "", hideWouldApply ? "would-hide" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "",
     ].filter(Boolean).join(" ");
 
     // illustration dynamic parts

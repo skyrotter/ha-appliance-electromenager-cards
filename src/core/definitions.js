@@ -85,6 +85,10 @@ const DEF = {
   power_strip: { accent: "active", threshold: 1,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["multiprise", "power_strip", "powerstrip", "steckdosenleiste", "bloc_prise"] },
+  // Prise connectée : variante de la multiprise (une prise), image / icône de l'appareil branché et voyants configurables
+  smart_plug: { accent: "active", threshold: 1,
+    fields: ["entity", "power", "energy", "cost", "switch"],
+    keys: ["smartplug", "smart_plug", "prise_connectee", "prise", "plug", "steckdose", "socket"] },
   phone_charger: { accent: "active", threshold: 2,
     fields: ["entity", "power", "energy", "cost", "battery_level", "switch"],
     keys: ["chargeur_tel", "chargeur_telephone", "phone_charger", "telephone", "phone", "iphone", "smartphone", "pixel", "galaxy"] },
@@ -141,6 +145,10 @@ const DEF = {
   radiator: { accent: "heat", threshold: 50,
     fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "humidity", "mode", "window", "switch"],
     keys: ["radiateur", "radiator", "chauffage", "heater", "convecteur"] },
+  // Imprimante / scanner (ex. Samsung C480W) sur prise connectée : état déduit de la puissance (impression, numérisation, veille)
+  printer: { accent: "active", threshold: 100,
+    fields: ["entity", "power", "energy", "cost", "switch"],
+    keys: ["imprimante", "printer", "scanner", "multifonction", "samsung", "xpress", "c480", "laser", "drucker"] },
   printer_3d: { accent: "active", threshold: 40,
     fields: ["entity", "power", "energy", "cost", "progress", "remaining", "program", "temperature", "bed_temperature", "light", "switch"],
     keys: ["imprimante", "printer", "3d", "bambu", "prusa", "octoprint", "klipper", "moonraker"] },

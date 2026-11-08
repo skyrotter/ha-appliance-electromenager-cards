@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.99.0";
+const VERSION = "1.100.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -335,6 +335,17 @@ const STRINGS = {
     "power_strip": "Power strip",
     "phone_charger": "Phone charger",
     "piano": "Digital piano",
+    "smart_plug": "Smart plug",
+    "f_icon": "Icon of the connected device (mdi:...)",
+    "f_indicators": "Status indicators",
+    "ind_led": "LED",
+    "ind_bolt": "Lightning bolt",
+    "ind_ring": "Ring around the socket",
+    "ind_glow": "Glow",
+    "ind_flow": "Current in the cable",
+    "printer": "Printer / scanner",
+    "scanning": "Scanning",
+    "f_scan_threshold": "Scanning above (W)",
     "garland": "LED string lights",
     "powered": "On",
     "lit": "Lit",
@@ -1455,6 +1466,17 @@ const STRINGS = {
     "power_strip": "Multiprise",
     "phone_charger": "Chargeur de téléphone",
     "piano": "Piano numérique",
+    "smart_plug": "Prise connectée",
+    "f_icon": "Icône de l'appareil branché (mdi:...)",
+    "f_indicators": "Indicateurs d'état",
+    "ind_led": "Voyant",
+    "ind_bolt": "Éclair",
+    "ind_ring": "Anneau autour de la prise",
+    "ind_glow": "Halo",
+    "ind_flow": "Courant dans le câble",
+    "printer": "Imprimante / scanner",
+    "scanning": "Numérisation",
+    "f_scan_threshold": "Numérisation au-dessus de (W)",
     "garland": "Guirlande LED",
     "powered": "En marche",
     "lit": "Allumée",
@@ -6015,6 +6037,66 @@ ${sock.map(([x, y], i) => { const col = cols[i % 2]; return `<g class="ms-s ms-s
 </g>`;
 };
 
+/* Imprimante / scanner (issue #297) sur prise connectée : l'état vient de la puissance (voir la carte, kind "printer").
+   Sans model : dessin SVG. model: samsung_c480 : photo détourée d'une Samsung Xpress C480W.
+   Mêmes calques animés dans les deux cas (classes pr-*, voir style/printer.css) : écran LCD (éteint / allumé), voyant bleu
+   de la façade, trait de lumière du scanner le long du couvercle, feuille qui sort de l'imprimante.
+   Photo : calques dans le repère de la photo d'origine (406 × 352 px) ; dessin : directement en unités du SVG (120 × 140). */
+const PRINTER_PHOTO = {
+  samsung_c480: { w: 406, h: 352, x: 54, y: 17,
+    img: "data:image/webp;base64,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",
+    lcd: "175,126 221.5,131 221,140 174.6,136", led: [296.5, 161, 8], beam: 5,
+    scan: "M100 98 L175 112 L329 135 L455 150",
+    slot: "141,152 252,188 330,202 330,340 141,340", sheet: "150,150 255,185 255,247 150,212", sheetLines: [158, 164, 247, 196, 9], dy: [-70, 6] },
+};
+const PRINTER_ALIAS = { c480: "samsung_c480", c480w: "samsung_c480", samsungc480: "samsung_c480", samsungc480w: "samsung_c480", samsung: "samsung_c480" };
+/* Dessin SVG : multifonction laser couleur vue de trois quarts (couvercle de scanner noir, bandeau de commande, bac) */
+const PRINTER_DRAWN = { lcd: "24,63 40,67 40,71 24,67", led: [64, 77.5, 2.2], beam: 1.6, scan: "M12 56 L78 72",
+  slot: "12,70 78,86 78,118 12,118", sheet: "18,69 72,82.5 72,102 18,88.5", sheetLines: [22, 74, 68, 87.5, 4.6], dy: [-22, 2] };
+const prLayers = (g, art) => {
+  const [lx, ly, lr] = g.led, [a, b, c2, d, st] = g.sheetLines;
+  const lines = [0, 1, 2, 3].map((i) => `<path d="M${a} ${b + i * st}L${c2} ${d + i * st}" stroke="#aeb4bb" stroke-width="${(g.beam / 2).toFixed(1)}" stroke-linecap="round"/>`).join("");
+  return `${art}
+  <g clip-path="url(#ID-slot)"><g class="pr-sheet" style="--sh0:${g.dy[0]}px;--sh1:${g.dy[1]}px">
+    <polygon points="${g.sheet}" fill="url(#ID-sheet)" stroke="#9aa2ab" stroke-width="${(g.beam / 3.5).toFixed(1)}"/>${lines}
+  </g></g>
+  <polygon class="pr-lcd-off" points="${g.lcd}" fill="#0b0e11"/>
+  <polygon class="pr-lcd-on" points="${g.lcd}" fill="#8ff0ff"/>
+  <path class="pr-scan" d="${g.scan}" pathLength="100" fill="none" stroke="#9ff3ff" stroke-width="${g.beam}" stroke-linecap="round"/>
+  <circle class="pr-led" cx="${lx}" cy="${ly}" r="${(lr * 1.8).toFixed(1)}" fill="url(#ID-led)"/>`;
+};
+SVG.printer = (c = {}) => {
+  const k0 = String((c && c.model) || "").toLowerCase().replace(/[^a-z0-9]/g, ""), g = PRINTER_PHOTO[PRINTER_ALIAS[k0] || k0];
+  const defs = `<defs>${DEFS}
+<clipPath id="ID-slot"><polygon points="${(g || PRINTER_DRAWN).slot}"/></clipPath>
+<radialGradient id="ID-led"><stop offset="0" stop-color="#8fd0ff"/><stop offset=".45" stop-color="#38a8ff" stop-opacity=".7"/><stop offset="1" stop-color="#38a8ff" stop-opacity="0"/></radialGradient>
+<linearGradient id="ID-sheet" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e9edf1"/></linearGradient>
+<linearGradient id="ID-prf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6f7f9"/><stop offset="1" stop-color="#dfe3e8"/></linearGradient>
+<linearGradient id="ID-prs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d4d9df"/><stop offset="1" stop-color="#b6bdc6"/></linearGradient>
+<linearGradient id="ID-prl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a3f47"/><stop offset="1" stop-color="#1a1d21"/></linearGradient>
+</defs>`;
+  if (g) {
+    const s = 112 / g.w;
+    return `${defs}<ellipse cx="60" cy="122.5" rx="48" ry="4" fill="url(#ID-shadow)"/>
+<g transform="translate(${(60 - g.w * s / 2).toFixed(2)} ${(70 - g.h * s / 2).toFixed(2)}) scale(${s.toFixed(4)}) translate(${-g.x} ${-g.y})">${prLayers(g, `<image href="${g.img}" x="${g.x}" y="${g.y}" width="${g.w}" height="${g.h}"/>`)}
+</g>`;
+  }
+  return `${defs}<ellipse cx="60" cy="124" rx="50" ry="4" fill="url(#ID-shadow)"/>
+${prLayers(PRINTER_DRAWN, `<polygon points="12,70 78,86 78,114 12,98" fill="url(#ID-prf)" stroke="#c4cad1" stroke-width=".6"/>
+  <polygon points="78,86 108,72 108,100 78,114" fill="url(#ID-prs)" stroke="#b0b7c0" stroke-width=".6"/>
+  <g stroke="#aab1ba" stroke-width=".6" opacity=".7"><path d="M86 90L100 83.5M86 94L100 87.5M86 98L100 91.5M86 102L100 95.5"/></g>
+  <polygon points="12,56 78,72 78,86 12,70" fill="#2b2f35"/>
+  <polygon points="78,72 108,58 108,72 78,86" fill="#16181c"/>
+  <polygon points="12,56 78,72 108,58 42,42" fill="url(#ID-prl)" stroke="#4a5058" stroke-width=".6"/>
+  <polygon points="16,56.8 40,44.6 90,56.6 78,70.4" fill="none" stroke="#4a5058" stroke-width=".4" opacity=".6"/>
+  <polygon points="22,62 42,67 42,72 22,67" fill="#15181c"/>
+  <circle cx="50" cy="73" r="3.4" fill="none" stroke="#6b737c" stroke-width=".7"/><circle cx="50" cy="73" r="1.3" fill="#6b737c"/>
+  <circle cx="58.5" cy="75.3" r="1.3" fill="#ff8a3d"/>
+  <polygon points="12,98 78,114 80,118 12,102" fill="#e3e7ec" stroke="#c0c7cf" stroke-width=".6"/>
+  <polygon points="34,105 52,109.5 52,111.3 34,106.8" fill="#aab1ba"/>
+  <g transform="translate(40 95) skewY(14)"><rect width="3" height="3" fill="#ffb020"/><rect x="3.4" width="3" height="3" fill="#43c07a"/><rect y="3.4" width="3" height="3" fill="#38a8ff"/><rect x="3.4" y="3.4" width="3" height="3" fill="#e5484d"/></g>`)}`;
+};
+
 SVG.printer_3d = () => `
 <defs>${DEFS}
 <clipPath id="ID-obj"><rect class="objclip" x="40" y="66" width="40" height="38"/></clipPath>
@@ -6411,6 +6493,38 @@ SVG.server_rack = () => `
 <rect x="22" y="121" width="76" height="3" fill="#1c2024"/>
 <path d="M18 130v4M102 130v4" stroke="#14171b" stroke-width="4" stroke-linecap="round"/>
 <path d="M20 6h80" stroke="#fff" stroke-opacity=".25" stroke-width="1"/>`;
+
+/* Prise connectée : variante de la multiprise, une seule prise murale française.
+ * Option `image` (URL) et/ou `icon` (mdi:...) : l'appareil branché derrière la prise, affiché dans une pastille
+ * au-dessus (l'image prime sur l'icône). Sans les deux : la prise seule, centrée et agrandie. */
+SVG.smart_plug = (c = {}) => {
+  const img = String((c && c.image) || "").trim(), ico = String((c && c.icon) || "").trim();
+  const dev = !!(img || ico);
+  const badge = !dev ? "" : `
+  <g class="sp-dev">
+    <circle cx="60" cy="34" r="27" fill="url(#ID-mstop)" stroke="#c4cad1" stroke-width=".8"/>
+    ${img
+      ? `<image class="sp-img" href="${esc(img)}" x="38" y="12" width="44" height="44" preserveAspectRatio="xMidYMid meet"/>`
+      : `<foreignObject x="39" y="13" width="42" height="42"><div xmlns="http://www.w3.org/1999/xhtml" class="sp-ico"><ha-icon icon="${esc(ico)}"></ha-icon></div></foreignObject>`}
+  </g>
+  <path d="M60 80 V61" stroke="#d5dae0" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+  <path class="sp-flow" d="M60 80 V61" stroke="#38a8ff" stroke-width="1.6" fill="none"/>`;
+  // sans appareil : la prise seule, centrée et agrandie
+  const tf = dev ? "" : ` transform="translate(60 72) scale(1.25) translate(-60 -105)"`;
+  return `
+<defs>${DEFS}<linearGradient id="ID-mstop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e6e9ed"/></linearGradient></defs>
+<g${tf}>
+  <ellipse cx="60" cy="134" rx="32" ry="4.5" fill="url(#ID-shadow)"/>
+  ${badge}
+  <ellipse class="sp-glow" cx="60" cy="106" rx="34" ry="32" fill="#38a8ff"/>
+  <rect x="34" y="80" width="52" height="52" rx="14" fill="url(#ID-mstop)" stroke="#c4cad1" stroke-width=".8"/>
+  <circle class="sp-ring" cx="60" cy="106" r="19" fill="none" stroke-width="1.6"/>
+  <circle cx="60" cy="106" r="16" fill="#eef1f4" stroke="#bfc6ce" stroke-width=".8"/>
+  <circle cx="53.5" cy="107" r="2.1" fill="#5b6168"/><circle cx="66.5" cy="107" r="2.1" fill="#5b6168"/><rect x="58.8" y="94" width="2.4" height="5.5" rx="1" fill="#9aa2ab"/>
+  <circle class="sp-led" cx="60" cy="125.5" r="3"/>
+  <g class="sp-bolt-b"><circle cx="79" cy="88" r="7.5"/><path class="sp-bolt" d="M80.4 82.8 L76 89.2 H79 L77.8 93.6 L82.6 87 H79.6 Z"/></g>
+</g>`;
+};
 
 /* Enceinte connectée (option model) : photo détourée + calques animés.
    Amazon Echo (Pop, Dot, Show 5 / 8 / 10 / 11 / 15, Spot), Google Nest (Mini, Audio, Hub, Hub 2e gén., Hub Max),
@@ -7257,6 +7371,10 @@ const DEF = {
   power_strip: { accent: "active", threshold: 1,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["multiprise", "power_strip", "powerstrip", "steckdosenleiste", "bloc_prise"] },
+  // Prise connectée : variante de la multiprise (une prise), image / icône de l'appareil branché et voyants configurables
+  smart_plug: { accent: "active", threshold: 1,
+    fields: ["entity", "power", "energy", "cost", "switch"],
+    keys: ["smartplug", "smart_plug", "prise_connectee", "prise", "plug", "steckdose", "socket"] },
   phone_charger: { accent: "active", threshold: 2,
     fields: ["entity", "power", "energy", "cost", "battery_level", "switch"],
     keys: ["chargeur_tel", "chargeur_telephone", "phone_charger", "telephone", "phone", "iphone", "smartphone", "pixel", "galaxy"] },
@@ -7313,6 +7431,10 @@ const DEF = {
   radiator: { accent: "heat", threshold: 50,
     fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "humidity", "mode", "window", "switch"],
     keys: ["radiateur", "radiator", "chauffage", "heater", "convecteur"] },
+  // Imprimante / scanner (ex. Samsung C480W) sur prise connectée : état déduit de la puissance (impression, numérisation, veille)
+  printer: { accent: "active", threshold: 100,
+    fields: ["entity", "power", "energy", "cost", "switch"],
+    keys: ["imprimante", "printer", "scanner", "multifonction", "samsung", "xpress", "c480", "laser", "drucker"] },
   printer_3d: { accent: "active", threshold: 40,
     fields: ["entity", "power", "energy", "cost", "progress", "remaining", "program", "temperature", "bed_temperature", "light", "switch"],
     keys: ["imprimante", "printer", "3d", "bambu", "prusa", "octoprint", "klipper", "moonraker"] },
@@ -7582,6 +7704,13 @@ class ApplianceCardBase extends HTMLElement {
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
       "switch_low", "switch_high", "power_level", "pellet_level", "ph", "orp", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
+  }
+
+  // prise connectée : voyants d'état choisis (option indicators : led, bolt, ring, glow, flow), par défaut led + bolt
+  _indClasses() {
+    const l = this._config.indicators;
+    const list = Array.isArray(l) ? l : typeof l === "string" && l ? [l] : ["led", "bolt"];
+    return list.filter((k) => ["led", "bolt", "ring", "glow", "flow"].includes(k)).map((k) => `ind-${k}`).join(" ");
   }
 
   // guirlande : une couleur choisie autre que blanc chaud → unicolore ; sinon arc-en-ciel
@@ -7895,6 +8024,16 @@ class ApplianceCardBase extends HTMLElement {
       if (m.pellets != null && m.pellets < (c.pellet_alert ?? 15)) m.alerts.push("pellets_low");
     } else if (kind === "pool_pump") {
       m.status = base === "running" ? "filtering" : base;
+    } else if (kind === "printer") {
+      // imprimante / scanner sur prise connectée : puissance > print_threshold (100 W) = impression, > scan_threshold (45 W) = numérisation,
+      // >= standby_threshold (1 W) = veille ; une entité d'état texte (IPP...) prime si elle le dit explicitement
+      const raw = main && !["switch", "light", "input_boolean", "binary_sensor"].includes(domainOf(c.entity)) ? String(main.state).toLowerCase() : "";
+      if (base === "unavailable" || base === "off" || (sw && !isOn(sw))) m.status = base === "unavailable" ? base : "off";
+      else if (/error|erreur|jam|bourrage|fault|d[eé]faut/.test(raw)) m.status = "failed";
+      else if (/scan|num[eé]ris/.test(raw)) m.status = "scanning";
+      else if (/print|impress|processing|busy/.test(raw)) m.status = "printing";
+      else if (watts !== null) m.status = watts > (c.print_threshold ?? c.threshold ?? 100) ? "printing" : watts > (c.scan_threshold ?? 45) ? "scanning" : watts >= (c.standby_threshold ?? 1) ? "standby" : "off";
+      else m.status = base === "running" || base === "on" ? "standby" : "off";
     } else if (kind === "printer_3d") {
       const raw = main ? `${main.state}`.toLowerCase() : "";
       if (/fail|error|erreur|[eé]chec/.test(raw)) m.status = "failed";
@@ -8163,6 +8302,11 @@ class ApplianceCardBase extends HTMLElement {
       const md = m.mode && !BAD.includes(String(m.mode.state).toLowerCase()) ? m.mode : null;
       const attrTxt = (st, k) => { try { if (hass.formatEntityAttributeValue) return hass.formatEntityAttributeValue(st, k); } catch (e) { /* ignore */ } return String(st.attributes[k]); };
       m.dhMode = md ? stateText(hass, md) : isHum && main.attributes.mode ? attrTxt(main, "mode") : null;
+    } else if (kind === "smart_plug") {
+      // prise allumée (interrupteur) ou qui consomme : « On » ; interrupteur allumé mais rien ne consomme : « Veille »
+      const swOn = isOn(sw) || (!sw && base === "on");
+      const draws = watts !== null ? powered : base === "running";
+      m.status = base === "off" || base === "unavailable" ? base : draws ? "powered" : swOn && watts !== null ? "standby" : swOn ? "powered" : "off";
     } else if (kind === "power_strip") {
       // sous tension si la prise / l'interrupteur est allumé, si ça consomme, ou si une des prises commandées est allumée
       const outs = (Array.isArray(c.outlets) ? c.outlets : []).map((i) => hass.states[i]);
@@ -8435,7 +8579,7 @@ class ApplianceCardBase extends HTMLElement {
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
     const hass = this._hass, kind = this._kind;
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
@@ -8542,14 +8686,14 @@ class ApplianceCardBase extends HTMLElement {
   _render(m) {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
     this._fetchCycle(active);
     const hideWouldApply = this._applyHide(active, m.alerts.length > 0);
     $("wrap").className = [
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
       active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
       m.alerts.length ? "alert" : "", isOn(m.door) ? "door-open" : "", isOn(m.fdoor) ? "fz-open" : "",
-      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", m.solarHeat ? "solar-heat" : "", hideWouldApply ? "would-hide" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "",
+      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", kind === "smart_plug" ? this._indClasses() : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", m.solarHeat ? "solar-heat" : "", hideWouldApply ? "would-hide" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "",
     ].filter(Boolean).join(" ");
 
     // illustration dynamic parts
@@ -9337,6 +9481,20 @@ function buildForm(kind) {
             { name: "outlets", selector: { entity: { multiple: true, domain: ["switch", "light", "input_boolean"] } } },
             { name: "sockets", selector: { number: { min: 2, max: 6, step: 1, mode: "box" } } },
           ] : []),
+          ...(kind === "printer" ? [
+            { name: "model", selector: { select: { mode: "dropdown", options: [
+              { value: "", label: tr(null, "printer_drawing") }, { value: "samsung_c480", label: "Samsung Xpress C480W (photo)" }] } } },
+            { name: "scan_threshold", selector: { number: { min: 1, max: 500, step: 1, mode: "box", unit_of_measurement: "W" } } },
+            { name: "standby_threshold", selector: { number: { min: 0, max: 20, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
+          ] : []),
+          ...(kind === "smart_plug" ? [
+            // appareil branché derrière la prise : image (URL) et / ou icône ; voyants d'état au choix
+            { name: "image", selector: { text: {} } },
+            { name: "icon", selector: { icon: {} } },
+            { name: "indicators", selector: { select: { multiple: true, mode: "list", options: [
+              { value: "led", label: tr(null, "ind_led") }, { value: "bolt", label: tr(null, "ind_bolt") }, { value: "ring", label: tr(null, "ind_ring") },
+              { value: "glow", label: tr(null, "ind_glow") }, { value: "flow", label: tr(null, "ind_flow") }] } } },
+          ] : []),
           ...(["phone_charger", "piano"].includes(kind) ? [
             { name: "standby_threshold", selector: { number: { min: 0, max: 10, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
@@ -9380,7 +9538,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "cookeo" && s.name === "style" ? "f_cookeo_style" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "fridge" && s.name === "finish" ? "f_fridge_finish" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "cookeo" && s.name === "style" ? "f_cookeo_style" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "fridge" && s.name === "finish" ? "f_fridge_finish" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : ["printer_3d", "printer"].includes(kind) && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix", "printer"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
   };
 }
 
@@ -9409,7 +9567,7 @@ function stubFor(kind, hass) {
   if (power) cfg.power = power;
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "smart_plug", "printer", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;
@@ -10749,6 +10907,35 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .ms-plug { opacity: 0; transform: translateY(-14px); transition: transform .5s, opacity .5s; }
 .ms-s.plug .ms-plug { opacity: 1; transform: none; }
 @keyframes ms-flow { to { stroke-dashoffset: -9; } }
+/* ---------- prise connectée (variante multiprise) : voyants configurables via les classes ind-* ---------- */
+.k-smart_plug .illus { overflow: hidden; }
+.sp-led { fill: #8a2d2d; transition: fill .3s; }
+.k-smart_plug.ind-led.st-powered .sp-led { fill: #43c07a; filter: drop-shadow(0 0 3px #43c07a); animation: ac-pulse 2s ease-in-out infinite; }
+.k-smart_plug.ind-led.st-standby .sp-led { fill: #ffb020; filter: drop-shadow(0 0 2px #ffb020); }
+.k-smart_plug:not(.ind-led) .sp-led { display: none; }
+.sp-ring { stroke: transparent; transition: stroke .3s; }
+.k-smart_plug.ind-ring.st-powered .sp-ring { stroke: #38a8ff; filter: drop-shadow(0 0 2px #38a8ff); animation: ac-pulse 1.6s ease-in-out infinite; }
+.k-smart_plug.ind-ring.st-standby .sp-ring { stroke: #ffb020; opacity: .7; }
+.sp-glow { opacity: 0; filter: blur(5px); transition: opacity .4s; }
+.k-smart_plug.ind-glow.st-powered .sp-glow { opacity: .3; animation: sp-breathe 2.4s ease-in-out infinite; }
+.sp-bolt-b { opacity: 0; transition: opacity .3s; }
+.sp-bolt-b circle { fill: #3a414b; transition: fill .3s; }
+.sp-bolt { fill: #6b737c; transition: fill .3s; }
+.k-smart_plug.ind-bolt .sp-bolt-b { opacity: 1; }
+.k-smart_plug.ind-bolt.st-powered .sp-bolt-b circle { fill: #ffc933; filter: drop-shadow(0 0 3px #ffc933); }
+.k-smart_plug.ind-bolt.st-powered .sp-bolt { fill: #3a2a00; }
+.k-smart_plug.ind-bolt.st-powered .sp-bolt-b { transform-box: fill-box; transform-origin: center; animation: sp-zap 1.2s ease-in-out infinite; }
+.sp-flow { stroke-dasharray: 3 6; opacity: 0; }
+.k-smart_plug.ind-flow.st-powered .sp-flow { opacity: 1; animation: ms-flow .8s linear infinite; }
+/* appareil branché : grisé quand la prise est coupée, en couleur sinon */
+.sp-dev { transition: opacity .4s, filter .4s; }
+.k-smart_plug:not(.st-powered):not(.st-standby) .sp-dev { opacity: .55; filter: grayscale(1); }
+.sp-ico { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #6b737c; transition: color .4s; }
+.sp-ico ha-icon { --mdc-icon-size: 100%; width: 100%; height: 100%; display: block; }
+.k-smart_plug.st-powered .sp-ico { color: var(--c); }
+.k-smart_plug.st-standby .sp-ico { color: #ffb020; }
+@keyframes sp-zap { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.18); } }
+@keyframes sp-breathe { 0%, 100% { opacity: .1; } 50% { opacity: .3; } }
 /* ---------- chargeur de téléphone ---------- */
 .phn-ring { stroke: #38a8ff; opacity: .15; }
 .k-phone_charger.st-charging .phn-ring { opacity: 1; animation: ac-pulse 1.6s ease-in-out infinite; }
@@ -10946,6 +11133,27 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-cookeo.st-cooking .ck-body { animation: ck-shake .3s linear infinite; }
 /* dessin réduit à ~24 % : amplitude en unités de la photo */
 @keyframes ck-shake { 0%,100% { transform: translate(0,0); } 25% { transform: translate(-2.5px,1px); } 50% { transform: translate(2px,-1.2px); } 75% { transform: translate(-1.2px,-.8px); } }
+
+/* ---------- imprimante / scanner (photo + calques) ---------- */
+.k-printer .illus { overflow: hidden; }
+.pr-lcd-off { opacity: 0; transition: opacity .4s; }
+.k-printer.st-off .pr-lcd-off, .k-printer.st-unavailable .pr-lcd-off { opacity: .92; }
+.pr-lcd-on { opacity: 0; mix-blend-mode: screen; transition: opacity .4s; }
+.k-printer.st-standby .pr-lcd-on { opacity: .12; }
+.k-printer.st-printing .pr-lcd-on, .k-printer.st-scanning .pr-lcd-on { animation: pr-lcd 1.4s ease-in-out infinite; }
+.pr-led { opacity: 0; transition: opacity .3s; }
+.k-printer.st-standby .pr-led { opacity: .55; }
+.k-printer.st-printing .pr-led { animation: pr-blink 1s ease-in-out infinite; }
+.k-printer.st-scanning .pr-led { animation: pr-blink .6s ease-in-out infinite; }
+.k-printer.st-failed .pr-led { opacity: 1; filter: hue-rotate(150deg) saturate(3); animation: pr-blink .5s steps(1) infinite; }
+.pr-scan { stroke-dasharray: 16 120; stroke-dashoffset: 16; opacity: 0; filter: drop-shadow(0 0 5px #7fe9ff); }
+.k-printer.st-scanning .pr-scan { opacity: 1; animation: pr-scan 1.8s linear infinite; }
+.pr-sheet { transform: translateY(var(--sh0, -70px)); }
+.k-printer.st-printing .pr-sheet { animation: pr-feed 3.2s ease-in-out infinite; }
+@keyframes pr-feed { 0% { transform: translateY(var(--sh0, -70px)); } 70%, 82% { transform: translateY(var(--sh1, 6px)); } 100% { transform: translateY(var(--sh1, 6px)); opacity: 0; } }
+@keyframes pr-scan { to { stroke-dashoffset: -100; } }
+@keyframes pr-lcd { 0%, 100% { opacity: .15; } 50% { opacity: .5; } }
+@keyframes pr-blink { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
 `;
 
 /* ------------------------------------------------------------------ */

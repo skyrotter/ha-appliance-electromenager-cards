@@ -386,6 +386,18 @@ const SCEN = [
       range(ctl, 'Puissance', 'sensor.phone_charger_power', 0, 20, 0.1, 7.5, 'W', W);
       range(ctl, 'Batterie', 'sensor.phone_battery', 0, 100, 1, 68, '%', { unit_of_measurement: '%', device_class: 'battery' });
     } },
+  { kind: 'smart-plug', title: 'Prise connectée',
+    cfg: { switch: 'switch.demo_smart_plug', power: 'sensor.demo_smart_plug_power', icon: 'mdi:vacuum', indicators: ['led', 'bolt', 'ring', 'flow'] },
+    build(ctl) {
+      set('switch.demo_smart_plug', 'on');
+      range(ctl, 'Puissance', 'sensor.demo_smart_plug_power', 0, 60, 0.5, 18, 'W', W);
+    } },
+  { kind: 'printer', title: 'Imprimante / scanner',
+    cfg: { switch: 'switch.demo_printer', power: 'sensor.demo_printer_power', model: 'samsung_c480' },
+    build(ctl) {
+      set('switch.demo_printer', 'on');
+      range(ctl, 'Puissance', 'sensor.demo_printer_power', 0, 450, 1, 320, 'W', W);
+    } },
   { kind: 'piano', title: 'Piano numérique',
     cfg: { switch: 'switch.piano', power: 'sensor.piano_power' },
     build(ctl) {

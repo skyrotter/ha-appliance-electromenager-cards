@@ -9,6 +9,35 @@
 .ms-plug { opacity: 0; transform: translateY(-14px); transition: transform .5s, opacity .5s; }
 .ms-s.plug .ms-plug { opacity: 1; transform: none; }
 @keyframes ms-flow { to { stroke-dashoffset: -9; } }
+/* ---------- prise connectée (variante multiprise) : voyants configurables via les classes ind-* ---------- */
+.k-smart_plug .illus { overflow: hidden; }
+.sp-led { fill: #8a2d2d; transition: fill .3s; }
+.k-smart_plug.ind-led.st-powered .sp-led { fill: #43c07a; filter: drop-shadow(0 0 3px #43c07a); animation: ac-pulse 2s ease-in-out infinite; }
+.k-smart_plug.ind-led.st-standby .sp-led { fill: #ffb020; filter: drop-shadow(0 0 2px #ffb020); }
+.k-smart_plug:not(.ind-led) .sp-led { display: none; }
+.sp-ring { stroke: transparent; transition: stroke .3s; }
+.k-smart_plug.ind-ring.st-powered .sp-ring { stroke: #38a8ff; filter: drop-shadow(0 0 2px #38a8ff); animation: ac-pulse 1.6s ease-in-out infinite; }
+.k-smart_plug.ind-ring.st-standby .sp-ring { stroke: #ffb020; opacity: .7; }
+.sp-glow { opacity: 0; filter: blur(5px); transition: opacity .4s; }
+.k-smart_plug.ind-glow.st-powered .sp-glow { opacity: .3; animation: sp-breathe 2.4s ease-in-out infinite; }
+.sp-bolt-b { opacity: 0; transition: opacity .3s; }
+.sp-bolt-b circle { fill: #3a414b; transition: fill .3s; }
+.sp-bolt { fill: #6b737c; transition: fill .3s; }
+.k-smart_plug.ind-bolt .sp-bolt-b { opacity: 1; }
+.k-smart_plug.ind-bolt.st-powered .sp-bolt-b circle { fill: #ffc933; filter: drop-shadow(0 0 3px #ffc933); }
+.k-smart_plug.ind-bolt.st-powered .sp-bolt { fill: #3a2a00; }
+.k-smart_plug.ind-bolt.st-powered .sp-bolt-b { transform-box: fill-box; transform-origin: center; animation: sp-zap 1.2s ease-in-out infinite; }
+.sp-flow { stroke-dasharray: 3 6; opacity: 0; }
+.k-smart_plug.ind-flow.st-powered .sp-flow { opacity: 1; animation: ms-flow .8s linear infinite; }
+/* appareil branché : grisé quand la prise est coupée, en couleur sinon */
+.sp-dev { transition: opacity .4s, filter .4s; }
+.k-smart_plug:not(.st-powered):not(.st-standby) .sp-dev { opacity: .55; filter: grayscale(1); }
+.sp-ico { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #6b737c; transition: color .4s; }
+.sp-ico ha-icon { --mdc-icon-size: 100%; width: 100%; height: 100%; display: block; }
+.k-smart_plug.st-powered .sp-ico { color: var(--c); }
+.k-smart_plug.st-standby .sp-ico { color: #ffb020; }
+@keyframes sp-zap { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.18); } }
+@keyframes sp-breathe { 0%, 100% { opacity: .1; } 50% { opacity: .3; } }
 /* ---------- chargeur de téléphone ---------- */
 .phn-ring { stroke: #38a8ff; opacity: .15; }
 .k-phone_charger.st-charging .phn-ring { opacity: 1; animation: ac-pulse 1.6s ease-in-out infinite; }
