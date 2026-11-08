@@ -55,6 +55,8 @@ travel_time: 25
 
 ## Retractable awning
 
+<p align="center"><img src="../awning.gif" width="420" alt="Animated retractable awning card: unrolling, strong wind, night with LED"></p>
+
 `custom:appliance-awning-card`: a retractable (folding-arm) awning on the front of a house, above a wooden terrace with garden furniture. The fabric unrolls with `current_position` (0 = retracted in its box, 100 = fully extended), the articulated arms follow, and the shade on the terrace grows with it. If the cover reports `current_tilt_position`, it sets the pitch of the fabric (a **Tilt** slider and tile). Buttons **Extend / Stop / Retract**. By default `open` means extended; if your motor reports the opposite, use `invert: true`.
 
 | Option | Effect |

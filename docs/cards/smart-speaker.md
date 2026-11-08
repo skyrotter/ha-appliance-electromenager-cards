@@ -13,6 +13,8 @@
 | Samsung | `samsung_hw_q800c` (HW-Q800C soundbar with its wireless subwoofer, photo), `samsung_hw_q800c_svg` (same, drawing): the subwoofer pumps with the bass, the front speakers pulse, the small display shows an equaliser and waves rise towards the ceiling (Atmos) |
 | Apple | `homepod` (2nd gen): `finish` `midnight` (default) or `white`; `homepod_mini` (mini 2): `white` (default), `pink`, `green`, `blue` or `midnight` |
 
+![Samsung HW-Q800C soundbar, photo and SVG versions](https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/soundbar-samsung-hw-q800c.gif)
+
 Without `model`, the card guesses from the entity id: `sonos` → Sonos One, `homepod` → HomePod (or HomePod mini), `devialet` / `phantom` → Phantom II, `nest` / `google` → Nest Mini, otherwise Echo Dot. `style` is accepted as an alias of `model`.
 
 States and animations:
