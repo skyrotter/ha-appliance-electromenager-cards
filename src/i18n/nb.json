@@ -1063,6 +1063,8 @@
 "show_clean": "Vis rengjøring",
 "entity_locked_in": "Lås «Bare inn» (Sure Petcare)",
 "entity_locked_out": "Lås «Bare ut» (Sure Petcare)",
+"entity_state": "Open/closed sensor (contact)",
+"entity_position": "Position sensor (0-100)",
 "entity_lux": "Lyssensor (lux)",
 "wind_max": "Grense for sterk vind (km/t)",
 "show_lux": "Vis lysnivå",

@@ -428,7 +428,21 @@ class ApplianceCardBase extends HTMLElement {
       else if (/scan|num[eé]ris/.test(raw)) m.status = "scanning";
       else if (/print|impress|processing|busy/.test(raw)) m.status = "printing";
       else if (watts !== null) m.status = watts > (c.print_threshold ?? c.threshold ?? 100) ? "printing" : watts > (c.scan_threshold ?? 45) ? "scanning" : watts >= (c.standby_threshold ?? 1) ? "standby" : "off";
+      // capteur d'état texte sans prise (Brother, IPP…) : veille / prête / en attente = veille ; sommeil profond, éteinte = éteinte
+      else if (raw && /deep.?sleep|hibernat|power.?off|[eé]teint|sommeil.?prof/.test(raw)) m.status = "off";
+      else if (raw && /idle|ready|wait|sleep|standby|veille|attente|pr[eê]t|warm|cool|chauff|refroid|inactive/.test(raw)) m.status = "standby";
       else m.status = base === "running" || base === "on" ? "standby" : "off";
+      // Brother MFC-J5955DW : niveaux d'encre (barres colorées) et message de l'imprimante (alerte)
+      if (/^brother|mfc.?j5955/i.test(String(c.model || ""))) {
+        const inks = [["k", "ink_black", c.ink_black], ["c", "ink_cyan", c.ink_cyan], ["m", "ink_magenta", c.ink_magenta], ["y", "ink_yellow", c.ink_yellow]].filter((x) => x[2]);
+        if (inks.length) {
+          const low = Number(c.ink_low) > 0 ? Number(c.ink_low) : 15;
+          m.ink = inks.map(([k, key, id]) => { const v = num(S(id)); return { k, key, id, v: v == null ? null : Math.max(0, Math.min(100, v)), low: v != null && v < low }; });
+          if (m.ink.some((i) => i.low) && m.status !== "unavailable") m.alerts.push("ink_low");
+        }
+        const msg = c.status_message ? S(c.status_message) : null, mt = msg ? String(msg.state).trim() : "";
+        if (mt && !BAD.includes(mt.toLowerCase()) && !/^(ok|ready|idle|waiting|sleep|none|no error|aucun|pr[eê]te?|normal)$/i.test(mt)) m.alerts.push(mt);
+      }
     } else if (kind === "printer_3d") {
       const raw = main ? `${main.state}`.toLowerCase() : "";
       if (/fail|error|erreur|[eé]chec/.test(raw)) m.status = "failed";
@@ -699,7 +713,10 @@ class ApplianceCardBase extends HTMLElement {
       m.dhMode = md ? stateText(hass, md) : isHum && main.attributes.mode ? attrTxt(main, "mode") : null;
     } else if (kind === "smart_plug") {
       // prise allumée (interrupteur) ou qui consomme : « On » ; interrupteur allumé mais rien ne consomme : « Veille »
-      const swOn = isOn(sw) || (!sw && base === "on");
+      // interrupteur mis dans « entity » (switch, input_boolean, light) au lieu de « switch » : son état « on » compte aussi,
+      // même si une faible conso a fait passer base de « on » à « standby »
+      const entOn = !sw && !!main && ["switch", "input_boolean", "light"].includes(domainOf(c.entity)) && isOn(main);
+      const swOn = isOn(sw) || entOn || (!sw && base === "on");
       const draws = watts !== null ? powered : base === "running";
       m.status = base === "off" || base === "unavailable" ? base : draws ? "powered" : swOn && watts !== null ? "standby" : swOn ? "powered" : "off";
     } else if (kind === "power_strip") {
@@ -1269,7 +1286,7 @@ class ApplianceCardBase extends HTMLElement {
     let statusTxt = m.phase ? tr(hass, `ph_${m.phase}`) : tr(hass, m.status);
     if (kind === "monitor" && m.status === "screen_on") statusTxt = tr(hass, mnCount(c) > 1 ? "monitors_on" : "monitor_on");
     if (m.main && ["sensor", "input_select", "select"].includes(domainOf(c.entity)) &&
-        active && !["fridge", "water_heater", "printer_3d", "pool_pump", "wet_vacuum"].includes(kind)) {
+        active && !["fridge", "water_heater", "printer_3d", "pool_pump", "wet_vacuum"].includes(kind) && !(kind === "printer" && /^brother|mfc.?j5955/i.test(String(c.model || "")))) {
       const raw = String(m.main.state).toLowerCase();
       if (![...OFF_STATES, ...DONE_STATES, "on", "running", "run"].includes(raw)) statusTxt = stateText(hass, m.main);
     }
@@ -1398,6 +1415,9 @@ class ApplianceCardBase extends HTMLElement {
         return `<button class="mode-btn ${on ? "on" : ""}" data-preset="${esc(o)}" data-mode="${key}" aria-pressed="${on}"${m.status === "unavailable" ? " disabled" : ""}><ha-icon icon="${MODE_ICON[key] || "mdi:tune-variant"}"></ha-icon>${esc(cap(o))}</button>`;
       }).join("");
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._setPreset(b.dataset.preset); }; });
+    } else if (kind === "printer" && m.ink) {
+      // niveaux d'encre : une barre par couleur (noir, cyan, magenta, jaune), clic = historique de l'entité
+      modesEl.innerHTML = `<div class="ink">${m.ink.map((i) => `<div class="ink-row ${i.k}${i.low ? " low" : ""}" data-entity="${esc(i.id)}"><span>${esc(c.labels && c.labels[i.key] ? String(c.labels[i.key]) : tr(hass, i.key))}</span><div class="ink-bar"><div class="ink-fill" style="width:${i.v ?? 0}%"></div></div><span class="ink-v">${i.v == null ? "—" : `${fmtNum(hass, i.v, 0)} %`}</span></div>`).join("")}</div>`;
     } else if (kind === "vmc" && (c.switch_low || c.switch_high) && c.show_modes !== false) {
       // VMC à deux interrupteurs : un bouton par vitesse configurée, celui de la vitesse active est allumé
       const sp = [["low", c.switch_low, "mdi:fan-speed-1", "speed1"], ["high", c.switch_high, "mdi:fan-speed-3", "speed2"]].filter((x) => x[1]);

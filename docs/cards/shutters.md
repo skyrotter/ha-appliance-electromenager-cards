@@ -118,6 +118,8 @@ entity_blind: cover.velux_bedroom_blind
 ## Options
 
 - `entity` (cover)
+- `entity_state` (own open/closed sensor for a cover without state feedback: a `binary_sensor` contact, `on` = open and `off` = closed, or any entity with an `open` / `closed` state; replaces the cover state, `invert` applies)
+- `entity_position` (own position sensor, 0-100, replaces `current_position`; the position wins if both sensors disagree; a movement reported by the cover is kept)
 - `entity_power` (motor power sensor)
 - `sun_entity` (default `sun.sun`; day view if missing)
 - `color` (CSS colour of the slats or leaves; defaults: aluminium, beige, green)
@@ -144,3 +146,11 @@ color: "#3f6f9a"
 ```
 
 [← All cards](../../README.md#the-cards)
+
+```yaml
+# Roller shutter without state feedback, with its own contact sensor
+type: custom:appliance-roller-shutter-card
+entity: cover.living_room_shutter
+entity_state: binary_sensor.shutter_contact
+entity_position: sensor.shutter_position   # optional
+```

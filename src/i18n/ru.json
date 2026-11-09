@@ -1040,6 +1040,8 @@
     "show_btn_vol_up": "Кнопка «Громче»",
     "override": "Временное изменение (Netatmo)",
     "override_durations": "Длительности (мин)",
+    "entity_state": "Open/closed sensor (contact)",
+    "entity_position": "Position sensor (0-100)",
     "entity_lux": "Датчик освещённости (лк)",
     "wind_max": "Порог сильного ветра (км/ч)",
     "show_lux": "Показывать освещённость",

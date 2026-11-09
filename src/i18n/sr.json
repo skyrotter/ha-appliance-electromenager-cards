@@ -1056,6 +1056,8 @@
     "show_btn_vol_up": "Дугме гласније",
     "override": "Привремена измена (Netatmo)",
     "override_durations": "Трајања (мин)",
+    "entity_state": "Open/closed sensor (contact)",
+    "entity_position": "Position sensor (0-100)",
     "entity_lux": "Сензор осветљености (лукс)",
     "wind_max": "Праг јаког ветра (km/h)",
     "show_lux": "Прикажи осветљеност",

@@ -1052,6 +1052,8 @@
     "show_btn_vol_down": "Tlačítko Hlasitost −",
     "show_btn_mute": "Tlačítko Ztlumit",
     "show_btn_vol_up": "Tlačítko Hlasitost +",
+    "entity_state": "Open/closed sensor (contact)",
+    "entity_position": "Position sensor (0-100)",
     "entity_lux": "Čidlo osvětlení (lux)",
     "wind_max": "Hranice silného větru (km/h)",
     "show_lux": "Zobrazit osvětlení",

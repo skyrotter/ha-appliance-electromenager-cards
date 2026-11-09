@@ -398,6 +398,16 @@ const SCEN = [
       set('switch.demo_printer', 'on');
       range(ctl, 'Puissance', 'sensor.demo_printer_power', 0, 450, 1, 320, 'W', W);
     } },
+  { kind: 'printer', title: 'Imprimante Brother (encre)',
+    cfg: { model: 'brother_mfcj5955dw', name: 'Brother MFC-J5955DW', entity: 'sensor.demo_br_status', status_message: 'sensor.demo_br_msg', ink_black: 'sensor.demo_br_k', ink_cyan: 'sensor.demo_br_c', ink_magenta: 'sensor.demo_br_m', ink_yellow: 'sensor.demo_br_y' },
+    build(ctl) {
+      select(ctl, 'État', 'sensor.demo_br_status', [['idle', 'Veille'], ['printing', 'Impression'], ['scanning', 'Numérisation'], ['paper jam', 'Bourrage']], 'idle');
+      select(ctl, 'Message', 'sensor.demo_br_msg', [['Ready', 'Prête'], ['Paper tray1 low', 'Papier bac 1 bas']], 'Ready');
+      range(ctl, 'Noir', 'sensor.demo_br_k', 0, 100, 1, 72, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Cyan', 'sensor.demo_br_c', 0, 100, 1, 55, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Magenta', 'sensor.demo_br_m', 0, 100, 1, 38, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Jaune', 'sensor.demo_br_y', 0, 100, 1, 64, '%', { unit_of_measurement: '%' });
+    } },
   { kind: 'piano', title: 'Piano numérique',
     cfg: { switch: 'switch.piano', power: 'sensor.piano_power' },
     build(ctl) {
@@ -881,6 +891,16 @@ const SCEN = [
       range(ctl, 'Batterie', 'sensor.rain_battery', 0, 100, 1, 78, '%', { unit_of_measurement: '%', device_class: 'battery' });
       set('sensor.rain_1h', 3.2, { unit_of_measurement: 'mm' }); set('sensor.rain_week', 31.5, { unit_of_measurement: 'mm' }); set('sensor.rain_month', 88, { unit_of_measurement: 'mm' }); set('sensor.rain_year', 640, { unit_of_measurement: 'mm' });
       set('sensor.rain_last', new Date(Date.now() - 3 * 3600e3).toISOString(), { device_class: 'timestamp' }); set('sensor.rain_signal', 72, { unit_of_measurement: '%' });
+    } },
+  { kind: 'plant-monitor', title: 'Moniteur de plante', lang: true,
+    cfg: { name: 'Schefflera salon', entity_moisture: 'sensor.plant_moisture', entity_temperature: 'sensor.plant_temperature', entity_conductivity: 'sensor.plant_conductivity', entity_brightness: 'sensor.plant_illuminance', entity_battery: 'sensor.plant_battery', entity_rssi: 'sensor.plant_rssi', min_moisture: 20, min_temperature: 12, min_brightness: 500, min_conductivity: 150 },
+    build(ctl) {
+      range(ctl, 'Humidité du sol', 'sensor.plant_moisture', 0, 100, 1, 45, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Température', 'sensor.plant_temperature', 0, 35, 0.5, 21.5, '°C', T);
+      range(ctl, 'Conductivité', 'sensor.plant_conductivity', 0, 1500, 10, 420, 'µS/cm', { unit_of_measurement: 'µS/cm' });
+      range(ctl, 'Luminosité', 'sensor.plant_illuminance', 0, 30000, 100, 8000, 'lx', { unit_of_measurement: 'lx', device_class: 'illuminance' });
+      range(ctl, 'Batterie', 'sensor.plant_battery', 0, 100, 1, 82, '%', { unit_of_measurement: '%', device_class: 'battery' });
+      set('sensor.plant_rssi', -61, { unit_of_measurement: 'dBm' });
     } },
   { kind: 'fan-heater', title: 'Chauffage soufflant', lang: true,
     cfg: { name: 'Soufflant bureau', entity_status: 'switch.fh_status', entity_power: 'sensor.fh_power', entity_energy: 'sensor.fh_energy', price_per_kwh: 0.25, entity_temp: 'sensor.fh_room', entity_target_temp: 'number.fh_target', entity_timer: 'sensor.fh_timer', entity_alarm: 'binary_sensor.fh_alarm' },

@@ -1098,6 +1098,8 @@
     "entity_nvme_1_temp": "Temperatura SSD 1",
     "entity_nvme_2": "SSD 2 (NVMe)",
     "entity_nvme_2_temp": "Temperatura SSD 2",
+    "entity_state": "Open/closed sensor (contact)",
+    "entity_position": "Position sensor (0-100)",
     "entity_lux": "Czujnik natężenia światła (lx)",
     "wind_max": "Próg silnego wiatru (km/h)",
     "show_lux": "Pokaż natężenie światła",

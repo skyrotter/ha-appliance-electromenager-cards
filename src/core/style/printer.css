@@ -10,6 +10,7 @@
 .k-printer.st-printing .pr-led { animation: pr-blink 1s ease-in-out infinite; }
 .k-printer.st-scanning .pr-led { animation: pr-blink .6s ease-in-out infinite; }
 .k-printer.st-failed .pr-led { opacity: 1; filter: hue-rotate(150deg) saturate(3); animation: pr-blink .5s steps(1) infinite; }
+.k-printer.st-failed .pr-led.g { filter: hue-rotate(-120deg) saturate(3); }
 .pr-scan { stroke-dasharray: 16 120; stroke-dashoffset: 16; opacity: 0; filter: drop-shadow(0 0 5px #7fe9ff); }
 .k-printer.st-scanning .pr-scan { opacity: 1; animation: pr-scan 1.8s linear infinite; }
 .pr-sheet { transform: translateY(var(--sh0, -70px)); }
@@ -18,3 +19,15 @@
 @keyframes pr-scan { to { stroke-dashoffset: -100; } }
 @keyframes pr-lcd { 0%, 100% { opacity: .15; } 50% { opacity: .5; } }
 @keyframes pr-blink { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
+
+/* niveaux d'encre (Brother MFC-J5955DW) : une barre par couleur ; sous le seuil, la barre clignote */
+.ink { grid-column: 1 / -1; display: grid; gap: 5px; }
+.ink-row { display: grid; grid-template-columns: 62px 1fr 38px; align-items: center; gap: 8px; font-size: 12px; color: var(--secondary-text-color); cursor: pointer; }
+.ink-row .ink-v { text-align: right; font-weight: 600; color: var(--primary-text-color); }
+.ink-bar { height: 8px; border-radius: 4px; background: rgba(127,127,127,.2); overflow: hidden; }
+.ink-fill { height: 100%; border-radius: 4px; background: var(--ink); transition: width .6s; }
+.ink-row.k { --ink: #4a4d52; } .ink-row.c { --ink: #00b4e6; } .ink-row.m { --ink: #e6007e; } .ink-row.y { --ink: #ffd400; }
+.ink-row.low .ink-v { color: var(--error-color, #db4437); }
+.ink-row.low .ink-fill { animation: ink-low 1.2s ease-in-out infinite; }
+.no-anim .ink-row.low .ink-fill { animation: none; }
+@keyframes ink-low { 50% { opacity: .35; } }

@@ -1040,6 +1040,8 @@
     "show_btn_vol_up": "Buton volum +",
     "override": "Derogare temporară (Netatmo)",
     "override_durations": "Durate derogare (min)",
+    "entity_state": "Open/closed sensor (contact)",
+    "entity_position": "Position sensor (0-100)",
     "entity_lux": "Senzor de luminozitate (lux)",
     "wind_max": "Prag vânt puternic (km/h)",
     "show_lux": "Afișează luminozitatea",
