@@ -1456,6 +1456,26 @@
     "low": "Schwach",
     "ok": "OK"
   },
+  "plant_monitor": {
+    "name": "Pflanzenmonitor",
+    "ok": "Gesund",
+    "dry": "Braucht Wasser",
+    "cold": "Zu kalt",
+    "dark": "Zu wenig Licht",
+    "hungry": "Braucht Dünger",
+    "low_battery": "Batterie schwach",
+    "unavailable": "Nicht verfügbar",
+    "moisture": "Bodenfeuchte",
+    "temperature": "Temperatur",
+    "conductivity": "Nährstoffe",
+    "brightness": "Licht",
+    "battery": "Batterie",
+    "rssi": "Signal",
+    "style_plant": "Pflanze (SVG)",
+    "style_sensor": "Sensor (SVG)",
+    "style_plant_photo": "Pflanze (Foto)",
+    "style_sensor_photo": "Sensor (Foto)"
+  },
   "rain_gauge": {
     "name": "Regenmesser",
     "dry": "Trocken",

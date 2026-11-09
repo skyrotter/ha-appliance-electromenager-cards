@@ -1456,6 +1456,26 @@
     "low": "Laag",
     "ok": "OK"
   },
+  "plant_monitor": {
+    "name": "Plantenmonitor",
+    "ok": "Gezond",
+    "dry": "Heeft water nodig",
+    "cold": "Te koud",
+    "dark": "Te weinig licht",
+    "hungry": "Heeft mest nodig",
+    "low_battery": "Batterij bijna leeg",
+    "unavailable": "Niet beschikbaar",
+    "moisture": "Bodemvocht",
+    "temperature": "Temperatuur",
+    "conductivity": "Voedingswaarde",
+    "brightness": "Licht",
+    "battery": "Batterij",
+    "rssi": "Signaal",
+    "style_plant": "Plant (SVG)",
+    "style_sensor": "Sensor (SVG)",
+    "style_plant_photo": "Plant (foto)",
+    "style_sensor_photo": "Sensor (foto)"
+  },
   "rain_gauge": {
     "name": "Regenmeter",
     "dry": "Droog",

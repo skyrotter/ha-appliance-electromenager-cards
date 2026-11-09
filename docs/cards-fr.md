@@ -258,6 +258,21 @@ entity_bubbles: switch.spa_bulles
 entity_temp: sensor.spa_temperature_eau
 ```
 
+**Moniteur de plante** (`custom:appliance-plant-monitor-card`) : capteur de plante BLE (Xiaomi Mi Flora, Parrot Flower Power…). Quatre illustrations au choix avec `style` : `plant` (plante panachée en SVG, par défaut), `sensor` (capteur planté dans la terre, SVG), `plant_photo` et `sensor_photo` (photos détourées). La terre s'assombrit avec l'humidité, les feuilles s'affaissent et une goutte appelle l'arrosage sous `min_moisture` (20 % par défaut) ; `min_temperature`, `min_brightness`, `min_conductivity` et `min_battery` (15 %) déclenchent une alerte. Tuiles : humidité, température, fertilité, luminosité, batterie, signal (`show_*` pour les masquer).
+
+```yaml
+type: custom:appliance-plant-monitor-card
+name: Schefflera
+style: plant
+entity_moisture: sensor.ble_moisture
+entity_temperature: sensor.ble_temperature
+entity_conductivity: sensor.ble_conductivity
+entity_brightness: sensor.ble_illuminance
+entity_battery: sensor.ble_battery
+entity_rssi: sensor.ble_rssi
+min_moisture: 20
+```
+
 **Sauna** : `custom:appliance-sauna-card`, cabine en lames de bois vue de face avec porte vitrée teintée (banquettes, poêle et pierres visibles), thermomètre mural, panneau de commande et conduit de ventilation. États : arrêt, chauffe, prêt (à `ready_margin` = 3 °C de la consigne), refroidissement (éteint mais au-dessus de 40 °C) et défaut. La lueur du poêle et les braises suivent la température, les ondes de chaleur montent au-dessus des pierres, la vapeur sort du conduit, le thermomètre se remplit ; alerte au-dessus de `temp_max` (110 °C). Avec une entité `climate`, la température et la consigne viennent de ses attributs et les boutons **− / Allumer-Éteindre / +** pilotent le thermostat. Tuiles : température, consigne, humidité, puissance du poêle, énergie, coût. Options : voir [sauna.md](cards/sauna.md).
 
 ```yaml

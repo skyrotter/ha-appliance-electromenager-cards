@@ -1456,6 +1456,26 @@
     "low": "Scarica",
     "ok": "OK"
   },
+  "plant_monitor": {
+    "name": "Monitor della pianta",
+    "ok": "In forma",
+    "dry": "Ha bisogno di acqua",
+    "cold": "Troppo freddo",
+    "dark": "Poca luce",
+    "hungry": "Ha bisogno di concime",
+    "low_battery": "Batteria scarica",
+    "unavailable": "Non disponibile",
+    "moisture": "Umidità del terreno",
+    "temperature": "Temperatura",
+    "conductivity": "Fertilità",
+    "brightness": "Luce",
+    "battery": "Batteria",
+    "rssi": "Segnale",
+    "style_plant": "Pianta (SVG)",
+    "style_sensor": "Sensore (SVG)",
+    "style_plant_photo": "Pianta (foto)",
+    "style_sensor_photo": "Sensore (foto)"
+  },
   "rain_gauge": {
     "name": "Pluviometro",
     "dry": "Asciutto",
