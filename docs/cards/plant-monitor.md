@@ -2,7 +2,7 @@
 
 `custom:appliance-plant-monitor-card`: a card for a Bluetooth plant sensor (Xiaomi Mi Flora / HHCC, Parrot Flower Power…) read through Home Assistant (Xiaomi BLE, ESPHome, Mi Flora integration…). The soil darkens with its moisture, the leaves droop and a drop asks for water below `min_moisture`; every other threshold raises an alert on the badge and the tile.
 
-![Plant monitor card: the four styles, healthy and dry](https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/plant-monitor.png)
+![Plant monitor card: the four styles: the soil dries, then is watered](https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/plant-monitor.gif)
 
 ## Style
 
