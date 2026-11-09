@@ -14,7 +14,7 @@ States: off, idle, running, very active (CPU above `cpu_busy` or high throughput
 
 ## Options
 
-Every value tile can be hidden with its `show_…` option, and `language: fr|en|de|it|nb|nl|pl|ro|ru|sr|sr-Latn` forces the language.
+Every value tile can be hidden with its `show_…` option, and `language: fr|en|de|it|es|nb|nl|pl|ro|ru|sr|sr-Latn` forces the language.
 
 - `entity` (optional on / off: ping, switch)
 - `entity_volume` (volume status), `entity_volume_used` (%). **Both accept a list for several volumes**: the ring and the alert follow the fullest one (`volume_max`)

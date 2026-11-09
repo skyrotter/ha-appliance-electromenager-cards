@@ -12,7 +12,7 @@ States: off, idle (CPU below 8 %), running, busy (CPU above `cpu_busy`), overhea
 
 - `model`: `bmax_b9` (default, BMAX B9 Max) or `home_assistant_green` (Home Assistant Green: translucent case on a finned heat sink, no button, a small LED at the front corner lights up when it runs). Same entities and tiles for both.
 
-Every value tile can be hidden with its `show_…` option, and `language: fr|en|de|it|nb|nl|pl|ro|ru|sr|sr-Latn` forces the language.
+Every value tile can be hidden with its `show_…` option, and `language: fr|en|de|it|es|nb|nl|pl|ro|ru|sr|sr-Latn` forces the language.
 
 - `entity` (optional on / off: ping, switch, device_tracker)
 - `entity_cpu` (%), `entity_cpu_temp`, `entity_ram` (%), `entity_disk` (%)
