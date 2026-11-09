@@ -19,11 +19,12 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `entity_input_voltage`
 - `entity_output_voltage`
 - `entity_energy`
+- `entity_battery_voltage` (V: NUT `battery.voltage`), `entity_nominal_power` (W: NUT `ups.realpower.nominal`), `entity_beeper` (the buzzer state as text, e.g. NUT `ups.beeper.status`: shown as is)
 - `battery_low` (default 20 %)
 - `load_max` (default 90 %)
 - `mains_min` (default 100 V)
 - `animations` (default true)
-- `show_status`, `show_charge`, `show_runtime`, `show_load`, `show_power`, `show_voltage`, `show_energy`
+- `show_status`, `show_charge`, `show_runtime`, `show_load`, `show_power`, `show_voltage`, `show_energy`, `show_battery_voltage`, `show_nominal_power`, `show_beeper`
 
 ## Example
 
