@@ -4,9 +4,9 @@
 
 <p align="center"><img src="../home-tech.gif" width="720" alt="Mini PC, NAS, TV box and smart scale cards"></p>
 
-**TV box** with a cut-out photo of your model (`model`): `freebox_pop` (Freebox Player Pop), `xiaomi_tv_box_s` (Xiaomi TV Box S) or `shield_tv_pro` (NVIDIA Shield TV Pro, default). It reads a `media_player` (Android TV Remote, Google Cast, Freebox…).
+**TV box** with a cut-out photo of your model (`model`): `freebox_pop` (Freebox Player Pop), `xiaomi_tv_box_s` (Xiaomi TV Box S), `shield_tv_pro` (NVIDIA Shield TV Pro, default), `google_tv_streamer` (Google TV Streamer) or `google_tv` (Google TV / Chromecast with Google TV). It reads a `media_player` (Android TV Remote, Google Cast, Freebox…).
 
-A floating screen sits next to the box: the artwork of what is playing with a slow Ken Burns zoom, an ambilight glow in the main colour of the artwork, the app, title and episode / artist, a running equaliser and the progress bar. Paused: the artwork dims and a pause icon pulses. Loading: a spinner. Home screen: an animated aurora in the colour of the box. Off or in standby: the screen goes dark with its red standby LED. The box answers too: the green stripe of the Shield lights up with a running light, the white LED of the Xiaomi turns on, the Player Pop glows on the table, and signal waves go from the box to the screen while playing. When the volume changes, a volume bar shows on screen.
+A floating screen sits next to the box: the artwork of what is playing with a slow Ken Burns zoom, an ambilight glow in the main colour of the artwork, the app, title and episode / artist, a running equaliser and the progress bar. Paused: the artwork dims and a pause icon pulses. Loading: a spinner. Home screen: an animated aurora in the colour of the box. Off or in standby: the screen goes dark with its red standby LED. The box answers too: the green stripe of the Shield lights up with a running light, the white LED of the Xiaomi turns on, the Player Pop glows on the table (the Google TV Streamer and Google TV have no status LED), and signal waves go from the box to the screen while playing. When the volume changes, a volume bar shows on screen.
 
 Remote buttons (only those the entity supports): power, home (with `entity_remote`), previous, play / pause, next, volume −, mute, volume +. With **Android TV Remote**, set `entity_remote`: turning on goes through the remote entity, which is more reliable.
 
@@ -40,6 +40,20 @@ type: custom:appliance-tv-box-card
 model: xiaomi_tv_box_s
 entity: media_player.xiaomi_tv_box_s
 entity_remote: remote.xiaomi_tv_box_s
+```
+
+```yaml
+type: custom:appliance-tv-box-card
+model: google_tv_streamer
+entity: media_player.google_tv_streamer
+entity_remote: remote.google_tv_streamer
+```
+
+```yaml
+type: custom:appliance-tv-box-card
+model: google_tv
+entity: media_player.google_tv
+entity_remote: remote.google_tv
 ```
 
 
