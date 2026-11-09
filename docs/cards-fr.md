@@ -286,6 +286,21 @@ entity_rssi: sensor.ble_rssi
 min_moisture: 20
 ```
 
+**Humidificateur** (`custom:appliance-humidifier-card`) : humidificateur à évaporation (Xiaomi Smartmi Evaporative Humidifier 2…). `style: svg` (dessin générique, par défaut) ou `style: smartmi` (photo détourée). L'écran LCD est redessiné avec les vraies valeurs (humidité, vitesse A / 1 / 2 / 3, barre du réservoir, `DRY` / `CLEAN`), la brume monte de l'ouverture du dessus pendant l'humidification. États : arrêt, humidification, cible atteinte, mode Dry, nettoyage (mode Clean), et alerte « eau basse » (`water_level` sous `water_low`, 20 % par défaut, ou capteur `low_water`). Boutons : marche / arrêt, humidité cible − / + (`target_humidity`, pas de `target_step` = 5 %), un bouton par mode (`mode` : Auto, Dry, Clean…) et un par vitesse (`fan_speed`).
+
+```yaml
+type: custom:appliance-humidifier-card
+name: Humidificateur
+style: smartmi
+entity: humidifier.smartmi_humidifier
+humidity: sensor.smartmi_humidity
+target_humidity: number.smartmi_target_humidity
+temperature: sensor.smartmi_temperature
+fan_speed: select.smartmi_fan_level
+mode: select.smartmi_mode
+water_level: sensor.smartmi_water_level
+```
+
 **Sauna** : `custom:appliance-sauna-card`, cabine en lames de bois vue de face avec porte vitrée teintée (banquettes, poêle et pierres visibles), thermomètre mural, panneau de commande et conduit de ventilation. États : arrêt, chauffe, prêt (à `ready_margin` = 3 °C de la consigne), refroidissement (éteint mais au-dessus de 40 °C) et défaut. La lueur du poêle et les braises suivent la température, les ondes de chaleur montent au-dessus des pierres, la vapeur sort du conduit, le thermomètre se remplit ; alerte au-dessus de `temp_max` (110 °C). Avec une entité `climate`, la température et la consigne viennent de ses attributs et les boutons **− / Allumer-Éteindre / +** pilotent le thermostat. Tuiles : température, consigne, humidité, puissance du poêle, énergie, coût. Options : voir [sauna.md](cards/sauna.md).
 
 ```yaml

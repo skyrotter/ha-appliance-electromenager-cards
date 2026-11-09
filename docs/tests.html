@@ -19,7 +19,7 @@ const has=(c,cls)=>c.wrap.classList.contains(cls);
 const tags=['thermomix','cookeo','washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','smart-speaker','fan','generic','tool-charger','ceiling-fan','dehumidifier','air-purifier','monitor','kettle','toaster','power-strip','phone-charger','piano','garland','wet-vacuum','ps5','smart-plug','dosing-pump','printer','elliptical','exercise-bike','rowing-machine'];
 tags.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 // card picker: every core card and every self-contained card listed exactly once
-const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','ceiling-spot','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','awning','water-meter','gas-meter','electric-meter','trv','room-climate','mailbox','smoke-detector','leak-detector','mini-pc','nas','tv-box','scale','smart-lock','cat-flap','pet-fountain','thermo-heater','smart-tap','water-valve','water-softener','rain-gauge','plant-monitor','fan-heater','inflatable-spa'];
+const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','ceiling-spot','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','awning','water-meter','gas-meter','electric-meter','trv','room-climate','mailbox','smoke-detector','leak-detector','mini-pc','nas','tv-box','scale','smart-lock','cat-flap','pet-fountain','thermo-heater','smart-tap','water-valve','water-softener','rain-gauge','plant-monitor','humidifier','fan-heater','inflatable-spa'];
 solo.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 const picked=window.customCards.map(c=>c.type), wanted=[...tags,...solo].map(t=>`appliance-${t}-card`).concat('appliance-card'); // + the single card (picker.js)
 ok(`customCards = ${wanted.length}`,picked.length===wanted.length&&wanted.every(t=>picked.filter(p=>p===t).length===1),
@@ -686,6 +686,34 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c=card('smart-plug',{switch:'switch.s',power:'sensor.p'},[mk('switch.s','on'),mk('sensor.p',0.2,W)]); ok('smart plug: switch on + 0,2 W -> standby',/st-standby/.test(st(c)),st(c));
  c=card('smart-plug',{entity:'switch.s'},[mk('switch.s','on')]); ok('smart plug: entity switch on without power -> powered',/st-powered/.test(st(c)),st(c));
  document.querySelectorAll('appliance-smart-plug-card').forEach((e)=>e.remove());
+}
+// humidificateur (Smartmi) : états, modes Dry / Clean, réservoir bas, boutons (#342)
+{const hc=(c)=>c.sr.querySelector('ha-card').className, bd=(c)=>c.sr.getElementById('hmbadge').textContent;
+ const H={entity:'humidifier.h',target_humidity:'number.t',fan_speed:'select.f',mode:'select.m',water_level:'sensor.w',temperature:'sensor.t'};
+ const S=(st='on',hum=50,tgt=60,mode='Auto',fan='auto',water=70)=>[mk('humidifier.h',st,{current_humidity:hum,humidity:tgt,min_humidity:30,max_humidity:80}),mk('number.t',tgt,{min:30,max:80}),mk('sensor.t',21.4,T),mk('select.f',fan,{options:['auto','1','2','3']}),mk('select.m',mode,{options:['Auto','Dry','Clean']}),mk('sensor.w',water,{unit_of_measurement:'%'})];
+ let c=card('humidifier',H,S()); ok('humidifier humidifying',/^humidifying/.test(hc(c))&&bd(c)==='Humidification',hc(c)+bd(c));
+ c=card('humidifier',H,S('on',61,60)); ok('humidifier target reached',/^target/.test(hc(c)),hc(c));
+ c=card('humidifier',H,S('off')); ok('humidifier off',/^off/.test(hc(c))&&bd(c)==='Arrêt',hc(c)+bd(c));
+ c=card('humidifier',H,S('on',40,60,'Dry')); ok('humidifier dry mode',/^dry/.test(hc(c))&&c.sr.getElementById('hmm').textContent==='DRY',hc(c));
+ c=card('humidifier',H,S('on',40,60,'Clean')); ok('humidifier clean mode',/^clean/.test(hc(c))&&c.sr.getElementById('hmm').textContent==='CLEAN',hc(c));
+ c=card('humidifier',H,S('on',40,60,'Auto','auto',12)); ok('humidifier low water (12 % <= 20 %): alert + badge + tile',/lowwater/.test(hc(c))&&bd(c)==='Eau basse'&&c.sr.querySelector('.tile[data-k=tank]').classList.contains('warn'),hc(c)+bd(c));
+ c=card('humidifier',{...H,water_low:10},S('on',40,60,'Auto','auto',12)); ok('humidifier water_low option',!/lowwater/.test(hc(c)),hc(c));
+ c=card('humidifier',{entity:'humidifier.h',low_water:'binary_sensor.l'},[...S(),mk('binary_sensor.l','on')]); ok('humidifier low_water binary sensor',/lowwater/.test(hc(c)),hc(c));
+ c=card('humidifier',H,S('off',40,60,'Auto','auto',5)); ok('humidifier off: no low water alert',!/lowwater/.test(hc(c)),hc(c));
+ c=card('humidifier',H,[mk('humidifier.h','unavailable')]); ok('humidifier unavailable',/^unavailable/.test(hc(c)),hc(c));
+ c=card('humidifier',H,S('on',50,60,'Auto','2')); ok('humidifier LCD shows humidity and fan speed',c.sr.getElementById('hmv').textContent==='50'&&c.sr.getElementById('hmf').textContent==='2',c.sr.getElementById('hmv').textContent+c.sr.getElementById('hmf').textContent);
+ c=card('humidifier',H,S()); ok('humidifier LCD fan auto -> A',c.sr.getElementById('hmf').textContent==='A');
+ c=card('humidifier',H,S('on',50,60,'Auto','auto',45)); ok('humidifier water bar = 9 of 20 segments',c.sr.querySelectorAll('#hmw .wbar:not(.e)').length===9,c.sr.querySelectorAll('#hmw .wbar:not(.e)').length);
+ c=card('humidifier',H,S()); ok('humidifier mode and fan buttons from select options, active one lit',c.sr.querySelectorAll('#hmmodes button').length===3&&c.sr.querySelector('#hmmodes button.on').textContent==='Auto'&&c.sr.querySelectorAll('#hmfans button').length===4&&c.sr.querySelector('#hmfans button.on').textContent==='auto');
+ const calls=c.h.calls; c.sr.querySelectorAll('#hmmodes button')[2].click(); ok('humidifier mode button calls select.select_option',calls.some((x)=>x[0]==='select'&&x[1]==='select_option'&&x[2].option==='Clean'&&x[2].entity_id==='select.m'),JSON.stringify(calls));
+ c.sr.querySelectorAll('#hmfans button')[3].click(); ok('humidifier fan button calls select.select_option',calls.some((x)=>x[2]&&x[2].option==='3'&&x[2].entity_id==='select.f'),JSON.stringify(calls));
+ c.sr.getElementById('hmup').click(); ok('humidifier target + calls number.set_value (60 -> 65)',calls.some((x)=>x[0]==='number'&&x[1]==='set_value'&&x[2].value===65),JSON.stringify(calls));
+ c.sr.getElementById('hmdn').click(); ok('humidifier target - calls number.set_value (60 -> 55)',calls.some((x)=>x[0]==='number'&&x[2].value===55),JSON.stringify(calls));
+ c.sr.getElementById('hmpw').click(); ok('humidifier power button calls homeassistant.toggle',calls.some((x)=>x[0]==='homeassistant'&&x[1]==='toggle'&&x[2].entity_id==='humidifier.h'),JSON.stringify(calls));
+ c=card('humidifier',{entity:'humidifier.h'},[mk('humidifier.h','on',{current_humidity:50,humidity:60,min_humidity:30,max_humidity:80,mode:'Dry',available_modes:['Auto','Dry','Clean']})]); ok('humidifier: modes read from the humidifier entity',/^dry/.test(hc(c))&&c.sr.querySelectorAll('#hmmodes button').length===3,hc(c));
+ c.sr.getElementById('hmup').click(); ok('humidifier: target via humidifier.set_humidity',c.h.calls.some((x)=>x[0]==='humidifier'&&x[1]==='set_humidity'&&x[2].humidity===65),JSON.stringify(c.h.calls));
+ ['svg','smartmi','inconnu'].forEach((stl)=>{c=card('humidifier',{...H,style:stl},S()); ok(`humidifier style ${stl}`,stl==='smartmi'?/data:image\/webp/.test(c.sr.querySelector('image').getAttribute('href')):!c.sr.querySelector('image'),stl);});
+ document.querySelectorAll('appliance-humidifier-card').forEach((e)=>e.remove());
 }
 // détecteur de fuite : une ou plusieurs sondes, vanne, sirène, gel, batterie
 {const hc=(c)=>c.sr.querySelector('ha-card').className, bd=(c)=>c.sr.getElementById('lkbadge').textContent, al=(c)=>c.sr.getElementById('lkalert').textContent;

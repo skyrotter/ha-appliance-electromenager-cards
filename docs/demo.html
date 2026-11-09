@@ -902,6 +902,18 @@ const SCEN = [
       range(ctl, 'Batterie', 'sensor.plant_battery', 0, 100, 1, 82, '%', { unit_of_measurement: '%', device_class: 'battery' });
       set('sensor.plant_rssi', -61, { unit_of_measurement: 'dBm' });
     } },
+  { kind: 'humidifier', title: 'Humidificateur', lang: true,
+    cfg: { name: 'Humidificateur Smartmi', style: 'smartmi', entity: 'switch.demo_hum', humidity: 'sensor.demo_hum_rh', target_humidity: 'number.demo_hum_target', temperature: 'sensor.demo_hum_temp', fan_speed: 'select.demo_hum_fan', mode: 'select.demo_hum_mode', water_level: 'sensor.demo_hum_water' },
+    build(ctl) {
+      select(ctl, 'Marche', 'switch.demo_hum', [['on', 'Marche'], ['off', 'Arrêt']], 'on');
+      range(ctl, 'Humidité', 'sensor.demo_hum_rh', 20, 80, 1, 48, '%', { unit_of_measurement: '%' });
+      set('number.demo_hum_target', 60, { min: 30, max: 80, step: 1 });
+      range(ctl, 'Température', 'sensor.demo_hum_temp', 10, 30, 0.5, 21.4, '°C', T);
+      select(ctl, 'Ventilateur', 'select.demo_hum_fan', [['auto', 'auto'], ['1', '1'], ['2', '2'], ['3', '3']], 'auto');
+      select(ctl, 'Mode', 'select.demo_hum_mode', [['Auto', 'Auto'], ['Dry', 'Dry'], ['Clean', 'Clean']], 'Auto');
+      states['select.demo_hum_fan'].attributes = { options: ['auto', '1', '2', '3'] }; states['select.demo_hum_mode'].attributes = { options: ['Auto', 'Dry', 'Clean'] };
+      range(ctl, 'Niveau d\'eau', 'sensor.demo_hum_water', 0, 100, 1, 70, '%', { unit_of_measurement: '%' });
+    } },
   { kind: 'fan-heater', title: 'Chauffage soufflant', lang: true,
     cfg: { name: 'Soufflant bureau', entity_status: 'switch.fh_status', entity_power: 'sensor.fh_power', entity_energy: 'sensor.fh_energy', price_per_kwh: 0.25, entity_temp: 'sensor.fh_room', entity_target_temp: 'number.fh_target', entity_timer: 'sensor.fh_timer', entity_alarm: 'binary_sensor.fh_alarm' },
     build(ctl) {
