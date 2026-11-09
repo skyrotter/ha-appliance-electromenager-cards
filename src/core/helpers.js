@@ -2,8 +2,10 @@
 /* Helpers                                                             */
 /* ------------------------------------------------------------------ */
 const BAD = ["unavailable", "unknown", "none", ""];
-const OFF_STATES = ["off", "idle", "inactive", "false", "standby", "stopped", "stop", "ready", "arret", "arrêt", "veille", "inactif", "pause", "paused", "0"];
-const DONE_STATES = ["finished", "finish", "done", "end", "ended", "complete", "completed", "termine", "terminé", "fin", "cycle_finished"];
+const OFF_STATES = ["off", "idle", "inactive", "false", "standby", "stopped", "stop", "ready", "arret", "arrêt", "veille", "inactif", "pause", "paused", "0",
+  // español
+  "apagado", "apagar", "espera", "en espera", "reposo", "parado", "pausar", "pausa por retirada de cesta", "precalentamiento en pausa"];
+const DONE_STATES = ["finished", "finish", "done", "end", "ended", "complete", "completed", "termine", "terminé", "fin", "cycle_finished", "completado", "terminado", "finalizado"];
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const num = (st) => {
   if (!st || BAD.includes(String(st.state).toLowerCase())) return null;

@@ -8260,8 +8260,10 @@ const DEF = {
 /* Helpers                                                             */
 /* ------------------------------------------------------------------ */
 const BAD = ["unavailable", "unknown", "none", ""];
-const OFF_STATES = ["off", "idle", "inactive", "false", "standby", "stopped", "stop", "ready", "arret", "arrêt", "veille", "inactif", "pause", "paused", "0"];
-const DONE_STATES = ["finished", "finish", "done", "end", "ended", "complete", "completed", "termine", "terminé", "fin", "cycle_finished"];
+const OFF_STATES = ["off", "idle", "inactive", "false", "standby", "stopped", "stop", "ready", "arret", "arrêt", "veille", "inactif", "pause", "paused", "0",
+  // español
+  "apagado", "apagar", "espera", "en espera", "reposo", "parado", "pausar", "pausa por retirada de cesta", "precalentamiento en pausa"];
+const DONE_STATES = ["finished", "finish", "done", "end", "ended", "complete", "completed", "termine", "terminé", "fin", "cycle_finished", "completado", "terminado", "finalizado"];
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const num = (st) => {
   if (!st || BAD.includes(String(st.state).toLowerCase())) return null;
@@ -8801,8 +8803,8 @@ class ApplianceCardBase extends HTMLElement {
       else if (BAD.includes(s)) base = null;
       else if (DONE_STATES.includes(s)) base = "finished";
       else if (OFF_STATES.includes(s)) {
-        base = ["standby", "veille"].includes(s) ? "standby"
-          : ["idle", "inactive", "inactif", "ready", "stopped", "stop", "pause", "paused"].includes(s) ? "idle"
+        base = ["standby", "veille", "espera", "en espera", "reposo"].includes(s) ? "standby"
+          : ["idle", "inactive", "inactif", "ready", "stopped", "stop", "pause", "paused", "pausar", "parado", "pausa por retirada de cesta", "precalentamiento en pausa"].includes(s) ? "idle"
           : ["input_boolean", "binary_sensor"].includes(dom) ? "idle" : "off";
       }
       // a plug/switch being "on" only means powered: let the power sensor decide
