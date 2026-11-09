@@ -1128,6 +1128,8 @@
     "show_timer": "Mostra timer",
     "switch_low": "Interruttore bassa velocità",
     "switch_high": "Interruttore alta velocità",
+    "entity_state": "Open/closed sensor (contact)",
+    "entity_position": "Position sensor (0-100)",
     "entity_lux": "Sensore di luminosità (lux)",
     "wind_max": "Soglia vento forte (km/h)",
     "show_lux": "Mostra luminosità",

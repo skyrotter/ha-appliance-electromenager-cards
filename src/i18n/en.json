@@ -1190,6 +1190,8 @@
     "show_timer": "Show timer",
     "switch_low": "Low speed switch",
     "switch_high": "High speed switch",
+    "entity_state": "Open/closed sensor (contact)",
+    "entity_position": "Position sensor (0-100)",
     "entity_lux": "Light level sensor (lux)",
     "wind_max": "Strong wind threshold (km/h)",
     "show_lux": "Show light level",

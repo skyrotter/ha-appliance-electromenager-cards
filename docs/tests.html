@@ -672,6 +672,19 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c=rs('open',{}); ok('roller shutter assumed, no position -> all active',!dis(c,'open')&&!dis(c,'close'));
  document.querySelectorAll('appliance-roller-shutter-card').forEach((e)=>e.remove());
 }
+// volet sans retour d'état : capteur contact (entity_state) et capteur de position (entity_position), toutes variantes
+{const kinds=['roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','awning'], cv=mk('cover.v','unknown',{supported_features:15,assumed_state:true}), bdg=(c)=>c.sr.getElementById('shbadge').textContent, cls=(c)=>c.sr.querySelector('ha-card').className;
+ kinds.forEach((k)=>{
+  let c=card(k,{entity:'cover.v',entity_state:'binary_sensor.c'},[cv,mk('binary_sensor.c','on')]); ok(`${k}: contact on -> open`,/open/.test(cls(c)),cls(c));
+  c=card(k,{entity:'cover.v',entity_state:'binary_sensor.c'},[cv,mk('binary_sensor.c','off')]); ok(`${k}: contact off -> closed`,/closed/.test(cls(c)),cls(c));
+  c=card(k,{entity:'cover.v',entity_position:'sensor.p'},[cv,mk('sensor.p','40')]); ok(`${k}: position sensor -> partial 40 %`,/partial/.test(cls(c))&&/40/.test(bdg(c)),cls(c)+bdg(c));
+ });
+ let c=card('roller-shutter',{entity:'cover.v',entity_state:'binary_sensor.c',invert:true},[cv,mk('binary_sensor.c','on')]); ok('contact + invert -> closed',/closed/.test(cls(c)),cls(c));
+ c=card('roller-shutter',{entity:'cover.v',entity_state:'binary_sensor.c'},[mk('cover.v','closing',{supported_features:15}),mk('binary_sensor.c','on')]); ok('cover closing stays closing',/closing/.test(cls(c)),cls(c));
+ c=card('roller-shutter',{entity:'cover.v',entity_state:'binary_sensor.c'},[cv,mk('binary_sensor.c','unavailable')]); ok('contact unavailable -> falls back',!/(open|closed)/.test(cls(c)),cls(c));
+ c=card('roller-shutter',{entity:'cover.v',entity_state:'binary_sensor.c',entity_position:'sensor.p'},[cv,mk('binary_sensor.c','off'),mk('sensor.p','100')]); ok('position wins over contact',/open/.test(cls(c)),cls(c));
+ document.querySelectorAll('#g > *').forEach((e)=>e.remove());
+}
 // climat de la pièce : commandes du thermostat (modes, ventilation, préréglage), désactivées par défaut
 {const TH=(id,v)=>mk(id,v,{unit_of_measurement:'°C',device_class:'temperature'}), CL=(st)=>mk('climate.c',st,{hvac_modes:['heat','off','cool'],fan_modes:['auto','low'],fan_mode:'low',preset_modes:['eco','comfort'],preset_mode:'eco',temperature:20,target_temp_step:0.5});
  const base={entity_temperature:'sensor.t',entity_climate:'climate.c'};

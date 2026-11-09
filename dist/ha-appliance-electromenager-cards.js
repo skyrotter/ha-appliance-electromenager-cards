@@ -12139,6 +12139,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_timer": "Show timer",
       "switch_low": "Low speed switch",
       "switch_high": "High speed switch",
+      "entity_state": "Open/closed sensor (contact)",
+      "entity_position": "Position sensor (0-100)",
       "entity_lux": "Light level sensor (lux)",
       "wind_max": "Strong wind threshold (km/h)",
       "show_lux": "Show light level",
@@ -12503,6 +12505,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_btn_vol_down": "Tlačítko Hlasitost −",
       "show_btn_mute": "Tlačítko Ztlumit",
       "show_btn_vol_up": "Tlačítko Hlasitost +",
+      "entity_state": "Open/closed sensor (contact)",
+      "entity_position": "Position sensor (0-100)",
       "entity_lux": "Čidlo osvětlení (lux)",
       "wind_max": "Hranice silného větru (km/h)",
       "show_lux": "Zobrazit osvětlení",
@@ -12926,6 +12930,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_timer": "Timer anzeigen",
       "switch_low": "Schalter niedrige Stufe",
       "switch_high": "Schalter hohe Stufe",
+      "entity_state": "Open/closed sensor (contact)",
+      "entity_position": "Position sensor (0-100)",
       "entity_lux": "Helligkeitssensor (Lux)",
       "wind_max": "Schwelle für starken Wind (km/h)",
       "show_lux": "Helligkeit anzeigen",
@@ -13379,6 +13385,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_timer": "Afficher la minuterie",
       "switch_low": "Interrupteur petite vitesse",
       "switch_high": "Interrupteur grande vitesse",
+      "entity_state": "Capteur ouvert / fermé (contact)",
+      "entity_position": "Capteur de position (0-100)",
       "entity_lux": "Capteur de luminosité (lux)",
       "wind_max": "Seuil de vent fort (km/h)",
       "show_lux": "Afficher la luminosité",
@@ -13802,6 +13810,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_timer": "Mostra timer",
       "switch_low": "Interruttore bassa velocità",
       "switch_high": "Interruttore alta velocità",
+      "entity_state": "Open/closed sensor (contact)",
+      "entity_position": "Position sensor (0-100)",
       "entity_lux": "Sensore di luminosità (lux)",
       "wind_max": "Soglia vento forte (km/h)",
       "show_lux": "Mostra luminosità",
@@ -14192,6 +14202,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_clean": "Vis rengjøring",
       "entity_locked_in": "Lås «Bare inn» (Sure Petcare)",
       "entity_locked_out": "Lås «Bare ut» (Sure Petcare)",
+      "entity_state": "Open/closed sensor (contact)",
+      "entity_position": "Position sensor (0-100)",
       "entity_lux": "Lyssensor (lux)",
       "wind_max": "Grense for sterk vind (km/t)",
       "show_lux": "Vis lysnivå",
@@ -14615,6 +14627,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_timer": "Timer tonen",
       "switch_low": "Schakelaar lage stand",
       "switch_high": "Schakelaar hoge stand",
+      "entity_state": "Open/closed sensor (contact)",
+      "entity_position": "Position sensor (0-100)",
       "entity_lux": "Lichtsensor (lux)",
       "wind_max": "Drempel harde wind (km/u)",
       "show_lux": "Toon lichtniveau",
@@ -15023,6 +15037,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_nvme_1_temp": "Temperatura SSD 1",
       "entity_nvme_2": "SSD 2 (NVMe)",
       "entity_nvme_2_temp": "Temperatura SSD 2",
+      "entity_state": "Open/closed sensor (contact)",
+      "entity_position": "Position sensor (0-100)",
       "entity_lux": "Czujnik natężenia światła (lx)",
       "wind_max": "Próg silnego wiatru (km/h)",
       "show_lux": "Pokaż natężenie światła",
@@ -15390,6 +15406,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_btn_vol_up": "Buton volum +",
       "override": "Derogare temporară (Netatmo)",
       "override_durations": "Durate derogare (min)",
+      "entity_state": "Open/closed sensor (contact)",
+      "entity_position": "Position sensor (0-100)",
       "entity_lux": "Senzor de luminozitate (lux)",
       "wind_max": "Prag vânt puternic (km/h)",
       "show_lux": "Afișează luminozitatea",
@@ -15757,6 +15775,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_btn_vol_up": "Кнопка «Громче»",
       "override": "Временное изменение (Netatmo)",
       "override_durations": "Длительности (мин)",
+      "entity_state": "Open/closed sensor (contact)",
+      "entity_position": "Position sensor (0-100)",
       "entity_lux": "Датчик освещённости (лк)",
       "wind_max": "Порог сильного ветра (км/ч)",
       "show_lux": "Показывать освещённость",
@@ -16124,6 +16144,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_btn_vol_up": "Дугме гласније",
       "override": "Привремена измена (Netatmo)",
       "override_durations": "Трајања (мин)",
+      "entity_state": "Open/closed sensor (contact)",
+      "entity_position": "Position sensor (0-100)",
       "entity_lux": "Сензор осветљености (лукс)",
       "wind_max": "Праг јаког ветра (km/h)",
       "show_lux": "Прикажи осветљеност",
@@ -16491,6 +16513,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_btn_vol_up": "Dugme glasnije",
       "override": "Privremena izmena (Netatmo)",
       "override_durations": "Trajanja (min)",
+      "entity_state": "Open/closed sensor (contact)",
+      "entity_position": "Position sensor (0-100)",
       "entity_lux": "Senzor osvetljenosti (luks)",
       "wind_max": "Prag jakog vetra (km/h)",
       "show_lux": "Prikaži osvetljenost",
@@ -27055,6 +27079,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
  * Boutons ouvrir / stop / fermer, curseurs de position et d'inclinaison, puissance du moteur.
  * Pergola : les lames pivotent selon l'inclinaison (sinon la position), redessinées image par image ;
  * en option pluie (entity_rain), éclairage LED (entity_light) et vent (entity_wind).
+ * Capteurs externes (volet sans retour d'état) : entity_state (contact on/off ou cover) et entity_position (0-100) remplacent l'état de la cover.
  * Fenêtre de toit (Velux) : l'ouvrant pivote sur son axe, volet roulant extérieur en option (entity_blind), pluie.
  */
 (() => {
@@ -28197,7 +28222,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         this._setTilt(Number(e.target.value));
       });
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
-        const k = el.dataset.k; this._more({ power: this._c.entity_power, rain: this._c.entity_rain, wind: this._c.entity_wind, blind: this._c.entity_blind, lux: this._c.entity_lux, temperature: this._c.entity_temperature }[k] || this._c.entity);
+        const k = el.dataset.k; this._more({ position: this._c.entity_position, power: this._c.entity_power, rain: this._c.entity_rain, wind: this._c.entity_wind, blind: this._c.entity_blind, lux: this._c.entity_lux, temperature: this._c.entity_temperature }[k] || this._c.entity);
       }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true; this._pos = null; this._ang = null;
     }
@@ -28237,6 +28262,20 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         if (a.current_position != null && isFinite(Number(a.current_position))) pos = Math.max(0, Math.min(100, Number(a.current_position)));
         if (a.current_tilt_position != null && isFinite(Number(a.current_tilt_position))) tilt = Math.max(0, Math.min(100, Number(a.current_tilt_position)));
       }
+      // capteurs externes (cover sans retour d'état natif) : entity_position (0-100) remplace current_position,
+      // entity_state (binary_sensor contact : on = ouvert, off = fermé ; ou cover / sensor open|closed) remplace l'état.
+      // Un mouvement annoncé par la cover (opening / closing) reste prioritaire.
+      const es = this._st(c.entity_state), ev = es ? String(es.state).toLowerCase() : '', epv = this._num(c.entity_position);
+      let sensed = false;
+      if (!isNaN(epv)) { pos = Math.max(0, Math.min(100, epv)); sensed = true; }
+      if (/^(on|true|1|open|opened|opening|unlocked)$/.test(ev) || /^(off|false|0|closed|closing|locked)$/.test(ev)) {
+        sensed = true;
+        if (st !== 'opening' && st !== 'closing') st = /^(on|true|1|open|opened|opening|unlocked)$/.test(ev) ? (ev === 'opening' ? 'opening' : 'open') : (ev === 'closing' ? 'closing' : 'closed');
+      } else if (!isNaN(epv) && st !== 'opening' && st !== 'closing') {
+        st = pos > 0 ? 'open' : 'closed'; // position seule : l'état en découle
+      }
+      if (!isNaN(epv) && st === 'closed' && pos > 0) st = 'open'; // capteurs contradictoires : la position prime
+      if (!isNaN(epv) && st === 'open' && pos <= 0) st = 'closed';
       // pergola : l'angle des lames est dans current_tilt_position si la cover le donne, sinon dans current_position
       this._tiltDriven = this.kind === 'pergola' && !isNaN(tilt);
       if (this._tiltDriven) { pos = tilt; if (st === 'closed' && pos > 0) st = 'open'; }
@@ -28253,7 +28292,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       else if (st === 'open' && pos < 100) st = pos > 0 ? 'partial' : 'closed';
       // angle des lames porté par la position de la cover (tilt_from_position)
       if (this._tiltFromPos && st !== 'unavailable') tilt = pos;
-      return { st, pos, known, tilt, s };
+      return { st, pos, known, tilt, s: s || es, sensed };
     }
 
     // pergola : fait pivoter les lames de l'angle affiché vers la cible en dur secondes
@@ -28288,7 +28327,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
     _render() {
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card;
-      const { st, pos, known, tilt, s } = this._compute();
+      const { st, pos, known, tilt, s, sensed } = this._compute();
       const sun = this._st(c.sun_entity), night = !!sun && sun.state === 'below_horizon';
       const rainS = this._st(c.entity_rain), rain = !!rainS && (/^(on|true|wet|rain|pluie|raining)$/i.test(String(rainS.state)) || this._num(c.entity_rain) > 0);
       const lightS = this._st(c.entity_light), leds = !!lightS && /^on$/i.test(String(lightS.state));
@@ -28347,7 +28386,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       const sf = Number(s && s.attributes && s.attributes.supported_features);
       const has = (bit) => !isFinite(sf) || sf <= 0 || !!(sf & bit);
       const assumed = !!(s && s.attributes && s.attributes.assumed_state === true);
-      const posKnown = this._blindOnly ? blA.current_position != null && isFinite(Number(blA.current_position)) : known;
+      const posKnown = this._blindOnly ? blA.current_position != null && isFinite(Number(blA.current_position)) : known || sensed;
       const ctl = r.getElementById('shctl');
       ctl.classList.toggle('hide', c.show_controls === false || !isCover || this._tiltOnly);
       const tiltSet = this._tiltFromPos ? has(4) : has(128);
@@ -28427,7 +28466,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
-        ent('entity', 'cover'), ent('entity_power', 'sensor'), ent('sun_entity', 'sun'),
+        ent('entity', 'cover'), ent('entity_state'), ent('entity_position', 'sensor'), ent('entity_power', 'sensor'), ent('sun_entity', 'sun'),
         ...(this.kind === 'pergola' ? [ent('entity_rain'), ent('entity_light'), ent('entity_wind', 'sensor')] : []),
         ...(this.kind === 'awning' ? [ent('entity_wind', 'sensor'), ent('entity_rain'), ent('entity_light'), ent('entity_lux', 'sensor'), ent('entity_temperature', 'sensor'),
           { name: 'wind_max', selector: { number: { min: 5, max: 120, step: 1, mode: 'box', unit_of_measurement: 'km/h' } } }] : []),

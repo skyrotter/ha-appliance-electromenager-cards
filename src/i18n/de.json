@@ -1128,6 +1128,8 @@
     "show_timer": "Timer anzeigen",
     "switch_low": "Schalter niedrige Stufe",
     "switch_high": "Schalter hohe Stufe",
+    "entity_state": "Open/closed sensor (contact)",
+    "entity_position": "Position sensor (0-100)",
     "entity_lux": "Helligkeitssensor (Lux)",
     "wind_max": "Schwelle für starken Wind (km/h)",
     "show_lux": "Helligkeit anzeigen",

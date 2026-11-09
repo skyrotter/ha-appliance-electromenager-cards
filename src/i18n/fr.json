@@ -1190,6 +1190,8 @@
     "show_timer": "Afficher la minuterie",
     "switch_low": "Interrupteur petite vitesse",
     "switch_high": "Interrupteur grande vitesse",
+    "entity_state": "Capteur ouvert / fermé (contact)",
+    "entity_position": "Capteur de position (0-100)",
     "entity_lux": "Capteur de luminosité (lux)",
     "wind_max": "Seuil de vent fort (km/h)",
     "show_lux": "Afficher la luminosité",

@@ -1128,6 +1128,8 @@
     "show_timer": "Timer tonen",
     "switch_low": "Schakelaar lage stand",
     "switch_high": "Schakelaar hoge stand",
+    "entity_state": "Open/closed sensor (contact)",
+    "entity_position": "Position sensor (0-100)",
     "entity_lux": "Lichtsensor (lux)",
     "wind_max": "Drempel harde wind (km/u)",
     "show_lux": "Toon lichtniveau",
