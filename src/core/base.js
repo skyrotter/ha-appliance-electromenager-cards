@@ -713,7 +713,10 @@ class ApplianceCardBase extends HTMLElement {
       m.dhMode = md ? stateText(hass, md) : isHum && main.attributes.mode ? attrTxt(main, "mode") : null;
     } else if (kind === "smart_plug") {
       // prise allumée (interrupteur) ou qui consomme : « On » ; interrupteur allumé mais rien ne consomme : « Veille »
-      const swOn = isOn(sw) || (!sw && base === "on");
+      // interrupteur mis dans « entity » (switch, input_boolean, light) au lieu de « switch » : son état « on » compte aussi,
+      // même si une faible conso a fait passer base de « on » à « standby »
+      const entOn = !sw && !!main && ["switch", "input_boolean", "light"].includes(domainOf(c.entity)) && isOn(main);
+      const swOn = isOn(sw) || entOn || (!sw && base === "on");
       const draws = watts !== null ? powered : base === "running";
       m.status = base === "off" || base === "unavailable" ? base : draws ? "powered" : swOn && watts !== null ? "standby" : swOn ? "powered" : "off";
     } else if (kind === "power_strip") {

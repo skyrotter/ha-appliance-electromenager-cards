@@ -678,6 +678,15 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c=card('printer',{model:'brother',entity:'sensor.st',ink_black:'sensor.k'},S('idle')); ok('brother alias model',rows(c).length===1&&!!c.sr.querySelector('image'),rows(c).length);
  document.querySelectorAll('appliance-printer-card').forEach((e)=>e.remove());
 }
+// prise connectée : interrupteur dans « entity » + conso faible (#296) = veille, pas éteinte
+{const st=(c)=>c.wrap.className;
+ let c=card('smart-plug',{entity:'switch.s',power:'sensor.p'},[mk('switch.s','on'),mk('sensor.p',0.2,W)]); ok('smart plug: entity switch on + 0,2 W -> standby (not off)',/st-standby/.test(st(c)),st(c));
+ c=card('smart-plug',{entity:'switch.s',power:'sensor.p'},[mk('switch.s','off'),mk('sensor.p',0,W)]); ok('smart plug: entity switch off -> off',/st-off/.test(st(c)),st(c));
+ c=card('smart-plug',{entity:'switch.s',power:'sensor.p'},[mk('switch.s','on'),mk('sensor.p',40,W)]); ok('smart plug: entity switch on + 40 W -> powered',/st-powered/.test(st(c)),st(c));
+ c=card('smart-plug',{switch:'switch.s',power:'sensor.p'},[mk('switch.s','on'),mk('sensor.p',0.2,W)]); ok('smart plug: switch on + 0,2 W -> standby',/st-standby/.test(st(c)),st(c));
+ c=card('smart-plug',{entity:'switch.s'},[mk('switch.s','on')]); ok('smart plug: entity switch on without power -> powered',/st-powered/.test(st(c)),st(c));
+ document.querySelectorAll('appliance-smart-plug-card').forEach((e)=>e.remove());
+}
 // détecteur de fuite : une ou plusieurs sondes, vanne, sirène, gel, batterie
 {const hc=(c)=>c.sr.querySelector('ha-card').className, bd=(c)=>c.sr.getElementById('lkbadge').textContent, al=(c)=>c.sr.getElementById('lkalert').textContent;
  let c=card('leak-detector',{entity_leak:'binary_sensor.l'},[mk('binary_sensor.l','off')]); ok('leak dry',/^dry/.test(hc(c))&&bd(c)==='Sec',hc(c));
