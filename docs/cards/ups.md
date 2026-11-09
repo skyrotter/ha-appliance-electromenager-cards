@@ -20,6 +20,7 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `entity_output_voltage`
 - `entity_energy`
 - `entity_battery_voltage` (V: NUT `battery.voltage`), `entity_nominal_power` (W: NUT `ups.realpower.nominal`), `entity_beeper` (the buzzer state as text, e.g. NUT `ups.beeper.status`: shown as is)
+- `extra_tiles`: a list of `{ entity, name, icon }` shown as extra tiles after the others, in the same style. `name` and `icon` are optional (default: the friendly name and the icon of the entity); a plain entity id is also accepted. Tap opens the entity's more-info; a tile whose entity is missing or `unavailable` is hidden. Example: `extra_tiles: [{ entity: sensor.proxmox_last_backup, name: Last backup, icon: mdi:backup-restore }]`
 - `battery_low` (default 20 %)
 - `load_max` (default 90 %)
 - `mains_min` (default 100 V)
