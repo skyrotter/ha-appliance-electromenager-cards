@@ -325,7 +325,7 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
         ent('entity_temperature', 'sensor'),
         window.applianceTempField,
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_since'), bool('show_co'), bool('show_battery'), bool('show_temperature'), bool('show_level'), bool('show_buttons'), bool('animations')] },
       ].filter(Boolean);
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);

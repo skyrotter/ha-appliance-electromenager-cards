@@ -395,7 +395,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         num('filter_low', 10, 100, '%'),
         num('battery_low', 20, 100, '%'),
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski', cs: 'Čeština' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski', cs: 'Čeština' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_buttons'), bool('show_level'), bool('show_filter'), bool('show_today'), bool('show_drink'), bool('show_clean'), bool('show_power'), bool('show_battery'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);

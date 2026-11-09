@@ -271,7 +271,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         ent('entity_leak', ['binary_sensor', 'input_boolean'], { multiple: true }), ent('entity_valve', ['valve', 'switch', 'input_boolean']),
         { type: 'grid', name: '', schema: [num('flow_threshold', 0, 5, 0.01, 0.01)] },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_flow'), bool('show_today'), bool('show_index'), bool('show_cost'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
