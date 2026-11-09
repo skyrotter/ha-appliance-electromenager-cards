@@ -269,7 +269,10 @@ function buildForm(kind) {
           ] : []),
           ...(kind === "printer" ? [
             { name: "model", selector: { select: { mode: "dropdown", options: [
-              { value: "", label: tr(null, "printer_drawing") }, { value: "samsung_c480", label: "Samsung Xpress C480W (photo)" }] } } },
+              { value: "", label: tr(null, "printer_drawing") }, { value: "samsung_c480", label: "Samsung Xpress C480W (photo)" }, { value: "brother_mfcj5955dw", label: "Brother MFC-J5955DW (photo)" }] } } },
+            // modèle Brother : niveaux d'encre, message d'état et seuil d'encre faible
+            ...["ink_black", "ink_cyan", "ink_magenta", "ink_yellow", "status_message"].map((name) => ({ name, selector: { entity: { domain: "sensor" } } })),
+            { name: "ink_low", selector: { number: { min: 1, max: 100, step: 1, mode: "box", unit_of_measurement: "%" } } },
             { name: "scan_threshold", selector: { number: { min: 1, max: 500, step: 1, mode: "box", unit_of_measurement: "W" } } },
             { name: "standby_threshold", selector: { number: { min: 0, max: 20, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
           ] : []),

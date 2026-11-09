@@ -398,6 +398,16 @@ const SCEN = [
       set('switch.demo_printer', 'on');
       range(ctl, 'Puissance', 'sensor.demo_printer_power', 0, 450, 1, 320, 'W', W);
     } },
+  { kind: 'printer', title: 'Imprimante Brother (encre)',
+    cfg: { model: 'brother_mfcj5955dw', name: 'Brother MFC-J5955DW', entity: 'sensor.demo_br_status', status_message: 'sensor.demo_br_msg', ink_black: 'sensor.demo_br_k', ink_cyan: 'sensor.demo_br_c', ink_magenta: 'sensor.demo_br_m', ink_yellow: 'sensor.demo_br_y' },
+    build(ctl) {
+      select(ctl, 'État', 'sensor.demo_br_status', [['idle', 'Veille'], ['printing', 'Impression'], ['scanning', 'Numérisation'], ['paper jam', 'Bourrage']], 'idle');
+      select(ctl, 'Message', 'sensor.demo_br_msg', [['Ready', 'Prête'], ['Paper tray1 low', 'Papier bac 1 bas']], 'Ready');
+      range(ctl, 'Noir', 'sensor.demo_br_k', 0, 100, 1, 72, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Cyan', 'sensor.demo_br_c', 0, 100, 1, 55, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Magenta', 'sensor.demo_br_m', 0, 100, 1, 38, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Jaune', 'sensor.demo_br_y', 0, 100, 1, 64, '%', { unit_of_measurement: '%' });
+    } },
   { kind: 'piano', title: 'Piano numérique',
     cfg: { switch: 'switch.piano', power: 'sensor.piano_power' },
     build(ctl) {

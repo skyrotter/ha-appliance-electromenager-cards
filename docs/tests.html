@@ -656,6 +656,28 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c=card('plant-monitor',{...E,compact:true,transparent:true},S(45)); ok('plant compact + transparent',/compact/.test(hc(c))&&c.sr.host.style.getPropertyValue('--ha-card-background')==='transparent',hc(c));
  document.querySelectorAll('appliance-plant-monitor-card').forEach((e)=>e.remove());
 }
+// imprimante Brother MFC-J5955DW : état texte, niveaux d'encre (barres), message, seuil d'encre faible (modèle Brother seulement)
+{const BR={model:'brother_mfcj5955dw',entity:'sensor.st',status_message:'sensor.msg',ink_black:'sensor.k',ink_cyan:'sensor.c',ink_magenta:'sensor.m',ink_yellow:'sensor.y'};
+ const S=(st,msg='Ready',k=72,cy=55,m=38,y=64)=>[mk('sensor.st',st),mk('sensor.msg',msg),mk('sensor.k',k,{unit_of_measurement:'%'}),mk('sensor.c',cy),mk('sensor.m',m),mk('sensor.y',y)];
+ const cl=(c)=>c.wrap.className, rows=(c)=>[...c.sr.querySelectorAll('.ink-row')], al=(c)=>{const e=c.sr.querySelector('.alert-line');return e?e.textContent:'';};
+ let c=card('printer',BR,S('idle')); ok('brother idle -> standby',/st-standby/.test(cl(c)),cl(c));
+ ok('brother 4 ink bars k c m y',rows(c).length===4&&rows(c).map((r)=>r.className.split(' ')[1]).join('')==='kcmy',rows(c).map((r)=>r.className).join('|'));
+ ok('brother ink widths and values',/width:72%/.test(rows(c)[0].innerHTML)&&/55\s*%/.test(rows(c)[1].textContent)&&/Noir/.test(rows(c)[0].textContent),rows(c)[0].textContent+rows(c)[1].textContent);
+ ok('brother no alert when ink ok and message Ready',!/alert/.test(cl(c))&&al(c)==='',cl(c)+al(c));
+ c=card('printer',BR,S('printing')); ok('brother printing',/st-printing/.test(cl(c)),cl(c));
+ c=card('printer',BR,S('Scanning')); ok('brother scanning',/st-scanning/.test(cl(c)),cl(c));
+ c=card('printer',BR,S('Deep Sleep')); ok('brother deep sleep -> off',/st-off/.test(cl(c)),cl(c));
+ c=card('printer',BR,S('Sleep')); ok('brother sleep -> standby',/st-standby/.test(cl(c)),cl(c));
+ c=card('printer',BR,S('paper jam')); ok('brother error -> failed',/st-failed/.test(cl(c)),cl(c));
+ c=card('printer',BR,S('idle','Paper tray1 low')); ok('brother message -> alert line',/alert/.test(cl(c))&&/Paper tray1 low/.test(al(c)),cl(c)+al(c));
+ c=card('printer',BR,S('idle','Ready',72,8)); ok('brother ink < 15 % -> low bar + alert',rows(c)[1].classList.contains('low')&&!rows(c)[0].classList.contains('low')&&/Encre faible/.test(al(c)),rows(c)[1].className+al(c));
+ c=card('printer',{...BR,ink_low:5},S('idle','Ready',72,8)); ok('brother ink_low option',!rows(c)[1].classList.contains('low'),rows(c)[1].className);
+ c=card('printer',{...BR,ink_magenta:'sensor.absent'},S('idle')); ok('brother missing ink entity -> dash',/—/.test(rows(c)[2].textContent),rows(c)[2].textContent);
+ c=card('printer',{entity:'sensor.st',ink_black:'sensor.k'},S('idle')); ok('other models: no ink bars',rows(c).length===0);
+ c=card('printer',{model:'samsung_c480',entity:'sensor.st',ink_black:'sensor.k'},S('idle')); ok('samsung: no ink bars',rows(c).length===0);
+ c=card('printer',{model:'brother',entity:'sensor.st',ink_black:'sensor.k'},S('idle')); ok('brother alias model',rows(c).length===1&&!!c.sr.querySelector('image'),rows(c).length);
+ document.querySelectorAll('appliance-printer-card').forEach((e)=>e.remove());
+}
 // détecteur de fuite : une ou plusieurs sondes, vanne, sirène, gel, batterie
 {const hc=(c)=>c.sr.querySelector('ha-card').className, bd=(c)=>c.sr.getElementById('lkbadge').textContent, al=(c)=>c.sr.getElementById('lkalert').textContent;
  let c=card('leak-detector',{entity_leak:'binary_sensor.l'},[mk('binary_sensor.l','off')]); ok('leak dry',/^dry/.test(hc(c))&&bd(c)==='Sec',hc(c));

@@ -88,6 +88,19 @@ hold_action:
 
 **Imprimante / scanner** (`custom:appliance-printer-card`) : imprimante laser ou multifonction (ex. Samsung Xpress C480W) sur une prise connectée, sans intégration imprimante : l'état vient de la `power` de la prise. Au-dessus de `threshold` (100 W) : « Impression » (une feuille sort, l'écran s'allume, le voyant bleu clignote) ; au-dessus de `scan_threshold` (45 W) : « Numérisation » (un trait de lumière balaie le couvercle) ; au-dessus de `standby_threshold` (1 W) : « Veille » ; sinon éteinte. Sans capteur de puissance, `switch` allumé = veille. Une `entity` dont l'état contient `print`, `scan` ou `error` (capteur IPP) prime sur la puissance. `model` : vide = dessin SVG, `samsung_c480` = photo de la Samsung Xpress C480W.
 
+**Imprimante Brother MFC-J5955DW** : `model: brother_mfcj5955dw` affiche la photo détourée de la multifonction jet d'encre A3 avec les mêmes calques animés (écran, voyant vert, faisceau du scanner, feuille dans le bac) et, **pour ce modèle seulement**, quatre barres d'encre colorées. `entity` = capteur d'état de l'imprimante (`idle`, `sleep`, `printing`…, sans prise connectée), `ink_black`, `ink_cyan`, `ink_magenta`, `ink_yellow` = niveaux restants en %, `ink_low` = seuil d'encre faible (15 % par défaut : barre rouge qui clignote), `status_message` = message de l'imprimante affiché en alerte (ex. « Paper tray1 low »).
+
+```yaml
+type: custom:appliance-printer-card
+model: brother_mfcj5955dw
+entity: sensor.office_mfc_j5955dw_printer_status
+status_message: sensor.mfc_j5955dw_status
+ink_black: sensor.mfc_j5955dw_black_ink_remaining
+ink_cyan: sensor.mfc_j5955dw_cyan_ink_remaining
+ink_magenta: sensor.mfc_j5955dw_magenta_ink_remaining
+ink_yellow: sensor.mfc_j5955dw_yellow_ink_remaining
+```
+
 **Chargeur de téléphone** (`custom:appliance-phone-charger-card`) : smartphone sur un socle à induction. Au-dessus de 2 W : « En charge », l'anneau pulse en bleu, l'écran affiche l'heure et la batterie qui se remplit (`battery_level`). Entre 0,3 W et le seuil, ou à 100 % : « Chargée », anneau vert.
 
 **Piano numérique** (`custom:appliance-piano-card`) : au-dessus de 3 W l'écran s'allume, les touches jouent et des notes s'envolent ; veille entre 0,3 W et le seuil.
