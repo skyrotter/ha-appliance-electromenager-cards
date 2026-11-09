@@ -351,6 +351,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         const small = document.createElement('small'); small.textContent = unit ?? '';
         el.querySelector('.v').replaceChildren(String(val ?? ''), small);
       });
+      window.applianceExtraTiles(this, r.querySelector('.tiles'), c.extra_tiles, this._hass, c);
     }
   }
   customElements.define(TAG, ApplianceMiniPcCard);
@@ -383,6 +384,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'model', selector: { select: { mode: 'dropdown', options: Object.keys(MODELS).map((value) => ({ value, label: tr[`model_${value}`] || T.en[`model_${value}`] || value })) } } },
         ent('entity'), ent('entity_cpu', 'sensor'), ent('entity_cpu_temp', 'sensor'), ent('entity_ram', 'sensor'), ent('entity_disk', 'sensor'),
         ent('entity_net_down', 'sensor'), ent('entity_net_up', 'sensor'), ent('entity_uptime', 'sensor'), ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'),
+        { name: 'extra_tiles', selector: { object: {} } },
         { type: 'grid', name: '', schema: [num('cpu_busy', 10, 100, 1, 70, '%'), num('temp_max', 40, 110, 1, 85, '°'), num('ram_max', 10, 100, 1, 90, '%'), num('disk_max', 10, 100, 1, 90, '%')] },
         window.applianceTempField,
         ...window.applianceActionFields,

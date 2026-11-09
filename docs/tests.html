@@ -1439,6 +1439,11 @@ ok('card size / grid',typeof c.el.getCardSize()==='number'&&c.el.getGridOptions(
  ok('ups dedicated tiles hidden without entity',['battery_voltage','nominal_power','beeper'].every(k=>d.sr.querySelector(`.tile[data-k=${k}]`).classList.contains('hide')));
  const o=card('ups',{entity_beeper:'sensor.bz',show_beeper:false},[mk('sensor.bz','enabled')]);
  ok('ups show_beeper:false hides the buzzer tile',o.sr.querySelector('.tile[data-k=beeper]').classList.contains('hide'));}
+// ups: extra_tiles (free-form entity tiles)
+{const c=card('ups',{entity_charge:'sensor.c',extra_tiles:[{entity:'sensor.x',name:'Cust',icon:'mdi:flash'},{entity:'sensor.gone',name:'Gone'},'sensor.y']},[mk('sensor.c',80,{unit_of_measurement:'%'}),mk('sensor.x',12.5,{unit_of_measurement:'V'}),mk('sensor.gone','unavailable'),mk('sensor.y','ok')]);
+ const ex=c.sr.querySelectorAll('.tile.extra'); let got=null; c.el.addEventListener('hass-more-info',e=>got=e.detail.entityId);
+ ok('ups extra_tiles: shown, unavailable one hidden',ex.length===2&&/Cust/.test(ex[0].textContent)&&/12[.,]5/.test(ex[0].textContent)&&/ok/i.test(ex[1].textContent),[...ex].map(e=>e.textContent).join(' | '));
+ ex[0].click(); ok('ups extra_tiles: click opens more-info',got==='sensor.x',got);}
 // underfloor heating: states, alerts, climate controls
 {const cls=(c)=>c.sr.querySelector('ha-card').className.trim().split(' ')[0], alert=(c)=>c.sr.getElementById('ufalert').textContent;
  const sc=[['hvac_action heating',{entity:'climate.f'},[mk('climate.f','heat',{hvac_action:'heating',current_temperature:19,temperature:21})],'heating'],
@@ -1831,6 +1836,11 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
 c=card('mini-pc',{entity_energy:'sensor.e'},[mk('sensor.e',0.22,{unit_of_measurement:'kWh'})]);
 ok('mini-pc energy tile (kWh today)',!c.sr.querySelector('.tile[data-k=energy]').classList.contains('hide')&&/0[.,]22/.test(c.sr.querySelector('.tile[data-k=energy]').textContent),c.sr.querySelector('.tile[data-k=energy]').textContent);
 ok('mini-pc energy tile hidden without entity',card('mini-pc',{entity_cpu:'sensor.c'},[mk('sensor.c',30,P)]).sr.querySelector('.tile[data-k=energy]').classList.contains('hide'));
+// mini-pc: extra_tiles (free-form entity tiles)
+{const c=card('mini-pc',{entity_cpu:'sensor.c',extra_tiles:[{entity:'sensor.x',name:'Cust',icon:'mdi:flash'},{entity:'sensor.gone',name:'Gone'},'sensor.y']},[mk('sensor.c',30,P),mk('sensor.x',12.5,{unit_of_measurement:'V'}),mk('sensor.gone','unavailable'),mk('sensor.y','ok')]);
+ const ex=c.sr.querySelectorAll('.tile.extra'); let got=null; c.el.addEventListener('hass-more-info',e=>got=e.detail.entityId);
+ ok('mini-pc extra_tiles: shown, unavailable one hidden',ex.length===2&&/Cust/.test(ex[0].textContent)&&/12[.,]5/.test(ex[0].textContent)&&/ok/i.test(ex[1].textContent),[...ex].map(e=>e.textContent).join(' | '));
+ ex[0].click(); ok('mini-pc extra_tiles: click opens more-info',got==='sensor.x',got);}
  c=card('nas',{entity_cpu:'sensor.c',entity_volume_used:'sensor.v',entity_drive_2:'sensor.d2'},[mk('sensor.c',10,P),mk('sensor.v',50,P),mk('sensor.d2','failing')]);
  ok('nas drive 2 failing -> warning + bay',cls(c)==='warning'&&c.sr.querySelector('.bay[data-i="1"]').classList.contains('bad')&&/Disque 2/.test(c.sr.getElementById('nsalert').textContent),cls(c));
   c=card('nas',{model:'terramaster_f4_423',entity_cpu:'sensor.c',entity_volume_used:['sensor.v1','sensor.v2'],entity_drive_1:'binary_sensor.h1',entity_drive_2:'binary_sensor.h2',entity_nvme_1:'binary_sensor.n1'},[mk('sensor.c',10,P),mk('sensor.v1',40,P),mk('sensor.v2',90,P),mk('binary_sensor.h1','off'),mk('binary_sensor.h2','on'),mk('binary_sensor.n1','on')]);

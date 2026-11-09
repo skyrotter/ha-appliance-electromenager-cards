@@ -12225,6 +12225,33 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
     if (changed && hass) el._applianceSeen = { hass, set, cfg, at: now };
     return changed;
   };
+  // extra_tiles : liste { entity, name, icon } rendue comme tuiles supplémentaires à la suite des autres (même style, un clic
+  // ouvre le more-info de l'entité, masquée si l'entité est absente ou indisponible). `card` fournit _more(id).
+  window.applianceExtraTiles = (card, container, list, hass, cfg) => {
+    if (!container) return;
+    container.querySelectorAll('.tile.extra').forEach((el) => el.remove());
+    if (!Array.isArray(list) || !hass) return;
+    const loc = window.applianceLocale(cfg, hass);
+    list.forEach((it) => {
+      const item = typeof it === 'string' ? { entity: it } : it;
+      const id = item && item.entity, st = id && hass.states[id];
+      if (!st || /^(unavailable|unknown)$/i.test(String(st.state))) return;
+      const a = st.attributes || {}, n = Number(st.state), unit = a.unit_of_measurement || '';
+      const el = document.createElement('div'); el.className = 'tile extra'; el.dataset.eid = id;
+      const l = document.createElement('div'); l.className = 'l';
+      const ic = item.icon || a.icon;
+      if (ic) { const i = document.createElement('ha-icon'); i.setAttribute('icon', ic); l.appendChild(i); }
+      const lbl = document.createElement('span'); lbl.className = 'lbl'; lbl.textContent = item.name || a.friendly_name || id; l.appendChild(lbl);
+      const v = document.createElement('div'); v.className = 'v';
+      if (unit && st.state !== '' && Number.isFinite(n)) {
+        const small = document.createElement('small'); small.textContent = unit;
+        v.replaceChildren(n.toLocaleString(loc, { maximumFractionDigits: 2 }), small);
+      } else v.textContent = hass.formatEntityState ? hass.formatEntityState(st) : String(st.state);
+      el.append(l, v);
+      el.addEventListener('click', () => card._more(id));
+      container.appendChild(el);
+    });
+  };
   window.applianceWatts = (s) => {
     const v = window.applianceNum(s); if (isNaN(v)) return NaN;
     const u = String((s.attributes || {}).unit_of_measurement || '').trim();
@@ -12241,6 +12268,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
   if (window.applianceEditorLabel) return;
   const L = {
     "en": {
+      "extra_tiles": "Extra tiles (list: entity, name, icon)",
       "animations": "Animations",
       "battery_low": "Low battery (%)",
       "buffer_tank": "Buffer tank",
@@ -13505,6 +13533,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "fabric_color": "Stofffarbe"
     },
     "es": {
+      "extra_tiles": "Tiles extra (lista: entity, name, icon)",
       "animations": "Animaciones",
       "battery_low": "Batería baja (%)",
       "buffer_tank": "Depósito de inercia",
@@ -27039,6 +27068,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         const small = document.createElement('small'); small.textContent = unit ?? '';
         el.querySelector('.v').replaceChildren(String(val ?? ''), small);
       });
+      window.applianceExtraTiles(this, r.querySelector('.tiles'), c.extra_tiles, this._hass, c);
     }
   }
   customElements.define(TAG, ApplianceUpsCard);
@@ -27069,6 +27099,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         ent('entity'), ent('entity_charge', 'sensor'), ent('entity_runtime', 'sensor'), ent('entity_load', 'sensor'), ent('entity_power', 'sensor'),
         ent('entity_input_voltage', 'sensor'), ent('entity_output_voltage', 'sensor'), ent('entity_energy', 'sensor'),
         ent('entity_battery_voltage', 'sensor'), ent('entity_nominal_power', 'sensor'), ent('entity_beeper'),
+        { name: 'extra_tiles', selector: { object: {} } },
         { type: 'grid', name: '', schema: [num('battery_low', 0, 100, 1, 20, '%'), num('load_max', 10, 100, 1, 90, '%'), num('mains_min', 0, 250, 1, 100, 'V')] },
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
@@ -39774,6 +39805,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         const small = document.createElement('small'); small.textContent = unit ?? '';
         el.querySelector('.v').replaceChildren(String(val ?? ''), small);
       });
+      window.applianceExtraTiles(this, r.querySelector('.tiles'), c.extra_tiles, this._hass, c);
     }
   }
   customElements.define(TAG, ApplianceMiniPcCard);
@@ -39806,6 +39838,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'model', selector: { select: { mode: 'dropdown', options: Object.keys(MODELS).map((value) => ({ value, label: tr[`model_${value}`] || T.en[`model_${value}`] || value })) } } },
         ent('entity'), ent('entity_cpu', 'sensor'), ent('entity_cpu_temp', 'sensor'), ent('entity_ram', 'sensor'), ent('entity_disk', 'sensor'),
         ent('entity_net_down', 'sensor'), ent('entity_net_up', 'sensor'), ent('entity_uptime', 'sensor'), ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'),
+        { name: 'extra_tiles', selector: { object: {} } },
         { type: 'grid', name: '', schema: [num('cpu_busy', 10, 100, 1, 70, '%'), num('temp_max', 40, 110, 1, 85, '°'), num('ram_max', 10, 100, 1, 90, '%'), num('disk_max', 10, 100, 1, 90, '%')] },
         window.applianceTempField,
         ...window.applianceActionFields,

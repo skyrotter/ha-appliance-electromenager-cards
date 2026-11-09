@@ -757,6 +757,7 @@
     "water_hot": "Water too hot"
   },
   "editor": {
+    "extra_tiles": "Extra tiles (list: entity, name, icon)",
     "animations": "Animations",
     "battery_low": "Low battery (%)",
     "buffer_tank": "Buffer tank",

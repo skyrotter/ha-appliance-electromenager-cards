@@ -20,6 +20,7 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `entity_uptime` (a "Last boot" timestamp or a duration in s, min, h or d)
 - `entity_power` (W, smart plug)
 - `entity_energy` (kWh: energy used, e.g. today's counter of the smart plug; shown in the sensor's unit)
+- `extra_tiles`: a list of `{ entity, name, icon }` shown as extra tiles after the others, in the same style. `name` and `icon` are optional (default: the friendly name and the icon of the entity); a plain entity id is also accepted. Tap opens the entity's more-info; a tile whose entity is missing or `unavailable` is hidden. Example: `extra_tiles: [{ entity: sensor.proxmox_last_backup, name: Last backup, icon: mdi:backup-restore }]`
 - `cpu_busy` (default 70 %), `temp_max` (default 85 °), `ram_max` (default 90 %), `disk_max` (default 90 %), `temperature_unit`
 - `animations` (default true)
 - `compact: true` (small fixed slots: smaller title, tiles and buttons, the illustration takes the remaining height), `transparent: true` (no card background), `illustration_size` (%)

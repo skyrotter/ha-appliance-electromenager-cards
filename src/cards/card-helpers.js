@@ -64,6 +64,33 @@
     if (changed && hass) el._applianceSeen = { hass, set, cfg, at: now };
     return changed;
   };
+  // extra_tiles : liste { entity, name, icon } rendue comme tuiles supplémentaires à la suite des autres (même style, un clic
+  // ouvre le more-info de l'entité, masquée si l'entité est absente ou indisponible). `card` fournit _more(id).
+  window.applianceExtraTiles = (card, container, list, hass, cfg) => {
+    if (!container) return;
+    container.querySelectorAll('.tile.extra').forEach((el) => el.remove());
+    if (!Array.isArray(list) || !hass) return;
+    const loc = window.applianceLocale(cfg, hass);
+    list.forEach((it) => {
+      const item = typeof it === 'string' ? { entity: it } : it;
+      const id = item && item.entity, st = id && hass.states[id];
+      if (!st || /^(unavailable|unknown)$/i.test(String(st.state))) return;
+      const a = st.attributes || {}, n = Number(st.state), unit = a.unit_of_measurement || '';
+      const el = document.createElement('div'); el.className = 'tile extra'; el.dataset.eid = id;
+      const l = document.createElement('div'); l.className = 'l';
+      const ic = item.icon || a.icon;
+      if (ic) { const i = document.createElement('ha-icon'); i.setAttribute('icon', ic); l.appendChild(i); }
+      const lbl = document.createElement('span'); lbl.className = 'lbl'; lbl.textContent = item.name || a.friendly_name || id; l.appendChild(lbl);
+      const v = document.createElement('div'); v.className = 'v';
+      if (unit && st.state !== '' && Number.isFinite(n)) {
+        const small = document.createElement('small'); small.textContent = unit;
+        v.replaceChildren(n.toLocaleString(loc, { maximumFractionDigits: 2 }), small);
+      } else v.textContent = hass.formatEntityState ? hass.formatEntityState(st) : String(st.state);
+      el.append(l, v);
+      el.addEventListener('click', () => card._more(id));
+      container.appendChild(el);
+    });
+  };
   window.applianceWatts = (s) => {
     const v = window.applianceNum(s); if (isNaN(v)) return NaN;
     const u = String((s.attributes || {}).unit_of_measurement || '').trim();

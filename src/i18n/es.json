@@ -757,6 +757,7 @@
     "water_hot": "Agua demasiado caliente"
   },
   "editor": {
+    "extra_tiles": "Tiles extra (lista: entity, name, icon)",
     "animations": "Animaciones",
     "battery_low": "Batería baja (%)",
     "buffer_tank": "Depósito de inercia",
