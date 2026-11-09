@@ -122,6 +122,13 @@ class ApplianceCardBase extends HTMLElement {
           <div class="bar" id="bar"><div class="bar-fill" id="barfill"></div></div>
         </div>
       </ha-card>`;
+    // illustration_only: only the animated drawing, without name, status, tiles or buttons
+    // (e.g. above another card that already shows them)
+    if (this._config.illustration_only) {
+      const st = document.createElement("style");
+      st.textContent = ".right-col,.modes,.bar{display:none!important}.top{justify-content:center!important}.illus{margin:0 auto!important}";
+      this.shadowRoot.appendChild(st);
+    }
     this.shadowRoot.querySelector("ha-card").addEventListener("click", (ev) => {
       const path = ev.composedPath();
       if (path.some((n) => n.classList && (n.classList.contains("toggle") || n.classList.contains("mode-btn")))) return;
