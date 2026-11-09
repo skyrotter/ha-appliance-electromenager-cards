@@ -189,6 +189,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     ['up', 'mdi:upload-network', 'show_up', 'entity_net_up'],
     ['uptime', 'mdi:timer-outline', 'show_uptime', 'entity_uptime'],
     ['power', 'mdi:flash', 'show_power', 'entity_power'],
+    ['energy', 'mdi:lightning-bolt-circle', 'show_energy', 'entity_energy'],
   ];
 
   // débit lisible : garde la famille de l'unité (octets ou bits) et choisit k / M / G
@@ -231,7 +232,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { show_status: true, show_cpu: true, show_temp: true, show_ram: true, show_disk: true, show_network: true, show_uptime: true, show_power: true,
+      this._c = { show_status: true, show_cpu: true, show_temp: true, show_ram: true, show_disk: true, show_network: true, show_uptime: true, show_power: true, show_energy: true,
         cpu_busy: 70, temp_max: 85, ram_max: 90, disk_max: 90, off_threshold: 3, ...c };
       this._built = false;
       if (this._hass) this._render();
@@ -339,7 +340,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const V = {
         cpu: [this._fmt(cpu, 0), '%'], temp: [this._fmt(tp.v, 0), tp.unit], ram: [this._fmt(ram, 0), '%'], disk: [this._fmt(dsk, 0), '%'],
         down: fmtNet(c.entity_net_down), up: fmtNet(c.entity_net_up), uptime: [this._dur(this._uptimeSec(c.entity_uptime)), ''],
-        power: [this._fmt(pw, 0), 'W'],
+        power: [this._fmt(pw, 0), 'W'], energy: [this._fmt(this._num(c.entity_energy), 2), this._unit(c.entity_energy, 'kWh')],
       };
       const bad = { temp: st === 'hot', ram: alerts.includes('ram_full'), disk: alerts.includes('disk_full') };
       TILES.forEach(([k, , opt, ent]) => {
@@ -381,13 +382,13 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'transparent', selector: { boolean: {} } },
         { name: 'model', selector: { select: { mode: 'dropdown', options: Object.keys(MODELS).map((value) => ({ value, label: tr[`model_${value}`] || T.en[`model_${value}`] || value })) } } },
         ent('entity'), ent('entity_cpu', 'sensor'), ent('entity_cpu_temp', 'sensor'), ent('entity_ram', 'sensor'), ent('entity_disk', 'sensor'),
-        ent('entity_net_down', 'sensor'), ent('entity_net_up', 'sensor'), ent('entity_uptime', 'sensor'), ent('entity_power', 'sensor'),
+        ent('entity_net_down', 'sensor'), ent('entity_net_up', 'sensor'), ent('entity_uptime', 'sensor'), ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'),
         { type: 'grid', name: '', schema: [num('cpu_busy', 10, 100, 1, 70, '%'), num('temp_max', 40, 110, 1, 85, '°'), num('ram_max', 10, 100, 1, 90, '%'), num('disk_max', 10, 100, 1, 90, '%')] },
         window.applianceTempField,
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
-          bool('show_status'), bool('compact', false), bool('show_cpu'), bool('show_temp'), bool('show_ram'), bool('show_disk'), bool('show_down'), bool('show_up'), bool('show_uptime'), bool('show_power'), bool('animations'),
+          bool('show_status'), bool('compact', false), bool('show_cpu'), bool('show_temp'), bool('show_ram'), bool('show_disk'), bool('show_down'), bool('show_up'), bool('show_uptime'), bool('show_power'), bool('show_energy'), bool('animations'),
         ] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'mini_pc_model' : s.name, this._hass);

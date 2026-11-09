@@ -165,6 +165,9 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
     ['input', 'mdi:power-plug', 'show_voltage'],
     ['output', 'mdi:power-socket-eu', 'show_voltage'],
     ['energy', 'mdi:lightning-bolt-circle', 'show_energy'],
+    ['battery_voltage', 'mdi:current-dc', 'show_battery_voltage'],
+    ['nominal_power', 'mdi:gauge-full', 'show_nominal_power'],
+    ['beeper', 'mdi:volume-high', 'show_beeper'],
   ];
 
   class ApplianceUpsCard extends HTMLElement {
@@ -186,7 +189,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { show_status: true, show_charge: true, show_runtime: true, show_load: true, show_power: true, show_voltage: true, show_energy: true,
+      this._c = { show_status: true, show_charge: true, show_runtime: true, show_load: true, show_power: true, show_voltage: true, show_energy: true, show_battery_voltage: true, show_nominal_power: true, show_beeper: true,
         battery_low: 20, load_max: 90, mains_min: 100, ...c };
       this._built = false;
       if (this._hass) this._render();
@@ -225,7 +228,8 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
         const cc = this._c, k = el.dataset.k;
         this._more({ charge: cc.entity_charge, runtime: cc.entity_runtime, load: cc.entity_load, power: cc.entity_power,
-          input: cc.entity_input_voltage, output: cc.entity_output_voltage, energy: cc.entity_energy }[k]);
+          input: cc.entity_input_voltage, output: cc.entity_output_voltage, energy: cc.entity_energy,
+          battery_voltage: cc.entity_battery_voltage, nominal_power: cc.entity_nominal_power, beeper: cc.entity_beeper }[k]);
       }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
@@ -276,6 +280,9 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       const al = r.getElementById('upalert'); al.textContent = alerts.map((a) => this._t(a)).join(' · '); al.classList.toggle('on', alerts.length > 0);
 
       const pw = this._watts(c.entity_power), vout = this._num(c.entity_output_voltage), energy = this._num(c.entity_energy);
+      const vbat = this._num(c.entity_battery_voltage), pnom = this._watts(c.entity_nominal_power);
+      const bst = c.entity_beeper && this._hass.states[c.entity_beeper];
+      const beeper = !bst || /^(unavailable|unknown)$/.test(String(bst.state)) ? '--' : (this._hass.formatEntityState ? this._hass.formatEntityState(bst) : String(bst.state));
       const V = {
         charge: [c.entity_charge, this._fmt(charge, 0), '%'],
         runtime: [c.entity_runtime, fmtRt(rt), ''],
@@ -284,6 +291,9 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         input: [c.entity_input_voltage, this._fmt(vin, 0), 'V'],
         output: [c.entity_output_voltage, this._fmt(vout, 0), 'V'],
         energy: [c.entity_energy, this._fmt(energy, 2), this._unit(c.entity_energy, 'kWh')],
+        battery_voltage: [c.entity_battery_voltage, this._fmt(vbat, 1), 'V'],
+        nominal_power: [c.entity_nominal_power, isNaN(pnom) ? '--' : this._fmt(pnom, 0), 'W'],
+        beeper: [c.entity_beeper, beeper, ''],
       };
       const bad = { charge: alerts.includes('low_battery'), load: alerts.includes('overload'), input: st === 'on_battery' || st === 'low_battery' };
       TILES.forEach(([k, , opt]) => {
@@ -323,11 +333,12 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         { name: 'transparent', selector: { boolean: {} } },
         ent('entity'), ent('entity_charge', 'sensor'), ent('entity_runtime', 'sensor'), ent('entity_load', 'sensor'), ent('entity_power', 'sensor'),
         ent('entity_input_voltage', 'sensor'), ent('entity_output_voltage', 'sensor'), ent('entity_energy', 'sensor'),
+        ent('entity_battery_voltage', 'sensor'), ent('entity_nominal_power', 'sensor'), ent('entity_beeper'),
         { type: 'grid', name: '', schema: [num('battery_low', 0, 100, 1, 20, '%'), num('load_max', 10, 100, 1, 90, '%'), num('mains_min', 0, 250, 1, 100, 'V')] },
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
-          bool('show_status'), bool('show_charge'), bool('show_runtime'), bool('show_load'), bool('show_power'), bool('show_voltage'), bool('show_energy'), bool('animations'),
+          bool('show_status'), bool('show_charge'), bool('show_runtime'), bool('show_load'), bool('show_power'), bool('show_voltage'), bool('show_energy'), bool('show_battery_voltage'), bool('show_nominal_power'), bool('show_beeper'), bool('animations'),
         ] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
