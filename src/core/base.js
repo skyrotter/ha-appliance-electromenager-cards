@@ -364,8 +364,8 @@ class ApplianceCardBase extends HTMLElement {
       else if (BAD.includes(s)) base = null;
       else if (DONE_STATES.includes(s)) base = "finished";
       else if (OFF_STATES.includes(s)) {
-        base = ["standby", "veille"].includes(s) ? "standby"
-          : ["idle", "inactive", "inactif", "ready", "stopped", "stop", "pause", "paused"].includes(s) ? "idle"
+        base = ["standby", "veille", "espera", "en espera", "reposo"].includes(s) ? "standby"
+          : ["idle", "inactive", "inactif", "ready", "stopped", "stop", "pause", "paused", "pausar", "parado", "pausa por retirada de cesta", "precalentamiento en pausa"].includes(s) ? "idle"
           : ["input_boolean", "binary_sensor"].includes(dom) ? "idle" : "off";
       }
       // a plug/switch being "on" only means powered: let the power sensor decide
