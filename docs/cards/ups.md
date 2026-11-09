@@ -10,6 +10,7 @@ States: on mains, charging, on battery, low battery, off and unavailable. The st
 
 Every value tile can be hidden with its `show_…` option, and `language: fr|en|de|it|nb|nl|pl|ro|ru|sr|sr-Latn` forces the language.
 
+- `model` (optional, YAML only): the default drawing (socket → tower UPS → box and NAS), or a photo of the UPS instead of the drawn tower: `cyberpower_vp1000` (CyberPower VP1000ELCD: the charge is shown over its screen and the power button is the status light) or `apc_bx950` (APC Back-UPS 950: the "On Line" light follows the state, no screen)
 - `entity` (NUT status sensor or binary_sensor)
 - `entity_charge` (battery %)
 - `entity_runtime` (s, min or h)

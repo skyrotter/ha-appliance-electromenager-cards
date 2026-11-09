@@ -1683,6 +1683,8 @@
     "down": "Download",
     "up": "Upload",
     "uptime": "Uptime",
+    "model_minisforum_x1": "Minisforum X1 (mini PC)",
+    "model_mac_mini": "Mac mini",
     "model_bmax_b9": "BMAX B9 Max (mini PC)",
     "model_home_assistant_green": "Home Assistant Green",
     "power": "Power",
