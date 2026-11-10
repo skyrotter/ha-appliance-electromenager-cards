@@ -1226,7 +1226,19 @@
     "entity_lux": "Capteur de luminosité (lux)",
     "wind_max": "Seuil de vent fort (km/h)",
     "show_lux": "Afficher la luminosité",
-    "fabric_color": "Couleur de la toile"
+    "fabric_color": "Couleur de la toile",
+    "internet_box_model": "Modèle de box",
+    "illustration": "Illustration (photo ou SVG)",
+    "entity_download": "Débit descendant",
+    "entity_upload": "Débit montant",
+    "entity_devices": "Appareils connectés",
+    "entity_wifi": "Interrupteur Wi-Fi",
+    "entity_reboot": "Bouton de redémarrage",
+    "max_speed": "Débit de référence (Mb/s)",
+    "show_download": "Tuile descendant",
+    "show_upload": "Tuile montant",
+    "show_devices": "Tuile appareils",
+    "show_wifi": "Tuile Wi-Fi"
   },
   "light": {
     "light_bulb": "Ampoule",
@@ -1986,5 +1998,19 @@
     "regen": "Prochaine régén.",
     "power": "Puissance",
     "days": "j"
+  },
+  "internet_box": {
+    "name": "Box internet",
+    "online": "En ligne",
+    "offline": "Hors ligne",
+    "unavailable": "Indisponible",
+    "download": "Descendant",
+    "upload": "Montant",
+    "devices": "Appareils",
+    "wifi": "Wi-Fi",
+    "on": "Activé",
+    "off": "Coupé",
+    "reboot": "Redémarrer",
+    "reboot_confirm": "Redémarrer la box ? La connexion internet sera coupée quelques minutes."
   }
 }

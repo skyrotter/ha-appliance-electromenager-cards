@@ -1235,7 +1235,19 @@
     "entity_lux": "Light level sensor (lux)",
     "wind_max": "Strong wind threshold (km/h)",
     "show_lux": "Show light level",
-    "fabric_color": "Fabric colour"
+    "fabric_color": "Fabric colour",
+    "internet_box_model": "Box model",
+    "illustration": "Illustration (photo or SVG)",
+    "entity_download": "Download speed",
+    "entity_upload": "Upload speed",
+    "entity_devices": "Connected devices",
+    "entity_wifi": "Wi-Fi switch",
+    "entity_reboot": "Restart button",
+    "max_speed": "Reference speed (Mb/s)",
+    "show_download": "Download tile",
+    "show_upload": "Upload tile",
+    "show_devices": "Devices tile",
+    "show_wifi": "Wi-Fi tile"
   },
   "light": {
     "light_bulb": "Bulb",
@@ -1998,5 +2010,19 @@
     "regen": "Next regen.",
     "power": "Power",
     "days": "d"
+  },
+  "internet_box": {
+    "name": "Internet box",
+    "online": "Online",
+    "offline": "Offline",
+    "unavailable": "Unavailable",
+    "download": "Download",
+    "upload": "Upload",
+    "devices": "Devices",
+    "wifi": "Wi-Fi",
+    "on": "On",
+    "off": "Off",
+    "reboot": "Restart",
+    "reboot_confirm": "Restart the box? The internet connection will be cut for a few minutes."
   }
 }
