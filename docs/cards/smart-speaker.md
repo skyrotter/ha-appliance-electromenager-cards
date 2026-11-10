@@ -6,7 +6,7 @@
 
 | Brand | `model` |
 |---|---|
-| Amazon Echo | `echo_pop`, `echo_dot` (5th gen), `echo_dot_3` (3rd gen, fabric), `echo_plus_2` (Echo Plus, 2nd gen), `echo_show_5`, `echo_show_8`, `echo_show_10`, `echo_show_11`, `echo_show_15`, `echo_spot` |
+| Amazon Echo | `echo_pop`, `echo_dot` (5th gen), `echo_dot_3` (3rd gen, fabric), `echo_plus_2` (Echo Plus, 2nd gen), `echo_flex` (Echo Flex, drawn), `echo_show_5`, `echo_show_8`, `echo_show_10`, `echo_show_11`, `echo_show_15`, `echo_spot` |
 | Google Nest | `nest_mini`, `nest_audio`, `nest_hub` (7"), `nest_hub_2` (2nd gen), `nest_hub_max` |
 | Sonos | `sonos_one`, `sonos_one_sl`, `sonos_era_100`, `sonos_era_300`, `sonos_beam` (Beam / Arc), `sonos_sub_mini`, `sonos_sub` |
 | Devialet | `devialet_phantom` (1st gen), `devialet_phantom_reactor`, `devialet_phantom_i`, `devialet_phantom_ii`, `devialet_phantom_ultimate`: `finish` `white` (default) or `black` |
@@ -18,7 +18,7 @@
 Without `model`, the card guesses from the entity id: `sonos` → Sonos One, `homepod` → HomePod (or HomePod mini), `devialet` / `phantom` → Phantom II, `nest` / `google` → Nest Mini, otherwise Echo Dot. `style` is accepted as an alias of `model`.
 
 States and animations:
-- **Playing**: sound waves come out of the speaker, faster and brighter as the volume goes up. Echo Pop / Dot: the blue light ring breathes. Echo Show, Echo Spot and Nest Hub: a light sweep, a glow and an equalizer on the screen. Nest Mini / Audio: the 4 white dots light up in a wave. Sonos: the speaker pumps with the bass (more on the subs), the white status light breathes. Devialet Phantom: the speaker pumps with the bass. HomePod: the Siri glow on top swirls and breathes.
+- **Playing**: sound waves come out of the speaker, faster and brighter as the volume goes up. Echo Pop / Dot: the blue light ring breathes; Echo Flex: the light bar at the top breathes. Echo Show, Echo Spot and Nest Hub: a light sweep, a glow and an equalizer on the screen. Nest Mini / Audio: the 4 white dots light up in a wave. Sonos: the speaker pumps with the bass (more on the subs), the white status light breathes. Devialet Phantom: the speaker pumps with the bass. HomePod: the Siri glow on top swirls and breathes.
 - **Muted**: no waves, dimmed lights; the mute button is lit and the volume tile is highlighted.
 - **Paused / idle**: dimmed, no waves.
 - **Standby / off / unavailable**: greyed out, black screen.

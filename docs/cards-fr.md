@@ -259,6 +259,16 @@ entity_power: sensor.soufflant_bureau_puissance
 entity_temp: sensor.bureau_temperature
 ```
 
+**Compteur de chaleur** (`custom:appliance-heat-meter-card`) : chauffage urbain / collectif, compteur à ultrasons (Landis+Gyr UH50 / T350, Kamstrup Multical, Sharky…) avec écran LCD, tuyau de départ rouge (fin) et de retour bleu (plus gros) avec particules animées, radiateur à eau, ondes de chaleur et badge puissance / ΔT. Tous les capteurs sont facultatifs : `entity_energy` (Wh, kWh, MWh, GJ), `entity_supply_temp` (départ Tv), `entity_return_temp` (retour Tr), `entity_power` (W, kW, MW ; **sans lui, la puissance est calculée** : débit × ΔT × 1,163), `entity_flow` (L/h, L/min, m³/h), `entity_water_volume`, `entity_room_temp`, `power_threshold` (kW, seuil « Chauffe en cours »). Voir [heat-meter.md](cards/heat-meter.md).
+
+```yaml
+type: custom:appliance-heat-meter-card
+entity_energy: sensor.compteur_chaleur_energie
+entity_supply_temp: sensor.compteur_chaleur_depart
+entity_return_temp: sensor.compteur_chaleur_retour
+entity_power: sensor.compteur_chaleur_puissance
+```
+
 **Spa gonflable** (`custom:appliance-inflatable-spa-card`) : spa rond type Lay-Z-Spa (paroi grise effet bois, bloc pompe avec écran de température). Chaque fonction agit seule : chauffage (eau chaude, vapeur), filtration (rides), bulles, jets, lumière LED (couleur `rgb_color`), couvercle fermé. Un bouton par entité renseignée, tuiles désactivables : eau, consigne, puissance, énergie, coût, pH, chlore, minuterie, couvercle. Alertes pH, eau trop chaude et code défaut (`Err`). Détail : [docs/cards/inflatable-spa.md](cards/inflatable-spa.md).
 
 ```yaml
