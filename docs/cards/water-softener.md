@@ -17,6 +17,7 @@ The phase comes from the state of `entity` (a sensor, select, switch or binary s
 | Option | What it does |
 |---|---|
 | `entity` | state of the softener (text of the current phase, or on / off) |
+| `entity_backwash`, `entity_brine`, `entity_rinse` | one entity per phase (`binary_sensor`, `switch`, `input_boolean` or `sensor`, **on = running**): backwash, brine draw, rinse. Used when `entity` does not give the phase; priority backwash > brine > rinse |
 | `entity_flow` | flow (L/min) |
 | `entity_capacity` | remaining capacity (%) |
 | `entity_salt` | salt level (%); alert at or below `salt_low` (20 %) |

@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.112.0";
+const VERSION = "1.113.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -13225,7 +13225,10 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_supply": "Show supply",
       "show_return": "Show return",
       "show_delta": "Show ΔT",
-      "show_room": "Show room"
+      "show_room": "Show room",
+      "entity_backwash": "Backwash (on = running)",
+      "entity_brine": "Brine draw (on = running)",
+      "entity_rinse": "Rinse (on = running)"
     },
     "cs": {
       "animations": "Animace",
@@ -15007,7 +15010,10 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_supply": "Afficher le départ",
       "show_return": "Afficher le retour",
       "show_delta": "Afficher ΔT",
-      "show_room": "Afficher la pièce"
+      "show_room": "Afficher la pièce",
+      "entity_backwash": "Contre-lavage (on = en cours)",
+      "entity_brine": "Aspiration de saumure (on = en cours)",
+      "entity_rinse": "Rinçage (on = en cours)"
     },
     "hu": {
       "animations": "Animációk",
@@ -46539,6 +46545,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
     _unit(id, d) { const s = this._st(id); return String((s && s.attributes && s.attributes.unit_of_measurement) || d).trim(); }
     _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _on(id) { const s = this._st(id); return !!s && /^(on|true|active|running|open)$/i.test(String(s.state)); }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
 
     _build() {
@@ -46559,13 +46566,17 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const c = this._c, e = this._st(c.entity);
       const flow = this._num(c.entity_flow), salt = this._num(c.entity_salt);
       const raw = e ? String(e.state) : '';
-      const known = [c.entity, c.entity_flow, c.entity_capacity, c.entity_salt].some((i) => { const s = this._st(i); return s && !/^(unavailable|unknown)$/i.test(String(s.state)); });
+      const known = [c.entity, c.entity_flow, c.entity_capacity, c.entity_salt, c.entity_backwash, c.entity_brine, c.entity_rinse].some((i) => { const s = this._st(i); return s && !/^(unavailable|unknown)$/i.test(String(s.state)); });
       let phase = 'idle';
       if (!known) phase = 'unavailable';
       else if (e && /^(off)$/i.test(raw)) phase = 'off';
       else if (RE.backwash.test(raw)) phase = 'backwash';
       else if (RE.rinse.test(raw)) phase = 'rinse';
       else if (RE.brine.test(raw) || (e && /^on$/i.test(raw) && /regen/i.test(String(e.entity_id) + JSON.stringify(e.attributes || {})))) phase = 'brine';
+      // une entité par phase (interrupteur / binary_sensor), prises en compte si `entity` ne donne pas déjà la phase
+      else if (this._on(c.entity_backwash)) phase = 'backwash';
+      else if (this._on(c.entity_brine)) phase = 'brine';
+      else if (this._on(c.entity_rinse)) phase = 'rinse';
       else if (/^(service|en.?service)$/i.test(raw.trim()) || (!isNaN(flow) && flow > 0.05)) phase = 'service';
       const low = !isNaN(salt) && salt <= Number(c.salt_low);
       return { phase, flow, salt, low };
@@ -46627,6 +46638,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ent('entity', ['sensor', 'binary_sensor', 'switch', 'input_boolean', 'select']),
+        ent('entity_backwash', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_brine', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_rinse', ['binary_sensor', 'switch', 'input_boolean', 'sensor']),
         ent('entity_flow', 'sensor'), ent('entity_capacity', 'sensor'), ent('entity_salt', 'sensor'),
         ent('entity_hardness_in', 'sensor'), ent('entity_hardness_out', 'sensor'),
         ent('entity_today', 'sensor'), ent('entity_regen_days', 'sensor'), ent('entity_power', 'sensor'),

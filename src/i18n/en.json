@@ -1270,7 +1270,10 @@
     "show_supply": "Show supply",
     "show_return": "Show return",
     "show_delta": "Show ΔT",
-    "show_room": "Show room"
+    "show_room": "Show room",
+    "entity_backwash": "Backwash (on = running)",
+    "entity_brine": "Brine draw (on = running)",
+    "entity_rinse": "Rinse (on = running)"
   },
   "light": {
     "light_bulb": "Bulb",

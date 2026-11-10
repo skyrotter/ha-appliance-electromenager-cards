@@ -1261,7 +1261,10 @@
     "show_supply": "Afficher le départ",
     "show_return": "Afficher le retour",
     "show_delta": "Afficher ΔT",
-    "show_room": "Afficher la pièce"
+    "show_room": "Afficher la pièce",
+    "entity_backwash": "Contre-lavage (on = en cours)",
+    "entity_brine": "Aspiration de saumure (on = en cours)",
+    "entity_rinse": "Rinçage (on = en cours)"
   },
   "light": {
     "light_bulb": "Ampoule",
