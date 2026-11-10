@@ -23,6 +23,8 @@ header h1 small { display:block; font-size:12px; font-weight:400; color:var(--se
 .seg { display:inline-flex; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
 .seg button { background:none; border:0; color:var(--secondary-text-color); padding:6px 11px; font:inherit; cursor:pointer; }
 .seg button.on { background:var(--primary-color); color:#fff; }
+#q { background:var(--card-background-color); color:var(--primary-text-color); border:1px solid var(--line); border-radius:8px; padding:6px 10px; font:inherit; width:200px; max-width:100%; }
+.cell[hidden] { display:none; }
 header a { color:var(--primary-color); text-decoration:none; font-size:13px; }
 main { padding:16px; display:grid; gap:16px; grid-template-columns:repeat(auto-fill, minmax(min(100%, 360px), 1fr)); max-width:1600px; margin:0 auto; }
 .cell { display:flex; flex-direction:column; gap:10px; }
@@ -49,6 +51,7 @@ footer { text-align:center; color:var(--secondary-text-color); font-size:12px; p
   <h1>Appliance Cards — page de test <small id="ver">Données simulées · aucune installation Home Assistant nécessaire</small></h1>
   <div class="seg" id="theme"><button data-v="dark" class="on">Sombre</button><button data-v="light">Clair</button></div>
   <div class="seg" id="lang"></div>
+  <input id="q" type="search" placeholder="Rechercher une carte…" aria-label="Rechercher une carte" autocomplete="off">
   <div class="seg" id="anim"><button data-v="1" class="on">Animations</button><button data-v="0">Off</button></div>
   <a href="tests.html">Tests automatiques →</a>
   <a href="https://github.com/skyrotter/ha-appliance-electromenager-cards">GitHub</a>
@@ -1171,6 +1174,14 @@ function lightCtl(ctl, id, pw, attrs) {
 const scenCfg = (s) => ({ ...s.cfg, ...(s.lang ? { language: lang } : {}), ...(animations ? {} : { animations: false }) });
 const toYaml = (kind, cfg) => [`type: custom:appliance-${kind}-card`, ...Object.entries(cfg).map(([k, v]) => `${k}: ${v}`)].join('\n');
 
+// recherche : sans accents ni majuscules, sur le titre, le type de carte, le nom et le modèle
+const norm = (t) => String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+function filterCards() {
+  const q = norm(document.getElementById('q').value).trim().split(/\s+/).filter(Boolean);
+  document.querySelectorAll('#main .cell').forEach((c) => { c.hidden = !q.every((w) => c.dataset.search.includes(w)); });
+}
+document.getElementById('q').addEventListener('input', filterCards);
+
 function buildAll() {
   const main = document.getElementById('main');
   main.innerHTML = ''; cards.length = 0;
@@ -1187,8 +1198,10 @@ function buildAll() {
     el.setConfig(cfg); el._scen = s;
     el.addEventListener('hass-more-info', (e) => log(`more-info ${e.detail.entityId}`));
     cards.push(el);
+    cell.dataset.search = norm(`${s.title} ${s.kind} ${s.kind.replace(/-/g, ' ')} ${s.cfg.name || ''} ${s.cfg.model || ''}`);
     cell.append(el, ctl); main.append(cell);
   }
+  filterCards();
   refresh();
 }
 
