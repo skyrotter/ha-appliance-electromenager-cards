@@ -45807,6 +45807,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 .vv-wr{opacity:0;transition:opacity .8s}.open .vv-wr{opacity:.5}
 .vv-flow{fill:none;stroke:#3d9bff;stroke-width:6;stroke-linecap:round;stroke-dasharray:10 8;opacity:0}
 .open .vv-flow{opacity:.85;animation:vvflow calc(.9s / var(--spd,1)) linear infinite}
+/* ouvert mais débit nul (capteur de débit renseigné) : l'eau ne bouge pas */
+.still .wv-stream,.still .vv-flow,.still .wv-ripple,.still .wv-splash{opacity:0;animation:none}
 .leak .vv-pipe-glow{opacity:1}
 @keyframes vvflow{to{stroke-dashoffset:-18}}
 `;
@@ -45936,7 +45938,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       // alerte prioritaire : l'état ouvert / fermé reste visible dessous (eau qui coule, levier)
       const alert = unavailable ? 'unavailable' : leak ? 'leak' : fault ? 'fault' : freeze ? 'freeze' : low ? 'low_battery' : m.rain && rain && !open ? 'rain' : '';
       const sCls = unavailable ? '' : moving ? 'moving' : open ? 'open' : 'closed';
-      return { s, open, moving, state, unavailable, flow, frac, pos, bat, low, binLow, temp, tc, freeze, leak, fault, rain, alert, sCls };
+      const still = open && !moving && !isNaN(flow) && flow <= thr;
+      return { s, open, still, moving, state, unavailable, flow, frac, pos, bat, low, binLow, temp, tc, freeze, leak, fault, rain, alert, sCls };
     }
 
     _build() {
@@ -45994,7 +45997,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card, m = this.constructor.META;
       const x = this._compute();
-      card.className = `${x.sCls} ${x.alert}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`.trim();
+      card.className = `${x.sCls} ${x.alert}${x.still ? ' still' : ''}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`.trim();
       card.style.setProperty('--pos', String(x.frac));
       card.style.setProperty('--spd', String(isNaN(x.flow) ? 1 : Math.max(0.6, Math.min(3, 0.6 + x.flow / 10))));
       r.getElementById('title').textContent = c.name || this._t('name');
@@ -46463,9 +46466,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
   const TILES = [['flow', 'mdi:water-pump', 'show_flow'], ['capacity', 'mdi:gauge', 'show_capacity'], ['salt', 'mdi:shaker-outline', 'show_salt'],
     ['hardness', 'mdi:water-opacity', 'show_hardness'], ['today', 'mdi:calendar-today', 'show_today'], ['regen', 'mdi:calendar-refresh', 'show_regen'], ['power', 'mdi:flash', 'show_power']];
   const RE = {
-    backwash: /backwash|back.?wash|contre.?lavage|gegenstrom/i,
+    backwash: /backwash|back.?wash|contre.?lavage|d[ée]tassage|gegenstrom/i,
     brine: /brine|saumure|aspir|draw|slow|regener|r[ée]g[ée]n[ée]ration|recharge|regen/i,
-    rinse: /rins|rin[cç]|fast|spül|spuel|refill|remplissage/i,
+    rinse: /rins|rin[cç]|fast|spül|spuel|refill|remplissage|renvoi/i,
   };
 
   class ApplianceWaterSoftenerCard extends HTMLElement {
@@ -46520,7 +46523,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       else if (RE.backwash.test(raw)) phase = 'backwash';
       else if (RE.rinse.test(raw)) phase = 'rinse';
       else if (RE.brine.test(raw) || (e && /^on$/i.test(raw) && /regen/i.test(String(e.entity_id) + JSON.stringify(e.attributes || {})))) phase = 'brine';
-      else if (!isNaN(flow) && flow > 0.05) phase = 'service';
+      else if (/^(service|en.?service)$/i.test(raw.trim()) || (!isNaN(flow) && flow > 0.05)) phase = 'service';
       const low = !isNaN(salt) && salt <= Number(c.salt_low);
       return { phase, flow, salt, low };
     }

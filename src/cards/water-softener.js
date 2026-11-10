@@ -118,9 +118,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
   const TILES = [['flow', 'mdi:water-pump', 'show_flow'], ['capacity', 'mdi:gauge', 'show_capacity'], ['salt', 'mdi:shaker-outline', 'show_salt'],
     ['hardness', 'mdi:water-opacity', 'show_hardness'], ['today', 'mdi:calendar-today', 'show_today'], ['regen', 'mdi:calendar-refresh', 'show_regen'], ['power', 'mdi:flash', 'show_power']];
   const RE = {
-    backwash: /backwash|back.?wash|contre.?lavage|gegenstrom/i,
+    backwash: /backwash|back.?wash|contre.?lavage|d[ée]tassage|gegenstrom/i,
     brine: /brine|saumure|aspir|draw|slow|regener|r[ée]g[ée]n[ée]ration|recharge|regen/i,
-    rinse: /rins|rin[cç]|fast|spül|spuel|refill|remplissage/i,
+    rinse: /rins|rin[cç]|fast|spül|spuel|refill|remplissage|renvoi/i,
   };
 
   class ApplianceWaterSoftenerCard extends HTMLElement {
@@ -175,7 +175,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       else if (RE.backwash.test(raw)) phase = 'backwash';
       else if (RE.rinse.test(raw)) phase = 'rinse';
       else if (RE.brine.test(raw) || (e && /^on$/i.test(raw) && /regen/i.test(String(e.entity_id) + JSON.stringify(e.attributes || {})))) phase = 'brine';
-      else if (!isNaN(flow) && flow > 0.05) phase = 'service';
+      else if (/^(service|en.?service)$/i.test(raw.trim()) || (!isNaN(flow) && flow > 0.05)) phase = 'service';
       const low = !isNaN(salt) && salt <= Number(c.salt_low);
       return { phase, flow, salt, low };
     }
