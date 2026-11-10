@@ -68,8 +68,8 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
     <path d="M 0 54 L 138 54" fill="none" stroke="url(#hmpiperead)" stroke-width="3.2" stroke-linecap="round"/>
     <path class="hm-sup" d="M 0 54 L 138 54"/>
     <!-- pastilles Tv / Tr -->
-    <rect x="6" y="44" width="30" height="11" rx="5.5" fill="#dc2626"/><text x="21" y="52" fill="#fff" font-size="6" font-weight="700" text-anchor="middle" font-family="sans-serif">Tv</text>
-    <rect x="6" y="114" width="30" height="11" rx="5.5" fill="#0288d1"/><text x="21" y="122" fill="#fff" font-size="6" font-weight="700" text-anchor="middle" font-family="sans-serif">Tr</text>
+    <rect x="6" y="37" width="30" height="11" rx="5.5" fill="#dc2626"/><text x="21" y="45" fill="#fff" font-size="6" font-weight="700" text-anchor="middle" font-family="sans-serif">Tv</text>
+    <rect x="6" y="103" width="30" height="11" rx="5.5" fill="#0288d1"/><text x="21" y="111" fill="#fff" font-size="6" font-weight="700" text-anchor="middle" font-family="sans-serif">Tr</text>
     <g transform="translate(42, 10)">
       <!-- corps laiton + raccords -->
       <g transform="translate(0, 44)">
