@@ -400,6 +400,16 @@ model: freebox_pop
 entity: media_player.freebox_player_pop
 ```
 
+**Box internet** : `custom:appliance-internet-box-card`, photo détourée (ou dessin SVG avec `illustration: svg`) de la Freebox Pop ou de la SFR Box (`model: freebox_pop` / `sfr_box`). Ondes Wi-Fi, paquets descendants (bleu) et montants (orange) à la vitesse du débit, LED blanche en ligne et rouge clignotante hors ligne, nuage barré en cas de coupure ; boutons Wi-Fi et redémarrage. Options : voir [internet-box.md](cards/internet-box.md).
+
+```yaml
+type: custom:appliance-internet-box-card
+model: sfr_box
+entity: binary_sensor.sfr_box_wan
+entity_download: sensor.sfr_box_download
+entity_upload: sensor.sfr_box_upload
+```
+
 **Balance connectée** : `custom:appliance-scale-card`, photo détourée de la Withings posée au sol en 3D, pour l'intégration **Withings**. À chaque pesée : empreintes lumineuses, plateau qui s'enfonce, chiffres qui défilent puis clignotent, ondes d'impédance et halo au sol ; l'écran alterne ensuite poids, masse grasse et IMC. Jauge IMC à aiguille, courbe sur `trend_days` jours avec l'objectif, « Objectif atteint ». Clic sur la balance : rejoue la pesée. Options : voir [scale.md](cards/scale.md).
 
 **Robinet connecté** (`custom:appliance-smart-tap-card`) : boîtier Zigbee noir à anneau lumineux (type Sonoff SWV) entre le robinet et le tuyau. Ouvert : anneau vert qui pulse, eau qui coule, herbe qui bouge ; pluie, défaut, pile faible, gel. Tout est facultatif. Voir [smart-tap.md](cards/smart-tap.md).

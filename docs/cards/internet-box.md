@@ -1,0 +1,38 @@
+# Internet box
+
+`custom:appliance-internet-box-card`
+
+**Internet box** with a cut-out photo or a vector SVG drawing of your model (`model`): `freebox_pop` (Freebox Pop, default) or `sfr_box` (SFR Box). Choose the drawing with `illustration: svg` (default `photo`).
+
+Animations: Wi-Fi waves leave the box, packets run towards the box (download, blue) and away from it (upload, orange) at a speed that follows your throughput, the box LED is white when online and blinks red when offline (the Wi-Fi tile of the SFR Box screen lights up too), the cloud is crossed out on an outage.
+
+Buttons: Wi-Fi on/off (`entity_wifi`) and restart (`entity_reboot`, with confirmation).
+
+## Options
+
+- `entity`: connection state (binary_sensor, sensor, device_tracker…). Without it, the box is online as soon as a throughput is readable
+- `entity_download`, `entity_upload` (sensors, Mb/s, kB/s, MB/s…), `entity_devices` (sensor), `entity_wifi` (switch), `entity_reboot` (button)
+- `model`, `illustration` (`photo` | `svg`), `max_speed` (reference throughput in Mb/s for the packet speed, default 1000)
+- `animations` (default true), `compact: true`, `transparent: true`, `illustration_size` (%)
+- `show_status`, `show_controls`, `show_download`, `show_upload`, `show_devices`, `show_wifi`
+- `language: fr|en|de|it|es|nb|nl|pl|ro|ru|sr|sr-Latn`
+
+## Examples
+
+```yaml
+type: custom:appliance-internet-box-card
+model: freebox_pop
+entity: binary_sensor.freebox_connectivity
+entity_download: sensor.freebox_download_speed
+entity_upload: sensor.freebox_upload_speed
+entity_wifi: switch.freebox_wifi
+```
+
+```yaml
+type: custom:appliance-internet-box-card
+model: sfr_box
+illustration: svg
+entity: binary_sensor.sfr_box_wan
+entity_download: sensor.sfr_box_download
+entity_upload: sensor.sfr_box_upload
+```
