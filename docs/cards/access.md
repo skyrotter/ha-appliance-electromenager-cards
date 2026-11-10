@@ -21,6 +21,7 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 
 - `entity` (cover, or binary_sensor / input_boolean / switch where on = open, or a text sensor: open / closed / opening / closing…)
 - `entity_control` (optional impulse entity: button, input_button, script or switch)
+- `entity_open`, `entity_close`, `entity_stop` (optional, for a double dry contact: one `button`, `script`, `switch`… per command; the Open / Close / Stop buttons then trigger these entities instead of the `cover` services, and only the buttons you configured are shown. `entity` still gives the state)
 - `entity_pedestrian` (optional pedestrian / partial opening: `button`, `input_button`, `script`, `scene`, `switch` or a `cover`; adds a **Pedestrian** button)
 - `entity_power` (motor)
 - `entity_energy`
@@ -61,3 +62,13 @@ travel_time: 18
 ```
 
 [← All cards](../../README.md#the-cards)
+
+Double dry contact (separate open and close commands):
+
+```yaml
+type: custom:appliance-sliding-gate-card
+entity: binary_sensor.portail_ouvert
+entity_open: button.portail_ouverture
+entity_close: button.portail_fermeture
+entity_pedestrian: script.portail_pieton
+```

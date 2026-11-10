@@ -12979,7 +12979,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "freeze_temp": "Freezing alert below",
       "show_probes": "Show probes",
       "box_model": "Mailbox model",
-      "entity_open": "Door opening (button, lock…)",
+      "entity_open": "Open command (button / script)",
       "entity_last_open": "Last opening (one or more timestamps)",
       "entity_battery_low": "Battery low",
       "show_last_open": "Show last opening",
@@ -13197,7 +13197,9 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "daily_goal": "Daily portions (fills the bowl)",
       "show_portions": "Portions tile",
       "show_serving": "Serving tile",
-      "show_source": "Source tile"
+      "show_source": "Source tile",
+      "entity_close": "Close command (button / script)",
+      "entity_stop": "Stop command (button / script)"
     },
     "cs": {
       "animations": "Animace",
@@ -14750,7 +14752,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "freeze_temp": "Alerte gel en dessous de",
       "show_probes": "Afficher les sondes",
       "box_model": "Modèle de boîte",
-      "entity_open": "Ouverture de la porte (bouton, serrure…)",
+      "entity_open": "Commande d'ouverture (bouton / script)",
       "entity_last_open": "Dernière ouverture (une ou plusieurs dates)",
       "entity_battery_low": "Pile faible",
       "show_last_open": "Afficher la dernière ouverture",
@@ -14969,7 +14971,9 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "daily_goal": "Portions du jour (remplit la gamelle)",
       "show_portions": "Tuile portions",
       "show_serving": "Tuile portion",
-      "show_source": "Tuile source"
+      "show_source": "Tuile source",
+      "entity_close": "Commande de fermeture (bouton / script)",
+      "entity_stop": "Commande d'arrêt (bouton / script)"
     },
     "hu": {
       "animations": "Animációk",
@@ -26009,15 +26013,20 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
       this._root = root; this._card = root.querySelector('ha-card'); this._sceneEl = root.querySelector('.scene'); this._built = true;
     }
 
+    // déclenche une entité de commande : bouton, script, scène, interrupteur, cover…
+    _fire(id) {
+      const h = this._hass, d = id.split('.')[0];
+      if (d === 'button' || d === 'input_button') h.callService(d, 'press', { entity_id: id });
+      else if (d === 'cover') h.callService('cover', 'open_cover', { entity_id: id });
+      else h.callService(['script', 'scene', 'switch', 'input_boolean'].includes(d) ? d : 'homeassistant', 'turn_on', { entity_id: id });
+    }
+
     _action(a) {
       const c = this._c, h = this._hass; if (!h) return;
-      if (a === 'pedestrian') { // ouverture partielle : entité dédiée (bouton, script, scène, interrupteur, cover)
-        const id = c.entity_pedestrian, d = id.split('.')[0];
-        if (d === 'button' || d === 'input_button') h.callService(d, 'press', { entity_id: id });
-        else if (d === 'cover') h.callService('cover', 'open_cover', { entity_id: id });
-        else h.callService(['script', 'scene', 'switch', 'input_boolean'].includes(d) ? d : 'homeassistant', 'turn_on', { entity_id: id });
-        return;
-      }
+      if (a === 'pedestrian') { this._fire(c.entity_pedestrian); return; } // ouverture partielle : entité dédiée
+      // contact sec double : une entité par commande (entity_open / entity_close / entity_stop)
+      const own = { open: c.entity_open, close: c.entity_close, stop: c.entity_stop }[a];
+      if (own) { this._fire(own); return; }
       if (a === 'command') {
         const id = c.entity_control || c.entity, d = id.split('.')[0];
         if (d === 'button' || d === 'input_button') h.callService(d, 'press', { entity_id: id });
@@ -26083,15 +26092,15 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
       badge.style.display = c.show_status === false ? 'none' : '';
 
       // commandes : ouvrir / stop / fermer pour une cover, sinon un bouton d'impulsion
-      const d = (c.entity || '').split('.')[0], isCover = d === 'cover' && !c.entity_control;
-      const canCmd = !!c.entity_control || ['switch', 'input_boolean', 'button', 'input_button', 'script'].includes(d);
+      const d = (c.entity || '').split('.')[0], dual = !!(c.entity_open || c.entity_close || c.entity_stop), isCover = (d === 'cover' && !c.entity_control) || dual;
+      const canCmd = !dual && (!!c.entity_control || ['switch', 'input_boolean', 'button', 'input_button', 'script'].includes(d));
       const sf = s && s.attributes && Number(s.attributes.supported_features);
       const ctl = r.getElementById('accctl');
       ctl.classList.toggle('hide', c.show_controls === false || (!isCover && !canCmd && !c.entity_pedestrian));
       ctl.querySelectorAll('button').forEach((b) => {
         const a = b.dataset.a;
         b.querySelector('span').textContent = this._t(`btn_${a}`);
-        b.classList.toggle('hide', a === 'pedestrian' ? !c.entity_pedestrian : a === 'command' ? isCover || !canCmd : !isCover || (a === 'stop' && isFinite(sf) && sf > 0 && !(sf & 8)));
+        b.classList.toggle('hide', a === 'pedestrian' ? !c.entity_pedestrian : a === 'command' ? isCover || !canCmd : dual ? !c[`entity_${a}`] : !isCover || (a === 'stop' && isFinite(sf) && sf > 0 && !(sf & 8)));
         b.disabled = st === 'unavailable' || (a === 'open' && (st === 'open' || st === 'opening')) || (a === 'close' && (st === 'closed' || st === 'closing'));
       });
       if (K.ico) ctl.querySelector('[data-a="command"] ha-icon').setAttribute('icon', st === 'closed' ? K.ico[0] : K.ico[1]);
@@ -26140,7 +26149,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
-        ent('entity'), ent('entity_control'), ent('entity_pedestrian'),
+        ent('entity'), ent('entity_control'), ent('entity_open'), ent('entity_close'), ent('entity_stop'), ent('entity_pedestrian'),
         ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'), ent('entity_cost', 'sensor'),
         { name: 'price_per_kwh', selector: { number: { min: 0, step: 0.0001, mode: 'box' } } },
         { type: 'grid', name: '', schema: [
@@ -45807,6 +45816,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 .vv-wr{opacity:0;transition:opacity .8s}.open .vv-wr{opacity:.5}
 .vv-flow{fill:none;stroke:#3d9bff;stroke-width:6;stroke-linecap:round;stroke-dasharray:10 8;opacity:0}
 .open .vv-flow{opacity:.85;animation:vvflow calc(.9s / var(--spd,1)) linear infinite}
+/* ouvert mais débit nul (capteur de débit renseigné) : l'eau ne bouge pas */
+.still .wv-stream,.still .vv-flow,.still .wv-ripple,.still .wv-splash{opacity:0;animation:none}
 .leak .vv-pipe-glow{opacity:1}
 @keyframes vvflow{to{stroke-dashoffset:-18}}
 `;
@@ -45936,7 +45947,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       // alerte prioritaire : l'état ouvert / fermé reste visible dessous (eau qui coule, levier)
       const alert = unavailable ? 'unavailable' : leak ? 'leak' : fault ? 'fault' : freeze ? 'freeze' : low ? 'low_battery' : m.rain && rain && !open ? 'rain' : '';
       const sCls = unavailable ? '' : moving ? 'moving' : open ? 'open' : 'closed';
-      return { s, open, moving, state, unavailable, flow, frac, pos, bat, low, binLow, temp, tc, freeze, leak, fault, rain, alert, sCls };
+      const still = open && !moving && !isNaN(flow) && flow <= thr;
+      return { s, open, still, moving, state, unavailable, flow, frac, pos, bat, low, binLow, temp, tc, freeze, leak, fault, rain, alert, sCls };
     }
 
     _build() {
@@ -45994,7 +46006,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card, m = this.constructor.META;
       const x = this._compute();
-      card.className = `${x.sCls} ${x.alert}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`.trim();
+      card.className = `${x.sCls} ${x.alert}${x.still ? ' still' : ''}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`.trim();
       card.style.setProperty('--pos', String(x.frac));
       card.style.setProperty('--spd', String(isNaN(x.flow) ? 1 : Math.max(0.6, Math.min(3, 0.6 + x.flow / 10))));
       r.getElementById('title').textContent = c.name || this._t('name');
@@ -46463,9 +46475,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
   const TILES = [['flow', 'mdi:water-pump', 'show_flow'], ['capacity', 'mdi:gauge', 'show_capacity'], ['salt', 'mdi:shaker-outline', 'show_salt'],
     ['hardness', 'mdi:water-opacity', 'show_hardness'], ['today', 'mdi:calendar-today', 'show_today'], ['regen', 'mdi:calendar-refresh', 'show_regen'], ['power', 'mdi:flash', 'show_power']];
   const RE = {
-    backwash: /backwash|back.?wash|contre.?lavage|gegenstrom/i,
+    backwash: /backwash|back.?wash|contre.?lavage|d[ée]tassage|gegenstrom/i,
     brine: /brine|saumure|aspir|draw|slow|regener|r[ée]g[ée]n[ée]ration|recharge|regen/i,
-    rinse: /rins|rin[cç]|fast|spül|spuel|refill|remplissage/i,
+    rinse: /rins|rin[cç]|fast|spül|spuel|refill|remplissage|renvoi/i,
   };
 
   class ApplianceWaterSoftenerCard extends HTMLElement {
@@ -46520,7 +46532,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       else if (RE.backwash.test(raw)) phase = 'backwash';
       else if (RE.rinse.test(raw)) phase = 'rinse';
       else if (RE.brine.test(raw) || (e && /^on$/i.test(raw) && /regen/i.test(String(e.entity_id) + JSON.stringify(e.attributes || {})))) phase = 'brine';
-      else if (!isNaN(flow) && flow > 0.05) phase = 'service';
+      else if (/^(service|en.?service)$/i.test(raw.trim()) || (!isNaN(flow) && flow > 0.05)) phase = 'service';
       const low = !isNaN(salt) && salt <= Number(c.salt_low);
       return { phase, flow, salt, low };
     }

@@ -1032,7 +1032,7 @@
     "freeze_temp": "Alerte gel en dessous de",
     "show_probes": "Afficher les sondes",
     "box_model": "Modèle de boîte",
-    "entity_open": "Ouverture de la porte (bouton, serrure…)",
+    "entity_open": "Commande d'ouverture (bouton / script)",
     "entity_last_open": "Dernière ouverture (une ou plusieurs dates)",
     "entity_battery_low": "Pile faible",
     "show_last_open": "Afficher la dernière ouverture",
@@ -1251,7 +1251,9 @@
     "daily_goal": "Portions du jour (remplit la gamelle)",
     "show_portions": "Tuile portions",
     "show_serving": "Tuile portion",
-    "show_source": "Tuile source"
+    "show_source": "Tuile source",
+    "entity_close": "Commande de fermeture (bouton / script)",
+    "entity_stop": "Commande d'arrêt (bouton / script)"
   },
   "light": {
     "light_bulb": "Ampoule",

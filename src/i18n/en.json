@@ -1042,7 +1042,7 @@
     "freeze_temp": "Freezing alert below",
     "show_probes": "Show probes",
     "box_model": "Mailbox model",
-    "entity_open": "Door opening (button, lock…)",
+    "entity_open": "Open command (button / script)",
     "entity_last_open": "Last opening (one or more timestamps)",
     "entity_battery_low": "Battery low",
     "show_last_open": "Show last opening",
@@ -1260,7 +1260,9 @@
     "daily_goal": "Daily portions (fills the bowl)",
     "show_portions": "Portions tile",
     "show_serving": "Serving tile",
-    "show_source": "Source tile"
+    "show_source": "Source tile",
+    "entity_close": "Close command (button / script)",
+    "entity_stop": "Stop command (button / script)"
   },
   "light": {
     "light_bulb": "Bulb",
