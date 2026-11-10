@@ -49019,42 +49019,66 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
 
   const SVG = (label) => {
     // ailettes du radiateur : 9 panneaux verticaux
-    const fins = Array.from({ length: 9 }, (_, i) => `<rect x="${140 + i * 9.6}" y="42" width="7.6" height="62" rx="2.5" fill="url(#hmfin)" stroke="#aeb6bf" stroke-width=".6"/>`).join('');
+    const fins = Array.from({ length: 9 }, (_, i) => `<rect x="${143 + i * 9.4}" y="46" width="7.2" height="58" rx="2" fill="url(#hmfin)" stroke="#cbd5e1" stroke-width="0.6"/>`).join('');
     return `<svg viewBox="0 0 240 130" role="img" aria-label="${esc(label)}"><defs>
-    <linearGradient id="hmbrass" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#f3d68b"/><stop offset=".5" stop-color="#c9973f"/><stop offset="1" stop-color="#8a6324"/></linearGradient>
-    <linearGradient id="hmfin" x1="0" x2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d8dde3"/></linearGradient>
-    <linearGradient id="hmbox" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#f4f6f8"/><stop offset="1" stop-color="#c9cfd6"/></linearGradient>
-    <radialGradient id="hmhot" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff7043" stop-opacity=".8"/><stop offset="1" stop-color="#ff7043" stop-opacity="0"/></radialGradient></defs>
-    <ellipse class="hm-glow" cx="184" cy="72" rx="62" ry="46" fill="url(#hmhot)"/>
-    <!-- tuyau de retour (bleu, plus gros) : bas du radiateur → réseau -->
-    <path d="M140 98H104V112H0" fill="none" stroke="#2b7de9" stroke-width="7" stroke-linejoin="round"/>
-    <path class="hm-ret" d="M140 98H104V112H0"/>
-    <!-- tuyau de départ (rouge, plus fin) : réseau → compteur → haut du radiateur -->
-    <path d="M0 76H12M72 76H112V50H140" fill="none" stroke="#e53935" stroke-width="4.4" stroke-linejoin="round"/>
-    <path class="hm-sup" d="M0 76H12M72 76H112V50H140"/>
-    <!-- corps laiton du compteur + raccords filetés -->
-    <rect x="14" y="66" width="56" height="20" rx="3" fill="url(#hmbrass)" stroke="#7a5520" stroke-width=".8"/>
-    <rect x="8" y="68" width="8" height="16" rx="1.5" fill="#b8892f" stroke="#7a5520" stroke-width=".6"/><rect x="68" y="68" width="8" height="16" rx="1.5" fill="#b8892f" stroke="#7a5520" stroke-width=".6"/>
-    ${[0, 1, 2].map((i) => `<path d="M${10 + i * 2.4} 68v16M${70 + i * 2.4} 68v16" stroke="#7a5520" stroke-width=".5"/>`).join('')}
-    <!-- calculateur : boîtier + écran LCD -->
-    <rect x="12" y="14" width="60" height="50" rx="5" fill="url(#hmbox)" stroke="#98a1ab" stroke-width="1"/>
-    <rect x="18" y="20" width="48" height="20" rx="2.5" fill="#c8d6c0" stroke="#6f7d68" stroke-width=".8"/>
-    <text id="hmlcd" x="62" y="33" text-anchor="end" font-size="11" fill="#1d2a1a" font-family="monospace" font-weight="700">--</text>
-    <text id="hmlcdu" x="62" y="38.5" text-anchor="end" font-size="4.4" fill="#1d2a1a" font-family="monospace" font-weight="700"></text>
-    <circle cx="26" cy="50" r="3.2" fill="#9aa2ab"/><circle cx="36" cy="50" r="3.2" fill="#9aa2ab"/>
-    <!-- radiateur à eau : tuyaux d'alimentation, panneau, ailettes, supports -->
-    <rect x="134" y="44" width="8" height="12" rx="2" fill="#b6bec6"/><rect x="134" y="92" width="8" height="12" rx="2" fill="#b6bec6"/>
-    <rect x="138" y="34" width="94" height="76" rx="6" fill="#eef1f4" stroke="#aeb6bf" stroke-width="1"/>
+    <linearGradient id="hmbrass" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fde047"/><stop offset=".35" stop-color="#eab308"/><stop offset=".7" stop-color="#ca8a04"/><stop offset="1" stop-color="#854d0e"/></linearGradient>
+    <linearGradient id="hmfin" x1="0" x2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e2e8f0"/></linearGradient>
+    <linearGradient id="hmbezel" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#64748b"/><stop offset=".5" stop-color="#475569"/><stop offset="1" stop-color="#334155"/></linearGradient>
+    <linearGradient id="hmsheen" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="rgba(255,255,255,0.6)"/><stop offset=".4" stop-color="rgba(255,255,255,0.1)"/><stop offset="1" stop-color="rgba(255,255,255,0.2)"/></linearGradient>
+    <linearGradient id="hmpiperead" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="138" y2="0"><stop offset="0%" stop-color="#ff1744"/><stop offset="40%" stop-color="#ef4444"/><stop offset="80%" stop-color="#dc2626"/><stop offset="100%" stop-color="#be123c"/></linearGradient>
+    <radialGradient id="hmhot" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff7043" stop-opacity=".7"/><stop offset="1" stop-color="#ff7043" stop-opacity="0"/></radialGradient></defs>
+    <ellipse class="hm-glow" cx="186" cy="74" rx="55" ry="40" fill="url(#hmhot)"/>
+    <!-- tuyau de retour (bleu, plus gros) : bas du radiateur → courbe arrondie → réseau -->
+    <path d="M 136 98 L 116 98 Q 104 98 104 110 L 104 114 Q 104 120 94 120 L 0 120" fill="none" stroke="#2563eb" stroke-width="4.8" stroke-linecap="round"/>
+    <path class="hm-ret" d="M 136 98 L 116 98 Q 104 98 104 110 L 104 114 Q 104 120 94 120 L 0 120"/>
+    <!-- tuyau de départ (rouge, plus fin) : réseau → compteur → entrée du radiateur, tout droit -->
+    <path d="M 0 54 L 138 54" fill="none" stroke="url(#hmpiperead)" stroke-width="3.2" stroke-linecap="round"/>
+    <path class="hm-sup" d="M 0 54 L 138 54"/>
+    <!-- pastilles Tv / Tr -->
+    <rect x="6" y="44" width="30" height="11" rx="5.5" fill="#dc2626"/><text x="21" y="52" fill="#fff" font-size="6" font-weight="700" text-anchor="middle" font-family="sans-serif">Tv</text>
+    <rect x="6" y="114" width="30" height="11" rx="5.5" fill="#0288d1"/><text x="21" y="122" fill="#fff" font-size="6" font-weight="700" text-anchor="middle" font-family="sans-serif">Tr</text>
+    <g transform="translate(42, 10)">
+      <!-- corps laiton + raccords -->
+      <g transform="translate(0, 44)">
+        <rect x="-14" y="-4.5" width="10" height="9" rx="1.5" fill="url(#hmbrass)" stroke="#713f12" stroke-width="0.6"/>
+        <rect x="-4" y="-6" width="3" height="12" rx="0.8" fill="url(#hmbrass)" stroke="#713f12" stroke-width="0.5"/>
+        <rect x="-1" y="-3.5" width="56" height="7" rx="1.5" fill="url(#hmbrass)" stroke="#713f12" stroke-width="0.5"/>
+        <rect x="55" y="-6" width="3" height="12" rx="0.8" fill="url(#hmbrass)" stroke="#713f12" stroke-width="0.5"/>
+        <rect x="58" y="-4.5" width="10" height="9" rx="1.5" fill="url(#hmbrass)" stroke="#713f12" stroke-width="0.6"/>
+      </g>
+      <!-- boîtier du calculateur : liseré brillant, plaque, écran LCD, bouton, code-barres, cache trapézoïdal -->
+      <rect x="0" y="0" width="54" height="64" rx="5" fill="url(#hmbezel)"/>
+      <rect x="1.5" y="1.5" width="51" height="61" rx="4" fill="none" stroke="#94a3b8" stroke-width="1" opacity="0.8"/>
+      <rect x="2" y="2" width="50" height="60" rx="3.5" fill="url(#hmsheen)"/>
+      <rect x="3.5" y="3.5" width="47" height="44" rx="2.5" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.5"/>
+      <text x="6" y="9" fill="#0f172a" font-size="4.2" font-weight="900" font-family="sans-serif">HEAT</text>
+      <text x="47" y="9" fill="#475569" font-size="3.6" font-weight="700" text-anchor="end" font-family="sans-serif">EN 1434</text>
+      <rect x="6" y="12" width="32" height="13" rx="1.5" fill="#064e3b" stroke="#022c22" stroke-width="0.7"/>
+      <text id="hmlcd" x="36" y="21" text-anchor="end" font-size="8" fill="#4ade80" font-family="monospace" font-weight="800">--</text>
+      <text id="hmlcdu" x="36" y="23.5" text-anchor="end" font-size="3.2" fill="#34d399" font-family="monospace" font-weight="700"></text>
+      <circle cx="43.5" cy="18.5" r="3.2" fill="#0f172a" stroke="#475569" stroke-width="0.6"/>
+      <g transform="translate(6, 33)" fill="#1e293b">
+        <rect x="0" y="0" width="0.8" height="5"/><rect x="1.5" y="0" width="0.5" height="5"/><rect x="2.5" y="0" width="1.2" height="5"/>
+        <rect x="4.5" y="0" width="0.5" height="5"/><rect x="6" y="0" width="1" height="5"/><rect x="8" y="0" width="1.4" height="5"/>
+      </g>
+      <circle cx="43" cy="35" r="2.5" fill="#e2e8f0" stroke="#94a3b8" stroke-width="0.5"/>
+      <polygon points="3.5,49 11,60 43,60 50.5,49" fill="rgba(241, 245, 249, 0.85)" stroke="#94a3b8" stroke-width="0.7"/>
+      <circle cx="27" cy="54.5" r="1.8" fill="url(#hmbrass)" stroke="#713f12" stroke-width="0.4"/>
+    </g>
+    <!-- radiateur à eau : raccords laiton, panneau, ailettes -->
+    <rect x="130" y="49.5" width="8" height="9" rx="1.2" fill="url(#hmbrass)" stroke="#713f12" stroke-width="0.5"/>
+    <rect x="130" y="93" width="8" height="10" rx="1.2" fill="url(#hmbrass)" stroke="#713f12" stroke-width="0.5"/>
+    <rect x="138" y="34" width="94" height="76" rx="5" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.2"/>
+    <rect x="142" y="38" width="86" height="5" rx="1.5" fill="#cbd5e1"/>
     ${fins}
-    <rect x="148" y="108" width="6" height="12" fill="#9aa2ab"/><rect x="216" y="108" width="6" height="12" fill="#9aa2ab"/>
     <!-- ondes de chaleur -->
-    <path class="hm-wave" d="M154 30c-4-5 4-8 0-13"/><path class="hm-wave" d="M184 30c-4-5 4-8 0-13"/><path class="hm-wave" d="M214 30c-4-5 4-8 0-13"/>
-    <!-- badge central : puissance et ΔT -->
-    <rect x="158" y="58" width="52" height="30" rx="8" fill="#ffffff" stroke="#e53935" stroke-width="1.4" fill-opacity=".95"/>
-    <text id="hmpow" x="184" y="71" text-anchor="middle" font-size="9.5" fill="#c62828" font-family="sans-serif" font-weight="700">--</text>
-    <text id="hmdt" x="184" y="82" text-anchor="middle" font-size="7" fill="#5a636d" font-family="sans-serif" font-weight="600"></text>
-    <text x="92" y="72" text-anchor="middle" font-size="5.5" fill="#e53935" font-family="sans-serif" font-weight="700">Tv</text>
-    <text x="40" y="106" text-anchor="middle" font-size="5.5" fill="#2b7de9" font-family="sans-serif" font-weight="700">Tr</text>
+    <path class="hm-wave" d="M 160 32 Q 163 26 160 20 Q 157 14 160 8"/>
+    <path class="hm-wave" d="M 185 32 Q 188 26 185 20 Q 182 14 185 8"/>
+    <path class="hm-wave" d="M 210 32 Q 213 26 210 20 Q 207 14 210 8"/>
+    <!-- badge sombre : puissance et ΔT -->
+    <rect x="156" y="58" width="58" height="26" rx="13" fill="#0f172a" stroke="#f59e0b" stroke-width="1.2"/>
+    <text id="hmpow" x="185" y="70" text-anchor="middle" font-size="8.5" fill="#fbbf24" font-family="sans-serif" font-weight="800">--</text>
+    <text id="hmdt" x="185" y="79" text-anchor="middle" font-size="6" fill="#f8fafc" font-family="sans-serif" font-weight="600"></text>
   </svg>`;
   };
 
