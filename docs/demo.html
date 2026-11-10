@@ -926,6 +926,16 @@ const SCEN = [
       checks(ctl, [['Alarme', 'binary_sensor.fh_alarm', false]]);
       set('sensor.fh_energy', 3.4, { unit_of_measurement: 'kWh' }); set('number.fh_target', 21, { unit_of_measurement: '°C' }); set('sensor.fh_timer', 75, { unit_of_measurement: 'min' });
     } },
+  { kind: 'heat-meter', title: 'Compteur de chaleur', lang: true,
+    cfg: { name: 'Chauffage urbain', entity_energy: 'sensor.hm_energy', entity_supply_temp: 'sensor.hm_tv', entity_return_temp: 'sensor.hm_tr', entity_power: 'sensor.hm_power', entity_flow: 'sensor.hm_flow', entity_water_volume: 'sensor.hm_volume', entity_room_temp: 'sensor.hm_room' },
+    build(ctl) {
+      range(ctl, 'Départ', 'sensor.hm_tv', 20, 80, 0.5, 43, '°C', T);
+      range(ctl, 'Retour', 'sensor.hm_tr', 20, 70, 0.5, 35, '°C', T);
+      range(ctl, 'Puissance', 'sensor.hm_power', 0, 20, 0.1, 1, 'kW', { unit_of_measurement: 'kW', device_class: 'power' });
+      range(ctl, 'Débit', 'sensor.hm_flow', 0, 1000, 5, 123, 'L/h', { unit_of_measurement: 'L/h' });
+      set('sensor.hm_energy', 57.392, { unit_of_measurement: 'MWh', device_class: 'energy' }); set('sensor.hm_volume', 7380.4, { unit_of_measurement: 'm³' });
+      range(ctl, 'Pièce', 'sensor.hm_room', 10, 30, 0.1, 21.8, '°C', T);
+    } },
   { kind: 'inflatable-spa', title: 'Spa gonflable', lang: true,
     cfg: { name: 'Spa jardin', entity_status: 'climate.spa_inf', entity_heater: 'switch.spa_heat', entity_filter: 'switch.spa_filt', entity_bubbles: 'switch.spa_bub', entity_jets: 'switch.spa_jet', entity_light: 'light.spa_led', entity_cover: 'cover.spa_lid', entity_power: 'sensor.spa_pw', entity_energy: 'sensor.spa_en', price_per_kwh: 0.25, entity_temp: 'sensor.spa_tw', entity_target_temp: 'climate.spa_inf', entity_ph: 'sensor.inf_ph', entity_chlorine: 'sensor.spa_cl', entity_timer: 'sensor.spa_tm' },
     build(ctl) {

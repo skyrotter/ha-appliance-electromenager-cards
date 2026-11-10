@@ -1262,7 +1262,15 @@
     "show_serving": "Serving tile",
     "show_source": "Source tile",
     "entity_close": "Close command (button / script)",
-    "entity_stop": "Stop command (button / script)"
+    "entity_stop": "Stop command (button / script)",
+    "entity_supply_temp": "Supply temperature (Tv)",
+    "entity_water_volume": "Total water volume",
+    "entity_room_temp": "Room temperature",
+    "power_threshold": "Heating threshold (kW)",
+    "show_supply": "Show supply",
+    "show_return": "Show return",
+    "show_delta": "Show ΔT",
+    "show_room": "Show room"
   },
   "light": {
     "light_bulb": "Bulb",
@@ -2060,5 +2068,19 @@
     "v_remote": "Remote",
     "v_unknown": "Unknown",
     "v_none": "None"
+  },
+  "heat_meter": {
+    "name": "Heat meter",
+    "idle": "No heating",
+    "heating": "Heating",
+    "unavailable": "Unavailable",
+    "supply": "Supply (Tv)",
+    "return": "Return (Tr)",
+    "delta": "ΔT",
+    "power": "Power",
+    "flow": "Flow",
+    "energy": "Energy",
+    "volume": "Volume",
+    "room": "Room"
   }
 }

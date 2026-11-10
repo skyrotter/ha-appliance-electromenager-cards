@@ -65,6 +65,7 @@ Alcuni esempi (elenco completo con anteprime nel [README in inglese](README.md#t
 | Acquario | `custom:appliance-aquarium-card` |
 | Contatore Linky | `custom:appliance-linky-card` |
 | Contatore del gas | `custom:appliance-gas-meter-card` |
+| Contatore di calore (teleriscaldamento) | `custom:appliance-heat-meter-card` |
 | Contatore elettrico (generico) | `custom:appliance-electric-meter-card` |
 | Valvola termostatica | `custom:appliance-trv-card` |
 | Batteria domestica | `custom:appliance-battery-card` |

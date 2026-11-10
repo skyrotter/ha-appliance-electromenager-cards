@@ -1253,7 +1253,15 @@
     "show_serving": "Tuile portion",
     "show_source": "Tuile source",
     "entity_close": "Commande de fermeture (bouton / script)",
-    "entity_stop": "Commande d'arrêt (bouton / script)"
+    "entity_stop": "Commande d'arrêt (bouton / script)",
+    "entity_supply_temp": "Température de départ (Tv)",
+    "entity_water_volume": "Volume d'eau total",
+    "entity_room_temp": "Température de la pièce",
+    "power_threshold": "Seuil de chauffe (kW)",
+    "show_supply": "Afficher le départ",
+    "show_return": "Afficher le retour",
+    "show_delta": "Afficher ΔT",
+    "show_room": "Afficher la pièce"
   },
   "light": {
     "light_bulb": "Ampoule",
@@ -2048,5 +2056,19 @@
     "v_remote": "À distance",
     "v_unknown": "Inconnu",
     "v_none": "Aucune"
+  },
+  "heat_meter": {
+    "name": "Compteur de chaleur",
+    "idle": "Pas de chauffe",
+    "heating": "Chauffe en cours",
+    "unavailable": "Indisponible",
+    "supply": "Départ (Tv)",
+    "return": "Retour (Tr)",
+    "delta": "ΔT",
+    "power": "Puissance",
+    "flow": "Débit",
+    "energy": "Énergie",
+    "volume": "Volume",
+    "room": "Pièce"
   }
 }
