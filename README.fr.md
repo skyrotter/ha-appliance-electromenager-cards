@@ -6,7 +6,7 @@
 [![Validate](https://github.com/skyrotter/ha-appliance-electromenager-cards/actions/workflows/validate.yml/badge.svg)](https://github.com/skyrotter/ha-appliance-electromenager-cards/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/LICENSE)
 
-[🇬🇧 English](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/README.md) · 🇫🇷 Français · [🇮🇹 Italiano](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/README.it.md) · [🇩🇪 Deutsch](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/README.de.md)
+[🇬🇧 English](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/README.md) · 🇫🇷 Français · [🇮🇹 Italiano](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/README.it.md) · [🇩🇪 Deutsch](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/README.de.md) · [🇪🇸 Español](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/README.es.md)
 
 ## ❤️ Soutenir le projet
 
@@ -14,7 +14,7 @@ Ce projet est gratuit et open source, développé sur mon temps libre. Si les ca
 
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/79-cartes.png" width="560" alt="79 cartes animées pour Home Assistant"></p>
 
-**96 cartes Lovelace pour l'électroménager**, chacune avec une illustration animée réaliste : tambour de lave-linge, flamme de poêle à granulés, chauffage diesel et sa couronne bleue, jacuzzi et ses jets, robot aspirateur, compteur Linky, batterie domestique… Elles affichent l'état en direct, la puissance, l'énergie et le coût, suivent le thème de Home Assistant (clair/sombre) et parlent français, anglais, allemand, norvégien, néerlandais, roumain, russe, serbe et italien.
+**96 cartes Lovelace pour l'électroménager**, chacune avec une illustration animée réaliste : tambour de lave-linge, flamme de poêle à granulés, chauffage diesel et sa couronne bleue, jacuzzi et ses jets, robot aspirateur, compteur Linky, batterie domestique… Elles affichent l'état en direct, la puissance, l'énergie et le coût, suivent le thème de Home Assistant (clair/sombre) et parlent français, anglais, allemand, norvégien, néerlandais, roumain, russe, serbe, italien et espagnol.
 
 Une simple prise connectée avec un capteur de puissance suffit. Les appareils connectés peuvent ajouter le programme, le temps restant, la progression, la porte, les températures…
 
