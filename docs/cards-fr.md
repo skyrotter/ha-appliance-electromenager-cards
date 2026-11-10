@@ -435,7 +435,7 @@ entity_weight: sensor.aqara_feeder_weight_per_day
 
 **Vanne motorisée** (`custom:appliance-water-valve-card`) : actionneur noir sur vanne à boule en laiton, levier rose qui tourne d'un quart de tour, eau qui circule dans le tuyau blanc, fuite, gel. Voir [water-valve.md](cards/water-valve.md).
 
-**Adoucisseur d'eau** (`custom:appliance-water-softener-card`) : cuve à résine et bac à sel en écorché, tête de commande avec écran LCD. Service, contre-lavage, aspiration de saumure, rinçage et alerte sel bas, avec les tuyaux animés. Voir [water-softener.md](cards/water-softener.md).
+**Adoucisseur d'eau** (`custom:appliance-water-softener-card`) : cuve à résine et bac à sel en écorché, tête de commande avec écran LCD. Service, contre-lavage, aspiration de saumure, rinçage et alerte sel bas, avec les tuyaux animés. Voir [water-softener.md](cards/water-softener.md). Une entité par phase est possible : `entity_backwash`, `entity_brine`, `entity_rinse` (une entité par phase : contre-lavage, aspiration de saumure, rinçage ; **on = en cours**, utilisées quand `entity` ne donne pas la phase).
 
 ```yaml
 type: custom:appliance-scale-card
