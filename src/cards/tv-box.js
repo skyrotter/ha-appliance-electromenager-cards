@@ -59,7 +59,7 @@
       led: '',
     },
   };
-  const BTN_KEYS = ['power', 'home', 'prev', 'play_pause', 'next', 'vol_down', 'mute', 'vol_up'];
+  const BTN_KEYS = ['power', 'home', 'prev', 'play_pause', 'next', 'source', 'vol_down', 'mute', 'vol_up'];
   const ALIAS = { firetvstickgen1: 'fire_tv_stick_gen1', firetvgen1: 'fire_tv_stick_gen1', firetv: 'fire_tv_stick', firetvstick: 'fire_tv_stick', amazonfiretv: 'fire_tv_stick', orange: 'orange_tv', orangetv: 'orange_tv', kaon: 'orange_tv', shield: 'shield_tv_pro', shieldtvpro: 'shield_tv_pro', xiaomi: 'xiaomi_tv_box_s', xiaomitvboxs: 'xiaomi_tv_box_s', mibox: 'xiaomi_tv_box_s', freebox: 'freebox_pop', freeboxpop: 'freebox_pop', playerpop: 'freebox_pop', googletv: 'google_tv', chromecast: 'google_tv', googletvstreamer: 'google_tv_streamer', tvstreamer: 'google_tv_streamer' };
   const modelKey = (m) => { const k = String(m || '').toLowerCase(); if (MODELS[k]) return k; const n = k.replace(/[^a-z0-9]/g, ''); return ALIAS[n] || 'shield_tv_pro'; };
 
@@ -342,6 +342,11 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       } else if (k === 'play_pause') call('media_play_pause');
       else if (k === 'prev') call('media_previous_track');
       else if (k === 'next') call('media_next_track');
+      else if (k === 'source') {
+        // source suivante dans source_list (HDMI 1 → HDMI 2 → …) ; select_source doit être géré par l'intégration
+        const list = Array.isArray(a.source_list) ? a.source_list : [];
+        if (list.length) call('select_source', { source: list[(list.indexOf(a.source) + 1) % list.length] });
+      }
       else if (k === 'mute') call('volume_mute', { is_volume_muted: !a.is_volume_muted });
       else if (k === 'home' && c.entity_remote) hass.callService('remote', 'send_command', { entity_id: c.entity_remote, command: 'HOME' });
       else if (k === 'vol_up' || k === 'vol_down') {
@@ -390,6 +395,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ['prev', 'mdi:skip-previous', 'previous', null, has(16)],
         ['play_pause', play ? 'mdi:pause' : 'mdi:play', play ? 'pause' : 'play', null, has(1) || has(16384), 'main'],
         ['next', 'mdi:skip-next', 'next', null, has(32)],
+        ['source', 'mdi:import', 'source', null, Array.isArray(a.source_list) && a.source_list.length > 1 && has(2048)],
         ['vol_down', 'mdi:volume-minus', 'vol_down', null, volOk],
         ['mute', muted ? 'mdi:volume-off' : 'mdi:volume-high', 'mute', muted, has(8)],
         ['vol_up', 'mdi:volume-plus', 'vol_up', null, volOk],

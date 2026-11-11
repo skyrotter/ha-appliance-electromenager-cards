@@ -8,7 +8,7 @@
 
 A floating screen sits next to the box: the artwork of what is playing with a slow Ken Burns zoom, an ambilight glow in the main colour of the artwork, the app, title and episode / artist, a running equaliser and the progress bar. Paused: the artwork dims and a pause icon pulses. Loading: a spinner. Home screen: an animated aurora in the colour of the box. Off or in standby: the screen goes dark with its red standby LED. The box answers too: the green stripe of the Shield lights up with a running light, the white LED of the Xiaomi turns on, the Player Pop glows on the table (the Google TV Streamer and Google TV have no status LED), and signal waves go from the box to the screen while playing. When the volume changes, a volume bar shows on screen.
 
-Remote buttons (only those the entity supports): power, home (with `entity_remote`), previous, play / pause, next, volume −, mute, volume +. With **Android TV Remote**, set `entity_remote`: turning on goes through the remote entity, which is more reliable.
+Remote buttons (only those the entity supports): power, home (with `entity_remote`), previous, play / pause, next, **source** (next source of the `source_list`, e.g. HDMI 1 → HDMI 2, when the integration supports `select_source`), volume −, mute, volume +. With **Android TV Remote**, set `entity_remote`: turning on goes through the remote entity, which is more reliable.
 
 ## Options
 
@@ -17,7 +17,7 @@ Remote buttons (only those the entity supports): power, home (with `entity_remot
 - `animations` (default true)
 - `compact: true` (small fixed slots: smaller title, tiles and buttons, the illustration takes the remaining height), `transparent: true` (no card background), `illustration_size` (%)
 - `show_status`, `show_controls`, `show_artwork`, `show_app`, `show_volume`, `show_power`
-- One checkbox per remote button: `show_btn_power`, `show_btn_home`, `show_btn_prev`, `show_btn_play_pause`, `show_btn_next`, `show_btn_vol_down`, `show_btn_mute`, `show_btn_vol_up`
+- One checkbox per remote button: `show_btn_power`, `show_btn_home`, `show_btn_prev`, `show_btn_play_pause`, `show_btn_next`, `show_btn_source`, `show_btn_vol_down`, `show_btn_mute`, `show_btn_vol_up`
 - `language: fr|en|de|it|es|nb|nl|pl|ro|ru|sr|sr-Latn`
 
 ## Examples
