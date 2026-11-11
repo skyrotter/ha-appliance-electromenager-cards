@@ -984,6 +984,8 @@
     "show_slider": "Show sliders",
     "show_tilt": "Show tilt",
     "image": "Your own image (URL)",
+    "entity_salt_max": "Salt tank capacity (entity)",
+    "salt_max": "Salt tank capacity (number)",
     "zones": "Zones (valves)",
     "zone_entity": "Entity",
     "zone_name": "Name",
