@@ -3,6 +3,7 @@
  * le circuit en serpentin, collecteur départ / retour au mur (hydraulique) ou câble chauffant
  * (heating_type: electric), thermostat mural. En chauffe, l'eau ou le courant circule, la dalle
  * rougeoit (--heat) et des ondes de chaleur montent du sol.
+ * `surface: wall` : mur chauffant (même circuit, vue de face : l'enduit est retiré à gauche pour montrer le serpentin).
  * États : off, heating, idle (allumé, consigne atteinte), fault. Entité climate (consigne ± et
  * marche / arrêt), switch / input_boolean / binary_sensor (vanne, circulateur) ou puissance seule.
  */
@@ -54,6 +55,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
 .elec .flow{stroke:#fff3c4;stroke-width:1.2;stroke-dasharray:2 8}
 @keyframes ufflow{to{stroke-dashoffset:-28}}
 .glow{opacity:calc(var(--heat) * .75);transition:opacity 1.5s}
+.glow2{opacity:calc(var(--heat) * .3);transition:opacity 1.5s}
 .wave{fill:none;stroke:var(--uf-heat-c);stroke-width:1.6;stroke-linecap:round;opacity:0}
 .heating .wave{animation:ufwave 3s ease-in infinite}
 .idle .wave{animation:ufwave 5s ease-in infinite;stroke-opacity:.5}
@@ -120,6 +122,44 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
  </g>
 </svg>`;
 
+  // mur chauffant (surface: wall) : mur vu de face, enduit retiré à gauche pour montrer le serpentin ; mêmes classes que le sol (couleurs, flux, lueur, ondes)
+  const WCOIL = 'M24 30 H138 Q148 30 148 40 Q148 50 138 50 H46 Q36 50 36 60 Q36 70 46 70 H138 Q148 70 148 80 Q148 90 138 90 H46 Q36 90 36 100 Q36 110 46 110 H138 Q148 110 148 120 Q148 130 138 130 H24';
+  const SVG_WALL = (label) => `
+<svg viewBox="0 0 270 170" role="img" aria-label="${esc(label)}">
+ <defs>
+  <linearGradient id="ufwwall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f1f3f5"/><stop offset="1" stop-color="#dde2e6"/></linearGradient>
+  <linearGradient id="ufglow" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff7a3d" stop-opacity=".75"/><stop offset="1" stop-color="#ff5a2a" stop-opacity=".2"/></linearGradient>
+  <clipPath id="ufwslab"><rect x="24" y="22" width="126" height="116"/></clipPath>
+ </defs>
+ <ellipse cx="135" cy="164" rx="128" ry="4" fill="#000" opacity=".15"/>
+ <!-- mur, plinthe, sol -->
+ <rect x="14" y="14" width="242" height="128" rx="3" fill="url(#ufwwall)" stroke="#c3cad1"/>
+ <rect x="0" y="142" width="270" height="20" fill="#b9a98f"/><rect x="14" y="136" width="242" height="6" fill="#e8e4dc" stroke="#c9c2b4" stroke-width=".8"/>
+ <!-- enduit retiré : chape et serpentin -->
+ <rect x="24" y="22" width="126" height="116" rx="2" fill="#cdc6ba" stroke="#a89c86" stroke-width="1.4"/>
+ <g clip-path="url(#ufwslab)"><path class="pipe" d="${WCOIL}"/><path class="flow" d="${WCOIL}"/></g>
+ <rect class="glow" x="24" y="22" width="126" height="116" rx="2" fill="url(#ufglow)"/>
+ <rect class="glow2" x="150" y="14" width="106" height="122" fill="#ff7a3d"/>
+ <!-- ondes de chaleur qui rayonnent du mur -->
+ <g><path class="wave" d="M170 128 q4 -5 0 -10 t0 -10"/><path class="wave" d="M188 128 q4 -5 0 -10 t0 -10"/><path class="wave" d="M206 128 q4 -5 0 -10 t0 -10"/>
+  <path class="wave" d="M224 128 q4 -5 0 -10 t0 -10"/><path class="wave" d="M242 128 q4 -5 0 -10 t0 -10"/></g>
+ <!-- thermostat -->
+ <rect x="186" y="34" width="30" height="36" rx="4" fill="#f9fafb" stroke="#b9c1c8"/>
+ <rect x="190" y="39" width="22" height="13" rx="2" fill="#1b1e22"/>
+ <text class="dsp" id="ufdsp" x="201" y="48.5">--</text>
+ <circle class="led" cx="201" cy="61" r="2.2"/>
+ <!-- collecteur (hydraulique) / boîtier du câble (électrique) -->
+ <g class="hyd">
+  <rect x="222" y="86" width="28" height="44" rx="3" fill="#f4f6f8" stroke="#b9c1c8"/>
+  <rect x="226" y="95" width="20" height="4" rx="2" fill="#d9483b"/><rect x="226" y="113" width="20" height="4" rx="2" fill="#2b7fd9"/>
+  <g fill="#5b636b"><circle cx="231" cy="97" r="2.2"/><circle cx="241" cy="97" r="2.2"/><circle cx="231" cy="115" r="2.2"/><circle cx="241" cy="115" r="2.2"/></g>
+ </g>
+ <g class="cab">
+  <rect x="224" y="96" width="24" height="28" rx="3" fill="#f4f6f8" stroke="#b9c1c8"/>
+  <path d="M236 102 l-4 7 h4 l-2 6 l6 -9 h-4 l2 -4 z" fill="#ff8a1f"/>
+ </g>
+</svg>`;
+
   const TILES = [
     ['temp', 'mdi:home-thermometer', 'show_temp'],
     ['target', 'mdi:thermometer-check', 'show_temp'],
@@ -176,7 +216,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       const c = this._c;
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="uftitle"></div><div class="badge" id="ufbadge"></div></div>
-        ${SVG(c.name || this._t('name'))}
+        ${(c.surface === 'wall' ? SVG_WALL : SVG)(c.name || this._t(c.surface === 'wall' ? 'name_wall' : 'name'))}
         <div class="alert" id="ufalert"></div>
         <div class="ctl" id="ufctl">
           <button class="sm" data-a="down"><ha-icon icon="mdi:minus"></ha-icon></button>
@@ -243,15 +283,15 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       const clamp = (x) => Math.max(0, Math.min(1, x));
       // lueur de la dalle : température du sol si connue (20 °C → floor_max, calcul en °C), sinon selon l'état
       const heat = !isNaN(floor) ? clamp((tc.toC(floor) - 20) / Math.max(1, tc.toC(floorMax) - 20)) : ({ heating: 0.8, idle: 0.3 }[st] || 0);
-      const elec = String(c.heating_type).toLowerCase() === 'electric';
-      card.className = `${st}${elec ? ' elec' : ''} ${c.animations === false ? 'noanim' : ''}`;
+      const elec = String(c.heating_type).toLowerCase() === 'electric', wall = c.surface === 'wall';
+      card.className = `${st}${elec ? ' elec' : ''}${wall ? ' wall' : ''} ${c.animations === false ? 'noanim' : ''}`;
       card.style.setProperty('--heat', (st === 'off' || st === 'fault' ? 0 : heat).toFixed(3));
 
-      r.getElementById('uftitle').textContent = c.name || this._t('name');
+      r.getElementById('uftitle').textContent = c.name || this._t(wall ? 'name_wall' : 'name');
       const badge = r.getElementById('ufbadge'); badge.textContent = this._t(st); badge.style.display = c.show_status === false ? 'none' : '';
       r.getElementById('ufdsp').textContent = st === 'off' ? 'OFF' : st === 'fault' ? 'Err' : !isNaN(temp) ? `${this._fmt(temp, 1)}°` : 'ON';
       const alerts = [];
-      if (!isNaN(floor) && floor > floorMax) alerts.push(this._t('floor_hot'));
+      if (!isNaN(floor) && floor > floorMax) alerts.push(this._t(wall ? 'wall_hot' : 'floor_hot'));
       if (!isNaN(water) && water > waterMax) alerts.push(this._t('water_hot'));
       const al = r.getElementById('ufalert'); al.textContent = alerts.join(' · '); al.classList.toggle('on', alerts.length > 0);
 
@@ -279,7 +319,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         const el = r.querySelector(`.tile[data-k="${k}"]`); const [show, val, unit] = V[k];
         el.classList.toggle('hide', !show || c[opt] === false);
         el.classList.toggle('bad', !!bad[k]);
-        el.querySelector('.lbl').textContent = this._l(k);
+        el.querySelector('.lbl').textContent = k === 'floor' && wall && !(c.labels && c.labels.floor) ? this._t('wall') : this._l(k);
         const small = document.createElement('small'); small.textContent = unit ?? '';
         el.querySelector('.v').replaceChildren(String(val ?? ''), small);
       });
@@ -317,6 +357,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         ent('entity'), ent('entity_temp', ['sensor', 'climate', 'water_heater']), ent('entity_target_temp'), ent('entity_floor_temp', 'sensor'), ent('entity_water_temp', 'sensor'),
         ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'), ent('entity_cost', 'sensor'),
         { name: 'price_per_kwh', selector: { number: { min: 0, step: 0.0001, mode: 'box' } } },
+        { name: 'surface', selector: { select: { options: ['floor', 'wall'] } } },
         { name: 'heating_type', selector: { select: { options: ['water', 'electric'] } } },
         { type: 'grid', name: '', schema: [tnum('floor_max', 20, 40, 0.5, 29), tnum('water_max', 25, 70, 1, 45), num('heat_threshold', 0, 5000, 1, 20, 'W')] },
         window.applianceTempField,
