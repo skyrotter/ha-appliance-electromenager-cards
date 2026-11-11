@@ -13669,6 +13669,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_slider": "Show sliders",
       "show_tilt": "Show tilt",
       "image": "Your own image (URL)",
+      "entity_salt_max": "Salt tank capacity (entity)",
+      "salt_max": "Salt tank capacity (number)",
       "zones": "Zones (valves)",
       "zone_entity": "Entity",
       "zone_name": "Name",
@@ -16060,6 +16062,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_slider": "Afficher les curseurs",
       "show_tilt": "Afficher l'inclinaison",
       "image": "Image perso (URL)",
+      "entity_salt_max": "Capacité maxi du bac à sel (entité)",
+      "salt_max": "Capacité maxi du bac à sel (valeur)",
       "zones": "Zones (vannes)",
       "zone_entity": "Entité",
       "zone_name": "Nom",
@@ -50803,17 +50807,21 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       else if (this._on(c.entity_refill)) phase = 'refill';
       // « service » : entité dédiée, texte « service », ou `entity` allumée dont le nom contient « service » (ex. « Cycle Service »)
       else if (this._on(c.entity_service) || /^(service|en.?service)$/i.test(raw.trim()) || (e && /^on$/i.test(raw) && /service/i.test(String(e.entity_id) + ' ' + ((e.attributes && e.attributes.friendly_name) || ''))) || (!isNaN(flow) && flow > 0.05)) phase = 'service';
-      const low = !isNaN(salt) && salt <= Number(c.salt_low);
-      return { phase, flow, salt, low };
+      // sel en kg / lb / g : avec la capacité maxi du bac (entity_salt_max, ex. un input_number, ou salt_max), la hauteur de sel dans le bac
+      // est salt / max ; sans maxi, ou si l'entité est déjà en %, la valeur est un pourcentage (comportement historique)
+      const mx = !isNaN(this._num(c.entity_salt_max)) ? this._num(c.entity_salt_max) : Number(c.salt_max);
+      const pct = !isNaN(salt) && mx > 0 && this._unit(c.entity_salt, '%') !== '%' ? salt / mx * 100 : salt;
+      const low = !isNaN(pct) && pct <= Number(c.salt_low);
+      return { phase, flow, salt, pct, low };
     }
 
     _render() {
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card;
-      const { phase, flow, salt, low } = this._compute();
+      const { phase, flow, salt, pct, low } = this._compute();
       card.className = `${phase}${low ? ' lowsalt' : ''}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`;
       card.style.setProperty('--spd', `${(isNaN(flow) ? 1.2 : Math.max(.5, Math.min(2.4, 2.4 - flow / 12))).toFixed(2)}s`);
-      card.style.setProperty('--salt', String(isNaN(salt) ? .6 : Math.max(.03, Math.min(1, salt / 100)).toFixed(3)));
+      card.style.setProperty('--salt', String(isNaN(pct) ? .6 : Math.max(.03, Math.min(1, pct / 100)).toFixed(3)));
       r.getElementById('wstitle').textContent = c.name || this._t('name');
       const state = low && !/^(backwash|brine|rinse|refill)$/.test(phase) ? 'lowsalt' : phase;
       r.getElementById('wsbadge').textContent = this._t(state);
@@ -50865,7 +50873,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ...window.applianceTileFields(this._hass),
         ent('entity', ['sensor', 'binary_sensor', 'switch', 'input_boolean', 'select']),
         ent('entity_backwash', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_brine', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_rinse', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_refill', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_service', ['binary_sensor', 'switch', 'input_boolean', 'sensor']),
-        ent('entity_flow', 'sensor'), ent('entity_capacity', 'sensor'), ent('entity_salt', 'sensor'),
+        ent('entity_flow', 'sensor'), ent('entity_capacity', 'sensor'), ent('entity_salt', 'sensor'), ent('entity_salt_max', ['sensor', 'input_number', 'number']), { name: 'salt_max', selector: { number: { min: 0, max: 2000, step: 1, mode: 'box' } } },
         ent('entity_hardness_in', 'sensor'), ent('entity_hardness_out', 'sensor'),
         ent('entity_today', 'sensor'), ent('entity_regen_days', 'sensor'), ent('entity_power', 'sensor'),
         { name: 'salt_low', default: 20, selector: { number: { min: 0, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },

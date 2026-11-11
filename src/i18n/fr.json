@@ -974,6 +974,8 @@
     "show_slider": "Afficher les curseurs",
     "show_tilt": "Afficher l'inclinaison",
     "image": "Image perso (URL)",
+    "entity_salt_max": "Capacité maxi du bac à sel (entité)",
+    "salt_max": "Capacité maxi du bac à sel (valeur)",
     "zones": "Zones (vannes)",
     "zone_entity": "Entité",
     "zone_name": "Nom",

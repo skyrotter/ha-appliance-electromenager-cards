@@ -22,7 +22,8 @@ The phase comes from the state of `entity` (a sensor, select, switch or binary s
 | `entity_service` | service phase (**on = running**): shows the blue « Service » state instead of the grey « Standby ». Also works when `entity` is on and its name contains « service » |
 | `entity_flow` | flow (L/min) |
 | `entity_capacity` | remaining capacity (%) |
-| `entity_salt` | salt level (%); alert at or below `salt_low` (20 %) |
+| `entity_salt` | salt level: in **%**, the salt height in the tank follows it; in **kg / lb / g**, add the tank capacity (`entity_salt_max` or `salt_max`). Alert at or below `salt_low` (20 % of the tank) |
+| `entity_salt_max`, `salt_max` | maximum salt the brine tank holds, in the same unit as `entity_salt`: an entity (`sensor`, `input_number`, `number`) or a fixed value. With it, the salt height in the drawing is `salt / maximum` (96 kg out of 150 kg = 64 %) |
 | `entity_hardness_in`, `entity_hardness_out` | hardness before and after, shown as `32 → 2 °f` |
 | `entity_today` | water softened today |
 | `entity_regen_days` | days before the next regeneration |
@@ -38,6 +39,9 @@ entity: sensor.softener_status
 entity_flow: sensor.softener_flow
 entity_capacity: sensor.softener_capacity_left
 entity_salt: sensor.softener_salt_level
+# salt in kg: the drawing follows salt / capacity
+# entity_salt: sensor.softener_salt_kg
+# entity_salt_max: input_number.salt_tank_capacity
 entity_hardness_in: sensor.water_hardness_in
 entity_hardness_out: sensor.water_hardness_out
 entity_regen_days: sensor.softener_days_to_regen
