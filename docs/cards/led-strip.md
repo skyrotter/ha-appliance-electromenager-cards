@@ -2,6 +2,8 @@
 
 `custom:appliance-led-strip-card`
 
+<p align="center"><img src="../led-strip.gif" width="520" alt="LED strip card: on / off module, color, brightness, effect"></p>
+
 An LED strip with **generic entities** (no brand): a `light` (WLED, Hue, Zigbee, Tuya, Govee…) or a simple `switch` / `input_boolean` (on / off module). The glow takes the **real color** of the light (`rgb_color`, `hs_color` or `color_temp_kelvin`, warm white otherwise) and follows its **brightness**; the dots of the strip blink while an effect runs.
 
 The drawing is just the **strip** (a flexible band with its LEDs) and its glow, with no room or decor around it.
