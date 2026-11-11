@@ -774,7 +774,6 @@
     "water_hot": "Water too hot"
   },
   "editor": {
-    "led_strip_style": "Installation (ceiling, roof, terrace)",
     "surface": "Installation (floor or wall)",
     "food_low": "Low hopper alert (%)",
     "hopper_capacity": "Hopper capacity (g)",

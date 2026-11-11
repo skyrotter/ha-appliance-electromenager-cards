@@ -1,6 +1,6 @@
 /* Carte « Ruban LED » — custom:appliance-led-strip-card
  * Ruban LED piloté par une entité `light` (couleur, luminosité, effet) ou un simple `switch` / `input_boolean` (module on / off).
- * Trois installations (`style`) : plafond (garage, sous-face d'un plafond), toiture (bord de toit, façade éclairée), terrasse (pourtour / plinthe).
+ * Dessin : le ruban seul (pastilles LED sur une bande souple) avec sa lueur, sans décor.
  * La lueur prend la couleur réelle de l'ampoule (rgb_color, hs_color, color_temp_kelvin), à défaut un blanc chaud, et suit la luminosité.
  * Commandes : marche / arrêt, curseur de luminosité (si l'entité sait varier), effet suivant (si l'entité a des effets).
  */
@@ -36,15 +36,14 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
 .tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
 .tile.hide{display:none}
 /* ---- illustration : la lueur suit la couleur (--ls-c) et la luminosité (--ls-b) ---- */
-.strip{fill:#d8dde2;stroke:#aab2ba;stroke-width:.8;transition:fill .5s}
-.on .strip{fill:rgb(var(--ls-c));filter:drop-shadow(0 0 4px rgba(var(--ls-c),.9))}
-.cone{fill:url(#lsg);opacity:0;transition:opacity .6s}
-.on .cone{opacity:calc(.25 + var(--ls-b) * .75)}
-.dot{fill:#fff;opacity:0}
-.on .dot{opacity:.9}
-.on.fx .dot{animation:lsfx 1.4s ease-in-out infinite;opacity:.9}
-.dot:nth-child(2n){animation-delay:-.35s!important}.dot:nth-child(3n){animation-delay:-.7s!important}.dot:nth-child(5n){animation-delay:-1.05s!important}
-@keyframes lsfx{50%{opacity:.15}}
+.sbase{fill:none;stroke:#d9dee3;stroke-width:12;stroke-linecap:round}
+.sglow{fill:none;stroke:rgb(var(--ls-c));stroke-width:34;stroke-linecap:round;filter:blur(9px);opacity:0;transition:opacity .6s}
+.on .sglow{opacity:calc(.25 + var(--ls-b) * .65)}
+.sled{fill:none;stroke:#aab2ba;stroke-width:6;stroke-dasharray:2.4 8.6;transition:stroke .5s}
+.on .sled{stroke:#fff;filter:drop-shadow(0 0 2px rgb(var(--ls-c)))}
+.on .sbase{stroke:rgb(var(--ls-c));stroke-opacity:.55}
+.on.fx .sled{animation:lsmove 1s linear infinite}
+@keyframes lsmove{to{stroke-dashoffset:-22}}
 .unavailable svg{filter:grayscale(.85) opacity(.65)}
 .noanim *{animation:none!important}
 ha-card.compact{display:flex;flex-direction:column;padding:6px}
@@ -54,34 +53,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 .compact .tiles{margin-top:4px;gap:4px}.compact .tile{padding:2px 5px;border-radius:8px}.compact .tile .v{font-size:12px;line-height:15px}
 `;
 
-  // Dessins : repères 270 × 150. Le dégradé #lsg (couleur de la lueur) est défini une fois pour les trois installations.
-  const DEFS = `<defs><linearGradient id="lsg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgb(var(--ls-c))" stop-opacity=".9"/><stop offset="1" stop-color="rgb(var(--ls-c))" stop-opacity="0"/></linearGradient>
-    <linearGradient id="lswall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eceff2"/><stop offset="1" stop-color="#d6dce1"/></linearGradient></defs>`;
-  const DOTS = (x0, x1, y) => Array.from({ length: 9 }, (_, i) => `<circle class="dot" cx="${(x0 + ((x1 - x0) * i) / 8).toFixed(1)}" cy="${y}" r="1.4"/>`).join('');
-  const SCENES = {
-    // garage : plafond vu en perspective, deux rubans fixés sous le plafond qui éclairent le mur et le sol
-    ceiling: `<rect x="10" y="10" width="250" height="26" rx="3" fill="#cfd5da" stroke="#b3bbc2"/>
-      <rect x="10" y="36" width="250" height="100" fill="url(#lswall)"/><rect x="0" y="136" width="270" height="14" fill="#9aa1a8"/>
-      <path class="cone" d="M30 36 H240 L262 136 H8 Z"/>
-      <rect class="strip" x="30" y="30" width="210" height="6" rx="3"/><g>${DOTS(36, 234, 33)}</g>
-      <rect x="150" y="62" width="80" height="74" rx="3" fill="#b9c1c8" stroke="#9aa3ab" opacity=".85"/><path d="M150 80 H230 M150 98 H230 M150 116 H230" stroke="#9aa3ab"/>`,
-    // bord de toiture : façade sous un toit, ruban le long de la sous-face du débord
-    roof: `<rect x="0" y="0" width="270" height="150" fill="#1d2433" opacity=".08"/>
-      <path d="M0 40 L60 6 H270 V40 Z" fill="#7a5a4a" stroke="#5b4236"/><path d="M0 40 H270 V46 H0 Z" fill="#a98f7c"/>
-      <rect x="10" y="46" width="250" height="96" fill="url(#lswall)"/><rect x="0" y="142" width="270" height="8" fill="#7d8a6e"/>
-      <path class="cone" d="M12 46 H258 L266 142 H4 Z"/>
-      <rect class="strip" x="12" y="43" width="246" height="5" rx="2.5"/><g>${DOTS(18, 252, 45.5)}</g>
-      <rect x="50" y="68" width="48" height="52" rx="2" fill="#bfe0f5" stroke="#9fb3c3" stroke-width="2"/><path d="M74 68 V120 M50 94 H98" stroke="#9fb3c3" stroke-width="2"/>
-      <rect x="170" y="72" width="30" height="70" rx="2" fill="#8d6e5a" stroke="#6d5444"/>`,
-    // terrasse : lames de bois, ruban sous le rebord (pourtour) qui éclaire le sol
-    terrace: `<rect x="0" y="0" width="270" height="150" fill="#1d2433" opacity=".08"/>
-      <rect x="10" y="30" width="250" height="60" fill="url(#lswall)"/><rect x="10" y="30" width="250" height="5" fill="#cfd5da"/>
-      <path d="M0 96 H270 V150 H0 Z" fill="#a98a63"/><path d="M0 108 H270 M0 120 H270 M0 132 H270" stroke="#8b6f4d" stroke-width="1.2"/>
-      <path class="cone" d="M14 92 H256 L270 150 H0 Z"/>
-      <rect class="strip" x="14" y="88" width="242" height="6" rx="3"/><g>${DOTS(20, 250, 91)}</g>
-      <rect x="10" y="90" width="250" height="6" fill="#cfd5da" opacity=".0"/>`,
-  };
-  const SVG = (label, style) => `<svg viewBox="0 0 270 150" role="img" aria-label="${label}">${DEFS}${SCENES[style] || SCENES.ceiling}</svg>`;
+  // Dessin : repères 270 × 100, bande souple ondulée ; la lueur est le même tracé flouté, teinté de la couleur de l'ampoule.
+  const STRIP = 'M16 62 C58 22 100 22 135 50 S212 78 254 38';
+  const SVG = (label) => `<svg viewBox="0 0 270 100" role="img" aria-label="${label}"><path class="sglow" d="${STRIP}"/><path class="sbase" d="${STRIP}"/><path class="sled" d="${STRIP}"/></svg>`;
 
   const TILES = [['brightness', 'mdi:brightness-6', 'show_brightness'], ['effect', 'mdi:palette-swatch-variant', 'show_effect'],
     ['power', 'mdi:flash', 'show_power'], ['energy', 'mdi:lightning-bolt-circle', 'show_energy']];
@@ -103,12 +77,12 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
     static getStubConfig(hass) {
       const ids = Object.keys((hass && hass.states) || {});
-      return { entity: ids.find((i) => /^light\./.test(i) && /(ruban|strip|led)/i.test(i)) || ids.find((i) => /^light\./.test(i)) || '', style: 'ceiling' };
+      return { entity: ids.find((i) => /^light\./.test(i) && /(ruban|strip|led)/i.test(i)) || ids.find((i) => /^light\./.test(i)) || '' };
     }
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { style: 'ceiling', show_status: true, show_controls: true, show_brightness: true, show_effect: true, show_power: true, show_energy: true, ...c };
+      this._c = { show_status: true, show_controls: true, show_brightness: true, show_effect: true, show_power: true, show_energy: true, ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -130,7 +104,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' }), c = this._c;
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="lstitle"></div><div class="badge" id="lsbadge"></div></div>
-        ${SVG((c.name || this._t('name')).replace(/"/g, ''), c.style)}
+        ${SVG((c.name || this._t('name')).replace(/"/g, ''))}
         <div class="ctl" id="lsctl"><button id="lspw" aria-pressed="false"><ha-icon icon="mdi:power"></ha-icon></button><input id="lsbr" class="hide" type="range" min="1" max="100" step="1" aria-label="${this._t('brightness')}"><button id="lsfx" class="hide"><ha-icon icon="mdi:palette-swatch-variant"></ha-icon></button></div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
@@ -221,7 +195,6 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._form.hass = this._hass; this._form.data = { ...this._c };
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
-        { name: 'style', selector: { select: { options: ['ceiling', 'roof', 'terrace'] } } },
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
@@ -232,7 +205,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('compact', false), bool('show_status'), bool('show_controls'), ...TILES.map(([, , o]) => bool(o)), bool('animations')] },
       ];
-      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'style' ? 'led_strip_style' : s.name, this._hass);
+      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
   }
   customElements.define(TAG + '-editor', ApplianceLedStripCardEditor);
