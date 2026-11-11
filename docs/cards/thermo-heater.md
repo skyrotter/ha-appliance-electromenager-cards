@@ -20,6 +20,8 @@ Every entity is optional. **Modes**: `off`, `pause` (on but not heating), `green
 | `entity_reserve` | hot water reserve in %: fills the tank. Without it, estimated from the temperature and the target |
 | `green_above` | below this power, the heater is in Pause; above it, Green (150 W). `running_above` still works as an alias |
 | `boost_above` | above this power, Boost (1000 W) |
+| `lcd_big` | `true` puts a **large readable value** on the tank (icon + temperature), since the small display is easy to miss on a small card. Default `false` |
+| `lcd_value` | with `lcd_big`: `current` (default, tank temperature, thermometer icon) or `target` (setpoint, target icon) |
 | `show_status`, `show_energy`, `show_power`, `show_mode`, `show_temp`, `show_bottom`, `show_target`, `show_reserve`, `animations`, `labels`, `language`, `illustration_size`, `transparent`, `tap_action`, `hold_action` | |
 
 ```yaml
