@@ -33,6 +33,8 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
 .tile.hide{display:none}
 /* ---- illustration ---- */
 .th-fan{transform-box:fill-box;transform-origin:50% 50%}
+.th-big{filter:drop-shadow(0 0 6px rgba(0,0,0,.85));pointer-events:none}
+.th-big text{fill:#fff;stroke:rgba(20,22,28,.8);stroke-width:14px;paint-order:stroke;stroke-linejoin:round;font:700 120px Roboto,Arial,sans-serif;text-anchor:middle;dominant-baseline:central}
 .th-lcd-txt{fill:#7fe0ff;font:700 29px 'Courier New',monospace;text-anchor:middle;dominant-baseline:central}.off .th-lcd-txt,.unavailable .th-lcd-txt{fill:#4f7d8f}
 .green .th-fan,.boost .th-fan{animation:thspin var(--spd) linear infinite}
 .boost .th-fan{animation-duration:calc(var(--spd) * .55)}
@@ -63,7 +65,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       <g class="th-elem"><path d="M563 1779l0 368c0,5 -5,9 -12,9l0 0c-7,0 -14,-4 -14,-9l2 -368c0,-5 6,-9 13,-9l0 0c7,0 12,4 12,9z"/><path d="M595 1779l0 369c0,5 5,9 12,9l0 0c7,0 14,-4 14,-9l-2 -369c0,-5 -6,-9 -13,-9l0 0c-7,0 -12,4 -12,9z"/><path d="M583 1732l-15 0c-14,0 -30,12 -30,24l0 20 25 0 0 -12c0,-4 6,-8 11,-8l9 0 0 -24z"/><path d="M575 1731l15 0c14,0 30,12 30,24l0 20 -25 0 0 -12c0,-4 -6,-8 -11,-9l-9 0 0 -24z"/></g>
       <rect fill="#d3d2d8" stroke="#2b2a29" x="524" y="2124" width="34" height="38"/><rect fill="#d3d2d8" stroke="#2b2a29" x="599" y="2124" width="34" height="38"/><rect fill="#7f7e75" stroke="#2b2a29" x="550" y="2124" width="49" height="38"/>
     </g>
-  </svg>`;
+  <g class="th-big" id="thbig"></g></svg>`;
 
   const TILES = [['energy', 'mdi:lightning-bolt-outline', 'show_energy'], ['power', 'mdi:flash', 'show_power'], ['mode', 'mdi:cog-sync', 'show_mode'],
     ['temp', 'mdi:thermometer', 'show_temp'], ['bottom', 'mdi:thermometer-low', 'show_bottom'], ['target', 'mdi:target', 'show_target'], ['reserve', 'mdi:gauge', 'show_reserve']];
@@ -160,6 +162,16 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       // donc à (1 − réserve) en partant du bas : réserve pleine → ballon rouge, réserve vide → ballon bleu (#307)
       r.getElementById('thg1').setAttribute('offset', String(Math.max(.02, Math.min(.98, 1 - f)).toFixed(3)));
 
+      // lcd_big : grande valeur lisible sur le ballon (icône thermomètre = température actuelle, cible = consigne, selon lcd_value)
+      const big = r.getElementById('thbig');
+      if (c.lcd_big === true) {
+        const cur = c.lcd_value !== 'target', v = cur ? temp : target;
+        const txt = `${this._fmt(v, 0)}${isNaN(v) ? '' : '°C'}`, w = txt.length * 72, slot = 130, x0 = 378 - (w + slot) / 2;
+        const ico = cur
+          ? '<g fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"><path d="M0 -42V12"/><circle cx="0" cy="26" r="18" fill="#fff"/></g>'
+          : '<g fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"><circle r="32"/><circle r="8" fill="#fff"/><path d="M0 -52V-36M0 36V52M-52 0H-36M36 0H52"/></g>';
+        big.innerHTML = `<g transform="translate(${(x0 + 45).toFixed(0)} 770)">${ico}</g><text x="${(x0 + slot + w / 2).toFixed(0)}" y="770">${txt}</text>`;
+      } else big.textContent = '';
       // écran dessiné sur l'appareil : température actuelle de l'eau
       r.getElementById('thlcd').textContent = isNaN(temp) ? '--°' : `${this._fmt(temp, 1)}°`;
       r.getElementById('thtitle').textContent = c.name || this._t('name');
@@ -219,7 +231,8 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
         { type: 'grid', name: '', schema: [num('green_above', 0, 2000, 1, 150, 'W'), num('boost_above', 100, 5000, 10, 1000, 'W')] },
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
-        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_energy'), bool('show_power'), bool('show_mode'), bool('show_temp'), bool('show_bottom'), bool('show_target'), bool('show_reserve'), bool('animations')] },
+        { name: 'lcd_value', selector: { select: { mode: 'dropdown', options: [{ value: 'current', label: window.applianceEditorLabel('lcd_value_current', this._hass) }, { value: 'target', label: window.applianceEditorLabel('lcd_value_target', this._hass) }] } } },
+        { type: 'grid', name: '', schema: [bool('lcd_big', false), bool('show_status'), bool('show_energy'), bool('show_power'), bool('show_mode'), bool('show_temp'), bool('show_bottom'), bool('show_target'), bool('show_reserve'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
