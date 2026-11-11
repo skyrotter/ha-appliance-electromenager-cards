@@ -4,6 +4,8 @@
  * portions et poids du jour, erreur, indicateur LED, sécurité enfant, mode (manuel / programmé), portions réglées, poids d'une portion.
  * Animations : croquettes qui tombent de la trappe dans la gamelle pendant la distribution, tas de croquettes qui grossit avec les
  * portions du jour, écran qui s'allume, voyant rouge qui clignote en cas d'erreur, cadenas affiché quand la sécurité enfant est active.
+ * Réserve de croquettes (facultatif) : `entity_level` (grammes restants ou %) + `hopper_capacity` → niveau teinté dans la trémie, tuiles Réserve et
+ * Autonomie (jours), alerte sous `food_low` %, bouton Remplir (remet `entity_level` à la capacité).
  * États : ready, feeding, error, unavailable.
  */
 (() => {
@@ -34,7 +36,7 @@
 .feeding .badge{background:color-mix(in srgb,var(--kib) 28%,transparent);color:var(--kib)}
 .error .badge{background:color-mix(in srgb,var(--pf-alert) 22%,transparent);color:var(--pf-alert)}
 .alert{display:none;margin-top:4px;font-size:11px;color:var(--pf-alert);font-weight:500;text-align:center}
-.error .alert{display:block}
+.error .alert,.lowfood .alert{display:block}
 svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible;cursor:pointer}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:6px;margin-top:6px}
 .tile{box-sizing:border-box;display:flex;flex-direction:column;background:var(--ac-tile-bg,rgba(127,127,127,.09));border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
@@ -77,6 +79,9 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
 .mound.dots{fill:#8b4a17;stroke:none}
 .feeding .mound{animation:pfbump .55s ease-in-out infinite}
 @keyframes pfbump{50%{transform:scale(calc(.3 + var(--fill) * .75)) translateY(-1px)}}
+.level{fill:#c98a4b;opacity:.6;mix-blend-mode:multiply;transition:y .8s,height .8s,fill .4s}
+.lowfood .level{fill:#e0643a;animation:pfblink 1.6s ease-in-out infinite}
+.tile.bad .v{color:var(--pf-alert)}
 .noanim *{animation:none!important;transition:none!important}
 
 /* ---- compact : petits emplacements fixes ---- */
@@ -100,6 +105,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 <svg viewBox="0 0 300 180" role="img" aria-label="${esc(label)}">
  <g transform="translate(${bx} ${by}) scale(${k.toFixed(5)})">
   <image class="photo" href="${m.img}" x="0" y="0" width="${m.pw}" height="${m.ph}"/>
+  <!-- niveau de croquettes dans la trémie (haut du réservoir, sous le couvercle) -->
+  <clipPath id="pfhop"><rect x="20" y="62" width="316" height="112" rx="30"/></clipPath>
+  <g clip-path="url(#pfhop)"><rect class="level" x="20" y="174" width="316" height="0"/></g>
   <!-- tas de croquettes dans la gamelle -->
   <g class="mounds"><ellipse class="mound" cx="232" cy="378" rx="46" ry="17"/><g class="mound dots"><circle cx="212" cy="368" r="4"/><circle cx="226" cy="362" r="4"/><circle cx="242" cy="364" r="4"/><circle cx="256" cy="370" r="4"/><circle cx="234" cy="372" r="4"/></g></g>
   <!-- croquettes qui tombent de la trappe -->
@@ -126,7 +134,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { show_status: true, show_controls: true, show_portions: true, show_weight: true, show_source: true, show_serving: true, show_mode: true, daily_goal: 6, ...c };
+      this._c = { show_status: true, show_controls: true, show_portions: true, show_weight: true, show_source: true, show_serving: true, show_mode: true, show_level: true, show_autonomy: true, food_low: 25, daily_goal: 6, ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -160,11 +168,13 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
           <div class="tile hide" data-k="serving"><div class="l"><ha-icon icon="mdi:bowl-mix"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>
           <div class="tile hide" data-k="source"><div class="l"><ha-icon icon="mdi:history"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>
           <div class="tile hide" data-k="mode"><div class="l"><ha-icon icon="mdi:calendar-clock"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>
+          <div class="tile hide" data-k="level"><div class="l"><ha-icon icon="mdi:storage-tank-outline"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>
+          <div class="tile hide" data-k="autonomy"><div class="l"><ha-icon icon="mdi:calendar-end"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>
         </div>
       </ha-card>`;
       this._card = root.querySelector('ha-card');
       window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity_feed || this._c.entity_portions));
-      const tgt = { portions: 'entity_portions', weight: 'entity_weight', serving: 'entity_serving', source: 'entity_source', mode: 'entity_mode' };
+      const tgt = { portions: 'entity_portions', weight: 'entity_weight', serving: 'entity_serving', source: 'entity_source', mode: 'entity_mode', level: 'entity_level', autonomy: 'entity_level' };
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => this._more(this._c[tgt[el.dataset.k]])));
       root.getElementById('pfctrls').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { e.stopPropagation(); this._cmd(b.dataset.k); } });
       this._root = root; this._built = true; this._lastPortions = undefined;
@@ -182,10 +192,26 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         this._feedAnim(); this._render();
       } else if (k === 'led' && c.entity_led) h.callService('homeassistant', 'toggle', { entity_id: c.entity_led });
       else if (k === 'lock' && c.entity_child_lock) h.callService('homeassistant', 'toggle', { entity_id: c.entity_child_lock });
-      else if (k === 'mode' && c.entity_mode) {
+      else if (k === 'refill' && c.entity_level) {
+        // trémie remplie : remet le niveau à la capacité (grammes, ou 100 si l'entité est en %)
+        const d = c.entity_level.split('.')[0], pct = /%/.test(this._unit(c.entity_level));
+        h.callService(d, 'set_value', { entity_id: c.entity_level, value: pct ? 100 : this._cap() });
+      } else if (k === 'mode' && c.entity_mode) {
         const s = this._st(c.entity_mode), opts = (s && s.attributes && s.attributes.options) || [];
         if (opts.length) h.callService('select', 'select_option', { entity_id: c.entity_mode, option: opts[(opts.indexOf(s.state) + 1) % opts.length] });
       }
+    }
+
+    _cap() { return Number(this._c.hopper_capacity) > 0 ? Number(this._c.hopper_capacity) : 1500; }
+    // niveau de la trémie : { frac (0-1), grams, days } ; NaN si `entity_level` absente ou indisponible
+    _level() {
+      const c = this._c, v = this._num(c.entity_level), cap = this._cap();
+      if (isNaN(v)) return { frac: NaN, grams: NaN, days: NaN };
+      const frac = Math.max(0, Math.min(1, /%/.test(this._unit(c.entity_level)) ? v / 100 : v / cap)), grams = frac * cap;
+      // consommation par jour : option daily_consumption (g), sinon poids du jour, sinon portions du jour × poids d'une portion
+      const w = this._num(c.entity_weight), pp = this._num(c.entity_portions), pw = this._num(c.entity_portion_weight);
+      const daily = Number(c.daily_consumption) > 0 ? Number(c.daily_consumption) : w > 0 ? w : pp > 0 && pw > 0 ? pp * pw : NaN;
+      return { frac, grams, days: isNaN(daily) ? NaN : grams / daily };
     }
 
     _state() {
@@ -206,21 +232,27 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const pp = this._num(c.entity_portions);
       if (this._lastPortions !== undefined && !isNaN(pp) && pp > this._lastPortions) this._feedAnim();
       if (!isNaN(pp)) this._lastPortions = pp;
-      const st = this._state();
-      card.className = `${st}${this._isOn(c.entity_child_lock) ? ' locked' : ''}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`;
+      const st = this._state(), lv = this._level();
+      const low = !isNaN(lv.frac) && lv.frac * 100 <= (Number(c.food_low) >= 0 ? Number(c.food_low) : 25);
+      card.className = `${st}${low ? ' lowfood' : ''}${this._isOn(c.entity_child_lock) ? ' locked' : ''}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`;
       const goal = Number(c.daily_goal) > 0 ? Number(c.daily_goal) : 6;
       card.style.setProperty('--fill', (isNaN(pp) ? 0 : Math.max(0, Math.min(1, pp / goal))).toFixed(3));
 
       r.getElementById('pftitle').textContent = c.name || m.label;
       const badge = r.getElementById('pfbadge'); badge.textContent = this._t(st); badge.style.display = c.show_status === false ? 'none' : '';
       const es = this._st(c.entity_error);
-      r.getElementById('pfalert').textContent = st === 'error' ? `${this._t('error')}${es && !/^(on|true)$/i.test(es.state) ? ` : ${es.state}` : ''}` : '';
+      // niveau dans la trémie : hauteur 112 (px de la photo) × fraction, ancrée en bas
+      const lvl = r.querySelector('.level'), hh = isNaN(lv.frac) ? 0 : lv.frac * 112;
+      lvl.setAttribute('height', hh.toFixed(1)); lvl.setAttribute('y', (174 - hh).toFixed(1));
+      r.getElementById('pfalert').textContent = st === 'error' ? `${this._t('error')}${es && !/^(on|true)$/i.test(es.state) ? ` : ${es.state}` : ''}` : low && st !== 'unavailable' ? this._t('low_food') : '';
 
       const modeS = this._st(c.entity_mode), ledOn = this._isOn(c.entity_led), lockOn = this._isOn(c.entity_child_lock);
       const btns = [
         ['feed', 'mdi:food-drumstick', this._t('feed'), 'main', !!c.entity_feed && !!this._st(c.entity_feed)],
         ['led', 'mdi:led-on', this._t('led'), ledOn ? 'on' : '', !!this._st(c.entity_led)],
         ['lock', lockOn ? 'mdi:lock' : 'mdi:lock-open-variant', this._t('child_lock'), lockOn ? 'on' : '', !!this._st(c.entity_child_lock)],
+        // Remplir : seulement si le niveau est un input_number / number (modifiable)
+        ['refill', 'mdi:bucket-outline', this._t('refill'), '', !!this._st(c.entity_level) && /^(input_number|number)\./.test(c.entity_level)],
       ].filter((b) => b[4] && c.show_controls !== false);
       const ctr = r.getElementById('pfctrls');
       ctr.classList.toggle('hide', !btns.length);
@@ -238,6 +270,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         serving: [!!this._st(c.entity_serving) && c.show_serving !== false, this._fmt(sv, 0), isNaN(pw) ? this._t('portions_unit') : `× ${this._fmt(pw, 0)} g`],
         source: [!!src && c.show_source !== false, this._tr(val(src)), ''],
         mode: [!!modeS && c.show_mode !== false, this._tr(val(modeS)), ''],
+        level: [!isNaN(lv.frac) && c.show_level !== false, this._fmt(lv.grams, 0), `g · ${this._fmt(lv.frac * 100, 0)} %`],
+        autonomy: [!isNaN(lv.days) && c.show_autonomy !== false, this._fmt(lv.days, lv.days < 10 ? 1 : 0), this._t('days_short')],
       };
       Object.entries(V).forEach(([k, [show, v, unit]]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`);
@@ -245,6 +279,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         el.querySelector('.lbl').textContent = this._l(k);
         const small = document.createElement('small'); small.textContent = unit;
         el.querySelector('.v').replaceChildren(String(v), small);
+        el.classList.toggle('bad', low && (k === 'level' || k === 'autonomy'));
         if (k === 'mode') el.onclick = () => this._cmd('mode');
       });
     }
@@ -279,10 +314,14 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ...window.applianceTileFields(this._hass),
         ent('entity_feed'), { name: 'feed_option', selector: { text: {} } }, ent('entity_source'), ent('entity_serving', 'number'), ent('entity_portion_weight', 'number'),
         ent('entity_portions', 'sensor'), ent('entity_weight', 'sensor'), ent('entity_error'), ent('entity_led', 'switch'), ent('entity_child_lock', 'switch'), ent('entity_mode', 'select'),
+        ent('entity_level', ['input_number', 'number', 'sensor']),
+        { name: 'hopper_capacity', default: 1500, selector: { number: { min: 50, max: 20000, step: 50, mode: 'box', unit_of_measurement: 'g' } } },
+        { name: 'daily_consumption', selector: { number: { min: 0, max: 2000, step: 5, mode: 'box', unit_of_measurement: 'g' } } },
+        { name: 'food_low', default: 25, selector: { number: { min: 0, max: 100, step: 5, mode: 'box', unit_of_measurement: '%' } } },
         { name: 'daily_goal', default: 6, selector: { number: { min: 1, max: 20, step: 1, mode: 'box' } } },
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', cs: 'Čeština', hu: 'Magyar', sr: 'Српски', 'sr-Latn': 'Srpski' }[value] || value })) } } },
-        { type: 'grid', name: '', schema: [bool('show_status'), bool('compact', false), bool('show_controls'), bool('show_portions'), bool('show_weight'), bool('show_serving'), bool('show_source'), bool('show_mode'), bool('animations')] },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('compact', false), bool('show_controls'), bool('show_portions'), bool('show_weight'), bool('show_serving'), bool('show_source'), bool('show_mode'), bool('show_level'), bool('show_autonomy'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'pet_feeder_model' : s.name, this._hass);
     }

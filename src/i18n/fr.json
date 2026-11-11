@@ -768,6 +768,10 @@
     "water_hot": "Eau trop chaude"
   },
   "editor": {
+    "food_low": "Alerte réserve basse (%)",
+    "hopper_capacity": "Capacité du bac (g)",
+    "daily_consumption": "Consommation par jour (g, facultatif)",
+    "show_autonomy": "Afficher l'autonomie",
     "entity_pump": "Pompe de puits",
     "entity_master": "Arrosage auto (on = activé)",
     "entity_soil": "Humidité du sol",
@@ -2137,6 +2141,11 @@
     "serving": "Portion",
     "source": "Dernière",
     "mode": "Mode",
+    "level": "Réserve",
+    "autonomy": "Autonomie",
+    "refill": "Remplir",
+    "low_food": "Réserve de croquettes basse",
+    "days_short": "jours",
     "portions_unit": "portions",
     "v_schedule": "Programmé",
     "v_manual": "Manuel",
