@@ -10,6 +10,7 @@ A resin water softener (Culligan type): cut-away resin tank with its control hea
 - **Backwash**: the resin bed is lifted and the water turns muddy.
 - **Brine draw**: the brine goes from the salt tank to the resin, which glows.
 - **Rinse**: fast rinse to the drain.
+- **Water return**: the brine tank is refilled (the brine level rises).
 - **Low salt**: red alert, the lid of the brine tank blinks.
 
 The phase comes from the state of `entity` (a sensor, select, switch or binary sensor: `backwash`, `contre-lavage`, `brine`, `saumure`, `regeneration`, `rinse`, `rinçage`, `off`…). Without it, the card is in service when `entity_flow` is above 0.05 and in standby otherwise.
@@ -17,7 +18,8 @@ The phase comes from the state of `entity` (a sensor, select, switch or binary s
 | Option | What it does |
 |---|---|
 | `entity` | state of the softener (text of the current phase, or on / off) |
-| `entity_backwash`, `entity_brine`, `entity_rinse` | one entity per phase (`binary_sensor`, `switch`, `input_boolean` or `sensor`, **on = running**): backwash, brine draw, rinse. Used when `entity` does not give the phase; priority backwash > brine > rinse |
+| `entity_backwash`, `entity_brine`, `entity_rinse`, `entity_refill` | one entity per phase (`binary_sensor`, `switch`, `input_boolean` or `sensor`, **on = running**): backwash, brine draw, rinse, water return (brine tank refill). Used when `entity` does not give the phase; priority backwash > brine > rinse > refill |
+| `entity_service` | service phase (**on = running**): shows the blue « Service » state instead of the grey « Standby ». Also works when `entity` is on and its name contains « service » |
 | `entity_flow` | flow (L/min) |
 | `entity_capacity` | remaining capacity (%) |
 | `entity_salt` | salt level (%); alert at or below `salt_low` (20 %) |

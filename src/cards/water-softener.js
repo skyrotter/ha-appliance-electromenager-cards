@@ -1,6 +1,6 @@
 /* Carte « Adoucisseur d'eau » — custom:appliance-water-softener-card 
  * Adoucisseur à résine (type Culligan) : cuve à résine avec tête de commande (écran LCD, boutons) et bac à sel.
- * Phases : service (eau adoucie), contre-lavage, aspiration de saumure, rinçage ; alerte sel bas.
+ * Phases : service (eau adoucie), contre-lavage, aspiration de saumure, rinçage, renvoi d'eau (remplissage du bac à sel) ; alerte sel bas.
  * Tuiles : débit, capacité restante, sel, dureté (entrée → sortie), consommation du jour, prochaine régénération, puissance.
  */
 (() => {
@@ -17,7 +17,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--ws-ok:var(--appli
 .title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
 .service .badge{background:color-mix(in srgb,var(--ws-cold) 22%,transparent);color:var(--ws-cold)}
-.backwash .badge,.brine .badge,.rinse .badge{background:color-mix(in srgb,var(--ws-warn) 24%,transparent);color:var(--ws-warn)}
+.backwash .badge,.brine .badge,.rinse .badge,.refill .badge{background:color-mix(in srgb,var(--ws-warn) 24%,transparent);color:var(--ws-warn)}
 .lowsalt .badge{background:color-mix(in srgb,var(--ws-alert) 22%,transparent);color:var(--ws-alert)}
 .body{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:4px}
 svg{display:block;flex:0 1 calc(190px * var(--illus-scale,1));width:calc(190px * var(--illus-scale,1));max-width:100%;height:auto;margin:0 auto;cursor:pointer;overflow:visible}
@@ -39,6 +39,7 @@ svg{display:block;flex:0 1 calc(190px * var(--illus-scale,1));width:calc(190px *
 .backwash .pin .pflow,.backwash .pdr .pflow{opacity:1;animation:wsd var(--spd) linear infinite}
 .rinse .pin .pflow,.rinse .pdr .pflow{opacity:1;animation:wsd calc(var(--spd) * .6) linear infinite}
 .brine .pbr .pflow,.brine .pdr .pflow{opacity:1;animation:wsd calc(var(--spd) * 1.4) linear infinite}
+.refill .pin .pflow,.refill .pbr .pflow{opacity:1;animation:wsd var(--spd) linear infinite}.refill .pbr .pflow{stroke:#6f8cff;animation-direction:reverse}
 .pbr .pflow{animation-direction:normal}
 @keyframes wsd{to{stroke-dashoffset:-16}}
 .drop{fill:#7fdcff;opacity:0}
@@ -57,13 +58,15 @@ svg{display:block;flex:0 1 calc(190px * var(--illus-scale,1));width:calc(190px *
 .muddy{fill:#b08a5a;opacity:0;transition:opacity .6s}.backwash .muddy{opacity:.32}
 .brinew{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(var(--lvl));transition:transform 1.4s ease}
 .brine .brinew{animation:wsbrine 5s ease-in-out infinite alternate}
+.refill .brinew{animation:wsrefill 5s ease-in-out infinite alternate}
+@keyframes wsrefill{from{transform:scaleY(.55)}to{transform:scaleY(.9)}}
 @keyframes wsbrine{from{transform:scaleY(.9)}to{transform:scaleY(.55)}}
 .salt{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(var(--salt));transition:transform 1.2s ease}
 .alertw{opacity:0}.lowsalt .alertw{opacity:1;animation:wsblink 1s ease-in-out infinite}
 .lowsalt .lid{animation:wsblink 1.6s ease-in-out infinite}
 @keyframes wsblink{50%{opacity:.35}}
 .lcdt{font:700 6.6px/1 ui-monospace,Consolas,monospace;fill:#2c3a10;text-anchor:middle;letter-spacing:.2px}
-.led{fill:#43d17a}.backwash .led,.brine .led,.rinse .led{fill:#ffa000;animation:wsblink .8s steps(2) infinite}.lowsalt .led{fill:#e53935}
+.led{fill:#43d17a}.backwash .led,.brine .led,.rinse .led,.refill .led{fill:#ffa000;animation:wsblink .8s steps(2) infinite}.lowsalt .led{fill:#e53935}
 .off svg,.unavailable svg{filter:grayscale(.85) opacity(.65)}
 .noanim *{animation:none!important}
 /* ---- compact : petits emplacements fixes ; l'illustration prend la hauteur restante, tuiles en colonne ---- */
@@ -121,7 +124,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
   const RE = {
     backwash: /backwash|back.?wash|contre.?lavage|d[ée]tassage|gegenstrom/i,
     brine: /brine|saumure|aspir|draw|slow|regener|r[ée]g[ée]n[ée]ration|recharge|regen/i,
-    rinse: /rins|rin[cç]|fast|spül|spuel|refill|remplissage|renvoi/i,
+    rinse: /rins|rin[cç]|fast|spül|spuel/i,
+    refill: /refill|remplissage|renvoi|water.?return|return/i,
   };
 
   class ApplianceWaterSoftenerCard extends HTMLElement {
@@ -170,18 +174,21 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const c = this._c, e = this._st(c.entity);
       const flow = this._num(c.entity_flow), salt = this._num(c.entity_salt);
       const raw = e ? String(e.state) : '';
-      const known = [c.entity, c.entity_flow, c.entity_capacity, c.entity_salt, c.entity_backwash, c.entity_brine, c.entity_rinse].some((i) => { const s = this._st(i); return s && !/^(unavailable|unknown)$/i.test(String(s.state)); });
+      const known = [c.entity, c.entity_flow, c.entity_capacity, c.entity_salt, c.entity_backwash, c.entity_brine, c.entity_rinse, c.entity_refill, c.entity_service].some((i) => { const s = this._st(i); return s && !/^(unavailable|unknown)$/i.test(String(s.state)); });
       let phase = 'idle';
       if (!known) phase = 'unavailable';
       else if (e && /^(off)$/i.test(raw)) phase = 'off';
       else if (RE.backwash.test(raw)) phase = 'backwash';
+      else if (RE.refill.test(raw)) phase = 'refill';
       else if (RE.rinse.test(raw)) phase = 'rinse';
       else if (RE.brine.test(raw) || (e && /^on$/i.test(raw) && /regen/i.test(String(e.entity_id) + JSON.stringify(e.attributes || {})))) phase = 'brine';
       // une entité par phase (interrupteur / binary_sensor), prises en compte si `entity` ne donne pas déjà la phase
       else if (this._on(c.entity_backwash)) phase = 'backwash';
       else if (this._on(c.entity_brine)) phase = 'brine';
       else if (this._on(c.entity_rinse)) phase = 'rinse';
-      else if (/^(service|en.?service)$/i.test(raw.trim()) || (!isNaN(flow) && flow > 0.05)) phase = 'service';
+      else if (this._on(c.entity_refill)) phase = 'refill';
+      // « service » : entité dédiée, texte « service », ou `entity` allumée dont le nom contient « service » (ex. « Cycle Service »)
+      else if (this._on(c.entity_service) || /^(service|en.?service)$/i.test(raw.trim()) || (e && /^on$/i.test(raw) && /service/i.test(String(e.entity_id) + ' ' + ((e.attributes && e.attributes.friendly_name) || ''))) || (!isNaN(flow) && flow > 0.05)) phase = 'service';
       const low = !isNaN(salt) && salt <= Number(c.salt_low);
       return { phase, flow, salt, low };
     }
@@ -194,7 +201,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       card.style.setProperty('--spd', `${(isNaN(flow) ? 1.2 : Math.max(.5, Math.min(2.4, 2.4 - flow / 12))).toFixed(2)}s`);
       card.style.setProperty('--salt', String(isNaN(salt) ? .6 : Math.max(.03, Math.min(1, salt / 100)).toFixed(3)));
       r.getElementById('wstitle').textContent = c.name || this._t('name');
-      const state = low && phase !== 'backwash' && phase !== 'brine' && phase !== 'rinse' ? 'lowsalt' : phase;
+      const state = low && !/^(backwash|brine|rinse|refill)$/.test(phase) ? 'lowsalt' : phase;
       r.getElementById('wsbadge').textContent = this._t(state);
       r.getElementById('wslcd').textContent = this._t(`lcd_${state}`);
       const fu = this._unit(c.entity_flow, 'L/min'), tu = this._unit(c.entity_today, 'L');
@@ -243,7 +250,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'transparent', selector: { boolean: {} } },
         ...window.applianceTileFields(this._hass),
         ent('entity', ['sensor', 'binary_sensor', 'switch', 'input_boolean', 'select']),
-        ent('entity_backwash', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_brine', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_rinse', ['binary_sensor', 'switch', 'input_boolean', 'sensor']),
+        ent('entity_backwash', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_brine', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_rinse', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_refill', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_service', ['binary_sensor', 'switch', 'input_boolean', 'sensor']),
         ent('entity_flow', 'sensor'), ent('entity_capacity', 'sensor'), ent('entity_salt', 'sensor'),
         ent('entity_hardness_in', 'sensor'), ent('entity_hardness_out', 'sensor'),
         ent('entity_today', 'sensor'), ent('entity_regen_days', 'sensor'), ent('entity_power', 'sensor'),
