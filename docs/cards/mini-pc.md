@@ -3,6 +3,7 @@
 `custom:appliance-mini-pc-card`
 
 <p align="center"><img src="../home-tech.gif" width="720" alt="Mini PC, NAS, TV box and smart scale cards"></p>
+<p align="center"><img src="../mini-pc-lenovo.gif" width="640" alt="Mini PC card: Lenovo ThinkCentre M720s SFF and M920q Tiny models"></p>
 
 **Mini PC** (cut-out photo of the BMAX B9 Max): a home server running Home Assistant, Proxmox, Jellyfin… monitored with **Glances** or **System Monitor**. The power button breathes in blue, a light sweep runs across the case, warm air leaves the side vents (faster with the CPU load), heat rises above the lid when busy (red when overheating), network packets go up and down the cable to the globe (download in blue, upload in green, speed and brightness follow the throughput), and three neon gauges show CPU, RAM and disk.
 
