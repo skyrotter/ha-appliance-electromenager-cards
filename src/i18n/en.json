@@ -771,6 +771,10 @@
     "water_hot": "Water too hot"
   },
   "editor": {
+    "food_low": "Low hopper alert (%)",
+    "hopper_capacity": "Hopper capacity (g)",
+    "daily_consumption": "Food eaten per day (g, optional)",
+    "show_autonomy": "Show the autonomy",
     "entity_pump": "Well pump",
     "entity_master": "Auto watering (on = enabled)",
     "entity_soil": "Soil moisture",
@@ -2151,6 +2155,11 @@
     "serving": "Serving",
     "source": "Last feed",
     "mode": "Mode",
+    "level": "Hopper",
+    "autonomy": "Autonomy",
+    "refill": "Refill",
+    "low_food": "Food running low",
+    "days_short": "days",
     "portions_unit": "portions",
     "v_schedule": "Schedule",
     "v_manual": "Manual",
