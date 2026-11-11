@@ -150,6 +150,7 @@ function buildForm(kind) {
           ...(["radiator", "towel_dryer", "ac_split"].includes(kind) ? [
             { name: "lcd_value", selector: { select: { mode: "dropdown", options: [
               { value: "target", label: tr(null, "lcd_value_target") }, { value: "current", label: tr(null, "lcd_value_current") }] } } },
+            { name: "lcd_big", selector: { boolean: {} }, default: false },
           ] : []),
           ...(["ac_split", "heat_pump"].includes(kind) ? [
             { name: "hvac", selector: { select: { mode: "dropdown", options: [
