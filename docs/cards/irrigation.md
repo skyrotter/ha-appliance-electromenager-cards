@@ -2,6 +2,8 @@
 
 `custom:appliance-irrigation-card`
 
+<p align="center"><img src="../irrigation.gif" width="376" alt="Irrigation card: zones, pump, rain"></p>
+
 A garden watering card with **generic entities** (no brand): 1 to 8 zones, a well pump, a rain sensor, soil moisture. A sprinkler head is drawn per zone and sprays when its zone is on; a cloud and raindrops appear when it rains; the pump LED blinks when the pump runs.
 
 - One **button per zone** (tap = on / off): `valve` (open / close), `switch`, `input_boolean`.
