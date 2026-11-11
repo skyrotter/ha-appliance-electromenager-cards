@@ -410,7 +410,7 @@ model: freebox_pop
 entity: media_player.freebox_player_pop
 ```
 
-**Box internet** : `custom:appliance-internet-box-card`, photo détourée (ou dessin SVG avec `illustration: svg`) de la Freebox Pop ou de la SFR Box (`model: freebox_pop` / `sfr_box`). Ondes Wi-Fi, paquets descendants (bleu) et montants (orange) à la vitesse du débit, LED blanche en ligne et rouge clignotante hors ligne, nuage barré en cas de coupure ; boutons Wi-Fi et redémarrage. Options : voir [internet-box.md](cards/internet-box.md).
+**Box internet** : `custom:appliance-internet-box-card`, photo détourée (ou dessin SVG avec `illustration: svg`) de la Freebox Pop ou de la SFR Box (`model: freebox_pop` / `sfr_box`), ou d'un routeur Wi-Fi : `router` (routeur générique à quatre antennes, dessiné), `asus_gt_be98` (ASUS ROG Rapture GT-BE98), `asus_rt_ac88u` (ASUS RT-AC88U), `xiaomi_ax3000` (Xiaomi Mesh System AX3000 NE, tour blanche). Ondes Wi-Fi, paquets descendants (bleu) et montants (orange) à la vitesse du débit, LED blanche en ligne et rouge clignotante hors ligne, nuage barré en cas de coupure ; boutons Wi-Fi et redémarrage. Options : voir [internet-box.md](cards/internet-box.md).
 
 ```yaml
 type: custom:appliance-internet-box-card

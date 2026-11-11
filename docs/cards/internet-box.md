@@ -2,7 +2,7 @@
 
 `custom:appliance-internet-box-card`
 
-**Internet box** with a cut-out photo or a vector SVG drawing of your model (`model`): `freebox_pop` (Freebox Pop, default) or `sfr_box` (SFR Box). Choose the drawing with `illustration: svg` (default `photo`).
+**Internet box** with a cut-out photo or a vector SVG drawing of your model (`model`): `freebox_pop` (Freebox Pop, default), `sfr_box` (SFR Box), or a Wi-Fi router: `router` (generic router with four antennas, drawn), `asus_gt_be98` (ASUS ROG Rapture GT-BE98), `asus_rt_ac88u` (ASUS RT-AC88U) and `xiaomi_ax3000` (Xiaomi Mesh System AX3000 NE, white tower). Choose the drawing with `illustration: svg` (default `photo`; `router` is always drawn, and the other routers use the generic drawing when `illustration: svg`).
 
 Animations: Wi-Fi waves leave the box, packets run towards the box (download, blue) and away from it (upload, orange) at a speed that follows your throughput, the box LED is white when online and blinks red when offline (the Wi-Fi tile of the SFR Box screen lights up too), the cloud is crossed out on an outage.
 
