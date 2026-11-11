@@ -51086,11 +51086,13 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
 @keyframes lsmove{to{stroke-dashoffset:-22}}
 .tvscr{fill:#2b3036;stroke:#aab2ba;stroke-width:3}
 .tvfoot{fill:#aab2ba}
+.bhalo{fill:rgb(var(--ls-c));filter:blur(11px);opacity:0;transition:opacity .6s}
+.on .bhalo{opacity:calc(.2 + var(--ls-b) * .6)}
 .on .tvscr{fill:#3a414a}
-.bbase{fill:none;stroke:#d9dee3;stroke-width:12;stroke-linecap:round}
-.bglow{fill:none;stroke:rgb(var(--ls-c));stroke-width:30;stroke-linecap:round;filter:blur(9px);opacity:0;transition:opacity .6s}
+.bbase{fill:none;stroke:#d9dee3;stroke-width:7;stroke-linecap:round}
+.bglow{fill:none;stroke:rgb(var(--ls-c));stroke-width:26;stroke-linecap:round;filter:blur(9px);opacity:0;transition:opacity .6s}
 .on .bglow{opacity:calc(.25 + var(--ls-b) * .65)}
-.bled{fill:none;stroke:#aab2ba;stroke-width:5;stroke-dasharray:2.4 8.6;stroke-linecap:round;transition:stroke .5s}
+.bled{fill:none;stroke:#aab2ba;stroke-width:3;stroke-dasharray:2 4;stroke-linecap:round;transition:stroke .5s}
 .on .bled{stroke:#fff;filter:drop-shadow(0 0 2px rgb(var(--ls-c)))}
 .on .bbase{stroke:rgb(var(--ls-c));stroke-opacity:.55}
 .on.fx .bled{animation:lsmove 1s linear infinite}
@@ -51106,9 +51108,10 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
   // Dessin : repères 270 × 100, bande souple ondulée ; la lueur est le même tracé flouté, teinté de la couleur de l'ampoule.
   const STRIP = 'M16 62 C58 22 100 22 135 50 S212 78 254 38';
   const SVG_STRIP = (label) => `<svg viewBox="0 0 270 100" role="img" aria-label="${label}"><path class="sglow" d="${STRIP}"/><path class="sbase" d="${STRIP}"/><path class="sled" d="${STRIP}"/></svg>`;
-  // Barres TV : deux barres verticales rigides de part et d'autre d'un téléviseur ; chacune a sa lueur sur le mur
-  const BARL = 'M52 22 L52 72', BARR = 'M218 22 L218 72';
-  const SVG_BARS = (label) => `<svg viewBox="0 0 270 100" role="img" aria-label="${label}"><path class="bglow" d="${BARL}"/><path class="bglow" d="${BARR}"/><rect class="tvscr" x="80" y="20" width="110" height="62" rx="4"/><rect class="tvfoot" x="122" y="82" width="26" height="4" rx="1"/><rect class="tvfoot" x="108" y="86" width="54" height="3" rx="1.5"/><path class="bbase" d="${BARL}"/><path class="bled" d="${BARL}"/><path class="bbase" d="${BARR}"/><path class="bled" d="${BARR}"/></svg>`;
+  // Barres TV (d'après les Govee DreamView) : téléviseur au mur avec halo de lueur derrière, caméra au-dessus,
+  // meuble bas, et deux barres posées de chaque côté sur le meuble, chacune avec sa lueur sur le mur
+  const BARL = 'M40 52 L40 72', BARR = 'M230 52 L230 72';
+  const SVG_BARS = (label) => `<svg viewBox="0 0 270 100" role="img" aria-label="${label}"><rect class="bhalo" x="54" y="8" width="162" height="62" rx="10"/><path class="bglow" d="${BARL}"/><path class="bglow" d="${BARR}"/><rect class="tvscr" x="62" y="14" width="146" height="50" rx="2"/><rect class="tvfoot" x="131" y="9" width="8" height="5" rx="2"/><rect class="tvfoot" x="20" y="77" width="230" height="9" rx="1.5"/><path class="bbase" d="${BARL}"/><path class="bled" d="${BARL}"/><path class="bbase" d="${BARR}"/><path class="bled" d="${BARR}"/><rect class="tvfoot" x="34" y="72" width="12" height="5" rx="2"/><rect class="tvfoot" x="224" y="72" width="12" height="5" rx="2"/></svg>`;
   const SVG = (label, shape) => (shape === 'bars' ? SVG_BARS : SVG_STRIP)(label);
 
   const TILES = [['brightness', 'mdi:brightness-6', 'show_brightness'], ['effect', 'mdi:palette-swatch-variant', 'show_effect'],
