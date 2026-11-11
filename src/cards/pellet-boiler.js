@@ -28,6 +28,7 @@ class AppliancePelletBoilerCard extends HTMLElement {
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
+        ...window.applianceTileFields(),
         { name: 'entity_status', selector: { entity: { domain: ['sensor', 'select', 'climate', 'switch', 'binary_sensor'] } } },
         { name: 'entity_power', selector: { entity: { domain: 'sensor', device_class: 'power' } } },
         { name: 'entity_energy', selector: { entity: { domain: 'sensor', device_class: 'energy' } } },
@@ -119,9 +120,11 @@ class AppliancePelletBoilerCard extends HTMLElement {
       .off .scrtxt, .off .scrlab { fill:#4f7d8f; }
       .led { fill:#6b6b6b; } .heating .led { fill:#43ff64; } .ignition .led { fill:#ffb300; animation:blink .8s infinite; }
       .extinguishing .led { fill:#3fa9ff; animation:blink 1.2s infinite; } .alarm .led { fill:#ff3b30; animation:blink .4s infinite; }
-      .stats { display:grid; gap:8px; margin-top:6px; }
-      .stat { text-align:center; background:var(--secondary-background-color, rgba(127,127,127,.12)); border-radius:10px; padding:6px 4px; }
-      .stat .v { font-weight:700; font-size:1.02em; } .stat .l { font-size:.7em; opacity:.65; text-transform:uppercase; letter-spacing:.04em; }
+      .stats { display:grid; gap:6px; margin-top:6px; }
+      .tile { box-sizing:border-box; display:flex; flex-direction:column; background:var(--ac-tile-bg, rgba(127,127,127,.09)); border-radius:10px; padding:5px 7px; min-width:0; overflow:hidden; text-align:center; cursor:pointer; }
+      .tile .l { display:flex; align-items:center; justify-content:center; font-size:10px; line-height:14px; color:var(--secondary-text-color); min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      .tile .v { font-size:14px; line-height:18px; font-weight:600; color:var(--primary-text-color); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      :host([tile-order="value"]) .tile { flex-direction:column-reverse; } :host([tile-order="value"]) .tile .v { margin:0 0 2px; }
       @keyframes flick { from { transform:scaleY(.82) scaleX(1.05) } to { transform:scaleY(1.12) scaleX(.94) } }
       @keyframes dash { to { stroke-dashoffset:-14 } } @keyframes dash2 { to { stroke-dashoffset:-18 } }
       @keyframes jig { to { transform:translateY(.8px) } }
@@ -276,8 +279,8 @@ class AppliancePelletBoilerCard extends HTMLElement {
     if (c.show_energy) it.push([this._l('energy'), f(e, 1, 'kWh'), c.entity_energy]);
     if (c.show_cost && cost !== null) it.push([this._l('cost'), f(cost, 2, '€'), c.entity_cost || c.entity_energy]);
     const stats = r.getElementById('stats');
-    stats.style.gridTemplateColumns = `repeat(${it.length > 4 ? Math.ceil(it.length / 2) : it.length}, 1fr)`;
-    stats.innerHTML = it.map(([l, v, id]) => `<div class="stat"${window.applianceTileAttrs(id)}><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
+    stats.style.gridTemplateColumns = `repeat(auto-fit, minmax(76px, 1fr))`;
+    stats.innerHTML = it.map(([l, v, id]) => `<div class="tile"${window.applianceTileAttrs(id)}><div class="l">${esc(l)}</div><div class="v">${esc(v)}</div></div>`).join('');
     window.applianceLinkTiles(stats, this);
   }
 }
