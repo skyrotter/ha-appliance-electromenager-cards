@@ -156,6 +156,7 @@
     "f_bed_temperature": "Sensor for pladetemperatur",
     "f_filament_color": "Filamentfarve (CSS)",
     "f_image": "Billed-URL (fx /local/min-enhed.png)",
+    "f_image_min": "Min. lysstyrke på foto når lyset er tændt (%)",
     "f_image_max": "Maks. lysstyrke på foto (% af lysniveauet)",
     "f_glow_max": "Maks. glød (% af lysniveauet)",
     "f_nozzle_temperatures": "Sensorer for dysetemperatur (T0, T1…)",
