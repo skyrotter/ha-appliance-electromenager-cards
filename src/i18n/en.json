@@ -774,6 +774,7 @@
     "water_hot": "Water too hot"
   },
   "editor": {
+    "led_strip_style": "Installation (ceiling, roof, terrace)",
     "surface": "Installation (floor or wall)",
     "food_low": "Low hopper alert (%)",
     "hopper_capacity": "Hopper capacity (g)",
@@ -2070,6 +2071,20 @@
     "signal": "Signal",
     "cost": "Cost",
     "low": "Low"
+  },
+  "led_strip": {
+    "name": "LED strip",
+    "on": "On",
+    "off": "Off",
+    "unavailable": "Unavailable",
+    "turn_on": "Turn on",
+    "turn_off": "Turn off",
+    "brightness": "Brightness",
+    "effect": "Effect",
+    "none": "None",
+    "next_effect": "Next effect",
+    "power": "Power",
+    "energy": "Energy"
   },
   "irrigation": {
     "name": "Irrigation",
