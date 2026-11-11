@@ -129,7 +129,7 @@ const DEF = {
     keys: ["piscine", "pool", "filtration", "pompe"] },
   // pompe doseuse péristaltique (pH+ / pH-) sur prise ou interrupteur : tourne quand elle injecte
   dosing_pump: { accent: "active", threshold: 3,
-    fields: ["entity", "power", "energy", "cost", "ph", "switch"],
+    fields: ["entity", "power", "energy", "cost", "ph", "switch", "dose_interval", "dose_timer", "dose_volume", "dose_time"],
     keys: ["doseuse", "dosing", "peristaltique", "ph_plus", "ph_moins", "ph_minus"] },
   chest_freezer: { accent: "cold", threshold: 20,
     fields: ["entity", "power", "energy", "cost", "temperature", "door", "switch"],

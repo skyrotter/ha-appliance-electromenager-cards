@@ -430,6 +430,15 @@ const STRINGS = {
     "presence_off": "Nobody",
     "low_water": "Low water level",
     "f_switch_ph_plus": "pH+ dosing pump (on/off)",
+    "dose_interval": "Interval",
+    "dose_timer": "Timer",
+    "dose_volume": "Dose",
+    "dose_time": "Time",
+    "day_short": "d",
+    "f_dose_interval": "Dosing interval (days: number, input_number or sensor)",
+    "f_dose_timer": "Dosing timer (switch: on = doses at the planned interval)",
+    "f_dose_volume": "Volume per dose (sensor, mL)",
+    "f_dose_time": "Dosing time (sensor with the schedule, e.g. 10:00)",
     "f_switch_ph_minus": "pH- dosing pump (on/off)",
     "f_switch_electrolysis": "Electrolysis (on/off)",
     "f_switch_heat_pump": "Pool heat pump (on/off)",
@@ -2527,6 +2536,15 @@ const STRINGS = {
     "presence_off": "Personne",
     "low_water": "Niveau d'eau bas",
     "f_switch_ph_plus": "Pompe doseuse pH+ (marche / arrêt)",
+    "dose_interval": "Intervalle",
+    "dose_timer": "Timer",
+    "dose_volume": "Dose",
+    "dose_time": "Heure",
+    "day_short": "j",
+    "f_dose_interval": "Intervalle de distribution (jours : number, input_number ou capteur)",
+    "f_dose_timer": "Timer de distribution (interrupteur : actif = distribue selon l'intervalle)",
+    "f_dose_volume": "Volume par dose (capteur, mL)",
+    "f_dose_time": "Heure de distribution (capteur du planning, ex. 10:00)",
     "f_switch_ph_minus": "Pompe doseuse pH- (marche / arrêt)",
     "f_switch_electrolysis": "Électrolyse (marche / arrêt)",
     "f_switch_heat_pump": "PAC de piscine (marche / arrêt)",
@@ -9108,7 +9126,7 @@ const DEF = {
     keys: ["piscine", "pool", "filtration", "pompe"] },
   // pompe doseuse péristaltique (pH+ / pH-) sur prise ou interrupteur : tourne quand elle injecte
   dosing_pump: { accent: "active", threshold: 3,
-    fields: ["entity", "power", "energy", "cost", "ph", "switch"],
+    fields: ["entity", "power", "energy", "cost", "ph", "switch", "dose_interval", "dose_timer", "dose_volume", "dose_time"],
     keys: ["doseuse", "dosing", "peristaltique", "ph_plus", "ph_moins", "ph_minus"] },
   chest_freezer: { accent: "cold", threshold: 20,
     fields: ["entity", "power", "energy", "cost", "temperature", "door", "switch"],
@@ -9417,7 +9435,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "switch_low", "switch_high", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water", "power_level", "pellet_level", "ph", "orp", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "switch_low", "switch_high", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water", "power_level", "pellet_level", "ph", "orp", "dose_interval", "dose_timer", "dose_volume", "dose_time", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -10810,6 +10828,15 @@ class ApplianceCardBase extends HTMLElement {
         return `<button class="mode-btn sp-btn ${on ? "on" : ""}" data-sp="${k}" title="${esc(tr(hass, lbl))}" aria-label="${esc(tr(hass, lbl))}"${on != null ? ` aria-pressed="${on}"` : ""}${dis ? " disabled" : ""}><ha-icon icon="${icon}"></ha-icon></button>`;
       }).join("");
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._spkCmd(b.dataset.sp); }; });
+    } else if (kind === "dosing_pump" && c.dose_timer) {
+      // doseuse programmée (aquarium) : bouton Timer, clic = bascule, allumé = distribue selon l'intervalle prévu
+      const id = c.dose_timer, st = hass.states[id], on = isOn(st), name = tr(hass, "dose_timer");
+      modesEl.innerHTML = `<button class="mode-btn outlet-btn ${on ? "on" : ""}" data-outlet="${esc(id)}" title="${esc(name)}" aria-label="${esc(name)}" aria-pressed="${on}" ${!st || st.state === "unavailable" ? "disabled" : ""}><ha-icon icon="mdi:timer-outline"></ha-icon>${esc(name)}</button>`;
+      modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => {
+        ev.stopPropagation();
+        const dom = domainOf(b.dataset.outlet);
+        hass.callService(["switch", "input_boolean", "light", "fan"].includes(dom) ? dom : "homeassistant", "toggle", { entity_id: b.dataset.outlet });
+      }; });
     } else if (kind === "pool_pump" && POOL_CTL.some(([k]) => c[k])) {
       // piscine : un bouton par équipement commandé (doseuses pH+ / pH-, électrolyse, PAC, douche), clic = bascule, bouton allumé = en marche
       modesEl.innerHTML = POOL_CTL.filter(([k]) => c[k]).map(([k, icon, lbl]) => {
@@ -10933,6 +10960,16 @@ class ApplianceCardBase extends HTMLElement {
       if (f.kcal) tile("mdi:fire", fmtUnit(hass, f.kcal, 0), lb("calories"), c.calories);
     } else if (kind === "dosing_pump") {
       if (m.pool && m.pool.ph) tile("mdi:ph", fmtUnit(hass, m.pool.ph, 2), lb("ph"), c.ph);
+      // aquarium (doseuse Jebao…) : intervalle en jours, volume par dose, heure de distribution
+      const dst = (k) => { const s = c[k] && hass.states[c[k]]; return s && !BAD.includes(String(s.state).toLowerCase()) ? s : null; };
+      const dInt = dst("dose_interval"), dVol = dst("dose_volume"), dTime = dst("dose_time");
+      if (dInt && num(dInt) != null) tile("mdi:calendar-refresh-outline", `${fmtNum(hass, num(dInt), 0)} ${tr(hass, "day_short")}`, lb("dose_interval"), c.dose_interval);
+      if (dVol) tile("mdi:cup-water", fmtUnit(hass, dVol, 1), lb("dose_volume"), c.dose_volume);
+      if (dTime) {
+        const sched = Array.isArray(dTime.attributes.schedule) && dTime.attributes.schedule[0] && dTime.attributes.schedule[0].time;
+        const t = /^\d{1,2}:\d{2}/.test(String(dTime.state)) ? String(dTime.state).slice(0, 5) : sched ? String(sched).slice(0, 5) : String(dTime.state);
+        tile("mdi:clock-outline", t, lb("dose_time"), c.dose_time);
+      }
     } else if (kind === "pool_pump") {
       if (m.tempVal != null && c.show_temperature !== false) tile("mdi:thermometer-water", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("water"), tEntity);
       // analyses de l'eau : [clé, icône, décimales] ; chaque mesure se masque avec show_<clé>: false
@@ -11039,6 +11076,10 @@ const SEL = {
   switch: { entity: { domain: ["switch", "input_boolean", "light"] } },
   switch_low: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
   switch_high: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
+  dose_interval: { entity: { domain: ["number", "input_number", "sensor"] } },
+  dose_timer: { entity: { domain: ["switch", "input_boolean"] } },
+  dose_volume: { entity: { domain: ["sensor", "number", "input_number"] } },
+  dose_time: { entity: { domain: ["sensor", "input_datetime"] } },
   switch_ph_plus: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
   switch_ph_minus: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
   switch_electrolysis: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
