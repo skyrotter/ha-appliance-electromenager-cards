@@ -10,7 +10,7 @@ States: off, idle (CPU below 8 %), running, busy (CPU above `cpu_busy`), overhea
 
 ## Options
 
-- `model`: `bmax_b9` (default, BMAX B9 Max), `home_assistant_green`, `minisforum_x1` (Minisforum X1, photo with the blue power button at the front) or `mac_mini` (Mac mini, front view: only the status LED, no button) (Home Assistant Green: translucent case on a finned heat sink, no button, a small LED at the front corner lights up when it runs). Same entities and tiles for both.
+- `model`: `bmax_b9` (default, BMAX B9 Max), `home_assistant_green`, `minisforum_x1` (Minisforum X1, photo with the blue power button at the front), `lenovo_m720s` (Lenovo ThinkCentre M720s SFF, slim tower, round power button at the top of the front), `lenovo_m920q` (Lenovo ThinkCentre M920q Tiny, 1-litre PC) or `mac_mini` (Mac mini, front view: only the status LED, no button) (Home Assistant Green: translucent case on a finned heat sink, no button, a small LED at the front corner lights up when it runs). Same entities and tiles for both.
 
 Every value tile can be hidden with its `show_…` option, and `language: fr|en|de|it|es|nb|nl|pl|ro|ru|sr|sr-Latn` forces the language.
 
