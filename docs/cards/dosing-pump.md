@@ -8,6 +8,8 @@ Blue peristaltic dosing pump, as used to correct the pH of a pool or to dose an 
 - The power button (`switch`) turns the pump on and off.
 - Scheduled dosing (aquarium): `dose_interval` (number or sensor, in days), `dose_volume` (sensor, mL per dose) and `dose_time` (sensor holding the time, e.g. `10:00`, or a `schedule` attribute) are shown as tiles. `dose_timer` (switch) adds a **Timer** button: on = the pump doses at the planned interval.
 
+- `color`: color of the pump housing and of the status dot (any CSS color: `"#e53935"`, `orange`, `rgb(…)`), to tell the products apart at a glance (pH+, iron, potassium…). Default: blue.
+
 ```yaml
 type: custom:appliance-dosing-pump-card
 name: pH- pump
