@@ -156,6 +156,7 @@
     "f_bed_temperature": "Sensor de temperatura de la cama",
     "f_filament_color": "Color del filamento (CSS)",
     "f_image": "URL de la imagen (p. ej. /local/mi-aparato.png)",
+    "f_image_min": "Brillo mínimo de la foto con la luz encendida (%)",
     "f_image_max": "Brillo máximo de la foto (% del nivel de luz)",
     "f_glow_max": "Resplandor máximo (% del nivel de luz)",
     "f_nozzle_temperatures": "Sensores de temperatura de boquillas (T0, T1…)",

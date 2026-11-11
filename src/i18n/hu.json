@@ -156,6 +156,7 @@
     "f_bed_temperature": "Ágy hőmérséklet szenzor",
     "f_filament_color": "Filament szín (CSS)",
     "f_image": "Kép URL (pl. /local/eszkozom.png)",
+    "f_image_min": "Min. fotófényesség bekapcsolt fénynél (%)",
     "f_image_max": "Max fotófényesség (% a fény szintjéből)",
     "f_glow_max": "Max izzás (% a fény szintjéből)",
     "f_nozzle_temperatures": "Fúvóka hőmérséklet szenzorok (T0, T1…)",

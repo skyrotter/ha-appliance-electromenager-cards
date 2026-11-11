@@ -426,9 +426,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       card.className = `${st}${cycle ? ' cycle' : ''} ${c.animations === false ? 'noanim' : ''}${c.compact === true ? ' compact' : ''}`;
       card.style.setProperty('--lc', col);
       card.style.setProperty('--b', (st === 'on' ? bri : 0).toFixed(3));
-      // photo perso : plafond de l'éclairage de la photo (image_max) et de la lueur (glow_max), en % de la luminosité de la lampe
+      // photo perso : plafond de l'éclairage de la photo (image_max), plancher de l'éclairage de la photo allumée (image_min) et plafond de la lueur (glow_max), en % de la luminosité de la lampe
       const cap = (v) => (isFinite(Number(v)) && v !== '' && v !== null ? Math.max(0, Math.min(100, Number(v))) / 100 : 1);
-      card.style.setProperty('--pb', (st === 'on' ? bri * cap(c.image_max) : 0).toFixed(3));
+      card.style.setProperty('--pb', (st === 'on' ? Math.max(bri * cap(c.image_max), (isFinite(Number(c.image_min)) && c.image_min !== '' && c.image_min !== null ? Math.max(0, Math.min(100, Number(c.image_min))) / 100 : 0)) : 0).toFixed(3));
       card.style.setProperty('--gb', (st === 'on' ? bri * cap(c.glow_max) : 0).toFixed(3));
       // sapin : guirlande d'une seule couleur si multicolor: false
       if (this.kind === 'christmas_tree') r.querySelectorAll('.xb').forEach((el, i) => {
@@ -503,6 +503,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'labels', selector: { object: {} } },
         { name: 'image', selector: { text: {} } },
         ...(String(this._c.image || '').trim() ? [
+          { name: 'image_min', selector: { number: { min: 0, max: 100, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
           { name: 'image_max', selector: { number: { min: 0, max: 100, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
           { name: 'glow_max', selector: { number: { min: 0, max: 100, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         ] : []),
