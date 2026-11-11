@@ -991,6 +991,8 @@
     "tile_order": "Tile order",
     "tile_order_name": "Name above, value below",
     "tile_order_value": "Value above, name below",
+    "lcd_big": "Large value on the drawing",
+    "f_lcd_big": "Large value on the drawing",
     "lcd_value": "Value on the display",
     "lcd_value_target": "Target temperature (default)",
     "lcd_value_current": "Current temperature",

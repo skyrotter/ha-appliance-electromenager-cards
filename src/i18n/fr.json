@@ -981,6 +981,8 @@
     "tile_order": "Ordre des tuiles",
     "tile_order_name": "Nom au-dessus, valeur en dessous",
     "tile_order_value": "Valeur au-dessus, nom en dessous",
+    "lcd_big": "Grande valeur sur le dessin",
+    "f_lcd_big": "Grande valeur sur le dessin",
     "lcd_value": "Valeur sur l'écran",
     "lcd_value_target": "Consigne (défaut)",
     "lcd_value_current": "Température actuelle",

@@ -1190,6 +1190,21 @@ class ApplianceCardBase extends HTMLElement {
     const sr = this.shadowRoot;
     const lcdEl = sr.querySelector(".lcd");
     if (lcdEl) lcdEl.textContent = this._lcdText(m);
+    // lcd_big : grande valeur lisible (icône + température) posée sur le dessin ; icône thermomètre = actuelle, cible = consigne (lcd_value)
+    if (c.lcd_big === true && ["radiator", "towel_dryer", "ac_split"].includes(kind)) {
+      const sv = sr.querySelector(".illus svg");
+      let bg = sv && sv.querySelector(".bigval");
+      if (sv && !bg) { bg = document.createElementNS("http://www.w3.org/2000/svg", "g"); bg.setAttribute("class", "bigval"); sv.appendChild(bg); }
+      if (bg) {
+        const raw = this._lcdText(m), num = /^-?\d+°$/.test(raw), txt = num ? `${raw.slice(0, -1)}${m.tempUnit || "°C"}` : raw;
+        const [cx, cy] = { radiator: [50, 64], towel_dryer: [60, 66], ac_split: [46, 60] }[kind];
+        const ico = c.lcd_value === "current"
+          ? `<g fill="none" stroke="#fff" stroke-width="1.3" stroke-linecap="round"><path d="M-0.1 -4V1.2"/><circle cx="-0.1" cy="2.7" r="2" fill="#fff"/><path d="M-1.4 -3a1.3 1.3 0 0 1 2.6 0V1.4" /></g>`
+          : `<g fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round"><circle r="3.4"/><circle r=".8" fill="#fff"/><path d="M0 -5.4V-3.6M0 3.6V5.4M-5.4 0H-3.6M3.6 0H5.4"/></g>`;
+        const slot = num ? 14 : 0, w = txt.length * 8.6 + slot, x0 = cx - w / 2;
+        bg.innerHTML = `${num ? `<g transform="translate(${(x0 + 5.5).toFixed(1)} ${cy}) scale(1.25)">${ico}</g>` : ""}<text x="${(x0 + slot + (w - slot) / 2).toFixed(1)}" y="${cy}">${esc(txt)}</text>`;
+      }
+    }
     const lcd3 = sr.querySelector(".lcd3");
     if (lcd3) lcd3.textContent = m.status === "unavailable" || m.flexVal == null ? "--°" : `${fmtNum(hass, m.flexVal, 0)}°`;
     const lcd2 = sr.querySelector(".lcd2");

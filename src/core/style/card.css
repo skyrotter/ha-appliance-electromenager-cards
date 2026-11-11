@@ -245,3 +245,7 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 @container (max-width: 320px) {
   :host([tile-order="name"][illus-big]) .wrap:not(.layout-split) .top { grid-template-areas: "head" "illus" "stats"; }
 }
+
+/* lcd_big : grande valeur posée sur le dessin (contour sombre pour rester lisible sur toutes les teintes) */
+.bigval { filter: drop-shadow(0 0 1.2px rgba(0, 0, 0, .85)); pointer-events: none; }
+.bigval text { fill: #fff; stroke: rgba(20, 22, 28, .75); stroke-width: 2.4px; paint-order: stroke; stroke-linejoin: round; font: 700 16px var(--paper-font-body1_-_font-family, Roboto, sans-serif); text-anchor: middle; dominant-baseline: central; }
