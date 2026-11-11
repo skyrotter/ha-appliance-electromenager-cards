@@ -1792,6 +1792,8 @@
     "uptime": "Uptime",
     "model_minisforum_x1": "Minisforum X1 (mini PC)",
     "model_mac_mini": "Mac mini",
+    "model_lenovo_m720s": "Lenovo ThinkCentre M720s SFF",
+    "model_lenovo_m920q": "Lenovo ThinkCentre M920q Tiny",
     "model_bmax_b9": "BMAX B9 Max (mini PC)",
     "model_home_assistant_green": "Home Assistant Green",
     "power": "Power",
