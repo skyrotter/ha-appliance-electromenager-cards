@@ -14,7 +14,8 @@ The drawing is just the **strip** (a flexible band with its LEDs) and its glow, 
 | Option | What it does |
 |---|---|
 | `entity` | the strip: `light`, `switch` or `input_boolean` |
-| `shape` | `strip` (default, flexible band) or `bars`: two rigid vertical **TV light bars** (Govee DreamView, Envisual…) on each side of a TV, each with its own glow on the wall; same `light` entity |
+| `shape` | `strip` (default, flexible band) or `bars`: a night living room: two **TV light bars** (Govee DreamView, Envisual…) on each side of a TV, the wall lit in two colors (left / right), same `light` entity |
+| `color2` | with `shape: bars`: color of the right half of the wall and the right bar (`"#00c8b4"`…). By default, the light's color with its hue shifted by 150°, like the teal / pink of the photo |
 | `color` | forces the glow color (`"#ff6600"`, `orange`…), for strips that do not report their color |
 | `entity_power`, `entity_energy` | power and energy tiles |
 | `compact`, `show_status`, `show_controls`, `show_brightness`, `show_effect`, `show_power`, `show_energy`, `animations`, `labels`, `language`, `illustration_size`, `transparent`, `tap_action`, `hold_action` | |

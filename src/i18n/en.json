@@ -985,6 +985,7 @@
     "image": "Your own image (URL)",
     "illustration_size": "Illustration size",
     "shape": "Shape",
+    "color2": "Second colour (TV light bars)",
     "shape_strip": "Flexible strip",
     "shape_bars": "TV light bars",
     "transparent": "Transparent background",
