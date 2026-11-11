@@ -12,7 +12,9 @@ A garden watering card with **generic entities** (no brand): 1 to 8 zones, a wel
 
 | Option | What it does |
 |---|---|
-| `zones` | list of entities (`valve`, `switch`, `input_boolean`), up to 8. Each can also be `{entity, name, icon}` |
+| `zones` | list of entities (`valve`, `switch`, `input_boolean`), up to 8. Each can also be `{entity, name, icon, x, y}`: `name` renames the button (long names wrap on two lines), `icon` is any `mdi:` icon, `x` / `y` place the zone on your image (see `image`). The visual editor lists them one by one (Home Assistant 2024.12 or later; older versions show the YAML) |
+| `image` | your own picture or plan (`/local/garden.jpg`, `/api/image/...` or a URL) shown **instead of the drawing**. A zone with `x` and `y` becomes a round button placed on the image (lit and pulsing while it waters); the other zones stay as buttons below |
+| `marker_names` | with `image`: shows the name of each zone next to its marker (default `false`, the name is then the tooltip) |
 | `entity_pump` | well pump (switch, input_boolean or binary_sensor) |
 | `entity_master` | « Auto watering » switch (on = enabled), shown as a button |
 | `entity_rain` | rain sensor: `binary_sensor` (on = rain) or `sensor` (rate above 0) |
@@ -34,6 +36,28 @@ entity_rain: binary_sensor.rain_detector
 entity_master: input_boolean.auto_watering
 block_on_rain: true
 entity_soil: sensor.garden_soil_moisture
+```
+
+**Your own image with the valves placed on it**: `x` is the distance from the left edge and `y` from the top edge of the image, in % (0 to 100). Start with a guess (the middle is `x: 50`, `y: 50`) and adjust.
+
+```yaml
+type: custom:appliance-irrigation-card
+name: Garden
+image: /local/garden-plan.jpg
+marker_names: true
+zones:
+  - entity: valve.lawn
+    name: Lawn
+    icon: mdi:grass
+    x: 28
+    y: 64
+  - entity: valve.pool_edge
+    name: Pool
+    icon: mdi:pool
+    x: 62
+    y: 22
+  - entity: switch.drip_line      # without x / y: button below the image
+    name: Drip
 ```
 
 [← All cards](../../README.md#the-cards)

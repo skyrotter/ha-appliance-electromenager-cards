@@ -35,11 +35,23 @@ svg{display:block;flex:0 1 calc(250px * var(--illus-scale,1));width:calc(250px *
 .zones:empty{display:none}
 .zb{display:flex;align-items:center;justify-content:center;gap:5px;min-width:0;padding:7px 6px;border:0;border-radius:12px;cursor:pointer;font:inherit;font-size:12px;font-weight:500;
   background:var(--ac-tile-bg,rgba(127,127,127,.12));color:var(--primary-text-color)}
-.zb span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.zb span{min-width:0;overflow:hidden;text-align:center;line-height:1.15;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .zb ha-icon{--mdc-icon-size:17px;flex:none}
 .zb.on{background:color-mix(in srgb,var(--ir-cold) 28%,transparent);color:var(--ir-cold)}
 .zb.stop.on{background:color-mix(in srgb,var(--ir-alert) 24%,transparent);color:var(--ir-alert)}
 .zb:disabled{opacity:.4;cursor:default}
+/* ---- image perso (option image) : la photo ou le plan remplace le dessin, les vannes sont posées dessus (x / y en %) ---- */
+.map{position:relative;flex:1 1 100%;width:calc(100% * min(1,var(--illus-scale,1)));max-width:100%;margin:0 auto;border-radius:12px;overflow:hidden;cursor:pointer;line-height:0}
+.map img{display:block;width:100%;height:auto}
+.zb.mk{position:absolute;transform:translate(-50%,-50%);flex-direction:column;gap:1px;padding:5px;min-width:32px;min-height:32px;border-radius:50%;line-height:1.1;
+  background:rgba(20,24,30,.62);color:#fff;backdrop-filter:blur(2px);box-shadow:0 1px 4px rgba(0,0,0,.45)}
+.zb.mk.lbl{border-radius:12px;padding:4px 7px}
+.zb.mk span{font-size:10px;max-width:84px}.zb.mk:not(.lbl) span{display:none}
+.zb.mk ha-icon{--mdc-icon-size:20px;display:inline-flex;width:20px;height:20px}
+.zb.mk.on{background:color-mix(in srgb,var(--ir-cold) 78%,#000);color:#fff;box-shadow:0 0 0 3px color-mix(in srgb,var(--ir-cold) 40%,transparent),0 0 12px var(--ir-cold)}
+.noanim .zb.mk.on{box-shadow:0 0 0 3px color-mix(in srgb,var(--ir-cold) 40%,transparent)}
+.zb.mk.on ha-icon{animation:irpulse 1.4s ease-in-out infinite}@keyframes irpulse{50%{transform:scale(1.18)}}
+.compact .map{flex:1 1 0;min-width:0}
 /* ---- illustration ---- */
 .spr{opacity:0}.spr.on{opacity:1}
 .arc{fill:none;stroke:#5fb8ff;stroke-width:2;stroke-linecap:round;stroke-dasharray:3 6}
@@ -69,10 +81,12 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
   const TILES = [['flow', 'mdi:water-pump', 'show_flow'], ['soil', 'mdi:water-percent', 'show_soil'], ['today', 'mdi:calendar-today', 'show_today'],
     ['next', 'mdi:calendar-clock', 'show_next'], ['pressure', 'mdi:gauge', 'show_pressure'], ['pump', 'mdi:pump', 'show_pump'], ['power', 'mdi:flash', 'show_power'], ['rain', 'mdi:weather-rainy', 'show_rain']];
 
-  // Liste de zones : ['valve.x', {entity, name}, …] ou « a, b, c » → [{id, name}]
+  // Liste de zones : ['valve.x', {entity, name, icon, x, y}, …] ou « a, b, c » → [{id, name}]
   const parseZones = (v) => (Array.isArray(v) ? v : v == null || v === '' ? [] : String(v).split(',')).map((z) => {
     const o = typeof z === 'string' ? { entity: z.trim() } : z || {};
-    return o.entity ? { id: String(o.entity), name: o.name || '', icon: o.icon || '' } : null;
+    const pct = (v) => { const n = parseFloat(String(v ?? '').replace(',', '.')); return isFinite(n) ? Math.max(0, Math.min(100, n)) : null; };
+    const x = pct(o.x), y = pct(o.y); // position sur l'image perso, en % depuis le coin haut-gauche
+    return o.entity ? { id: String(o.entity), name: o.name || '', icon: o.icon || '', x: x != null && y != null ? x : null, y: x != null && y != null ? y : null } : null;
   }).filter(Boolean).slice(0, 8);
 
   class ApplianceIrrigationCard extends HTMLElement {
@@ -133,14 +147,21 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       </svg>`;
     }
 
+    // Image perso : <img> en fond, une pastille cliquable par zone qui a x / y (en % de l'image). Les autres zones restent en boutons dessous.
+    _map(label) {
+      const e = (v) => String(v).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+      const mk = this._zones.map((z, i) => (z.x == null ? '' : `<button class="zb mk${this._c.marker_names === true ? ' lbl' : ''}" data-b="z${i}" data-id="${e(z.id)}" style="left:${z.x}%;top:${z.y}%"><ha-icon icon="${e(z.icon || (this._dom(z.id) === 'valve' ? 'mdi:valve' : 'mdi:sprinkler-variant'))}"></ha-icon><span></span></button>`)).join('');
+      return `<div class="map" role="img" aria-label="${e(label)}"><img src="${e(this._c.image)}" alt="" loading="lazy">${mk}</div>`;
+    }
+
     _build() {
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="irtitle"></div><div class="badge" id="irbadge"></div></div>
-        <div class="body">${this._svg((this._c.name || this._t('name')).replace(/"/g, ''))}
+        <div class="body">${this._c.image ? this._map((this._c.name || this._t('name')).replace(/"/g, '')) : this._svg((this._c.name || this._t('name')).replace(/"/g, ''))}
           <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
         </div><div class="zones" id="irzones"></div></ha-card>`;
-      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more((this._zones[0] || {}).id || this._c.entity_pump));
+      window.applianceBindIllus(this, root.querySelector('svg, .map'), () => this._more((this._zones[0] || {}).id || this._c.entity_pump));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
         const c = this._c; this._more({ flow: c.entity_flow, soil: c.entity_soil, today: c.entity_today, next: c.entity_next, pressure: c.entity_pressure, pump: c.entity_pump, power: c.entity_power, rain: c.entity_rain }[el.dataset.k]);
       }));
@@ -148,15 +169,18 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const zb = root.getElementById('irzones');
       const btn = (key, icon, id) => `<button class="zb" data-b="${key}"${id ? ` data-id="${id}"` : ''}><ha-icon icon="${icon}"></ha-icon><span></span></button>`;
       zb.innerHTML = this._c.show_buttons === false ? '' :
-        this._zones.map((z, i) => btn('z' + i, z.icon || (this._dom(z.id) === 'valve' ? 'mdi:valve' : 'mdi:sprinkler-variant'), z.id)).join('')
+        this._zones.map((z, i) => (this._c.image && z.x != null ? '' : btn('z' + i, z.icon || (this._dom(z.id) === 'valve' ? 'mdi:valve' : 'mdi:sprinkler-variant'), z.id))).join('')
         + (this._zones.length > 1 ? btn('stop', 'mdi:stop', '').replace('class="zb"', 'class="zb stop"') : '')
         + (this._c.entity_master ? btn('master', 'mdi:calendar-check', this._c.entity_master) : '');
-      zb.querySelectorAll('.zb').forEach((b) => b.addEventListener('click', () => {
+      // boutons du bas et pastilles de l'image : même comportement (stopPropagation : pas d'action tap_action de l'image)
+      root.querySelectorAll('.zb').forEach((b) => b.addEventListener('click', (ev) => {
+        ev.stopPropagation();
         const k = b.dataset.b;
         if (k === 'stop') { this._zones.forEach((z) => this._on(z.id) && this._set(z.id, false)); return; }
         if (k === 'master') { this._set(this._c.entity_master, !this._on(this._c.entity_master)); return; }
         const z = this._zones[Number(k.slice(1))]; if (z) this._set(z.id, !this._on(z.id));
       }));
+      root.querySelectorAll('.zb.mk').forEach((b) => b.addEventListener('pointerdown', (ev) => ev.stopPropagation()));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
 
@@ -184,7 +208,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         : this._t(rain && phase !== 'unavailable' ? 'rain' : phase);
       // têtes d'arrosage : celles des zones ouvertes projettent l'eau
       r.querySelectorAll('.spr').forEach((el) => el.classList.toggle('on', this._zones[Number(el.dataset.z)] ? this._on(this._zones[Number(el.dataset.z)].id) : false));
-      r.querySelector('.lawn').classList.toggle('wet', phase === 'watering');
+      const lawn = r.querySelector('.lawn'); if (lawn) lawn.classList.toggle('wet', phase === 'watering');
       // boutons
       const blocked = c.block_on_rain === true && rain;
       r.querySelectorAll('.zb').forEach((b) => {
@@ -192,9 +216,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         if (k === 'stop') { span.textContent = this._t('stop'); b.classList.toggle('on', active.length > 0); b.disabled = !active.length; return; }
         if (k === 'master') { const on = this._on(c.entity_master); span.textContent = this._t('auto'); b.classList.toggle('on', on); b.disabled = !st || st.state === 'unavailable'; return; }
         const z = this._zones[Number(k.slice(1))], on = this._on(z.id);
-        span.textContent = this._name(z); b.classList.toggle('on', on);
+        span.textContent = this._name(z); b.title = this._name(z); b.classList.toggle('on', on);
         b.disabled = !st || st.state === 'unavailable' || (blocked && !on);
-        b.title = blocked && !on ? this._t('blocked') : '';
+        if (blocked && !on) b.title = this._t('blocked');
       });
       // tuiles
       const fu = this._unit(c.entity_flow, 'L/min'), tu = this._unit(c.entity_today, 'L');
@@ -250,7 +274,15 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ...window.applianceTileFields(this._hass),
-        { name: 'zones', selector: { entity: { multiple: true, domain: ['valve', 'switch', 'input_boolean'] } } },
+        // zones : liste d'objets {entity, name, icon, x, y} (HA ≥ 2024.12) ; une ancienne version de HA affiche le YAML. x / y : position sur l'image perso, en %
+        { name: 'zones', selector: { object: { multiple: true, label_field: 'entity', fields: {
+          entity: { label: window.applianceEditorLabel('zone_entity', this._hass), required: true, selector: { entity: { domain: ['valve', 'switch', 'input_boolean'] } } },
+          name: { label: window.applianceEditorLabel('zone_name', this._hass), selector: { text: {} } },
+          icon: { label: window.applianceEditorLabel('zone_icon', this._hass), selector: { icon: {} } },
+          x: { label: window.applianceEditorLabel('zone_x', this._hass), selector: { number: { min: 0, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
+          y: { label: window.applianceEditorLabel('zone_y', this._hass), selector: { number: { min: 0, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
+        } } } },
+        { name: 'image', selector: { text: {} } }, bool('marker_names', false),
         ent('entity_pump', ['switch', 'input_boolean', 'binary_sensor']), ent('entity_master', ['switch', 'input_boolean']),
         ent('entity_rain', ['binary_sensor', 'sensor', 'input_boolean']), bool('block_on_rain', false),
         ent('entity_flow', 'sensor'), ent('entity_soil', 'sensor'), ent('entity_today', 'sensor'), ent('entity_next', ['sensor', 'input_datetime']),
