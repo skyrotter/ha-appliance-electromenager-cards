@@ -882,6 +882,7 @@
     "indexes": "Meter indexes",
     "invert": "Invert state",
     "invert_position": "Invert position (open ↔ closed)",
+    "invert_buttons": "Invert the buttons (Open ↔ Close commands)",
     "invert_power": "Invert power sign",
     "jets_threshold": "Jets threshold (W)",
     "language": "Language",

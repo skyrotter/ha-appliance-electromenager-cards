@@ -872,6 +872,7 @@
     "indexes": "Index du compteur",
     "invert": "Inverser l'état",
     "invert_position": "Inverser la position (ouvert ↔ fermé)",
+    "invert_buttons": "Inverser les boutons (commandes Ouvrir ↔ Fermer)",
     "invert_power": "Inverser le signe de la puissance",
     "jets_threshold": "Seuil des jets (W)",
     "language": "Langue",
