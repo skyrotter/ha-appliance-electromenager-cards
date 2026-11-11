@@ -11862,6 +11862,21 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
   margin-top: 1.5px !important;
 }
 
+/* tile_order: name → titre et état en ligne du haut, au-dessus du dessin (comme les cartes récentes) ; sans l'option, disposition historique.
+   Rien ne change pour la disposition « split ». */
+:host([tile-order="name"]) .wrap:not(.layout-split) .top { grid-template-areas: "head head" "illus stats"; }
+:host([tile-order="name"]) .wrap:not(.layout-split) .stats { align-self: center; }
+@container (max-width: 400px) {
+  :host([tile-order="name"]) .wrap:not(.layout-split) .top { grid-template-areas: "head head" "illus illus" "stats stats"; }
+  :host([tile-order="name"]) .wrap:not(.layout-split) .illus { justify-self: center; }
+}
+@container (max-width: 280px) {
+  :host([tile-order="name"]) .wrap:not(.layout-split) .top { grid-template-areas: "head" "illus" "stats"; }
+}
+@container (max-width: 320px) {
+  :host([tile-order="name"][illus-big]) .wrap:not(.layout-split) .top { grid-template-areas: "head" "illus" "stats"; }
+}
+
 ﻿/* ---------- illustration: shared ---------- */
 .lcd { font: 700 8.5px ui-monospace, "Courier New", monospace; letter-spacing: .25px; fill: #7ec8e3 !important; font-weight: 700; dominant-baseline: central; transition: fill .3s; }
 .active .lcd { fill: var(--ac-lcd, #38d9ff) !important; }
