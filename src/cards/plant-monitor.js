@@ -32,7 +32,8 @@
 .body{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:4px}
 svg{display:block;flex:0 1 calc(190px * var(--illus-scale,1));width:calc(190px * var(--illus-scale,1));max-width:100%;height:auto;margin:0 auto;cursor:pointer;overflow:visible}
 .tiles{flex:1 1 130px;display:grid;grid-template-columns:repeat(auto-fit,minmax(88px,1fr));gap:6px;min-width:0}
-.tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
+.tile{box-sizing:border-box;display:flex;flex-direction:column;background:var(--ac-tile-bg,rgba(127,127,127,.09));border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
+:host([tile-order="value"]) .tile{flex-direction:column-reverse}:host([tile-order="value"]) .tile .v{margin:0 0 2px}
 .tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
 .tile .l span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tile .l ha-icon{--mdc-icon-size:13px;flex:none}
@@ -236,6 +237,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
+        ...window.applianceTileFields(this._hass),
         ent('entity_moisture', 'sensor'), ent('entity_temperature', 'sensor'), ent('entity_conductivity', 'sensor'), ent('entity_brightness', 'sensor'), ent('entity_battery', 'sensor'), ent('entity_rssi', 'sensor'),
         { type: 'grid', name: '', schema: [num('min_moisture', 20, 0, 100, 1, '%'), num('min_temperature', undefined, -20, 60, 0.5, '°C'), num('min_conductivity', undefined, 0, 5000, 10, 'µS/cm'),
           num('min_brightness', undefined, 0, 100000, 100, 'lx'), num('min_battery', 15, 0, 100, 1, '%')] },

@@ -23,6 +23,12 @@
     // transparent : la carte laisse voir le fond du tableau de bord (variables de ha-card, héritées dans le shadow DOM)
     const T = { '--ha-card-background': 'transparent', '--ha-card-box-shadow': 'none', '--ha-card-border-width': '0' };
     for (const [k, v] of Object.entries(T)) { if (cfg && cfg.transparent) el.style.setProperty(k, v); else el.style.removeProperty(k); }
+    // tile_background : « transparent » (défaut, léger voile gris) ou « theme » (fond secondaire du thème HA) → --ac-tile-bg, lue par les tuiles
+    if (cfg && cfg.tile_background === 'theme') el.style.setProperty('--ac-tile-bg', 'var(--secondary-background-color, rgba(127,127,127,.12))');
+    else el.style.removeProperty('--ac-tile-bg');
+    // tile_order : « name » (nom au-dessus) ou « value » (valeur au-dessus) → attribut tile-order sur la carte ; absent = ordre historique de la carte
+    if (cfg && (cfg.tile_order === 'name' || cfg.tile_order === 'value')) el.setAttribute('tile-order', cfg.tile_order);
+    else el.removeAttribute('tile-order');
   };
   // Températures (multi-pays) : unité d'affichage = option temperature_unit (C / F), sinon celle de Home Assistant, sinon °C.
   // conv() convertit la valeur d'une entité depuis son unit_of_measurement (à défaut l'unité de HA : climate / water_heater
@@ -54,6 +60,13 @@
   };
   // champ « Unité de température » des éditeurs (vide : automatique)
   window.applianceTempField = { name: 'temperature_unit', selector: { select: { mode: 'dropdown', options: [{ value: 'C', label: '°C' }, { value: 'F', label: '°F' }] } } };
+  // Champs d'éditeur communs : fond et ordre des tuiles (vide = comportement historique de la carte)
+  window.applianceTileFields = (hass) => [
+    { name: 'tile_background', selector: { select: { mode: 'dropdown', options: [
+      { value: 'transparent', label: window.applianceEditorLabel('tile_bg_transparent', hass) }, { value: 'theme', label: window.applianceEditorLabel('tile_bg_theme', hass) }] } } },
+    { name: 'tile_order', selector: { select: { mode: 'dropdown', options: [
+      { value: 'name', label: window.applianceEditorLabel('tile_order_name', hass) }, { value: 'value', label: window.applianceEditorLabel('tile_order_value', hass) }] } } },
+  ];
   // Fiche d'une entité (more-info de Home Assistant)
   window.applianceMore = (el, id) => { if (id) el.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); };
   // Tuile cliquable : attributs à ajouter à une tuile liée à une entité (rien sans entité)

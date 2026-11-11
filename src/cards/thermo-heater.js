@@ -23,7 +23,8 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--th-ok:var(--appli
 .body{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:4px}
 svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px * var(--illus-scale,1));max-width:100%;height:auto;margin:0 auto;cursor:pointer}
 .tiles{flex:1 1 130px;display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:6px;min-width:0}
-.tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
+.tile{box-sizing:border-box;display:flex;flex-direction:column;background:var(--ac-tile-bg,rgba(127,127,127,.09));border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
+:host([tile-order="value"]) .tile{flex-direction:column-reverse}:host([tile-order="value"]) .tile .v{margin:0 0 2px}
 .tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
 .tile .l span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tile .l ha-icon{--mdc-icon-size:13px;flex:none}
@@ -32,6 +33,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
 .tile.hide{display:none}
 /* ---- illustration ---- */
 .th-fan{transform-box:fill-box;transform-origin:50% 50%}
+.th-lcd-txt{fill:#7fe0ff;font:700 29px 'Courier New',monospace;text-anchor:middle;dominant-baseline:central}.off .th-lcd-txt,.unavailable .th-lcd-txt{fill:#4f7d8f}
 .green .th-fan,.boost .th-fan{animation:thspin var(--spd) linear infinite}
 .boost .th-fan{animation-duration:calc(var(--spd) * .55)}
 .th-elem path{fill:#8d8d8d;transition:fill .4s}
@@ -53,6 +55,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
     <linearGradient id="thtank" gradientUnits="userSpaceOnUse" x1="506" y1="2157" x2="506" y2="867"><stop id="thg0" offset="0" stop-color="#000dc4"/><stop id="thg1" offset=".5" stop-color="#7f0762"/><stop offset="1" stop-color="#ff0000"/></linearGradient></defs>
     <image href="${PHOTO}" x="0" y="0" width="738" height="1674"/>
     <g class="th-fan"><image href="${FAN}" x="198" y="102" width="280" height="280"/></g>
+    <g class="th-lcd"><rect x="488" y="196" width="108" height="62" rx="9" fill="#0c1720" stroke="#8f98a2" stroke-width="3"/><text id="thlcd" class="th-lcd-txt" x="542" y="228">--°</text></g>
     <g transform="scale(.78935) translate(-94 -255)">
       <g class="th-water"><path fill="url(#thtank)" stroke="#2b2a29" stroke-width="3" d="M923 2093c-208,92 -477,87 -699,0l1 -1145c232,-106 446,-119 699,0l-1 1145z"/></g>
       <path fill="url(#th2)" d="M208 708l0 753c0,5 -4,9 -10,9l0 0c-5,0 -12,-4 -12,-9l1 -753c0,-5 5,-9 11,-9l0 0c5,0 10,4 10,9z"/><path fill="url(#th3)" d="M381 543l-188 0c-4,0 -8,-5 -8,-11l0 0c0,-6 4,-13 8,-13l188 1c4,0 8,6 8,12l0 0c0,6 -4,11 -8,11z"/><path fill="url(#th4)" d="M379 695l-152 0c-4,0 -8,-5 -8,-11l0 0c0,-6 4,-13 8,-13l152 1c4,0 8,6 8,12l0 0c0,6 -4,11 -8,11z"/><path fill="url(#th5)" d="M174 566l0 1116c0,5 -5,9 -12,9l0 0c-7,0 -14,-4 -14,-9l2 -1116c0,-5 6,-9 13,-9l0 0c7,0 12,4 12,9z"/><path fill="url(#th6)" d="M311 1533l499 -36c6,0 10,4 11,9l0 0c0,6 -4,11 -10,11l-499 36c-6,0 -10,-4 -11,-9l0 0c0,-6 4,-11 10,-11z"/><path fill="url(#th7)" d="M246 1485l567 12c5,0 8,5 8,10l0 0c-1,6 -5,10 -10,10l-567 -12c-5,0 -8,-5 -7,-10l0 0c1,-6 5,-10 10,-10z"/><path fill="url(#th8)" d="M221 1709l590 -21c7,0 13,4 13,10l0 0c0,6 -6,11 -14,11l-590 21c-7,0 -13,-4 -13,-10l0 0c0,-6 6,-11 14,-11z"/><path fill="url(#th9)" d="M312 1596l499 -36c6,0 10,4 11,9l0 0c0,6 -4,11 -10,11l-499 36c-6,0 -10,-4 -11,-9l0 0c0,-6 4,-11 10,-11z"/><path fill="url(#th10)" d="M314 1659l499 -36c6,0 10,4 11,9l0 0c0,6 -4,11 -10,11l-499 36c-6,0 -10,-4 -11,-9l0 0c0,-6 4,-11 10,-11z"/><path fill="url(#th11)" d="M313 1533l500 28c6,0 9,5 8,11l0 0c-1,6 -6,10 -12,10l-500 -28c-6,0 -9,-5 -8,-11l0 0c1,-6 6,-10 12,-10z"/><path fill="url(#th12)" d="M315 1596l500 28c6,0 9,5 8,11l0 0c-1,6 -6,10 -12,10l-500 -28c-6,0 -9,-5 -8,-11l0 0c1,-6 6,-10 12,-10z"/><path fill="url(#th13)" d="M316 1659l500 28c6,0 9,5 8,11l0 0c-1,6 -6,10 -12,10l-500 -28c-6,0 -9,-5 -8,-11l0 0c1,-6 6,-10 12,-10z"/>
@@ -157,6 +160,8 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       // donc à (1 − réserve) en partant du bas : réserve pleine → ballon rouge, réserve vide → ballon bleu (#307)
       r.getElementById('thg1').setAttribute('offset', String(Math.max(.02, Math.min(.98, 1 - f)).toFixed(3)));
 
+      // écran dessiné sur l'appareil : température actuelle de l'eau
+      r.getElementById('thlcd').textContent = isNaN(temp) ? '--°' : `${this._fmt(temp, 1)}°`;
       r.getElementById('thtitle').textContent = c.name || this._t('name');
       const badge = r.getElementById('thbadge');
       badge.textContent = this._t(`mode_${mode}`);
@@ -207,6 +212,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
+        ...window.applianceTileFields(this._hass),
         ent('entity', ['water_heater', 'climate', 'switch']), ent('entity_mode', ['select', 'input_select', 'sensor']),
         ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'), ent('entity_temp', 'sensor'), ent('entity_target', ['sensor', 'number', 'input_number']),
         ent('entity_temp_bottom', 'sensor'), ent('entity_reserve', 'sensor'),

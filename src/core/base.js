@@ -997,14 +997,16 @@ class ApplianceCardBase extends HTMLElement {
 
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
-    const hass = this._hass, kind = this._kind;
+    const hass = this._hass, kind = this._kind, c = this._config;
+    // lcd_value : « current » affiche la température actuelle plutôt que la consigne (radiateur, sèche-serviettes, clim)
+    const lcdT = () => (c.lcd_value === "current" ? m.tempVal ?? m.targetVal : m.targetVal ?? m.tempVal);
     const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "in_use", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
       if (m.status === "off") return "OFF";
       if (m.radMode === "frost") return "H-G";
-      const v = m.targetVal ?? m.tempVal;
+      const v = lcdT();
       return v != null ? `${Math.round(v)}°` : "ON";
     }
     if (kind === "server_rack") {
@@ -1015,7 +1017,7 @@ class ApplianceCardBase extends HTMLElement {
     if (kind === "radiator") {
       if (m.status === "off") return "OFF";
       if (m.radMode === "frost") return "H-G";
-      const v = m.targetVal ?? m.tempVal;
+      const v = lcdT();
       return v != null ? `${Math.round(v)}°` : "ON";
     }
     if (kind === "solar") {
@@ -1077,8 +1079,15 @@ class ApplianceCardBase extends HTMLElement {
     }
     if (kind === "ac_split") {
       if (m.status === "off" || m.status === "unavailable") return "";
-      return m.targetVal != null ? `${Math.round(m.targetVal)}°` : m.tempVal != null ? `${Math.round(m.tempVal)}°` : "ON";
+      const v = lcdT();
+      return v != null ? `${Math.round(v)}°` : "ON";
     }
+    if (kind === "heat_pump") {
+      if (m.status === "off") return "OFF";
+      if (m.watts == null) return "ON";
+      return m.watts >= 1000 ? `${(m.watts / 1000).toFixed(m.watts >= 10000 ? 0 : 1)}kW` : `${Math.round(m.watts)}W`;
+    }
+    if (kind === "air_purifier") return m.pm != null ? `PM ${Math.round(m.pm)}` : m.status === "off" ? "OFF" : "PM --";
     if (kind === "coffee_maker") {
       if (m.status === "brewing") return tr(hass, "lcd_brewing");
       if (m.status === "ready") return tr(hass, "lcd_ready");

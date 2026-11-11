@@ -129,6 +129,7 @@ function buildForm(kind) {
           ] : []),
           { name: "illustration_size", selector: { number: { min: 30, max: 300, step: 5, mode: "slider", unit_of_measurement: "%" } } },
           { name: "transparent", selector: { boolean: {} } },
+          ...window.applianceTileFields(),
           { name: "animations", selector: { boolean: {} }, default: true },
           { name: "hide_when_inactive", selector: { boolean: {} } },
           { name: "hide_delay", selector: { number: { min: 0, max: 1440, step: 1, mode: "box", unit_of_measurement: "min" } } },
@@ -141,6 +142,10 @@ function buildForm(kind) {
               { value: "h2d", label: "Bambu Lab H2D (photo)" }, { value: "h2d_svg", label: "Bambu Lab H2D (SVG)" }] } } },
             { name: "nozzle_temperatures", selector: { entity: { multiple: true, domain: "sensor" } } },
             { name: "filament_color", selector: { text: {} } },
+          ] : []),
+          ...(["radiator", "towel_dryer", "ac_split"].includes(kind) ? [
+            { name: "lcd_value", selector: { select: { mode: "dropdown", options: [
+              { value: "target", label: tr(null, "lcd_value_target") }, { value: "current", label: tr(null, "lcd_value_current") }] } } },
           ] : []),
           ...(["ac_split", "heat_pump"].includes(kind) ? [
             { name: "hvac", selector: { select: { mode: "dropdown", options: [
