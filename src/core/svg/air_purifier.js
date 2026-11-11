@@ -21,4 +21,5 @@ SVG.air_purifier = () => `
 <g class="ap-knob"><circle cx="74" cy="30" r="4.2" fill="url(#ID-apknob)" stroke="#8b949d" stroke-width=".4"/>
   <path d="M74 30v-3.4" stroke="#3a424b" stroke-width="1.1" stroke-linecap="round"/></g>
 <g class="ap-ticks" fill="#6c757e"><circle cx="68.8" cy="32" r=".55"/><circle cx="69.6" cy="27" r=".55"/><circle cx="74" cy="24.4" r=".55"/><circle cx="78.4" cy="27" r=".55"/></g>
+${lcd(45, 102, 30, 11)}
 <rect x="34" y="124" width="52" height="5" rx="2" fill="#3a3f45"/>`;

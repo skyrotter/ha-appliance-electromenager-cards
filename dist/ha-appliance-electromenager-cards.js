@@ -6096,12 +6096,12 @@ SVG.ac_split = () => `
 <path d="M10 70h100" stroke="#fff" stroke-opacity=".9" stroke-width="1"/>
 <rect class="ac-slot" x="12" y="73.5" width="96" height="5" rx="2.5" fill="#2a2f35"/>
 <g class="ac-flap"><path d="M12 74.5h96q0 4.5-4 5h-88q-4-.5-4-5z" fill="#f2f4f6" stroke="#aab2ba" stroke-width=".5"/></g>
-<rect x="84" y="58" width="22" height="9" rx="2" fill="#0c1720" opacity=".9"/>
-<text class="lcd" x="95" y="64.6" text-anchor="middle">OFF</text>
-<g class="ac-ico ico-cool" stroke="#4fc3f7" stroke-width=".9" stroke-linecap="round"><path d="M78 59v8M74.5 61l7 4M74.5 65l7-4"/></g>
-<g class="ac-ico ico-heat"><circle cx="78" cy="63" r="2" fill="#ff8a3d"/><path d="M78 58.6v1.2M78 66.2v1.2M73.6 63h1.2M81.2 63h1.2M74.9 59.9l.8.8M80.3 65.3l.8.8M74.9 66.1l.8-.8M80.3 60.7l.8-.8" stroke="#ff8a3d" stroke-width=".8" stroke-linecap="round"/></g>
-<g class="ac-ico ico-dry"><path d="M78 59q-3 4-3 5.6a3 3 0 0 0 6 0q0-1.6-3-5.6z" fill="#7fd6c0"/></g>
-<g class="ac-ico ico-fan" stroke="#cfd6dd" stroke-width="1" stroke-linecap="round" fill="none"><path d="M78 63q-3-4 0-4.5M78 63q4-1 3.5 2.4M78 63q-1 4-4 2"/></g>
+<rect x="80" y="56" width="30" height="14" rx="2.5" fill="#0c1720" opacity=".9"/>
+<text class="lcd" x="95" y="63.4" text-anchor="middle">OFF</text>
+<g class="ac-ico ico-cool" transform="translate(-9 3)" stroke="#4fc3f7" stroke-width=".9" stroke-linecap="round"><path d="M78 59v8M74.5 61l7 4M74.5 65l7-4"/></g>
+<g class="ac-ico ico-heat" transform="translate(-9 3)"><circle cx="78" cy="63" r="2" fill="#ff8a3d"/><path d="M78 58.6v1.2M78 66.2v1.2M73.6 63h1.2M81.2 63h1.2M74.9 59.9l.8.8M80.3 65.3l.8.8M74.9 66.1l.8-.8M80.3 60.7l.8-.8" stroke="#ff8a3d" stroke-width=".8" stroke-linecap="round"/></g>
+<g class="ac-ico ico-dry" transform="translate(-9 3)"><path d="M78 59q-3 4-3 5.6a3 3 0 0 0 6 0q0-1.6-3-5.6z" fill="#7fd6c0"/></g>
+<g class="ac-ico ico-fan" transform="translate(-9 3)" stroke="#cfd6dd" stroke-width="1" stroke-linecap="round" fill="none"><path d="M78 63q-3-4 0-4.5M78 63q4-1 3.5 2.4M78 63q-1 4-4 2"/></g>
 <circle class="led l1" cx="18" cy="64" r="1.1"/>`;
 
 SVG.air_fryer = () => `
@@ -6195,6 +6195,7 @@ SVG.air_purifier = () => `
 <g class="ap-knob"><circle cx="74" cy="30" r="4.2" fill="url(#ID-apknob)" stroke="#8b949d" stroke-width=".4"/>
   <path d="M74 30v-3.4" stroke="#3a424b" stroke-width="1.1" stroke-linecap="round"/></g>
 <g class="ap-ticks" fill="#6c757e"><circle cx="68.8" cy="32" r=".55"/><circle cx="69.6" cy="27" r=".55"/><circle cx="74" cy="24.4" r=".55"/><circle cx="78.4" cy="27" r=".55"/></g>
+${lcd(45, 102, 30, 11)}
 <rect x="34" y="124" width="52" height="5" rx="2" fill="#3a3f45"/>`;
 
 SVG.av_receiver = () => `
@@ -7193,7 +7194,8 @@ SVG.heat_pump = () => `
 <path d="M84 40v72" stroke="#b9c0c7" stroke-width=".7"/>
 <g stroke="#bfc6cd" stroke-width=".6"><path d="M88 46h20M88 50h20M88 54h20M88 58h20M88 62h20M88 66h20"/></g>
 <rect x="88" y="84" width="20" height="18" rx="1.5" fill="#e3e7eb" stroke="#aab2ba" stroke-width=".5"/>
-<circle cx="98" cy="93" r="1.3" fill="#9aa2ab"/>
+${lcd(89.5, 86, 17, 9)}
+<circle cx="98" cy="99" r="1.3" fill="#9aa2ab"/>
 <circle class="hp-led" cx="104" cy="75" r="1.2"/>
 <circle cx="46" cy="75" r="31" fill="#d4d9de" stroke="#aab2ba" stroke-width=".6"/>
 <circle cx="46" cy="75" r="28" fill="url(#ID-grill)"/>
@@ -10321,14 +10323,16 @@ class ApplianceCardBase extends HTMLElement {
 
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
-    const hass = this._hass, kind = this._kind;
+    const hass = this._hass, kind = this._kind, c = this._config;
+    // lcd_value : « current » affiche la température actuelle plutôt que la consigne (radiateur, sèche-serviettes, clim)
+    const lcdT = () => (c.lcd_value === "current" ? m.tempVal ?? m.targetVal : m.targetVal ?? m.tempVal);
     const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "in_use", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
       if (m.status === "off") return "OFF";
       if (m.radMode === "frost") return "H-G";
-      const v = m.targetVal ?? m.tempVal;
+      const v = lcdT();
       return v != null ? `${Math.round(v)}°` : "ON";
     }
     if (kind === "server_rack") {
@@ -10339,7 +10343,7 @@ class ApplianceCardBase extends HTMLElement {
     if (kind === "radiator") {
       if (m.status === "off") return "OFF";
       if (m.radMode === "frost") return "H-G";
-      const v = m.targetVal ?? m.tempVal;
+      const v = lcdT();
       return v != null ? `${Math.round(v)}°` : "ON";
     }
     if (kind === "solar") {
@@ -10401,8 +10405,15 @@ class ApplianceCardBase extends HTMLElement {
     }
     if (kind === "ac_split") {
       if (m.status === "off" || m.status === "unavailable") return "";
-      return m.targetVal != null ? `${Math.round(m.targetVal)}°` : m.tempVal != null ? `${Math.round(m.tempVal)}°` : "ON";
+      const v = lcdT();
+      return v != null ? `${Math.round(v)}°` : "ON";
     }
+    if (kind === "heat_pump") {
+      if (m.status === "off") return "OFF";
+      if (m.watts == null) return "ON";
+      return m.watts >= 1000 ? `${(m.watts / 1000).toFixed(m.watts >= 10000 ? 0 : 1)}kW` : `${Math.round(m.watts)}W`;
+    }
+    if (kind === "air_purifier") return m.pm != null ? `PM ${Math.round(m.pm)}` : m.status === "off" ? "OFF" : "PM --";
     if (kind === "coffee_maker") {
       if (m.status === "brewing") return tr(hass, "lcd_brewing");
       if (m.status === "ready") return tr(hass, "lcd_ready");
@@ -11149,6 +11160,10 @@ function buildForm(kind) {
               { value: "h2d", label: "Bambu Lab H2D (photo)" }, { value: "h2d_svg", label: "Bambu Lab H2D (SVG)" }] } } },
             { name: "nozzle_temperatures", selector: { entity: { multiple: true, domain: "sensor" } } },
             { name: "filament_color", selector: { text: {} } },
+          ] : []),
+          ...(["radiator", "towel_dryer", "ac_split"].includes(kind) ? [
+            { name: "lcd_value", selector: { select: { mode: "dropdown", options: [
+              { value: "target", label: tr(null, "lcd_value_target") }, { value: "current", label: tr(null, "lcd_value_current") }] } } },
           ] : []),
           ...(["ac_split", "heat_pump"].includes(kind) ? [
             { name: "hvac", selector: { select: { mode: "dropdown", options: [
@@ -12162,6 +12177,7 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-ac_split.st-ac_dry .ico-dry, .k-ac_split.st-ac_fan .ico-fan { opacity: 1; }
 .k-ac_split.st-off .ac-ico, .k-ac_split.st-unavailable .ac-ico { opacity: 0 !important; }
 .k-ac_split .lcd { fill: transparent; }
+.wrap.k-ac_split svg text.lcd, .wrap.k-ac_split .lcd { font-size: 10.5px !important; }
 .k-ac_split:not(.st-off):not(.st-unavailable) .lcd { fill: var(--acc); }
 .k-ac_split:not(.st-off):not(.st-unavailable) .l1 { fill: #3ddc84; }
 .ac-warm { opacity: 0; transition: opacity 1.2s; }
@@ -12189,6 +12205,9 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-heat_pump.st-cooling .hp-led, .k-heat_pump.st-heating .hp-led, .k-heat_pump.st-ac_dry .hp-led, .k-heat_pump.st-defrost .hp-led { fill: #3ddc84; }
 .k-heat_pump.st-at_target .hp-led, .k-heat_pump.st-ac_fan .hp-led { fill: #ffd76a; }
 @keyframes hp-wave { 0% { opacity: .8; transform: scale(1); } 100% { opacity: 0; transform: scale(1.55); } }
+
+/* écran : puissance */
+.wrap.k-heat_pump svg text.lcd, .wrap.k-heat_pump .lcd { font-size: 4.7px !important; letter-spacing: 0 !important; }
 
 /* ---------- towel dryer ---------- */
 .td-glow { opacity: 0; transition: opacity .8s; }
@@ -12629,6 +12648,9 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-air_purifier.filter-bad .ap-knob circle { stroke: var(--ac-heat); stroke-width: 1; filter: drop-shadow(0 0 1.4px var(--ac-heat)); }
 @keyframes ap-dust { 0% { opacity: 0; transform: translateX(0); } 20% { opacity: .9; } 80% { opacity: .6; } 100% { opacity: 0; transform: translateX(26px); } }
 @keyframes ap-up { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -20; } }
+
+/* écran : PM2.5 */
+.wrap.k-air_purifier svg text.lcd, .wrap.k-air_purifier .lcd { font-size: 7.5px !important; letter-spacing: 0 !important; }
 
 /* ---------- écrans PC ---------- */
 .mn-screen { opacity: 0; transition: opacity .5s; }
@@ -13357,6 +13379,9 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "tile_order": "Tile order",
       "tile_order_name": "Name above, value below",
       "tile_order_value": "Value above, name below",
+      "lcd_value": "Value on the display",
+      "lcd_value_target": "Target temperature (default)",
+      "lcd_value_current": "Current temperature",
       "entity_wind": "Wind speed sensor",
       "show_rain": "Show rain",
       "show_wind": "Show wind",
@@ -15666,6 +15691,9 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "tile_order": "Ordre des tuiles",
       "tile_order_name": "Nom au-dessus, valeur en dessous",
       "tile_order_value": "Valeur au-dessus, nom en dessous",
+      "lcd_value": "Valeur sur l'écran",
+      "lcd_value_target": "Consigne (défaut)",
+      "lcd_value_current": "Température actuelle",
       "entity_wind": "Capteur de vent",
       "show_rain": "Afficher la pluie",
       "show_wind": "Afficher le vent",
@@ -23069,7 +23097,7 @@ class AppliancePelletBoilerCard extends HTMLElement {
       .heating .heat path { animation:rise 2.4s ease-in infinite; } .heat path:nth-child(2) { animation-delay:.8s !important; } .heat path:nth-child(3) { animation-delay:1.6s !important; }
       /* Écran */
       .scr { fill:#0d1a24; } .alarm .scr { fill:#4a0d0d; animation:blink .6s infinite; }
-      .scrtxt { fill:#7fe0ff; font:700 7px 'Courier New',monospace; text-anchor:middle; } .scrlab { fill:#7fe0ff; font:5px 'Courier New',monospace; text-anchor:middle; opacity:.8; }
+      .scrtxt { fill:#7fe0ff; font:700 13px 'Courier New',monospace; text-anchor:middle; } .scrlab { fill:#7fe0ff; font:6.5px 'Courier New',monospace; text-anchor:middle; opacity:.8; }
       .off .scrtxt, .off .scrlab { fill:#4f7d8f; }
       .led { fill:#6b6b6b; } .heating .led { fill:#43ff64; } .ignition .led { fill:#ffb300; animation:blink .8s infinite; }
       .extinguishing .led { fill:#3fa9ff; animation:blink 1.2s infinite; } .alarm .led { fill:#ff3b30; animation:blink .4s infinite; }
@@ -23116,10 +23144,10 @@ class AppliancePelletBoilerCard extends HTMLElement {
         <rect x="244" y="74" width="3" height="16" rx="1.5" fill="#9aa0a6"/><rect x="244" y="150" width="3" height="16" rx="1.5" fill="#9aa0a6"/>
         <rect x="138" y="198" width="10" height="5" fill="#2e3237"/><rect x="236" y="198" width="10" height="5" fill="#2e3237"/>
         <!-- Écran tactile -->
-        <rect x="208" y="55" width="36" height="24" rx="3" fill="#2b2f35"/>
-        <rect class="scr" x="211" y="58" width="30" height="18" rx="2"/>
-        <text class="scrlab" x="226" y="65" id="lab"></text><text class="scrtxt" x="226" y="73" id="val"></text>
-        <circle class="led" cx="214" cy="82" r="1.6"/>
+        <rect x="186" y="53" width="58" height="38" rx="4" fill="#2b2f35"/>
+        <rect class="scr" x="189" y="56" width="52" height="32" rx="2.5"/>
+        <text class="scrlab" x="215" y="65" id="lab"></text><text class="scrtxt" x="215" y="80" id="val"></text>
+        <circle class="led" cx="193" cy="96" r="1.8"/>
         <!-- Hublot de combustion -->
         <circle cx="192" cy="160" r="15" fill="#2b2f35"/>
         <circle cx="192" cy="160" r="11.5" fill="#120a06"/>
@@ -23220,6 +23248,8 @@ class AppliancePelletBoilerCard extends HTMLElement {
     if (st === 'heating') { lab.textContent = this._t('flow').toUpperCase(); val.textContent = dep === null ? 'ON' : `${Math.round(dep)}${tc.unit}`; }
     else if (st === 'off') { lab.textContent = this._t('off').toUpperCase(); val.textContent = dep === null ? '--' : `${Math.round(dep)}${tc.unit}`; }
     else { lab.textContent = ''; val.textContent = this._t(st).toUpperCase().slice(0, 9); }
+    // texte d'état long (ALLUMAGE…) : police réduite pour tenir dans l'écran
+    val.style.fontSize = val.textContent.length > 5 ? '8px' : '';
 
     const f = (v, d, u) => (v === null ? '—' : `${v.toFixed(d)} ${u}`);
     const it = [];
@@ -46931,6 +46961,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
 .tile.hide{display:none}
 /* ---- illustration ---- */
 .th-fan{transform-box:fill-box;transform-origin:50% 50%}
+.th-lcd-txt{fill:#7fe0ff;font:700 29px 'Courier New',monospace;text-anchor:middle;dominant-baseline:central}.off .th-lcd-txt,.unavailable .th-lcd-txt{fill:#4f7d8f}
 .green .th-fan,.boost .th-fan{animation:thspin var(--spd) linear infinite}
 .boost .th-fan{animation-duration:calc(var(--spd) * .55)}
 .th-elem path{fill:#8d8d8d;transition:fill .4s}
@@ -46952,6 +46983,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
     <linearGradient id="thtank" gradientUnits="userSpaceOnUse" x1="506" y1="2157" x2="506" y2="867"><stop id="thg0" offset="0" stop-color="#000dc4"/><stop id="thg1" offset=".5" stop-color="#7f0762"/><stop offset="1" stop-color="#ff0000"/></linearGradient></defs>
     <image href="${PHOTO}" x="0" y="0" width="738" height="1674"/>
     <g class="th-fan"><image href="${FAN}" x="198" y="102" width="280" height="280"/></g>
+    <g class="th-lcd"><rect x="488" y="196" width="108" height="62" rx="9" fill="#0c1720" stroke="#8f98a2" stroke-width="3"/><text id="thlcd" class="th-lcd-txt" x="542" y="228">--°</text></g>
     <g transform="scale(.78935) translate(-94 -255)">
       <g class="th-water"><path fill="url(#thtank)" stroke="#2b2a29" stroke-width="3" d="M923 2093c-208,92 -477,87 -699,0l1 -1145c232,-106 446,-119 699,0l-1 1145z"/></g>
       <path fill="url(#th2)" d="M208 708l0 753c0,5 -4,9 -10,9l0 0c-5,0 -12,-4 -12,-9l1 -753c0,-5 5,-9 11,-9l0 0c5,0 10,4 10,9z"/><path fill="url(#th3)" d="M381 543l-188 0c-4,0 -8,-5 -8,-11l0 0c0,-6 4,-13 8,-13l188 1c4,0 8,6 8,12l0 0c0,6 -4,11 -8,11z"/><path fill="url(#th4)" d="M379 695l-152 0c-4,0 -8,-5 -8,-11l0 0c0,-6 4,-13 8,-13l152 1c4,0 8,6 8,12l0 0c0,6 -4,11 -8,11z"/><path fill="url(#th5)" d="M174 566l0 1116c0,5 -5,9 -12,9l0 0c-7,0 -14,-4 -14,-9l2 -1116c0,-5 6,-9 13,-9l0 0c7,0 12,4 12,9z"/><path fill="url(#th6)" d="M311 1533l499 -36c6,0 10,4 11,9l0 0c0,6 -4,11 -10,11l-499 36c-6,0 -10,-4 -11,-9l0 0c0,-6 4,-11 10,-11z"/><path fill="url(#th7)" d="M246 1485l567 12c5,0 8,5 8,10l0 0c-1,6 -5,10 -10,10l-567 -12c-5,0 -8,-5 -7,-10l0 0c1,-6 5,-10 10,-10z"/><path fill="url(#th8)" d="M221 1709l590 -21c7,0 13,4 13,10l0 0c0,6 -6,11 -14,11l-590 21c-7,0 -13,-4 -13,-10l0 0c0,-6 6,-11 14,-11z"/><path fill="url(#th9)" d="M312 1596l499 -36c6,0 10,4 11,9l0 0c0,6 -4,11 -10,11l-499 36c-6,0 -10,-4 -11,-9l0 0c0,-6 4,-11 10,-11z"/><path fill="url(#th10)" d="M314 1659l499 -36c6,0 10,4 11,9l0 0c0,6 -4,11 -10,11l-499 36c-6,0 -10,-4 -11,-9l0 0c0,-6 4,-11 10,-11z"/><path fill="url(#th11)" d="M313 1533l500 28c6,0 9,5 8,11l0 0c-1,6 -6,10 -12,10l-500 -28c-6,0 -9,-5 -8,-11l0 0c1,-6 6,-10 12,-10z"/><path fill="url(#th12)" d="M315 1596l500 28c6,0 9,5 8,11l0 0c-1,6 -6,10 -12,10l-500 -28c-6,0 -9,-5 -8,-11l0 0c1,-6 6,-10 12,-10z"/><path fill="url(#th13)" d="M316 1659l500 28c6,0 9,5 8,11l0 0c-1,6 -6,10 -12,10l-500 -28c-6,0 -9,-5 -8,-11l0 0c1,-6 6,-10 12,-10z"/>
@@ -47056,6 +47088,8 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       // donc à (1 − réserve) en partant du bas : réserve pleine → ballon rouge, réserve vide → ballon bleu (#307)
       r.getElementById('thg1').setAttribute('offset', String(Math.max(.02, Math.min(.98, 1 - f)).toFixed(3)));
 
+      // écran dessiné sur l'appareil : température actuelle de l'eau
+      r.getElementById('thlcd').textContent = isNaN(temp) ? '--°' : `${this._fmt(temp, 1)}°`;
       r.getElementById('thtitle').textContent = c.name || this._t('name');
       const badge = r.getElementById('thbadge');
       badge.textContent = this._t(`mode_${mode}`);

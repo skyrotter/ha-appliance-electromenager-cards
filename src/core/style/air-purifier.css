@@ -25,3 +25,6 @@
 .k-air_purifier.filter-bad .ap-knob circle { stroke: var(--ac-heat); stroke-width: 1; filter: drop-shadow(0 0 1.4px var(--ac-heat)); }
 @keyframes ap-dust { 0% { opacity: 0; transform: translateX(0); } 20% { opacity: .9; } 80% { opacity: .6; } 100% { opacity: 0; transform: translateX(26px); } }
 @keyframes ap-up { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -20; } }
+
+/* écran : PM2.5 */
+.wrap.k-air_purifier svg text.lcd, .wrap.k-air_purifier .lcd { font-size: 7.5px !important; letter-spacing: 0 !important; }

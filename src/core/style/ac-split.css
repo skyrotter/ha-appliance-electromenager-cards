@@ -19,6 +19,7 @@
 .k-ac_split.st-ac_dry .ico-dry, .k-ac_split.st-ac_fan .ico-fan { opacity: 1; }
 .k-ac_split.st-off .ac-ico, .k-ac_split.st-unavailable .ac-ico { opacity: 0 !important; }
 .k-ac_split .lcd { fill: transparent; }
+.wrap.k-ac_split svg text.lcd, .wrap.k-ac_split .lcd { font-size: 10.5px !important; }
 .k-ac_split:not(.st-off):not(.st-unavailable) .lcd { fill: var(--acc); }
 .k-ac_split:not(.st-off):not(.st-unavailable) .l1 { fill: #3ddc84; }
 .ac-warm { opacity: 0; transition: opacity 1.2s; }
@@ -29,3 +30,4 @@
 .k-heat_pump.st-heating .hp-fins { stroke: #cfe9ff; }
 @keyframes ac-blow { to { stroke-dashoffset: -24; } }
 @keyframes ac-swing { 0%, 100% { transform: translateY(4.5px) scaleY(.75); } 50% { transform: translateY(5.5px) scaleY(.55); } }
+

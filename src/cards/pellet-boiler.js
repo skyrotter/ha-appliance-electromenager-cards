@@ -116,7 +116,7 @@ class AppliancePelletBoilerCard extends HTMLElement {
       .heating .heat path { animation:rise 2.4s ease-in infinite; } .heat path:nth-child(2) { animation-delay:.8s !important; } .heat path:nth-child(3) { animation-delay:1.6s !important; }
       /* Écran */
       .scr { fill:#0d1a24; } .alarm .scr { fill:#4a0d0d; animation:blink .6s infinite; }
-      .scrtxt { fill:#7fe0ff; font:700 7px 'Courier New',monospace; text-anchor:middle; } .scrlab { fill:#7fe0ff; font:5px 'Courier New',monospace; text-anchor:middle; opacity:.8; }
+      .scrtxt { fill:#7fe0ff; font:700 13px 'Courier New',monospace; text-anchor:middle; } .scrlab { fill:#7fe0ff; font:6.5px 'Courier New',monospace; text-anchor:middle; opacity:.8; }
       .off .scrtxt, .off .scrlab { fill:#4f7d8f; }
       .led { fill:#6b6b6b; } .heating .led { fill:#43ff64; } .ignition .led { fill:#ffb300; animation:blink .8s infinite; }
       .extinguishing .led { fill:#3fa9ff; animation:blink 1.2s infinite; } .alarm .led { fill:#ff3b30; animation:blink .4s infinite; }
@@ -163,10 +163,10 @@ class AppliancePelletBoilerCard extends HTMLElement {
         <rect x="244" y="74" width="3" height="16" rx="1.5" fill="#9aa0a6"/><rect x="244" y="150" width="3" height="16" rx="1.5" fill="#9aa0a6"/>
         <rect x="138" y="198" width="10" height="5" fill="#2e3237"/><rect x="236" y="198" width="10" height="5" fill="#2e3237"/>
         <!-- Écran tactile -->
-        <rect x="208" y="55" width="36" height="24" rx="3" fill="#2b2f35"/>
-        <rect class="scr" x="211" y="58" width="30" height="18" rx="2"/>
-        <text class="scrlab" x="226" y="65" id="lab"></text><text class="scrtxt" x="226" y="73" id="val"></text>
-        <circle class="led" cx="214" cy="82" r="1.6"/>
+        <rect x="186" y="53" width="58" height="38" rx="4" fill="#2b2f35"/>
+        <rect class="scr" x="189" y="56" width="52" height="32" rx="2.5"/>
+        <text class="scrlab" x="215" y="65" id="lab"></text><text class="scrtxt" x="215" y="80" id="val"></text>
+        <circle class="led" cx="193" cy="96" r="1.8"/>
         <!-- Hublot de combustion -->
         <circle cx="192" cy="160" r="15" fill="#2b2f35"/>
         <circle cx="192" cy="160" r="11.5" fill="#120a06"/>
@@ -267,6 +267,8 @@ class AppliancePelletBoilerCard extends HTMLElement {
     if (st === 'heating') { lab.textContent = this._t('flow').toUpperCase(); val.textContent = dep === null ? 'ON' : `${Math.round(dep)}${tc.unit}`; }
     else if (st === 'off') { lab.textContent = this._t('off').toUpperCase(); val.textContent = dep === null ? '--' : `${Math.round(dep)}${tc.unit}`; }
     else { lab.textContent = ''; val.textContent = this._t(st).toUpperCase().slice(0, 9); }
+    // texte d'état long (ALLUMAGE…) : police réduite pour tenir dans l'écran
+    val.style.fontSize = val.textContent.length > 5 ? '8px' : '';
 
     const f = (v, d, u) => (v === null ? '—' : `${v.toFixed(d)} ${u}`);
     const it = [];
