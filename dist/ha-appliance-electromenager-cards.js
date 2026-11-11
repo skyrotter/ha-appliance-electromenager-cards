@@ -20008,6 +20008,7 @@ class ApplianceAquariumCard extends HTMLElement {
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
+        ...window.applianceTileFields(),
         { name: 'entity_power', selector: { entity: { domain: 'sensor', device_class: 'power' } } },
         { name: 'entity_energy', selector: { entity: { domain: 'sensor', device_class: 'energy' } } },
         { name: 'entity_temperature', selector: { entity: { domain: 'sensor', device_class: 'temperature' } } },
@@ -20105,7 +20106,8 @@ class ApplianceAquariumCard extends HTMLElement {
       .fish { animation:swim var(--dur) linear infinite; animation-delay:var(--delay); }
       .tail { transform-origin:2px 0; animation:wag calc(.5s / var(--speed,1)) ease-in-out infinite alternate; }
       .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(70px,1fr)); gap:8px; margin-top:10px; }
-      .stat { text-align:center; background:var(--secondary-background-color, rgba(127,127,127,.12)); border-radius:10px; padding:6px 4px; }
+      .stat { text-align:center; display:flex; flex-direction:column; background:var(--ac-tile-bg, rgba(127,127,127,.09)); border-radius:10px; padding:6px 4px; }
+      :host([tile-order="name"]) .stat { flex-direction:column-reverse; }
       .stat.link { cursor:pointer; } .stat.link:hover { background:rgba(127,127,127,.2); }
       svg { cursor:pointer; }
       .stat .v { font-weight:700; font-size:1.05em; } .stat .l { font-size:.7em; opacity:.65; text-transform:uppercase; letter-spacing:.04em; }
@@ -21091,6 +21093,7 @@ class ApplianceBatteryCard extends HTMLElement {
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
+        ...window.applianceTileFields(),
         { name: 'entity_soc', selector: { entity: { domain: 'sensor', device_class: 'battery' } } },
         { name: 'entity_power', selector: { entity: { domain: 'sensor', device_class: 'power' } } },
         { name: 'invert_power', selector: { boolean: {} } },
@@ -21199,7 +21202,8 @@ class ApplianceBatteryCard extends HTMLElement {
       .bolt { fill:#ffb300; opacity:0; } .charging .bolt { opacity:1; animation:blink 1.2s infinite; }
       .arrow { fill:#00acc1; opacity:0; } .discharging .arrow { opacity:1; animation:blink 1.2s infinite; }
       .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(78px,1fr)); gap:8px; margin-top:6px; }
-      .stat { text-align:center; background:var(--secondary-background-color, rgba(127,127,127,.12)); border-radius:10px; padding:6px 4px; }
+      .stat { text-align:center; display:flex; flex-direction:column; background:var(--ac-tile-bg, rgba(127,127,127,.09)); border-radius:10px; padding:6px 4px; }
+      :host([tile-order="name"]) .stat { flex-direction:column-reverse; }
       .stat .v { font-weight:700; font-size:1.05em; } .stat .l { font-size:.7em; opacity:.65; text-transform:uppercase; letter-spacing:.04em; }
       @keyframes dash { to { stroke-dashoffset:-11; } } @keyframes blink { 50% { opacity:.35; } }
       @keyframes wave { from { transform:translate(-12px, var(--wy,0px)); } to { transform:translate(8px, var(--wy,0px)); } }
@@ -21503,6 +21507,7 @@ class ApplianceEvChargerCard extends HTMLElement {
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
+        ...window.applianceTileFields(),
         { name: 'entity_power', selector: { entity: { domain: 'sensor', device_class: 'power' } } },
         { name: 'entity_session_energy', selector: { entity: { domain: 'sensor', device_class: 'energy' } } },
         { name: 'entity_car_soc', selector: { entity: { domain: 'sensor' } } },
@@ -21572,7 +21577,8 @@ class ApplianceEvChargerCard extends HTMLElement {
       .charging .gfill { animation:breathe 2s ease-in-out infinite; }
       .gtxt { fill:#fff; font:800 10px system-ui,sans-serif; text-anchor:middle; text-shadow:0 1px 2px rgba(0,0,0,.6); }
       .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(78px,1fr)); gap:8px; margin-top:6px; }
-      .stat { text-align:center; background:var(--secondary-background-color, rgba(127,127,127,.12)); border-radius:10px; padding:6px 4px; }
+      .stat { text-align:center; display:flex; flex-direction:column; background:var(--ac-tile-bg, rgba(127,127,127,.09)); border-radius:10px; padding:6px 4px; }
+      :host([tile-order="name"]) .stat { flex-direction:column-reverse; }
       .stat .v { font-weight:700; font-size:1.05em; } .stat .l { font-size:.7em; opacity:.65; text-transform:uppercase; letter-spacing:.04em; }
       @keyframes dash { to { stroke-dashoffset:-11; } }
       @keyframes breathe { 50% { opacity:.45; } }
@@ -22054,6 +22060,7 @@ class ApplianceRobotVacuumCard extends HTMLElement {
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
+        ...window.applianceTileFields(),
         { name: 'entity_battery', selector: { entity: { domain: 'sensor', device_class: 'battery' } } },
         { name: 'entity_area', selector: { entity: { domain: 'sensor' } } },
         { name: 'entity_time', selector: { entity: { domain: 'sensor' } } },
@@ -22173,7 +22180,8 @@ const COMMON_CSS_VAC = `
   .btn:active { transform:scale(.95); } .btn svg { width:18px; height:18px; fill:currentColor; }
   .btn.on { background:var(--primary-color,#03a9f4); color:#fff; }
   .stats { display:grid; gap:8px; margin-top:8px; }
-  .stat { text-align:center; background:var(--secondary-background-color, rgba(127,127,127,.12)); border-radius:10px; padding:6px 4px; }
+  .stat { text-align:center; display:flex; flex-direction:column; background:var(--ac-tile-bg, rgba(127,127,127,.09)); border-radius:10px; padding:6px 4px; }
+  :host([tile-order="name"]) .stat { flex-direction:column-reverse; }
   .stat .v { font-weight:700; font-size:1.02em; } .stat .l { font-size:.7em; opacity:.65; text-transform:uppercase; letter-spacing:.04em; }
   @keyframes blink { 50% { opacity:.3 } } @keyframes breathe { 50% { opacity:.4 } }
   /* format compact : vignette à gauche, nom + état, tuiles, boutons dessous */
@@ -22191,7 +22199,8 @@ const COMMON_CSS_VAC = `
   .compact[data-st=returning] .dot { background:#3fa9ff; } .compact[data-st=paused] .dot { background:#ffb300; } .compact[data-st=error] .dot { background:#e53935; }
   .compact .badge { align-self:flex-start; }
   .compact .stats { grid-area:stats; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; margin-top:0; }
-  .compact .tile { display:flex; flex-direction:column; padding:6px 9px; border-radius:10px; min-width:0; background:rgba(127,127,127,.09); }
+  .compact .tile { display:flex; flex-direction:column; padding:6px 9px; border-radius:10px; min-width:0; background:var(--ac-tile-bg, rgba(127,127,127,.09)); }
+  :host([tile-order=\"name\"]) .compact .tile { flex-direction:column-reverse; }
   .compact .val { font-size:14px; font-weight:600; color:var(--primary-text-color); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .compact .lbl { font-size:11px; color:var(--secondary-text-color); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .compact .btns { margin-top:10px; } .compact .btn { border-radius:10px; }
@@ -22626,6 +22635,7 @@ class ApplianceRobotMowerCard extends HTMLElement {
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
+        ...window.applianceTileFields(),
         { name: 'entity_battery', selector: { entity: { domain: 'sensor', device_class: 'battery' } } },
         { name: 'entity_area', selector: { entity: { domain: 'sensor' } } },
         { name: 'entity_time', selector: { entity: { domain: 'sensor' } } },
@@ -22825,7 +22835,8 @@ const COMMON_CSS_MOW = `
   .btn:active { transform:scale(.95); } .btn svg { width:18px; height:18px; fill:currentColor; }
   .btn.on { background:var(--primary-color,#43a047); color:#fff; }
   .stats { display:grid; gap:8px; margin-top:8px; }
-  .stat { text-align:center; background:var(--secondary-background-color, rgba(127,127,127,.12)); border-radius:10px; padding:6px 4px; }
+  .stat { text-align:center; display:flex; flex-direction:column; background:var(--ac-tile-bg, rgba(127,127,127,.09)); border-radius:10px; padding:6px 4px; }
+  :host([tile-order="name"]) .stat { flex-direction:column-reverse; }
   .stat .v { font-weight:700; font-size:1.02em; } .stat .l { font-size:.7em; opacity:.65; text-transform:uppercase; letter-spacing:.04em; }
   @keyframes blink { 50% { opacity:.3 } } @keyframes breathe { 50% { opacity:.4 } }
   /* format compact : vignette à gauche, nom + état, tuiles, boutons dessous */
@@ -22843,7 +22854,8 @@ const COMMON_CSS_MOW = `
   .compact[data-st=returning] .dot { background:#3fa9ff; } .compact[data-st=paused] .dot { background:#ffb300; } .compact[data-st=error] .dot { background:#e53935; }
   .compact .badge { align-self:flex-start; }
   .compact .stats { grid-area:stats; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; margin-top:0; }
-  .compact .tile { display:flex; flex-direction:column; padding:6px 9px; border-radius:10px; min-width:0; background:rgba(127,127,127,.09); }
+  .compact .tile { display:flex; flex-direction:column; padding:6px 9px; border-radius:10px; min-width:0; background:var(--ac-tile-bg, rgba(127,127,127,.09)); }
+  :host([tile-order=\"name\"]) .compact .tile { flex-direction:column-reverse; }
   .compact .val { font-size:14px; font-weight:600; color:var(--primary-text-color); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .compact .lbl { font-size:11px; color:var(--secondary-text-color); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .compact .btns { margin-top:10px; } .compact .btn { border-radius:10px; }

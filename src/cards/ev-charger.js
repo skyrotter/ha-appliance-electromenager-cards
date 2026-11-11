@@ -27,6 +27,7 @@ class ApplianceEvChargerCard extends HTMLElement {
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
+        ...window.applianceTileFields(),
         { name: 'entity_power', selector: { entity: { domain: 'sensor', device_class: 'power' } } },
         { name: 'entity_session_energy', selector: { entity: { domain: 'sensor', device_class: 'energy' } } },
         { name: 'entity_car_soc', selector: { entity: { domain: 'sensor' } } },
@@ -96,7 +97,8 @@ class ApplianceEvChargerCard extends HTMLElement {
       .charging .gfill { animation:breathe 2s ease-in-out infinite; }
       .gtxt { fill:#fff; font:800 10px system-ui,sans-serif; text-anchor:middle; text-shadow:0 1px 2px rgba(0,0,0,.6); }
       .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(78px,1fr)); gap:8px; margin-top:6px; }
-      .stat { text-align:center; background:var(--secondary-background-color, rgba(127,127,127,.12)); border-radius:10px; padding:6px 4px; }
+      .stat { text-align:center; display:flex; flex-direction:column; background:var(--ac-tile-bg, rgba(127,127,127,.09)); border-radius:10px; padding:6px 4px; }
+      :host([tile-order="name"]) .stat { flex-direction:column-reverse; }
       .stat .v { font-weight:700; font-size:1.05em; } .stat .l { font-size:.7em; opacity:.65; text-transform:uppercase; letter-spacing:.04em; }
       @keyframes dash { to { stroke-dashoffset:-11; } }
       @keyframes breathe { 50% { opacity:.45; } }

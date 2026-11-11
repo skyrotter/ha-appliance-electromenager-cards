@@ -31,6 +31,7 @@ class ApplianceRobotMowerCard extends HTMLElement {
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
+        ...window.applianceTileFields(),
         { name: 'entity_battery', selector: { entity: { domain: 'sensor', device_class: 'battery' } } },
         { name: 'entity_area', selector: { entity: { domain: 'sensor' } } },
         { name: 'entity_time', selector: { entity: { domain: 'sensor' } } },
@@ -230,7 +231,8 @@ const COMMON_CSS_MOW = `
   .btn:active { transform:scale(.95); } .btn svg { width:18px; height:18px; fill:currentColor; }
   .btn.on { background:var(--primary-color,#43a047); color:#fff; }
   .stats { display:grid; gap:8px; margin-top:8px; }
-  .stat { text-align:center; background:var(--secondary-background-color, rgba(127,127,127,.12)); border-radius:10px; padding:6px 4px; }
+  .stat { text-align:center; display:flex; flex-direction:column; background:var(--ac-tile-bg, rgba(127,127,127,.09)); border-radius:10px; padding:6px 4px; }
+  :host([tile-order="name"]) .stat { flex-direction:column-reverse; }
   .stat .v { font-weight:700; font-size:1.02em; } .stat .l { font-size:.7em; opacity:.65; text-transform:uppercase; letter-spacing:.04em; }
   @keyframes blink { 50% { opacity:.3 } } @keyframes breathe { 50% { opacity:.4 } }
   /* format compact : vignette à gauche, nom + état, tuiles, boutons dessous */
@@ -248,7 +250,8 @@ const COMMON_CSS_MOW = `
   .compact[data-st=returning] .dot { background:#3fa9ff; } .compact[data-st=paused] .dot { background:#ffb300; } .compact[data-st=error] .dot { background:#e53935; }
   .compact .badge { align-self:flex-start; }
   .compact .stats { grid-area:stats; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; margin-top:0; }
-  .compact .tile { display:flex; flex-direction:column; padding:6px 9px; border-radius:10px; min-width:0; background:rgba(127,127,127,.09); }
+  .compact .tile { display:flex; flex-direction:column; padding:6px 9px; border-radius:10px; min-width:0; background:var(--ac-tile-bg, rgba(127,127,127,.09)); }
+  :host([tile-order=\"name\"]) .compact .tile { flex-direction:column-reverse; }
   .compact .val { font-size:14px; font-weight:600; color:var(--primary-text-color); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .compact .lbl { font-size:11px; color:var(--secondary-text-color); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .compact .btns { margin-top:10px; } .compact .btn { border-radius:10px; }
