@@ -1433,6 +1433,7 @@
     "model_tado": "Tado X wall thermostat",
     "model_t6": "Honeywell Home T6 thermostat",
     "model_bht6000": "Tuya BHT6000 thermostat (round, black screen)",
+    "model_vitotrol": "Viessmann Vitotrol 200 thermostat",
     "model_atlantic_io": "Atlantic io thermostat (square, Zone Control)",
     "model_atlantic_io2": "Atlantic io thermostat (vertical, dial)",
     "model_classic": "Radiator valve (classic)",
