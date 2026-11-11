@@ -1,11 +1,11 @@
 /* Pompe doseuse péristaltique (pH+ / pH-) : boîtier bleu, tête transparente, rotor à galets qui tourne, tuyau beige, raccords noirs */
 SVG.dosing_pump = () => `
 <defs>${DEFS}
-<linearGradient id="ID-dpblue" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#3b86e0"/><stop offset="1" stop-color="#1b55a6"/></linearGradient>
+<linearGradient id="ID-dpblue" x1="0" x2="1" y1="0" y2="1"><stop offset="0" style="stop-color:var(--dp-color,#3b86e0)"/><stop offset="1" style="stop-color:color-mix(in srgb,var(--dp-color,#3b86e0) 62%,#000)"/></linearGradient>
 <linearGradient id="ID-dpwin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f7fb"/><stop offset="1" stop-color="#cfd8e2"/></linearGradient>
 <clipPath id="ID-dpclip"><rect x="26" y="40" width="68" height="58" rx="8"/></clipPath></defs>
 <ellipse cx="60" cy="126" rx="44" ry="4" fill="url(#ID-shadow)"/>
-<rect x="18" y="4" width="84" height="108" rx="10" fill="url(#ID-dpblue)" stroke="#143f7c" stroke-width="1"/>
+<rect x="18" y="4" width="84" height="108" rx="10" fill="url(#ID-dpblue)" style="stroke:color-mix(in srgb,var(--dp-color,#3b86e0) 40%,#000)" stroke-width="1"/>
 <rect x="26" y="10" width="68" height="26" rx="6" fill="#eef1f5" stroke="#c4ccd6" stroke-width=".8"/>
 <circle cx="37" cy="23" r="6" fill="#fff" stroke="#c4ccd6" stroke-width=".8"/><circle cx="83" cy="23" r="6" fill="#fff" stroke="#c4ccd6" stroke-width=".8"/>
 ${[0, 1, 2, 3, 4].map((k) => `<circle class="dp-led${k === 2 ? " dp-on" : ""}" cx="${48 + k * 6}" cy="20" r="1.7"/>`).join("")}

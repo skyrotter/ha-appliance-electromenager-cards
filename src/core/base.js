@@ -1132,6 +1132,8 @@ class ApplianceCardBase extends HTMLElement {
     // illustration dynamic parts
     if (kind === "av_receiver") $("wrap").style.setProperty("--amp", (m.amp ?? .6).toFixed(2));
     if (kind === "smart_speaker") $("wrap").style.setProperty("--amp", (m.amp ?? .5).toFixed(2));
+    // dosing_pump : color = couleur du boîtier (n'importe quelle couleur CSS), pour repérer chaque produit (pH+, fer, potassium…)
+    if (kind === "dosing_pump") { if (c.color) $("wrap").style.setProperty("--dp-color", String(c.color)); else $("wrap").style.removeProperty("--dp-color"); }
     if (kind === "beer_tap") $("wrap").style.setProperty("--keg", ((m.keg ?? 70) / 100).toFixed(2));
     if (kind === "power_strip") {
       // fiche branchée : prises commandées (outlets), sinon toutes sauf la dernière ; LED allumée si la prise est active
