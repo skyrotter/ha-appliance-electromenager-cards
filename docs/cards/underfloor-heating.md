@@ -18,6 +18,7 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `entity_power`
 - `entity_energy`
 - `entity_cost` or `price_per_kwh` (with `currency`)
+- `surface` (`floor` or `wall`, default `floor`): `wall` draws a **heated wall** seen from the front (plaster removed on the left to show the coil, wall glowing and heat waves, same states and tiles; the floor tile reads **Wall**)
 - `heating_type` (`water` or `electric`, default `water`)
 - `floor_max` (default 29 °C)
 - `water_max` (default 45 °C)
@@ -35,6 +36,16 @@ entity_floor_temp: sensor.living_room_floor_temperature
 entity_water_temp: sensor.underfloor_flow_temperature
 entity_energy: sensor.heat_pump_energy
 price_per_kwh: 0.2516
+```
+
+## Example: heated wall
+
+```yaml
+type: custom:appliance-underfloor-heating-card
+name: Living room wall
+surface: wall
+entity: climate.living_room_wall
+entity_floor_temp: sensor.living_room_wall_temperature
 ```
 
 [← All cards](../../README.md#the-cards)

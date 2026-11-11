@@ -13381,6 +13381,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
   if (window.applianceEditorLabel) return;
   const L = {
     "en": {
+      "surface": "Installation (floor or wall)",
       "food_low": "Low hopper alert (%)",
       "hopper_capacity": "Hopper capacity (g)",
       "daily_consumption": "Food eaten per day (g, optional)",
@@ -15763,6 +15764,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "fabric_color": "Color de la tela"
     },
     "fr": {
+      "surface": "Installation (sol ou mur)",
       "food_low": "Alerte réserve basse (%)",
       "hopper_capacity": "Capacité du bac (g)",
       "daily_consumption": "Consommation par jour (g, facultatif)",
@@ -31962,6 +31964,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
  * le circuit en serpentin, collecteur départ / retour au mur (hydraulique) ou câble chauffant
  * (heating_type: electric), thermostat mural. En chauffe, l'eau ou le courant circule, la dalle
  * rougeoit (--heat) et des ondes de chaleur montent du sol.
+ * `surface: wall` : mur chauffant (même circuit, vue de face : l'enduit est retiré à gauche pour montrer le serpentin).
  * États : off, heating, idle (allumé, consigne atteinte), fault. Entité climate (consigne ± et
  * marche / arrêt), switch / input_boolean / binary_sensor (vanne, circulateur) ou puissance seule.
  */
@@ -31986,6 +31989,9 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       "turn_on": "Turn on",
       "turn_off": "Turn off",
       "floor_hot": "Floor too hot",
+      "name_wall": "Wall heating",
+      "wall": "Wall",
+      "wall_hot": "Wall too hot",
       "water_hot": "Water too hot"
     },
     "cs": {
@@ -32076,6 +32082,9 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       "turn_on": "Allumer",
       "turn_off": "Éteindre",
       "floor_hot": "Sol trop chaud",
+      "name_wall": "Mur chauffant",
+      "wall": "Mur",
+      "wall_hot": "Mur trop chaud",
       "water_hot": "Eau trop chaude"
     },
     "hu": {
@@ -32284,6 +32293,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
 .elec .flow{stroke:#fff3c4;stroke-width:1.2;stroke-dasharray:2 8}
 @keyframes ufflow{to{stroke-dashoffset:-28}}
 .glow{opacity:calc(var(--heat) * .75);transition:opacity 1.5s}
+.glow2{opacity:calc(var(--heat) * .3);transition:opacity 1.5s}
 .wave{fill:none;stroke:var(--uf-heat-c);stroke-width:1.6;stroke-linecap:round;opacity:0}
 .heating .wave{animation:ufwave 3s ease-in infinite}
 .idle .wave{animation:ufwave 5s ease-in infinite;stroke-opacity:.5}
@@ -32350,6 +32360,44 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
  </g>
 </svg>`;
 
+  // mur chauffant (surface: wall) : mur vu de face, enduit retiré à gauche pour montrer le serpentin ; mêmes classes que le sol (couleurs, flux, lueur, ondes)
+  const WCOIL = 'M24 30 H138 Q148 30 148 40 Q148 50 138 50 H46 Q36 50 36 60 Q36 70 46 70 H138 Q148 70 148 80 Q148 90 138 90 H46 Q36 90 36 100 Q36 110 46 110 H138 Q148 110 148 120 Q148 130 138 130 H24';
+  const SVG_WALL = (label) => `
+<svg viewBox="0 0 270 170" role="img" aria-label="${esc(label)}">
+ <defs>
+  <linearGradient id="ufwwall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f1f3f5"/><stop offset="1" stop-color="#dde2e6"/></linearGradient>
+  <linearGradient id="ufglow" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff7a3d" stop-opacity=".75"/><stop offset="1" stop-color="#ff5a2a" stop-opacity=".2"/></linearGradient>
+  <clipPath id="ufwslab"><rect x="24" y="22" width="126" height="116"/></clipPath>
+ </defs>
+ <ellipse cx="135" cy="164" rx="128" ry="4" fill="#000" opacity=".15"/>
+ <!-- mur, plinthe, sol -->
+ <rect x="14" y="14" width="242" height="128" rx="3" fill="url(#ufwwall)" stroke="#c3cad1"/>
+ <rect x="0" y="142" width="270" height="20" fill="#b9a98f"/><rect x="14" y="136" width="242" height="6" fill="#e8e4dc" stroke="#c9c2b4" stroke-width=".8"/>
+ <!-- enduit retiré : chape et serpentin -->
+ <rect x="24" y="22" width="126" height="116" rx="2" fill="#cdc6ba" stroke="#a89c86" stroke-width="1.4"/>
+ <g clip-path="url(#ufwslab)"><path class="pipe" d="${WCOIL}"/><path class="flow" d="${WCOIL}"/></g>
+ <rect class="glow" x="24" y="22" width="126" height="116" rx="2" fill="url(#ufglow)"/>
+ <rect class="glow2" x="150" y="14" width="106" height="122" fill="#ff7a3d"/>
+ <!-- ondes de chaleur qui rayonnent du mur -->
+ <g><path class="wave" d="M170 128 q4 -5 0 -10 t0 -10"/><path class="wave" d="M188 128 q4 -5 0 -10 t0 -10"/><path class="wave" d="M206 128 q4 -5 0 -10 t0 -10"/>
+  <path class="wave" d="M224 128 q4 -5 0 -10 t0 -10"/><path class="wave" d="M242 128 q4 -5 0 -10 t0 -10"/></g>
+ <!-- thermostat -->
+ <rect x="186" y="34" width="30" height="36" rx="4" fill="#f9fafb" stroke="#b9c1c8"/>
+ <rect x="190" y="39" width="22" height="13" rx="2" fill="#1b1e22"/>
+ <text class="dsp" id="ufdsp" x="201" y="48.5">--</text>
+ <circle class="led" cx="201" cy="61" r="2.2"/>
+ <!-- collecteur (hydraulique) / boîtier du câble (électrique) -->
+ <g class="hyd">
+  <rect x="222" y="86" width="28" height="44" rx="3" fill="#f4f6f8" stroke="#b9c1c8"/>
+  <rect x="226" y="95" width="20" height="4" rx="2" fill="#d9483b"/><rect x="226" y="113" width="20" height="4" rx="2" fill="#2b7fd9"/>
+  <g fill="#5b636b"><circle cx="231" cy="97" r="2.2"/><circle cx="241" cy="97" r="2.2"/><circle cx="231" cy="115" r="2.2"/><circle cx="241" cy="115" r="2.2"/></g>
+ </g>
+ <g class="cab">
+  <rect x="224" y="96" width="24" height="28" rx="3" fill="#f4f6f8" stroke="#b9c1c8"/>
+  <path d="M236 102 l-4 7 h4 l-2 6 l6 -9 h-4 l2 -4 z" fill="#ff8a1f"/>
+ </g>
+</svg>`;
+
   const TILES = [
     ['temp', 'mdi:home-thermometer', 'show_temp'],
     ['target', 'mdi:thermometer-check', 'show_temp'],
@@ -32406,7 +32454,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       const c = this._c;
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="uftitle"></div><div class="badge" id="ufbadge"></div></div>
-        ${SVG(c.name || this._t('name'))}
+        ${(c.surface === 'wall' ? SVG_WALL : SVG)(c.name || this._t(c.surface === 'wall' ? 'name_wall' : 'name'))}
         <div class="alert" id="ufalert"></div>
         <div class="ctl" id="ufctl">
           <button class="sm" data-a="down"><ha-icon icon="mdi:minus"></ha-icon></button>
@@ -32473,15 +32521,15 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       const clamp = (x) => Math.max(0, Math.min(1, x));
       // lueur de la dalle : température du sol si connue (20 °C → floor_max, calcul en °C), sinon selon l'état
       const heat = !isNaN(floor) ? clamp((tc.toC(floor) - 20) / Math.max(1, tc.toC(floorMax) - 20)) : ({ heating: 0.8, idle: 0.3 }[st] || 0);
-      const elec = String(c.heating_type).toLowerCase() === 'electric';
-      card.className = `${st}${elec ? ' elec' : ''} ${c.animations === false ? 'noanim' : ''}`;
+      const elec = String(c.heating_type).toLowerCase() === 'electric', wall = c.surface === 'wall';
+      card.className = `${st}${elec ? ' elec' : ''}${wall ? ' wall' : ''} ${c.animations === false ? 'noanim' : ''}`;
       card.style.setProperty('--heat', (st === 'off' || st === 'fault' ? 0 : heat).toFixed(3));
 
-      r.getElementById('uftitle').textContent = c.name || this._t('name');
+      r.getElementById('uftitle').textContent = c.name || this._t(wall ? 'name_wall' : 'name');
       const badge = r.getElementById('ufbadge'); badge.textContent = this._t(st); badge.style.display = c.show_status === false ? 'none' : '';
       r.getElementById('ufdsp').textContent = st === 'off' ? 'OFF' : st === 'fault' ? 'Err' : !isNaN(temp) ? `${this._fmt(temp, 1)}°` : 'ON';
       const alerts = [];
-      if (!isNaN(floor) && floor > floorMax) alerts.push(this._t('floor_hot'));
+      if (!isNaN(floor) && floor > floorMax) alerts.push(this._t(wall ? 'wall_hot' : 'floor_hot'));
       if (!isNaN(water) && water > waterMax) alerts.push(this._t('water_hot'));
       const al = r.getElementById('ufalert'); al.textContent = alerts.join(' · '); al.classList.toggle('on', alerts.length > 0);
 
@@ -32509,7 +32557,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         const el = r.querySelector(`.tile[data-k="${k}"]`); const [show, val, unit] = V[k];
         el.classList.toggle('hide', !show || c[opt] === false);
         el.classList.toggle('bad', !!bad[k]);
-        el.querySelector('.lbl').textContent = this._l(k);
+        el.querySelector('.lbl').textContent = k === 'floor' && wall && !(c.labels && c.labels.floor) ? this._t('wall') : this._l(k);
         const small = document.createElement('small'); small.textContent = unit ?? '';
         el.querySelector('.v').replaceChildren(String(val ?? ''), small);
       });
@@ -32547,6 +32595,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         ent('entity'), ent('entity_temp', ['sensor', 'climate', 'water_heater']), ent('entity_target_temp'), ent('entity_floor_temp', 'sensor'), ent('entity_water_temp', 'sensor'),
         ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'), ent('entity_cost', 'sensor'),
         { name: 'price_per_kwh', selector: { number: { min: 0, step: 0.0001, mode: 'box' } } },
+        { name: 'surface', selector: { select: { options: ['floor', 'wall'] } } },
         { name: 'heating_type', selector: { select: { options: ['water', 'electric'] } } },
         { type: 'grid', name: '', schema: [tnum('floor_max', 20, 40, 0.5, 29), tnum('water_max', 25, 70, 1, 45), num('heat_threshold', 0, 5000, 1, 20, 'W')] },
         window.applianceTempField,
@@ -50950,6 +50999,255 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: "Arrosage du jardin : zones (électrovannes), pompe de puits, pluie, humidité du sol, arrêt général.", preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/irrigation.md',
+  });
+})();
+
+/* Carte « Ruban LED » — custom:appliance-led-strip-card
+ * Ruban LED piloté par une entité `light` (couleur, luminosité, effet) ou un simple `switch` / `input_boolean` (module on / off).
+ * Dessin : le ruban seul (pastilles LED sur une bande souple) avec sa lueur, sans décor.
+ * La lueur prend la couleur réelle de l'ampoule (rgb_color, hs_color, color_temp_kelvin), à défaut un blanc chaud, et suit la luminosité.
+ * Commandes : marche / arrêt, curseur de luminosité (si l'entité sait varier), effet suivant (si l'entité a des effets).
+ */
+(() => {
+  const TAG = 'appliance-led-strip-card';
+  if (customElements.get(TAG)) return;
+
+  const T = {
+    "en": {
+      "name": "LED strip",
+      "on": "On",
+      "off": "Off",
+      "unavailable": "Unavailable",
+      "turn_on": "Turn on",
+      "turn_off": "Turn off",
+      "brightness": "Brightness",
+      "effect": "Effect",
+      "none": "None",
+      "next_effect": "Next effect",
+      "power": "Power",
+      "energy": "Energy"
+    },
+    "fr": {
+      "name": "Ruban LED",
+      "on": "Allumé",
+      "off": "Éteint",
+      "unavailable": "Indisponible",
+      "turn_on": "Allumer",
+      "turn_off": "Éteindre",
+      "brightness": "Luminosité",
+      "effect": "Effet",
+      "none": "Aucun",
+      "next_effect": "Effet suivant",
+      "power": "Puissance",
+      "energy": "Énergie"
+    }
+  };
+  const ON_RE = /^(on|true|1)$/i;
+  const BAD_RE = /^(unavailable|unknown)$/i;
+
+  const CSS = `
+:host{display:block;height:100%} ha-card{display:block;height:100%;box-sizing:border-box;padding:10px 12px 12px;overflow:hidden;--ls-c:255,214,153;--ls-b:.8;--ls-ok:var(--appliance-ok-color,#43a047)}
+.head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
+.on .badge{background:rgba(var(--ls-c),.28);color:var(--primary-text-color)}
+svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible;cursor:pointer}
+.ctl{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px}
+.ctl.hide{display:none}
+.ctl button{display:flex;align-items:center;justify-content:center;gap:4px;border:0;border-radius:18px;height:34px;min-width:34px;padding:0 10px;cursor:pointer;background:var(--secondary-background-color,rgba(127,127,127,.18));color:var(--primary-text-color);font:600 12px var(--paper-font-body1_-_font-family,Roboto,sans-serif);--mdc-icon-size:18px}
+.ctl button.on{background:rgb(var(--ls-c));color:#1b1b1b;box-shadow:0 0 12px rgba(var(--ls-c),.55)}
+.ctl button.hide{display:none}.ctl button:disabled{opacity:.4;cursor:default}
+.ctl input[type=range]{flex:1 1 auto;min-width:60px;max-width:160px;accent-color:rgb(var(--ls-c));cursor:pointer}
+.ctl input.hide{display:none}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:6px;margin-top:6px}
+.tile{box-sizing:border-box;display:flex;flex-direction:column;background:var(--ac-tile-bg,rgba(127,127,127,.09));border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
+:host([tile-order="value"]) .tile{flex-direction:column-reverse}:host([tile-order="value"]) .tile .v{margin:0 0 2px}
+.tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
+.tile .l span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tile .l ha-icon{--mdc-icon-size:13px;flex:none}
+.tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
+.tile.hide{display:none}
+/* ---- illustration : la lueur suit la couleur (--ls-c) et la luminosité (--ls-b) ---- */
+.sbase{fill:none;stroke:#d9dee3;stroke-width:12;stroke-linecap:round}
+.sglow{fill:none;stroke:rgb(var(--ls-c));stroke-width:34;stroke-linecap:round;filter:blur(9px);opacity:0;transition:opacity .6s}
+.on .sglow{opacity:calc(.25 + var(--ls-b) * .65)}
+.sled{fill:none;stroke:#aab2ba;stroke-width:6;stroke-dasharray:2.4 8.6;transition:stroke .5s}
+.on .sled{stroke:#fff;filter:drop-shadow(0 0 2px rgb(var(--ls-c)))}
+.on .sbase{stroke:rgb(var(--ls-c));stroke-opacity:.55}
+.on.fx .sled{animation:lsmove 1s linear infinite}
+@keyframes lsmove{to{stroke-dashoffset:-22}}
+.unavailable svg{filter:grayscale(.85) opacity(.65)}
+.noanim *{animation:none!important}
+ha-card.compact{display:flex;flex-direction:column;padding:6px}
+.compact .head{flex:none}.compact .title{font-size:12px;line-height:16px}.compact .badge{font-size:10px;padding:0 6px}
+.compact svg{flex:1 1 0;min-height:40px;width:calc(100% * min(1,var(--illus-scale,1)));max-width:none;height:auto;margin-top:3px}
+.compact .ctl{margin-top:4px}.compact .ctl button{height:24px;font-size:10px;--mdc-icon-size:14px}
+.compact .tiles{margin-top:4px;gap:4px}.compact .tile{padding:2px 5px;border-radius:8px}.compact .tile .v{font-size:12px;line-height:15px}
+`;
+
+  // Dessin : repères 270 × 100, bande souple ondulée ; la lueur est le même tracé flouté, teinté de la couleur de l'ampoule.
+  const STRIP = 'M16 62 C58 22 100 22 135 50 S212 78 254 38';
+  const SVG = (label) => `<svg viewBox="0 0 270 100" role="img" aria-label="${label}"><path class="sglow" d="${STRIP}"/><path class="sbase" d="${STRIP}"/><path class="sled" d="${STRIP}"/></svg>`;
+
+  const TILES = [['brightness', 'mdi:brightness-6', 'show_brightness'], ['effect', 'mdi:palette-swatch-variant', 'show_effect'],
+    ['power', 'mdi:flash', 'show_power'], ['energy', 'mdi:lightning-bolt-circle', 'show_energy']];
+
+  // température de couleur (kelvins) → RGB approximatif (formule de Tanner Helland)
+  const kelvinRgb = (k) => {
+    const t = Math.max(1000, Math.min(40000, k)) / 100, cl = (v) => Math.max(0, Math.min(255, Math.round(v)));
+    const r = t <= 66 ? 255 : 329.698727446 * Math.pow(t - 60, -0.1332047592);
+    const g = t <= 66 ? 99.4708025861 * Math.log(t) - 161.1195681661 : 288.1221695283 * Math.pow(t - 60, -0.0755148492);
+    const b = t >= 66 ? 255 : t <= 19 ? 0 : 138.5177312231 * Math.log(t - 10) - 305.0447927307;
+    return [cl(r), cl(g), cl(b)];
+  };
+  const hsRgb = (h, s) => { // teinte 0-360, saturation 0-100 → RGB (luminosité maximale)
+    s /= 100; const f = (n) => { const k = (n + h / 60) % 6; return Math.round(255 * (1 - s * Math.max(0, Math.min(k, 4 - k, 1)))); };
+    return [f(5), f(3), f(1)];
+  };
+
+  class ApplianceLedStripCard extends HTMLElement {
+    static getConfigElement() { return document.createElement(TAG + '-editor'); }
+    static getStubConfig(hass) {
+      const ids = Object.keys((hass && hass.states) || {});
+      return { entity: ids.find((i) => /^light\./.test(i) && /(ruban|strip|led)/i.test(i)) || ids.find((i) => /^light\./.test(i)) || '' };
+    }
+    setConfig(c) {
+      if (window.applianceSize) window.applianceSize(this, c);
+      if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
+      this._c = { show_status: true, show_controls: true, show_brightness: true, show_effect: true, show_power: true, show_energy: true, ...c };
+      this._built = false;
+      if (this._hass) this._render();
+    }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch && !this._dragging) this._render(); }
+    getCardSize() { return 4; }
+    getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
+    _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
+    _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
+    _st(id) { return id && this._hass.states[id]; }
+    _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
+    _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
+    _dom() { return String(this._c.entity || '').split('.')[0]; }
+
+    _build() {
+      const root = this.shadowRoot || this.attachShadow({ mode: 'open' }), c = this._c;
+      root.innerHTML = `<style>${CSS}</style><ha-card>
+        <div class="head"><div class="title" id="lstitle"></div><div class="badge" id="lsbadge"></div></div>
+        ${SVG((c.name || this._t('name')).replace(/"/g, ''))}
+        <div class="ctl" id="lsctl"><button id="lspw" aria-pressed="false"><ha-icon icon="mdi:power"></ha-icon></button><input id="lsbr" class="hide" type="range" min="1" max="100" step="1" aria-label="${this._t('brightness')}"><button id="lsfx" class="hide"><ha-icon icon="mdi:palette-swatch-variant"></ha-icon></button></div>
+        <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
+      </ha-card>`;
+      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(c.entity));
+      root.getElementById('lspw').addEventListener('click', () => {
+        const d = this._dom(); this._hass.callService(['light', 'switch', 'input_boolean'].includes(d) ? d : 'homeassistant', 'toggle', { entity_id: c.entity });
+      });
+      const br = root.getElementById('lsbr');
+      br.addEventListener('input', () => { this._dragging = true; });
+      br.addEventListener('change', () => { this._dragging = false; this._hass.callService('light', 'turn_on', { entity_id: c.entity, brightness_pct: Number(br.value) }); });
+      root.getElementById('lsfx').addEventListener('click', () => {
+        const s = this._st(c.entity), list = (s && s.attributes && s.attributes.effect_list) || [];
+        if (list.length) this._hass.callService('light', 'turn_on', { entity_id: c.entity, effect: list[(list.indexOf(s.attributes.effect) + 1) % list.length] });
+      });
+      const tgt = { brightness: c.entity, effect: c.entity, power: c.entity_power, energy: c.entity_energy };
+      root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => this._more(tgt[el.dataset.k])));
+      this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
+    }
+
+    _color(a) {
+      const c = this._c;
+      if (c.color) { // couleur imposée : #rrggbb, rgb(…) ou nom CSS, résolue par le navigateur
+        const el = document.createElement('canvas').getContext('2d'); el.fillStyle = '#ffd699'; el.fillStyle = String(c.color);
+        const m = /^#([0-9a-f]{6})$/i.exec(el.fillStyle); if (m) return [0, 2, 4].map((i) => parseInt(m[1].substr(i, 2), 16));
+      }
+      if (Array.isArray(a.rgb_color) && a.rgb_color.length >= 3) return a.rgb_color.slice(0, 3);
+      if (Array.isArray(a.hs_color) && a.hs_color.length >= 2 && Number(a.hs_color[1]) > 4) return hsRgb(Number(a.hs_color[0]), Number(a.hs_color[1]));
+      const k = Number(a.color_temp_kelvin) || (Number(a.color_temp) > 0 ? 1e6 / Number(a.color_temp) : NaN);
+      return isNaN(k) ? [255, 214, 153] : kelvinRgb(k);
+    }
+
+    _render() {
+      if (!this._built) this._build();
+      const c = this._c, r = this._root, card = this._card, s = this._st(c.entity);
+      const raw = s ? String(s.state) : '', a = (s && s.attributes) || {};
+      const st = !s || BAD_RE.test(raw) ? 'unavailable' : ON_RE.test(raw) ? 'on' : 'off';
+      const dimmable = this._dom() === 'light' && Array.isArray(a.supported_color_modes) ? a.supported_color_modes.some((m) => m !== 'onoff') : this._dom() === 'light' && a.brightness != null;
+      const bri = a.brightness != null ? Math.max(0, Math.min(1, Number(a.brightness) / 255)) : 1;
+      const fx = st === 'on' && !!a.effect && !/^(none|off)$/i.test(String(a.effect));
+      card.className = `${st}${fx ? ' fx' : ''}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`;
+      card.style.setProperty('--ls-c', this._color(a).join(','));
+      card.style.setProperty('--ls-b', (st === 'on' ? Math.max(0.15, bri) : 0).toFixed(2));
+      r.getElementById('lstitle').textContent = c.name || (s && s.attributes && s.attributes.friendly_name) || this._t('name');
+      const badge = r.getElementById('lsbadge'); badge.textContent = this._t(st); badge.style.display = c.show_status === false ? 'none' : '';
+
+      // commandes
+      const ctl = r.getElementById('lsctl'), pw = r.getElementById('lspw'), br = r.getElementById('lsbr'), fxb = r.getElementById('lsfx');
+      ctl.classList.toggle('hide', c.show_controls === false || !s);
+      pw.classList.toggle('on', st === 'on'); pw.setAttribute('aria-pressed', String(st === 'on')); pw.disabled = st === 'unavailable'; pw.title = this._t(st === 'on' ? 'turn_off' : 'turn_on');
+      br.classList.toggle('hide', !dimmable || st === 'unavailable'); br.disabled = st !== 'on';
+      if (!this._dragging) br.value = String(Math.round(bri * 100));
+      const hasFx = Array.isArray(a.effect_list) && a.effect_list.length > 1;
+      fxb.classList.toggle('hide', !hasFx || st === 'unavailable'); fxb.title = this._t('next_effect');
+
+      // tuiles
+      const V = {
+        brightness: [dimmable && st === 'on', this._fmt(bri * 100, 0), '%'],
+        effect: [hasFx || fx, a.effect ? String(a.effect) : this._t('none'), ''],
+        power: [c.entity_power, this._fmt(this._num(c.entity_power), 0), this._unit(c.entity_power, 'W')],
+        energy: [c.entity_energy, this._fmt(this._num(c.entity_energy), 2), this._unit(c.entity_energy, 'kWh')],
+      };
+      TILES.forEach(([k, , opt]) => {
+        const el = r.querySelector(`.tile[data-k="${k}"]`), [show, val, unit] = V[k];
+        el.classList.toggle('hide', !show || c[opt] === false);
+        el.querySelector('.lbl').textContent = this._l(k);
+        const small = document.createElement('small'); small.textContent = unit ?? '';
+        el.querySelector('.v').replaceChildren(String(val ?? ''), small);
+      });
+    }
+  }
+  customElements.define(TAG, ApplianceLedStripCard);
+
+  /* ---- éditeur visuel ---- */
+  class ApplianceLedStripCardEditor extends HTMLElement {
+    setConfig(c) { this._c = c; this._draw(); }
+    set hass(h) { this._hass = h; if (this._form) this._form.hass = h; }
+    _draw() {
+      if (!this._form) {
+        this._form = document.createElement('ha-form');
+        this._form.addEventListener('value-changed', (e) => {
+          this._c = e.detail.value;
+          this.dispatchEvent(new CustomEvent('config-changed', { detail: { config: this._c }, bubbles: true, composed: true }));
+        });
+        this.appendChild(this._form);
+      }
+      const ent = (name, domain) => ({ name, selector: { entity: domain ? { domain } : {} } });
+      const bool = (name, def = true) => ({ name, selector: { boolean: {} }, default: def });
+      this._form.hass = this._hass; this._form.data = { ...this._c };
+      this._form.schema = [
+        { name: 'name', selector: { text: {} } },
+        { name: 'labels', selector: { object: {} } },
+        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
+        { name: 'transparent', selector: { boolean: {} } },
+        ...window.applianceTileFields(this._hass),
+        ent('entity', ['light', 'switch', 'input_boolean']), { name: 'color', selector: { text: {} } },
+        ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'),
+        ...window.applianceActionFields,
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { type: 'grid', name: '', schema: [bool('compact', false), bool('show_status'), bool('show_controls'), ...TILES.map(([, , o]) => bool(o)), bool('animations')] },
+      ];
+      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
+    }
+  }
+  customElements.define(TAG + '-editor', ApplianceLedStripCardEditor);
+
+  window.customCards = window.customCards || [];
+  window.customCards.push({
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
+    description: 'Ruban LED animé : plafond, toiture ou terrasse, couleur et luminosité réelles, marche / arrêt, effet.', preview: true,
+    documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/led-strip.md',
   });
 })();
 

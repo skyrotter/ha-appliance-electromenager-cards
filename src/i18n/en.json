@@ -768,9 +768,13 @@
     "turn_on": "Turn on",
     "turn_off": "Turn off",
     "floor_hot": "Floor too hot",
+    "name_wall": "Wall heating",
+    "wall": "Wall",
+    "wall_hot": "Wall too hot",
     "water_hot": "Water too hot"
   },
   "editor": {
+    "surface": "Installation (floor or wall)",
     "food_low": "Low hopper alert (%)",
     "hopper_capacity": "Hopper capacity (g)",
     "daily_consumption": "Food eaten per day (g, optional)",
@@ -2066,6 +2070,20 @@
     "signal": "Signal",
     "cost": "Cost",
     "low": "Low"
+  },
+  "led_strip": {
+    "name": "LED strip",
+    "on": "On",
+    "off": "Off",
+    "unavailable": "Unavailable",
+    "turn_on": "Turn on",
+    "turn_off": "Turn off",
+    "brightness": "Brightness",
+    "effect": "Effect",
+    "none": "None",
+    "next_effect": "Next effect",
+    "power": "Power",
+    "energy": "Energy"
   },
   "irrigation": {
     "name": "Irrigation",
