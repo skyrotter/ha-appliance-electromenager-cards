@@ -7193,9 +7193,9 @@ SVG.heat_pump = () => `
 <path d="M10 37h100" stroke="#fff" stroke-width="1.2"/>
 <path d="M84 40v72" stroke="#b9c0c7" stroke-width=".7"/>
 <g stroke="#bfc6cd" stroke-width=".6"><path d="M88 46h20M88 50h20M88 54h20M88 58h20M88 62h20M88 66h20"/></g>
-<rect x="88" y="84" width="20" height="18" rx="1.5" fill="#e3e7eb" stroke="#aab2ba" stroke-width=".5"/>
-${lcd(89.5, 86, 17, 9)}
-<circle cx="98" cy="99" r="1.3" fill="#9aa2ab"/>
+<rect x="86" y="84" width="24" height="22" rx="1.5" fill="#e3e7eb" stroke="#aab2ba" stroke-width=".5"/>
+${lcd(87.5, 86, 21, 12)}
+<circle cx="98" cy="102" r="1.3" fill="#9aa2ab"/>
 <circle class="hp-led" cx="104" cy="75" r="1.2"/>
 <circle cx="46" cy="75" r="31" fill="#d4d9de" stroke="#aab2ba" stroke-width=".6"/>
 <circle cx="46" cy="75" r="28" fill="url(#ID-grill)"/>
@@ -12207,7 +12207,7 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 @keyframes hp-wave { 0% { opacity: .8; transform: scale(1); } 100% { opacity: 0; transform: scale(1.55); } }
 
 /* écran : puissance */
-.wrap.k-heat_pump svg text.lcd, .wrap.k-heat_pump .lcd { font-size: 4.7px !important; letter-spacing: 0 !important; }
+.wrap.k-heat_pump svg text.lcd, .wrap.k-heat_pump .lcd { font-size: 6px !important; letter-spacing: 0 !important; }
 
 /* ---------- towel dryer ---------- */
 .td-glow { opacity: 0; transition: opacity .8s; }
