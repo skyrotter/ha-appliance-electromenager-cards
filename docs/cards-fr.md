@@ -420,6 +420,15 @@ entity_download: sensor.sfr_box_download
 entity_upload: sensor.sfr_box_upload
 ```
 
+**Climatiseur mobile** : `custom:appliance-portable-ac-card`, climatiseur monobloc portable sur roulettes avec sa gaine d'évacuation vers la fenêtre (dessin SVG). Air froid bleu qui sort de la grille (orange en chauffage, gris en ventilation), air chaud qui part par la gaine, gouttes qui tombent dans le réservoir en déshumidification, réservoir plein qui clignote en rouge avec une alerte ; l'écran affiche la consigne et le mode (`COOL`, `DRY`, `FAN`, `HEAT`, `READY`). Fonctionne avec une entité `climate`, ou avec un interrupteur et des capteurs. Boutons marche / arrêt, consigne − / +, mode. Options : `entity`, `entity_temperature`, `entity_target`, `entity_fan`, `entity_timer`, `entity_tank` (binaire plein, ou niveau en %), `entity_power`, `temp_step`. Voir [portable-ac.md](cards/portable-ac.md).
+
+```yaml
+type: custom:appliance-portable-ac-card
+entity: climate.climatiseur_salon
+entity_tank: binary_sensor.climatiseur_reservoir_plein
+entity_power: sensor.climatiseur_puissance
+```
+
 **Distributeur de croquettes** : `custom:appliance-pet-feeder-card`, photo détourée de l'Aqara Smart Pet Feeder C1 (`model: aqara_c1`, Zigbee2MQTT). Croquettes qui tombent dans la gamelle pendant la distribution, tas qui grossit avec les portions du jour, écran rouge en erreur, cadenas sécurité enfant ; boutons Nourrir, LED, sécurité enfant, mode. Options : voir [pet-feeder.md](cards/pet-feeder.md).
 
 ```yaml
