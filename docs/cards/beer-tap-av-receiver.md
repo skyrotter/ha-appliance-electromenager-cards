@@ -20,9 +20,14 @@ pouring: binary_sensor.beer_pouring        # optional
 - The display shows the source (or the volume); **Muted** shows `MUTE`; **Standby**: red LED.
 - With a `media_player`: `on`/`playing` = playing, `paused`, `standby`, `off`, plus `volume_level`, `source`, `is_volume_muted`. With a plug: playing above 40 W, standby from 0.2 W.
 
+- With a `media_player`, the card shows **control buttons** (`show_controls`, default on; only those the entity supports): **mute**, **volume −**, **volume +**, **power**, **next source** (`source_list`) and **next audio mode** (`sound_mode_list`). The volume step is `volume_step` (0.05 = 5 %).
+- Two tiles show the **active source** (`source`) and the **current audio mode** (`sound_mode`): `show_source` and `show_sound_mode` hide them.
+
 ```yaml
 type: custom:appliance-av-receiver-card
 entity: media_player.living_room_avr   # or power: sensor.avr_power
+power: sensor.avr_power                # optional
+volume_step: 0.02                      # optional
 ```
 
 

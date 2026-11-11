@@ -987,6 +987,11 @@ class ApplianceCardBase extends HTMLElement {
       const list = Array.isArray(a.source_list) ? a.source_list : [];
       if (list.length) call("select_source", { source: list[(list.indexOf(a.source) + 1) % list.length] });
     }
+    else if (key === "sound_mode") {
+      // mode audio suivant dans sound_mode_list (DTS Surround → Dolby → Stéréo → …)
+      const list = Array.isArray(a.sound_mode_list) ? a.sound_mode_list : [];
+      if (list.length) call("select_sound_mode", { sound_mode: list[(list.indexOf(a.sound_mode) + 1) % list.length] });
+    }
     else if (key === "mute") call("volume_mute", { is_volume_muted: !a.is_volume_muted });
     else {
       const v = Number(a.volume_level), up = key === "vol_up";
@@ -1460,6 +1465,25 @@ class ApplianceCardBase extends HTMLElement {
         return `<button class="mode-btn sp-btn ${on ? "on" : ""}" data-sp="${k}" title="${esc(tr(hass, lbl))}" aria-label="${esc(tr(hass, lbl))}"${on != null ? ` aria-pressed="${on}"` : ""}${dis ? " disabled" : ""}><ha-icon icon="${icon}"></ha-icon></button>`;
       }).join("");
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._spkCmd(b.dataset.sp); }; });
+    } else if (kind === "av_receiver" && c.show_controls !== false && domainOf(c.entity) === "media_player" && hass.states[c.entity]) {
+      // ampli : marche / arrêt, sourdine, volume −, volume +, source suivante, mode audio suivant (selon les fonctions annoncées par l'entité)
+      const a = hass.states[c.entity].attributes || {}, sf = Number(a.supported_features);
+      // MediaPlayerEntityFeature : VOLUME_SET 4, VOLUME_MUTE 8, TURN_ON 128, TURN_OFF 256, VOLUME_STEP 1024, SELECT_SOURCE 2048
+      const has = (bit) => !Number.isFinite(sf) || (sf & bit) !== 0;
+      const off = ["off", "standby", "unavailable"].includes(m.status), muted = m.status === "muted" || !!a.is_volume_muted, vol = has(4) || has(1024);
+      const btns = [
+        has(8) ? ["mute", muted ? "mdi:volume-off" : "mdi:volume-high", "mute", muted] : null,
+        vol ? ["vol_down", "mdi:volume-minus", "volume_down", null] : null,
+        vol ? ["vol_up", "mdi:volume-plus", "volume_up", null] : null,
+        has(128) || has(256) ? ["power", "mdi:power", "toggle", !off] : null,
+        has(2048) && Array.isArray(a.source_list) && a.source_list.length > 1 ? ["source", "mdi:import", "source_next", null] : null,
+        Array.isArray(a.sound_mode_list) && a.sound_mode_list.length > 1 ? ["sound_mode", "mdi:surround-sound", "sound_mode_next", null] : null,
+      ].filter(Boolean);
+      modesEl.innerHTML = btns.map(([k, icon, lbl, on]) => {
+        const dis = m.status === "unavailable" || (off && k !== "power");
+        return `<button class="mode-btn sp-btn ${on ? "on" : ""}" data-sp="${k}" title="${esc(tr(hass, lbl))}" aria-label="${esc(tr(hass, lbl))}"${on != null ? ` aria-pressed="${on}"` : ""}${dis ? " disabled" : ""}><ha-icon icon="${icon}"></ha-icon></button>`;
+      }).join("");
+      modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._spkCmd(b.dataset.sp); }; });
     } else if (kind === "tv" && (c.show_controls ?? tvProjector(c)) && domainOf(c.entity) === "media_player" && hass.states[c.entity]) {
       // télé / vidéoprojecteur : marche / arrêt, source suivante, volume −, lecture / pause, volume +, sourdine
       const a = hass.states[c.entity].attributes || {}, sf = Number(a.supported_features);
@@ -1599,6 +1623,11 @@ class ApplianceCardBase extends HTMLElement {
       if (m.picMode && c.show_picture_mode !== false && !BAD.includes(String(m.picMode.state).toLowerCase()))
         tile("mdi:palette", stateText(hass, m.picMode), lb("picture_mode"), c.picture_mode);
       if (m.tempVal != null && c.show_temperature !== false) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 0)} ${m.tempUnit}`, lb("temperature"), tEntity);
+    } else if (kind === "av_receiver") {
+      // ampli : source active et mode audio actuel (attributs `source` et `sound_mode` du media_player)
+      const a = m.main && domainOf(c.entity) === "media_player" ? m.main.attributes || {} : {}, up = !["off", "standby", "unavailable"].includes(m.status);
+      if (up && a.source && c.show_source !== false) tile("mdi:import", String(a.source), lb("source_active"), c.entity);
+      if (up && a.sound_mode && c.show_sound_mode !== false) tile("mdi:surround-sound", String(a.sound_mode), lb("sound_mode"), c.entity);
     } else if (kind === "smart_speaker") {
       if (m.vol != null && !["off", "standby", "unavailable"].includes(m.status)) tile(m.muted ? "mdi:volume-off" : "mdi:volume-high", `${Math.round(m.vol * 100)} %`, lb("volume"), c.entity, m.muted ? "warn" : "");
       if (spOn && m.app) tile("mdi:music-box-outline", m.app, lb("source"), c.entity);

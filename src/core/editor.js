@@ -175,6 +175,10 @@ function buildForm(kind) {
           ] : []),
           ...(kind === "av_receiver" ? [
             { name: "max_power", selector: { number: { min: 50, max: 2000, step: 10, mode: "box", unit_of_measurement: "W" } } },
+            { name: "show_controls", selector: { boolean: {} }, default: true },
+            { name: "show_source", selector: { boolean: {} }, default: true },
+            { name: "show_sound_mode", selector: { boolean: {} }, default: true },
+            { name: "volume_step", selector: { number: { min: 0.01, max: 0.2, step: 0.01, mode: "box" } } },
           ] : []),
           ...(kind === "smart_speaker" ? [
             // model : photo de l'enceinte (vide = devinée depuis l'entité : Sonos, Google Nest, sinon Echo Dot)
