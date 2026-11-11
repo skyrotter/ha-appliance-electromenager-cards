@@ -773,6 +773,7 @@
     "wall_hot": "Zid je previše topao",
     "water_hot": "Voda je previše topla"
   },
+  "editor": {
     "surface": "Montaža (pod ili zid)",
     "food_low": "Upozorenje na nizak nivo hrane (%)",
     "hopper_capacity": "Kapacitet rezervoara (g)",
