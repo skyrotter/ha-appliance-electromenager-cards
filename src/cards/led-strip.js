@@ -1,5 +1,6 @@
 /* Carte « Ruban LED » — custom:appliance-led-strip-card
  * Ruban LED piloté par une entité `light` (couleur, luminosité, effet) ou un simple `switch` / `input_boolean` (module on / off).
+ * `shape: bars` : deux barres verticales (type Govee DreamView) de part et d'autre d'un téléviseur, même entité.
  * Dessin : le ruban seul (pastilles LED sur une bande souple) avec sa lueur, sans décor.
  * La lueur prend la couleur réelle de l'ampoule (rgb_color, hs_color, color_temp_kelvin), à défaut un blanc chaud, et suit la luminosité.
  * Commandes : marche / arrêt, curseur de luminosité (si l'entité sait varier), effet suivant (si l'entité a des effets).
@@ -44,6 +45,16 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
 .on .sbase{stroke:rgb(var(--ls-c));stroke-opacity:.55}
 .on.fx .sled{animation:lsmove 1s linear infinite}
 @keyframes lsmove{to{stroke-dashoffset:-22}}
+.tvscr{fill:#2b3036;stroke:#aab2ba;stroke-width:3}
+.tvfoot{fill:#aab2ba}
+.on .tvscr{fill:#3a414a}
+.bbase{fill:none;stroke:#d9dee3;stroke-width:12;stroke-linecap:round}
+.bglow{fill:none;stroke:rgb(var(--ls-c));stroke-width:30;stroke-linecap:round;filter:blur(9px);opacity:0;transition:opacity .6s}
+.on .bglow{opacity:calc(.25 + var(--ls-b) * .65)}
+.bled{fill:none;stroke:#aab2ba;stroke-width:5;stroke-dasharray:2.4 8.6;stroke-linecap:round;transition:stroke .5s}
+.on .bled{stroke:#fff;filter:drop-shadow(0 0 2px rgb(var(--ls-c)))}
+.on .bbase{stroke:rgb(var(--ls-c));stroke-opacity:.55}
+.on.fx .bled{animation:lsmove 1s linear infinite}
 .unavailable svg{filter:grayscale(.85) opacity(.65)}
 .noanim *{animation:none!important}
 ha-card.compact{display:flex;flex-direction:column;padding:6px}
@@ -55,7 +66,11 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 
   // Dessin : repères 270 × 100, bande souple ondulée ; la lueur est le même tracé flouté, teinté de la couleur de l'ampoule.
   const STRIP = 'M16 62 C58 22 100 22 135 50 S212 78 254 38';
-  const SVG = (label) => `<svg viewBox="0 0 270 100" role="img" aria-label="${label}"><path class="sglow" d="${STRIP}"/><path class="sbase" d="${STRIP}"/><path class="sled" d="${STRIP}"/></svg>`;
+  const SVG_STRIP = (label) => `<svg viewBox="0 0 270 100" role="img" aria-label="${label}"><path class="sglow" d="${STRIP}"/><path class="sbase" d="${STRIP}"/><path class="sled" d="${STRIP}"/></svg>`;
+  // Barres TV : deux barres verticales rigides de part et d'autre d'un téléviseur ; chacune a sa lueur sur le mur
+  const BARL = 'M52 22 L52 72', BARR = 'M218 22 L218 72';
+  const SVG_BARS = (label) => `<svg viewBox="0 0 270 100" role="img" aria-label="${label}"><path class="bglow" d="${BARL}"/><path class="bglow" d="${BARR}"/><rect class="tvscr" x="80" y="20" width="110" height="62" rx="4"/><rect class="tvfoot" x="122" y="82" width="26" height="4" rx="1"/><rect class="tvfoot" x="108" y="86" width="54" height="3" rx="1.5"/><path class="bbase" d="${BARL}"/><path class="bled" d="${BARL}"/><path class="bbase" d="${BARR}"/><path class="bled" d="${BARR}"/></svg>`;
+  const SVG = (label, shape) => (shape === 'bars' ? SVG_BARS : SVG_STRIP)(label);
 
   const TILES = [['brightness', 'mdi:brightness-6', 'show_brightness'], ['effect', 'mdi:palette-swatch-variant', 'show_effect'],
     ['power', 'mdi:flash', 'show_power'], ['energy', 'mdi:lightning-bolt-circle', 'show_energy']];
@@ -83,7 +98,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { show_status: true, show_controls: true, show_brightness: true, show_effect: true, show_power: true, show_energy: true, ...c };
-      this._built = false;
+      this._built = false; // reconstruit aussi le dessin quand `shape` change
       if (this._hass) this._render();
     }
     set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch && !this._dragging) this._render(); }
@@ -104,7 +119,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' }), c = this._c;
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="lstitle"></div><div class="badge" id="lsbadge"></div></div>
-        ${SVG((c.name || this._t('name')).replace(/"/g, ''))}
+        ${SVG((c.name || this._t('name')).replace(/"/g, ''), c.shape)}
         <div class="ctl" id="lsctl"><button id="lspw" aria-pressed="false"><ha-icon icon="mdi:power"></ha-icon></button><input id="lsbr" class="hide" type="range" min="1" max="100" step="1" aria-label="${this._t('brightness')}"><button id="lsfx" class="hide"><ha-icon icon="mdi:palette-swatch-variant"></ha-icon></button></div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
@@ -199,6 +214,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ...window.applianceTileFields(this._hass),
+        { name: 'shape', selector: { select: { mode: 'dropdown', options: [{ value: 'strip', label: window.applianceEditorLabel('shape_strip', this._hass) }, { value: 'bars', label: window.applianceEditorLabel('shape_bars', this._hass) }] } } },
         ent('entity', ['light', 'switch', 'input_boolean']), { name: 'color', selector: { text: {} } },
         ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'),
         ...window.applianceActionFields,
@@ -213,7 +229,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
   window.customCards = window.customCards || [];
   window.customCards.push({
     type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
-    description: 'Ruban LED animé : plafond, toiture ou terrasse, couleur et luminosité réelles, marche / arrêt, effet.', preview: true,
+    description: 'Ruban LED animé ou barres lumineuses TV : plafond, toiture ou terrasse, couleur et luminosité réelles, marche / arrêt, effet.', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/led-strip.md',
   });
 })();

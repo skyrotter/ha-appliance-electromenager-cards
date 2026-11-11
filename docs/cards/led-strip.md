@@ -14,11 +14,17 @@ The drawing is just the **strip** (a flexible band with its LEDs) and its glow, 
 | Option | What it does |
 |---|---|
 | `entity` | the strip: `light`, `switch` or `input_boolean` |
+| `shape` | `strip` (default, flexible band) or `bars`: two rigid vertical **TV light bars** (Govee DreamView, Envisual…) on each side of a TV, each with its own glow on the wall; same `light` entity |
 | `color` | forces the glow color (`"#ff6600"`, `orange`…), for strips that do not report their color |
 | `entity_power`, `entity_energy` | power and energy tiles |
 | `compact`, `show_status`, `show_controls`, `show_brightness`, `show_effect`, `show_power`, `show_energy`, `animations`, `labels`, `language`, `illustration_size`, `transparent`, `tap_action`, `hold_action` | |
 
 ```yaml
+type: custom:appliance-led-strip-card
+name: TV light bars
+shape: bars
+entity: light.tv_light_bars
+---
 type: custom:appliance-led-strip-card
 name: Garage
 entity: switch.garage_led_strips
