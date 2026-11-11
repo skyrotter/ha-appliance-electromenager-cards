@@ -12,9 +12,11 @@ Buttons: Wi-Fi on/off (`entity_wifi`) and restart (`entity_reboot`, with confirm
 
 - `entity`: connection state (binary_sensor, sensor, device_tracker…). Without it, the box is online as soon as a throughput is readable
 - `entity_download`, `entity_upload` (sensors, Mb/s, kB/s, MB/s…), `entity_devices` (sensor), `entity_wifi` (switch), `entity_reboot` (button)
+- `entity_ping` (sensor, ms), `entity_wan_ip` (sensor, text), `entity_uptime` (sensor in seconds, minutes, hours or days, or a `timestamp` sensor holding the last boot), `entity_cpu` and `entity_memory` (sensors, %): extra tiles, shown only when the entity is set
+- Wi-Fi switch per band, one round button each next to the main Wi-Fi button: `entity_wifi_24`, `entity_wifi_5`, `entity_wifi_6`, `entity_wifi_guest` (guest network), `entity_wifi_iot` (IoT network). Switches, lit when on
 - `model`, `illustration` (`photo` | `svg`), `max_speed` (reference throughput in Mb/s for the packet speed, default 1000)
 - `animations` (default true), `compact: true`, `transparent: true`, `illustration_size` (%)
-- `show_status`, `show_controls`, `show_download`, `show_upload`, `show_devices`, `show_wifi`
+- `show_status`, `show_controls`, `show_download`, `show_upload`, `show_devices`, `show_wifi`, `show_ping`, `show_wan_ip`, `show_uptime`, `show_cpu`, `show_memory`
 - `language: fr|en|de|it|es|nb|nl|pl|ro|ru|sr|sr-Latn`
 
 ## Examples

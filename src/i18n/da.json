@@ -2058,7 +2058,17 @@
     "on": "Til",
     "off": "Fra",
     "reboot": "Genstart",
-    "reboot_confirm": "Genstart routeren? Internetforbindelsen afbrydes i nogle minutter."
+    "reboot_confirm": "Genstart routeren? Internetforbindelsen afbrydes i nogle minutter.",
+    "ping": "Ping",
+    "wan_ip": "WAN-IP",
+    "uptime": "Oppetid",
+    "cpu": "CPU",
+    "memory": "Hukommelse",
+    "wifi_24": "Wi-Fi 2,4 GHz",
+    "wifi_5": "Wi-Fi 5 GHz",
+    "wifi_6": "Wi-Fi 6 GHz",
+    "wifi_guest": "Gæste-Wi-Fi",
+    "wifi_iot": "IoT-Wi-Fi"
   },
   "pet_feeder": {
     "name": "Foderautomat",

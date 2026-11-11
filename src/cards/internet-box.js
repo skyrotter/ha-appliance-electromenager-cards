@@ -97,6 +97,23 @@
         <rect x="27" y="52" width="12" height="3.4" rx="1.7" fill="#d2d4d9" stroke="#b9bbc1" stroke-width=".5"/>`,
     },
   };
+  // interrupteurs Wi-Fi par bande : [clé = suffixe de l'option entity_…, icône, texte court du bouton, libellé]
+  const BANDS = [['wifi_24', 'mdi:wifi', '2.4', 'wifi_24'], ['wifi_5', 'mdi:wifi', '5', 'wifi_5'], ['wifi_6', 'mdi:wifi', '6', 'wifi_6'], ['wifi_guest', 'mdi:account-multiple', '', 'wifi_guest'], ['wifi_iot', 'mdi:chip', '', 'wifi_iot']];
+  // durée de fonctionnement : capteur en secondes / minutes / heures / jours, ou horodatage du dernier démarrage
+  const uptimeSeconds = (st) => {
+    if (!st || /^(unavailable|unknown|none)$/i.test(String(st.state))) return NaN;
+    const raw = String(st.state), n = parseFloat(raw.replace(',', '.'));
+    if ((st.attributes || {}).device_class === 'timestamp' || (!isFinite(n) && !isNaN(Date.parse(raw)))) { const ms = Date.now() - Date.parse(raw); return ms > 0 ? ms / 1000 : NaN; }
+    if (!isFinite(n)) return NaN;
+    const u = String((st.attributes || {}).unit_of_measurement || 's').toLowerCase();
+    return n * (u === 'd' ? 86400 : u === 'h' ? 3600 : u === 'min' ? 60 : u === 'ms' ? 0.001 : 1);
+  };
+  const fmtUptime = (sec, loc) => {
+    if (!isFinite(sec)) return '--';
+    const f = (v, unit) => new Intl.NumberFormat(loc, { style: 'unit', unit, unitDisplay: 'narrow', maximumFractionDigits: 0 }).format(v);
+    const d = Math.floor(sec / 86400), h = Math.floor((sec % 86400) / 3600), mi = Math.floor((sec % 3600) / 60);
+    return d ? `${f(d, 'day')} ${f(h, 'hour')}` : h ? `${f(h, 'hour')} ${f(mi, 'minute')}` : f(mi, 'minute');
+  };
   const ALIAS = { generic: 'router', antennas: 'router', routeur: 'router', rog: 'asus_gt_be98', gtbe98: 'asus_gt_be98', rapture: 'asus_gt_be98', ac88u: 'asus_rt_ac88u', rtac88u: 'asus_rt_ac88u', xiaomi: 'xiaomi_ax3000', ax3000: 'xiaomi_ax3000', freebox: 'freebox_pop', pop: 'freebox_pop', free: 'freebox_pop', sfr: 'sfr_box', sfrbox: 'sfr_box', box8: 'sfr_box', sfrbox8: 'sfr_box' };
   const modelKey = (m) => { const k = String(m || '').toLowerCase(); if (MODELS[k]) return k; const n = k.replace(/[^a-z0-9]/g, ''); return ALIAS[n] || 'freebox_pop'; };
 
@@ -128,6 +145,10 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
   background:var(--secondary-background-color,rgba(127,127,127,.18));transition:transform .15s,background .3s,box-shadow .3s;--mdc-icon-size:19px;padding:0}
 .ctrls button:hover{transform:scale(1.08)}.ctrls button:active{transform:scale(.92)}
 .ctrls button.on{background:var(--wifi);color:#fff;box-shadow:0 0 12px color-mix(in srgb,var(--wifi) 60%,transparent)}
+.ctrls button.band{width:auto;min-width:34px;padding:0 10px 0 7px;border-radius:17px;gap:3px;font:600 11px/1 var(--paper-font-body1_-_font-family,inherit)}
+.ctrls button.band ha-icon{--mdc-icon-size:16px}
+.tile[data-k="wan_ip"]{grid-column:span 2}
+.compact .tile[data-k="wan_ip"]{grid-column:auto}.compact .tile[data-k="wan_ip"] .v{font-size:10.5px}
 .ctrls button:disabled{opacity:.35;cursor:default;transform:none}
 
 /* ---- box ---- */
@@ -187,6 +208,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 .compact > svg{flex:1 1 0;min-height:40px;width:calc(100% * min(1, var(--illus-scale,1)));max-width:none;height:auto;margin-top:3px}
 .compact .ctrls{flex:none;gap:2px;margin-top:4px;flex-wrap:nowrap}
 .compact .ctrls button{width:21px;height:21px;--mdc-icon-size:13px}
+.compact .ctrls button.band{width:auto;min-width:21px;padding:0 6px 0 4px;font-size:9px}
 `;
 
   const SVG = (label, m, drawing) => {
@@ -279,11 +301,16 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
           <div class="tile hide" data-k="upload"><div class="l"><ha-icon icon="mdi:upload"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>
           <div class="tile hide" data-k="devices"><div class="l"><ha-icon icon="mdi:devices"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>
           <div class="tile hide" data-k="wifi"><div class="l"><ha-icon icon="mdi:wifi"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>
+          <div class="tile hide" data-k="ping"><div class="l"><ha-icon icon="mdi:timer-sand"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>
+          <div class="tile hide" data-k="wan_ip"><div class="l"><ha-icon icon="mdi:ip-network"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>
+          <div class="tile hide" data-k="uptime"><div class="l"><ha-icon icon="mdi:clock-outline"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>
+          <div class="tile hide" data-k="cpu"><div class="l"><ha-icon icon="mdi:cpu-64-bit"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>
+          <div class="tile hide" data-k="memory"><div class="l"><ha-icon icon="mdi:memory"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>
         </div>
       </ha-card>`;
       this._card = root.querySelector('ha-card');
       window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity || this._c.entity_download));
-      const tgt = { download: 'entity_download', upload: 'entity_upload', devices: 'entity_devices', wifi: 'entity_wifi' };
+      const tgt = { download: 'entity_download', upload: 'entity_upload', devices: 'entity_devices', wifi: 'entity_wifi', ping: 'entity_ping', wan_ip: 'entity_wan_ip', uptime: 'entity_uptime', cpu: 'entity_cpu', memory: 'entity_memory' };
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => this._more(this._c[tgt[el.dataset.k]])));
       root.getElementById('ibctrls').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { e.stopPropagation(); this._cmd(b.dataset.k); } });
       this._root = root; this._built = true;
@@ -306,6 +333,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     _cmd(k) {
       const c = this._c, hass = this._hass; if (!hass) return;
       if (k === 'wifi' && c.entity_wifi) hass.callService('homeassistant', 'toggle', { entity_id: c.entity_wifi });
+      else if (BANDS.some((b) => b[0] === k) && c['entity_' + k]) hass.callService('homeassistant', 'toggle', { entity_id: c['entity_' + k] });
       else if (k === 'reboot' && c.entity_reboot) {
         if (!window.confirm || window.confirm(this._t('reboot_confirm'))) hass.callService(c.entity_reboot.split('.')[0], c.entity_reboot.startsWith('button.') ? 'press' : 'turn_on', { entity_id: c.entity_reboot });
       }
@@ -335,21 +363,27 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const ctr = r.getElementById('ibctrls');
       const btns = [
         ['wifi', wifiOn ? 'mdi:wifi' : 'mdi:wifi-off', 'wifi', wifiOn, !!wifiS],
+        ...BANDS.map(([k, icon, txt]) => { const s = this._st(c['entity_' + k]), on = !!s && String(s.state).toLowerCase() === 'on'; return [k, on || !s || txt ? icon : icon, k, on, !!s, txt]; }),
         ['reboot', 'mdi:restart', 'reboot', null, !!this._st(c.entity_reboot)],
       ].filter((b) => b[4] && c.show_controls !== false);
       ctr.classList.toggle('hide', !btns.length);
       const sig = btns.map((b) => b.join('|')).join(';') + st;
       if (ctr._sig !== sig) {
         ctr._sig = sig;
-        ctr.innerHTML = btns.map(([k, icon, lbl, on]) => `<button class="${on ? 'on' : ''}" data-k="${k}" title="${esc(this._t(lbl))}" aria-label="${esc(this._t(lbl))}"${st === 'unavailable' ? ' disabled' : ''}><ha-icon icon="${icon}"></ha-icon></button>`).join('');
+        ctr.innerHTML = btns.map(([k, icon, lbl, on, , txt]) => `<button class="${on ? 'on' : ''}${txt ? ' band' : ''}" data-k="${k}" title="${esc(this._l(lbl))}" aria-label="${esc(this._l(lbl))}"${st === 'unavailable' ? ' disabled' : ''}><ha-icon icon="${icon}"></ha-icon>${txt ? `<span>${txt}</span>` : ''}</button>`).join('');
       }
 
-      const dv = this._num(c.entity_devices);
+      const dv = this._num(c.entity_devices), pg = this._num(c.entity_ping), cp = this._num(c.entity_cpu), mm = this._num(c.entity_memory);
       const V = {
         download: [!!this._st(c.entity_download) && c.show_download !== false, this._fmt(dn, dn < 10 ? 1 : 0), this._unit(c.entity_download) || 'Mb/s'],
         upload: [!!this._st(c.entity_upload) && c.show_upload !== false, this._fmt(up, up < 10 ? 1 : 0), this._unit(c.entity_upload) || 'Mb/s'],
         devices: [!!this._st(c.entity_devices) && c.show_devices !== false, this._fmt(dv, 0), ''],
         wifi: [!!wifiS && c.show_wifi !== false, this._t(wifiOn ? 'on' : 'off'), ''],
+        ping: [!!this._st(c.entity_ping) && c.show_ping !== false, this._fmt(pg, pg < 10 ? 1 : 0), this._unit(c.entity_ping) || 'ms'],
+        wan_ip: [!!this._st(c.entity_wan_ip) && c.show_wan_ip !== false, /^(unavailable|unknown)$/i.test(String(this._st(c.entity_wan_ip)?.state)) ? '--' : String(this._st(c.entity_wan_ip)?.state ?? '--'), ''],
+        uptime: [!!this._st(c.entity_uptime) && c.show_uptime !== false, fmtUptime(uptimeSeconds(this._st(c.entity_uptime)), window.applianceLocale(this._c, this._hass)), ''],
+        cpu: [!!this._st(c.entity_cpu) && c.show_cpu !== false, this._fmt(cp, 0), this._unit(c.entity_cpu) || '%'],
+        memory: [!!this._st(c.entity_memory) && c.show_memory !== false, this._fmt(mm, 0), this._unit(c.entity_memory) || '%'],
       };
       Object.entries(V).forEach(([k, [show, val, unit]]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`);
@@ -388,10 +422,12 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'transparent', selector: { boolean: {} } },
         ...window.applianceTileFields(this._hass),
         ent('entity'), ent('entity_download', 'sensor'), ent('entity_upload', 'sensor'), ent('entity_devices', 'sensor'), ent('entity_wifi', 'switch'), ent('entity_reboot'),
+        ent('entity_ping', 'sensor'), ent('entity_wan_ip', 'sensor'), ent('entity_uptime', 'sensor'), ent('entity_cpu', 'sensor'), ent('entity_memory', 'sensor'),
+        ent('entity_wifi_24', 'switch'), ent('entity_wifi_5', 'switch'), ent('entity_wifi_6', 'switch'), ent('entity_wifi_guest', 'switch'), ent('entity_wifi_iot', 'switch'),
         { name: 'max_speed', default: 1000, selector: { number: { min: 10, max: 10000, step: 10, mode: 'box', unit_of_measurement: 'Mb/s' } } },
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', cs: 'Čeština', hu: 'Magyar', sr: 'Српски', 'sr-Latn': 'Srpski' }[value] || value })) } } },
-        { type: 'grid', name: '', schema: [bool('show_status'), bool('compact', false), bool('show_controls'), bool('show_download'), bool('show_upload'), bool('show_devices'), bool('show_wifi'), bool('animations')] },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('compact', false), bool('show_controls'), bool('show_download'), bool('show_upload'), bool('show_devices'), bool('show_wifi'), bool('show_ping'), bool('show_wan_ip'), bool('show_uptime'), bool('show_cpu'), bool('show_memory'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'internet_box_model' : s.name, this._hass);
     }
