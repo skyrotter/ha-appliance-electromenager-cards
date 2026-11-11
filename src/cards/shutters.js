@@ -551,7 +551,11 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
           this._hass.callService('cover', this._blindDown > 0 ? 'open_cover' : 'close_cover', { entity_id: id }); return;
         }
         if (b.dataset.a === 'light') { if (this._hass && this._c.entity_light) this._hass.callService('homeassistant', 'toggle', { entity_id: this._c.entity_light }); return; }
-        if (this._hass && this._main()) this._hass.callService('cover', `${b.dataset.a}_cover`, { entity_id: this._main() });
+        if (this._hass && this._main()) {
+          // invert_buttons : moteur câblé à l'envers, « Ouvrir » ferme la cover et inversement (le dessin et la position ne changent pas)
+          const a = this._c.invert_buttons ? { open: 'close', close: 'open' }[b.dataset.a] || b.dataset.a : b.dataset.a;
+          this._hass.callService('cover', `${a}_cover`, { entity_id: this._main() });
+        }
       }));
       root.querySelector('#shpos input').addEventListener('change', (e) => {
         if (!this._hass) return;
@@ -760,7 +764,8 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         if (a === 'light') { b.classList.toggle('on', leds); b.disabled = !lightS; return; }
         // assumed_state (RFXCOM, Somfy RTS…) : l'état est supposé, pas mesuré, donc on laisse tout cliquable comme la carte HA,
         // sauf si la cover remonte une position (current_position) : on s'y fie et on grise Ouvrir à 100 %, Fermer à 0 %
-        b.disabled = st === 'unavailable' || ((!assumed || posKnown) && ((a === 'open' && (bst === 'open' || bst === 'opening')) || (a === 'close' && (bst === 'closed' || bst === 'closing'))));
+        const ea = c.invert_buttons ? { open: 'close', close: 'open' }[a] || a : a; // action réellement envoyée par ce bouton
+        b.disabled = st === 'unavailable' || ((!assumed || posKnown) && ((ea === 'open' && (bst === 'open' || bst === 'opening')) || (ea === 'close' && (bst === 'closed' || bst === 'closing'))));
       });
       const rng = (id, show, label, val) => {
         const el = r.getElementById(id), inp = el.querySelector('input');
@@ -828,6 +833,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
           { name: 'travel_time', selector: { number: { min: 0, max: 120, step: 1, mode: 'box', unit_of_measurement: 's' } } },
         ] },
         bool('invert', false),
+        bool('invert_buttons', false),
         ...(this.kind === 'venetian_blind' ? [bool('tilt_only', false), bool('tilt_from_position', false), { name: 'tilt_presets', selector: { object: {} } }] : []),
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
