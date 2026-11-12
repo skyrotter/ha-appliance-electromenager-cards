@@ -20,7 +20,7 @@ It works with the `climate` entity of any smart radiator valve (Zigbee2MQTT, ZHA
 | `minimal` | `true` shows only the header and the dial (no badge, buttons or tiles). Combine with `tap_action: navigate` to open a page or pop-up with all the details |
 | `show_status`, `show_temperature`, `show_valve`, `show_battery`, `show_window`, `animations`, `labels`, `language`, `illustration_size`, `transparent` | |
 
-**Target**: **− / +** buttons, sent 0.8 s after the last tap, respecting the valve's step and limits.
+**Target**: **− / +** buttons, sent 0.8 s after the last tap, respecting the valve's step and limits. On the **Nest** model, you can also drag the arc around the dial: the target follows your finger or mouse live (between `min_temp` and `max_temp`, snapped to the step) and is sent when you let go. A simple tap on the dial still opens the entity.
 
 States: **Heating** (from `hvac_action`, or the valve opening when there is no `hvac_action`), **At target**, **Off**, **Window open** (blue alert), **Unavailable**.
 

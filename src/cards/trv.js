@@ -68,6 +68,7 @@
       <circle class="tv-nestheat" cx="199" cy="199" r="184" fill="url(#tvnesth)"/>
       <path d="${ARC}" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="10" stroke-linecap="round"/>
       <path class="tv-arc" id="tvarc" d="${ARC}" fill="none" stroke-width="10" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100"/>
+      <path class="tv-hit" id="tvhit" d="${ARC}" fill="none" stroke="transparent" stroke-width="56" stroke-linecap="round"/>
       <text class="tv-txt" id="tvmode" x="199" y="128" text-anchor="middle" font-size="20" font-weight="600" letter-spacing="2" opacity=".85"></text>
       <text class="tv-txt tv-big" id="tvbig" x="199" y="236" text-anchor="middle" font-size="104" font-weight="400">--</text>
       <text class="tv-txt" id="tvsmall" x="199" y="304" text-anchor="middle" font-size="42" font-weight="500" opacity=".9">--</text>
@@ -256,7 +257,8 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
 .heating path.tv-heat{animation:tvflame 1.2s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:50% 100%}
 .tv-nestheat{opacity:0;transition:opacity .8s}
 .heating .tv-nestheat{opacity:1;animation:tvbreathe 3s ease-in-out infinite}
-.tv-arc{stroke:#2b9af9;transition:stroke-dasharray .6s}.heating .tv-arc{stroke:#fff}
+.tv-hit{pointer-events:stroke;cursor:grab;touch-action:none}.tv-hit.drag{cursor:grabbing}
+.tv-arc{stroke:#2b9af9;transition:stroke-dasharray .6s}.dragging .tv-arc{transition:none}.heating .tv-arc{stroke:#fff}
 .off .tv-arc{stroke:#555}
 /* LED (Shelly) et anneaux lumineux (Netatmo 1re génération) */
 .tv-led{fill:#3d8bff;opacity:.85;transition:fill .4s,opacity .4s}
@@ -358,6 +360,9 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       </ha-card>`;
       window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity));
       root.getElementById('tvsl').addEventListener('click', () => this._more(this._c.entity));
+      // Nest : on règle la consigne en faisant glisser l'arc (un simple clic ouvre toujours la fiche de l'entité)
+      const hit = root.getElementById('tvhit');
+      if (hit) this._bindArc(root, hit);
       root.getElementById('tvm').addEventListener('click', () => this._step(-1));
       root.getElementById('tvp').addEventListener('click', () => this._step(1));
       // dérogation : choix de la durée appliquée aux prochains réglages − / +, retour au planning
@@ -403,7 +408,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
     _render() {
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card, k = this._compute(), u = this._unit();
-      card.className = `${k.st}${c.animations === false ? ' noanim' : ''}`;
+      card.className = `${k.st}${c.animations === false ? ' noanim' : ''}${this._drag ? ' dragging' : ''}`;
       // en-tête : nom (défaut), icône seule ou les deux (header: name / icon / both, icône au choix avec icon)
       const hd = ['icon', 'both'].includes(c.header) ? c.header : 'name', title = r.getElementById('tvtitle');
       const nm = c.name || (k.cs && k.cs.attributes.friendly_name) || this._t('name');
@@ -510,15 +515,22 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       });
     }
 
+    // consigne arrondie au pas du thermostat et bornée par min_temp / max_temp
+    _snap(v) {
+      const a = this._compute().a, step = Number(a.target_temp_step) || (this._unit().includes('F') ? 1 : 0.5);
+      const mn = this._num(a.min_temp), mx = this._num(a.max_temp);
+      if (fin(mn)) v = Math.max(mn, v); if (fin(mx)) v = Math.min(mx, v);
+      return Math.round(v / step) * step;
+    }
     // − / + : la consigne change tout de suite à l'écran, l'appel part 0,8 s après le dernier clic
     _step(dir) {
       const k = this._compute(); if (!fin(k.target)) return;
-      const a = k.a, step = Number(a.target_temp_step) || (this._unit().includes('F') ? 1 : 0.5);
-      let v = (this._pending != null ? this._pending : k.target) + dir * step;
-      const mn = this._num(a.min_temp), mx = this._num(a.max_temp);
-      if (fin(mn)) v = Math.max(mn, v); if (fin(mx)) v = Math.min(mx, v);
-      this._pending = Math.round(v / step) * step;
+      const step = Number(k.a.target_temp_step) || (this._unit().includes('F') ? 1 : 0.5);
+      this._pending = this._snap((this._pending != null ? this._pending : k.target) + dir * step);
       this._render();
+      this._schedule();
+    }
+    _schedule() {
       clearTimeout(this._timer);
       this._timer = setTimeout(() => {
         const t = Math.round(this._pending * 10) / 10, d = this._ovr() ? this._dur || 0 : 0;
@@ -529,6 +541,40 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         } else this._hass.callService('climate', 'set_temperature', { entity_id: this._c.entity, temperature: t });
         setTimeout(() => { this._pending = null; if (this._hass) this._render(); }, 4000);
       }, 800);
+    }
+    // Nest : glisser l'arc (270°, de 135° à 405°) règle la consigne entre min_temp et max_temp ; l'appel part au relâchement (+ 0,8 s)
+    _bindArc(root, hit) {
+      const svg = hit.ownerSVGElement;
+      let from = null, moved = false;
+      const frac = (ev) => {
+        const pt = svg.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY;
+        const p = pt.matrixTransform(svg.getScreenCTM().inverse());
+        const deg = (Math.atan2(p.y - 199, p.x - 199) * 180 / Math.PI + 360) % 360, t = (deg - 135 + 360) % 360; // 0 = bas gauche, 270 = bas droite
+        return t <= 270 ? t / 270 : (t - 270 < 360 - t ? 1 : 0); // dans le creux du bas : l'extrémité la plus proche
+      };
+      hit.addEventListener('pointerdown', (ev) => {
+        const k = this._compute();
+        if ((ev.button != null && ev.button > 0) || k.dead || k.off || !fin(k.target)) return;
+        from = { x: ev.clientX, y: ev.clientY }; moved = false;
+        try { hit.setPointerCapture(ev.pointerId); } catch (e) { /* navigateur ancien */ }
+      });
+      hit.addEventListener('pointermove', (ev) => {
+        if (!from) return;
+        if (!moved && Math.hypot(ev.clientX - from.x, ev.clientY - from.y) < 5) return; // un simple appui n'est pas un glissement
+        moved = true; this._drag = true; clearTimeout(this._timer);
+        hit.classList.add('drag'); this._card && this._card.classList.add('dragging');
+        const a = this._compute().a, mn = fin(this._num(a.min_temp)) ? this._num(a.min_temp) : 5, mx = fin(this._num(a.max_temp)) ? this._num(a.max_temp) : 30;
+        const v = this._snap(mn + frac(ev) * (mx - mn));
+        if (v !== this._pending) { this._pending = v; this._render(); }
+      });
+      const end = () => {
+        if (!from) return;
+        from = null; hit.classList.remove('drag'); this._card && this._card.classList.remove('dragging');
+        if (moved) { this._drag = false; this._schedule(); setTimeout(() => { moved = false; }, 0); }
+      };
+      ['pointerup', 'pointercancel'].forEach((t) => hit.addEventListener(t, end));
+      // le clic qui suit un glissement ne doit pas ouvrir la fiche de l'entité
+      root.addEventListener('click', (ev) => { if (moved) { ev.stopPropagation(); ev.preventDefault(); } }, true);
     }
   }
   customElements.define(TAG, ApplianceTrvCard);
