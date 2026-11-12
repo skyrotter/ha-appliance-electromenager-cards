@@ -18,11 +18,16 @@ Every entity is optional. **Modes**: `off`, `pause` (on but not heating), `green
 | `entity_target` | target temperature (otherwise the `temperature` of `entity`) |
 | `entity_temp_bottom` | bottom-of-tank temperature (extra tile, `show_bottom`) |
 | `entity_reserve` | hot water reserve in %: fills the tank. Without it, estimated from the temperature and the target |
+| `hot_water_level` | remaining hot water in % (used when `entity_reserve` is not set): fills the tank |
+| `hot_water_volume` | remaining hot water in L: extra **Volume** tile, and fills the tank when `tank_volume` is set |
+| `tank_volume` | tank capacity in L (number or entity), links `hot_water_volume` and `hot_water_level` |
+| `last_cycle` | `true` shows the **last heating cycle** when idle (start → end, duration, energy), read from the Home Assistant history (4 days) of `entity_power`. A cycle is power above `green_above`. Default `false` |
+| `cycle_gap` | pause (min) kept inside the same cycle (15) |
 | `green_above` | below this power, the heater is in Pause; above it, Green (150 W). `running_above` still works as an alias |
 | `boost_above` | above this power, Boost (1000 W) |
 | `lcd_big` | `true` puts a **large readable value** on the tank (icon + temperature), since the small display is easy to miss on a small card. Default `false` |
 | `lcd_value` | with `lcd_big`: `current` (default, tank temperature, thermometer icon) or `target` (setpoint, target icon) |
-| `show_status`, `show_energy`, `show_power`, `show_mode`, `show_temp`, `show_bottom`, `show_target`, `show_reserve`, `animations`, `labels`, `language`, `illustration_size`, `transparent`, `tap_action`, `hold_action` | |
+| `show_status`, `show_energy`, `show_power`, `show_mode`, `show_temp`, `show_bottom`, `show_target`, `show_reserve`, `show_volume`, `show_cycle`, `animations`, `labels`, `language`, `illustration_size`, `transparent`, `tap_action`, `hold_action` | |
 
 ```yaml
 type: custom:appliance-thermo-heater-card

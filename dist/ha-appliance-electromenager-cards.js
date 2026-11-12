@@ -14110,7 +14110,13 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_rinse": "Rinse (on = running)",
       "entity_fan": "Fan speed",
       "entity_tank": "Water tank (full / level)",
-      "temp_step": "Temperature step"
+      "temp_step": "Temperature step",
+      "last_cycle": "Show the last cycle (start, end, duration, energy)",
+      "cycle_gap": "Pause kept in the same cycle (min)",
+      "tank_volume": "Tank capacity (L)",
+      "hot_water_level": "Remaining hot water (%)",
+      "hot_water_volume": "Remaining hot water (L)",
+      "show_cycle": "Show the last cycle"
     },
     "cs": {
       "animations": "Animace",
@@ -16669,7 +16675,13 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_rinse": "Rinçage (on = en cours)",
       "entity_fan": "Vitesse de ventilation",
       "entity_tank": "Réservoir (plein / niveau)",
-      "temp_step": "Pas de température"
+      "temp_step": "Pas de température",
+      "last_cycle": "Afficher le dernier cycle (début, fin, durée, conso)",
+      "cycle_gap": "Pause tolérée dans un même cycle (min)",
+      "tank_volume": "Capacité du ballon (L)",
+      "hot_water_level": "Eau chaude restante (%)",
+      "hot_water_volume": "Eau chaude restante (L)",
+      "show_cycle": "Afficher le dernier cycle"
     },
     "hu": {
       "animations": "Animációk",
@@ -49350,7 +49362,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
  * Ballon à pompe à chaleur (type Ariston Nuos) : photo détourée + écorché du ballon (dessin proposé par Ppatou, #268).
  * Le ballon se remplit du bleu (froid) au rouge (chaud) selon la réserve d'eau chaude, le ventilateur tourne en modes
  * Éco (green) et Boost, la résistance rougit en Boost. Modes : off / pause / green / boost, lus sur l'entité (water_heater,
- * select…) ou déduits de la puissance. Tuiles : énergie, puissance, mode, température, consigne, eau chaude.
+ * select…) ou déduits de la puissance. Tuiles : énergie, puissance, mode, température, consigne, eau chaude, volume,
+ * dernier cycle (option last_cycle : début → fin, durée, conso, lus dans l'historique de Home Assistant).
  */
 (() => {
   const TAG = 'appliance-thermo-heater-card';
@@ -49370,7 +49383,11 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "temp": "Temperature",
       "target": "Target",
       "bottom": "Bottom",
-      "reserve": "Hot water"
+      "reserve": "Hot water",
+      "volume": "Volume",
+      "cycle": "Last cycle",
+      "duration": "Cycle duration",
+      "cycle_kwh": "Cycle energy"
     },
     "da": {
       "name": "Varmepumpevandvarmer",
@@ -49430,7 +49447,11 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "temp": "Température",
       "target": "Consigne",
       "bottom": "Bas du ballon",
-      "reserve": "Eau chaude"
+      "reserve": "Eau chaude",
+      "volume": "Volume",
+      "cycle": "Dernier cycle",
+      "duration": "Durée du cycle",
+      "cycle_kwh": "Conso du cycle"
     },
     "hu": {
       "name": "Termodinamikus bojler",
@@ -49494,6 +49515,36 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     }
   };
   const asList = (v) => (Array.isArray(v) ? v : v ? [v] : []);
+  // Dernier cycle terminé d'après l'historique de la puissance (même logique que la carte chauffe-eau).
+  // pw : [{ t (ms), w (W) }] trié ; cycle = puissance > seuil, les creux plus courts que gapMin restent dans le cycle.
+  // en : [{ t, v (kWh) }] compteur d'énergie, facultatif. Renvoie { start, end, kwh } ou null (aucun cycle, ou cycle en cours).
+  const lastCycle = (pw, threshold, gapMin, en) => {
+    const gap = gapMin * 60000;
+    let start = null, lastOn = null, cyc = null;
+    for (let i = 0; i < pw.length; i++) {
+      const p = pw[i], next = pw[i + 1];
+      if (!(p.w > threshold)) continue;
+      const offAt = next ? next.t : null;
+      if (start === null || p.t - lastOn > gap) { if (start !== null) cyc = { start, end: lastOn }; start = p.t; }
+      lastOn = offAt;
+      if (offAt === null) return null; // encore au-dessus du seuil : cycle en cours
+    }
+    if (start !== null && lastOn !== null) cyc = { start, end: lastOn };
+    if (!cyc || cyc.end - cyc.start < 120000) return null; // moins de 2 min : pic parasite
+    // énergie : écart du compteur, sinon intégrale de la puissance
+    const at = (T) => { let v = null; for (const e of en) { if (e.t <= T) v = e.v; else break; } return v; };
+    const e0 = at(cyc.start), e1 = at(cyc.end + 60000);
+    let kwh = e0 != null && e1 != null && e1 >= e0 ? e1 - e0 : null;
+    if (kwh === null) {
+      kwh = 0;
+      for (let i = 0; i < pw.length - 1; i++) {
+        const a = Math.max(pw[i].t, cyc.start), b = Math.min(pw[i + 1].t, cyc.end);
+        if (b > a && pw[i].w > 0) kwh += pw[i].w * (b - a) / 3.6e9;
+      }
+    }
+    return { ...cyc, kwh };
+  };
+  const fmtDur = (min) => { const m = Math.round(min); if (m < 60) return `${m} min`; const h = Math.floor(m / 60), r = m % 60; return r ? `${h} h ${String(r).padStart(2, '0')}` : `${h} h`; };
 
   const CSS = `
 :host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
@@ -49552,7 +49603,8 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
   <g class="th-big" id="thbig"></g></svg>`;
 
   const TILES = [['energy', 'mdi:lightning-bolt-outline', 'show_energy'], ['power', 'mdi:flash', 'show_power'], ['mode', 'mdi:cog-sync', 'show_mode'],
-    ['temp', 'mdi:thermometer', 'show_temp'], ['bottom', 'mdi:thermometer-low', 'show_bottom'], ['target', 'mdi:target', 'show_target'], ['reserve', 'mdi:gauge', 'show_reserve']];
+    ['temp', 'mdi:thermometer', 'show_temp'], ['bottom', 'mdi:thermometer-low', 'show_bottom'], ['target', 'mdi:target', 'show_target'], ['reserve', 'mdi:gauge', 'show_reserve'],
+    ['volume', 'mdi:water', 'show_volume'], ['cycle', 'mdi:history', 'show_cycle'], ['duration', 'mdi:timer-outline', 'show_cycle'], ['cycle_kwh', 'mdi:lightning-bolt', 'show_cycle']];
   // mode lu sur l'entité ; les états reconnus (dans toutes les langues courantes) priment sur la puissance
   const RE_OFF = /^(off|unavailable|unknown|none|aus|arr[êe]t|spento|uit|av|oprit)$/i;
   const RE_BOOST = /boost|perform|turbo|electric|[ée]lectri|force|high.?demand|forc[ée]|intensiv|rapid|comfort/i;
@@ -49569,12 +49621,13 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { show_energy: true, show_power: true, show_mode: true, show_temp: true, show_target: true, show_reserve: true, show_bottom: true, boost_above: 1000, green_above: c.running_above != null && c.green_above == null ? c.running_above : 150, ...c };
+      this._c = { show_energy: true, show_power: true, show_mode: true, show_temp: true, show_target: true, show_reserve: true, show_bottom: true, show_volume: true, show_cycle: true, boost_above: 1000, green_above: c.running_above != null && c.green_above == null ? c.running_above : 150, ...c };
       this._built = false;
       if (this._hass) this._render();
     }
     set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 5; }
+    disconnectedCallback() { clearTimeout(this._cycTimer); }
     getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
@@ -49585,6 +49638,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
     _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
     _unit(id, d) { const s = this._st(id); return String((s && s.attributes && s.attributes.unit_of_measurement) || d).trim(); }
     _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _clock(t) { try { return new Date(t).toLocaleTimeString(window.applianceLocale(this._c, this._hass), { hour: '2-digit', minute: '2-digit' }); } catch (e) { return new Date(t).toTimeString().slice(0, 5); } }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
 
     _build() {
@@ -49597,7 +49651,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       </ha-card>`;
       window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity || this._c.entity_power));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
-        const c = this._c; this._more({ energy: c.entity_energy, power: c.entity_power, mode: c.entity_mode || c.entity, temp: c.entity_temp || c.entity, bottom: c.entity_temp_bottom, target: c.entity_target || c.entity, reserve: c.entity_reserve }[el.dataset.k]);
+        const c = this._c; this._more({ energy: c.entity_energy, power: c.entity_power, mode: c.entity_mode || c.entity, temp: c.entity_temp || c.entity, bottom: c.entity_temp_bottom, target: c.entity_target || c.entity, reserve: c.entity_reserve || c.hot_water_level || c.hot_water_volume, volume: c.hot_water_volume || c.hot_water_level, cycle: c.entity_power, duration: c.entity_power, cycle_kwh: c.entity_energy || c.entity_power }[el.dataset.k]);
       }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
@@ -49628,10 +49682,47 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       return { mode, power, temp, bottom, target, reserve };
     }
 
+    // last_cycle : dernier cycle lu dans l'historique (4 jours), relu au chargement puis 20 s après chaque fin de cycle
+    // (le temps que l'enregistreur écrive les derniers points). Cycle = puissance au-dessus de green_above.
+    _fetchCycle(active) {
+      const c = this._c, hass = this._hass;
+      if (!c.last_cycle || !c.entity_power || !hass || typeof hass.callWS !== 'function') return;
+      const was = this._cycActive;
+      this._cycActive = active;
+      const first = !this._cycAt, ended = was === true && !active;
+      if (this._cycBusy || !(first || ended) || (first && active)) return;
+      this._cycBusy = true; this._cycAt = Date.now();
+      clearTimeout(this._cycTimer);
+      this._cycTimer = setTimeout(() => {
+        const now = Date.now(), pId = c.entity_power, eId = c.entity_energy, ids = [pId].concat(eId ? [eId] : []);
+        const k = (i, f) => f[(hass.states[i] && hass.states[i].attributes.unit_of_measurement) || ''] ?? 1;
+        hass.callWS({ type: 'history/history_during_period', start_time: new Date(now - 4 * 86400000).toISOString(), end_time: new Date(now).toISOString(),
+          entity_ids: ids, minimal_response: true, no_attributes: true, significant_changes_only: false })
+          .then((r) => {
+            const pts = (i, f) => ((r && r[i]) || []).map((p) => ({ t: (p.lu ?? p.lc) * 1000, v: parseFloat(p.s) * f })).filter((p) => Number.isFinite(p.t) && Number.isFinite(p.v));
+            const pw = pts(pId, k(pId, { kW: 1000 })).map((p) => ({ t: p.t, w: p.v }));
+            const en = eId ? pts(eId, k(eId, { Wh: 1e-3, MWh: 1e3 })) : [];
+            this._cycle = lastCycle(pw, Number(c.green_above), Number(c.cycle_gap ?? 15), en);
+          })
+          .catch(() => { this._cycle = null; })
+          .finally(() => { this._cycBusy = false; if (this._hass) this._render(); });
+      }, was === true ? 20000 : 0);
+    }
+
     _render() {
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card;
-      const { mode, power, temp, bottom, target, reserve } = this._compute();
+      const { mode, power, temp, bottom, target, reserve: reserve0 } = this._compute();
+      // eau chaude restante : entity_reserve (%), sinon hot_water_level (%), sinon hot_water_volume (L) rapporté à tank_volume (L, nombre ou entité)
+      const lvlE = this._num(c.hot_water_level), vol = this._num(c.hot_water_volume);
+      const cap = typeof c.tank_volume === 'string' ? this._num(c.tank_volume) : Number(c.tank_volume);
+      const capOk = isFinite(cap) && cap > 0;
+      const rsv = !isNaN(reserve0) ? reserve0 : !isNaN(lvlE) ? lvlE : !isNaN(vol) && capOk ? (vol / cap) * 100 : NaN;
+      const reserve = isNaN(rsv) ? NaN : Math.max(0, Math.min(100, rsv));
+      const litres = !isNaN(vol) ? vol : !isNaN(reserve) && capOk ? (reserve * cap) / 100 : NaN;
+      const active = mode === 'green' || mode === 'boost';
+      this._fetchCycle(active);
+      const cy = c.last_cycle && !active ? this._cycle : null;
       card.className = `${mode}${c.animations === false ? ' noanim' : ''}`;
       // vitesse du ventilateur : plus la puissance est élevée, plus il tourne vite (bornée)
       const spd = isNaN(power) ? 2 : Math.max(.7, Math.min(3, 3 - power / 500));
@@ -49671,11 +49762,15 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
         temp: [c.entity_temp || c.entity, this._fmt(temp, 1), tu === '%' ? '°C' : (tu || '°C')],
         bottom: [c.entity_temp_bottom, this._fmt(bottom, 1), tu === '%' ? '°C' : (tu || '°C')],
         target: [c.entity_target || c.entity, this._fmt(target, 0), tu === '%' ? '°C' : (tu || '°C')],
-        reserve: [c.entity_reserve, this._fmt(reserve, 0), ru],
+        reserve: [c.entity_reserve || c.hot_water_level || c.hot_water_volume, this._fmt(reserve, 0), c.entity_reserve ? ru : '%'],
+        volume: [!isNaN(litres) && (c.hot_water_volume || c.hot_water_level), this._fmt(litres, 0), 'L'],
+        cycle: [cy, cy ? `${this._clock(cy.start)} → ${this._clock(cy.end)}` : '', ''],
+        duration: [cy, cy ? fmtDur((cy.end - cy.start) / 60000) : '', ''],
+        cycle_kwh: [cy, cy ? this._fmt(cy.kwh, 2) : '', 'kWh'],
       };
       TILES.forEach(([k, , opt]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`); const [show, val, unit] = V[k];
-        const has = !!show && (k === 'mode' || k === 'energy' || k === 'power' || k === 'reserve' ? true : val !== '--');
+        const has = !!show && (k === 'mode' || k === 'energy' || k === 'power' || k === 'reserve' || k === 'cycle' || k === 'duration' || k === 'cycle_kwh' ? true : val !== '--');
         el.classList.toggle('hide', !has || c[opt] === false);
         el.querySelector('.lbl').textContent = this._l(k);
         const small = document.createElement('small'); small.textContent = unit ?? '';
@@ -49712,11 +49807,14 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
         ent('entity', ['water_heater', 'climate', 'switch']), ent('entity_mode', ['select', 'input_select', 'sensor']),
         ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'), ent('entity_temp', 'sensor'), ent('entity_target', ['sensor', 'number', 'input_number']),
         ent('entity_temp_bottom', 'sensor'), ent('entity_reserve', 'sensor'),
+        ent('hot_water_level', 'sensor'), ent('hot_water_volume', 'sensor'),
+        { type: 'grid', name: '', schema: [{ name: 'tank_volume', selector: { number: { min: 0, max: 1000, step: 1, mode: 'box', unit_of_measurement: 'L' } } }, num('cycle_gap', 0, 240, 1, 15, 'min')] },
+        { name: 'last_cycle', selector: { boolean: {} } },
         { type: 'grid', name: '', schema: [num('green_above', 0, 2000, 1, 150, 'W'), num('boost_above', 100, 5000, 10, 1000, 'W')] },
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { name: 'lcd_value', selector: { select: { mode: 'dropdown', options: [{ value: 'current', label: window.applianceEditorLabel('lcd_value_current', this._hass) }, { value: 'target', label: window.applianceEditorLabel('lcd_value_target', this._hass) }] } } },
-        { type: 'grid', name: '', schema: [bool('lcd_big', false), bool('show_status'), bool('show_energy'), bool('show_power'), bool('show_mode'), bool('show_temp'), bool('show_bottom'), bool('show_target'), bool('show_reserve'), bool('animations')] },
+        { type: 'grid', name: '', schema: [bool('lcd_big', false), bool('show_status'), bool('show_energy'), bool('show_power'), bool('show_mode'), bool('show_temp'), bool('show_bottom'), bool('show_target'), bool('show_reserve'), bool('show_volume'), bool('show_cycle'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }

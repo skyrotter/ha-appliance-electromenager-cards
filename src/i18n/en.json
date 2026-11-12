@@ -1367,7 +1367,13 @@
     "entity_rinse": "Rinse (on = running)",
     "entity_fan": "Fan speed",
     "entity_tank": "Water tank (full / level)",
-    "temp_step": "Temperature step"
+    "temp_step": "Temperature step",
+    "last_cycle": "Show the last cycle (start, end, duration, energy)",
+    "cycle_gap": "Pause kept in the same cycle (min)",
+    "tank_volume": "Tank capacity (L)",
+    "hot_water_level": "Remaining hot water (%)",
+    "hot_water_volume": "Remaining hot water (L)",
+    "show_cycle": "Show the last cycle"
   },
   "light": {
     "light_bulb": "Bulb",
@@ -2038,7 +2044,11 @@
     "temp": "Temperature",
     "target": "Target",
     "bottom": "Bottom",
-    "reserve": "Hot water"
+    "reserve": "Hot water",
+    "volume": "Volume",
+    "cycle": "Last cycle",
+    "duration": "Cycle duration",
+    "cycle_kwh": "Cycle energy"
   },
   "smart_tap": {
     "name": "Smart tap",
