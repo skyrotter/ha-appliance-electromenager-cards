@@ -1029,6 +1029,19 @@ const SCEN = [
       range(ctl, 'Puissance', 'sensor.sump_pump_power', 0, 800, 10, 420, 'W', W);
       set('sensor.sump_pump_starts_today', 14, {}); set('sensor.sump_pump_energy', 0.35, KWH);
     } },
+  { kind: 'rainwater-tank', title: "Citerne d'eau de pluie + hydrophore", lang: true,
+    cfg: { entity: 'switch.hydrophore', entity_power: 'sensor.hydrophore_power', entity_level: 'sensor.citerne_level', tank_capacity: 5000, entity_pressure: 'sensor.hydrophore_pressure', entity_flow: 'sensor.hydrophore_flow', entity_tank_rain: 'binary_sensor.rain', entity_mains: 'switch.appoint_eau_ville', entity_low_float: 'binary_sensor.citerne_low_float', entity_starts: 'sensor.hydrophore_starts_today', entity_energy: 'sensor.hydrophore_energy', price_per_kwh: 0.2516 },
+    build(ctl) {
+      select(ctl, 'État pompe', 'switch.hydrophore', [['on', 'Marche / On'], ['off', 'Arrêt / Off']], 'on');
+      range(ctl, 'Niveau citerne', 'sensor.citerne_level', 0, 100, 1, 62, '%', { unit_of_measurement: '%' });
+      select(ctl, 'Pluie', 'binary_sensor.rain', [['off', 'Non / No'], ['on', 'Oui / Yes']], 'on');
+      select(ctl, 'Appoint eau de ville', 'switch.appoint_eau_ville', [['off', 'Arrêt / Off'], ['on', 'Actif / On']], 'off');
+      select(ctl, 'Flotteur niveau bas', 'binary_sensor.citerne_low_float', [['off', 'Normal'], ['on', 'Bas / Low']], 'off');
+      range(ctl, 'Puissance', 'sensor.hydrophore_power', 0, 1200, 10, 780, 'W', W);
+      range(ctl, 'Pression', 'sensor.hydrophore_pressure', 0, 8, 0.1, 3.4, 'bar', { unit_of_measurement: 'bar' });
+      range(ctl, 'Débit', 'sensor.hydrophore_flow', 0, 40, 1, 22, 'L/min', { unit_of_measurement: 'L/min' });
+      set('sensor.hydrophore_starts_today', 18, {}); set('sensor.hydrophore_energy', 1.4, KWH);
+    } },
   { kind: 'ups', title: 'Onduleur', lang: true,
     cfg: { entity: 'sensor.ups_status_data', entity_charge: 'sensor.ups_battery_charge', entity_runtime: 'sensor.ups_battery_runtime', entity_load: 'sensor.ups_load', entity_power: 'sensor.ups_power', entity_input_voltage: 'sensor.ups_input_voltage' },
     build(ctl) {

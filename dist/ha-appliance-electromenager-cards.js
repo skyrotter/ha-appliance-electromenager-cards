@@ -13635,6 +13635,13 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_since": "Show last change",
       "show_soc": "Show state of charge",
       "show_starts": "Show starts",
+      "entity_low_float": "Low-level float (on = tank nearly empty)",
+      "entity_tank_volume": "Remaining volume (L, m³…)",
+      "entity_tank_rain": "Rain (sensor, binary sensor or weather)",
+      "entity_mains": "Mains water top-up (valve or sensor)",
+      "tank_capacity": "Tank capacity (L, to compute the volume from the level)",
+      "show_tank_volume": "Show remaining volume",
+      "show_mains": "Show mains top-up",
       "show_status": "Show status",
       "show_status_tile": "Show status tile",
       "show_tariff": "Show tariff",
@@ -16034,6 +16041,13 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_since": "Afficher le dernier changement",
       "show_soc": "Afficher le niveau de charge",
       "show_starts": "Afficher les démarrages",
+      "entity_low_float": "Flotteur de niveau bas (on = citerne presque vide)",
+      "entity_tank_volume": "Volume restant (L, m³…)",
+      "entity_tank_rain": "Pluie (capteur, capteur binaire ou météo)",
+      "entity_mains": "Appoint d'eau de ville (vanne ou capteur)",
+      "tank_capacity": "Capacité de la citerne (L, pour calculer le volume depuis le niveau)",
+      "show_tank_volume": "Afficher le volume restant",
+      "show_mains": "Afficher l'appoint d'eau de ville",
       "show_status": "Afficher l'état",
       "show_status_tile": "Afficher la tuile d'état",
       "show_tariff": "Afficher le tarif",
@@ -29775,7 +29789,7 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
 })();
 
 /* Cartes « Pompes » — pompe à eau, pompe industrielle et pompe de relevage
- * custom:appliance-water-pump-card, appliance-industrial-pump-card, appliance-sump-pump-card.
+ * custom:appliance-water-pump-card, appliance-industrial-pump-card, appliance-sump-pump-card, appliance-rainwater-tank-card.
  * Pompe à eau : style sobre, cuve source dont le niveau suit entity_level, roue à aubes visible
  * dans la volute, eau qui circule dans les tuyaux, jet et vagues dans le bassin de sortie.
  * Pompe industrielle : groupe moteur + pompe à engrenage interne sur châssis, finition métal,
@@ -29785,6 +29799,9 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
  * les seuils (max_flow, no_flow_threshold) ; la tuile garde l'unité du capteur.
  * Pompe de relevage : fosse en coupe, eau qui arrive par le drain, niveau (entity_level) et flotteur,
  * pompe immergée, refoulement vers l'égout, repère « max » et gyrophare si le niveau est trop haut.
+ * Citerne d'eau de pluie + hydrophore : citerne enterrée en coupe (gouttière, niveau en %, repère « min », crépine),
+ * groupe surpresseur hors sol (manomètre, pressostat, réservoir à vessie) et robinet ; la pluie (entity_tank_rain) ou une
+ * montée du niveau fait couler la gouttière, le robinet coule quand la pompe tourne.
  * États : off, running, warning (marche avec alerte), alarm (niveau haut, pompe arrêtée), fault, unavailable.
  */
 (() => {
@@ -29817,6 +29834,12 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
       "alarm": "High level",
       "high_level": "High water level",
       "pit": "Pit",
+      "rainwater_tank": "Rainwater tank",
+      "volume": "Volume",
+      "mains": "Mains top-up",
+      "mains_on": "Active",
+      "mains_off": "Off",
+      "dry_run": "Pump running dry",
       "starts": "Starts"
     },
     "cs": {
@@ -29957,6 +29980,12 @@ svg{display:block;width:100%;max-width:calc(250px * var(--illus-scale,1));height
       "alarm": "Niveau haut",
       "high_level": "Niveau d'eau trop haut",
       "pit": "Fosse",
+      "rainwater_tank": "Citerne d'eau de pluie",
+      "volume": "Volume",
+      "mains": "Appoint eau de ville",
+      "mains_on": "Actif",
+      "mains_off": "Arrêt",
+      "dry_run": "Pompe en marche à sec",
       "starts": "Démarrages"
     },
     "hu": {
@@ -30326,6 +30355,34 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
 .sp .maxt{fill:var(--pp-alert);font:600 7px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif)}
 .sp.running .led,.sp.warning .led{fill:var(--pp-ok)}
 .sp.fault .led,.sp.alarm .led{fill:var(--pp-alert);animation:ppblink .5s steps(2) infinite}
+
+/* ---- citerne d'eau de pluie + hydrophore ---- */
+.rt{--fd:.8s;--dl:24px}
+.rt .tankw{transform:translateY(calc((1 - var(--lvl)) * 68px));transition:transform 1.5s ease-out}
+.rt .wave{animation:ppwave 3.2s linear infinite}
+.rt.running .wave,.rt.warning .wave{animation-duration:1.5s}
+.rt .dflow{stroke:#d5ecff}
+.rt .rflow{fill:none;stroke:var(--fluid);stroke-linecap:round;stroke-width:2.4;stroke-dasharray:4 6;opacity:0;transition:opacity .6s}
+.rt.rain .rflow{opacity:1;animation:rtrain .8s linear infinite}
+@keyframes rtrain{to{stroke-dashoffset:-10}}
+.rt .drop{fill:var(--fluid);opacity:0}
+.rt.rain .drop{animation:rtdrop 1s ease-in infinite}
+.rt .drop:nth-of-type(2){animation-delay:-.33s}.rt .drop:nth-of-type(3){animation-delay:-.66s}
+@keyframes rtdrop{0%{opacity:0;transform:translateY(0)}15%{opacity:.9}100%{opacity:0;transform:translateY(calc((1 - var(--lvl)) * 68px + 2px))}}
+.rt .ripple{fill:none;stroke:#fff;stroke-width:1;opacity:0;transform-box:fill-box;transform-origin:center}
+.rt.rain .ripple{animation:ppripple 1.2s ease-out infinite}
+.rt .jet{opacity:0;transition:opacity .5s}
+.rt.running .jet,.rt.warning .jet{opacity:.9}
+.rt .jetd{stroke:#fff}
+.rt .rig{transform-box:view-box}
+.rt.running .rig,.rt.warning .rig{animation:ppvib .12s linear infinite}
+.rt .needle{transform-box:view-box;transform-origin:185px 11px;transform:rotate(calc(var(--pr) * 240deg - 120deg));transition:transform 1s ease-out}
+.rt.running .needle,.rt.warning .needle{animation:ppjit .18s ease-in-out infinite alternate}
+.rt .minl{stroke:var(--pp-alert);stroke-width:1.2;stroke-dasharray:3 2}
+.rt .mint{fill:var(--pp-alert);font:600 7px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif)}
+.rt .pct{fill:#fff;stroke:rgba(0,40,80,.45);stroke-width:3;paint-order:stroke;font:700 15px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif);text-anchor:middle}
+.rt.running .led,.rt.warning .led{fill:var(--pp-ok)}
+.rt.fault .led{fill:var(--pp-alert);animation:ppblink .5s steps(2) infinite}
 .noanim *{animation:none!important}
 `;
 
@@ -30512,6 +30569,84 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
 </svg>`;
   };
 
+  /* Citerne d'eau de pluie + hydrophore : citerne enterrée en coupe, gouttière, crépine, groupe surpresseur et robinet */
+  const SVG_TANK = (label) => {
+    const wave = `M30 100 q6 -3 12 0 ${'t12 0 '.repeat(13)}V200 H30 Z`;
+    const fins = Array.from({ length: 5 }, (_, i) => `M${209 + i * 4} 15 V29`).join(' ');
+    const mesh = Array.from({ length: 4 }, (_, i) => `M${146 + i * 3} 153 V163`).join(' ');
+    return `
+<svg viewBox="0 0 260 180" role="img" aria-label="${esc(label)}">
+ <defs>
+  <linearGradient id="rtsoil" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a6a4a"/><stop offset="1" stop-color="#5b4430"/></linearGradient>
+  <linearGradient id="rtwater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--fluid)" stop-opacity=".8"/><stop offset="1" stop-color="#1b4f7a" stop-opacity=".95"/></linearGradient>
+  <linearGradient id="rtves" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a98ee"/><stop offset="1" stop-color="#1457b0"/></linearGradient>
+  <linearGradient id="rtmot" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a74d0"/><stop offset="1" stop-color="#143f80"/></linearGradient>
+  <clipPath id="rttank"><rect x="41" y="79" width="132" height="90" rx="9"/></clipPath>
+ </defs>
+ <!-- sol en coupe et pelouse -->
+ <rect x="0" y="52" width="260" height="128" fill="url(#rtsoil)"/>
+ <g fill="#6f5338" opacity=".6"><circle cx="14" cy="130" r="2.4"/><circle cx="22" cy="165" r="2"/><circle cx="196" cy="100" r="2.2"/><circle cx="226" cy="140" r="3"/><circle cx="200" cy="168" r="2.2"/><circle cx="240" cy="90" r="2"/></g>
+ <rect x="0" y="47" width="260" height="7" fill="#5aa046"/>
+ <!-- maison, toit, gouttière et descente -->
+ <rect x="0" y="0" width="12" height="48" fill="#e9dcc6"/>
+ <path d="M0 0 H30 L26 9 H0 Z" fill="#c8663a"/>
+ <path d="M0 11 H27" stroke="#8c969e" stroke-width="3" stroke-linecap="round"/>
+ <!-- citerne béton -->
+ <rect x="34" y="72" width="146" height="104" rx="16" fill="#b8bdc2" stroke="#8f969c"/>
+ <rect x="90" y="54" width="32" height="22" fill="#b8bdc2" stroke="#8f969c"/>
+ <rect x="96" y="54" width="20" height="26" fill="#c5cdd3"/>
+ <rect x="41" y="79" width="132" height="90" rx="9" fill="#c5cdd3"/>
+ <rect x="84" y="49" width="44" height="6" rx="2" fill="#2f7d3a"/>
+ <g clip-path="url(#rttank)"><g class="tankw"><path class="wave" d="${wave}" fill="url(#rtwater)"/><ellipse class="ripple" cx="52" cy="100" rx="6" ry="2"/><ellipse class="ripple" cx="52" cy="100" rx="6" ry="2" style="animation-delay:-.6s"/></g></g>
+ <g stroke="#fff" stroke-opacity=".6" stroke-width="1"><path d="M41 117 H48 M41 134 H48 M41 151 H48"/></g>
+ <path class="minl" id="rtmin" d="M41 0 H173"/><text class="mint" id="rtmint" x="170" y="0" text-anchor="end">min</text>
+ <text class="pct" id="rtpct" x="107" y="138"></text>
+ <!-- descente de gouttière : l'eau coule quand il pleut -->
+ <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M25 11 V84 Q25 92 33 92 H52 V96" stroke="#7d868e" stroke-width="7"/>
+  <path d="M25 11 V84 Q25 92 33 92 H52 V96" stroke="#c4ccd3" stroke-width="3.6"/>
+  <path class="rflow" d="M25 11 V84 Q25 92 33 92 H52 V96"/>
+ </g>
+ <g><circle class="drop" cx="52" cy="99" r="1.8"/><circle class="drop" cx="51" cy="99" r="1.5"/><circle class="drop" cx="53" cy="99" r="1.6"/></g>
+ <!-- aspiration : crépine au fond, tuyau qui remonte vers la pompe -->
+ <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M150 150 V30 Q150 22 158 22 H188" stroke="#2c333a" stroke-width="7"/>
+  <path d="M150 150 V30 Q150 22 158 22 H188" stroke="#4a5a68" stroke-width="3.6"/>
+  <path class="flow" d="M150 150 V30 Q150 22 158 22 H188" stroke-width="2" stroke-dasharray="5 7"/>
+ </g>
+ <rect x="144" y="150" width="12" height="15" rx="2" fill="#aab2ba" stroke="#6f7882"/>
+ <path d="${mesh}" stroke="#6f7882" stroke-width=".8"/>
+ <!-- hydrophore hors sol -->
+ <rect x="178" y="47" width="70" height="5" fill="#b9bec3"/>
+ <g fill="none" stroke-linecap="round">
+  <path d="M206 9 H247" stroke="#14509a" stroke-width="4"/>
+  <path d="M206 9 H247" stroke="#2a7be0" stroke-width="2.4"/>
+  <path class="flow dflow" d="M206 9 H247" stroke-width="1.4" stroke-dasharray="4 6"/>
+ </g>
+ <g class="rig">
+  <rect x="190" y="31" width="48" height="16" rx="8" fill="url(#rtves)" stroke="#14509a"/>
+  <path d="M198 34 H230" stroke="#fff" stroke-opacity=".35" stroke-width="1.4" stroke-linecap="round"/>
+  <rect x="204" y="14" width="24" height="16" rx="3" fill="url(#rtmot)" stroke="#0e3a75"/>
+  <path d="${fins}" stroke="#0e3a75" stroke-width="1"/>
+  <rect x="228" y="15" width="7" height="14" rx="2" fill="#1b1f23"/>
+  <circle class="led" cx="231.5" cy="22" r="1.8"/>
+  <circle cx="195" cy="22" r="9" fill="#1f6fd0" stroke="#14509a"/>
+  <g class="rot" style="transform-box:view-box;transform-origin:195px 22px"><path d="M195 22 V15 M195 22 H202 M195 22 V29 M195 22 H188" stroke="#fff" stroke-opacity=".7" stroke-width="1.6" stroke-linecap="round"/></g>
+  <rect x="191" y="9" width="8" height="5" fill="#c9a24a"/>
+  <rect x="198" y="7" width="9" height="4" rx="1" fill="#c9a24a"/>
+  <rect x="190" y="0" width="14" height="7" rx="1.5" fill="#1b1f23"/>
+  <path d="M189 11 H191" stroke="#c9a24a" stroke-width="2"/>
+  <circle cx="185" cy="11" r="4.5" fill="#f5f5f0" stroke="#c9a24a" stroke-width="1.2"/>
+  <g class="needle"><path d="M185 11 V7.4" stroke="#d32f2f" stroke-width=".9" stroke-linecap="round"/></g>
+ </g>
+ <!-- robinet -->
+ <rect x="242" y="5" width="12" height="8" rx="2" fill="#c9a24a"/>
+ <rect x="249" y="12" width="5" height="6" rx="1" fill="#c9a24a"/>
+ <rect x="247" y="2" width="4" height="4" fill="#d32f2f"/><rect x="243" y="0" width="12" height="2.4" rx="1.2" fill="#d32f2f"/>
+ <g class="jet"><rect x="250.6" y="18" width="2.8" height="30" rx="1.4" class="fluidfill" opacity=".55"/><path class="flow jetd" d="M252 18 V48" stroke-width="1.6" stroke-dasharray="3 6"/></g>
+</svg>`;
+  };
+
   const KINDS = {
     water_pump: { cls: 'wp', svg: SVG_WATER, re: /pomp|pump|arros|forage|puits|well|irrig/i,
       d: { max_flow: 40, max_power: 1200, run_threshold: 15, max_pressure: 6, pressure_max: 5, temp_max: 70, level_min: 15 } },
@@ -30519,6 +30654,8 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       d: { max_flow: 200, max_power: 7500, run_threshold: 100, max_pressure: 16, pressure_max: 12, temp_max: 85, level_min: 10 } },
     sump_pump: { cls: 'sp', svg: SVG_SUMP, sump: true, re: /relevage|sump|fosse|puisard|cuve.?eaux/i,
       d: { max_flow: 150, max_power: 800, run_threshold: 20, max_pressure: 2, pressure_max: 2, temp_max: 70, level_min: 0, level_max: 80 } },
+    rainwater_tank: { cls: 'rt', svg: SVG_TANK, tank: true, re: /citerne|cistern|pluie|rain|recup|hydrophore|surpresseur|tank/i,
+      d: { max_flow: 40, max_power: 1200, run_threshold: 15, max_pressure: 6, pressure_max: 5, temp_max: 70, level_min: 15 } },
   };
   const TILES = [
     ['flow', 'mdi:waves-arrow-right', 'show_flow'],
@@ -30526,10 +30663,12 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
     ['power', 'mdi:flash', 'show_power'],
     ['temp', 'mdi:thermometer', 'show_temp'],
     ['level', 'mdi:storage-tank-outline', 'show_level'],
+    ['volume', 'mdi:water', 'show_tank_volume'],
     ['runtime', 'mdi:timer-outline', 'show_runtime'],
     ['starts', 'mdi:counter', 'show_starts'],
     ['energy', 'mdi:lightning-bolt-circle', 'show_energy'],
     ['cost', 'mdi:cash', 'show_cost'],
+    ['mains', 'mdi:water-sync', 'show_mains'],
   ];
 
   class AppliancePumpCard extends HTMLElement {
@@ -30543,7 +30682,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       // temp_max par défaut (en °C dans KINDS) : converti dans l'unité d'affichage au rendu
       const { temp_max, ...d } = KINDS[this.kind].d;
       this._c = { show_status: true, show_controls: true, show_flow: true, show_pressure: true, show_power: true, show_temp: true, show_level: true,
-        show_runtime: true, show_starts: true, show_energy: true, show_cost: true, no_flow_threshold: 0.5, ...d, ...c };
+        show_runtime: true, show_starts: true, show_energy: true, show_cost: true, show_tank_volume: true, show_mains: true, no_flow_threshold: 0.5, ...d, ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -30591,7 +30730,8 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
         const cc = this._c, k = el.dataset.k;
         this._more({ flow: cc.entity_flow, pressure: cc.entity_pressure, power: cc.entity_power, temp: cc.entity_temp, level: cc.entity_level || cc.entity_float,
-          runtime: cc.entity_runtime, starts: cc.entity_starts, energy: cc.entity_energy, cost: cc.entity_cost || cc.entity_energy }[k]);
+          runtime: cc.entity_runtime, starts: cc.entity_starts, energy: cc.entity_energy, cost: cc.entity_cost || cc.entity_energy,
+          volume: cc.entity_tank_volume || cc.entity_level, mains: cc.entity_mains }[k]);
       }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
@@ -30620,7 +30760,12 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         const fl = this._st(c.entity_float);
         if ((!isNaN(level) && level > Number(c.level_max)) || (fl && fl.state === 'on')) v.alerts.push('high_level');
         if (!on && v.alerts.includes('high_level')) return { ...v, st: 'alarm' };
-      } else if (!isNaN(level) && level < Number(c.level_min)) v.alerts.push('low_level');
+      } else {
+        // citerne : flotteur « niveau bas » (on = citerne presque vide) ; pompe qui tourne à vide = marche à sec
+        const lf = KINDS[this.kind].tank ? this._st(c.entity_low_float) : null, empty = !!lf && lf.state === 'on';
+        if (empty || (!isNaN(level) && level < Number(c.level_min))) v.alerts.push('low_level');
+        if (KINDS[this.kind].tank && on && (empty || (!isNaN(level) && level <= 2))) v.alerts.push('dry_run');
+      }
       return { ...v, st: !on ? 'off' : v.alerts.length ? 'warning' : 'running' };
     }
 
@@ -30634,7 +30779,17 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       // vitesse d'animation : débit sinon puissance, au moins 0,25 pour que ça reste lisible
       let spd = !isNaN(flow) ? flow / Number(c.max_flow) : !isNaN(pw) ? pw / Number(c.max_power) : 0.7;
       spd = on ? Math.max(0.25, clamp(spd)) : 0.25;
-      card.className = `${K.cls} ${st}${alerts.includes('high_level') ? ' hi' : ''} ${c.animations === false ? 'noanim' : ''}`;
+      // citerne : la gouttière coule s'il pleut (entity_tank_rain) ou si le niveau vient de monter (moins de 2 minutes)
+      let rain = false;
+      if (K.tank) {
+        if (!isNaN(level)) { if (this._pl != null && level > this._pl + 0.05) this._rise = Date.now(); this._pl = level; }
+        const rs = this._st(c.entity_tank_rain), rt = rs ? String(rs.state).toLowerCase() : '';
+        rain = /^(on|true|rainy|pouring|lightning-rainy|snowy-rainy|hail)$/.test(rt) || (rt !== '' && isFinite(Number(rt)) && Number(rt) > 0)
+          || (!!this._rise && Date.now() - this._rise < 120000);
+        clearTimeout(this._rainT);
+        if (this._rise && !rs && Date.now() - this._rise < 120000) this._rainT = setTimeout(() => this.isConnected && this._render(), 121000 - (Date.now() - this._rise));
+      }
+      card.className = `${K.cls} ${st}${alerts.includes('high_level') ? ' hi' : ''}${rain ? ' rain' : ''} ${c.animations === false ? 'noanim' : ''}`;
       card.style.setProperty('--spd', spd.toFixed(3));
       // sans capteur de niveau, la fosse se vide pendant que la pompe tourne
       const lvl0 = K.sump ? (alerts.includes('high_level') ? 0.9 : on ? 0.3 : 0.55) : 0.6;
@@ -30646,6 +30801,15 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         mx.setAttribute('d', `M70 ${y.toFixed(1)} H170`);
         r.getElementById('spmaxt').setAttribute('y', (y - 2).toFixed(1));
         mx.style.display = r.getElementById('spmaxt').style.display = c.entity_level ? '' : 'none';
+      }
+      const mn = r.getElementById('rtmin');
+      if (mn) {
+        // repère « min » : même formule que .tankw (surface pleine à y = 100, vide à y = 168)
+        const y = 100 + (1 - clamp(Number(c.level_min) / 100)) * 68;
+        mn.setAttribute('d', `M41 ${y.toFixed(1)} H173`);
+        r.getElementById('rtmint').setAttribute('y', (y - 2).toFixed(1));
+        mn.style.display = r.getElementById('rtmint').style.display = c.entity_level && Number(c.level_min) > 0 ? '' : 'none';
+        r.getElementById('rtpct').textContent = isNaN(level) ? '' : `${this._fmt(level, 0)} %`;
       }
       card.style.setProperty('--pr', (isNaN(pres) ? (on ? 0.5 : 0) : clamp(pres / Number(c.max_pressure))).toFixed(3));
       if (c.fluid_color) card.style.setProperty('--fluid', String(c.fluid_color)); else card.style.removeProperty('--fluid');
@@ -30664,6 +30828,10 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       const energy = this._num(c.entity_energy), run = this._num(c.entity_runtime), starts = this._num(c.entity_starts);
       let cost = this._num(c.entity_cost), costU = this._unit(c.entity_cost, c.currency || '€');
       if (isNaN(cost) && c.price_per_kwh && !isNaN(energy)) { cost = energy * Number(c.price_per_kwh); costU = c.currency || '€'; }
+      // citerne : volume restant (capteur, sinon niveau × tank_capacity en litres) et appoint d'eau de ville
+      const volRaw = this._num(c.entity_tank_volume), cap = Number(c.tank_capacity);
+      const vol = !isNaN(volRaw) ? volRaw : !isNaN(level) && cap > 0 ? level / 100 * cap : NaN;
+      const ms = this._st(c.entity_mains), mainsOn = !!ms && /^(on|open|opening|true|1)$/.test(String(ms.state).toLowerCase());
       const V = {
         flow: [c.entity_flow, this._fmt(flowRaw, 1), this._unit(c.entity_flow, 'L/min')],
         pressure: [c.entity_pressure, this._fmt(pres, 1), this._unit(c.entity_pressure, 'bar')],
@@ -30674,6 +30842,8 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         starts: [c.entity_starts, this._fmt(starts, 0), ''],
         energy: [c.entity_energy, this._fmt(energy, 2), this._unit(c.entity_energy, 'kWh')],
         cost: [c.entity_cost || (c.price_per_kwh && c.entity_energy), this._fmt(cost, 2), costU],
+        volume: [K.tank && (c.entity_tank_volume || (cap > 0 && c.entity_level)), this._fmt(vol, vol < 100 ? 1 : 0), c.entity_tank_volume ? this._unit(c.entity_tank_volume, 'L') : 'L'],
+        mains: [c.entity_mains, ms ? this._t(mainsOn ? 'mains_on' : 'mains_off') : '--', ''],
       };
       const bad = { flow: alerts.includes('no_flow'), pressure: alerts.includes('overpressure'), temp: alerts.includes('overheat'), level: alerts.includes('low_level') || alerts.includes('high_level') };
       TILES.forEach(([k, , opt]) => {
@@ -30716,6 +30886,9 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         ent('entity'), ent('entity_power', 'sensor'), ent('entity_flow', 'sensor'), ent('entity_pressure', 'sensor'),
         ent('entity_temp', ['sensor', 'climate', 'water_heater']), ent('entity_level', 'sensor'), ent('entity_fault', 'binary_sensor'), ent('entity_runtime', 'sensor'),
         ...(KINDS[this.kind].sump ? [ent('entity_float', 'binary_sensor'), ent('entity_starts', 'sensor')] : []),
+        ...(KINDS[this.kind].tank ? [ent('entity_low_float', 'binary_sensor'), ent('entity_tank_volume', 'sensor'), ent('entity_tank_rain', ['binary_sensor', 'sensor', 'weather']),
+          ent('entity_mains', ['binary_sensor', 'switch', 'input_boolean', 'valve']), ent('entity_starts', 'sensor'),
+          { name: 'tank_capacity', selector: { number: { min: 0, max: 1000000, step: 10, mode: 'box', unit_of_measurement: 'L' } } }] : []),
         ent('entity_energy', 'sensor'), ent('entity_cost', 'sensor'),
         { name: 'price_per_kwh', selector: { number: { min: 0, step: 0.0001, mode: 'box' } } },
         { name: 'fluid_color', selector: { text: {} } },
@@ -30728,7 +30901,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_controls'), bool('show_flow'), bool('show_pressure'), bool('show_power'), bool('show_temp'),
-          bool('show_level'), bool('show_runtime'), bool('show_starts'), bool('show_energy'), bool('show_cost'), bool('animations'),
+          bool('show_level'), bool('show_runtime'), bool('show_starts'), bool('show_energy'), bool('show_cost'), ...(KINDS[this.kind].tank ? [bool('show_tank_volume'), bool('show_mains')] : []), bool('animations'),
         ] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
@@ -30739,6 +30912,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
     water_pump: 'Pompe à eau sobre (arrosage, puits, piscine) : roue à aubes, eau qui circule, vagues, niveau de cuve, débit et pression.',
     industrial_pump: 'Pompe industrielle robuste : finition métal, voyants, manomètre, pulsations et vibrations selon le débit.',
     sump_pump: 'Pompe de relevage : fosse en coupe, niveau et flotteur, pompe immergée, refoulement, alarme de niveau haut.',
+    rainwater_tank: "Citerne d'eau de pluie et hydrophore : citerne enterrée en coupe, gouttière, niveau, volume, groupe surpresseur, pression et robinet.",
   };
   window.customCards = window.customCards || [];
   for (const kind of Object.keys(KINDS)) {
