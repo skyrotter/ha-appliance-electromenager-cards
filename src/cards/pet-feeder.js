@@ -4,7 +4,7 @@
  * portions et poids du jour, erreur, indicateur LED, sécurité enfant, mode (manuel / programmé), portions réglées, poids d'une portion.
  * Animations : croquettes qui tombent de la trappe dans la gamelle pendant la distribution, tas de croquettes qui grossit avec les
  * portions du jour, écran qui s'allume, voyant rouge qui clignote en cas d'erreur, cadenas affiché quand la sécurité enfant est active.
- * Réserve de croquettes (facultatif) : `entity_level` (grammes restants ou %) + `hopper_capacity` → niveau teinté dans la trémie, tuiles Réserve et
+ * Réserve de croquettes (facultatif) : `entity_level` (grammes restants ou %) + `hopper_capacity` → tuiles Réserve et
  * Autonomie (jours), alerte sous `food_low` %, bouton Remplir (remet `entity_level` à la capacité).
  * États : ready, feeding, error, unavailable.
  */
@@ -38,7 +38,7 @@
 .alert{display:none;margin-top:4px;font-size:11px;color:var(--pf-alert);font-weight:500;text-align:center}
 .error .alert,.lowfood .alert{display:block}
 svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height:var(--appliance-illustration-height,auto);margin:2px auto 0;overflow:visible;cursor:pointer}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:6px;margin-top:6px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(88px,1fr));gap:6px;margin-top:6px}
 .tile{box-sizing:border-box;display:flex;flex-direction:column;background:var(--ac-tile-bg,rgba(127,127,127,.09));border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
 :host([tile-order="value"]) .tile{flex-direction:column-reverse}:host([tile-order="value"]) .tile .v{margin:0 0 2px}
 .tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
@@ -46,6 +46,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
 .tile .l ha-icon{--mdc-icon-size:13px;flex:none}
 .tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
+.tile .v small.pc{display:block;margin:0;line-height:12px}
 .tile.hide{display:none}
 .ctrls{display:flex;justify-content:center;gap:6px;margin-top:6px;flex-wrap:wrap}
 .ctrls.hide{display:none}
@@ -79,8 +80,6 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
 .mound.dots{fill:#8b4a17;stroke:none}
 .feeding .mound{animation:pfbump .55s ease-in-out infinite}
 @keyframes pfbump{50%{transform:scale(calc(.3 + var(--fill) * .75)) translateY(-1px)}}
-.level{fill:#c98a4b;opacity:.6;mix-blend-mode:multiply;transition:y .8s,height .8s,fill .4s}
-.lowfood .level{fill:#e0643a;animation:pfblink 1.6s ease-in-out infinite}
 .tile.bad .v{color:var(--pf-alert)}
 .noanim *{animation:none!important;transition:none!important}
 
@@ -105,9 +104,6 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 <svg viewBox="0 0 300 180" role="img" aria-label="${esc(label)}">
  <g transform="translate(${bx} ${by}) scale(${k.toFixed(5)})">
   <image class="photo" href="${m.img}" x="0" y="0" width="${m.pw}" height="${m.ph}"/>
-  <!-- niveau de croquettes dans la trémie (haut du réservoir, sous le couvercle) -->
-  <clipPath id="pfhop"><rect x="6" y="54" width="243" height="122" rx="12"/></clipPath>
-  <g clip-path="url(#pfhop)"><rect class="level" x="6" y="176" width="243" height="0"/></g>
   <!-- tas de croquettes dans la gamelle -->
   <g class="mounds"><ellipse class="mound" cx="232" cy="378" rx="46" ry="17"/><g class="mound dots"><circle cx="212" cy="368" r="4"/><circle cx="226" cy="362" r="4"/><circle cx="242" cy="364" r="4"/><circle cx="256" cy="370" r="4"/><circle cx="234" cy="372" r="4"/></g></g>
   <!-- croquettes qui tombent de la trappe -->
@@ -241,9 +237,6 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       r.getElementById('pftitle').textContent = c.name || m.label;
       const badge = r.getElementById('pfbadge'); badge.textContent = this._t(st); badge.style.display = c.show_status === false ? 'none' : '';
       const es = this._st(c.entity_error);
-      // niveau dans la trémie : hauteur 122 (px de la photo, du bas du couvercle au rebord du corps) × fraction, ancrée en bas
-      const lvl = r.querySelector('.level'), hh = isNaN(lv.frac) ? 0 : lv.frac * 122;
-      lvl.setAttribute('height', hh.toFixed(1)); lvl.setAttribute('y', (176 - hh).toFixed(1));
       r.getElementById('pfalert').textContent = st === 'error' ? `${this._t('error')}${es && !/^(on|true)$/i.test(es.state) ? ` : ${es.state}` : ''}` : low && st !== 'unavailable' ? this._t('low_food') : '';
 
       const modeS = this._st(c.entity_mode), ledOn = this._isOn(c.entity_led), lockOn = this._isOn(c.entity_child_lock);
@@ -270,15 +263,17 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         serving: [!!this._st(c.entity_serving) && c.show_serving !== false, this._fmt(sv, 0), isNaN(pw) ? this._t('portions_unit') : `× ${this._fmt(pw, 0)} g`],
         source: [!!src && c.show_source !== false, this._tr(val(src)), ''],
         mode: [!!modeS && c.show_mode !== false, this._tr(val(modeS)), ''],
-        level: [!isNaN(lv.frac) && c.show_level !== false, this._fmt(lv.grams, 0), `g · ${this._fmt(lv.frac * 100, 0)} %`],
+        level: [!isNaN(lv.frac) && c.show_level !== false, this._fmt(lv.grams, 0), 'g', `${this._fmt(lv.frac * 100, 0)} %`],
         autonomy: [!isNaN(lv.days) && c.show_autonomy !== false, this._fmt(lv.days, lv.days < 10 ? 1 : 0), this._t('days_short')],
       };
-      Object.entries(V).forEach(([k, [show, v, unit]]) => {
+      Object.entries(V).forEach(([k, [show, v, unit, sub]]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`);
         el.classList.toggle('hide', !show);
         el.querySelector('.lbl').textContent = this._l(k);
         const small = document.createElement('small'); small.textContent = unit;
-        el.querySelector('.v').replaceChildren(String(v), small);
+        const parts = [String(v), small];
+        if (sub) { const pc = document.createElement('small'); pc.className = 'pc'; pc.textContent = sub; parts.push(pc); }
+        el.querySelector('.v').replaceChildren(...parts);
         el.classList.toggle('bad', low && (k === 'level' || k === 'autonomy'));
         if (k === 'mode') el.onclick = () => this._cmd('mode');
       });
