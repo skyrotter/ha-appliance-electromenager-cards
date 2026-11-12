@@ -185,7 +185,7 @@ function buildForm(kind) {
           ...(kind === "smart_speaker" ? [
             // model : photo de l'enceinte (vide = devinée depuis l'entité : Sonos, Google Nest, sinon Echo Dot)
             { name: "model", selector: { select: { mode: "dropdown", options: [
-              { value: "echo_pop", label: "Amazon Echo Pop" }, { value: "echo_dot", label: "Amazon Echo Dot (5e gén. / 5th gen)" }, { value: "echo_flex", label: "Amazon Echo Flex" }, { value: "echo_dot_3", label: "Amazon Echo Dot (3e gén. / 3rd gen)" }, { value: "echo_plus_2", label: "Amazon Echo Plus (2e gén. / 2nd gen)" },
+              { value: "echo_pop", label: "Amazon Echo Pop" }, { value: "echo_dot", label: "Amazon Echo Dot (5e gén. avec horloge / 5th gen, clock)" }, { value: "echo_dot_5", label: "Amazon Echo Dot (5e gén. sans horloge / 5th gen, no clock)" }, { value: "echo_flex", label: "Amazon Echo Flex" }, { value: "echo_dot_3", label: "Amazon Echo Dot (3e gén. / 3rd gen)" }, { value: "echo_plus_2", label: "Amazon Echo Plus (2e gén. / 2nd gen)" },
               { value: "echo_show_5", label: "Amazon Echo Show 5" }, { value: "echo_show_8", label: "Amazon Echo Show 8" },
               { value: "echo_show_10", label: "Amazon Echo Show 10" }, { value: "echo_show_11", label: "Amazon Echo Show 11" },
               { value: "echo_show_15", label: "Amazon Echo Show 15" }, { value: "echo_spot", label: "Amazon Echo Spot" },
