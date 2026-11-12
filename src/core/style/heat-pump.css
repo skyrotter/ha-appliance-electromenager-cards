@@ -1,7 +1,7 @@
 /* ---------- air conditioning: outdoor heat pump ---------- */
 .hp-fan { transform-box: view-box; transform-origin: 46px 75px; }
 .k-heat_pump.st-cooling .hp-fan, .k-heat_pump.st-heating .hp-fan, .k-heat_pump.st-ac_dry .hp-fan { animation: ac-rot .45s linear infinite; }
-.k-heat_pump.st-ac_fan .hp-fan, .k-heat_pump.st-at_target .hp-fan { animation: ac-rot 2.5s linear infinite; }
+.k-heat_pump.st-ac_fan .hp-fan { animation: ac-rot 2.5s linear infinite; }
 .hp-out circle { fill: none; stroke-width: 2.2; opacity: 0; transform-box: view-box; transform-origin: 46px 75px; }
 .k-heat_pump.st-cooling .hp-out circle { stroke: #ff8a3d; animation: hp-wave 1.8s ease-out infinite; }
 .k-heat_pump.st-heating .hp-out circle, .k-heat_pump.st-ac_dry .hp-out circle { stroke: #4fc3f7; animation: hp-wave 1.8s ease-out infinite; }

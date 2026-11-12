@@ -7374,7 +7374,7 @@ ${lcd(87.5, 86, 21, 12)}
 <circle class="hp-led" cx="104" cy="75" r="1.2"/>
 <circle cx="46" cy="75" r="31" fill="#d4d9de" stroke="#aab2ba" stroke-width=".6"/>
 <circle cx="46" cy="75" r="28" fill="url(#ID-grill)"/>
-<g class="hp-fan" fill="#8e979f"><path d="M46 75q-2-16 8-23q3 9-8 23z"/><path d="M46 75q15-6 23 3q-9 4-23-3z"/><path d="M46 75q-13 10-24 4q5-8 24-4z"/></g>
+<g class="hp-fan" fill="#8e979f"><path d="M46 75q-2-16 8-23q3 9-8 23z"/><path d="M46 75q-2-16 8-23q3 9-8 23z" transform="rotate(90 46 75)"/><path d="M46 75q-2-16 8-23q3 9-8 23z" transform="rotate(180 46 75)"/><path d="M46 75q-2-16 8-23q3 9-8 23z" transform="rotate(270 46 75)"/></g>
 <circle cx="46" cy="75" r="4" fill="#59616b"/>
 <g fill="none" stroke="#e6eaee" stroke-opacity=".8" stroke-width=".7"><circle cx="46" cy="75" r="9"/><circle cx="46" cy="75" r="15"/><circle cx="46" cy="75" r="21"/><circle cx="46" cy="75" r="27"/><path d="M46 47v56M18 75h56"/></g>
 </g>
@@ -10059,6 +10059,8 @@ class ApplianceCardBase extends HTMLElement {
       else if (mode) m.status = (watts !== null && !powered && !["fan_only", "dry"].includes(mode)) ? "at_target" : (fromMode(mode) || guess);
       else if (watts !== null) m.status = powered ? guess : "off";
       else m.status = base === "running" || base === "on" ? guess : "off";
+      // puissance sous le seuil : le groupe extérieur ne tourne pas (veille du contrôleur), on ignore hvac_action/mode
+      if (watts !== null && !powered && (m.status === "cooling" || m.status === "heating")) m.status = "at_target";
       if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
       m.acMode = mode && mode !== "off" ? mode : null;
       m.accent = m.status === "heating" ? "heat" : "cold";
@@ -12477,7 +12479,7 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 /* ---------- air conditioning: outdoor heat pump ---------- */
 .hp-fan { transform-box: view-box; transform-origin: 46px 75px; }
 .k-heat_pump.st-cooling .hp-fan, .k-heat_pump.st-heating .hp-fan, .k-heat_pump.st-ac_dry .hp-fan { animation: ac-rot .45s linear infinite; }
-.k-heat_pump.st-ac_fan .hp-fan, .k-heat_pump.st-at_target .hp-fan { animation: ac-rot 2.5s linear infinite; }
+.k-heat_pump.st-ac_fan .hp-fan { animation: ac-rot 2.5s linear infinite; }
 .hp-out circle { fill: none; stroke-width: 2.2; opacity: 0; transform-box: view-box; transform-origin: 46px 75px; }
 .k-heat_pump.st-cooling .hp-out circle { stroke: #ff8a3d; animation: hp-wave 1.8s ease-out infinite; }
 .k-heat_pump.st-heating .hp-out circle, .k-heat_pump.st-ac_dry .hp-out circle { stroke: #4fc3f7; animation: hp-wave 1.8s ease-out infinite; }
