@@ -16,7 +16,7 @@ ${lcd(87.5, 86, 21, 12)}
 <circle class="hp-led" cx="104" cy="75" r="1.2"/>
 <circle cx="46" cy="75" r="31" fill="#d4d9de" stroke="#aab2ba" stroke-width=".6"/>
 <circle cx="46" cy="75" r="28" fill="url(#ID-grill)"/>
-<g class="hp-fan" fill="#8e979f"><path d="M46 75q-2-16 8-23q3 9-8 23z"/><path d="M46 75q15-6 23 3q-9 4-23-3z"/><path d="M46 75q-13 10-24 4q5-8 24-4z"/></g>
+<g class="hp-fan" fill="#8e979f"><path d="M46 75q-2-16 8-23q3 9-8 23z"/><path d="M46 75q-2-16 8-23q3 9-8 23z" transform="rotate(90 46 75)"/><path d="M46 75q-2-16 8-23q3 9-8 23z" transform="rotate(180 46 75)"/><path d="M46 75q-2-16 8-23q3 9-8 23z" transform="rotate(270 46 75)"/></g>
 <circle cx="46" cy="75" r="4" fill="#59616b"/>
 <g fill="none" stroke="#e6eaee" stroke-opacity=".8" stroke-width=".7"><circle cx="46" cy="75" r="9"/><circle cx="46" cy="75" r="15"/><circle cx="46" cy="75" r="21"/><circle cx="46" cy="75" r="27"/><path d="M46 47v56M18 75h56"/></g>
 </g>

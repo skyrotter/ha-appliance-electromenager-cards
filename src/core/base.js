@@ -558,6 +558,8 @@ class ApplianceCardBase extends HTMLElement {
       else if (mode) m.status = (watts !== null && !powered && !["fan_only", "dry"].includes(mode)) ? "at_target" : (fromMode(mode) || guess);
       else if (watts !== null) m.status = powered ? guess : "off";
       else m.status = base === "running" || base === "on" ? guess : "off";
+      // puissance sous le seuil : le groupe extérieur ne tourne pas (veille du contrôleur), on ignore hvac_action/mode
+      if (watts !== null && !powered && (m.status === "cooling" || m.status === "heating")) m.status = "at_target";
       if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
       m.acMode = mode && mode !== "off" ? mode : null;
       m.accent = m.status === "heating" ? "heat" : "cold";
