@@ -14,7 +14,7 @@ Dieses Projekt ist kostenlos und Open Source und entsteht in meiner Freizeit. We
 
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/79-cartes.png" width="560" alt="79 animierte Gerätekarten für Home Assistant"></p>
 
-**96 Lovelace-Karten für Haushaltsgeräte**, jede mit einer realistischen animierten Illustration: eine rotierende Waschmaschinentrommel, eine flackernde Pelletofen-Flamme, eine Dieselheizung mit blauer Brennerkrone, ein Whirlpool mit sprudelnden Düsen, ein Saugroboter, ein Linky-Zähler, ein Heimspeicher … Sie zeigen Status, Leistung, Energie und Kosten live an, folgen deinem Home-Assistant-Theme (hell/dunkel) und sprechen Englisch, Französisch, Deutsch, Norwegisch, Niederländisch, Rumänisch, Russisch, Serbisch, Italienisch und Spanisch.
+**124 Lovelace-Karten für Haushaltsgeräte**, jede mit einer realistischen animierten Illustration: eine rotierende Waschmaschinentrommel, eine flackernde Pelletofen-Flamme, eine Dieselheizung mit blauer Brennerkrone, ein Whirlpool mit sprudelnden Düsen, ein Saugroboter, ein Linky-Zähler, ein Heimspeicher … Sie zeigen Status, Leistung, Energie und Kosten live an, folgen deinem Home-Assistant-Theme (hell/dunkel) und sprechen Englisch, Französisch, Deutsch, Norwegisch, Niederländisch, Rumänisch, Russisch, Serbisch, Italienisch, Spanisch, Tschechisch, Dänisch, Ungarisch und Polnisch.
 
 Eine einfache smarte Steckdose mit Leistungsmessung genügt. Vernetzte Geräte können zusätzlich Programm, Restzeit, Fortschritt, Tür, Temperaturen … anzeigen.
 
@@ -25,6 +25,18 @@ Eine einfache smarte Steckdose mit Leistungsmessung genügt. Vernetzte Geräte k
 Echte Darstellungen der Karten, nach Themen gruppiert (simulierte Daten).
 
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-latest.png" width="860" alt="Neueste Karten: aufblasbarer Whirlpool, Heizlüfter, Bambu Lab A1, Regenmesser"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-1-127-a.png" width="860" alt="Neu in 1.127: Regenwasserzisterne mit Hauswasserwerk, Prusa-Drucker MK4 und MK3, Google Chromecast"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-1-127-b.png" width="860" alt="Lautsprecher und Thermostat: Echo Dot 3. und 5. Generation, Nest-Thermostat mit ziehbarem Sollwertbogen"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-outdoor-lighting.png" width="860" alt="Außen und Beleuchtung: Markise, LED-Streifen, TV-Lichtleisten, peristaltische Dosierpumpe"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-it-box.png" width="860" alt="IT und Boxen: Mini-PC, Synology-NAS, Freebox Player Pop, Brother-Drucker"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-pets-air-plants.png" width="860" alt="Tiere, Luft und Pflanzen: Hundefutterautomat, Luftbefeuchter, Pflanzensensor"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-water-irrigation.png" width="860" alt="Wasser und Bewässerung: Wasserenthärter, Gartenbewässerung, motorisiertes Ventil"></p>
 
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/smart-speaker.png" width="860" alt="Smart Speaker und Sprachassistenten: Amazon Echo, Google Nest, Sonos, Devialet, Apple HomePod"></p>
 
