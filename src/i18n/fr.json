@@ -1358,7 +1358,13 @@
     "entity_rinse": "Rinçage (on = en cours)",
     "entity_fan": "Vitesse de ventilation",
     "entity_tank": "Réservoir (plein / niveau)",
-    "temp_step": "Pas de température"
+    "temp_step": "Pas de température",
+    "last_cycle": "Afficher le dernier cycle (début, fin, durée, conso)",
+    "cycle_gap": "Pause tolérée dans un même cycle (min)",
+    "tank_volume": "Capacité du ballon (L)",
+    "hot_water_level": "Eau chaude restante (%)",
+    "hot_water_volume": "Eau chaude restante (L)",
+    "show_cycle": "Afficher le dernier cycle"
   },
   "light": {
     "light_bulb": "Ampoule",
@@ -2024,7 +2030,11 @@
     "temp": "Température",
     "target": "Consigne",
     "bottom": "Bas du ballon",
-    "reserve": "Eau chaude"
+    "reserve": "Eau chaude",
+    "volume": "Volume",
+    "cycle": "Dernier cycle",
+    "duration": "Durée du cycle",
+    "cycle_kwh": "Conso du cycle"
   },
   "smart_tap": {
     "name": "Robinet connecté",
