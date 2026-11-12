@@ -27892,8 +27892,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
  <g transform="translate(${bx} ${by}) scale(${k.toFixed(5)})">
   <image class="photo" href="${m.img}" x="0" y="0" width="${m.pw}" height="${m.ph}"/>
   <!-- niveau de croquettes dans la trémie (haut du réservoir, sous le couvercle) -->
-  <clipPath id="pfhop"><rect x="20" y="62" width="316" height="112" rx="30"/></clipPath>
-  <g clip-path="url(#pfhop)"><rect class="level" x="20" y="174" width="316" height="0"/></g>
+  <clipPath id="pfhop"><rect x="6" y="54" width="243" height="122" rx="12"/></clipPath>
+  <g clip-path="url(#pfhop)"><rect class="level" x="6" y="176" width="243" height="0"/></g>
   <!-- tas de croquettes dans la gamelle -->
   <g class="mounds"><ellipse class="mound" cx="232" cy="378" rx="46" ry="17"/><g class="mound dots"><circle cx="212" cy="368" r="4"/><circle cx="226" cy="362" r="4"/><circle cx="242" cy="364" r="4"/><circle cx="256" cy="370" r="4"/><circle cx="234" cy="372" r="4"/></g></g>
   <!-- croquettes qui tombent de la trappe -->
@@ -28027,9 +28027,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       r.getElementById('pftitle').textContent = c.name || m.label;
       const badge = r.getElementById('pfbadge'); badge.textContent = this._t(st); badge.style.display = c.show_status === false ? 'none' : '';
       const es = this._st(c.entity_error);
-      // niveau dans la trémie : hauteur 112 (px de la photo) × fraction, ancrée en bas
-      const lvl = r.querySelector('.level'), hh = isNaN(lv.frac) ? 0 : lv.frac * 112;
-      lvl.setAttribute('height', hh.toFixed(1)); lvl.setAttribute('y', (174 - hh).toFixed(1));
+      // niveau dans la trémie : hauteur 122 (px de la photo, du bas du couvercle au rebord du corps) × fraction, ancrée en bas
+      const lvl = r.querySelector('.level'), hh = isNaN(lv.frac) ? 0 : lv.frac * 122;
+      lvl.setAttribute('height', hh.toFixed(1)); lvl.setAttribute('y', (176 - hh).toFixed(1));
       r.getElementById('pfalert').textContent = st === 'error' ? `${this._t('error')}${es && !/^(on|true)$/i.test(es.state) ? ` : ${es.state}` : ''}` : low && st !== 'unavailable' ? this._t('low_food') : '';
 
       const modeS = this._st(c.entity_mode), ledOn = this._isOn(c.entity_led), lockOn = this._isOn(c.entity_child_lock);
