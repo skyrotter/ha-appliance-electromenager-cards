@@ -1,6 +1,6 @@
-# Water pump, industrial pump and sump pump
+# Water pump, industrial pump, sump pump and rainwater tank
 
-`custom:appliance-water-pump-card · custom:appliance-industrial-pump-card · custom:appliance-sump-pump-card`
+`custom:appliance-water-pump-card · custom:appliance-industrial-pump-card · custom:appliance-sump-pump-card · custom:appliance-rainwater-tank-card`
 
 **Water pump**: clean, light style for a garden, well, rainwater or pool pump. A source tank on the left (its level follows `entity_level`), the pump volute with a spinning impeller, a finned motor and the delivery pipe pouring into a basin. Water flows in the pipes, waves move in the tank and the basin, ripples spread where the jet lands.
 
@@ -8,7 +8,9 @@
 
 **Sump pump**: buried pit seen in cross-section. Water drips in from the drain, the pit level follows `entity_level` (%) with a red **max** mark at `level_max`, the float rides on the surface, the submersible pump vibrates and pushes water up the discharge pipe. Above `level_max`, or when the alarm float `entity_float` is on, the card raises **High water level** and an alarm beacon flashes on the ground; if the pump is off at that moment the state becomes **alarm**. Without a level sensor, the pit empties while the pump runs. `entity_starts` shows the number of starts (e.g. a `history_stats` count).
 
-On all three cards the animation speed follows the flow (`entity_flow` / `max_flow`), otherwise the power (`entity_power` / `max_power`). States: off, running, warning (running with an alert), fault and unavailable. Alerts: **no flow while running** (dry run, below `no_flow_threshold`), overpressure (above `pressure_max`), motor too hot (above `temp_max`) and low level (below `level_min`). With a `switch`, `input_boolean` or `fan` entity, an On/Off button is shown (`homeassistant.toggle`). Without a status entity, the state comes from power (above `run_threshold` = running).
+**Rainwater tank + booster pump**: buried tank in cross-section, fed by the downspout of the house gutter, with the booster set above ground (pump, pressure vessel, gauge, pressure switch) and a tap. The suction pipe dips into the tank down to its strainer. The tank level follows `entity_level` (%) with the percentage written on the water and a red **min** mark at `level_min`. The gutter and the drops run when it rains (`entity_tank_rain`: a binary sensor `on`, a rain-rate sensor above 0 or a `weather` entity that is rainy / pouring) or, without that entity, for two minutes after the level rises. The tap flows and the gauge needle follows `entity_pressure` while the pump runs. Tiles: flow, pressure, power, tank level, **remaining volume** (`entity_tank_volume`, or level × `tank_capacity` in litres), runtime, starts, energy, cost and **mains top-up** (`entity_mains`, on = active). Alerts: **low level** (below `level_min`, or `entity_low_float` on) and **pump running dry** (pump on with the float on or the level at 2 % or less), plus the common alerts below.
+
+On all four cards the animation speed follows the flow (`entity_flow` / `max_flow`), otherwise the power (`entity_power` / `max_power`). States: off, running, warning (running with an alert), fault and unavailable. Alerts: **no flow while running** (dry run, below `no_flow_threshold`), overpressure (above `pressure_max`), motor too hot (above `temp_max`) and low level (below `level_min`). With a `switch`, `input_boolean` or `fan` entity, an On/Off button is shown (`homeassistant.toggle`). Without a status entity, the state comes from power (above `run_threshold` = running).
 
 ## Options
 
@@ -34,10 +36,15 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `level_min` (alert below: water 15, industrial 10 %)
 - `level_max` (sump pump: alert above, default 80 %)
 - `entity_float` (sump pump: high-level float, binary_sensor)
-- `entity_starts` (sump pump: number of starts)
+- `entity_starts` (sump pump and rainwater tank: number of starts)
+- `entity_low_float` (rainwater tank: low-level float, binary_sensor, on = tank nearly empty)
+- `entity_tank_volume` (rainwater tank: remaining volume, any unit, shown as is)
+- `tank_capacity` (rainwater tank: capacity in litres, to compute the volume from the level when there is no volume sensor)
+- `entity_tank_rain` (rainwater tank: binary_sensor, rain-rate sensor or `weather` entity)
+- `entity_mains` (rainwater tank: mains-water top-up valve or sensor, on = active)
 - `no_flow_threshold` (L/min, default 0.5)
 - `animations` (default true)
-- `show_status`, `show_controls`, `show_flow`, `show_pressure`, `show_power`, `show_temp`, `show_level`, `show_runtime`, `show_starts`, `show_energy`, `show_cost`
+- `show_status`, `show_controls`, `show_flow`, `show_pressure`, `show_power`, `show_temp`, `show_level`, `show_runtime`, `show_starts`, `show_energy`, `show_cost`, `show_tank_volume` and `show_mains` (rainwater tank)
 
 ## Examples
 
@@ -81,3 +88,20 @@ level_max: 80
 ```
 
 [← All cards](../../README.md#the-cards)
+
+```yaml
+type: custom:appliance-rainwater-tank-card
+name: Rainwater tank
+entity: switch.booster_pump
+entity_power: sensor.booster_pump_power
+entity_energy: sensor.booster_pump_energy
+entity_level: sensor.tank_level
+tank_capacity: 5000
+entity_pressure: sensor.booster_pressure
+entity_flow: sensor.booster_flow
+entity_tank_rain: binary_sensor.raining
+entity_mains: switch.mains_topup_valve
+entity_low_float: binary_sensor.tank_low_float
+entity_starts: sensor.booster_starts_today
+level_min: 15
+```

@@ -365,6 +365,25 @@ entity_float: binary_sensor.fosse_niveau_haut
 entity_starts: sensor.pompe_relevage_demarrages_jour
 ```
 
+**Citerne d'eau de pluie + hydrophore** : `custom:appliance-rainwater-tank-card`, citerne enterrée vue en coupe, alimentée par la descente de gouttière, avec le groupe surpresseur hors sol (pompe, réservoir à vessie, manomètre, pressostat) et un robinet. La crépine plonge au fond de la citerne. Le niveau suit `entity_level` (%), écrit sur l'eau, avec un repère rouge **min** à `level_min`. La gouttière coule quand il pleut (`entity_tank_rain` : capteur binaire `on`, capteur d'intensité de pluie supérieur à 0 ou entité `weather` en pluie), ou, sans cette entité, pendant deux minutes après une hausse du niveau. Le robinet coule et l'aiguille du manomètre suit `entity_pressure` quand la pompe tourne. Tuiles : débit, pression, puissance, niveau, **volume restant** (`entity_tank_volume`, ou niveau × `tank_capacity` en litres), fonctionnement, démarrages, énergie, coût et **appoint d'eau de ville** (`entity_mains`, on = actif). Alertes : **niveau bas** (sous `level_min`, ou `entity_low_float` à on) et **pompe en marche à sec** (pompe allumée avec le flotteur bas ou un niveau à 2 % ou moins).
+
+```yaml
+type: custom:appliance-rainwater-tank-card
+name: Citerne jardin
+entity: switch.hydrophore
+entity_power: sensor.hydrophore_puissance
+entity_energy: sensor.hydrophore_energie
+entity_level: sensor.citerne_niveau
+tank_capacity: 5000
+entity_pressure: sensor.hydrophore_pression
+entity_flow: sensor.hydrophore_debit
+entity_tank_rain: binary_sensor.il_pleut
+entity_mains: switch.vanne_appoint_eau_de_ville
+entity_low_float: binary_sensor.citerne_flotteur_bas
+entity_starts: sensor.hydrophore_demarrages_jour
+level_min: 15
+```
+
 **Onduleur** : `custom:appliance-ups-card`, prise murale → onduleur tour → box internet et NAS protégés. Sur secteur, le courant circule de la prise vers les appareils ; sur batterie, la prise s'éteint (éclair barré), l'écran passe à l'orange, l'onduleur bipe et le courant part de la batterie. La batterie visible sur le flanc suit `entity_charge`, la barre de 5 LED suit `entity_load`. L'état vient de l'intégration **NUT** : codes bruts de `sensor.<onduleur>_status_data` (`OL`, `OB`, `LB`, `CHRG`, `RB`, `OVER`, `OFF`…) ou texte de `sensor.<onduleur>_status`, sinon un `binary_sensor` (on = secteur présent) ou la tension d'entrée. Alertes : batterie faible, surcharge, batterie à remplacer. Tuiles : batterie, autonomie, charge, puissance, tensions d'entrée et de sortie, énergie. Options : voir [ups.md](cards/ups.md).
 
 ```yaml

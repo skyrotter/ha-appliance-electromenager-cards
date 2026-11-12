@@ -1357,6 +1357,7 @@ ok('card size / grid',typeof c.el.getCardSize()==='number'&&c.el.getGridOptions(
   ['water-pump',{name:X,fluid_color:X,entity:'switch.p',entity_power:'sensor.p',entity_flow:'sensor.f',entity_level:'sensor.l',entity_energy:'sensor.e',price_per_kwh:1,currency:X},[mk('switch.p','on'),mk('sensor.p',600,U),mk('sensor.f',20,U),mk('sensor.l',50,U),mk('sensor.e',3,U)]],
   ['industrial-pump',{name:X,entity:'switch.p',entity_power:'sensor.p',entity_pressure:'sensor.b',entity_temp:'sensor.t',entity_runtime:'sensor.r'},[mk('switch.p','on'),mk('sensor.p',5000,U),mk('sensor.b',8,U),mk('sensor.t',60,U),mk('sensor.r',2,U)]],
   ['sump-pump',{name:X,entity:'switch.p',entity_level:'sensor.l',entity_starts:'sensor.s'},[mk('switch.p','on'),mk('sensor.l',50,U),mk('sensor.s',3,U)]],
+  ['rainwater-tank',{name:X,entity:'switch.p',entity_level:'sensor.l',tank_capacity:5000,entity_mains:'switch.m'},[mk('switch.p','on'),mk('sensor.l',50,U),mk('switch.m','off')]],
   ['ups',{name:X,entity:'sensor.u',entity_charge:'sensor.c',entity_load:'sensor.l',entity_energy:'sensor.e'},[mk('sensor.u',X),mk('sensor.c',80,U),mk('sensor.l',30,U),mk('sensor.e',3,U)]],
   ['underfloor-heating',{name:X,entity:'climate.f',entity_floor_temp:'sensor.f',entity_energy:'sensor.e',price_per_kwh:1,currency:X},[mk('climate.f','heat',{current_temperature:20,temperature:21}),mk('sensor.f',25,U),mk('sensor.e',3,U)]],
   ['roller-shutter',{name:X,entity:'cover.v',entity_power:'sensor.p',color:X,labels:{position:X}},[mk('cover.v','open',{current_position:X}),mk('sensor.p',8,U)]],
