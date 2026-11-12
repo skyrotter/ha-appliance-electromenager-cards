@@ -27638,7 +27638,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
  * portions et poids du jour, erreur, indicateur LED, sécurité enfant, mode (manuel / programmé), portions réglées, poids d'une portion.
  * Animations : croquettes qui tombent de la trappe dans la gamelle pendant la distribution, tas de croquettes qui grossit avec les
  * portions du jour, écran qui s'allume, voyant rouge qui clignote en cas d'erreur, cadenas affiché quand la sécurité enfant est active.
- * Réserve de croquettes (facultatif) : `entity_level` (grammes restants ou %) + `hopper_capacity` → niveau teinté dans la trémie, tuiles Réserve et
+ * Réserve de croquettes (facultatif) : `entity_level` (grammes restants ou %) + `hopper_capacity` → tuiles Réserve et
  * Autonomie (jours), alerte sous `food_low` %, bouton Remplir (remet `entity_level` à la capacité).
  * États : ready, feeding, error, unavailable.
  */
@@ -27866,8 +27866,6 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
 .mound.dots{fill:#8b4a17;stroke:none}
 .feeding .mound{animation:pfbump .55s ease-in-out infinite}
 @keyframes pfbump{50%{transform:scale(calc(.3 + var(--fill) * .75)) translateY(-1px)}}
-.level{fill:#c98a4b;opacity:.6;mix-blend-mode:multiply;transition:y .8s,height .8s,fill .4s}
-.lowfood .level{fill:#e0643a;animation:pfblink 1.6s ease-in-out infinite}
 .tile.bad .v{color:var(--pf-alert)}
 .noanim *{animation:none!important;transition:none!important}
 
@@ -27892,9 +27890,6 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 <svg viewBox="0 0 300 180" role="img" aria-label="${esc(label)}">
  <g transform="translate(${bx} ${by}) scale(${k.toFixed(5)})">
   <image class="photo" href="${m.img}" x="0" y="0" width="${m.pw}" height="${m.ph}"/>
-  <!-- niveau de croquettes dans la trémie (haut du réservoir, sous le couvercle) -->
-  <clipPath id="pfhop"><rect x="6" y="54" width="243" height="122" rx="12"/></clipPath>
-  <g clip-path="url(#pfhop)"><rect class="level" x="6" y="176" width="243" height="0"/></g>
   <!-- tas de croquettes dans la gamelle -->
   <g class="mounds"><ellipse class="mound" cx="232" cy="378" rx="46" ry="17"/><g class="mound dots"><circle cx="212" cy="368" r="4"/><circle cx="226" cy="362" r="4"/><circle cx="242" cy="364" r="4"/><circle cx="256" cy="370" r="4"/><circle cx="234" cy="372" r="4"/></g></g>
   <!-- croquettes qui tombent de la trappe -->
@@ -28028,9 +28023,6 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       r.getElementById('pftitle').textContent = c.name || m.label;
       const badge = r.getElementById('pfbadge'); badge.textContent = this._t(st); badge.style.display = c.show_status === false ? 'none' : '';
       const es = this._st(c.entity_error);
-      // niveau dans la trémie : hauteur 122 (px de la photo, du bas du couvercle au rebord du corps) × fraction, ancrée en bas
-      const lvl = r.querySelector('.level'), hh = isNaN(lv.frac) ? 0 : lv.frac * 122;
-      lvl.setAttribute('height', hh.toFixed(1)); lvl.setAttribute('y', (176 - hh).toFixed(1));
       r.getElementById('pfalert').textContent = st === 'error' ? `${this._t('error')}${es && !/^(on|true)$/i.test(es.state) ? ` : ${es.state}` : ''}` : low && st !== 'unavailable' ? this._t('low_food') : '';
 
       const modeS = this._st(c.entity_mode), ledOn = this._isOn(c.entity_led), lockOn = this._isOn(c.entity_child_lock);

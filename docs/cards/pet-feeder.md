@@ -40,7 +40,7 @@ entity_mode: select.aqara_feeder_mode
 
 Most feeders cannot measure the food left, so the card reads a **helper you keep up to date**: an `input_number` (grams left; or a `number` / `sensor`, in grams or in %).
 
-- The hopper of the drawing is **filled in proportion** to `entity_level` / `hopper_capacity` and turns red below `food_low` (25 %) with the message *Food running low*.
+- Below `food_low` (25 % by default) the card shows the message *Food running low* and the **Hopper** and **Autonomy** tiles turn red.
 - Two tiles: **Hopper** (grams and %) and **Autonomy** (days left). The daily consumption is `daily_consumption` if set, otherwise `entity_weight` (weight of the day), otherwise portions of the day × `entity_portion_weight`. For an accurate autonomy, set `daily_consumption` (e.g. 5 × 10 g = `50`).
 - A **Refill** button (when `entity_level` is an `input_number` or `number`) sets the level back to `hopper_capacity` (or 100 % if the entity is in %).
 
