@@ -4,7 +4,7 @@
 
 <p align="center"><img src="../water-softener.gif" width="376" alt="Water softener card: service, backwash, brine, rinse, low salt"></p>
 
-A resin water softener (Culligan type): cut-away resin tank with its control head (LCD screen) and a cut-away brine tank with salt. The pipes are animated according to the phase:
+A resin water softener (Culligan type): cut-away resin tank with its control head (LCD screen) and a cut-away brine tank with salt. The pipes are animated according to the phase (the water in the brine tank stays low, at most about 30 % of its height, and rises during the water return):
 
 - **Service**: hard water comes in, softened water goes out (faster with the flow).
 - **Backwash**: the resin bed is lifted and the water turns muddy.
@@ -27,8 +27,11 @@ The phase comes from the state of `entity` (a sensor, select, switch or binary s
 | `entity_hardness_in`, `entity_hardness_out` | hardness before and after, shown as `32 → 2 °f` |
 | `entity_today` | water softened today |
 | `entity_regen_days` | days before the next regeneration |
+| `entity_last_regen` | date of the last cycle (`sensor` with a date / timestamp, or `input_datetime`; plain text is shown as is) |
+| `entity_cycle_volume` | water used by one regeneration cycle (L) |
+| `entity_salt_year` | salt used per year (kg) |
 | `entity_power` | power (W) |
-| `salt_low`, `compact`, `show_flow`, `show_capacity`, `show_salt`, `show_hardness`, `show_today`, `show_regen`, `show_power`, `animations`, `labels`, `language`, `illustration_size`, `transparent`, `tap_action`, `hold_action` | |
+| `salt_low`, `compact`, `show_flow`, `show_capacity`, `show_salt`, `show_hardness`, `show_today`, `show_regen`, `show_last_regen`, `show_cycle_volume`, `show_salt_year`, `show_power`, `animations`, `labels`, `language`, `illustration_size`, `transparent`, `tap_action`, `hold_action` | |
 
 `compact: true` is for small fixed slots (smaller title and tiles, the illustration takes the remaining height); `transparent: true` removes the card background.
 
