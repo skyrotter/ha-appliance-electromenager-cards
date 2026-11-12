@@ -764,7 +764,9 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         if (a === 'light') { b.classList.toggle('on', leds); b.disabled = !lightS; return; }
         // assumed_state (RFXCOM, Somfy RTS…) : l'état est supposé, pas mesuré, donc on laisse tout cliquable comme la carte HA,
         // sauf si la cover remonte une position (current_position) : on s'y fie et on grise Ouvrir à 100 %, Fermer à 0 %
-        const ea = c.invert_buttons ? { open: 'close', close: 'open' }[a] || a : a; // action réellement envoyée par ce bouton
+        // Avec un capteur externe (entity_state / entity_position), l'état affiché est l'état réel du store : on grise selon le bouton affiché.
+        // Sans capteur, l'état vient de la cover, qui suit la commande envoyée : on grise selon l'action réellement envoyée.
+        const ea = c.invert_buttons && !sensed ? { open: 'close', close: 'open' }[a] || a : a;
         b.disabled = st === 'unavailable' || ((!assumed || posKnown) && ((ea === 'open' && (bst === 'open' || bst === 'opening')) || (ea === 'close' && (bst === 'closed' || bst === 'closing'))));
       });
       const rng = (id, show, label, val) => {
