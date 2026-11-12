@@ -14,7 +14,7 @@ This project is free and open source, built in my spare time. If it makes your d
 
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/79-cartes.png" width="560" alt="79 animated appliance cards for Home Assistant"></p>
 
-**96 Lovelace cards for household appliances**, each with a realistic animated illustration: a tumbling washer drum, a flickering pellet-stove flame, a diesel heater with its blue burner crown, a hot tub with bubbling jets, a robot vacuum, a Linky meter, a home battery… They show the live status, power, energy and cost, follow your Home Assistant theme (light/dark) and speak English, French, German, Norwegian, Dutch, Romanian, Russian, Serbian, Italian and Spanish.
+**124 Lovelace cards for household appliances**, each with a realistic animated illustration: a tumbling washer drum, a flickering pellet-stove flame, a diesel heater with its blue burner crown, a hot tub with bubbling jets, a robot vacuum, a Linky meter, a home battery… They show the live status, power, energy and cost, follow your Home Assistant theme (light/dark) and speak English, French, German, Norwegian, Dutch, Romanian, Russian, Serbian, Italian, Spanish, Czech, Danish, Hungarian and Polish.
 
 A simple smart plug with a power sensor is enough. Connected appliances can add program, remaining time, progress, door, temperatures…
 
@@ -25,6 +25,18 @@ A simple smart plug with a power sensor is enough. Connected appliances can add 
 Live renders of the cards, grouped by theme (simulated data).
 
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-latest.png" width="860" alt="Latest cards: inflatable spa, fan heater, Bambu Lab A1 printer, rain gauge"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-1-127-a.png" width="860" alt="New in 1.127: rainwater tank with booster pump, Prusa MK4 and MK3 printers, Google Chromecast"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-1-127-b.png" width="860" alt="Smart speakers and thermostat: Echo Dot 3rd and 5th gen, Nest thermostat with draggable target arc"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-outdoor-lighting.png" width="860" alt="Outdoor and lighting: retractable awning, LED strip, TV light bars, peristaltic dosing pump"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-it-box.png" width="860" alt="IT and boxes: mini PC, Synology NAS, Freebox Player Pop, Brother printer"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-pets-air-plants.png" width="860" alt="Pets, air and plants: dog feeder, humidifier, plant sensor"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-water-irrigation.png" width="860" alt="Water and irrigation: water softener, garden irrigation, motorised valve"></p>
 
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/smart-speaker.png" width="860" alt="Smart speakers and voice assistants: Amazon Echo, Google Nest, Sonos, Devialet, Apple HomePod"></p>
 

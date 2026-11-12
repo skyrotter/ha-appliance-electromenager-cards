@@ -14,7 +14,7 @@ Este proyecto es gratuito y de código abierto, desarrollado en mi tiempo libre.
 
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/79-cartes.png" width="560" alt="79 tarjetas animadas de electrodomésticos para Home Assistant"></p>
 
-**96 tarjetas Lovelace para electrodomésticos**, cada una con una ilustración animada realista: el tambor de una lavadora girando, la llama parpadeante de una estufa de pellets, un calefactor diésel con su corona azul de combustión, un jacuzzi con sus chorros burbujeantes, un robot aspirador, un contador Linky, una batería doméstica... Muestran el estado en directo, la potencia, la energía y el coste, siguen el tema de Home Assistant (claro/oscuro) y hablan inglés, francés, alemán, noruego, neerlandés, rumano, ruso, serbio, italiano y español.
+**124 tarjetas Lovelace para electrodomésticos**, cada una con una ilustración animada realista: el tambor de una lavadora girando, la llama parpadeante de una estufa de pellets, un calefactor diésel con su corona azul de combustión, un jacuzzi con sus chorros burbujeantes, un robot aspirador, un contador Linky, una batería doméstica... Muestran el estado en directo, la potencia, la energía y el coste, siguen el tema de Home Assistant (claro/oscuro) y hablan inglés, francés, alemán, noruego, neerlandés, rumano, ruso, serbio, italiano, español, checo, danés, húngaro y polaco.
 
 Basta con un simple enchufe inteligente con sensor de potencia. Los electrodomésticos conectados pueden añadir programa, tiempo restante, progreso, puerta, temperaturas...
 
@@ -25,6 +25,18 @@ Basta con un simple enchufe inteligente con sensor de potencia. Los electrodomé
 Renderizados en vivo de las tarjetas, agrupadas por temática (datos simulados).
 
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-latest.png" width="860" alt="Últimas tarjetas: spa hinchable, calefactor de aire, impresora Bambu Lab A1, pluviómetro"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-1-127-a.png" width="860" alt="Novedades 1.127: aljibe de agua de lluvia con grupo de presión, impresoras Prusa MK4 y MK3, Google Chromecast"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-1-127-b.png" width="860" alt="Altavoces y termostato: Echo Dot 3.ª y 5.ª generación, termostato Nest con consigna arrastrable"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-outdoor-lighting.png" width="860" alt="Exterior e iluminación: toldo, tira LED, barras de luz para TV, bomba dosificadora peristáltica"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-it-box.png" width="860" alt="Informática y cajas: mini PC, NAS Synology, Freebox Player Pop, impresora Brother"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-pets-air-plants.png" width="860" alt="Mascotas, aire y plantas: comedero para perros, humidificador, sensor de plantas"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-water-irrigation.png" width="860" alt="Agua y riego: descalcificador, riego del jardín, válvula motorizada"></p>
 
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/smart-speaker.png" width="860" alt="Altavoces inteligentes y asistentes de voz: Amazon Echo, Google Nest, Sonos, Devialet, Apple HomePod"></p>
 
