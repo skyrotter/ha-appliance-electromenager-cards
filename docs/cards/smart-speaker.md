@@ -2,11 +2,11 @@
 
 ![Smart speaker cards](../smart-speaker.png)
 
-`custom:appliance-smart-speaker-card`: a smart speaker drawn from a **real product photo**, picked with `model` in the visual editor. 31 models:
+`custom:appliance-smart-speaker-card`: a smart speaker drawn from a **real product photo**, picked with `model` in the visual editor. 32 models:
 
 | Brand | `model` |
 |---|---|
-| Amazon Echo | `echo_pop`, `echo_dot` (5th gen), `echo_dot_3` (3rd gen, fabric), `echo_plus_2` (Echo Plus, 2nd gen), `echo_flex` (Echo Flex, drawn), `echo_show_5`, `echo_show_8`, `echo_show_10`, `echo_show_11`, `echo_show_15`, `echo_spot` |
+| Amazon Echo | `echo_pop`, `echo_dot` (5th gen with the clock display), `echo_dot_5` (5th gen without clock), `echo_dot_3` (3rd gen, fabric), `echo_plus_2` (Echo Plus, 2nd gen), `echo_flex` (Echo Flex, drawn), `echo_show_5`, `echo_show_8`, `echo_show_10`, `echo_show_11`, `echo_show_15`, `echo_spot` |
 | Google Nest | `nest_mini`, `nest_audio`, `nest_hub` (7"), `nest_hub_2` (2nd gen), `nest_hub_max` |
 | Sonos | `sonos_one`, `sonos_one_sl`, `sonos_era_100`, `sonos_era_300`, `sonos_beam` (Beam / Arc), `sonos_sub_mini`, `sonos_sub` |
 | Devialet | `devialet_phantom` (1st gen), `devialet_phantom_reactor`, `devialet_phantom_i`, `devialet_phantom_ii`, `devialet_phantom_ultimate`: `finish` `white` (default) or `black` |
