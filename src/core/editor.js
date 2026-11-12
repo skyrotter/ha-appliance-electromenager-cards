@@ -143,7 +143,8 @@ function buildForm(kind) {
             { name: "model", selector: { select: { mode: "dropdown", options: [
               { value: "", label: tr(null, "printer_drawing") }, { value: "neptune4pro", label: "Elegoo Neptune 4 Pro" }, { value: "kobrax", label: "Anycubic Kobra X" }, { value: "a1", label: "Bambu Lab A1" },
               { value: "x1c", label: "Bambu Lab X1 Carbon (photo)" }, { value: "x1c_svg", label: "Bambu Lab X1 Carbon (SVG)" },
-              { value: "h2d", label: "Bambu Lab H2D (photo)" }, { value: "h2d_svg", label: "Bambu Lab H2D (SVG)" }] } } },
+              { value: "h2d", label: "Bambu Lab H2D (photo)" }, { value: "h2d_svg", label: "Bambu Lab H2D (SVG)" },
+              { value: "mk4", label: "Prusa MK4 / MK4S" }, { value: "mk3", label: "Prusa i3 MK3 / MK3S+" }] } } },
             { name: "nozzle_temperatures", selector: { entity: { multiple: true, domain: "sensor" } } },
             { name: "filament_color", selector: { text: {} } },
           ] : []),

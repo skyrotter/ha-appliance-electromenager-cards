@@ -73,6 +73,9 @@
 /* Bambu Lab X1 Carbon / H2D : photo (model x1c, h2d) et dessin (x1c_svg, h2d_svg) */
 .k-printer_3d.indeterminate .p3-x1c .objclip { y: 96.8px; height: 14px; }
 .k-printer_3d.indeterminate .p3-h2d .objclip { y: 92.6px; height: 14px; }
+/* Prusa MK3 / MK4 (photo) */
+.k-printer_3d.indeterminate .p3-mk4 .objclip { y: 99.9px; height: 14px; }
+.k-printer_3d.indeterminate .p3-mk3 .objclip { y: 96.1px; height: 14px; }
 /* dessin : la bobine active de l'AMS défile pendant l'impression, la lampe de la chambre s'allume */
 .k-printer_3d.st-printing .ams-roll { animation: bam-roll .9s linear infinite; }
 @keyframes bam-roll { from { transform: translateY(0); } to { transform: translateY(5px); } }
