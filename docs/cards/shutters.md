@@ -125,7 +125,7 @@ entity_blind: cover.velux_bedroom_blind
 - `color` (CSS colour of the slats or leaves; defaults: aluminium, beige, green)
 - `travel_time` (s, full travel: the drawing moves at the speed of the motor; default 1.2 s per change)
 - `invert` (`true` for a cover that reports its position upside down, 0 = open and 100 = closed, as some Tuya shutters do: the drawing, badge, tiles and slider are flipped; the Open / Close buttons are unchanged)
-- `invert_buttons` (`true` when the motor is wired the other way round and the **Open / Extend** button actually closes the cover: the buttons then send the opposite command, `close_cover` for Open and `open_cover` for Close, and are greyed accordingly. The drawing, position and slider are unchanged, use `invert` for those)
+- `invert_buttons` (`true` when the motor is wired the other way round and the **Open / Extend** button actually closes the cover: the buttons then send the opposite command, `close_cover` for Open and `open_cover` for Close, and are greyed accordingly (with an external `entity_state` / `entity_position` sensor, the buttons are greyed from the real state it reports instead). The drawing, position and slider are unchanged, use `invert` for those)
 - `animations`, `show_status`, `show_controls`, `show_slider`, `show_position`, `show_tilt`, `show_power`, `show_since`
 - `labels` (tile keys: `position`, `tilt`, `power`, `since`)
 - `language: fr|en|de|it|es|nb|nl|pl|ro|ru|sr|sr-Latn`
