@@ -38449,14 +38449,20 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
     _snap(v) {
       const a = this._compute().a, step = Number(a.target_temp_step) || (this._unit().includes('F') ? 1 : 0.5);
       const mn = this._num(a.min_temp), mx = this._num(a.max_temp);
+      if (!fin(v)) return NaN;
       if (fin(mn)) v = Math.max(mn, v); if (fin(mx)) v = Math.min(mx, v);
-      return Math.round(v / step) * step;
+      v = Math.round(v / step) * step;
+      if (fin(mn) && v < mn) v = Math.ceil(mn / step) * step; // l'arrondi ne doit jamais sortir de min_temp / max_temp
+      if (fin(mx) && v > mx) v = Math.floor(mx / step) * step;
+      return Math.round(v * 100) / 100; // pas de reste flottant (30.000000000000004)
     }
     // − / + : la consigne change tout de suite à l'écran, l'appel part 0,8 s après le dernier clic
     _step(dir) {
       const k = this._compute(); if (!fin(k.target)) return;
       const step = Number(k.a.target_temp_step) || (this._unit().includes('F') ? 1 : 0.5);
-      this._pending = this._snap((this._pending != null ? this._pending : k.target) + dir * step);
+      const v = this._snap((this._pending != null ? this._pending : k.target) + dir * step);
+      if (!fin(v)) return;
+      this._pending = v;
       this._render();
       this._schedule();
     }
@@ -38477,8 +38483,9 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       const svg = hit.ownerSVGElement;
       let from = null, moved = false;
       const frac = (ev) => {
+        const m = svg.getScreenCTM(); if (!m) return NaN;
         const pt = svg.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY;
-        const p = pt.matrixTransform(svg.getScreenCTM().inverse());
+        const p = pt.matrixTransform(m.inverse());
         const deg = (Math.atan2(p.y - 199, p.x - 199) * 180 / Math.PI + 360) % 360, t = (deg - 135 + 360) % 360; // 0 = bas gauche, 270 = bas droite
         return t <= 270 ? t / 270 : (t - 270 < 360 - t ? 1 : 0); // dans le creux du bas : l'extrémité la plus proche
       };
@@ -38488,6 +38495,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         from = { x: ev.clientX, y: ev.clientY }; moved = false;
         try { hit.setPointerCapture(ev.pointerId); } catch (e) { /* navigateur ancien */ }
       });
+      hit.addEventListener('touchstart', (ev) => { const k = this._compute(); if (!k.dead && !k.off && fin(k.target)) ev.preventDefault(); }, { passive: false });
       hit.addEventListener('pointermove', (ev) => {
         if (!from) return;
         if (!moved && Math.hypot(ev.clientX - from.x, ev.clientY - from.y) < 5) return; // un simple appui n'est pas un glissement
@@ -38495,12 +38503,14 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         hit.classList.add('drag'); this._card && this._card.classList.add('dragging');
         const a = this._compute().a, mn = fin(this._num(a.min_temp)) ? this._num(a.min_temp) : 5, mx = fin(this._num(a.max_temp)) ? this._num(a.max_temp) : 30;
         const v = this._snap(mn + frac(ev) * (mx - mn));
-        if (v !== this._pending) { this._pending = v; this._render(); }
+        if (fin(v) && v !== this._pending) { this._pending = v; this._render(); }
       });
-      const end = () => {
+      const end = (ev) => {
         if (!from) return;
         from = null; hit.classList.remove('drag'); this._card && this._card.classList.remove('dragging');
         if (moved) { this._drag = false; this._schedule(); setTimeout(() => { moved = false; }, 0); }
+        // au doigt, touchstart annulé = pas de clic synthétique : un simple appui rouvre la fiche de l'entité
+        else if (ev.type === 'pointerup' && ev.pointerType === 'touch') svg.dispatchEvent(new MouseEvent('click', { bubbles: true, composed: true }));
       };
       ['pointerup', 'pointercancel'].forEach((t) => hit.addEventListener(t, end));
       // le clic qui suit un glissement ne doit pas ouvrir la fiche de l'entité
