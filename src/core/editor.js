@@ -194,6 +194,7 @@ function buildForm(kind) {
               { value: "nest_hub_max", label: "Google Nest Hub Max" },
               { value: "sonos_one", label: "Sonos One" }, { value: "sonos_one_sl", label: "Sonos One SL" },
               { value: "sonos_era_100", label: "Sonos Era 100" }, { value: "sonos_era_300", label: "Sonos Era 300" },
+              { value: "sonos_five", label: "Sonos Five" }, { value: "sonos_roam", label: "Sonos Roam" },
               { value: "sonos_beam", label: "Sonos Beam / Arc" }, { value: "sonos_sub_mini", label: "Sonos Sub Mini" }, { value: "sonos_sub", label: "Sonos Sub" },
               { value: "devialet_phantom", label: "Devialet Phantom (1re gén. / 1st gen)" }, { value: "devialet_phantom_reactor", label: "Devialet Phantom Reactor" },
               { value: "devialet_phantom_i", label: "Devialet Phantom I" }, { value: "devialet_phantom_ii", label: "Devialet Phantom II" },
