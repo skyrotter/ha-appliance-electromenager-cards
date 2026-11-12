@@ -9,6 +9,7 @@ An open-frame, bed-slinger style printer (Bambu Lab A1, Prusa MK, Ender…). The
 - **Printer photo** (`model`, "Printer" in the visual editor): `neptune4pro` (Elegoo Neptune 4 Pro), `kobrax` (Anycubic Kobra X) or `a1` (Bambu Lab A1) shows a photo of that printer instead of the drawing, with the same states: the nozzle glows (red while heating, yellow while printing), heat rises from the bed, the part grows on the bed with `progress` and a bright dot sweeps its top layer, the screen goes dark when off and flashes red on error. Leave empty for the drawing.
 ![Bambu Lab X1 Carbon and H2D, photo and SVG versions](https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/printer-3d-bambu-x1c-h2d.gif)
 
+- **Prusa MK4 / MK4S and Prusa i3 MK3 / MK3S+** (`model: mk4` / `mk3`, photo): same layers as the A1 photo (nozzle glow, heat rising from the bed, the part growing with `progress`, a sweeping light, the screen going dark when off and red on error) and a progress bar on the printer screen. Works with PrusaLink (`entity` = the printer status sensor).
 - **Bambu Lab X1 Carbon and H2D** (`model: x1c` / `h2d`, photo; `x1c_svg` / `h2d_svg`, drawing): the photo versions have the same layers as the A1 (nozzle glow, heat rising from the bed, the part growing with `progress`, a sweeping light on its top, chamber light beam, progress bar on the touchscreen). The drawn versions show the closed chamber with the AMS on top: the active spool (colour of `filament_color`) scrolls while printing, the gantry rises with the part, the chamber light turns on and the touchscreen shows the progress.
 - **Bambu Lab A1 photo** extras: the toolhead ring spins while printing and glows by state (yellow, orange heating, green done, red error), the hotend block glows while heating, the screen shows a progress bar, and the toolhead light casts a beam on the bed. Set `light` to your light entity (e.g. `light.a1_chamber_light`); without it the light is on while heating and printing.
 
@@ -26,7 +27,7 @@ bed_temperature: sensor.a1_bed_temperature
 program: sensor.a1_task_name
 power: sensor.printer_plug_power
 filament_color: "#ff8a1f"
-model: a1                   # optional: a1 / x1c / h2d / neptune4pro / kobrax (photo), x1c_svg / h2d_svg (drawing)
+model: a1                   # optional: a1 / x1c / h2d / mk4 / mk3 / neptune4pro / kobrax (photo), x1c_svg / h2d_svg (drawing)
 light: light.a1_chamber_light  # optional: toolhead light (A1 photo)
 ```
 
