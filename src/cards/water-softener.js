@@ -12,7 +12,7 @@
   const CSS = `
 :host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
 ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--ws-ok:var(--appliance-ok-color,#43a047);--ws-warn:var(--appliance-warn-color,#ffa000);
-  --ws-alert:var(--appliance-alert-color,#db4437);--ws-cold:var(--appliance-cold-color,#2b9af9);--spd:1.2s;--salt:.65;--lvl:.85}
+  --ws-alert:var(--appliance-alert-color,#db4437);--ws-cold:var(--appliance-cold-color,#2b9af9);--spd:1.2s;--salt:.65;--lvl:.2}
 .head{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
@@ -59,8 +59,8 @@ svg{display:block;flex:0 1 calc(190px * var(--illus-scale,1));width:calc(190px *
 .brinew{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(var(--lvl));transition:transform 1.4s ease}
 .brine .brinew{animation:wsbrine 5s ease-in-out infinite alternate}
 .refill .brinew{animation:wsrefill 5s ease-in-out infinite alternate}
-@keyframes wsrefill{from{transform:scaleY(.55)}to{transform:scaleY(.9)}}
-@keyframes wsbrine{from{transform:scaleY(.9)}to{transform:scaleY(.55)}}
+@keyframes wsrefill{from{transform:scaleY(.12)}to{transform:scaleY(.3)}}
+@keyframes wsbrine{from{transform:scaleY(.3)}to{transform:scaleY(.12)}}
 .salt{transform-box:fill-box;transform-origin:50% 100%;transform:scaleY(var(--salt));transition:transform 1.2s ease}
 .alertw{opacity:0}.lowsalt .alertw{opacity:1;animation:wsblink 1s ease-in-out infinite}
 .lowsalt .lid{animation:wsblink 1.6s ease-in-out infinite}
@@ -120,7 +120,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
   </svg>`;
 
   const TILES = [['flow', 'mdi:water-pump', 'show_flow'], ['capacity', 'mdi:gauge', 'show_capacity'], ['salt', 'mdi:shaker-outline', 'show_salt'],
-    ['hardness', 'mdi:water-opacity', 'show_hardness'], ['today', 'mdi:calendar-today', 'show_today'], ['regen', 'mdi:calendar-refresh', 'show_regen'], ['power', 'mdi:flash', 'show_power']];
+    ['hardness', 'mdi:water-opacity', 'show_hardness'], ['today', 'mdi:calendar-today', 'show_today'], ['regen', 'mdi:calendar-refresh', 'show_regen'],
+    ['last_regen', 'mdi:calendar-check', 'show_last_regen'], ['cycle_volume', 'mdi:water-sync', 'show_cycle_volume'], ['salt_year', 'mdi:shaker-outline', 'show_salt_year'], ['power', 'mdi:flash', 'show_power']];
   const RE = {
     backwash: /backwash|back.?wash|contre.?lavage|d[ée]tassage|gegenstrom/i,
     brine: /brine|saumure|aspir|draw|slow|regener|r[ée]g[ée]n[ée]ration|recharge|regen/i,
@@ -138,7 +139,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { show_flow: true, show_capacity: true, show_salt: true, show_hardness: true, show_today: true, show_regen: true, show_power: true, salt_low: 20, ...c };
+      this._c = { show_flow: true, show_capacity: true, show_salt: true, show_hardness: true, show_today: true, show_regen: true, show_last_regen: true, show_cycle_volume: true, show_salt_year: true, show_power: true, salt_low: 20, ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -165,7 +166,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         </div></ha-card>`;
       window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity || this._c.entity_flow));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
-        const c = this._c; this._more({ flow: c.entity_flow, capacity: c.entity_capacity, salt: c.entity_salt, hardness: c.entity_hardness_out || c.entity_hardness_in, today: c.entity_today, regen: c.entity_regen_days, power: c.entity_power }[el.dataset.k]);
+        const c = this._c; this._more({ flow: c.entity_flow, capacity: c.entity_capacity, salt: c.entity_salt, hardness: c.entity_hardness_out || c.entity_hardness_in, today: c.entity_today, regen: c.entity_regen_days, last_regen: c.entity_last_regen, cycle_volume: c.entity_cycle_volume, salt_year: c.entity_salt_year, power: c.entity_power }[el.dataset.k]);
       }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
@@ -210,6 +211,14 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       r.getElementById('wslcd').textContent = this._t(`lcd_${state}`);
       const fu = this._unit(c.entity_flow, 'L/min'), tu = this._unit(c.entity_today, 'L');
       const hin = this._num(c.entity_hardness_in), hout = this._num(c.entity_hardness_out), hu = this._unit(c.entity_hardness_out || c.entity_hardness_in, '°f');
+      let lastTxt = null;
+      const ls = this._st(c.entity_last_regen);
+      if (ls && !/^(unavailable|unknown|none)$/i.test(ls.state)) {
+        const d = new Date(ls.state);
+        lastTxt = !isNaN(d) && /\d{4}-\d{2}-\d{2}/.test(ls.state)
+          ? d.toLocaleString(window.applianceLocale(c, this._hass, true), /T\d|\d:\d/.test(ls.state) ? { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' } : { day: '2-digit', month: '2-digit', year: '2-digit' })
+          : String(ls.state);
+      }
       const V = {
         flow: [c.entity_flow, this._fmt(flow, 1), fu],
         capacity: [c.entity_capacity, this._fmt(this._num(c.entity_capacity), 0), this._unit(c.entity_capacity, '%')],
@@ -217,6 +226,10 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         hardness: [c.entity_hardness_in || c.entity_hardness_out, !isNaN(hin) && !isNaN(hout) ? `${this._fmt(hin, 0)} → ${this._fmt(hout, 0)}` : this._fmt(!isNaN(hout) ? hout : hin, 0), hu],
         today: [c.entity_today, this._fmt(this._num(c.entity_today), 0), tu],
         regen: [c.entity_regen_days, this._fmt(this._num(c.entity_regen_days), 0), this._t('days')],
+        // date du dernier cycle : horodatage / date ISO → format court local, sinon le texte de l'entité tel quel
+        last_regen: [lastTxt != null && c.entity_last_regen, lastTxt, ''],
+        cycle_volume: [c.entity_cycle_volume, this._fmt(this._num(c.entity_cycle_volume), 0), this._unit(c.entity_cycle_volume, 'L')],
+        salt_year: [c.entity_salt_year, this._fmt(this._num(c.entity_salt_year), 0), this._unit(c.entity_salt_year, 'kg')],
         power: [c.entity_power, this._fmt(this._num(c.entity_power), 0), this._unit(c.entity_power, 'W')],
       };
       TILES.forEach(([k, , opt]) => {
@@ -257,7 +270,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ent('entity_backwash', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_brine', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_rinse', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_refill', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_service', ['binary_sensor', 'switch', 'input_boolean', 'sensor']),
         ent('entity_flow', 'sensor'), ent('entity_capacity', 'sensor'), ent('entity_salt', 'sensor'), ent('entity_salt_max', ['sensor', 'input_number', 'number']), { name: 'salt_max', selector: { number: { min: 0, max: 2000, step: 1, mode: 'box' } } },
         ent('entity_hardness_in', 'sensor'), ent('entity_hardness_out', 'sensor'),
-        ent('entity_today', 'sensor'), ent('entity_regen_days', 'sensor'), ent('entity_power', 'sensor'),
+        ent('entity_today', 'sensor'), ent('entity_regen_days', 'sensor'), ent('entity_last_regen', ['sensor', 'input_datetime']), ent('entity_cycle_volume', 'sensor'), ent('entity_salt_year', 'sensor'), ent('entity_power', 'sensor'),
         { name: 'salt_low', default: 20, selector: { number: { min: 0, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
