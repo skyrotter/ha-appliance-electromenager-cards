@@ -244,6 +244,8 @@ Click a card for its options and examples.
 | [Motorised water valve (ball valve actuator)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/water-valve.md) | `custom:appliance-water-valve-card` |
 | [Water softener (resin tank, brine tank)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/water-softener.md) | `custom:appliance-water-softener-card` |
 | [Water softener, generic (tank with central tube, brine tank with cane)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/water-softener-generic.md) | `custom:appliance-water-softener-generic-card` |
+| [Surveillance camera (detections, night mode, your own photo)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/camera.md) | `custom:appliance-camera-card` |
+| [NVR recorder (animated LEDs, disk, CPU)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/camera.md) | `custom:appliance-nvr-card` |
 | [Cat flap (microchip, pets in / out)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/cat-flap.md) | `custom:appliance-cat-flap-card` |
 | [Pet water fountain](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/pet-fountain.md) | `custom:appliance-pet-fountain-card` |
 | [Generic appliance (your own image)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/generic.md) | `custom:appliance-generic-card` |

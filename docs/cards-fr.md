@@ -467,6 +467,8 @@ entity_weight: sensor.aqara_feeder_weight_per_day
 
 **Adoucisseur d'eau générique** (`custom:appliance-water-softener-generic-card`) : même carte avec un dessin de bouteille composite (tube central, crépines, vanne en tête) et de bac à saumure séparé (canne, flotteur, trop-plein). Sans débit en mode service (`entity_flow` à 0), aucune animation. Mêmes options que l'adoucisseur ci-dessus. Voir [water-softener-generic.md](cards/water-softener-generic.md).
 
+**Caméra** (`custom:appliance-camera-card`) : photo détourée (`model` : `dome`, `bullet`, `turret`, ou `image` pour la vôtre), détections mouvement / personne / animal / véhicule (halo et ondes de la couleur du type), mode nuit, carte SD ; un clic ouvre la vidéo (fiche de `entity_camera`). **NVR** (`custom:appliance-nvr-card`) : photo de l'enregistreur, voyants PWR et HDD animés, mémoire et disque libres, puissance, énergie, uptime, CPU. Voir [camera.md](cards/camera.md).
+
 ```yaml
 type: custom:appliance-scale-card
 entity_weight: sensor.withings_weight
