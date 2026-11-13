@@ -2187,7 +2187,10 @@
     "cycle_volume": "Water per cycle",
     "salt_year": "Salt per year",
     "power": "Power",
-    "days": "d"
+    "days": "d",
+    "f_model": "Drawing",
+    "model_culligan": "Culligan (control head, salt tank)",
+    "model_generic": "Generic (tank with central tube, brine tank with cane)"
   },
   "internet_box": {
     "name": "Internet box",

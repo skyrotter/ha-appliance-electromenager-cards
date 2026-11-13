@@ -1,5 +1,8 @@
-/* Carte « Adoucisseur d'eau » — custom:appliance-water-softener-card 
- * Adoucisseur à résine (type Culligan) : cuve à résine avec tête de commande (écran LCD, boutons) et bac à sel.
+/* Carte « Adoucisseur d'eau » — custom:appliance-water-softener-card
+ * Deux dessins au choix (option model) : culligan (défaut) = cuve à résine avec tête de commande (écran LCD, boutons) et bac à sel ;
+ * generic = bouteille composite (tube central, crépines), vanne en tête, bac à sel séparé avec canne à saumure et flotteur.
+ * custom:appliance-water-softener-generic-card reste reconnue (alias de model: generic) pour les tableaux de bord existants.
+ * En service sans débit (entity_flow à 0), plus aucune animation.
  * Phases : service (eau adoucie), contre-lavage, aspiration de saumure, rinçage, renvoi d'eau (remplissage du bac à sel) ; alerte sel bas.
  * Tuiles : débit, capacité restante, sel, dureté (entrée → sortie), consommation du jour, prochaine régénération, puissance.
  */
@@ -69,6 +72,8 @@ svg{display:block;flex:0 1 calc(190px * var(--illus-scale,1));width:calc(190px *
 .led{fill:#43d17a}.backwash .led,.brine .led,.rinse .led,.refill .led{fill:#ffa000;animation:wsblink .8s steps(2) infinite}.lowsalt .led{fill:#e53935}
 .off svg,.unavailable svg{filter:grayscale(.85) opacity(.65)}
 .noanim *{animation:none!important}
+/* service sans débit : tout est figé */
+.still *{animation:none!important}.still .pflow,.still .drop{opacity:0!important}
 /* ---- compact : petits emplacements fixes ; l'illustration prend la hauteur restante, tuiles en colonne ---- */
 ha-card.compact{display:flex;flex-direction:column;padding:6px}
 .compact .head{flex:none;gap:4px}.compact .title{font-size:12px;line-height:16px}.compact .badge{font-size:10px;padding:0 6px}
@@ -80,7 +85,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 
   // Ébauche vectorielle : tête de commande (écran + panneau bleu), cuve à résine en écorché (lit de résine, tube central),
   // bac à sel en écorché (sel, saumure). Repères : 250 × 290.
-  const SVG = (label) => `<svg viewBox="0 0 250 290" role="img" aria-label="${label}"><defs>
+  const SVG_CULLIGAN = (label) => `<svg viewBox="0 0 250 290" role="img" aria-label="${label}"><defs>
     <linearGradient id="wsc" x1="0" x2="1"><stop offset="0" stop-color="#f6f0df"/><stop offset=".55" stop-color="#e8dfc7"/><stop offset="1" stop-color="#cfc4a6"/></linearGradient>
     <linearGradient id="wsh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbf8ef"/><stop offset="1" stop-color="#e2d9c0"/></linearGradient>
     <linearGradient id="wsb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b57c9"/><stop offset="1" stop-color="#1f3499"/></linearGradient>
@@ -117,6 +122,68 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       <rect x="139" y="252" width="82" height="8" fill="#b9c4cb"/></g>
     <rect class="lid" x="124" y="142" width="112" height="14" rx="7" fill="url(#wsh)" stroke="#b9b095" stroke-width="1"/><rect x="170" y="145" width="20" height="5" rx="2.5" fill="#cfc5a8"/>
     <g class="alertw"><circle cx="218" cy="128" r="11" fill="#e53935"/><path d="M218 121v8" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="218" cy="134" r="1.5" fill="#fff"/></g>
+  </svg>`;
+
+  // Dessin générique (d'après le schéma type « bouteille + bac ») : vanne à deux fenêtres sur la bouteille,
+  // bouteille composite translucide (intérieur PE) remplie de résine, tube central, crépines haute et basse (fentes 0,2 mm),
+  // pied évasé ; bac à sel avec couvercle, canne à saumure + flotteur, coude trop-plein, sel au-dessus de la saumure. Repères : 250 × 290.
+  const SVG_GENERIC = (label) => `<svg viewBox="0 0 250 290" role="img" aria-label="${label}"><defs>
+    <linearGradient id="wsc" x1="0" x2="1"><stop offset="0" stop-color="#cfe6f4" stop-opacity=".9"/><stop offset=".35" stop-color="#eef7fc" stop-opacity=".95"/><stop offset="1" stop-color="#a9cbe2" stop-opacity=".9"/></linearGradient>
+    <linearGradient id="wsh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3f4f6"/><stop offset="1" stop-color="#c3c8ce"/></linearGradient>
+    <linearGradient id="wsv" x1="0" x2="1"><stop offset="0" stop-color="#b9bfc6"/><stop offset=".45" stop-color="#e9ecef"/><stop offset="1" stop-color="#9aa2ab"/></linearGradient>
+    <linearGradient id="wsw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e3f3fb"/><stop offset="1" stop-color="#b8e0f4"/></linearGradient>
+    <linearGradient id="wsg" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <radialGradient id="wssh"><stop offset="0" stop-color="#000" stop-opacity=".3"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+    <pattern id="wsr" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="4" fill="#e9dcc0"/><circle cx="1" cy="1.1" r=".9" fill="#c9b38a"/><circle cx="3" cy="2.9" r="1" fill="#d8c49c"/><circle cx="3.1" cy=".8" r=".45" fill="#a88f63"/><circle cx="1.1" cy="3.2" r=".4" fill="#fff"/></pattern>
+    <pattern id="wss" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="#e4e8eb"/><circle cx="1.3" cy="1.4" r="1.2" fill="#fff" stroke="#aab4bb" stroke-width=".4"/><circle cx="3.8" cy="3.6" r="1.3" fill="#fff" stroke="#aab4bb" stroke-width=".4"/><circle cx="3.9" cy="1" r=".5" fill="#c9d1d6"/></pattern>
+    <clipPath id="wsrw"><rect x="43.5" y="63.5" width="43" height="196" rx="21"/></clipPath>
+    <clipPath id="wsbw"><rect x="145" y="159" width="88" height="110" rx="2"/></clipPath></defs>
+    <ellipse cx="128" cy="279" rx="116" ry="6" fill="url(#wssh)"/>
+    <!-- tuyaux : arrivée (eau dure), départ (eau adoucie), saumure (canne → vanne), évacuation à l'égout -->
+    <g class="pipe pin"><path class="pbase" d="M4 30 H32"/><path class="pflow" d="M4 30 H32"/></g>
+    <g class="pipe pout"><path class="pbase" d="M98 30 H246"/><path class="pflow" d="M98 30 H246"/></g>
+    <g class="pipe pbr"><path class="pbase" d="M156 172 H140 V50 Q140 44 134 44 H98" style="stroke-width:3"/><path class="pflow" d="M156 172 H140 V50 Q140 44 134 44 H98"/></g>
+    <g class="pipe pdr"><path class="pbase" d="M32 42 C14 42 12 120 12 272" style="stroke:#a9a39a;stroke-width:4"/><path class="pflow" d="M32 42 C14 42 12 120 12 272"/></g>
+    <!-- pied évasé -->
+    <path d="M42 258 H88 L96 276 H34 Z" fill="#9aa3ab" stroke="#7d868f" stroke-width=".8"/><rect x="32" y="274" width="66" height="4" rx="1.5" fill="#7d868f"/>
+    <!-- bouteille : coque composite translucide, intérieur PE -->
+    <rect x="40" y="60" width="50" height="203" rx="25" fill="url(#wsc)" stroke="#8fb4cf" stroke-width="1.1"/>
+    <g clip-path="url(#wsrw)"><rect x="43" y="60" width="44" height="200" fill="url(#wsw)"/><rect class="muddy" x="43" y="60" width="44" height="200"/>
+      <g class="beads"><rect x="43" y="96" width="44" height="166" fill="url(#wsr)"/></g><rect class="bed" x="43" y="96" width="44" height="166"/>
+      <g>${[48, 55, 75, 82, 59].map((x) => `<circle class="drop" cx="${x}" cy="72" r="1.8"/>`).join('')}</g></g>
+    <rect x="43.5" y="63.5" width="43" height="196" rx="21" fill="none" stroke="#ffffff" stroke-opacity=".8" stroke-width=".8"/>
+    <rect x="46" y="70" width="7" height="180" rx="3.5" fill="url(#wsg)"/>
+    <!-- tube central + crépine basse (cône à fentes) -->
+    <rect x="63" y="50" width="4" height="190" rx="2" fill="#f7f7f4" stroke="#b5bbbf" stroke-width=".5"/>
+    <path d="M57.5 238 H72.5 V246 L68 255 H62 L57.5 246 Z" fill="#6c747b" stroke="#4d545a" stroke-width=".6"/>
+    <path d="M59 241 H71 M59 244 H71 M60 247 H70 M61.5 250 H68.5" stroke="#b9c0c6" stroke-width=".6"/>
+    <!-- col + crépine haute -->
+    <rect x="55" y="48" width="20" height="14" rx="2" fill="url(#wsv)" stroke="#7d868f" stroke-width=".6"/>
+    <rect x="59" y="62" width="12" height="9" rx="1.5" fill="#cfc2a3" stroke="#8d7f5f" stroke-width=".5"/><path d="M60.5 64.5h9M60.5 67h9M60.5 69.5h9" stroke="#8d7f5f" stroke-width=".4"/>
+    <!-- vanne : deux fenêtres (écran + programmateur) -->
+    <rect x="32" y="10" width="66" height="40" rx="4" fill="url(#wsh)" stroke="#7d868f" stroke-width="1"/>
+    <rect x="32" y="10" width="66" height="5" rx="2.5" fill="#fff" opacity=".45"/>
+    <rect x="35.5" y="15" width="34" height="22" rx="2" fill="#5a636c" stroke="#3f464c" stroke-width=".6"/>
+    <rect x="37.5" y="19" width="30" height="12" rx="1" fill="#a9c957"/><text class="lcdt" id="wslcd" x="52.5" y="27.5">SERVICE</text>
+    <rect x="72.5" y="15" width="22" height="22" rx="2" fill="#5a636c" stroke="#3f464c" stroke-width=".6"/>
+    <rect x="74.5" y="17" width="18" height="18" rx="1.5" fill="#cfd5db"/><circle cx="83.5" cy="26" r="5" fill="#eef1f3" stroke="#8e979f" stroke-width=".6"/><path d="M83.5 22.5v3.5l2.4 1.6" stroke="#5a636c" stroke-width=".8" fill="none" stroke-linecap="round"/>
+    <circle class="led" cx="39" cy="43.5" r="2"/><rect x="45" y="41.5" width="16" height="4" rx="2" fill="#aab1b8"/><rect x="74" y="41" width="20" height="5" rx="2.5" fill="#aab1b8"/>
+    <!-- bac à sel : paroi translucide -->
+    <rect x="142" y="156" width="94" height="116" rx="3" fill="url(#wsc)" stroke="#8fb4cf" stroke-width="1.1"/>
+    <g clip-path="url(#wsbw)"><rect x="145" y="159" width="88" height="110" fill="#f4f8fa" opacity=".7"/>
+      <rect class="salt" x="145" y="159" width="88" height="110" fill="url(#wss)"/>
+      <rect class="brinew" x="145" y="159" width="88" height="110" fill="#6fc2ea" opacity=".45"/></g>
+    <rect x="146" y="162" width="5" height="104" rx="2.5" fill="url(#wsg)"/>
+    <!-- coude trop-plein -->
+    <path d="M142 186 H134 V196" fill="none" stroke="#9aa6ae" stroke-width="3.4" stroke-linecap="round"/>
+    <!-- canne à saumure (puits) + tuyau intérieur + flotteur -->
+    <rect x="152" y="166" width="10" height="102" rx="2" fill="#f2f6f8" fill-opacity=".85" stroke="#8e9aa3" stroke-width=".8"/>
+    <path d="M157 172 V256" stroke="#7d868f" stroke-width="1.6"/>
+    <path d="M157 200 V214" stroke="#5a636c" stroke-width="1"/><rect x="154" y="214" width="6" height="9" rx="1.5" fill="#ffb300" stroke="#a87400" stroke-width=".6"/>
+    <rect x="152" y="260" width="10" height="8" fill="#8e9aa3" opacity=".5"/>
+    <!-- couvercle -->
+    <rect class="lid" x="138" y="150" width="102" height="7" rx="2" fill="url(#wsh)" stroke="#7d868f" stroke-width=".9"/>
+    <g class="alertw"><circle cx="224" cy="134" r="10" fill="#e53935"/><path d="M224 127.5v7.5" stroke="#fff" stroke-width="2.3" stroke-linecap="round"/><circle cx="224" cy="139.5" r="1.4" fill="#fff"/></g>
   </svg>`;
 
   const TILES = [['flow', 'mdi:water-pump', 'show_flow'], ['capacity', 'mdi:gauge', 'show_capacity'], ['salt', 'mdi:shaker-outline', 'show_salt'],
@@ -161,7 +228,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="wstitle"></div><div class="badge" id="wsbadge"></div></div>
-        <div class="body">${SVG((this._c.name || this._t('name')).replace(/"/g, ''))}
+        <div class="body">${(this._c.model === 'generic' ? SVG_GENERIC : SVG_CULLIGAN)((this._c.name || this._t('name')).replace(/"/g, ''))}
           <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
         </div></ha-card>`;
       window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity || this._c.entity_flow));
@@ -195,20 +262,24 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const mx = !isNaN(this._num(c.entity_salt_max)) ? this._num(c.entity_salt_max) : Number(c.salt_max);
       const pct = !isNaN(salt) && mx > 0 && this._unit(c.entity_salt, '%') !== '%' ? salt / mx * 100 : salt;
       const low = !isNaN(pct) && pct <= Number(c.salt_low);
-      return { phase, flow, salt, pct, low };
+      const still = phase === 'service' && !isNaN(flow) && flow <= 0.05;
+      return { phase, flow, salt, pct, low, still };
     }
 
     _render() {
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card;
-      const { phase, flow, salt, pct, low } = this._compute();
-      card.className = `${phase}${low ? ' lowsalt' : ''}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`;
+      const { phase, flow, salt, pct, low, still } = this._compute();
+      card.className = `${phase}${still ? ' still' : ''}${low ? ' lowsalt' : ''}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`;
       card.style.setProperty('--spd', `${(isNaN(flow) ? 1.2 : Math.max(.5, Math.min(2.4, 2.4 - flow / 12))).toFixed(2)}s`);
       card.style.setProperty('--salt', String(isNaN(pct) ? .6 : Math.max(.03, Math.min(1, pct / 100)).toFixed(3)));
       r.getElementById('wstitle').textContent = c.name || this._t('name');
       const state = low && !/^(backwash|brine|rinse|refill)$/.test(phase) ? 'lowsalt' : phase;
       r.getElementById('wsbadge').textContent = this._t(state);
       r.getElementById('wslcd').textContent = this._t(`lcd_${state}`);
+      // dessin générique : écran étroit, texte long (CONTRE-LAVAGE…) compressé pour rester dans la fenêtre
+      const lcd = r.getElementById('wslcd');
+      if (c.model === 'generic' && lcd.textContent.length > 7) { lcd.setAttribute('textLength', '28'); lcd.setAttribute('lengthAdjust', 'spacingAndGlyphs'); } else lcd.removeAttribute('textLength');
       const fu = this._unit(c.entity_flow, 'L/min'), tu = this._unit(c.entity_today, 'L');
       const hin = this._num(c.entity_hardness_in), hout = this._num(c.entity_hardness_out), hu = this._unit(c.entity_hardness_out || c.entity_hardness_in, '°f');
       let lastTxt = null;
@@ -243,6 +314,10 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     }
   }
   customElements.define(TAG, ApplianceWaterSoftenerCard);
+  // ancienne carte « générique » : même carte avec model: generic par défaut (tableaux de bord existants)
+  customElements.define('appliance-water-softener-generic-card', class extends ApplianceWaterSoftenerCard {
+    setConfig(c) { super.setConfig({ model: 'generic', ...c }); }
+  });
 
   /* ---- éditeur visuel ---- */
   class ApplianceWaterSoftenerCardEditor extends HTMLElement {
@@ -262,6 +337,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._form.hass = this._hass; this._form.data = { ...this._c };
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
+        { name: 'model', default: 'culligan', selector: { select: { mode: 'dropdown', options: ['culligan', 'generic'].map((value) => ({ value, label: this._lbl(`model_${value}`) })) } } },
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
@@ -276,8 +352,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('compact', false), ...TILES.map(([, , o]) => bool(o)), bool('animations')] },
       ];
-      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
+      this._form.computeLabel = (s) => (s.name === 'model' ? this._lbl('f_model') : window.applianceEditorLabel(s.name, this._hass));
     }
+    _lbl(k) { const l = window.applianceLang(T, this._c, this._hass); return T[l][k] ?? T.en[k] ?? k; }
   }
   customElements.define(TAG + '-editor', ApplianceWaterSoftenerCardEditor);
 

@@ -237,8 +237,7 @@ Clique sur une carte pour ses options et ses exemples (pages en anglais).
 | [Balance connectée (photo Withings)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/scale.md) | `custom:appliance-scale-card` |
 | [Robinet connecté (arrosage Zigbee)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/smart-tap.md) | `custom:appliance-smart-tap-card` |
 | [Vanne motorisée (actionneur sur vanne à boule)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/water-valve.md) | `custom:appliance-water-valve-card` |
-| [Adoucisseur d'eau (cuve à résine, bac à sel)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/water-softener.md) | `custom:appliance-water-softener-card` |
-| [Adoucisseur d'eau générique (bouteille à tube central, bac à saumure avec canne)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/water-softener-generic.md) | `custom:appliance-water-softener-generic-card` |
+| [Adoucisseur d'eau (Culligan ou générique : cuve à résine, bac à sel)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/water-softener.md) | `custom:appliance-water-softener-card` |
 | [Caméra de surveillance (détections, mode nuit, votre photo)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/camera.md) | `custom:appliance-camera-card` |
 | [Enregistreur NVR (voyants animés, disque, CPU)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/camera.md) | `custom:appliance-nvr-card` |
 | [Switch PoE (SSCPOE / Steamemo GPS208, GPS204V, GPS105S)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/poe-switch.md) | `custom:appliance-poe-switch-card` |

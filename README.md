@@ -243,8 +243,7 @@ Click a card for its options and examples.
 | [Smart scale (Withings photo)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/scale.md) | `custom:appliance-scale-card` |
 | [Smart tap (Zigbee garden valve)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/smart-tap.md) | `custom:appliance-smart-tap-card` |
 | [Motorised water valve (ball valve actuator)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/water-valve.md) | `custom:appliance-water-valve-card` |
-| [Water softener (resin tank, brine tank)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/water-softener.md) | `custom:appliance-water-softener-card` |
-| [Water softener, generic (tank with central tube, brine tank with cane)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/water-softener-generic.md) | `custom:appliance-water-softener-generic-card` |
+| [Water softener (Culligan or generic: resin tank, brine tank)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/water-softener.md) | `custom:appliance-water-softener-card` |
 | [Surveillance camera (detections, night mode, your own photo)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/camera.md) | `custom:appliance-camera-card` |
 | [NVR recorder (animated LEDs, disk, CPU)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/camera.md) | `custom:appliance-nvr-card` |
 | [PoE switch (SSCPOE / Steamemo GPS208, GPS204V, GPS105S)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/poe-switch.md) | `custom:appliance-poe-switch-card` |
