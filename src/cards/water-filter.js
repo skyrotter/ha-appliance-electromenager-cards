@@ -70,7 +70,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { stages: 3, filter_mode: 'used', soon_pct: 25, replace_pct: 5, warn_days: 30, show_status: true, show_flow: true, show_left: true, show_date: true, show_today: true, show_month: true, show_year: true, show_total: true, show_buttons: true, ...c };
+      this._c = { stages: 3, filter_mode: 'used', date_mode: 'last', soon_pct: 25, replace_pct: 5, warn_days: 30, show_status: true, show_flow: true, show_left: true, show_date: true, show_today: true, show_month: true, show_year: true, show_total: true, show_buttons: true, ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -155,10 +155,15 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       if (!(cap > 0)) return NaN;
       return Math.max(0, Math.min(100, (this._c.filter_mode === 'used' ? cap - v : v) / cap * 100));
     }
-    _days(id) {
-      const s = this._st(id); if (!this._ok(s)) return NaN;
-      const t = Date.parse(s.state); if (!t) return NaN;
-      return Math.ceil((t - Date.now()) / 86400000);
+    // date : jours restants avant la date de remplacement (date_mode « next »), ou, en mode « last » (date du dernier remplacement),
+    // jours restants = replace_after_days - jours écoulés (NaN sans replace_after_days) ; elapsed = jours depuis le dernier remplacement
+    _date(id) {
+      const s = this._st(id), c = this._c, none = { days: NaN, elapsed: NaN };
+      if (!this._ok(s)) return none;
+      const t = Date.parse(s.state); if (!t) return none;
+      if (c.date_mode === 'next') return { days: Math.ceil((t - Date.now()) / 86400000), elapsed: NaN };
+      const elapsed = Math.max(0, Math.floor((Date.now() - t) / 86400000)), after = Number(c.replace_after_days);
+      return { days: after > 0 ? after - elapsed : NaN, elapsed };
     }
 
     _render() {
@@ -167,7 +172,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const cap = Number(c.filter_capacity);
       const ids = [c.entity_filter, c.entity_filter_2, c.entity_filter_3];
       const pcts = this._centers().map((_, i) => this._pct(ids[i] || c.entity_filter, i === 0 ? cap : Number(c[`filter_capacity_${i + 1}`]) || cap));
-      const days = this._days(c.entity_date), flow = this._num(c.entity_flow);
+      const dt = this._date(c.entity_date), days = dt.days, flow = this._num(c.entity_flow);
       const known = [c.entity_filter, c.entity_flow, c.entity_date, c.entity_today, c.entity_total].some((i) => i && this._ok(this._st(i)));
       let level = Math.max(0, ...pcts.map((p) => lvl(p, Number(c.soon_pct), Number(c.replace_pct))));
       if (!isNaN(days)) level = Math.max(level, days < 0 ? 2 : days <= Number(c.warn_days) ? 1 : 0);
@@ -189,7 +194,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const V = {
         flow: [c.entity_flow, this._fmt(flow, 1), this._unit(c.entity_flow, 'L/min'), flowing ? '' : '', 'show_flow'],
         left: [c.entity_filter, !isNaN(left) ? this._fmt(left, 0) : this._fmt(this._num(c.entity_filter), 0), !isNaN(left) ? '%' : lu, level === 2 ? 'bad' : level === 1 ? 'warn' : '', 'show_left'],
-        date: [c.entity_date, !isNaN(days) ? (days < 0 ? this._t('overdue') : `${this._fmt(days)} ${this._t('d')}`) : (this._st(c.entity_date) ? String(this._st(c.entity_date).state) : '--'), '', !isNaN(days) && days < 0 ? 'bad' : !isNaN(days) && days <= Number(c.warn_days) ? 'warn' : '', 'show_date'],
+        date: [c.entity_date, !isNaN(days) ? (days < 0 ? this._t('overdue') : `${this._fmt(days)} ${this._t('d')}`) : !isNaN(dt.elapsed) ? `${this._fmt(dt.elapsed)} ${this._t('d')}` : (this._st(c.entity_date) ? String(this._st(c.entity_date).state) : '--'), '', !isNaN(days) && days < 0 ? 'bad' : !isNaN(days) && days <= Number(c.warn_days) ? 'warn' : '', 'show_date'],
         today: [c.entity_today, this._fmt(this._num(c.entity_today), 1), this._unit(c.entity_today, 'L'), '', 'show_today'],
         month: [c.entity_month, this._fmt(this._num(c.entity_month), 0), this._unit(c.entity_month, 'L'), '', 'show_month'],
         year: [c.entity_year, this._fmt(this._num(c.entity_year), 0), this._unit(c.entity_year, 'L'), '', 'show_year'],
@@ -198,7 +203,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       r.querySelectorAll('.tile').forEach((el) => {
         const k = el.dataset.k, [id, val, unit, cls, opt] = V[k];
         el.className = `tile${!id || c[opt] === false ? ' hide' : ''}${cls ? ' ' + cls : ''}`;
-        el.querySelector('.lbl').textContent = this._l(k);
+        el.querySelector('.lbl').textContent = k === 'date' && c.date_mode !== 'next' && isNaN(days) ? this._l('date_last') : this._l(k);
         const small = document.createElement('small'); small.textContent = unit ?? '';
         el.querySelector('.v').replaceChildren(String(val ?? ''), small);
       });
@@ -229,7 +234,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ent('entity_filter', 'sensor'), ent('entity_filter_2', 'sensor'), ent('entity_filter_3', 'sensor'),
         { name: 'filter_mode', default: 'used', selector: { select: { mode: 'dropdown', options: [{ value: 'used', label: this._lbl('filter_mode_used') }, { value: 'remaining', label: this._lbl('filter_mode_remaining') }] } } },
         num('filter_capacity', undefined, 0, 100000, 'L'), num('filter_capacity_2', undefined, 0, 100000, 'L'), num('filter_capacity_3', undefined, 0, 100000, 'L'),
-        ent('entity_date', ['sensor', 'input_datetime']), ent('entity_reset', ['script', 'button', 'input_button', 'switch', 'input_boolean']),
+        ent('entity_date', ['sensor', 'input_datetime']),
+        { name: 'date_mode', default: 'last', selector: { select: { mode: 'dropdown', options: [{ value: 'last', label: this._lbl('date_mode_last') }, { value: 'next', label: this._lbl('date_mode_next') }] } } }, num('replace_after_days', undefined, 0, 3650, 'd'),
+        ent('entity_reset', ['script', 'button', 'input_button', 'switch', 'input_boolean']),
         ent('entity_flow', 'sensor'), ent('entity_today', 'sensor'), ent('entity_month', 'sensor'), ent('entity_year', 'sensor'), ent('entity_total', 'sensor'),
         num('soon_pct', 25, 0, 100, '%'), num('replace_pct', 5, 0, 100, '%'), num('warn_days', 30, 0, 365, 'd'),
         ...window.applianceActionFields,

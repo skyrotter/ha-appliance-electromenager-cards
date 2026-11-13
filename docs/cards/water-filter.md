@@ -13,7 +13,9 @@ An under-sink drinking water filter with **1, 2 or 3 cartridges** (`stages`) and
 | `filter_mode` | `used` (default): the counter is the litres already filtered, it grows until the replacement. `remaining`: the counter is the litres left |
 | `filter_capacity` | litres a cartridge can filter (e.g. `4000`) |
 | `entity_filter_2`, `entity_filter_3`, `filter_capacity_2`, `filter_capacity_3` | optional separate counters and capacities for the other cartridges (by default they share the first one) |
-| `entity_date` | replacement date (`sensor` with a date, or `input_datetime`): days left, orange from `warn_days` (30), red once past |
+| `entity_date` | date of the filter replacement (`sensor` with a date / timestamp, or `input_datetime`) |
+| `date_mode` | `last` (default): the date is the **last replacement**, the tile shows the filter age in days. `next`: the date is the **next replacement**, the tile shows the days left |
+| `replace_after_days` | with `date_mode: last`, the filter lifetime in days (e.g. `365`): the tile then counts the days left, orange from `warn_days` (30), red once past. With `date_mode: next`, same colours on the days left |
 | `soon_pct`, `replace_pct` | remaining life under which the filter is « Replace soon » (25 %) and « Replace filter » (5 %) |
 | `entity_reset` | script / button / switch run by the **Filter replaced** button (asks to tap a second time to confirm) |
 | `entity_flow` | flow (L/min) |
@@ -26,8 +28,10 @@ name: Kitchen filter
 stages: 3
 entity_filter: sensor.kitchen_drink_water_filter
 filter_mode: used
-filter_capacity: 4000
-entity_date: sensor.time_reset_filter
+filter_capacity: 10000
+entity_date: sensor.time_reset_filter   # date of the last replacement
+date_mode: last
+# replace_after_days: 365
 entity_reset: script.replace_filter
 entity_flow: sensor.kitchen_l_min
 entity_today: sensor.drinking_water_consumption_per_day

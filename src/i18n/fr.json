@@ -2389,6 +2389,11 @@
     "f_show_month": "Tuile mois",
     "f_show_year": "Tuile année",
     "f_show_total": "Tuile total",
-    "f_show_buttons": "Afficher le bouton de remise à zéro"
+    "f_show_buttons": "Afficher le bouton de remise à zéro",
+    "date_last": "Âge du filtre",
+    "date_mode_last": "La date est celle du dernier remplacement",
+    "date_mode_next": "La date est celle du prochain remplacement",
+    "f_date_mode": "Sens de la date",
+    "f_replace_after_days": "Remplacer après (jours, facultatif)"
   }
 }

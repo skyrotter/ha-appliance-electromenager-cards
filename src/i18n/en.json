@@ -2403,6 +2403,11 @@
     "f_show_month": "Month tile",
     "f_show_year": "Year tile",
     "f_show_total": "Total tile",
-    "f_show_buttons": "Show the reset button"
+    "f_show_buttons": "Show the reset button",
+    "date_last": "Filter age",
+    "date_mode_last": "The date is the last replacement",
+    "date_mode_next": "The date is the next replacement",
+    "f_date_mode": "Meaning of the date",
+    "f_replace_after_days": "Replace after (days, optional)"
   }
 }
