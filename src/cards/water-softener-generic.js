@@ -81,51 +81,66 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 .compact .tile{padding:2px 5px;border-radius:8px}.compact .tile .l ha-icon{--mdc-icon-size:12px}.compact .tile .v{font-size:12px;line-height:15px;margin-top:0}
 `;
 
-  // Ébauche vectorielle générique : vanne en tête, bouteille composite en écorché (résine, tube central, crépines),
-  // bac à sel séparé avec canne à saumure et flotteur. Repères : 250 × 290.
+  // Dessin générique (d'après le schéma type « bouteille + bac ») : vanne à deux fenêtres sur la bouteille,
+  // bouteille composite translucide (intérieur PE) remplie de résine, tube central, crépines haute et basse (fentes 0,2 mm),
+  // pied évasé ; bac à sel avec couvercle, canne à saumure + flotteur, coude trop-plein, sel au-dessus de la saumure. Repères : 250 × 290.
   const SVG = (label) => `<svg viewBox="0 0 250 290" role="img" aria-label="${label}"><defs>
-    <linearGradient id="wsc" x1="0" x2="1"><stop offset="0" stop-color="#e6f1f8"/><stop offset=".55" stop-color="#d3e5f1"/><stop offset="1" stop-color="#b4cfe2"/></linearGradient>
-    <linearGradient id="wsh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f5f7"/><stop offset="1" stop-color="#cfd3d9"/></linearGradient>
-    <linearGradient id="wsw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9eef9"/><stop offset="1" stop-color="#a3d3ee"/></linearGradient>
-    <radialGradient id="wssh"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
-    <pattern id="wsr" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="#c98f2a"/><circle cx="1.4" cy="1.4" r="1.2" fill="#e7b04a"/><circle cx="3.9" cy="3.6" r="1.3" fill="#e0a43a"/><circle cx="3.8" cy="1" r=".7" fill="#a8731a"/></pattern>
-    <pattern id="wss" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#d3dade"/><circle cx="1.6" cy="1.6" r="1.5" fill="#fff" stroke="#9aa6ae" stroke-width=".5"/><circle cx="4.4" cy="4.2" r="1.6" fill="#fff" stroke="#9aa6ae" stroke-width=".5"/></pattern>
-    <clipPath id="wsrw"><rect x="41" y="104" width="50" height="154" rx="5"/></clipPath>
-    <clipPath id="wsbw"><rect x="139" y="168" width="82" height="92" rx="5"/></clipPath></defs>
-    <ellipse cx="125" cy="274" rx="112" ry="7" fill="url(#wssh)"/>
-    <!-- tuyaux : arrivée (eau dure), départ (eau adoucie), saumure (vanne ↔ canne), évacuation -->
-    <g class="pipe pin"><path class="pbase" d="M6 38 H26"/><path class="pflow" d="M6 38 H26"/></g>
-    <g class="pipe pout"><path class="pbase" d="M106 38 H244"/><path class="pflow" d="M106 38 H244"/></g>
-    <g class="pipe pbr"><path class="pbase" d="M150 142 C150 100 125 92 106 56" style="stroke-width:3.4"/><path class="pflow" d="M150 142 C150 100 125 92 106 56"/></g>
-    <g class="pipe pdr"><path class="pbase" d="M26 54 C10 54 8 130 8 262" style="stroke:#a9a39a"/><path class="pflow" d="M26 54 C10 54 8 130 8 262"/></g>
-    <!-- socle + bouteille composite -->
-    <rect x="36" y="262" width="60" height="12" rx="3" fill="#aeb6bd"/>
-    <rect x="30" y="64" width="72" height="204" rx="32" fill="url(#wsc)" stroke="#8fb4cf" stroke-width="1.2"/>
-    <rect x="37" y="100" width="58" height="162" rx="8" fill="#f2f8fc" stroke="#a9c6da" stroke-width=".8"/>
-    <g clip-path="url(#wsrw)"><rect x="41" y="104" width="50" height="154" fill="url(#wsw)"/><rect class="muddy" x="41" y="104" width="50" height="154"/>
-      <g class="beads"><rect x="41" y="150" width="50" height="94" fill="url(#wsr)"/></g><rect class="bed" x="41" y="150" width="50" height="94"/>
-      <g>${[47, 54, 78, 85, 60].map((x) => `<circle class="drop" cx="${x}" cy="110" r="1.9"/>`).join('')}</g></g>
-    <!-- tube central + crépines (fentes 0,2 mm) -->
-    <rect x="63.4" y="70" width="5.2" height="176" rx="2.6" fill="#f5f5f2" stroke="#bfc3c6" stroke-width=".6"/>
-    <rect x="58" y="78" width="16" height="12" rx="2" fill="#c9a96b" stroke="#8d7440" stroke-width=".6"/><path d="M60 82h12M60 86h12" stroke="#8d7440" stroke-width=".5"/>
-    <path d="M58 246h16l-3 12H61z" fill="#9aa1a8" stroke="#6f767c" stroke-width=".6"/><path d="M60 250h12M61 254h10" stroke="#6f767c" stroke-width=".5"/>
-    <!-- vanne -->
-    <rect x="26" y="14" width="76" height="50" rx="6" fill="url(#wsh)" stroke="#9aa1a8" stroke-width="1"/>
-    <rect x="32" y="20" width="40" height="15" rx="2" fill="#a9c957" stroke="#6f8a2c" stroke-width=".7"/><text class="lcdt" id="wslcd" x="52" y="30.5">SERVICE</text>
-    <rect x="77" y="20" width="19" height="15" rx="2" fill="#e4e7ea" stroke="#9aa1a8" stroke-width=".6"/><rect x="80" y="23" width="13" height="9" rx="1.5" fill="#cfd4d9"/>
-    <circle class="led" cx="38" cy="50" r="2.1"/><rect x="46" y="47.5" width="22" height="5" rx="2.5" fill="#c4cad0"/><rect x="74" y="45" width="22" height="10" rx="3" fill="#cfd4d9" stroke="#9aa1a8" stroke-width=".5"/>
-    <!-- bac à sel séparé -->
-    <rect x="128" y="150" width="104" height="122" rx="10" fill="url(#wsc)" stroke="#8fb4cf" stroke-width="1.2"/>
-    <rect x="134" y="164" width="92" height="100" rx="8" fill="#f2f8fc" stroke="#a9c6da" stroke-width=".8"/>
-    <g clip-path="url(#wsbw)"><rect x="139" y="168" width="82" height="92" fill="#f2f5f6"/>
-      <rect class="brinew" x="139" y="168" width="82" height="92" fill="#9ed8f2" opacity=".7"/><rect class="salt" x="139" y="168" width="82" height="92" fill="url(#wss)" opacity=".92"/>
-      <rect x="139" y="252" width="82" height="8" fill="#b9c4cb"/></g>
-    <!-- canne à saumure + flotteur + coude trop-plein -->
-    <rect x="146.5" y="144" width="7" height="108" rx="3" fill="#eef1f3" stroke="#9aa6ae" stroke-width=".8" opacity=".95"/>
-    <rect x="144" y="226" width="12" height="12" rx="3" fill="#ffb300" stroke="#a87400" stroke-width=".7"/>
-    <path d="M226 190h10v-14h-10" fill="none" stroke="#9aa6ae" stroke-width="4" stroke-linecap="round"/>
-    <rect class="lid" x="124" y="142" width="112" height="12" rx="6" fill="url(#wsh)" stroke="#9aa1a8" stroke-width="1"/>
-    <g class="alertw"><circle cx="218" cy="124" r="11" fill="#e53935"/><path d="M218 117v8" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="218" cy="130" r="1.5" fill="#fff"/></g>
+    <linearGradient id="wsc" x1="0" x2="1"><stop offset="0" stop-color="#cfe6f4" stop-opacity=".9"/><stop offset=".35" stop-color="#eef7fc" stop-opacity=".95"/><stop offset="1" stop-color="#a9cbe2" stop-opacity=".9"/></linearGradient>
+    <linearGradient id="wsh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3f4f6"/><stop offset="1" stop-color="#c3c8ce"/></linearGradient>
+    <linearGradient id="wsv" x1="0" x2="1"><stop offset="0" stop-color="#b9bfc6"/><stop offset=".45" stop-color="#e9ecef"/><stop offset="1" stop-color="#9aa2ab"/></linearGradient>
+    <linearGradient id="wsw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e3f3fb"/><stop offset="1" stop-color="#b8e0f4"/></linearGradient>
+    <linearGradient id="wsg" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <radialGradient id="wssh"><stop offset="0" stop-color="#000" stop-opacity=".3"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+    <pattern id="wsr" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="4" fill="#e9dcc0"/><circle cx="1" cy="1.1" r=".9" fill="#c9b38a"/><circle cx="3" cy="2.9" r="1" fill="#d8c49c"/><circle cx="3.1" cy=".8" r=".45" fill="#a88f63"/><circle cx="1.1" cy="3.2" r=".4" fill="#fff"/></pattern>
+    <pattern id="wss" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="#e4e8eb"/><circle cx="1.3" cy="1.4" r="1.2" fill="#fff" stroke="#aab4bb" stroke-width=".4"/><circle cx="3.8" cy="3.6" r="1.3" fill="#fff" stroke="#aab4bb" stroke-width=".4"/><circle cx="3.9" cy="1" r=".5" fill="#c9d1d6"/></pattern>
+    <clipPath id="wsrw"><rect x="43.5" y="63.5" width="43" height="196" rx="21"/></clipPath>
+    <clipPath id="wsbw"><rect x="145" y="159" width="88" height="110" rx="2"/></clipPath></defs>
+    <ellipse cx="128" cy="279" rx="116" ry="6" fill="url(#wssh)"/>
+    <!-- tuyaux : arrivée (eau dure), départ (eau adoucie), saumure (canne → vanne), évacuation à l'égout -->
+    <g class="pipe pin"><path class="pbase" d="M4 30 H32"/><path class="pflow" d="M4 30 H32"/></g>
+    <g class="pipe pout"><path class="pbase" d="M98 30 H246"/><path class="pflow" d="M98 30 H246"/></g>
+    <g class="pipe pbr"><path class="pbase" d="M156 172 H140 V50 Q140 44 134 44 H98" style="stroke-width:3"/><path class="pflow" d="M156 172 H140 V50 Q140 44 134 44 H98"/></g>
+    <g class="pipe pdr"><path class="pbase" d="M32 42 C14 42 12 120 12 272" style="stroke:#a9a39a;stroke-width:4"/><path class="pflow" d="M32 42 C14 42 12 120 12 272"/></g>
+    <!-- pied évasé -->
+    <path d="M42 258 H88 L96 276 H34 Z" fill="#9aa3ab" stroke="#7d868f" stroke-width=".8"/><rect x="32" y="274" width="66" height="4" rx="1.5" fill="#7d868f"/>
+    <!-- bouteille : coque composite translucide, intérieur PE -->
+    <rect x="40" y="60" width="50" height="203" rx="25" fill="url(#wsc)" stroke="#8fb4cf" stroke-width="1.1"/>
+    <g clip-path="url(#wsrw)"><rect x="43" y="60" width="44" height="200" fill="url(#wsw)"/><rect class="muddy" x="43" y="60" width="44" height="200"/>
+      <g class="beads"><rect x="43" y="96" width="44" height="166" fill="url(#wsr)"/></g><rect class="bed" x="43" y="96" width="44" height="166"/>
+      <g>${[48, 55, 75, 82, 59].map((x) => `<circle class="drop" cx="${x}" cy="72" r="1.8"/>`).join('')}</g></g>
+    <rect x="43.5" y="63.5" width="43" height="196" rx="21" fill="none" stroke="#ffffff" stroke-opacity=".8" stroke-width=".8"/>
+    <rect x="46" y="70" width="7" height="180" rx="3.5" fill="url(#wsg)"/>
+    <!-- tube central + crépine basse (cône à fentes) -->
+    <rect x="63" y="50" width="4" height="190" rx="2" fill="#f7f7f4" stroke="#b5bbbf" stroke-width=".5"/>
+    <path d="M57.5 238 H72.5 V246 L68 255 H62 L57.5 246 Z" fill="#6c747b" stroke="#4d545a" stroke-width=".6"/>
+    <path d="M59 241 H71 M59 244 H71 M60 247 H70 M61.5 250 H68.5" stroke="#b9c0c6" stroke-width=".6"/>
+    <!-- col + crépine haute -->
+    <rect x="55" y="48" width="20" height="14" rx="2" fill="url(#wsv)" stroke="#7d868f" stroke-width=".6"/>
+    <rect x="59" y="62" width="12" height="9" rx="1.5" fill="#cfc2a3" stroke="#8d7f5f" stroke-width=".5"/><path d="M60.5 64.5h9M60.5 67h9M60.5 69.5h9" stroke="#8d7f5f" stroke-width=".4"/>
+    <!-- vanne : deux fenêtres (écran + programmateur) -->
+    <rect x="32" y="10" width="66" height="40" rx="4" fill="url(#wsh)" stroke="#7d868f" stroke-width="1"/>
+    <rect x="32" y="10" width="66" height="5" rx="2.5" fill="#fff" opacity=".45"/>
+    <rect x="35.5" y="15" width="34" height="22" rx="2" fill="#5a636c" stroke="#3f464c" stroke-width=".6"/>
+    <rect x="37.5" y="19" width="30" height="12" rx="1" fill="#a9c957"/><text class="lcdt" id="wslcd" x="52.5" y="27.5">SERVICE</text>
+    <rect x="72.5" y="15" width="22" height="22" rx="2" fill="#5a636c" stroke="#3f464c" stroke-width=".6"/>
+    <rect x="74.5" y="17" width="18" height="18" rx="1.5" fill="#cfd5db"/><circle cx="83.5" cy="26" r="5" fill="#eef1f3" stroke="#8e979f" stroke-width=".6"/><path d="M83.5 22.5v3.5l2.4 1.6" stroke="#5a636c" stroke-width=".8" fill="none" stroke-linecap="round"/>
+    <circle class="led" cx="39" cy="43.5" r="2"/><rect x="45" y="41.5" width="16" height="4" rx="2" fill="#aab1b8"/><rect x="74" y="41" width="20" height="5" rx="2.5" fill="#aab1b8"/>
+    <!-- bac à sel : paroi translucide -->
+    <rect x="142" y="156" width="94" height="116" rx="3" fill="url(#wsc)" stroke="#8fb4cf" stroke-width="1.1"/>
+    <g clip-path="url(#wsbw)"><rect x="145" y="159" width="88" height="110" fill="#f4f8fa" opacity=".7"/>
+      <rect class="salt" x="145" y="159" width="88" height="110" fill="url(#wss)"/>
+      <rect class="brinew" x="145" y="159" width="88" height="110" fill="#6fc2ea" opacity=".45"/></g>
+    <rect x="146" y="162" width="5" height="104" rx="2.5" fill="url(#wsg)"/>
+    <!-- coude trop-plein -->
+    <path d="M142 186 H134 V196" fill="none" stroke="#9aa6ae" stroke-width="3.4" stroke-linecap="round"/>
+    <!-- canne à saumure (puits) + tuyau intérieur + flotteur -->
+    <rect x="152" y="166" width="10" height="102" rx="2" fill="#f2f6f8" fill-opacity=".85" stroke="#8e9aa3" stroke-width=".8"/>
+    <path d="M157 172 V256" stroke="#7d868f" stroke-width="1.6"/>
+    <path d="M157 200 V214" stroke="#5a636c" stroke-width="1"/><rect x="154" y="214" width="6" height="9" rx="1.5" fill="#ffb300" stroke="#a87400" stroke-width=".6"/>
+    <rect x="152" y="260" width="10" height="8" fill="#8e9aa3" opacity=".5"/>
+    <!-- couvercle -->
+    <rect class="lid" x="138" y="150" width="102" height="7" rx="2" fill="url(#wsh)" stroke="#7d868f" stroke-width=".9"/>
+    <g class="alertw"><circle cx="224" cy="134" r="10" fill="#e53935"/><path d="M224 127.5v7.5" stroke="#fff" stroke-width="2.3" stroke-linecap="round"/><circle cx="224" cy="139.5" r="1.4" fill="#fff"/></g>
   </svg>`;
 
   const TILES = [['flow', 'mdi:water-pump', 'show_flow'], ['capacity', 'mdi:gauge', 'show_capacity'], ['salt', 'mdi:shaker-outline', 'show_salt'],
@@ -219,6 +234,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const state = low && !/^(backwash|brine|rinse|refill)$/.test(phase) ? 'lowsalt' : phase;
       r.getElementById('wsbadge').textContent = this._t(state);
       r.getElementById('wslcd').textContent = this._t(`lcd_${state}`);
+      // écran étroit : texte long (CONTRE-LAVAGE…) compressé pour rester dans la fenêtre
+      const lcd = r.getElementById('wslcd');
+      if (lcd.textContent.length > 7) { lcd.setAttribute('textLength', '28'); lcd.setAttribute('lengthAdjust', 'spacingAndGlyphs'); } else lcd.removeAttribute('textLength');
       const fu = this._unit(c.entity_flow, 'L/min'), tu = this._unit(c.entity_today, 'L');
       const hin = this._num(c.entity_hardness_in), hout = this._num(c.entity_hardness_out), hu = this._unit(c.entity_hardness_out || c.entity_hardness_in, '°f');
       let lastTxt = null;
