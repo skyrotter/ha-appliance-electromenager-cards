@@ -2316,5 +2316,31 @@
     "f_entity_disk_free": "Espace disque libre (%)",
     "f_disk_low": "Disque presque plein sous (%)",
     "f_cpu_high": "Charge CPU élevée dès (%)"
+  },
+  "poe_switch": {
+    "name": "Switch PoE",
+    "unavailable": "Indisponible",
+    "up": "Actifs",
+    "down": "Inactif",
+    "on": "Activé",
+    "off": "Coupé",
+    "total": "Puissance totale",
+    "voltage": "Tension",
+    "poe": "Ports PoE",
+    "links": "Liaisons",
+    "port": "Port",
+    "power": "Puissance",
+    "extend": "Extend",
+    "uplink": "LIAISON MONTANTE",
+    "hint": "Touchez un port pour son détail",
+    "confirm_off": "Couper l'alimentation PoE du {port} ? L'appareil branché va s'éteindre.",
+    "f_model": "Modèle de switch",
+    "f_prefix": "Préfixe des entités (ex. gps208xxxx_arubg3l)",
+    "f_entity_total_power": "Puissance totale (facultatif, remplace le préfixe)",
+    "f_entity_voltage": "Tension (facultatif, remplace le préfixe)",
+    "f_show_total": "Tuile puissance totale",
+    "f_show_voltage": "Tuile tension",
+    "f_show_poe": "Tuile ports PoE",
+    "f_show_links": "Tuile liaisons"
   }
 }

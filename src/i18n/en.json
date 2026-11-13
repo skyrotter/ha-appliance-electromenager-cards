@@ -2330,5 +2330,31 @@
     "f_entity_disk_free": "Disk space free (%)",
     "f_disk_low": "Disk almost full below (%)",
     "f_cpu_high": "High CPU load from (%)"
+  },
+  "poe_switch": {
+    "name": "PoE switch",
+    "unavailable": "Unavailable",
+    "up": "Up",
+    "down": "Down",
+    "on": "On",
+    "off": "Off",
+    "total": "Total power",
+    "voltage": "Voltage",
+    "poe": "PoE ports",
+    "links": "Links",
+    "port": "Port",
+    "power": "Power",
+    "extend": "Extend",
+    "uplink": "UPLINK",
+    "hint": "Tap a port for its details",
+    "confirm_off": "Cut the PoE power of {port}? The connected device will turn off.",
+    "f_model": "Switch model",
+    "f_prefix": "Entity prefix (e.g. gps208xxxx_arubg3l)",
+    "f_entity_total_power": "Total power (optional, overrides the prefix)",
+    "f_entity_voltage": "Voltage (optional, overrides the prefix)",
+    "f_show_total": "Total power tile",
+    "f_show_voltage": "Voltage tile",
+    "f_show_poe": "PoE ports tile",
+    "f_show_links": "Links tile"
   }
 }

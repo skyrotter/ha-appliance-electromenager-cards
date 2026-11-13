@@ -469,6 +469,8 @@ entity_weight: sensor.aqara_feeder_weight_per_day
 
 **Caméra** (`custom:appliance-camera-card`) : photo détourée (`model` : `dome`, `bullet`, `turret`, ou `image` pour la vôtre), détections mouvement / personne / animal / véhicule (halo et ondes de la couleur du type), mode nuit, carte SD ; un clic ouvre la vidéo (fiche de `entity_camera`). **NVR** (`custom:appliance-nvr-card`) : photo de l'enregistreur, voyants PWR et HDD animés, mémoire et disque libres, puissance, énergie, uptime, CPU. Voir [camera.md](cards/camera.md).
 
+**Switch PoE** (`custom:appliance-poe-switch-card`) : face avant du switch dessinée avec ses ports (`model` : `gps208`, `gps204v`, `gps105s`), LED de liaison qui clignote avec le trafic et LED PoE qui respire quand le port alimente un appareil. Une seule option `prefix` retrouve toutes les entités. Un clic sur un port affiche son détail et pilote son PoE (confirmation avant de couper). Voir [poe-switch.md](cards/poe-switch.md).
+
 ```yaml
 type: custom:appliance-scale-card
 entity_weight: sensor.withings_weight
