@@ -471,7 +471,7 @@ entity_weight: sensor.aqara_feeder_weight_per_day
 
 **Switch PoE** (`custom:appliance-poe-switch-card`) : face avant du switch dessinée avec ses ports (`model` : `gps208`, `gps204v`, `gps105s`), LED de liaison qui clignote avec le trafic et LED PoE qui respire quand le port alimente un appareil. Une seule option `prefix` retrouve toutes les entités. Un clic sur un port affiche son détail et pilote son PoE (confirmation avant de couper). Voir [poe-switch.md](cards/poe-switch.md).
 
-**Filtre à eau** (`custom:appliance-water-filter-card`) : filtre sous évier à 1, 2 ou 3 cartouches (`stages`) avec son robinet ; fenêtres témoins vertes / orange / rouge selon l'usure (compteur en litres avec `filter_capacity` et `filter_mode`, date de remplacement, `soon_pct` et `replace_pct`). Gouttes et reflets seulement quand l'eau coule (sans débit, plus d'animation). Bouton **Filtre remplacé** (script, confirmation par un 2e clic). Voir [water-filter.md](cards/water-filter.md).
+**Filtre à eau** (`custom:appliance-water-filter-card`) : filtre sous évier à 1, 2 ou 3 cartouches (`stages`) avec son robinet ; fenêtres témoins vertes / orange / rouge selon l'usure (compteur en litres avec `filter_capacity` et `filter_mode`, date de remplacement (`date_mode` : `last` = dernier remplacement, `next` = prochain ; `replace_after_days`), `soon_pct` et `replace_pct`). Gouttes et reflets seulement quand l'eau coule (sans débit, plus d'animation). Bouton **Filtre remplacé** (script, confirmation par un 2e clic). Voir [water-filter.md](cards/water-filter.md).
 
 ```yaml
 type: custom:appliance-scale-card
