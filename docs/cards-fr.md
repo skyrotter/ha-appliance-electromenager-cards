@@ -467,6 +467,10 @@ entity_weight: sensor.aqara_feeder_weight_per_day
 
 **Adoucisseur d'eau générique** (`custom:appliance-water-softener-generic-card`) : même carte avec un dessin de bouteille composite (tube central, crépines, vanne en tête) et de bac à saumure séparé (canne, flotteur, trop-plein). Sans débit en mode service (`entity_flow` à 0), aucune animation. Mêmes options que l'adoucisseur ci-dessus. Voir [water-softener-generic.md](cards/water-softener-generic.md).
 
+**Caméra** (`custom:appliance-camera-card`) : photo détourée (`model` : `dome`, `bullet`, `turret`, ou `image` pour la vôtre), détections mouvement / personne / animal / véhicule (halo et ondes de la couleur du type), mode nuit, carte SD ; un clic ouvre la vidéo (fiche de `entity_camera`). **NVR** (`custom:appliance-nvr-card`) : photo de l'enregistreur, voyants PWR et HDD animés, mémoire et disque libres, puissance, énergie, uptime, CPU. Voir [camera.md](cards/camera.md).
+
+**Switch PoE** (`custom:appliance-poe-switch-card`) : face avant du switch dessinée avec ses ports (`model` : `gps208`, `gps204v`, `gps105s`), LED de liaison qui clignote avec le trafic et LED PoE qui respire quand le port alimente un appareil. Une seule option `prefix` retrouve toutes les entités. Un clic sur un port affiche son détail et pilote son PoE (confirmation avant de couper). Voir [poe-switch.md](cards/poe-switch.md).
+
 ```yaml
 type: custom:appliance-scale-card
 entity_weight: sensor.withings_weight

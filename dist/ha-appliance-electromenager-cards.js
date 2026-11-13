@@ -15611,7 +15611,14 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_rinse": "Spülung (an = läuft)",
       "entity_fan": "Lüfterstufe",
       "entity_tank": "Wassertank (voll / Füllstand)",
-      "temp_step": "Temperaturschritt"
+      "temp_step": "Temperaturschritt",
+      "slider_position": "Position des Reglers",
+      "last_cycle": "Letzten Zyklus anzeigen (Start, Ende, Dauer, Energie)",
+      "cycle_gap": "Pause innerhalb eines Zyklus (Min.)",
+      "tank_volume": "Speicherkapazität (L)",
+      "hot_water_level": "Verbleibendes Warmwasser (%)",
+      "hot_water_volume": "Verbleibendes Warmwasser (L)",
+      "show_cycle": "Letzten Zyklus anzeigen"
     },
     "es": {
       "extra_tiles": "Tiles extra (lista: entity, name, icon)",
@@ -33444,7 +33451,10 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       "brightness": "Helligkeit",
       "power": "Leistung",
       "energy": "Energie",
-      "ceiling_spot": "Einbaustrahler"
+      "ceiling_spot": "Einbaustrahler",
+      "slider_bottom": "Unter der Glühbirne",
+      "slider_left": "Links",
+      "slider_right": "Rechts"
     },
     "es": {
       "light_bulb": "Bombilla",
@@ -49461,7 +49471,11 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "temp": "Temperatur",
       "target": "Soll",
       "bottom": "Unten",
-      "reserve": "Warmwasser"
+      "reserve": "Warmwasser",
+      "volume": "Volumen",
+      "cycle": "Letzter Zyklus",
+      "duration": "Zyklusdauer",
+      "cycle_kwh": "Zyklusenergie"
     },
     "es": {
       "name": "Termo termodinámico",
@@ -52332,6 +52346,702 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     type: TAG, name: `Appliance – ${T.en.name} (generic) / ${T.fr.name} (générique)`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
     description: "Adoucisseur d'eau animé : service, contre-lavage, saumure, rinçage, sel, capacité, dureté.", preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/water-softener.md',
+  });
+})();
+
+/* Cartes « Caméra » et « NVR » — custom:appliance-camera-card, custom:appliance-nvr-card
+ * Caméra : photo détourée (modèles dome / bullet / turret, ou votre propre image), cadre de visée avec point REC,
+ * détections (mouvement, personne, animal, véhicule) qui allument un halo et des ondes de la couleur du type détecté,
+ * mode nuit (scène bleutée, lune), mémoire libre de la carte SD ; un clic sur la caméra ouvre le flux vidéo (fiche de l'entité camera).
+ * NVR : photo détourée de l'enregistreur, voyants PWR / HDD qui s'animent, mémoire et disque libres, puissance, énergie, uptime, CPU.
+ */
+(() => {
+  if (customElements.get('appliance-camera-card')) return;
+
+  const T = {
+    "en": {
+      "name_camera": "Camera",
+      "name_nvr": "NVR recorder",
+      "idle": "Monitoring",
+      "offline": "Offline",
+      "motion": "Motion",
+      "person": "Person",
+      "animal": "Animal",
+      "vehicle": "Vehicle",
+      "detected": "Detected",
+      "clear": "None",
+      "sd": "SD card",
+      "night": "Night",
+      "day": "Day",
+      "running": "Recording",
+      "busy": "High load",
+      "disk_low": "Disk almost full",
+      "off": "Off",
+      "unavailable": "Unavailable",
+      "memory": "Memory free",
+      "disk": "Disk free",
+      "power": "Power",
+      "energy": "Energy",
+      "uptime": "Uptime",
+      "cpu": "CPU",
+      "d": "d",
+      "h": "h",
+      "f_model": "Camera model",
+      "f_entity_camera": "Camera (video on click)",
+      "f_entity_motion": "Motion detected",
+      "f_entity_person": "Person detected",
+      "f_entity_animal": "Animal detected",
+      "f_entity_vehicle": "Vehicle detected",
+      "f_entity_sd": "SD card free space",
+      "f_entity_night": "Night / day switch",
+      "f_sd_low": "Low SD space threshold (%)",
+      "f_show_motion": "Motion tile",
+      "f_show_person": "Person tile",
+      "f_show_animal": "Animal tile",
+      "f_show_vehicle": "Vehicle tile",
+      "f_show_sd": "SD card tile",
+      "f_show_night": "Night / day tile",
+      "f_entity_memory_free": "Memory free (%)",
+      "f_entity_disk_free": "Disk space free (%)",
+      "f_disk_low": "Disk almost full below (%)",
+      "f_cpu_high": "High CPU load from (%)"
+    },
+    "fr": {
+      "name_camera": "Caméra",
+      "name_nvr": "Enregistreur NVR",
+      "idle": "Surveillance",
+      "offline": "Hors ligne",
+      "motion": "Mouvement",
+      "person": "Personne",
+      "animal": "Animal",
+      "vehicle": "Véhicule",
+      "detected": "Détecté",
+      "clear": "Aucun",
+      "sd": "Carte SD",
+      "night": "Nuit",
+      "day": "Jour",
+      "running": "Enregistrement",
+      "busy": "Charge élevée",
+      "disk_low": "Disque presque plein",
+      "off": "Éteint",
+      "unavailable": "Indisponible",
+      "memory": "Mémoire libre",
+      "disk": "Disque libre",
+      "power": "Puissance",
+      "energy": "Énergie",
+      "uptime": "Uptime",
+      "cpu": "CPU",
+      "d": "j",
+      "h": "h",
+      "f_model": "Modèle de caméra",
+      "f_entity_camera": "Caméra (vidéo au clic)",
+      "f_entity_motion": "Mouvement détecté",
+      "f_entity_person": "Personne détectée",
+      "f_entity_animal": "Animal détecté",
+      "f_entity_vehicle": "Véhicule détecté",
+      "f_entity_sd": "Espace libre carte SD",
+      "f_entity_night": "Interrupteur nuit / jour",
+      "f_sd_low": "Seuil carte SD presque pleine (%)",
+      "f_show_motion": "Tuile mouvement",
+      "f_show_person": "Tuile personne",
+      "f_show_animal": "Tuile animal",
+      "f_show_vehicle": "Tuile véhicule",
+      "f_show_sd": "Tuile carte SD",
+      "f_show_night": "Tuile nuit / jour",
+      "f_entity_memory_free": "Mémoire libre (%)",
+      "f_entity_disk_free": "Espace disque libre (%)",
+      "f_disk_low": "Disque presque plein sous (%)",
+      "f_cpu_high": "Charge CPU élevée dès (%)"
+    }
+  };
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+  // photos détourées (webp transparent) intégrées au fichier
+  const IMG = {"nvr": {"w": 560, "h": 148, "uri": "data:image/webp;base64,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"}, "dome": {"w": 240, "h": 204, "uri": "data:image/webp;base64,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"}, "bullet": {"w": 260, "h": 149, "uri": "data:image/webp;base64,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"}, "turret": {"w": 240, "h": 210, "uri": "data:image/webp;base64,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"}};
+  // voyants du NVR (PWR vert, HDD rouge), en % de la photo
+  const LEDS = { pwr: [82.75, 25.7], hdd: [89.96, 25.6] };
+
+  const CSS = `
+:host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--cm-ok:var(--appliance-ok-color,#43a047);--cm-alert:var(--appliance-alert-color,#db4437);--cm-warn:var(--appliance-warn-color,#ffa000);--dc:#ffa000;transition:box-shadow .5s}
+.head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
+.idle .badge,.running .badge{background:color-mix(in srgb,var(--cm-ok) 20%,transparent);color:var(--cm-ok)}
+.motion .badge,.person .badge,.animal .badge,.vehicle .badge,.busy .badge,.disk_low .badge{background:color-mix(in srgb,var(--dc) 24%,transparent);color:var(--dc)}
+ha-card.motion,ha-card.person,ha-card.animal,ha-card.vehicle,ha-card.disk_low{box-shadow:0 0 0 1px color-mix(in srgb,var(--dc) 60%,transparent),0 0 18px color-mix(in srgb,var(--dc) 25%,transparent)}
+.stage{position:relative;margin:4px auto 0;max-width:calc(260px * var(--illus-scale,1));min-height:150px;padding:16px 0;box-sizing:border-box;border-radius:14px;background:radial-gradient(ellipse at 50% 55%,#252c36,#14181e 78%);overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .6s}
+.nvr .stage{max-width:calc(380px * var(--illus-scale,1));min-height:100px;padding:12px 0}
+.night .stage{background:radial-gradient(ellipse at 50% 55%,#1d2a52,#0a0f24 78%)}
+.ph{position:relative;display:flex;max-width:76%}.nvr .ph{max-width:88%}
+.stage img{display:block;max-width:100%;max-height:118px;object-fit:contain;transition:filter .6s;filter:drop-shadow(0 6px 8px rgba(0,0,0,.45))}
+.nvr .stage img{max-height:96px}
+.night .stage img{filter:brightness(.78) saturate(.8) drop-shadow(0 6px 8px rgba(0,0,0,.45))}
+.off .stage img,.unavailable .stage img{filter:grayscale(1) brightness(.6)}
+.glow{position:absolute;inset:12%;border-radius:50%;background:radial-gradient(circle,var(--dc) 0%,transparent 68%);opacity:0;filter:blur(18px);transition:opacity .5s;pointer-events:none}
+.motion .glow,.person .glow,.animal .glow,.vehicle .glow{opacity:.55;animation:cmglow 1.6s ease-in-out infinite alternate}
+@keyframes cmglow{from{opacity:.25}to{opacity:.65}}
+.wave{position:absolute;left:50%;top:50%;width:46%;aspect-ratio:1;margin:-23% 0 0 -23%;border-radius:50%;border:2px solid var(--dc);opacity:0;pointer-events:none}
+.motion .wave,.person .wave,.animal .wave,.vehicle .wave{animation:cmwave 2.4s ease-out infinite}.wave.w2{animation-delay:1.2s!important}
+@keyframes cmwave{0%{opacity:.8;transform:scale(.6)}100%{opacity:0;transform:scale(2.1)}}
+/* cadre de visée : coins + point REC */
+.vf{position:absolute;inset:8px;pointer-events:none;border-radius:8px;--c:rgba(255,255,255,.55);
+  background:linear-gradient(var(--c),var(--c)) 0 0/14px 2px,linear-gradient(var(--c),var(--c)) 0 0/2px 14px,linear-gradient(var(--c),var(--c)) 100% 0/14px 2px,linear-gradient(var(--c),var(--c)) 100% 0/2px 14px,
+  linear-gradient(var(--c),var(--c)) 0 100%/14px 2px,linear-gradient(var(--c),var(--c)) 0 100%/2px 14px,linear-gradient(var(--c),var(--c)) 100% 100%/14px 2px,linear-gradient(var(--c),var(--c)) 100% 100%/2px 14px;background-repeat:no-repeat}
+.motion .vf,.person .vf,.animal .vf,.vehicle .vf{--c:var(--dc);animation:cmfast 1s steps(2) infinite}
+.nvr .vf{display:none}
+.rec,.det,.moon{z-index:2}
+.rec{position:absolute;left:14px;top:12px;display:flex;align-items:center;gap:4px;font:700 9px/1 sans-serif;color:#fff;letter-spacing:.5px;opacity:.9;pointer-events:none}
+.rec i{width:7px;height:7px;border-radius:50%;background:#e53935;animation:cmblink 1.6s ease-in-out infinite}
+.offline .rec,.off .rec,.unavailable .rec{display:none}.nvr .rec{display:none}
+@keyframes cmblink{50%{opacity:.2}}
+@keyframes cmfast{50%{opacity:.45}}
+.det{position:absolute;left:10px;bottom:10px;display:none;align-items:center;gap:4px;padding:3px 8px 3px 6px;border-radius:12px;background:color-mix(in srgb,var(--dc) 85%,#000);color:#fff;font:600 11px/14px sans-serif;pointer-events:none}
+.det ha-icon{--mdc-icon-size:15px}
+.motion .det,.person .det,.animal .det,.vehicle .det{display:flex}
+.moon{position:absolute;right:12px;top:10px;display:none;color:#cfd8ff;pointer-events:none}.moon ha-icon{--mdc-icon-size:18px}
+.night .moon{display:flex}
+/* NVR : voyants */
+.led{position:absolute;width:2.3%;height:2.5%;border-radius:2px;transform:translate(-50%,-50%);pointer-events:none;opacity:0}
+.nvr .led{opacity:1}
+.led.pwr{background:#4cff7a;box-shadow:0 0 5px 1px #4cff7a}
+.led.hdd{background:#ff4b4b;box-shadow:0 0 5px 1px #ff4b4b;animation:cmhdd var(--hz,1.4s) steps(1) infinite}
+.running .led.pwr,.busy .led.pwr,.disk_low .led.pwr{animation:cmbeat 3s ease-in-out infinite}
+.off .led,.unavailable .led{opacity:0!important}
+.disk_low .led.hdd{animation:cmfast .5s steps(2) infinite}
+@keyframes cmhdd{0%,100%{opacity:.15}20%{opacity:1}35%{opacity:.2}55%{opacity:1}70%{opacity:.1}}
+@keyframes cmbeat{50%{opacity:.5}}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(86px,1fr));gap:6px;margin-top:8px}
+.tile{box-sizing:border-box;display:flex;flex-direction:column;background:var(--ac-tile-bg,rgba(127,127,127,.09));border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
+:host([tile-order="value"]) .tile{flex-direction:column-reverse}:host([tile-order="value"]) .tile .v{margin:0 0 2px}
+.tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
+.tile .l span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tile .l ha-icon{--mdc-icon-size:13px;flex:none}
+.tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
+.tile.hide{display:none}.tile.on .v,.tile.on .l{color:var(--tc,var(--dc))}.tile.bad .v{color:var(--cm-alert)}.tile.warn .v{color:var(--cm-warn)}
+.noanim *{animation:none!important}
+/* compact : petits emplacements fixes */
+ha-card.compact{display:flex;flex-direction:column;padding:6px}
+.compact .head{flex:none;gap:4px}.compact .title{font-size:12px;line-height:16px}.compact .badge{font-size:10px;padding:0 6px}
+.compact .stage{flex:1 1 auto;min-height:0;max-width:none;margin-top:3px;border-radius:10px}.compact .stage img{max-height:90%}
+.compact .tiles{flex:none;gap:3px;margin-top:3px;grid-template-columns:repeat(auto-fit,minmax(60px,1fr))}.compact .tile{padding:2px 5px;border-radius:8px}.compact .tile .v{font-size:12px;line-height:15px;margin-top:0}
+`;
+
+  const COLORS = { motion: '#ffa000', person: '#ff5252', animal: '#b36bff', vehicle: '#42a5f5' };
+  const ICONS = { motion: 'mdi:motion-sensor', person: 'mdi:walk', animal: 'mdi:paw', vehicle: 'mdi:car' };
+  const ON_RE = /^(on|true|yes|1|detected|active|motion|open|home|night|nuit)$/i;
+
+  // socle commun : lecture des entités, tuiles, actions de l'illustration
+  class Base extends HTMLElement {
+    get _config() { return this._c; }
+    getCardSize() { return 4; }
+    getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+    setConfig(c) {
+      if (window.applianceSize) window.applianceSize(this, c);
+      if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
+      this._c = { ...this.constructor.DEFAULTS, ...c };
+      this._built = false;
+      if (this._hass) this._render();
+    }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
+    _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
+    _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
+    _st(id) { return id && this._hass.states[id]; }
+    _ok(s) { return !!s && !/^(unavailable|unknown)$/i.test(String(s.state)); }
+    _num(id) { const s = this._st(id); return this._ok(s) ? window.applianceNum(s) : NaN; }
+    _unit(id, d) { const s = this._st(id); return String((s && s.attributes && s.attributes.unit_of_measurement) || d || '').trim(); }
+    _on(id) { const s = this._st(id); return this._ok(s) && ON_RE.test(String(s.state).trim()); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _more(id) { window.applianceMore(this, id); }
+    _img() {
+      const c = this._c, custom = String(c.image || '').trim();
+      if (custom) return { uri: custom, custom: true };
+      return IMG[this.constructor.IMGKEY(c)] || IMG[this.constructor.DEFAULTS.model || 'nvr'];
+    }
+    _build() {
+      const c = this._c, root = this.shadowRoot || this.attachShadow({ mode: 'open' }), im = this._img();
+      const label = esc(c.name || this._t(this.constructor.NAME));
+      root.innerHTML = `<style>${CSS}</style><ha-card class="${this.constructor.CLS}">
+        <div class="head"><div class="title" id="cmtitle"></div><div class="badge" id="cmbadge"></div></div>
+        <div class="stage"><div class="glow"></div><div class="wave"></div><div class="wave w2"></div>
+          <div class="ph"><img src="${esc(im.uri)}" alt="${label}">
+            <i class="led pwr" style="left:${LEDS.pwr[0]}%;top:${LEDS.pwr[1]}%"></i><i class="led hdd" style="left:${LEDS.hdd[0]}%;top:${LEDS.hdd[1]}%"></i></div>
+          <div class="vf"></div><div class="rec"><i></i>REC</div><div class="moon"><ha-icon icon="mdi:weather-night"></ha-icon></div>
+          <div class="det"><ha-icon icon="mdi:motion-sensor" id="cmdi"></ha-icon><span id="cmdt"></span></div></div>
+        <div class="tiles">${this.constructor.TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
+      </ha-card>`;
+      const stage = root.querySelector('.stage');
+      // les LED ne sont posées que sur la photo du NVR (leurs coordonnées sont celles de cette photo)
+      if (!this.constructor.HASLEDS || im.custom) root.querySelectorAll('.led').forEach((e) => e.remove());
+      window.applianceBindIllus(this, stage, () => this._more(this._main()));
+      root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => this._tileClick(el.dataset.k)));
+      this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
+    }
+    _fillTiles(V, extraCls) {
+      const c = this._c;
+      this._root.querySelectorAll('.tile').forEach((el) => {
+        const k = el.dataset.k, [id, val, unit, cls, opt] = V[k];
+        el.classList.toggle('hide', !id || c[opt] === false);
+        el.className = `tile${!id || c[opt] === false ? ' hide' : ''}${cls ? ' ' + cls : ''}`;
+        el.style.setProperty('--tc', COLORS[k] || 'var(--dc)');
+        el.querySelector('.lbl').textContent = this._l(k);
+        const small = document.createElement('small'); small.textContent = unit ?? '';
+        el.querySelector('.v').replaceChildren(String(val ?? ''), small);
+      });
+    }
+  }
+
+  /* ---------------- Caméra ---------------- */
+  class ApplianceCameraCard extends Base {
+    static get DEFAULTS() { return { model: 'dome', show_status: true }; }
+    static get NAME() { return 'name_camera'; }
+    static get CLS() { return 'cam'; }
+    static IMGKEY(c) { return ['dome', 'bullet', 'turret'].includes(c.model) ? c.model : 'dome'; }
+    static get TILES() { return [['motion', 'mdi:motion-sensor'], ['person', 'mdi:walk'], ['animal', 'mdi:paw'], ['vehicle', 'mdi:car'], ['sd', 'mdi:sd'], ['night', 'mdi:theme-light-dark']]; }
+    static getConfigElement() { return document.createElement('appliance-camera-card-editor'); }
+    static getStubConfig(hass) {
+      const ids = Object.keys((hass && hass.states) || {});
+      return { entity_camera: ids.find((i) => i.startsWith('camera.')) || '' };
+    }
+    _main() { const c = this._c; return c.entity_camera || c.entity_person || c.entity_motion || c.entity_animal || c.entity_vehicle || ''; }
+    _tileClick(k) {
+      const c = this._c, id = { motion: c.entity_motion, person: c.entity_person, animal: c.entity_animal, vehicle: c.entity_vehicle, sd: c.entity_sd, night: c.entity_night }[k];
+      // interrupteur jour / nuit : un clic bascule (switch / input_boolean), sinon fiche de l'entité
+      if (k === 'night' && id && /^(switch|input_boolean)\./.test(id) && this._hass) { this._hass.callService('homeassistant', 'toggle', { entity_id: id }); return; }
+      this._more(id);
+    }
+    _render() {
+      if (!this._built) this._build();
+      const c = this._c, r = this._root, card = this._card;
+      const cam = this._st(c.entity_camera), ids = ['entity_camera', 'entity_motion', 'entity_person', 'entity_animal', 'entity_vehicle'].map((k) => c[k]).filter(Boolean);
+      const online = !ids.length || ids.some((i) => this._ok(this._st(i)));
+      // détection : priorité personne > animal > véhicule > mouvement
+      const det = this._on(c.entity_person) ? 'person' : this._on(c.entity_animal) ? 'animal' : this._on(c.entity_vehicle) ? 'vehicle' : this._on(c.entity_motion) ? 'motion' : '';
+      const nightS = this._st(c.entity_night), night = this._ok(nightS) && /^(on|night|nuit|true|ir|nachts?)$/i.test(String(nightS.state).trim());
+      const st = !online ? 'offline' : det || 'idle';
+      card.className = `cam ${st}${night ? ' night' : ''}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`;
+      card.style.setProperty('--dc', COLORS[det] || '#ffa000');
+      r.getElementById('cmtitle').textContent = c.name || this._t('name_camera');
+      const badge = r.getElementById('cmbadge'); badge.textContent = this._t(st); badge.style.display = c.show_status === false ? 'none' : '';
+      if (det) { r.getElementById('cmdi').setAttribute('icon', ICONS[det]); r.getElementById('cmdt').textContent = this._t(det); }
+      const dv = (k, id) => [id, this._ok(this._st(id)) ? (this._on(id) ? this._t('detected') : this._t('clear')) : '--', '', this._on(id) ? 'on' : '', `show_${k}`];
+      const sdn = this._num(c.entity_sd);
+      this._fillTiles({
+        motion: dv('motion', c.entity_motion), person: dv('person', c.entity_person), animal: dv('animal', c.entity_animal), vehicle: dv('vehicle', c.entity_vehicle),
+        sd: [c.entity_sd, this._fmt(sdn, sdn < 10 ? 1 : 0), this._unit(c.entity_sd, '%'), !isNaN(sdn) && this._unit(c.entity_sd, '%') === '%' && sdn < Number(c.sd_low ?? 10) ? 'bad' : '', 'show_sd'],
+        night: [c.entity_night, this._ok(nightS) ? this._t(night ? 'night' : 'day') : '--', '', night ? 'warn' : '', 'show_night'],
+      });
+    }
+  }
+
+  /* ---------------- NVR ---------------- */
+  class ApplianceNvrCard extends Base {
+    static get DEFAULTS() { return { disk_low: 10, cpu_high: 85, show_status: true }; }
+    static get NAME() { return 'name_nvr'; }
+    static get CLS() { return 'nvr'; }
+    static get HASLEDS() { return true; }
+    static IMGKEY() { return 'nvr'; }
+    static get TILES() { return [['memory', 'mdi:memory'], ['disk', 'mdi:harddisk'], ['power', 'mdi:flash'], ['energy', 'mdi:lightning-bolt-circle'], ['uptime', 'mdi:timer-outline'], ['cpu', 'mdi:cpu-64-bit']]; }
+    static getConfigElement() { return document.createElement('appliance-nvr-card-editor'); }
+    static getStubConfig(hass) {
+      const ids = Object.keys((hass && hass.states) || {});
+      return { entity: ids.find((i) => /(nvr|reolink)/i.test(i) && /^(binary_sensor|sensor|switch)\./.test(i)) || '' };
+    }
+    _main() { const c = this._c; return c.entity || c.entity_cpu || c.entity_power || ''; }
+    _tileClick(k) { const c = this._c; this._more({ memory: c.entity_memory_free, disk: c.entity_disk_free, power: c.entity_power, energy: c.entity_energy, uptime: c.entity_uptime, cpu: c.entity_cpu }[k]); }
+    // uptime : durée (s / min / h / j) ou horodatage du dernier démarrage → « 3 j 4 h »
+    _uptime(id) {
+      const s = this._st(id); if (!this._ok(s)) return '--';
+      let sec = NaN; const n = parseFloat(String(s.state).replace(',', '.'));
+      const u = this._unit(id, '').toLowerCase();
+      if (isFinite(n) && !/^\d{4}-\d{2}-\d{2}/.test(String(s.state))) sec = n * ({ s: 1, min: 60, h: 3600, d: 86400 }[u] || 1);
+      else { const t = Date.parse(s.state); if (t) sec = (Date.now() - t) / 1000; }
+      if (!isFinite(sec) || sec < 0) return String(s.state);
+      const d = Math.floor(sec / 86400), h = Math.floor(sec % 86400 / 3600), m = Math.floor(sec % 3600 / 60);
+      return d ? `${d} ${this._t('d')} ${h} ${this._t('h')}` : h ? `${h} ${this._t('h')} ${m} min` : `${m} min`;
+    }
+    _render() {
+      if (!this._built) this._build();
+      const c = this._c, r = this._root, card = this._card;
+      const e = this._st(c.entity), cpu = this._num(c.entity_cpu), disk = this._num(c.entity_disk_free), mem = this._num(c.entity_memory_free);
+      const pw = window.applianceWatts ? window.applianceWatts(this._st(c.entity_power)) : this._num(c.entity_power);
+      const known = [c.entity, c.entity_cpu, c.entity_power, c.entity_disk_free, c.entity_memory_free, c.entity_uptime].some((i) => i && this._ok(this._st(i)));
+      const lowDisk = !isNaN(disk) && disk <= Number(c.disk_low), busy = !isNaN(cpu) && cpu >= Number(c.cpu_high);
+      const off = e && /^(off|false|0)$/i.test(String(e.state).trim());
+      const st = !known ? 'unavailable' : off ? 'off' : lowDisk ? 'disk_low' : busy ? 'busy' : 'running';
+      card.className = `nvr ${st}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`;
+      card.style.setProperty('--dc', st === 'disk_low' ? '#db4437' : '#ffa000');
+      // le voyant HDD clignote plus vite quand le processeur travaille
+      card.style.setProperty('--hz', `${(isNaN(cpu) ? 1.4 : Math.max(.5, 1.6 - cpu / 100)).toFixed(2)}s`);
+      r.getElementById('cmtitle').textContent = c.name || this._t('name_nvr');
+      const badge = r.getElementById('cmbadge'); badge.textContent = this._t(st); badge.style.display = c.show_status === false ? 'none' : '';
+      const pct = (id, v, low) => [id, this._fmt(v, 0), this._unit(id, '%'), !isNaN(v) && low ? 'bad' : ''];
+      this._fillTiles({
+        memory: [...pct(c.entity_memory_free, mem, mem <= 10), 'show_memory'],
+        disk: [...pct(c.entity_disk_free, disk, lowDisk), 'show_disk'],
+        power: [c.entity_power, this._fmt(pw, pw < 10 ? 1 : 0), 'W', '', 'show_power'],
+        energy: [c.entity_energy, this._fmt(this._num(c.entity_energy), 2), this._unit(c.entity_energy, 'kWh'), '', 'show_energy'],
+        uptime: [c.entity_uptime, this._uptime(c.entity_uptime), '', '', 'show_uptime'],
+        cpu: [...pct(c.entity_cpu, cpu, busy), 'show_cpu'],
+      });
+    }
+  }
+
+  /* ---------------- éditeurs ---------------- */
+  class EditorBase extends HTMLElement {
+    setConfig(c) { this._c = c; this._draw(); }
+    set hass(h) { this._hass = h; if (this._form) this._form.hass = h; }
+    _draw() {
+      if (!this._form) {
+        this._form = document.createElement('ha-form');
+        this._form.addEventListener('value-changed', (e) => { this._c = e.detail.value; this.dispatchEvent(new CustomEvent('config-changed', { detail: { config: this._c }, bubbles: true, composed: true })); });
+        this.appendChild(this._form);
+      }
+      this._form.hass = this._hass; this._form.data = { ...this._c };
+      const lang = { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' };
+      this._form.schema = [
+        { name: 'name', selector: { text: {} } }, { name: 'labels', selector: { object: {} } },
+        ...this.top(),
+        { name: 'image', selector: { text: {} } },
+        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
+        { name: 'transparent', selector: { boolean: {} } },
+        ...window.applianceTileFields(this._hass),
+        ...this.entities(),
+        ...window.applianceActionFields,
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: lang[value] || value })) } } },
+        { type: 'grid', name: '', schema: [{ name: 'show_status', selector: { boolean: {} }, default: true }, { name: 'compact', selector: { boolean: {} }, default: false }, { name: 'animations', selector: { boolean: {} }, default: true }, ...this.flags().map((name) => ({ name, selector: { boolean: {} }, default: true }))] },
+      ];
+      this._form.computeLabel = (s) => { const l = window.applianceLang(T, this._c, this._hass); return T[l][`f_${s.name}`] ?? T.en[`f_${s.name}`] ?? window.applianceEditorLabel(s.name, this._hass); };
+    }
+  }
+  const ent = (name, domain) => ({ name, selector: { entity: domain ? { domain } : {} } });
+  class ApplianceCameraCardEditor extends EditorBase {
+    top() { return [{ name: 'model', default: 'dome', selector: { select: { mode: 'dropdown', options: [{ value: 'dome', label: 'Dome' }, { value: 'bullet', label: 'Bullet' }, { value: 'turret', label: 'Turret' }] } } }]; }
+    entities() { return [ent('entity_camera', ['camera']), ent('entity_motion', ['binary_sensor', 'sensor', 'switch']), ent('entity_person', ['binary_sensor', 'sensor', 'switch']), ent('entity_animal', ['binary_sensor', 'sensor', 'switch']), ent('entity_vehicle', ['binary_sensor', 'sensor', 'switch']), ent('entity_sd', 'sensor'), ent('entity_night', ['switch', 'input_boolean', 'binary_sensor', 'select', 'sensor']), { name: 'sd_low', default: 10, selector: { number: { min: 0, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } }]; }
+    flags() { return ['show_motion', 'show_person', 'show_animal', 'show_vehicle', 'show_sd', 'show_night']; }
+  }
+  class ApplianceNvrCardEditor extends EditorBase {
+    top() { return []; }
+    entities() { return [ent('entity', ['binary_sensor', 'switch', 'sensor', 'input_boolean']), ent('entity_memory_free', 'sensor'), ent('entity_disk_free', 'sensor'), ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'), ent('entity_uptime', 'sensor'), ent('entity_cpu', 'sensor'),
+      { name: 'disk_low', default: 10, selector: { number: { min: 0, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } }, { name: 'cpu_high', default: 85, selector: { number: { min: 0, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } }]; }
+    flags() { return ['show_memory', 'show_disk', 'show_power', 'show_energy', 'show_uptime', 'show_cpu']; }
+  }
+
+  const defs = [['appliance-camera-card', ApplianceCameraCard, ApplianceCameraCardEditor, 'name_camera', 'Caméra de surveillance : détections (mouvement, personne, animal, véhicule), mode nuit, carte SD ; un clic ouvre la vidéo.'],
+    ['appliance-nvr-card', ApplianceNvrCard, ApplianceNvrCardEditor, 'name_nvr', 'Enregistreur vidéo NVR : voyants animés, mémoire, disque, puissance, énergie, uptime, CPU.']];
+  window.customCards = window.customCards || [];
+  for (const [tag, Card, Editor, key, desc] of defs) {
+    customElements.define(tag, Card);
+    customElements.define(tag + '-editor', Editor);
+    window.customCards.push({ type: tag, name: `Appliance – ${T.en[key]} / ${T.fr[key]}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l][key]])), description: desc, preview: true,
+      documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/camera.md' });
+  }
+})();
+
+/* Carte « Switch PoE » — custom:appliance-poe-switch-card
+ * Switchs PoE gérés dans le cloud (SSCPOE / Steamemo : GPS208, GPS204V, GPS105S…) : face avant dessinée en SVG avec ses ports
+ * (LED de liaison verte qui clignote avec le trafic, LED PoE orange qui respire quand le port alimente un appareil).
+ * Une seule option `prefix` (ex. gps208xxxx_arubg3l) retrouve toutes les entités : switch.<prefix>_<n>_poe / _extend,
+ * sensor.<prefix>_<n>_link / _power / _rx / _tx, ports LAN <prefix>_lan<n>_*, <prefix>_total_power et <prefix>_voltage.
+ * Un clic sur un port le sélectionne : détail (liaison, PoE, puissance, débits) et boutons PoE / Extend (confirmation avant de couper le PoE).
+ */
+(() => {
+  const TAG = 'appliance-poe-switch-card';
+  if (customElements.get(TAG)) return;
+
+  const T = {
+    "en": {
+      "name": "PoE switch",
+      "unavailable": "Unavailable",
+      "up": "Up",
+      "down": "Down",
+      "on": "On",
+      "off": "Off",
+      "total": "Total power",
+      "voltage": "Voltage",
+      "poe": "PoE ports",
+      "links": "Links",
+      "port": "Port",
+      "power": "Power",
+      "extend": "Extend",
+      "uplink": "UPLINK",
+      "hint": "Tap a port for its details",
+      "confirm_off": "Cut the PoE power of {port}? The connected device will turn off.",
+      "f_model": "Switch model",
+      "f_prefix": "Entity prefix (e.g. gps208xxxx_arubg3l)",
+      "f_entity_total_power": "Total power (optional, overrides the prefix)",
+      "f_entity_voltage": "Voltage (optional, overrides the prefix)",
+      "f_show_total": "Total power tile",
+      "f_show_voltage": "Voltage tile",
+      "f_show_poe": "PoE ports tile",
+      "f_show_links": "Links tile"
+    },
+    "fr": {
+      "name": "Switch PoE",
+      "unavailable": "Indisponible",
+      "up": "Actifs",
+      "down": "Inactif",
+      "on": "Activé",
+      "off": "Coupé",
+      "total": "Puissance totale",
+      "voltage": "Tension",
+      "poe": "Ports PoE",
+      "links": "Liaisons",
+      "port": "Port",
+      "power": "Puissance",
+      "extend": "Extend",
+      "uplink": "LIAISON MONTANTE",
+      "hint": "Touchez un port pour son détail",
+      "confirm_off": "Couper l'alimentation PoE du {port} ? L'appareil branché va s'éteindre.",
+      "f_model": "Modèle de switch",
+      "f_prefix": "Préfixe des entités (ex. gps208xxxx_arubg3l)",
+      "f_entity_total_power": "Puissance totale (facultatif, remplace le préfixe)",
+      "f_entity_voltage": "Tension (facultatif, remplace le préfixe)",
+      "f_show_total": "Tuile puissance totale",
+      "f_show_voltage": "Tuile tension",
+      "f_show_poe": "Tuile ports PoE",
+      "f_show_links": "Tuile liaisons"
+    }
+  };
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+  // modèles : nombre de ports PoE et de ports LAN (liaison montante)
+  const MODELS = { gps208: { poe: 8, lan: 2, label: 'GPS208' }, gps204v: { poe: 4, lan: 2, label: 'GPS204V' }, gps105s: { poe: 4, lan: 1, label: 'GPS105S' } };
+  const DOWN_RE = /^(off|down|false|no|0|none|disconnected|unplugged|no.?link|nolink|unavailable|unknown|)$/i;
+
+  const CSS = `
+:host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--ps-ok:var(--appliance-ok-color,#43a047);--ps-warn:var(--appliance-warn-color,#ffa000);--ps-alert:var(--appliance-alert-color,#db4437)}
+.head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
+.online .badge{background:color-mix(in srgb,var(--ps-ok) 20%,transparent);color:var(--ps-ok)}
+.unavailable .badge{background:color-mix(in srgb,var(--ps-alert) 20%,transparent);color:var(--ps-alert)}
+svg{display:block;width:100%;max-width:calc(560px * var(--illus-scale,1));height:auto;margin:6px auto 0;overflow:visible}
+.port{cursor:pointer}
+.sock{fill:#15181c;stroke:#5b636c;stroke-width:1}.lan .sock{stroke:#7a8cff}
+.pin{fill:#c9a24a}
+.led{fill:#2b3138;transition:fill .3s}
+.up .ll{fill:#3ddc6a;filter:drop-shadow(0 0 2px #3ddc6a)}
+.up.traf .ll{animation:psblink var(--tr,1s) steps(1) infinite}
+.poe .pl{fill:#7a5a1a}
+.act .pl{fill:#ffb300;filter:drop-shadow(0 0 3px #ffb300);animation:psbreath 2.4s ease-in-out infinite}
+.num{font:600 7.5px/1 sans-serif;fill:#aeb7c0;text-anchor:middle}
+.sel .sock{stroke:var(--primary-color,#03a9f4);stroke-width:2}
+.sel .selr{opacity:1}.selr{opacity:0;fill:none;stroke:var(--primary-color,#03a9f4);stroke-width:1.2;stroke-dasharray:3 2}
+.dim{opacity:.35}
+.unavailable svg{filter:grayscale(.8) opacity(.6)}
+@keyframes psblink{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes psbreath{50%{opacity:.45}}
+.noanim *{animation:none!important}
+.detail{margin-top:8px;padding:8px 10px;border-radius:12px;background:var(--ac-tile-bg,rgba(127,127,127,.09));font-size:12px;color:var(--primary-text-color)}
+.detail.hint{color:var(--secondary-text-color);text-align:center}
+.detail .dh{display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:600;font-size:13px}
+.detail .dg{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:4px 10px;margin-top:6px;color:var(--secondary-text-color)}
+.detail .dg b{display:block;color:var(--primary-text-color);font-weight:600}
+.detail .btns{display:flex;gap:6px;margin-top:8px}
+.detail button{flex:1 1 0;display:flex;align-items:center;justify-content:center;gap:4px;border:0;border-radius:10px;padding:6px 8px;cursor:pointer;background:var(--secondary-background-color);color:var(--primary-text-color);font:500 12px/16px var(--paper-font-body1_-_font-family,Roboto,sans-serif)}
+.detail button.on{background:#ffb300;color:#2a2112}
+.detail button.hide{display:none}.detail button ha-icon{--mdc-icon-size:16px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(86px,1fr));gap:6px;margin-top:8px}
+.tile{box-sizing:border-box;display:flex;flex-direction:column;background:var(--ac-tile-bg,rgba(127,127,127,.09));border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
+:host([tile-order="value"]) .tile{flex-direction:column-reverse}:host([tile-order="value"]) .tile .v{margin:0 0 2px}
+.tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
+.tile .l span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tile .l ha-icon{--mdc-icon-size:13px;flex:none}
+.tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
+.tile.hide{display:none}
+ha-card.compact{display:flex;flex-direction:column;padding:6px}
+.compact .head{flex:none}.compact .title{font-size:12px;line-height:16px}.compact .badge{font-size:10px;padding:0 6px}
+.compact svg{margin-top:3px}.compact .tiles{gap:3px;margin-top:4px}.compact .tile{padding:2px 5px;border-radius:8px}.compact .tile .v{font-size:12px;line-height:15px;margin-top:0}
+`;
+
+  const TILES = [['total', 'mdi:flash'], ['voltage', 'mdi:sine-wave'], ['poe', 'mdi:ethernet-cable'], ['links', 'mdi:lan-connect']];
+
+  class ApplianceSwitchPoeCard extends HTMLElement {
+    get _config() { return this._c; }
+    static getConfigElement() { return document.createElement(TAG + '-editor'); }
+    static getStubConfig(hass) {
+      const ids = Object.keys((hass && hass.states) || {}), m = ids.map((i) => /^switch\.(.+?)_(?:1|lan1)_(?:poe|extend)$/.exec(i)).find(Boolean);
+      return { model: 'gps208', prefix: m ? m[1] : '' };
+    }
+    setConfig(c) {
+      if (window.applianceSize) window.applianceSize(this, c);
+      if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
+      this._c = { model: 'gps208', show_status: true, show_total: true, show_voltage: true, show_poe: true, show_links: true, ...c };
+      this._model = MODELS[this._c.model] || MODELS.gps208;
+      const p = String(this._c.prefix || '').trim().replace(/^(sensor|switch)\./, '').replace(/_+$/, '');
+      this._p = p;
+      // entités dérivées du préfixe : liste suivie par applianceChanged (le préfixe seul n'est pas un identifiant d'entité)
+      this._ports = [];
+      for (let i = 1; i <= this._model.poe; i++) this._ports.push(this._mk('poe', i, `${i}`));
+      for (let i = 1; i <= this._model.lan; i++) this._ports.push(this._mk('lan', i, `lan${i}`));
+      const all = this._ports.flatMap((o) => [o.link, o.rx, o.tx, o.ext, o.poe, o.pw]).filter(Boolean);
+      this._tot = this._c.entity_total_power || (p ? `sensor.${p}_total_power` : '');
+      this._volt = this._c.entity_voltage || (p ? `sensor.${p}_voltage` : '');
+      this._watch = { ids: [...all, this._tot, this._volt].filter(Boolean) };
+      this._sel = this._sel && this._ports.some((o) => o.key === this._sel) ? this._sel : '';
+      this._built = false;
+      if (this._hass) this._render();
+    }
+    // entités d'un port : PoE (1…n) ou LAN (lan1…)
+    _mk(kind, n, tag) {
+      const p = this._p, e = (d, s) => (p ? `${d}.${p}_${tag}_${s}` : '');
+      return { kind, n, key: `${kind}${n}`, link: e('sensor', 'link'), rx: e('sensor', 'rx'), tx: e('sensor', 'tx'), ext: e('switch', 'extend'),
+        poe: kind === 'poe' ? e('switch', 'poe') : '', pw: kind === 'poe' ? e('sensor', 'power') : '' };
+    }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._watch); this._hass = h; if (ch) this._render(); }
+    getCardSize() { return 4; }
+    getGridOptions() { return { columns: 12, min_columns: 4, rows: 'auto', min_rows: 1 }; }
+
+    _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
+    _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
+    _lang() { return window.applianceLang(T, this._c, this._hass); }
+    _st(id) { return id && this._hass.states[id]; }
+    _ok(s) { return !!s && !/^(unavailable|unknown)$/i.test(String(s.state)); }
+    _num(id) { const s = this._st(id); if (!this._ok(s)) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
+    _unit(id, d) { const s = this._st(id); return String((s && s.attributes && s.attributes.unit_of_measurement) || d || '').trim(); }
+    _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    _on(id) { const s = this._st(id); return this._ok(s) && /^(on|true|1)$/i.test(String(s.state).trim()); }
+    _more(id) { window.applianceMore(this, id); }
+
+    // face avant : n ports PoE, un espace, puis les ports LAN. Repères : largeur variable × 100.
+    _svg() {
+      const m = this._model, W = 40, M = 18, gap = 16, w = M * 2 + m.poe * W + gap + m.lan * W;
+      const cell = (o, i, x) => `<g class="port ${o.kind}" data-k="${o.key}" transform="translate(${x} 0)">
+        <rect class="selr" x="1" y="26" width="${W - 2}" height="58" rx="5"/>
+        <circle class="led ll" cx="12" cy="36" r="2.4"/>${o.kind === 'poe' ? '<circle class="led pl" cx="28" cy="36" r="2.4"/>' : ''}
+        <rect class="sock" x="7" y="44" width="26" height="22" rx="3"/><path class="pin" d="M11 47h18v2H11z"/><path class="pin" d="M12 56h16v1.6H12zM12 60h16v1.6H12z" opacity=".7"/>
+        <text class="num" x="20" y="79">${o.kind === 'lan' ? 'LAN' + o.n : o.n}</text><rect x="0" y="22" width="${W}" height="64" fill="transparent"/></g>`;
+      let x = M, out = '';
+      this._ports.forEach((o, i) => { if (o.kind === 'lan' && o.n === 1) x += gap; out += cell(o, i, x); x += W; });
+      return `<svg viewBox="0 0 ${w} 100" role="img" aria-label="${esc(this._c.name || this._t('name'))}">
+        <rect x="2" y="6" width="${w - 4}" height="90" rx="9" fill="#2a2f36" stroke="#4a525b" stroke-width="1.5"/>
+        <rect x="2" y="6" width="${w - 4}" height="14" rx="9" fill="#39404a"/><rect x="2" y="14" width="${w - 4}" height="6" fill="#39404a"/>
+        <text x="${M}" y="16.5" font-family="sans-serif" font-size="8" font-weight="700" fill="#cfd6dd" letter-spacing=".6">PoE SWITCH · ${m.label}</text>
+        <circle cx="${w - 16}" cy="13" r="2.4" class="led pwr" fill="#3ddc6a"/>
+        <text x="${M + m.poe * W + gap / 2 + 0.5}" y="94" class="num" style="font-size:6.5px;opacity:.8">${esc(this._t('uplink'))}</text>
+        ${out}</svg>`;
+    }
+
+    _build() {
+      const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
+      root.innerHTML = `<style>${CSS}</style><ha-card>
+        <div class="head"><div class="title" id="pstitle"></div><div class="badge" id="psbadge"></div></div>
+        ${this._svg()}
+        <div class="detail hint" id="psdetail"></div>
+        <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
+      </ha-card>`;
+      root.querySelectorAll('.port').forEach((g) => g.addEventListener('click', () => {
+        this._sel = this._sel === g.dataset.k ? '' : g.dataset.k;
+        this._render();
+      }));
+      root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => this._more({ total: this._tot, voltage: this._volt }[el.dataset.k])));
+      this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
+    }
+
+    // liaison : texte d'état, vitesse numérique (Mbit/s) → « 1 G », sinon l'état tel quel
+    _link(o) {
+      const s = this._st(o.link);
+      if (!this._ok(s)) return { up: false, txt: '--' };
+      const raw = String(s.state).trim(), n = parseFloat(raw.replace(',', '.'));
+      if (isFinite(n) && /^[\d.,]+$/.test(raw)) return { up: n > 0, txt: n <= 0 ? this._t('down') : n >= 1000 ? `${this._fmt(n / 1000, 1)} G` : `${this._fmt(n)} M` };
+      const up = !DOWN_RE.test(raw);
+      return { up, txt: /^(on|up|true|connected|link)$/i.test(raw) ? this._t('up') : /^(off|down|false)$/i.test(raw) ? this._t('down') : raw };
+    }
+    _traffic(o) { const a = this._num(o.rx), b = this._num(o.tx); return (isNaN(a) ? 0 : a) + (isNaN(b) ? 0 : b); }
+
+    _render() {
+      if (!this._built) this._build();
+      const c = this._c, r = this._root, card = this._card;
+      const known = this._watch.ids.some((i) => this._ok(this._st(i)));
+      let up = 0, poeOn = 0;
+      this._ports.forEach((o) => {
+        const g = r.querySelector(`.port[data-k="${o.key}"]`); if (!g) return;
+        const l = this._link(o), pw = this._num(o.pw), poe = o.poe ? this._on(o.poe) : false, act = poe && (isNaN(pw) ? l.up : pw > 0.05), tr = this._traffic(o);
+        if (l.up) up++; if (poe) poeOn++;
+        g.classList.toggle('up', l.up); g.classList.toggle('poe', poe); g.classList.toggle('act', act); g.classList.toggle('traf', l.up && tr > 0);
+        g.classList.toggle('sel', this._sel === o.key);
+        g.style.setProperty('--tr', `${Math.max(.15, Math.min(1.4, 1.4 - Math.log10(1 + tr) * .45)).toFixed(2)}s`);
+        g.classList.toggle('dim', !known);
+      });
+      card.className = `${known ? 'online' : 'unavailable'}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`;
+      r.getElementById('pstitle').textContent = c.name || this._t('name');
+      const badge = r.getElementById('psbadge'); badge.textContent = known ? `${up}/${this._ports.length} ${this._t('up').toLowerCase()}` : this._t('unavailable'); badge.style.display = c.show_status === false ? 'none' : '';
+      this._detail(r.getElementById('psdetail'));
+      const tot = this._num(this._tot), vol = this._num(this._volt);
+      const V = {
+        total: [this._tot, this._fmt(tot, tot < 10 ? 1 : 0), this._unit(this._tot, 'W'), 'show_total'],
+        voltage: [this._volt, this._fmt(vol, 1), this._unit(this._volt, 'V'), 'show_voltage'],
+        poe: [this._model.poe && this._p, `${poeOn}/${this._model.poe}`, '', 'show_poe'],
+        links: [this._p, `${up}/${this._ports.length}`, '', 'show_links'],
+      };
+      r.querySelectorAll('.tile').forEach((el) => {
+        const [id, val, unit, opt] = V[el.dataset.k];
+        el.classList.toggle('hide', !id || c[opt] === false);
+        el.querySelector('.lbl').textContent = this._l(el.dataset.k);
+        const small = document.createElement('small'); small.textContent = unit ?? '';
+        el.querySelector('.v').replaceChildren(String(val ?? ''), small);
+      });
+    }
+
+    // détail du port sélectionné : liaison, PoE, puissance, débits, boutons PoE / Extend
+    _detail(box) {
+      const o = this._ports.find((p) => p.key === this._sel);
+      if (!o) { box.className = 'detail hint'; box.textContent = this._t('hint'); return; }
+      const l = this._link(o), pw = this._num(o.pw), rx = this._num(o.rx), tx = this._num(o.tx), poe = o.poe ? this._on(o.poe) : false, ext = o.ext ? this._on(o.ext) : false;
+      const name = o.kind === 'lan' ? `LAN ${o.n}` : `${this._t('port')} ${o.n}`;
+      box.className = 'detail';
+      box.innerHTML = `<div class="dh"><span>${esc(name)}</span><span>${esc(l.txt)}</span></div>
+        <div class="dg">${o.kind === 'poe' ? `<div>PoE<b>${esc(this._t(poe ? 'on' : 'off'))}</b></div><div>${esc(this._t('power'))}<b>${this._fmt(pw, pw < 10 ? 1 : 0)} ${esc(this._unit(o.pw, 'W'))}</b></div>` : ''}
+          <div>↓ rx<b>${this._fmt(rx, 1)} ${esc(this._unit(o.rx, ''))}</b></div><div>↑ tx<b>${this._fmt(tx, 1)} ${esc(this._unit(o.tx, ''))}</b></div></div>
+        <div class="btns"><button id="bpoe" class="${poe ? 'on' : ''}${o.poe && this._st(o.poe) ? '' : ' hide'}"><ha-icon icon="mdi:flash"></ha-icon>PoE ${esc(this._t(poe ? 'on' : 'off'))}</button>
+          <button id="bext" class="${ext ? 'on' : ''}${o.ext && this._st(o.ext) ? '' : ' hide'}"><ha-icon icon="mdi:arrow-expand-horizontal"></ha-icon>${esc(this._t('extend'))} ${esc(this._t(ext ? 'on' : 'off'))}</button></div>`;
+      const sw = (id, ask) => () => {
+        const on = this._on(id);
+        if (ask && on && !window.confirm(this._t('confirm_off').replace('{port}', name))) return;
+        this._hass.callService('switch', on ? 'turn_off' : 'turn_on', { entity_id: id });
+      };
+      if (o.poe) box.querySelector('#bpoe').addEventListener('click', sw(o.poe, true));
+      if (o.ext) box.querySelector('#bext').addEventListener('click', sw(o.ext, false));
+    }
+  }
+  customElements.define(TAG, ApplianceSwitchPoeCard);
+
+  /* ---- éditeur visuel ---- */
+  class ApplianceSwitchPoeCardEditor extends HTMLElement {
+    setConfig(c) { this._c = c; this._draw(); }
+    set hass(h) { this._hass = h; if (this._form) this._form.hass = h; }
+    _draw() {
+      if (!this._form) {
+        this._form = document.createElement('ha-form');
+        this._form.addEventListener('value-changed', (e) => { this._c = e.detail.value; this.dispatchEvent(new CustomEvent('config-changed', { detail: { config: this._c }, bubbles: true, composed: true })); });
+        this.appendChild(this._form);
+      }
+      const bool = (name, def = true) => ({ name, selector: { boolean: {} }, default: def });
+      this._form.hass = this._hass; this._form.data = { ...this._c };
+      this._form.schema = [
+        { name: 'name', selector: { text: {} } }, { name: 'labels', selector: { object: {} } },
+        { name: 'model', default: 'gps208', selector: { select: { mode: 'dropdown', options: Object.entries(MODELS).map(([value, m]) => ({ value, label: `${m.label} (${m.poe} PoE + ${m.lan} LAN)` })) } } },
+        { name: 'prefix', selector: { text: {} } },
+        { name: 'entity_total_power', selector: { entity: { domain: 'sensor' } } }, { name: 'entity_voltage', selector: { entity: { domain: 'sensor' } } },
+        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
+        { name: 'transparent', selector: { boolean: {} } },
+        ...window.applianceTileFields(this._hass),
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('compact', false), bool('animations'), bool('show_total'), bool('show_voltage'), bool('show_poe'), bool('show_links')] },
+      ];
+      this._form.computeLabel = (s) => { const l = window.applianceLang(T, this._c, this._hass); return T[l][`f_${s.name}`] ?? T.en[`f_${s.name}`] ?? window.applianceEditorLabel(s.name, this._hass); };
+    }
+  }
+  customElements.define(TAG + '-editor', ApplianceSwitchPoeCardEditor);
+
+  window.customCards = window.customCards || [];
+  window.customCards.push({
+    type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
+    description: 'Switch PoE (SSCPOE / Steamemo GPS208, GPS204V, GPS105S) : face avant avec ports, LED de liaison et PoE, puissance, débits ; un clic sur un port le détaille et pilote son PoE.', preview: true,
+    documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/poe-switch.md',
   });
 })();
 
