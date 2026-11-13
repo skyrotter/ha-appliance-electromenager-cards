@@ -15611,7 +15611,14 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_rinse": "Spülung (an = läuft)",
       "entity_fan": "Lüfterstufe",
       "entity_tank": "Wassertank (voll / Füllstand)",
-      "temp_step": "Temperaturschritt"
+      "temp_step": "Temperaturschritt",
+      "slider_position": "Position des Reglers",
+      "last_cycle": "Letzten Zyklus anzeigen (Start, Ende, Dauer, Energie)",
+      "cycle_gap": "Pause innerhalb eines Zyklus (Min.)",
+      "tank_volume": "Speicherkapazität (L)",
+      "hot_water_level": "Verbleibendes Warmwasser (%)",
+      "hot_water_volume": "Verbleibendes Warmwasser (L)",
+      "show_cycle": "Letzten Zyklus anzeigen"
     },
     "es": {
       "extra_tiles": "Tiles extra (lista: entity, name, icon)",
@@ -33444,7 +33451,10 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       "brightness": "Helligkeit",
       "power": "Leistung",
       "energy": "Energie",
-      "ceiling_spot": "Einbaustrahler"
+      "ceiling_spot": "Einbaustrahler",
+      "slider_bottom": "Unter der Glühbirne",
+      "slider_left": "Links",
+      "slider_right": "Rechts"
     },
     "es": {
       "light_bulb": "Bombilla",
@@ -49461,7 +49471,11 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       "temp": "Temperatur",
       "target": "Soll",
       "bottom": "Unten",
-      "reserve": "Warmwasser"
+      "reserve": "Warmwasser",
+      "volume": "Volumen",
+      "cycle": "Letzter Zyklus",
+      "duration": "Zyklusdauer",
+      "cycle_kwh": "Zyklusenergie"
     },
     "es": {
       "name": "Termo termodinámico",
