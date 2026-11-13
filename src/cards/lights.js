@@ -45,15 +45,19 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 .tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap}
 .tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
 .tile.hide{display:none}
-/* curseur de luminosité (brightness_slider) : tuile pleine largeur, gardée grisée quand c'est éteint */
-.tile .bs{display:none}
-.tile.slide{grid-column:1/-1;cursor:default;display:flex;flex-wrap:wrap;align-items:center;gap:2px 8px;text-align:left;padding:6px 10px}
-.tile.slide .l{flex:1 0 auto;justify-content:flex-start;order:1}.tile.slide .v{flex:none;min-width:40px;text-align:right;margin-top:0;order:3}
-.tile.slide .bs{display:block;flex:1 1 90px;min-width:90px;margin:0;accent-color:var(--lt-ok);cursor:pointer;height:22px;order:2}
-.compact .tile.slide .lbl{display:none}.compact .tile.slide .l{flex:0 0 auto}
-.tile.slide.dim .v,.tile.slide.dim .l{opacity:.55}
-.tile.slide.dim .bs{accent-color:#9aa0a6}
-.compact .tile.slide{padding:3px 8px}
+/* curseur de luminosité (brightness_slider) : posé dans la scène, sous l'ampoule, sans tuile en plus (gagne en hauteur) */
+.sb{position:absolute;left:8%;right:8%;bottom:6px;display:none;align-items:center;gap:6px;padding:2px 9px;border-radius:12px;background:rgba(255,255,255,.14);backdrop-filter:blur(3px);cursor:default}
+.stage.hasbs .sb{display:flex}
+.sb .bs{flex:1 1 auto;min-width:0;margin:0;height:20px;accent-color:var(--lt-ok);cursor:pointer}
+.sb .sv{flex:none;min-width:32px;text-align:right;font:600 11px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif);color:#fff}
+.sb.dim{opacity:.6}.sb.dim .bs{accent-color:#9aa0a6}
+.compact .sb{bottom:3px;padding:0 6px}
+/* slider_position left / right : curseur vertical sur le côté de la scène, on glisse vers le haut ou vers le bas */
+.stage.sbl .sb,.stage.sbr .sb{top:12%;bottom:12%;left:auto;right:auto;width:30px;flex-direction:column;padding:8px 0 6px;gap:4px;border-radius:15px}
+.stage.sbl .sb{left:6px}.stage.sbr .sb{right:6px}
+.stage.sbl .sb .bs,.stage.sbr .sb .bs{writing-mode:vertical-lr;direction:rtl;-webkit-appearance:slider-vertical;appearance:slider-vertical;width:20px;height:auto;flex:1 1 auto;min-height:0}
+.stage.sbl .sb .sv,.stage.sbr .sb .sv{order:-1;min-width:0;text-align:center;font-size:10px}
+.compact .stage.sbl .sb,.compact .stage.sbr .sb{top:6%;bottom:6%;padding:5px 0 3px}
 
 /* ---- compact : petits emplacements fixes (ex. 120 × 130 px) ; l'illustration prend la hauteur restante ---- */
 ha-card.compact{display:flex;flex-direction:column;padding:6px}
@@ -329,17 +333,19 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const color = this.kind === 'color_bulb', img = String(this._c.image || '').trim();
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="lttitle"></div><div class="badge" id="ltbadge"></div></div>
-        <div class="stage${img ? ' ph' : this.kind === 'ceiling_spot' ? ' ceil' : ''}">${img ? `<div class="uph"><div class="glow"></div><img src="${esc(img)}" alt="${esc(this._c.name || this._t(this.kind))}"></div>` : `<svg viewBox="0 0 200 180" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${SVGS[this.kind](this._c)}</svg>`}</div>
+        <div class="stage${img ? ' ph' : this.kind === 'ceiling_spot' ? ' ceil' : ''}">${img ? `<div class="uph"><div class="glow"></div><img src="${esc(img)}" alt="${esc(this._c.name || this._t(this.kind))}"></div>` : `<svg viewBox="0 0 200 180" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${SVGS[this.kind](this._c)}</svg>`}<div class="sb" id="ltsb"><input class="bs" id="ltbs" type="range" min="0" max="100" step="1"><span class="sv" id="ltsv"></span></div></div>
         <div class="ctl" id="ltctl">
           <button data-a="on"><ha-icon icon="mdi:lightbulb-on"></ha-icon><span></span></button>
           ${color ? '<button data-a="color"><ha-icon icon="mdi:palette"></ha-icon><span></span></button>' : ''}
           <button data-a="off"><ha-icon icon="mdi:lightbulb-off-outline"></ha-icon><span></span></button>
         </div>
         <div class="tiles">${[['brightness', 'mdi:brightness-6'], ['power', 'mdi:flash'], ['energy', 'mdi:lightning-bolt-circle']].map(([k, ic]) =>
-          `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div>${k === 'brightness' ? '<input class="bs" id="ltbs" type="range" min="0" max="100" step="1">' : ''}<div class="v"></div></div>`).join('')}</div>
+          `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
       // illustration : tap_action / hold_action (appui long 0,5 s) ; par défaut, la fiche de l'entité
       const stage = root.querySelector('.stage'), stop = () => clearTimeout(this._holdTimer);
+      // le curseur ne déclenche ni tap_action ni hold_action de la scène
+      for (const ev of ['click', 'pointerdown']) root.getElementById('ltsb').addEventListener(ev, (e) => e.stopPropagation());
       stage.addEventListener('click', () => {
         if (this._held) { this._held = false; return; } // clic qui suit un appui long : ignoré
         if (this._c.tap_action) this._run(this._c.tap_action); else this._more(this._c.entity);
@@ -354,12 +360,11 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       stage.addEventListener('contextmenu', (ev) => { if (this._c.hold_action) ev.preventDefault(); });
       root.querySelectorAll('.ctl button').forEach((b) => b.addEventListener('click', () => this._action(b.dataset.a)));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
-        if (el.classList.contains('slide')) return; // tuile curseur : le clic sert au curseur, pas à la fiche
         const k = el.dataset.k; this._more(k === 'brightness' ? this._c.entity : this._c[`entity_${k}`]);
       }));
       // curseur de luminosité : la valeur suit le doigt, l'appel part au relâchement (0 = éteindre)
       const bs = root.getElementById('ltbs');
-      bs.addEventListener('input', () => { this._sliding = true; root.querySelector('.tile[data-k="brightness"] .v').firstChild.textContent = bs.value; });
+      bs.addEventListener('input', () => { this._sliding = true; root.getElementById('ltsv').textContent = `${bs.value} %`; });
       bs.addEventListener('change', () => {
         const v = Number(bs.value), h = this._hass, id = this._c.entity;
         this._sliding = false;
@@ -463,13 +468,16 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const slider = dimmable && (c.brightness_slider ?? this.kind === 'ceiling_spot') !== false;
       const pct = st === 'on' && isFinite(Number(a.brightness)) ? Math.max(1, Math.round(Number(a.brightness) / 2.55)) : 0;
       const V = {
-        brightness: [slider || (st === 'on' && isFinite(Number(a.brightness))), slider ? pct : Math.round(bri * 100), '%', 'show_brightness'],
+        brightness: [!slider && st === 'on' && isFinite(Number(a.brightness)), Math.round(bri * 100), '%', 'show_brightness'],
         power: [c.entity_power, this._fmt(pw, pw < 10 ? 1 : 0), this._unit(c.entity_power, 'W'), 'show_power'],
         energy: [c.entity_energy, this._fmt(energy, 2), this._unit(c.entity_energy, 'kWh'), 'show_energy'],
       };
-      const bt = r.querySelector('.tile[data-k="brightness"]'), bs = r.getElementById('ltbs');
-      bt.classList.toggle('slide', slider); bt.classList.toggle('dim', slider && st !== 'on');
-      if (slider && !this._sliding) bs.value = String(pct);
+      const bs = r.getElementById('ltbs');
+      const pos = ['left', 'right'].includes(c.slider_position) ? c.slider_position : 'bottom'; // emplacement : sous l'ampoule (défaut), à gauche ou à droite
+      const stg = r.querySelector('.stage');
+      stg.classList.toggle('hasbs', slider); stg.classList.toggle('sbl', pos === 'left'); stg.classList.toggle('sbr', pos === 'right');
+      r.getElementById('ltsb').classList.toggle('dim', st !== 'on');
+      if (slider && !this._sliding) { bs.value = String(pct); r.getElementById('ltsv').textContent = `${pct} %`; }
       bs.setAttribute('aria-label', this._l('brightness'));
       r.querySelectorAll('.tile').forEach((el) => {
         const [show, val, unit, opt] = V[el.dataset.k];
@@ -513,6 +521,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ent('entity'), ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'),
         { name: 'tap_action', selector: { ui_action: { actions: ['more-info', 'toggle', 'navigate', 'url', 'perform-action', 'none'] } } },
         { name: 'hold_action', selector: { ui_action: { actions: ['more-info', 'toggle', 'navigate', 'url', 'perform-action', 'none'] } } },
+        { name: 'slider_position', default: 'bottom', selector: { select: { mode: 'dropdown', options: ['bottom', 'left', 'right'].map((value) => ({ value, label: T[window.applianceLang(T, this._c, this._hass)][`slider_${value}`] ?? T.en[`slider_${value}`] })) } } },
         { name: 'color', selector: { color_rgb: {} } },
         { type: 'grid', name: '', schema: [
           bool('follow_light_color'),

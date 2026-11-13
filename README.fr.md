@@ -237,6 +237,7 @@ Clique sur une carte pour ses options et ses exemples (pages en anglais).
 | [Robinet connecté (arrosage Zigbee)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/smart-tap.md) | `custom:appliance-smart-tap-card` |
 | [Vanne motorisée (actionneur sur vanne à boule)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/water-valve.md) | `custom:appliance-water-valve-card` |
 | [Adoucisseur d'eau (cuve à résine, bac à sel)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/water-softener.md) | `custom:appliance-water-softener-card` |
+| [Adoucisseur d'eau générique (bouteille à tube central, bac à saumure avec canne)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/water-softener-generic.md) | `custom:appliance-water-softener-generic-card` |
 | [Chatière connectée (puce, animaux dedans / dehors)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/cat-flap.md) | `custom:appliance-cat-flap-card` |
 | [Fontaine à eau pour animaux](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/pet-fountain.md) | `custom:appliance-pet-fountain-card` |
 | [Appareil générique (ta propre image)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/generic.md) | `custom:appliance-generic-card` |
