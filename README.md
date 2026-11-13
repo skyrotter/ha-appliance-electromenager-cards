@@ -149,6 +149,7 @@ Click a card for its options and examples.
 | [Rainwater tank + booster pump](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/pumps.md) | `custom:appliance-rainwater-tank-card` |
 | [Hot tub (jacuzzi)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/jacuzzi.md) | `custom:appliance-jacuzzi-card` |
 | [Aquarium](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/aquarium.md) | `custom:appliance-aquarium-card` |
+| [Reef aquarium (saltwater: LED fixtures, corals, water parameters)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/reef-aquarium.md) | `custom:appliance-reef-aquarium-card` |
 
 ### Gates, garage and sauna
 
