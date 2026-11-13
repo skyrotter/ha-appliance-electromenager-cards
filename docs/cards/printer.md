@@ -9,7 +9,7 @@
 - **Standby**: power above `standby_threshold` (1 W), screen and LED on.
 - **Off**: plug off or power below `standby_threshold`, the screen is dark.
 - Without a power sensor, `switch` on means standby. An `entity` whose state contains `print`, `scan` or `error` (e.g. an IPP printer sensor) takes priority over the power.
-- `model`: empty for the SVG drawing, `samsung_c480` for the photo of the Samsung Xpress C480W. The same animated layers are used for both.
+- `model`: empty for the SVG drawing, `samsung_c480` for the photo of the Samsung Xpress C480W, `brother_hl3270cdw` for the photo of the Brother HL-L3270CDW (laser colour printer, touchscreen, no scanner). The same animated layers are used for all.
 - The power button toggles the plug; `power`, `energy` and `cost` give the usual tiles.
 
 ```yaml
