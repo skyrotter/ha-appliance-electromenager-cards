@@ -1127,6 +1127,7 @@
     "show_window": "Show window",
     "spot_count": "Number of spotlights",
     "brightness_slider": "Brightness slider",
+    "slider_position": "Slider position",
     "entity_cpu": "CPU usage",
     "entity_cpu_temp": "CPU temperature",
     "entity_ram": "Memory usage (%)",
@@ -1395,7 +1396,10 @@
     "brightness": "Brightness",
     "power": "Power",
     "energy": "Energy",
-    "ceiling_spot": "Recessed spotlights"
+    "ceiling_spot": "Recessed spotlights",
+    "slider_bottom": "Below the bulb",
+    "slider_left": "Left",
+    "slider_right": "Right"
   },
   "shutter": {
     "roller_shutter": "Roller shutter",

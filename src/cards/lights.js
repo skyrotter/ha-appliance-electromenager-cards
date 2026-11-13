@@ -52,6 +52,12 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 .sb .sv{flex:none;min-width:32px;text-align:right;font:600 11px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif);color:#fff}
 .sb.dim{opacity:.6}.sb.dim .bs{accent-color:#9aa0a6}
 .compact .sb{bottom:3px;padding:0 6px}
+/* slider_position left / right : curseur vertical sur le côté de la scène, on glisse vers le haut ou vers le bas */
+.stage.sbl .sb,.stage.sbr .sb{top:12%;bottom:12%;left:auto;right:auto;width:30px;flex-direction:column;padding:8px 0 6px;gap:4px;border-radius:15px}
+.stage.sbl .sb{left:6px}.stage.sbr .sb{right:6px}
+.stage.sbl .sb .bs,.stage.sbr .sb .bs{writing-mode:vertical-lr;direction:rtl;-webkit-appearance:slider-vertical;appearance:slider-vertical;width:20px;height:auto;flex:1 1 auto;min-height:0}
+.stage.sbl .sb .sv,.stage.sbr .sb .sv{order:-1;min-width:0;text-align:center;font-size:10px}
+.compact .stage.sbl .sb,.compact .stage.sbr .sb{top:6%;bottom:6%;padding:5px 0 3px}
 
 /* ---- compact : petits emplacements fixes (ex. 120 × 130 px) ; l'illustration prend la hauteur restante ---- */
 ha-card.compact{display:flex;flex-direction:column;padding:6px}
@@ -467,7 +473,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         energy: [c.entity_energy, this._fmt(energy, 2), this._unit(c.entity_energy, 'kWh'), 'show_energy'],
       };
       const bs = r.getElementById('ltbs');
-      r.querySelector('.stage').classList.toggle('hasbs', slider);
+      const pos = ['left', 'right'].includes(c.slider_position) ? c.slider_position : 'bottom'; // emplacement : sous l'ampoule (défaut), à gauche ou à droite
+      const stg = r.querySelector('.stage');
+      stg.classList.toggle('hasbs', slider); stg.classList.toggle('sbl', pos === 'left'); stg.classList.toggle('sbr', pos === 'right');
       r.getElementById('ltsb').classList.toggle('dim', st !== 'on');
       if (slider && !this._sliding) { bs.value = String(pct); r.getElementById('ltsv').textContent = `${pct} %`; }
       bs.setAttribute('aria-label', this._l('brightness'));
@@ -513,6 +521,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ent('entity'), ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'),
         { name: 'tap_action', selector: { ui_action: { actions: ['more-info', 'toggle', 'navigate', 'url', 'perform-action', 'none'] } } },
         { name: 'hold_action', selector: { ui_action: { actions: ['more-info', 'toggle', 'navigate', 'url', 'perform-action', 'none'] } } },
+        { name: 'slider_position', default: 'bottom', selector: { select: { mode: 'dropdown', options: ['bottom', 'left', 'right'].map((value) => ({ value, label: T[window.applianceLang(T, this._c, this._hass)][`slider_${value}`] ?? T.en[`slider_${value}`] })) } } },
         { name: 'color', selector: { color_rgb: {} } },
         { type: 'grid', name: '', schema: [
           bool('follow_light_color'),
