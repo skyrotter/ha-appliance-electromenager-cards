@@ -192,6 +192,7 @@ function buildForm(kind) {
               { value: "nest_mini", label: "Google Nest Mini" }, { value: "nest_audio", label: "Google Nest Audio" },
               { value: "nest_hub", label: "Google Nest Hub (7\")" }, { value: "nest_hub_2", label: "Google Nest Hub (2e gén. / 2nd gen)" },
               { value: "nest_hub_max", label: "Google Nest Hub Max" },
+              { value: "sonos_play_1", label: "Sonos Play:1" }, { value: "sonos_play_3", label: "Sonos Play:3" }, { value: "sonos_play_5", label: "Sonos Play:5" },
               { value: "sonos_one", label: "Sonos One" }, { value: "sonos_one_sl", label: "Sonos One SL" },
               { value: "sonos_era_100", label: "Sonos Era 100" }, { value: "sonos_era_300", label: "Sonos Era 300" },
               { value: "sonos_five", label: "Sonos Five" }, { value: "sonos_roam", label: "Sonos Roam" },
