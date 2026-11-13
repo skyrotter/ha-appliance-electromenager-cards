@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mockup chaîne hi-fi – Home Assistant</title>
+<style>
+  html,body{margin:0;height:100%;background:#fff;display:flex;align-items:center;justify-content:center;font-family:"Courier New",monospace}
+  /* Conteneur à l'échelle de l'image (508x540) : tout est positionné en % */
+  .hifi{position:relative;height:93vh;aspect-ratio:508/540;background:url(chaine.jpg) center/100% 100% no-repeat}
+  .ov{position:absolute;color:#4fd8ff;text-shadow:0 0 6px #1aa7e0;overflow:hidden;box-sizing:border-box}
+  /* Afficheurs (fond noir qui recouvre l'image d'origine) */
+  .lcd{background:#02070b;border-radius:3px;display:flex;flex-direction:column;justify-content:center;padding:0 2.5%}
+  .tuner{left:10.2%;top:9.4%;width:71%;height:10%}
+  .tuner .big{font-size:2.6vh;letter-spacing:.15em;white-space:nowrap}
+  .tuner .scale{height:30%;margin-top:2%;background:repeating-linear-gradient(90deg,#1b7fa5 0 1px,transparent 1px 12px);opacity:.7;position:relative}
+  .tuner .scale i{position:absolute;top:-30%;bottom:-30%;width:2px;background:#8be8ff;left:52%;box-shadow:0 0 6px #4fd8ff}
+  .eq{left:11%;top:29.5%;width:77.5%;height:10%;background:#02070b;display:flex;align-items:flex-end;gap:1.1%;padding:0 1.5%;border-radius:3px}
+  .eq b{flex:1;background:repeating-linear-gradient(0deg,#27b6ea 0 3px,transparent 3px 5px);box-shadow:0 0 4px #1aa7e0;animation:vu 1.1s ease-in-out infinite alternate;height:30%}
+  @keyframes vu{to{height:95%}}
+  .tape{left:52.3%;top:54.5%;width:29.5%;height:7%}
+  .tape .t1{font-size:1.5vh;white-space:nowrap}
+  .tape .t2{font-size:1.3vh;opacity:.8;white-space:nowrap}
+  .vol{left:77%;top:76.5%;width:20%;height:18%;border-radius:50%;pointer-events:none}
+  .vol-label{left:47.5%;top:77%;font-size:1.6vh;width:23%;text-align:center;text-shadow:0 0 6px #1aa7e0;background:#02070b;border-radius:3px;padding:.3% 0}
+  /* Zones cliquables = futures entités HA */
+  .hit{position:absolute;cursor:pointer;border-radius:4px}
+  .hit:hover{outline:1px solid #4fd8ff;background:rgba(79,216,255,.12)}
+  .note{position:fixed;bottom:6px;left:0;right:0;text-align:center;color:#889;font-size:12px}
+</style></head><body>
+<div class="hifi" id="hifi">
+  <!-- Tuner = media_player.source / station -->
+  <div class="ov lcd tuner"><div class="big" id="station">FRANCE INTER 105.5</div><div class="scale"><i></i></div></div>
+  <!-- Égaliseur = animation (ou vrais sliders number.* / entités EQ) -->
+  <div class="ov eq" id="eq"></div>
+  <!-- Cassette = titre en cours (media_title / media_artist) -->
+  <div class="ov lcd tape"><div class="t1" id="title">DAFT PUNK</div><div class="t2" id="sub">AROUND THE WORLD</div></div>
+  <!-- Volume = media_player.volume_level -->
+  <div class="ov vol-label" id="vol">VOL 42</div>
+
+  <!-- Boutons cassette : précédent / lecture / suivant -->
+  <div class="hit" style="left:52.6%;top:65.5%;width:7%;height:7%" onclick="step(-1)"></div>
+  <div class="hit" style="left:66%;top:65.5%;width:7%;height:7%" onclick="toggle()"></div>
+  <div class="hit" style="left:73.5%;top:65.5%;width:7%;height:7%" onclick="step(1)"></div>
+  <!-- Molette volume -->
+  <div class="hit" style="left:77%;top:76.5%;width:20%;height:18%;border-radius:50%" onclick="vol(5)" oncontextmenu="vol(-5);return false"></div>
+</div>
+<div class="note">Mockup – clic sur lecture / suivant / précédent, clic sur la molette = volume +5 (clic droit = −5)</div>
+<script>
+  const eq=document.getElementById('eq');
+  for(let i=0;i<24;i++){const b=document.createElement('b');b.style.animationDelay=(-Math.random()*1.1)+'s';b.style.animationDuration=(0.6+Math.random()*0.9)+'s';eq.appendChild(b)}
+  const pistes=[["DAFT PUNK","AROUND THE WORLD","FRANCE INTER 105.5"],["MICHAEL JACKSON","BILLIE JEAN","RTL 104.3"],["A-HA","TAKE ON ME","FIP 105.1"],["DEPECHE MODE","ENJOY THE SILENCE","NOSTALGIE 90.4"]];
+  let i=0,play=true,v=42;
+  function draw(){const p=pistes[i];title.textContent=p[0];sub.textContent=p[1];station.textContent=p[2];vol.textContent='VOL '+v;
+    eq.querySelectorAll('b').forEach(b=>b.style.animationPlayState=play?'running':'paused')}
+  function step(d){i=(i+d+pistes.length)%pistes.length;draw()}
+  function toggle(){play=!play;draw()}
+  function vol(d){v=Math.max(0,Math.min(100,v+d));draw()}
+  draw();
+</script></body></html>
