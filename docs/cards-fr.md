@@ -465,6 +465,8 @@ entity_weight: sensor.aqara_feeder_weight_per_day
 
 **Adoucisseur d'eau** (`custom:appliance-water-softener-card`) : cuve à résine et bac à sel en écorché, tête de commande avec écran LCD. Service, contre-lavage, aspiration de saumure, rinçage et alerte sel bas, avec les tuyaux animés. Voir [water-softener.md](cards/water-softener.md). Une entité par phase est possible : `entity_backwash`, `entity_brine`, `entity_rinse` (une entité par phase : contre-lavage, aspiration de saumure, rinçage ; **on = en cours**, utilisées quand `entity` ne donne pas la phase).
 
+**Adoucisseur d'eau générique** (`custom:appliance-water-softener-generic-card`) : même carte avec un dessin de bouteille composite (tube central, crépines, vanne en tête) et de bac à saumure séparé (canne, flotteur, trop-plein). Sans débit en mode service (`entity_flow` à 0), aucune animation. Mêmes options que l'adoucisseur ci-dessus. Voir [water-softener-generic.md](cards/water-softener-generic.md).
+
 ```yaml
 type: custom:appliance-scale-card
 entity_weight: sensor.withings_weight
