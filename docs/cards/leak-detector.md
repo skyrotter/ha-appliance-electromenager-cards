@@ -4,6 +4,7 @@
 
 | Option | What it does |
 |---|---|
+| `model` | drawing of the detector: `puck` (default, generic puck), `ikea` (IKEA BADRING E2202, photo) or `sonoff` (Sonoff SNZB-05P, photo). With a photo model, the device sits in the puddle on a leak, a red warning triangle blinks and the status LED turns red |
 | `entity_leak` | leak sensor: `binary_sensor` (device class moisture) or a text sensor (`wet`, `leak`, `fuite`… / `dry`, `sec`…). **A list works too**: the alert names the wet probes and a tile shows how many are wet (`1/4`) |
 | `entity_valve` | shut-off valve (`valve`, `switch`, `input_boolean`): **Close / Open valve** button; the handle turns red and the drops stop when it is closed |
 | `entity_siren` | siren (`siren`, `switch`, `input_boolean`, `button`, `script`): **Silence siren** button during a leak |
