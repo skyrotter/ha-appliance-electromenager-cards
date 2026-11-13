@@ -23,6 +23,10 @@
   /* Zones cliquables = futures entités HA */
   .hit{position:absolute;cursor:pointer;border-radius:4px}
   .hit:hover{outline:1px solid #4fd8ff;background:rgba(79,216,255,.12)}
+  .lbl{font-size:.95vh;color:#3a3d40;text-align:center;letter-spacing:.04em;text-shadow:0 1px 0 rgba(255,255,255,.5);white-space:nowrap;pointer-events:none}
+  .led{background:#7fe0ff;box-shadow:0 0 7px 2px #1aa7e0;border-radius:2px;pointer-events:none;display:none}
+  .patch{overflow:hidden;pointer-events:none;display:none}
+  .patch div{position:absolute;background:url(chaine.jpg) 0 0/100% 100% no-repeat}
   .note{position:fixed;bottom:6px;left:0;right:0;text-align:center;color:#889;font-size:12px}
 </style></head><body>
 <div class="hifi" id="hifi">
@@ -39,19 +43,40 @@
   <div class="hit" style="left:52.6%;top:65.5%;width:7%;height:7%" onclick="step(-1)"></div>
   <div class="hit" style="left:66%;top:65.5%;width:7%;height:7%" onclick="toggle()"></div>
   <div class="hit" style="left:73.5%;top:65.5%;width:7%;height:7%" onclick="step(1)"></div>
+  <!-- Sources : 3 premiers boutons de l'ampli (media_player Spotify / Sonos / Chromecast) -->
+  <div class="ov patch" id="patch" style="left:53.4%;top:85.7%;width:4.2%;height:1.1%"><div id="patchin"></div></div>
+  <div class="ov led" id="led0" style="left:47.9%;top:86.1%;width:4.2%;height:.3%"></div>
+  <div class="ov led" id="led2" style="left:59.2%;top:86.1%;width:4.2%;height:.3%"></div>
+  <div class="ov lbl" style="left:47.3%;top:89.1%;width:5%">SPOTIFY</div>
+  <div class="ov lbl" style="left:52.9%;top:89.1%;width:5%">SONOS</div>
+  <div class="ov lbl" style="left:58.6%;top:89.1%;width:5%">CAST</div>
+  <div class="hit" title="Spotify" style="left:47.3%;top:85.2%;width:5%;height:3.5%" onclick="src(0)"></div>
+  <div class="hit" title="Sonos" style="left:52.9%;top:85.2%;width:5%;height:3.5%" onclick="src(1)"></div>
+  <div class="hit" title="Chromecast" style="left:58.6%;top:85.2%;width:5%;height:3.5%" onclick="src(2)"></div>
   <!-- Molette volume -->
   <div class="hit" style="left:77%;top:76.5%;width:20%;height:18%;border-radius:50%" onclick="vol(5)" oncontextmenu="vol(-5);return false"></div>
 </div>
-<div class="note">Mockup – clic sur lecture / suivant / précédent, clic sur la molette = volume +5 (clic droit = −5)</div>
+<div class="note">Mockup – clic sur les 3 boutons de l'ampli = source (Spotify / Sonos / Chromecast), lecture / suivant / précédent, clic sur la molette = volume +5 (clic droit = −5)</div>
 <script>
   const eq=document.getElementById('eq');
   for(let i=0;i<24;i++){const b=document.createElement('b');b.style.animationDelay=(-Math.random()*1.1)+'s';b.style.animationDuration=(0.6+Math.random()*0.9)+'s';eq.appendChild(b)}
-  const pistes=[["DAFT PUNK","AROUND THE WORLD","FRANCE INTER 105.5"],["MICHAEL JACKSON","BILLIE JEAN","RTL 104.3"],["A-HA","TAKE ON ME","FIP 105.1"],["DEPECHE MODE","ENJOY THE SILENCE","NOSTALGIE 90.4"]];
-  let i=0,play=true,v=42;
-  function draw(){const p=pistes[i];title.textContent=p[0];sub.textContent=p[1];station.textContent=p[2];vol.textContent='VOL '+v;
-    eq.querySelectorAll('b').forEach(b=>b.style.animationPlayState=play?'running':'paused')}
-  function step(d){i=(i+d+pistes.length)%pistes.length;draw()}
+  // Une liste de pistes par source (dans HA : media_player.spotify / sonos / chromecast)
+  const sources=[
+    {nom:"SPOTIFY",lieu:"DAILY MIX 1",pistes:[["DAFT PUNK","AROUND THE WORLD"],["A-HA","TAKE ON ME"],["DEPECHE MODE","ENJOY THE SILENCE"]]},
+    {nom:"SONOS",lieu:"SALON",pistes:[["FRANCE INTER","105.5 FM"],["FIP","105.1 FM"],["RTL","104.3 FM"]]},
+    {nom:"CHROMECAST",lieu:"TV SALON",pistes:[["YOUTUBE MUSIC","LOFI BEATS"],["NETFLIX","BANDE SON"],["PODCAST","LE JOURNAL"]]}];
+  let s_=1,i=0,play=true,v=42;
+  function draw(){const S=sources[s_],p=S.pistes[i];
+    station.textContent=S.nom+' > '+S.lieu;title.textContent=p[0];sub.textContent=p[1];vol.textContent='VOL '+v;
+    eq.querySelectorAll('b').forEach(b=>b.style.animationPlayState=play?'running':'paused');
+    // LED : celle du bouton 2 (Sonos) est déjà dans la photo, on la masque avec un morceau de bouton voisin
+    patch.style.display=s_===1?'none':'block';led0.style.display=s_===0?'block':'none';led2.style.display=s_===2?'block':'none'}
+  function src(n){s_=n;i=0;draw()}
+  function step(d){i=(i+d+3)%3;draw()}
   function toggle(){play=!play;draw()}
   function vol(d){v=Math.max(0,Math.min(100,v+d));draw()}
+  function fitPatch(){const h=document.getElementById('hifi'),W=h.clientWidth,H=h.clientHeight;
+    Object.assign(patchin.style,{width:W+'px',height:H+'px',left:-(0.534+0.055)*W+'px',top:-0.857*H+'px'})}
+  addEventListener('resize',fitPatch);fitPatch();
   draw();
 </script></body></html>
