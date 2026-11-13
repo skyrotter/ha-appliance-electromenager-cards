@@ -2173,7 +2173,10 @@
     "cycle_volume": "Eau par cycle",
     "salt_year": "Sel par an",
     "power": "Puissance",
-    "days": "j"
+    "days": "j",
+    "f_model": "Dessin",
+    "model_culligan": "Culligan (tête de commande, bac à sel)",
+    "model_generic": "Générique (bouteille à tube central, bac à saumure avec canne)"
   },
   "internet_box": {
     "name": "Box internet",

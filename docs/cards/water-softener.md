@@ -4,7 +4,7 @@
 
 <p align="center"><img src="../water-softener.gif" width="376" alt="Water softener card: service, backwash, brine, rinse, low salt"></p>
 
-A resin water softener (Culligan type): cut-away resin tank with its control head (LCD screen) and a cut-away brine tank with salt. The pipes are animated according to the phase (the water in the brine tank stays low, at most about 30 % of its height, and rises during the water return):
+A resin water softener, with two drawings to choose from with `model`: `culligan` (default), a cut-away resin tank with its control head (LCD screen) and a cut-away brine tank with salt; `generic`, a composite tank with its central tube and strainers, a control valve on top and a separate brine tank with its brine well (cane), float and overflow elbow. The pipes are animated according to the phase (the water in the brine tank stays low, at most about 30 % of its height, and rises during the water return):
 
 - **Service**: hard water comes in, softened water goes out (faster with the flow).
 - **Backwash**: the resin bed is lifted and the water turns muddy.
@@ -13,10 +13,13 @@ A resin water softener (Culligan type): cut-away resin tank with its control hea
 - **Water return**: the brine tank is refilled (the brine level rises).
 - **Low salt**: red alert, the lid of the brine tank blinks.
 
+In service with `entity_flow` at 0, nothing moves.
+
 The phase comes from the state of `entity` (a sensor, select, switch or binary sensor: `backwash`, `contre-lavage`, `brine`, `saumure`, `regeneration`, `rinse`, `rinçage`, `off`…). Without it, the card is in service when `entity_flow` is above 0.05 and in standby otherwise.
 
 | Option | What it does |
 |---|---|
+| `model` | drawing: `culligan` (default) or `generic`. The old `custom:appliance-water-softener-generic-card` still works and is the same card with `model: generic` |
 | `entity` | state of the softener (text of the current phase, or on / off) |
 | `entity_backwash`, `entity_brine`, `entity_rinse`, `entity_refill` | one entity per phase (`binary_sensor`, `switch`, `input_boolean` or `sensor`, **on = running**): backwash, brine draw, rinse, water return (brine tank refill). Used when `entity` does not give the phase; priority backwash > brine > rinse > refill |
 | `entity_service` | service phase (**on = running**): shows the blue « Service » state instead of the grey « Standby ». Also works when `entity` is on and its name contains « service » |
