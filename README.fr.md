@@ -241,6 +241,7 @@ Clique sur une carte pour ses options et ses exemples (pages en anglais).
 | [Caméra de surveillance (détections, mode nuit, votre photo)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/camera.md) | `custom:appliance-camera-card` |
 | [Enregistreur NVR (voyants animés, disque, CPU)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/camera.md) | `custom:appliance-nvr-card` |
 | [Switch PoE (SSCPOE / Steamemo GPS208, GPS204V, GPS105S)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/poe-switch.md) | `custom:appliance-poe-switch-card` |
+| [Raspberry Pi 4 (CPU, température, RAM, disque, réseau, sous-tension)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/raspberry-pi.md) | `custom:appliance-raspberry-pi-card` |
 | [Filtre à eau sous évier (1 à 3 cartouches)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/water-filter.md) | `custom:appliance-water-filter-card` |
 | [Chatière connectée (puce, animaux dedans / dehors)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/cat-flap.md) | `custom:appliance-cat-flap-card` |
 | [Fontaine à eau pour animaux](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/pet-fountain.md) | `custom:appliance-pet-fountain-card` |
