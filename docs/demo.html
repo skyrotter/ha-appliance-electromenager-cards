@@ -1169,6 +1169,193 @@ const SCEN = [
       set('sensor.demo_wind', 12, { unit_of_measurement: 'km/h' });
       checks(ctl, [['Pluie', 'binary_sensor.demo_rain', false], ['LED', 'light.demo_pergola_led', false]]);
     } },
+  /* ---- cartes ajoutées à la démo (fiches complétées) ---- */
+  { kind: 'air-purifier', title: "Purificateur d'air",
+    cfg: { name: 'FÖRNUFTIG', power: 'sensor.purifier_power', energy: 'sensor.purifier_energy', switch: 'switch.purifier', pm25: 'sensor.purifier_pm25', filter: 'sensor.purifier_filter' },
+    build(ctl) {
+      set('switch.purifier', 'on');
+      range(ctl, 'Puissance (vitesse)', 'sensor.purifier_power', 0, 15, 0.5, 6, 'W', W);
+      range(ctl, 'PM2.5', 'sensor.purifier_pm25', 0, 150, 1, 18, 'µg/m³', { unit_of_measurement: 'µg/m³', device_class: 'pm25' });
+      range(ctl, 'Filtre', 'sensor.purifier_filter', 0, 100, 1, 72, '%', { unit_of_measurement: '%' });
+      set('sensor.purifier_energy', 1.2, KWH);
+    } },
+  { kind: 'generic', title: 'Appareil générique (votre image)',
+    cfg: { name: 'Enceinte salon', image: "data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150"><rect x="14" y="8" width="92" height="134" rx="16" fill="#2b2f36"/><circle cx="60" cy="48" r="16" fill="#555c66"/><circle cx="60" cy="48" r="7" fill="#1a1d22"/><circle cx="60" cy="100" r="28" fill="#555c66"/><circle cx="60" cy="100" r="13" fill="#1a1d22"/></svg>'), power: 'sensor.generic_power', switch: 'switch.generic', energy: 'sensor.generic_energy' },
+    build(ctl) {
+      set('switch.generic', 'on');
+      range(ctl, 'Puissance', 'sensor.generic_power', 0, 120, 1, 28, 'W', W);
+      set('sensor.generic_energy', 0.6, KWH);
+    } },
+  ...[['sonos_play_1', 'Sonos Play:1'], ['sonos_play_3', 'Sonos Play:3'], ['sonos_play_5', 'Sonos Play:5']].map(([model, title]) => ({
+    kind: 'smart-speaker', title: `Enceinte ${title}`,
+    cfg: { name: title, entity: `media_player.demo_${model}`, model, power: `sensor.demo_${model}_power`, energy: `sensor.demo_${model}_energy` },
+    build(ctl) {
+      const id = `media_player.demo_${model}`, A = { volume_level: 0.5, is_volume_muted: false, media_artist: 'Daft Punk', media_title: 'Around the World', app_name: 'Sonos' };
+      set(id, 'playing', A);
+      select(ctl, 'État', id, [['playing', 'Lecture / Playing'], ['paused', 'Pause'], ['idle', 'Inactif / Idle'], ['off', 'Arrêt / Off'], ['unavailable', 'Indisponible']], 'playing', () => { states[id].attributes = states[id].attributes?.volume_level != null ? states[id].attributes : { ...A }; });
+      states[id].attributes = { ...A };
+      const lab = document.createElement('label'); lab.textContent = 'Volume';
+      const inp = Object.assign(document.createElement('input'), { type: 'range', min: 0, max: 100, step: 1, value: 50 }), out = document.createElement('output');
+      const show = () => (out.textContent = `${inp.value} %`);
+      inp.oninput = () => { states[id].attributes = { ...states[id].attributes, volume_level: inp.value / 100 }; show(); refresh(); };
+      show(); ctl.append(lab, inp, out);
+      range(ctl, 'Puissance', `sensor.demo_${model}_power`, 0, 40, 0.5, 9, 'W', W);
+      set(`sensor.demo_${model}_energy`, 0.4, KWH);
+    } })),
+  { kind: 'monitor', title: 'Écran',
+    cfg: { name: 'Écran bureau', entity: 'switch.demo_monitor', power: 'sensor.demo_monitor_power', energy: 'sensor.demo_monitor_energy' },
+    build(ctl) {
+      set('switch.demo_monitor', 'on');
+      range(ctl, 'Puissance', 'sensor.demo_monitor_power', 0, 120, 0.5, 38, 'W', W);
+      set('sensor.demo_monitor_energy', 0.9, KWH);
+    } },
+  { kind: 'thermomix', title: 'Thermomix',
+    cfg: { model: 'tm6', power: 'sensor.demo_thermomix_power', switch: 'switch.demo_thermomix', energy: 'sensor.demo_thermomix_energy', price_per_kwh: 0.25 },
+    build(ctl) {
+      set('switch.demo_thermomix', 'on');
+      range(ctl, 'Puissance', 'sensor.demo_thermomix_power', 0, 1500, 10, 640, 'W', W);
+      set('sensor.demo_thermomix_energy', 0.35, KWH);
+    } },
+  { kind: 'cookeo', title: 'Cookeo',
+    cfg: { style: 'photo', power: 'sensor.demo_cookeo_power', switch: 'switch.demo_cookeo', energy: 'sensor.demo_cookeo_energy', temperature: 'sensor.demo_cookeo_temp', remaining: 'sensor.demo_cookeo_remaining', program: 'sensor.demo_cookeo_program' },
+    build(ctl) {
+      set('switch.demo_cookeo', 'on');
+      range(ctl, 'Puissance', 'sensor.demo_cookeo_power', 0, 1600, 10, 900, 'W', W);
+      range(ctl, 'Température', 'sensor.demo_cookeo_temp', 20, 200, 1, 110, '°C', T);
+      set('sensor.demo_cookeo_remaining', 24, { unit_of_measurement: 'min' }); set('sensor.demo_cookeo_program', 'Mijoter'); set('sensor.demo_cookeo_energy', 0.5, KWH);
+    } },
+  { kind: 'dosing-pump', title: 'Pompe doseuse (pH-)',
+    cfg: { name: 'Pompe pH-', entity: 'switch.demo_ph_minus', switch: 'switch.demo_ph_minus', power: 'sensor.demo_ph_minus_power', ph: 'sensor.demo_pool_ph' },
+    build(ctl) {
+      set('switch.demo_ph_minus', 'on');
+      range(ctl, 'Puissance', 'sensor.demo_ph_minus_power', 0, 30, 0.5, 12, 'W', W);
+      range(ctl, 'pH piscine', 'sensor.demo_pool_ph', 6.5, 8.5, 0.05, 7.6, '', { unit_of_measurement: 'pH' });
+    } },
+  ...[['elliptical', 'Vélo elliptique', 'ellip'], ['exercise-bike', "Vélo d'appartement", 'bike'], ['rowing-machine', 'Rameur', 'rower']].map(([kind, title, k]) => ({
+    kind, title, lang: false,
+    cfg: { name: title, entity: `switch.demo_${k}`, power: `sensor.demo_${k}_power`, energy: `sensor.demo_${k}_energy`, cadence: `sensor.demo_${k}_cadence`, heart_rate: `sensor.demo_${k}_hr`, calories: `sensor.demo_${k}_cal`, distance: `sensor.demo_${k}_dist`, threshold: 10 },
+    build(ctl) {
+      set(`switch.demo_${k}`, 'on');
+      range(ctl, 'Puissance (effort)', `sensor.demo_${k}_power`, 0, 300, 5, 140, 'W', W);
+      range(ctl, kind === 'rowing-machine' ? 'Cadence (coups/min)' : 'Cadence (tr/min)', `sensor.demo_${k}_cadence`, 0, 120, 1, 26, '', { unit_of_measurement: 'rpm' });
+      range(ctl, 'Fréquence cardiaque', `sensor.demo_${k}_hr`, 50, 190, 1, 128, 'bpm', { unit_of_measurement: 'bpm' });
+      set(`sensor.demo_${k}_energy`, 0.2, KWH); set(`sensor.demo_${k}_cal`, 210, { unit_of_measurement: 'kcal' }); set(`sensor.demo_${k}_dist`, 4.2, { unit_of_measurement: 'km' });
+    } })),
+  { kind: 'reef-aquarium', title: 'Aquarium récifal (eau de mer)', lang: true,
+    cfg: { name: 'Récifal salon', entity_light: ['light.demo_reef_1', 'light.demo_reef_2', 'light.demo_reef_3'], entity_feed: 'input_boolean.demo_reef_feed', entity_temperature: 'sensor.demo_reef_temp', entity_salinity: 'sensor.demo_reef_sal', entity_ph: 'sensor.demo_reef_ph', entity_orp: 'sensor.demo_reef_orp', entity_alkalinity: 'sensor.demo_reef_kh', entity_calcium: 'sensor.demo_reef_ca', entity_magnesium: 'sensor.demo_reef_mg', entity_nitrate: 'sensor.demo_reef_no3', entity_phosphate: 'sensor.demo_reef_po4', entity_ato_level: 'sensor.demo_reef_ato', entity_power: 'sensor.demo_reef_power', entity_return: 'switch.demo_reef_return', entity_wavemaker: ['switch.demo_reef_w1', 'switch.demo_reef_w2'], entity_skimmer: 'switch.demo_reef_skim', entity_heater: 'switch.demo_reef_heater', entity_ato: 'switch.demo_reef_atopump' },
+    build(ctl) {
+      ['light.demo_reef_1', 'light.demo_reef_2', 'light.demo_reef_3'].forEach((id, i) => { set(id, 'on', { brightness: 230 }); if (i === 0) LIGHT_SEL[id] = select(ctl, 'Rampes', id, [['on', 'Allumées / On'], ['off', 'Éteintes / Off']], 'on', (v) => { ['light.demo_reef_2', 'light.demo_reef_3'].forEach((o) => set(o, v, { brightness: 230 })); }); states[id].attributes = { brightness: 230 }; });
+      checks(ctl, [['Nourrissage', 'input_boolean.demo_reef_feed', false], ['Remontée', 'switch.demo_reef_return', true], ['Brasseur 1', 'switch.demo_reef_w1', true], ['Brasseur 2', 'switch.demo_reef_w2', true], ['Écumeur', 'switch.demo_reef_skim', true], ['Chauffage', 'switch.demo_reef_heater', true], ['Osmolation', 'switch.demo_reef_atopump', false]]);
+      range(ctl, 'Température', 'sensor.demo_reef_temp', 20, 30, 0.1, 25.6, '°C', T);
+      range(ctl, 'Salinité', 'sensor.demo_reef_sal', 30, 40, 0.1, 35, 'ppt', { unit_of_measurement: 'ppt' });
+      range(ctl, 'pH', 'sensor.demo_reef_ph', 7.4, 8.8, 0.01, 8.15, '', {});
+      range(ctl, 'KH', 'sensor.demo_reef_kh', 4, 14, 0.1, 8.4, 'dKH', { unit_of_measurement: 'dKH' });
+      range(ctl, 'Phosphates', 'sensor.demo_reef_po4', 0, 0.4, 0.01, 0.05, 'ppm', { unit_of_measurement: 'ppm' });
+      range(ctl, 'Réserve osmolation', 'sensor.demo_reef_ato', 0, 100, 1, 64, '%', { unit_of_measurement: '%' });
+      set('sensor.demo_reef_orp', 380, { unit_of_measurement: 'mV' }); set('sensor.demo_reef_ca', 430, { unit_of_measurement: 'ppm' }); set('sensor.demo_reef_mg', 1350, { unit_of_measurement: 'ppm' }); set('sensor.demo_reef_no3', 5, { unit_of_measurement: 'ppm' }); set('sensor.demo_reef_power', 186, W);
+    } },
+  { kind: 'internet-box', title: 'Box internet (Freebox Pop)', lang: true,
+    cfg: { model: 'freebox_pop', entity: 'binary_sensor.demo_box_online', entity_download: 'sensor.demo_box_down', entity_upload: 'sensor.demo_box_up', entity_wifi: 'switch.demo_box_wifi' },
+    build(ctl) {
+      checks(ctl, [['En ligne', 'binary_sensor.demo_box_online', true], ['Wi-Fi', 'switch.demo_box_wifi', true]]);
+      range(ctl, 'Débit descendant', 'sensor.demo_box_down', 0, 1000, 5, 420, 'Mbit/s', { unit_of_measurement: 'Mbit/s', device_class: 'data_rate' });
+      range(ctl, 'Débit montant', 'sensor.demo_box_up', 0, 600, 5, 85, 'Mbit/s', { unit_of_measurement: 'Mbit/s', device_class: 'data_rate' });
+    } },
+  { kind: 'pet-feeder', title: 'Distributeur de croquettes (Aqara C1)', lang: true,
+    cfg: { model: 'aqara_c1', entity_feed: 'select.demo_feeder_feed', entity_portions: 'sensor.demo_feeder_portions', entity_weight: 'sensor.demo_feeder_weight', entity_error: 'binary_sensor.demo_feeder_error', entity_led: 'switch.demo_feeder_led', entity_child_lock: 'switch.demo_feeder_lock', entity_mode: 'select.demo_feeder_mode' },
+    build(ctl) {
+      select(ctl, 'Distribution', 'select.demo_feeder_feed', [['idle', 'Prêt / Ready'], ['feed', 'Distribuer / Feed']], 'idle');
+      states['select.demo_feeder_feed'].attributes = { options: ['idle', 'feed'] };
+      select(ctl, 'Mode', 'select.demo_feeder_mode', [['schedule', 'Programme / Schedule'], ['manual', 'Manuel / Manual']], 'schedule');
+      states['select.demo_feeder_mode'].attributes = { options: ['schedule', 'manual'] };
+      checks(ctl, [['Erreur', 'binary_sensor.demo_feeder_error', false], ['LED', 'switch.demo_feeder_led', true], ['Verrou enfant', 'switch.demo_feeder_lock', false]]);
+      range(ctl, 'Portions du jour', 'sensor.demo_feeder_portions', 0, 12, 1, 3, '', { unit_of_measurement: 'portions' });
+      range(ctl, 'Poids du jour', 'sensor.demo_feeder_weight', 0, 300, 5, 90, 'g', { unit_of_measurement: 'g' });
+    } },
+  { kind: 'portable-ac', title: 'Climatiseur mobile', lang: true,
+    cfg: { entity: 'climate.demo_portable_ac', entity_tank: 'binary_sensor.demo_pac_tank', entity_power: 'sensor.demo_pac_power' },
+    build(ctl) {
+      select(ctl, 'Mode', 'climate.demo_portable_ac', [['cool', 'Froid / Cool'], ['fan_only', 'Ventilation / Fan'], ['dry', 'Déshumidification / Dry'], ['off', 'Arrêt / Off']], 'cool');
+      states['climate.demo_portable_ac'].attributes = { current_temperature: 27, temperature: 23, hvac_action: 'cooling', min_temp: 16, max_temp: 30, target_temp_step: 1, hvac_modes: ['cool', 'fan_only', 'dry', 'off'], fan_modes: ['low', 'medium', 'high'], fan_mode: 'medium' };
+      range(ctl, 'Puissance', 'sensor.demo_pac_power', 0, 1400, 10, 850, 'W', W);
+      checks(ctl, [['Réservoir plein', 'binary_sensor.demo_pac_tank', false]]);
+    } },
+  { kind: 'awning', title: 'Store banne', lang: true,
+    cfg: { entity: 'cover.demo_awning', entity_power: 'sensor.demo_awning_power', travel_time: 10 },
+    build(ctl) { shutterCtl(ctl, 'cover.demo_awning', 'sensor.demo_awning_power', 10, 60); } },
+  { kind: 'smart-lock', title: 'Serrure connectée (Nuki)', lang: true,
+    cfg: { model: 'nuki_pro_5', entity: 'lock.demo_front_door', entity_battery: 'sensor.demo_lock_battery', entity_door: 'binary_sensor.demo_lock_door' },
+    build(ctl) {
+      select(ctl, 'Serrure', 'lock.demo_front_door', [['locked', 'Verrouillée / Locked'], ['unlocked', 'Déverrouillée / Unlocked'], ['open', 'Ouverte / Open'], ['locking', 'Verrouillage / Locking'], ['unlocking', 'Déverrouillage / Unlocking'], ['jammed', 'Bloquée / Jammed']], 'locked');
+      range(ctl, 'Batterie', 'sensor.demo_lock_battery', 0, 100, 1, 82, '%', { unit_of_measurement: '%', device_class: 'battery' });
+      checks(ctl, [['Porte ouverte', 'binary_sensor.demo_lock_door', false]]);
+    } },
+  { kind: 'thermo-heater', title: 'Chauffe-eau thermodynamique', lang: true,
+    cfg: { name: 'Boiler', entity: 'water_heater.demo_boiler', entity_power: 'sensor.demo_boiler_power', entity_energy: 'sensor.demo_boiler_energy', entity_reserve: 'sensor.demo_boiler_reserve' },
+    build(ctl) {
+      select(ctl, 'Mode', 'water_heater.demo_boiler', [['eco', 'Éco'], ['performance', 'Performance'], ['heat_pump', 'Pompe à chaleur'], ['off', 'Arrêt / Off']], 'eco');
+      states['water_heater.demo_boiler'].attributes = { current_temperature: 52, temperature: 55, min_temp: 35, max_temp: 70, operation_list: ['eco', 'performance', 'heat_pump', 'off'] };
+      range(ctl, 'Puissance', 'sensor.demo_boiler_power', 0, 2200, 10, 420, 'W', W);
+      range(ctl, 'Eau chaude restante', 'sensor.demo_boiler_reserve', 0, 100, 1, 68, '%', { unit_of_measurement: '%' });
+      set('sensor.demo_boiler_energy', 2.1, KWH);
+    } },
+  { kind: 'irrigation', title: 'Arrosage (4 zones)', lang: true,
+    cfg: { name: 'Jardin', zones: ['valve.demo_lawn', 'valve.demo_veg', 'valve.demo_hedge', { entity: 'switch.demo_drip', name: 'Goutte-à-goutte' }], entity_pump: 'switch.demo_well_pump', entity_rain: 'binary_sensor.demo_rain_det', entity_master: 'input_boolean.demo_auto_water', block_on_rain: true, entity_soil: 'sensor.demo_soil' },
+    build(ctl) {
+      const OC = [['closed', 'Fermée / Closed'], ['open', 'Ouverte / Open']];
+      select(ctl, 'Pelouse', 'valve.demo_lawn', OC, 'open'); select(ctl, 'Potager', 'valve.demo_veg', OC, 'closed'); select(ctl, 'Haie', 'valve.demo_hedge', OC, 'closed');
+      checks(ctl, [['Goutte-à-goutte', 'switch.demo_drip', false], ['Pompe du puits', 'switch.demo_well_pump', true], ['Pluie détectée', 'binary_sensor.demo_rain_det', false], ['Arrosage auto', 'input_boolean.demo_auto_water', true]]);
+      range(ctl, 'Humidité du sol', 'sensor.demo_soil', 0, 100, 1, 38, '%', { unit_of_measurement: '%', device_class: 'moisture' });
+    } },
+  { kind: 'led-strip', title: 'Bandeau LED (barres)', lang: true,
+    cfg: { name: 'Barres TV', shape: 'bars', entity: 'light.demo_led_bars', entity_power: 'sensor.demo_led_bars_power' },
+    build(ctl) { lightCtl(ctl, 'light.demo_led_bars', 'sensor.demo_led_bars_power', { brightness: 200, rgb_color: [120, 90, 255], supported_color_modes: ['rgb'] }); } },
+  { kind: 'camera', title: 'Caméra (dome)', lang: true,
+    cfg: { name: 'Entrée', model: 'dome', entity_camera: 'camera.demo_cam', entity_motion: 'binary_sensor.demo_cam_motion', entity_person: 'binary_sensor.demo_cam_person', entity_animal: 'binary_sensor.demo_cam_animal', entity_vehicle: 'binary_sensor.demo_cam_vehicle', entity_sd: 'sensor.demo_cam_sd', entity_night: 'switch.demo_cam_night' },
+    build(ctl) {
+      set('camera.demo_cam', 'idle');
+      checks(ctl, [['Mouvement', 'binary_sensor.demo_cam_motion', true], ['Personne', 'binary_sensor.demo_cam_person', false], ['Animal', 'binary_sensor.demo_cam_animal', false], ['Véhicule', 'binary_sensor.demo_cam_vehicle', false], ['Mode nuit', 'switch.demo_cam_night', false]]);
+      range(ctl, 'Carte SD libre', 'sensor.demo_cam_sd', 0, 100, 1, 64, '%', { unit_of_measurement: '%' });
+    } },
+  { kind: 'camera', title: 'Caméra (bullet, nuit)', lang: true,
+    cfg: { name: 'Jardin', model: 'bullet', entity_camera: 'camera.demo_cam2', entity_motion: 'binary_sensor.demo_cam2_motion', entity_person: 'binary_sensor.demo_cam2_person', entity_animal: 'binary_sensor.demo_cam2_animal', entity_sd: 'sensor.demo_cam2_sd', entity_night: 'switch.demo_cam2_night' },
+    build(ctl) {
+      set('camera.demo_cam2', 'idle');
+      checks(ctl, [['Mouvement', 'binary_sensor.demo_cam2_motion', false], ['Personne', 'binary_sensor.demo_cam2_person', true], ['Animal', 'binary_sensor.demo_cam2_animal', false], ['Mode nuit', 'switch.demo_cam2_night', true]]);
+      range(ctl, 'Carte SD libre', 'sensor.demo_cam2_sd', 0, 100, 1, 8, '%', { unit_of_measurement: '%' });
+    } },
+  { kind: 'nvr', title: 'Enregistreur NVR', lang: true,
+    cfg: { name: 'NVR', entity: 'binary_sensor.demo_nvr', entity_memory_free: 'sensor.demo_nvr_mem', entity_disk_free: 'sensor.demo_nvr_disk', entity_power: 'sensor.demo_nvr_power', entity_energy: 'sensor.demo_nvr_energy', entity_uptime: 'sensor.demo_nvr_uptime', entity_cpu: 'sensor.demo_nvr_cpu' },
+    build(ctl) {
+      checks(ctl, [['En marche', 'binary_sensor.demo_nvr', true]]);
+      range(ctl, 'Mémoire libre', 'sensor.demo_nvr_mem', 0, 100, 1, 42, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Disque libre', 'sensor.demo_nvr_disk', 0, 100, 1, 55, '%', { unit_of_measurement: '%' });
+      range(ctl, 'CPU', 'sensor.demo_nvr_cpu', 0, 100, 1, 23, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Puissance', 'sensor.demo_nvr_power', 0, 60, 0.5, 18, 'W', W);
+      set('sensor.demo_nvr_energy', 12.4, KWH); set('sensor.demo_nvr_uptime', new Date(Date.now() - 12.5 * 864e5).toISOString());
+    } },
+  { kind: 'poe-switch', title: 'Switch PoE (GPS208)', lang: true,
+    cfg: { name: 'Switch caméras', model: 'gps208', prefix: 'demo_gps208' },
+    build(ctl) {
+      const p = 'demo_gps208';
+      for (let i = 1; i <= 8; i++) {
+        const up = i !== 3 && i !== 6, on = i !== 6 && i !== 8;
+        set(`sensor.${p}_${i}_link`, up ? (i % 2 ? 1000 : 100) : 0); set(`switch.${p}_${i}_poe`, on ? 'on' : 'off'); set(`switch.${p}_${i}_extend`, 'off');
+        set(`sensor.${p}_${i}_power`, on && up ? (4 + i * 0.7).toFixed(1) : 0, W); set(`sensor.${p}_${i}_rx`, up ? i * 12 : 0, { unit_of_measurement: 'Mbps' }); set(`sensor.${p}_${i}_tx`, up ? i * 3 : 0, { unit_of_measurement: 'Mbps' });
+      }
+      [1, 2].forEach((n) => { set(`sensor.${p}_lan${n}_link`, n === 1 ? 1000 : 0); set(`switch.${p}_lan${n}_extend`, 'off'); set(`sensor.${p}_lan${n}_rx`, n === 1 ? 420 : 0, { unit_of_measurement: 'Mbps' }); set(`sensor.${p}_lan${n}_tx`, n === 1 ? 88 : 0, { unit_of_measurement: 'Mbps' }); });
+      range(ctl, 'Puissance totale', `sensor.${p}_total_power`, 0, 130, 0.5, 31.4, 'W', W);
+      range(ctl, 'Tension', `sensor.${p}_voltage`, 48, 56, 0.1, 52.1, 'V', { unit_of_measurement: 'V' });
+      ctl.append(Object.assign(document.createElement('span'), { textContent: '' }), Object.assign(document.createElement('span'), { textContent: 'Cliquez sur un port de la carte pour son détail', style: 'color:var(--secondary-text-color);font-size:12px' }), document.createElement('span'));
+    } },
+  { kind: 'water-filter', title: 'Filtre à eau sous évier (3 cartouches)', lang: true,
+    cfg: { name: 'Filtre cuisine', stages: 3, entity_filter: 'sensor.demo_filter', filter_mode: 'used', filter_capacity: 10000, entity_date: 'sensor.demo_filter_date', replace_after_days: 365, entity_reset: 'script.demo_filter_reset', entity_flow: 'sensor.demo_filter_flow', entity_today: 'sensor.demo_filter_today', entity_month: 'sensor.demo_filter_month', entity_year: 'sensor.demo_filter_year', entity_total: 'sensor.demo_filter_total' },
+    build(ctl) {
+      range(ctl, 'Litres filtrés', 'sensor.demo_filter', 0, 10000, 50, 2100, 'L', { unit_of_measurement: 'L' });
+      range(ctl, 'Débit', 'sensor.demo_filter_flow', 0, 8, 0.1, 2.4, 'L/min', { unit_of_measurement: 'L/min' });
+      set('sensor.demo_filter_date', new Date(Date.now() - 23 * 864e5).toISOString()); set('script.demo_filter_reset', 'off');
+      set('sensor.demo_filter_today', 8.5, { unit_of_measurement: 'L' }); set('sensor.demo_filter_month', 139, { unit_of_measurement: 'L' }); set('sensor.demo_filter_year', 211, { unit_of_measurement: 'L' }); set('sensor.demo_filter_total', 2100, { unit_of_measurement: 'L' });
+    } },
 ];
 const ROBOT_SEL = {}, LIGHT_SEL = {};
 // volets : cover positionnable (et inclinable pour le store vénitien), moteur, soleil jour / nuit
