@@ -14,6 +14,8 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `entity_power` (positive = charging, `invert_power: true` if yours is reversed)
 - `entity_energy`
 - `entity_temperature`
+- `entity_calibration`: date of the next calibration (e.g. Zendure batteries), from a `sensor` (date or timestamp) or an `input_datetime`; shown in a tile
+- `show_calibration` (default true)
 - `capacity_kwh` (default 10)
 - `max_power`
 - `low_threshold` (default 15 %)

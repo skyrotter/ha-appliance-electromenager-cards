@@ -480,6 +480,7 @@
   },
   "battery": {
     "name": "Batterie solaire",
+    "calibration": "Prochaine calibration",
     "soc": "Charge",
     "power": "Puissance",
     "energy": "Énergie",
@@ -850,6 +851,7 @@
     "entity_scop": "SCOP",
     "entity_session_energy": "Énergie de la session",
     "entity_soc": "Niveau de charge",
+    "entity_calibration": "Prochaine calibration (capteur de date)",
     "entity_source_in_temp": "Température d'entrée source",
     "entity_source_out_temp": "Température de sortie source",
     "entity_source_pump": "Pompe de captage",
@@ -958,6 +960,7 @@
     "show_temperature": "Tuile température",
     "show_temps": "Afficher les températures",
     "show_time": "Afficher le temps",
+    "show_calibration": "Afficher la prochaine calibration",
     "show_voltage": "Afficher les tensions",
     "show_water": "Afficher la température de l'eau",
     "show_water_level": "Afficher le niveau d'eau",
