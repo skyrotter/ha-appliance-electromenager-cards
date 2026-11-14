@@ -1270,6 +1270,7 @@
     "ceiling_spot": "Focos empotrados"
   },
   "shutter": {
+    "sliding_curtain": "Cortinas correderas",
     "roller_shutter": "Persiana enrollable",
     "venetian_blind": "Persiana veneciana",
     "swing_shutter": "Contraventanas",

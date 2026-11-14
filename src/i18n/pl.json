@@ -1137,6 +1137,7 @@
     "ceiling_spot": "Oprawy wpuszczane"
   },
   "shutter": {
+    "sliding_curtain": "Zasłony przesuwne",
     "roller_shutter": "Roleta zewnętrzna",
     "venetian_blind": "Żaluzja",
     "swing_shutter": "Okiennice skrzydłowe",

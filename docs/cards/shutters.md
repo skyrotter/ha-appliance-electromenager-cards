@@ -1,16 +1,17 @@
 # Shutters and blinds
 
-`custom:appliance-roller-shutter-card · custom:appliance-venetian-blind-card · custom:appliance-swing-shutter-card · custom:appliance-pergola-card · custom:appliance-roof-window-card · custom:appliance-awning-card`
+`custom:appliance-roller-shutter-card · custom:appliance-venetian-blind-card · custom:appliance-swing-shutter-card · custom:appliance-sliding-curtain-card · custom:appliance-pergola-card · custom:appliance-roof-window-card · custom:appliance-awning-card`
 
 <p align="center"><img src="../shutters.gif" width="600" alt="Animated shutter cards"></p>
 
-Three window coverings, a bioclimatic pergola, a roof window and a retractable awning driven by a `cover` entity. The view through the window follows the sun: day sky with the sun, or night sky with the moon and stars when `sun.sun` is below the horizon.
+Shutters, blinds, sliding curtains, a bioclimatic pergola, a roof window and a retractable awning driven by a `cover` entity. The view through the window follows the sun: day sky with the sun, or night sky with the moon and stars when `sun.sun` is below the horizon.
 
 | Card | Animation |
 |---|---|
 | Roller shutter (`roller-shutter`) | the aluminium slats roll up into the box at `current_position`; light slits between the slats by day, a beam of light into the room when open |
 | Venetian blind (`venetian-blind`) | the slats stack under the head rail as the blind goes up, and turn with `current_tilt_position` (flat = see through, closed = full slats); a **Tilt** slider |
 | Swing shutters (`swing-shutter`) | two louvred leaves swing open in 3D on their hinges and fold back against the wall |
+| [Sliding curtains](sliding-curtain.md) (`sliding-curtain`) | two fabric panels gather sideways from the centre, following `current_position`; `color` sets the fabric colour |
 | Bioclimatic pergola (`pergola`) | the louvres of an aluminium pergola, in front of a modern house with a pool, turn with `current_tilt_position` (or `current_position` when the cover has no tilt); sun rays and striped shadows on the terrace, LED strip and lit house at night |
 
 **Tilt only (venetian blind)**: `tilt_only: true` hides Open / Stop / Close and the position slider and keeps only the slat angle: the **Tilt** slider and preset buttons **0 / 25 / 50 / 75 / 100 %** (0 % = slats closed, 50 % = half open, 100 % = closed again, tilted the other way). Each button calls `cover.set_cover_tilt_position`; the one matching the current angle is highlighted. Change the buttons with `tilt_presets`; the cover must support tilt.

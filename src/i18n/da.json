@@ -1308,6 +1308,7 @@
     "ceiling_spot": "Indbygningsspots"
   },
   "shutter": {
+    "sliding_curtain": "Skydegardiner",
     "roller_shutter": "Rulleskodde",
     "venetian_blind": "Persienne",
     "swing_shutter": "Skodder",
