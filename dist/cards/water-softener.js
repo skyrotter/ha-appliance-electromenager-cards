@@ -486,10 +486,10 @@ svg{display:block;flex:0 1 calc(190px * var(--illus-scale,1));width:calc(190px *
 /* service sans débit : tout est figé */
 .still *{animation:none!important}.still .pflow,.still .drop{opacity:0!important}
 /* ---- tiles_right : titre, état et dessin à gauche, tuiles en colonne à droite, depuis le haut de la carte ---- */
-ha-card.side{display:grid;grid-template-columns:minmax(0,1fr) minmax(105px,.85fr);column-gap:12px;align-content:start;align-items:start}
-.side .head,.side .leak,.side .prog{grid-column:1}
+ha-card.side{display:grid;grid-template-rows:auto auto auto 1fr;grid-template-columns:minmax(0,1fr) minmax(105px,.85fr);column-gap:12px;align-content:start;align-items:start}
+.side .head{grid-column:1;grid-row:1}.side .leak{grid-column:1;grid-row:2}.side .prog{grid-column:1;grid-row:3}
 .side .body{display:contents}
-.side svg{grid-column:1;width:100%;max-width:calc(190px * var(--illus-scale,1));margin:4px auto 0;flex:none}
+.side svg{grid-column:1;grid-row:4;align-self:center;width:100%;max-width:calc(190px * var(--illus-scale,1));margin:4px auto 0;flex:none}
 .side .tiles{grid-column:2;grid-row:1 / span 4;grid-template-columns:1fr;align-self:start}
 /* ---- compact : petits emplacements fixes ; l'illustration prend la hauteur restante, tuiles en colonne ---- */
 ha-card.compact{display:flex;flex-direction:column;padding:6px}
