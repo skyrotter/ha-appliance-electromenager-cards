@@ -13864,6 +13864,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_parcel": "Parcel sensor",
       "entity_door": "Door sensor",
       "entity_door_back": "Rear door sensor (double-door)",
+      "entity_battery_back": "Rear door battery (%)",
+      "entity_battery_back_low": "Rear door battery low",
       "show_doors": "Show door states",
       "entity_count": "Letter counter",
       "entity_reset": "Mark as collected (button, helper, counter, script…)",
@@ -13887,6 +13889,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_last_open": "Last opening (one or more timestamps)",
       "entity_battery_low": "Battery low",
       "show_last_open": "Show last opening",
+      "show_battery_back": "Show rear door battery",
       "show_hvac_modes": "Thermostat mode buttons",
       "show_fan_modes": "Thermostat fan mode list",
       "show_preset_modes": "Thermostat preset list",
@@ -16439,6 +16442,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_parcel": "Capteur colis",
       "entity_door": "Capteur de porte",
       "entity_door_back": "Capteur de porte arrière (double porte)",
+      "entity_battery_back": "Batterie de la porte arrière (%)",
+      "entity_battery_back_low": "Pile faible de la porte arrière",
       "show_doors": "Afficher l’état des portes",
       "entity_count": "Compteur de lettres",
       "entity_reset": "Relevé du courrier (bouton, entrée, compteur, script…)",
@@ -16462,6 +16467,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_last_open": "Dernière ouverture (une ou plusieurs dates)",
       "entity_battery_low": "Pile faible",
       "show_last_open": "Afficher la dernière ouverture",
+      "show_battery_back": "Afficher la batterie de la porte arrière",
       "show_hvac_modes": "Boutons de mode du thermostat",
       "show_fan_modes": "Liste ventilation du thermostat",
       "show_preset_modes": "Liste préréglages du thermostat",
@@ -41635,6 +41641,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "open": "Door open",
       "door_front": "Front",
       "door_back": "Rear",
+      "battery_back": "Rear battery",
       "open_front": "Front door open",
       "open_back": "Rear door open",
       "open_both": "Doors open",
@@ -41800,6 +41807,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       "open": "Porte ouverte",
       "door_front": "Avant",
       "door_back": "Arrière",
+      "battery_back": "Batterie arrière",
       "open_front": "Porte avant ouverte",
       "open_back": "Porte arrière ouverte",
       "open_both": "Portes ouvertes",
@@ -42263,8 +42271,8 @@ svg{display:block;width:100%;height:auto;overflow:visible}
     <g class="bk-bat"><rect x="326" y="255" width="26" height="14" rx="2" fill="#e53935"/><rect x="352" y="259" width="3" height="6" fill="#e53935"/><rect x="329" y="258" width="5" height="8" fill="#fff"/></g>
   </svg>`;
 
-  const TILES = [['last', 'mdi:clock-outline', 'show_since'], ['count', 'mdi:email-multiple-outline', 'show_count'], ['battery', 'mdi:battery', 'show_battery'],
-    ['door_front', 'mdi:door', 'show_doors'], ['door_back', 'mdi:door', 'show_doors'], ['last_open', 'mdi:door-open', 'show_last_open']]; // les 3 premières : 1re ligne, portes et dernière ouverture : 2e ligne
+  const TILES = [['last', 'mdi:clock-outline', 'show_since'], ['count', 'mdi:email-multiple-outline', 'show_count'], ['battery', 'mdi:battery', 'show_battery'], ['battery_back', 'mdi:battery', 'show_battery_back'],
+    ['door_front', 'mdi:door', 'show_doors'], ['door_back', 'mdi:door', 'show_doors'], ['last_open', 'mdi:door-open', 'show_last_open']]; // les 4 premières : 1re ligne, portes et dernière ouverture : 2e ligne
 
   class ApplianceMailboxCard extends HTMLElement {
 
@@ -42283,7 +42291,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { show_status: true, show_since: true, show_count: true, show_battery: true, show_buttons: true, show_doors: true, show_last_open: true, box_color: 'anthracite', ...c };
+      this._c = { show_status: true, show_since: true, show_count: true, show_battery: true, show_battery_back: true, show_buttons: true, show_doors: true, show_last_open: true, box_color: 'anthracite', ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -42339,7 +42347,8 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       // dernière ouverture : la plus récente des dates (sensor timestamp) de entity_last_open, une ou plusieurs
       const lastOpen = this._ids(c.entity_last_open).map((i) => this._st(i)).filter((x) => this._ok(x)).reduce((a, x) => Math.max(a, Date.parse(x.state) || 0), 0);
       const bl = this._st(c.entity_battery_low), batLow = this._ok(bl) && ON_RE.test(String(bl.state));
-      return { st, mail, parcel, opened, openedBack, count, last, lastOpen, batLow };
+      const bbl = this._st(c.entity_battery_back_low), batBackLow = this._ok(bbl) && ON_RE.test(String(bbl.state)); // pile faible du capteur de la porte arrière
+      return { st, mail, parcel, opened, openedBack, count, last, lastOpen, batLow, batBackLow };
     }
 
     _boks() { return String(this._c.box_model || '').toLowerCase() === 'boks'; }
@@ -42379,13 +42388,13 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         <div class="head"><div class="title" id="mbtitle"></div><div class="badge" id="mbbadge"></div></div>
         <div class="scene">${(this._boks() ? SVG_BOKS : SVG)(this._c.name || this._t('name'))}<div class="count" id="mbcount"></div></div>
         <div class="ctl" id="mbctl"><button id="mbcollect"><ha-icon icon="mdi:email-check-outline"></ha-icon><span></span></button><button id="mbopen"><ha-icon icon="mdi:door-open"></ha-icon><span></span></button></div>
-        ${[TILES.slice(0, 3), TILES.slice(3)].map((row, i) => `<div class="tiles" id="mbrow${i}">${row.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${window.applianceIcon(this._c, k, ic)}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>`).join('')}
+        ${[TILES.slice(0, 4), TILES.slice(4)].map((row, i) => `<div class="tiles" id="mbrow${i}">${row.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${window.applianceIcon(this._c, k, ic)}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>`).join('')}
       </ha-card>`;
       window.applianceBindIllus(this, root.querySelector('.scene'), () => this._more(this._c.entity_mail || this._c.entity_parcel || this._c.entity_door));
       root.querySelector('#mbcollect').addEventListener('click', () => this._collect());
       root.querySelector('#mbopen').addEventListener('click', () => this._openDoor());
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
-        const c = this._c; this._more({ last: c.entity_mail || c.entity_parcel, count: c.entity_count || c.entity_mail, battery: c.entity_battery, door_front: c.entity_door, door_back: c.entity_door_back, last_open: this._ids(c.entity_last_open)[0] }[el.dataset.k]);
+        const c = this._c; this._more({ last: c.entity_mail || c.entity_parcel, count: c.entity_count || c.entity_mail, battery: c.entity_battery, battery_back: c.entity_battery_back, door_front: c.entity_door, door_back: c.entity_door_back, last_open: this._ids(c.entity_last_open)[0] }[el.dataset.k]);
       }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
@@ -42393,8 +42402,8 @@ svg{display:block;width:100%;height:auto;overflow:visible}
     _render() {
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card;
-      const { st, opened, openedBack, count, last, lastOpen, batLow } = this._compute();
-      card.className = `${st}${opened ? ' opened' : ''}${opened || openedBack ? ' door_open' : ''}${batLow ? ' batlow' : ''}${c.animations === false ? ' noanim' : ''}`;
+      const { st, opened, openedBack, count, last, lastOpen, batLow, batBackLow } = this._compute();
+      card.className = `${st}${opened ? ' opened' : ''}${opened || openedBack ? ' door_open' : ''}${batLow || batBackLow ? ' batlow' : ''}${c.animations === false ? ' noanim' : ''}`;
       // couleur : nom connu ou #hex (nuances dérivées par color-mix)
       const col = COLORS[String(c.box_color || '').toLowerCase()];
       const hex = !col && /^#[0-9a-f]{3,8}$/i.test(String(c.box_color)) ? c.box_color : null;
@@ -42422,10 +42431,12 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       const os = this._st(c.entity_open); ob.disabled = !os || /^unavailable$/i.test(String(os.state));
 
       const bat = this._st(c.entity_battery), batV = this._ok(bat) ? parseFloat(bat.state) : NaN;
+      const bat2 = this._st(c.entity_battery_back), batBackV = this._ok(bat2) ? parseFloat(bat2.state) : NaN;
       const V = {
         last: [c.entity_mail || c.entity_parcel, st === 'empty' || st === 'unavailable' ? '--' : this._when(last), ''],
         count: [c.entity_count, isNaN(count) ? '--' : String(Math.round(count)), ''],
         battery: [c.entity_battery, isNaN(batV) ? '--' : String(Math.round(batV)), '%'],
+        battery_back: [c.entity_battery_back, isNaN(batBackV) ? '--' : String(Math.round(batBackV)), '%'],
         // tuiles des portes : seulement si une porte arrière est configurée
         door_front: [dbl && c.entity_door, this._doorTxt(c.entity_door, opened), ''],
         door_back: [c.entity_door_back, this._doorTxt(c.entity_door_back, openedBack), ''],
@@ -42434,7 +42445,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       TILES.forEach(([k, defIcon, opt]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`); const [show, val, unit] = V[k];
         el.classList.toggle('hide', !show || c[opt] === false);
-        el.classList.toggle('bad', k === 'battery' && (batV < 20 || batLow) || k === 'door_front' && opened || k === 'door_back' && openedBack);
+        el.classList.toggle('bad', k === 'battery' && (batV < 20 || batLow) || k === 'battery_back' && (batBackV < 20 || batBackLow) || k === 'door_front' && opened || k === 'door_back' && openedBack);
         el.querySelector('.lbl').textContent = this._l(k);
         // icône perso (option `icons`), sinon celle par défaut ; les portes gardent leur icône selon l'état
         el.querySelector('ha-icon').setAttribute('icon', window.applianceIcon(c, k, defIcon));
@@ -42491,13 +42502,15 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         ent('entity_reset', ['button', 'input_button', 'input_boolean', 'switch', 'counter', 'script', 'automation', 'scene', 'input_number']),
         ent('entity_battery', 'sensor'),
         ent('entity_battery_low', ['binary_sensor', 'input_boolean']),
+        ent('entity_battery_back', 'sensor'),
+        ent('entity_battery_back_low', ['binary_sensor', 'input_boolean']),
         ent('entity_open', ['button', 'input_button', 'lock', 'script', 'switch', 'input_boolean']),
         ent('entity_last_open', 'sensor', { multiple: true }),
         { type: 'grid', name: '', schema: [{ name: 'mail_states', selector: { text: {} } }, { name: 'parcel_states', selector: { text: {} } }] },
         ...(boks ? [] : [{ name: 'box_color', selector: { select: { mode: 'dropdown', custom_value: true, options: Object.keys(COLORS).map((value) => ({ value, label: tr['color_' + value] || value })) } } }]),
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
-        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_since'), bool('show_count'), bool('show_battery'), bool('show_buttons'), bool('show_doors'), bool('show_last_open'), bool('animations')] },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_since'), bool('show_count'), bool('show_battery'), bool('show_battery_back'), bool('show_buttons'), bool('show_doors'), bool('show_last_open'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
