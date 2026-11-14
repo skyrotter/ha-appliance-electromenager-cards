@@ -57,7 +57,7 @@ Si la recherche ne la trouve pas encore : HACS → ⋮ → *Dépôts personnalis
 
 **Manuelle**
 
-1. Copie `dist/ha-appliance-electromenager-cards.js` dans `/config/www/`.
+1. Copie tout le contenu de `dist/` (le fichier `.js` *et* le dossier `cards/`) dans `/config/www/`.
 2. Paramètres → Tableaux de bord → ⋮ → Ressources → ajoute `/local/ha-appliance-electromenager-cards.js` (module JavaScript).
 
 ## Démarrage rapide

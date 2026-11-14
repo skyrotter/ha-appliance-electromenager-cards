@@ -63,7 +63,7 @@ If the search does not find it yet: HACS → ⋮ → *Custom repositories* → a
 
 **Manual**
 
-1. Copy `dist/ha-appliance-electromenager-cards.js` to `/config/www/`.
+1. Copy the whole content of `dist/` (the `.js` file *and* the `cards/` folder) to `/config/www/`.
 2. Settings → Dashboards → ⋮ → Resources → add `/local/ha-appliance-electromenager-cards.js` (JavaScript module).
 
 ## Quick start

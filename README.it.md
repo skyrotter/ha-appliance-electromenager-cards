@@ -92,7 +92,7 @@ Se la ricerca non la trova: HACS → ⋮ → **Repository personalizzati** → a
 
 ### Installazione manuale
 
-1. Copia `dist/ha-appliance-electromenager-cards.js` in `/config/www/`.
+1. Copia tutto il contenuto di `dist/` (il file `.js` *e* la cartella `cards/`) in `/config/www/`.
 2. Vai in **Impostazioni → Dashboard → ⋮ → Risorse**.
 3. Aggiungi `/local/ha-appliance-electromenager-cards.js` come modulo JavaScript.
 
