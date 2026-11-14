@@ -427,7 +427,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ent('entity_visceral_fat'), ent('entity_heart_pulse'), ent('entity_weight_goal'), ent('entity_battery'), ent('entity_bmi'),
         { type: 'grid', name: '', schema: [num('height', 50, 250, 1, undefined, 'cm'), num('recent_minutes', 1, 120, 1, 5, 'min'), num('trend_days', 7, 365, 1, 30)] },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        window.applianceLanguageField(T),
         { type: 'grid', name: '', schema: [bool('show_status'), bool('compact', false), bool('show_bmi'), bool('show_trend'), bool('animations')] },
         // une case par tuile
         { type: 'grid', name: '', schema: TILES.map((t) => bool(t[3])) },

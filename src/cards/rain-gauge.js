@@ -269,7 +269,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ent('entity_last', 'sensor'), ent('entity_battery', 'sensor'), ent('entity_signal', 'sensor'),
         num('heavy_rate', 7.6, 0.5, 50, 0.1, 'mm/h'), num('gauge_max', 50, 1, 500, 1, 'mm'), num('battery_low', 20, 1, 100, 1, '%'),
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        window.applianceLanguageField(T),
         { type: 'grid', name: '', schema: [bool('compact', false), bool('show_status'), ...TILES.map(([, , o]) => bool(o)), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);

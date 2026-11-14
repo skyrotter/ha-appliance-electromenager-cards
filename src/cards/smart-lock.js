@@ -338,8 +338,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       }
       const ent = (name, domain) => ({ name, selector: { entity: domain ? { domain } : {} } });
       const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
-      const lang = (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en';
-      const tr = T[lang] || T[String(lang).slice(0, 2)] || T.en;
+      const tr = T[window.applianceLang(T, null, this._hass)] || T.en;
       this._form.hass = this._hass;
       this._form.data = this._c;
       this._form.schema = [
@@ -360,7 +359,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         { name: 'battery_low', default: 20, selector: { number: { min: 1, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
         ent('entity_door', ['binary_sensor', 'sensor']),
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        window.applianceLanguageField(T),
         { type: 'grid', name: '', schema: [bool('confirm_open'), bool('show_status'), bool('show_buttons'), bool('show_battery'), bool('show_door'), bool('show_since'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'lock_model' : s.name, this._hass);

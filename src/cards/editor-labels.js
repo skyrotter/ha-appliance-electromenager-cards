@@ -6,12 +6,7 @@
 (() => {
   if (window.applianceEditorLabel) return;
   const L = /*@i18n editor*/{};
-  const lang = (hass) => {
-    const h = hass || document.querySelector('home-assistant')?.hass;
-    let l = ((h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').toLowerCase().slice(0, 2);
-    if (l === 'no' || l === 'nn') l = 'nb'; // norvégien : no / nn → nb (bokmål)
-    return L[l] ? l : 'en';
-  };
+  const lang = (hass) => window.applianceLang(L, null, hass);
   const human = (n) => { const t = String(n).replace(/^entity_/, '').replace(/_/g, ' '); return t.charAt(0).toUpperCase() + t.slice(1); };
   // illustration_size (en %, 30 à 300) : échelle du dessin, lue par chaque carte via --illus-scale
   window.applianceSize = (el, cfg) => {

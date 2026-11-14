@@ -240,7 +240,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ent('entity_flow', 'sensor'), ent('entity_today', 'sensor'), ent('entity_month', 'sensor'), ent('entity_year', 'sensor'), ent('entity_total', 'sensor'),
         num('soon_pct', 25, 0, 100, '%'), num('replace_pct', 5, 0, 100, '%'), num('warn_days', 30, 0, 365, 'd'),
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        window.applianceLanguageField(T),
         { type: 'grid', name: '', schema: [bool('show_status'), bool('compact', false), bool('show_buttons'), bool('animations'), ...TILES.map(([, , o]) => bool(o))] },
       ];
       this._form.computeLabel = (s) => this._lbl(`f_${s.name}`, s.name);

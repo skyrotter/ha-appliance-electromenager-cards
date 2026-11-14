@@ -1951,6 +1951,116 @@ ok('mini-pc energy tile hidden without entity',card('mini-pc',{entity_cpu:'senso
  ok('tv-box hidden buttons',!c.sr.querySelector('#tvctrls [data-k=mute]')&&!c.sr.querySelector('#tvctrls [data-k=prev]')&&!!c.sr.querySelector('#tvctrls [data-k=next]'));
  c=card('scale',{entity_weight:'sensor.w',entity_bone_mass:'sensor.b',entity_muscle_mass:'sensor.m',show_bone:false,animations:false},[mk('sensor.w',70,{unit_of_measurement:'kg'}),mk('sensor.b',3,{unit_of_measurement:'kg'}),mk('sensor.m',55,{unit_of_measurement:'kg'})]);
  ok('scale show_bone false',c.sr.querySelector('.tile[data-k=bone]').classList.contains('hide')&&!c.sr.querySelector('.tile[data-k=muscle]').classList.contains('hide'));}
+// Portuguese regions: actual card output, editors, picker, aliases and overrides.
+{
+ const cases = [
+  ['pt-PT', 'Máquina de lavar roupa', 'Frigorífico', 'Sensor de humidade (%)'],
+  ['pt-BR', 'Lavadora de roupas', 'Geladeira', 'Sensor de umidade (%)'],
+  ['pt_BR', 'Lavadora de roupas', 'Geladeira', 'Sensor de umidade (%)'],
+  ['pt-br', 'Lavadora de roupas', 'Geladeira', 'Sensor de umidade (%)'],
+  ['pt', 'Máquina de lavar roupa', 'Frigorífico', 'Sensor de humidade (%)'],
+ ];
+ for (const [locale, washer, fridge, humidity] of cases) {
+  const c = card('washer', {entity:'input_boolean.w'}, [mk('input_boolean.w','on')], locale);
+  ok(`Portuguese ${locale}: core name and washing state`, c.txt().includes(washer) && c.txt().includes(locale.toLowerCase().replace('_','-') === 'pt-br' ? 'Lavando' : 'A lavar'), c.txt());
+  c.el.remove();
+  ok(`Portuguese ${locale}: editor labels`, window.applianceEditorLabel('entity_humidity', hassOf([], locale)) === (humidity.includes('humidade') ? 'Humidade' : 'Umidade'));
+  const ed = document.createElement('appliance-card-editor');
+  ed.hass = hassOf([], locale); ed.setConfig({type:'custom:appliance-card'}); document.body.append(ed);
+  const form = ed.querySelector('ha-form'), options = form.schema[0].selector.select.options;
+  ok(`Portuguese ${locale}: picker regional names`, options.find((o)=>o.value==='appliance-fridge-card')?.label === fridge);
+  ok(`Portuguese ${locale}: picker interface`, form.computeLabel() === 'Tipo de aparelho');
+  const labels = options.map((o)=>o.label), sorted = [...labels].sort((a,b)=>a.localeCompare(b, locale.replace('_','-'), {sensitivity:'base'}));
+  ok(`Portuguese ${locale}: picker sorting`, JSON.stringify(labels) === JSON.stringify(sorted));
+  const nextLocale = fridge === 'Geladeira' ? 'pt-PT' : 'pt-BR';
+  ed.hass = hassOf([], nextLocale);
+  const updated = form.schema[0].selector.select.options.find((o)=>o.value==='appliance-fridge-card')?.label;
+  ok(`Portuguese ${locale}: picker updates on language change`, updated === (nextLocale === 'pt-PT' ? 'Frigorífico' : 'Geladeira'));
+  ed.remove();
+ }
+ // A legacy standalone card must normalize its explicit override too.
+ const b = card('battery', {entity_power:'sensor.p', language:'pt_BR'}, [mk('sensor.p',1500,W)], 'pt-PT');
+ ok('Portuguese override: battery charges in Brazilian Portuguese', /carregando/i.test(b.sr.textContent), b.sr.textContent.slice(-150));
+ b.el.hass = hassOf([mk('sensor.p',1500,W)], 'fr');
+ ok('Portuguese override survives HA language change', /carregando/i.test(b.sr.textContent));
+ b.el.remove();
+ // Editor model selectors used to shorten pt-BR/pt-PT to two letters.
+ for (const [locale, expected] of [['pt-PT','Termóstato Netatmo'], ['pt-BR','Termostato Netatmo']]) {
+  const ed = document.createElement('appliance-trv-card-editor'); ed.hass = hassOf([], locale); ed.setConfig({}); document.body.append(ed);
+  const model = ed.querySelector('ha-form').schema.find((f)=>f.name==='model');
+  ok(`Portuguese ${locale}: thermostat model names`, model.selector.select.options.some((o)=>o.label===expected));
+  ed.remove();
+ }
+ const H = (l) => hassOf([],l), TT = {en:{}, 'pt-PT':{}, 'pt-BR':{}};
+ for (const [input, expected] of [['PT_br','pt-BR'],['pt_pt','pt-PT'],['pt','pt-PT'],['pt-AO','pt-PT']])
+  ok(`Portuguese resolver: ${input}`, window.applianceLang(TT, null, H(input)) === expected);
+}
+// Portuguese review: first-use empty card and UPS autonomy labels.
+{
+ const empty = document.createElement('appliance-card');
+ empty.setConfig({type:'custom:appliance-card'});
+ empty.hass = hassOf([], 'pt-BR');
+ ok('Portuguese: empty appliance card prompts for a type', empty.textContent === 'Escolha um tipo de aparelho no editor.', empty.textContent);
+ empty.setConfig({type:'custom:appliance-card', appliance:'appliance-battery-card'});
+ ok('Portuguese: empty card can select an appliance', !!empty.querySelector('appliance-battery-card'));
+ empty.setConfig({type:'custom:appliance-card'});
+ ok('Portuguese: clearing the appliance restores the prompt', empty.textContent === 'Escolha um tipo de aparelho no editor.', empty.textContent);
+ empty.hass = hassOf([], 'en');
+ ok('Empty appliance card updates language', empty.textContent === 'Pick an appliance type in the editor.', empty.textContent);
+ for (const locale of ['pt', 'pt-BR']) {
+  const ed = document.createElement('appliance-ups-card-editor'); ed.hass=hassOf([],locale); ed.setConfig({});
+  const form=ed.querySelector('ha-form');
+  ok(`Portuguese ${locale}: UPS editor runtime is autonomy`, form.computeLabel({name:'entity_runtime'})==='Autonomia' && form.computeLabel({name:'show_runtime'})==='Autonomia');
+ }
+}
+// Newly synchronized upstream cards: regional names, selectors, overrides and real alerts.
+{
+ const cards = [
+  ['camera','Câmara','Câmera'], ['nvr','Gravador NVR','Gravador NVR'],
+  ['poe-switch','Switch PoE','Switch PoE'], ['water-filter','Filtro de água','Filtro de água'],
+  ['reef-aquarium','Aquário de recife','Aquário de recife'], ['raspberry-pi','Raspberry Pi','Raspberry Pi'],
+ ];
+ for (const [kind, pt, br] of cards) {
+  const tag='appliance-'+kind+'-card', C=customElements.get(tag), el=document.createElement(tag);
+  el.setConfig({animations:false}); document.getElementById('g').append(el);
+  for (const [locale, expected] of [['pt',pt],['pt-BR',br]]) {
+   el.hass=hassOf([],locale);
+   ok(`Portuguese sync ${kind}: ${locale} render`, el.shadowRoot.textContent.includes(expected));
+  }
+  el.setConfig({language:'pt_PT', animations:false}); el.hass=hassOf([], 'pt-BR');
+  ok(`Portuguese sync ${kind}: explicit alias overrides HA`, el._lang()==='pt-PT' && el.shadowRoot.textContent.includes(pt));
+  el.remove();
+  const ed=C.getConfigElement(); ed.hass=hassOf([], 'pt-BR'); ed.setConfig({});
+  const fields=[...ed.querySelectorAll('ha-form')].flatMap(f=>f.schema||[]), field=fields.find(f=>f.name==='language');
+  ok(`Portuguese sync ${kind}: shared selector`, field?.selector.select.options.some(o=>o.value==='pt-PT'&&o.label==='Português (Portugal)') && field.selector.select.options.some(o=>o.value==='pt-BR'&&o.label==='Português (Brasil)'));
+ }
+ for (const locale of ['pt', 'pt-BR']) {
+  const pi=document.createElement('appliance-raspberry-pi-card');
+  pi.setConfig({entity_power_status:'binary_sensor.uv',animations:false}); document.getElementById('g').append(pi);
+  pi.hass=hassOf([mk('binary_sensor.uv','on')],locale);
+  ok(`Portuguese sync Raspberry Pi ${locale}: undervoltage alert`,pi.shadowRoot.getElementById('rpalert').textContent==='Subtensão: verifique a alimentação');
+  pi.remove();
+  const filter=document.createElement('appliance-water-filter-card');
+  filter.setConfig({entity_filter:'sensor.filter_life',filter_mode:'remaining',animations:false}); document.getElementById('g').append(filter);
+  filter.hass=hassOf([mk('sensor.filter_life',1,{unit_of_measurement:'%'})],locale);
+  ok(`Portuguese sync water filter ${locale}: replacement alert`,filter.shadowRoot.textContent.includes('Substitua o filtro agora'));
+  filter.remove();
+ }
+}
+// A translated PoE confirmation must name the port once and honor cancellation.
+for (const locale of ['pt','pt-BR']) {
+ const el=document.createElement('appliance-poe-switch-card'); el.setConfig({prefix:'pt_test',animations:false});
+ document.getElementById('g').append(el);
+ const h=hassOf([mk(el._ports[0].poe,'on')],locale); el.hass=h;
+ el.shadowRoot.querySelector('.port').dispatchEvent(new Event('click'));
+ let prompt=''; const previousConfirm=window.confirm;
+ try {
+  window.confirm=(message)=>{prompt=message;return false;};
+  el.shadowRoot.getElementById('bpoe').click();
+  ok(`Portuguese sync PoE ${locale}: translated confirmation`,prompt.startsWith('Desligar a alimentação PoE em Porta 1?')&&!prompt.includes('{port}'),prompt);
+  ok(`Portuguese sync PoE ${locale}: cancel keeps power on`,h.calls.length===0,JSON.stringify(h.calls));
+ } finally {window.confirm=previousConfirm;el.remove();}
+}
 window.RESULTS=R;
 const fails=R.filter(r=>!r.pass).length;
 document.getElementById('sum').innerHTML=`<b class="${fails?'f':'p'}">${R.length-fails} / ${R.length} tests réussis</b> — fichier testé : <code>dist/ha-appliance-electromenager-cards.js</code>`;

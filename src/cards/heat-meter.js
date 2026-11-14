@@ -270,7 +270,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
         { name: 'power_threshold', default: 0.05, selector: { number: { min: 0, max: 5, step: 0.01, mode: 'box', unit_of_measurement: 'kW' } } },
         window.applianceTempField,
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        window.applianceLanguageField(T),
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_supply'), bool('show_return'), bool('show_delta'), bool('show_power'), bool('show_flow'), bool('show_energy'), bool('show_volume'), bool('show_room'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);

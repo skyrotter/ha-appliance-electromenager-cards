@@ -340,12 +340,14 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         { name: 'extra_tiles', selector: { object: {} } },
         { type: 'grid', name: '', schema: [num('battery_low', 0, 100, 1, 20, '%'), num('load_max', 10, 100, 1, 90, '%'), num('mains_min', 0, 250, 1, 100, 'V')] },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        window.applianceLanguageField(T),
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_charge'), bool('show_runtime'), bool('show_load'), bool('show_power'), bool('show_voltage'), bool('show_energy'), bool('show_battery_voltage'), bool('show_nominal_power'), bool('show_beeper'), bool('animations'),
         ] },
       ];
-      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
+      this._form.computeLabel = (s) => ['entity_runtime', 'show_runtime'].includes(s.name)
+        ? (T[window.applianceLang(T, null, this._hass)].runtime ?? T.en.runtime)
+        : window.applianceEditorLabel(s.name, this._hass);
     }
   }
   customElements.define(TAG + '-editor', ApplianceUpsCardEditor);

@@ -11,7 +11,7 @@ window.customCards = window.customCards || [];
  */
 const I18N_AQUARIUM = /*@i18n aquarium*/{};
 // Home Assistant language, used when `language` option is not explicitly set
-const lang = (h) => window.applianceLang(I18N_AQUARIUM, null, h);
+const lang = (h, cfg) => window.applianceLang(I18N_AQUARIUM, cfg, h);
 
 class ApplianceAquariumCard extends HTMLElement {
   static getStubConfig(hass) {
@@ -52,7 +52,7 @@ class ApplianceAquariumCard extends HTMLElement {
           { name: 'show_cost', selector: { boolean: {} }, default: true },
         ] },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(I18N_AQUARIUM) } } },
+        window.applianceLanguageField(I18N_AQUARIUM),
       ],
       computeLabel: (s) => window.applianceEditorLabel(s.name),
     };
@@ -71,7 +71,7 @@ class ApplianceAquariumCard extends HTMLElement {
 
   set hass(hass) {
     // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
-    const l = this._config && (this._config.language || lang(hass));
+    const l = this._config && lang(hass, this._config);
     if (l && l !== this._lng) { this._lng = l; this._hass = hass; this._built = false; this._build(); }
    
     this._hass = hass;
@@ -81,7 +81,7 @@ class ApplianceAquariumCard extends HTMLElement {
   getCardSize() { return 5; }
   getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
-  _t(k) { return (I18N_AQUARIUM[this._config.language || lang(this._hass)] || I18N_AQUARIUM.en)[k] ?? I18N_AQUARIUM.en[k] ?? k; }
+  _t(k) { return (I18N_AQUARIUM[lang(this._hass, this._config)] || I18N_AQUARIUM.en)[k] ?? I18N_AQUARIUM.en[k] ?? k; }
   // libellé perso (option labels) sinon traduction
   _l(k) { const L = this._config && this._config.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
 
