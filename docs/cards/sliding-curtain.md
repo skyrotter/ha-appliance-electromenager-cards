@@ -14,6 +14,7 @@ libraries, or additional resources are needed.
 type: custom:appliance-sliding-curtain-card
 entity: cover.living_room_curtains
 name: Living room curtains
+language: en
 color: '#b6a997'
 travel_time: 8
 show_position: false
@@ -53,7 +54,7 @@ show_position: false
 show_since: false
 ```
 
-Try **Rideaux coulissants** in the [interactive demo](../demo.html), including
+Try **Sliding curtains** in the [interactive demo](../demo.html), including
 Open, Stop, Close, partial positions, and the day/night switch.
 
 [← All cards](../../README.md#the-cards)
