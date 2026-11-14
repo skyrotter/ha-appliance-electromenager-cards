@@ -1,0 +1,630 @@
+/* ================================================================== */
+/* appliance-robot-vacuum-card.js                                   */
+/* ================================================================== */
+(() => {
+"use strict";
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
+const define = (tag, cls) => { if (!customElements.get(tag)) customElements.define(tag, cls); };
+window.customCards = window.customCards || [];
+/* appliance-robot-vacuum-card — robot aspirateur + station de vidage, animé, avec commandes
+ * type: custom:appliance-robot-vacuum-card
+ */
+const I18N_VAC = {
+  "en": {
+    "name": "Robot vacuum",
+    "battery": "Battery",
+    "area": "Area",
+    "time": "Time",
+    "fan": "Suction",
+    "status": "Status",
+    "filter": "Filter",
+    "brush": "Brush",
+    "start": "Start",
+    "pause": "Pause",
+    "dock": "Dock",
+    "cleaning": "Cleaning",
+    "docked": "Docked",
+    "charging": "Charging",
+    "returning": "Returning",
+    "paused": "Paused",
+    "idle": "Idle",
+    "error": "Error",
+    "emptying": "Emptying"
+  },
+  "cs": {
+    "name": "Robotický vysavač",
+    "battery": "Baterie",
+    "area": "Plocha",
+    "time": "Čas",
+    "fan": "Sání",
+    "status": "Stav",
+    "filter": "Filtr",
+    "brush": "Kartáč",
+    "start": "Spustit",
+    "pause": "Pauza",
+    "dock": "Do stanice",
+    "cleaning": "Uklízí",
+    "docked": "Ve stanici",
+    "charging": "Nabíjí se",
+    "returning": "Vrací se",
+    "paused": "Pozastaveno",
+    "idle": "Nečinný",
+    "error": "Chyba",
+    "emptying": "Vyprazdňuje"
+  },
+  "da": {
+    "name": "Robotstøvsuger",
+    "battery": "Batteri",
+    "area": "Areal",
+    "time": "Tid",
+    "fan": "Sugeevne",
+    "status": "Status",
+    "filter": "Filter",
+    "brush": "Børste",
+    "start": "Start",
+    "pause": "Pause",
+    "dock": "Dock",
+    "cleaning": "Gør rent",
+    "docked": "I dock",
+    "charging": "Oplader",
+    "returning": "Vender hjem",
+    "paused": "På pause",
+    "idle": "Inaktiv",
+    "error": "Fejl",
+    "emptying": "Tømmer"
+  },
+  "de": {
+    "name": "Saugroboter",
+    "battery": "Akku",
+    "area": "Fläche",
+    "time": "Dauer",
+    "fan": "Saugleistung",
+    "status": "Status",
+    "filter": "Filter",
+    "brush": "Bürste",
+    "start": "Start",
+    "pause": "Pause",
+    "dock": "Station",
+    "cleaning": "Reinigt",
+    "docked": "In der Station",
+    "charging": "Lädt",
+    "returning": "Kehrt zurück",
+    "paused": "Pausiert",
+    "idle": "Inaktiv",
+    "error": "Fehler",
+    "emptying": "Entleert"
+  },
+  "es": {
+    "name": "Robot aspirador",
+    "battery": "Batería",
+    "area": "Superficie",
+    "time": "Tiempo",
+    "fan": "Succión",
+    "status": "Estado",
+    "filter": "Filtro",
+    "brush": "Cepillo",
+    "start": "Iniciar",
+    "pause": "Pausa",
+    "dock": "Base",
+    "cleaning": "Limpiando",
+    "docked": "En la base",
+    "charging": "Cargando",
+    "returning": "Volviendo",
+    "paused": "En pausa",
+    "idle": "Inactivo",
+    "error": "Error",
+    "emptying": "Vaciando"
+  },
+  "fr": {
+    "name": "Robot aspirateur",
+    "battery": "Batterie",
+    "area": "Surface",
+    "time": "Durée",
+    "fan": "Aspiration",
+    "status": "Statut",
+    "filter": "Filtre",
+    "brush": "Brosse",
+    "start": "Démarrer",
+    "pause": "Pause",
+    "dock": "Base",
+    "cleaning": "Nettoyage",
+    "docked": "À la base",
+    "charging": "En charge",
+    "returning": "Retour base",
+    "paused": "En pause",
+    "idle": "Inactif",
+    "error": "Erreur",
+    "emptying": "Vidage"
+  },
+  "hu": {
+    "name": "Robotporszívó",
+    "battery": "Akkumulátor",
+    "area": "Terület",
+    "time": "Idő",
+    "fan": "Szívóerő",
+    "status": "Állapot",
+    "filter": "Szűrő",
+    "brush": "Kefe",
+    "start": "Indítás",
+    "pause": "Szünet",
+    "dock": "Dokkolás",
+    "cleaning": "Tisztítás",
+    "docked": "Dokkolva",
+    "charging": "Töltés",
+    "returning": "Visszatérés",
+    "paused": "Szüneteltetve",
+    "idle": "Tétlen",
+    "error": "Hiba",
+    "emptying": "Ürítés"
+  },
+  "it": {
+    "name": "Robot aspirapolvere",
+    "battery": "Batteria",
+    "area": "Superficie",
+    "time": "Durata",
+    "fan": "Aspirazione",
+    "status": "Stato",
+    "filter": "Filtro",
+    "brush": "Spazzola",
+    "start": "Avvia",
+    "pause": "Pausa",
+    "dock": "Base",
+    "cleaning": "Pulizia",
+    "docked": "Alla base",
+    "charging": "In carica",
+    "returning": "Ritorno alla base",
+    "paused": "In pausa",
+    "idle": "Inattivo",
+    "error": "Errore",
+    "emptying": "Svuotamento"
+  },
+  "nb": {
+    "name": "Robotstøvsuger",
+    "battery": "Batteri",
+    "area": "Areal",
+    "time": "Tid",
+    "fan": "Sugeeffekt",
+    "status": "Status",
+    "filter": "Filter",
+    "brush": "Børste",
+    "start": "Start",
+    "pause": "Pause",
+    "dock": "Til lader",
+    "cleaning": "Rengjør",
+    "docked": "I laderen",
+    "charging": "Lader",
+    "returning": "På vei hjem",
+    "paused": "Pause",
+    "idle": "Inaktiv",
+    "error": "Feil",
+    "emptying": "Tømmer"
+  },
+  "nl": {
+    "name": "Robotstofzuiger",
+    "battery": "Batterij",
+    "area": "Oppervlakte",
+    "time": "Tijd",
+    "fan": "Zuigkracht",
+    "status": "Status",
+    "filter": "Filter",
+    "brush": "Borstel",
+    "start": "Start",
+    "pause": "Pauze",
+    "dock": "Naar basis",
+    "cleaning": "Aan het poetsen",
+    "docked": "In basis",
+    "charging": "Laden",
+    "returning": "Keert terug",
+    "paused": "Gepauzeerd",
+    "idle": "Inactief",
+    "error": "Fout",
+    "emptying": "Aan het legen"
+  },
+  "pl": {
+    "name": "Robot sprzątający",
+    "battery": "Bateria",
+    "area": "Powierzchnia",
+    "time": "Czas",
+    "fan": "Moc ssania",
+    "status": "Status",
+    "filter": "Filtr",
+    "brush": "Szczotka",
+    "start": "Start",
+    "pause": "Pauza",
+    "dock": "Stacja",
+    "cleaning": "Czyszczenie",
+    "docked": "W stacji",
+    "charging": "Ładowanie",
+    "returning": "Powrót",
+    "paused": "Wstrzymano",
+    "idle": "Bezczynny",
+    "error": "Błąd",
+    "emptying": "Opróżnianie"
+  },
+  "pt-BR": {
+    "name": "Robô aspirador",
+    "battery": "Bateria",
+    "area": "Área",
+    "time": "Duração",
+    "fan": "Sucção",
+    "status": "Estado",
+    "filter": "Filtro",
+    "brush": "Escova",
+    "start": "Iniciar",
+    "pause": "Pausa",
+    "dock": "Base",
+    "cleaning": "Limpando",
+    "docked": "Na base",
+    "charging": "Carregando",
+    "returning": "Retornando",
+    "paused": "Em pausa",
+    "idle": "Inativo",
+    "error": "Erro",
+    "emptying": "Esvaziando"
+  },
+  "pt-PT": {
+    "name": "Robô aspirador",
+    "battery": "Bateria",
+    "area": "Área",
+    "time": "Duração",
+    "fan": "Sucção",
+    "status": "Estado",
+    "filter": "Filtro",
+    "brush": "Escova",
+    "start": "Iniciar",
+    "pause": "Pausa",
+    "dock": "Base",
+    "cleaning": "A limpar",
+    "docked": "Na base",
+    "charging": "A carregar",
+    "returning": "A regressar",
+    "paused": "Em pausa",
+    "idle": "Inativo",
+    "error": "Erro",
+    "emptying": "A esvaziar"
+  },
+  "ro": {
+    "name": "Robot aspirator",
+    "battery": "Baterie",
+    "area": "Suprafață",
+    "time": "Timp",
+    "fan": "Aspirare",
+    "status": "Stare",
+    "filter": "Filtru",
+    "brush": "Perie",
+    "start": "Start",
+    "pause": "Pauză",
+    "dock": "Bază",
+    "cleaning": "Curățare",
+    "docked": "La bază",
+    "charging": "Se încarcă",
+    "returning": "Revine la bază",
+    "paused": "În pauză",
+    "idle": "Inactiv",
+    "error": "Eroare",
+    "emptying": "Golire"
+  },
+  "ru": {
+    "name": "Робот-пылесос",
+    "battery": "Батарея",
+    "area": "Площадь",
+    "time": "Время",
+    "fan": "Всасывание",
+    "status": "Статус",
+    "filter": "Фильтр",
+    "brush": "Щётка",
+    "start": "Старт",
+    "pause": "Пауза",
+    "dock": "На базу",
+    "cleaning": "Уборка",
+    "docked": "На базе",
+    "charging": "Зарядка",
+    "returning": "Возврат",
+    "paused": "Пауза",
+    "idle": "Простой",
+    "error": "Ошибка",
+    "emptying": "Очистка"
+  },
+  "sr": {
+    "name": "Робот усисивач",
+    "battery": "Батерија",
+    "area": "Површина",
+    "time": "Време",
+    "fan": "Усисавање",
+    "status": "Статус",
+    "filter": "Филтер",
+    "brush": "Четка",
+    "start": "Покрени",
+    "pause": "Паузирај",
+    "dock": "База",
+    "cleaning": "Чишћење",
+    "docked": "На бази",
+    "charging": "Пуњење",
+    "returning": "Повратак на базу",
+    "paused": "Паузирано",
+    "idle": "У стању мировања",
+    "error": "Грешка",
+    "emptying": "Правњење контејнера"
+  },
+  "sr-Latn": {
+    "name": "Robot usisivač",
+    "battery": "Baterija",
+    "area": "Površina",
+    "time": "Vreme",
+    "fan": "Usisavanje",
+    "status": "Status",
+    "filter": "Filter",
+    "brush": "Četka",
+    "start": "Pokreni",
+    "pause": "Pauziraj",
+    "dock": "Baza",
+    "cleaning": "Čišćenje",
+    "docked": "Na bazi",
+    "charging": "Punjenje",
+    "returning": "Povratak na bazu",
+    "paused": "Pauzirano",
+    "idle": "U stanju mirovanja",
+    "error": "Greška",
+    "emptying": "Pražnjenje kontejnera"
+  }
+};
+// Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
+const lang = (h, cfg) => window.applianceLang(I18N_VAC, cfg, h);
+const ICONS_VAC = {
+  start: '<path d="M8 5v14l11-7z"/>',
+  pause: '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>',
+  dock: '<path d="M12 3 2 12h3v8h5v-6h4v6h5v-8h3z"/>',
+};
+
+// Logique commune (états, services, stats) — le dessin est dans la carte « seule » ci-dessous
+class ApplianceRobotVacuumCard extends HTMLElement {
+  static getStubConfig(hass) { return { entity: Object.keys((hass && hass.states) || {}).find((i) => i.startsWith('vacuum.')) || '' }; }
+
+  static getConfigForm() {
+    return {
+      schema: [
+        { name: 'entity', required: true, selector: { entity: { domain: 'vacuum' } } },
+        { name: 'name', selector: { text: {} } },
+        { name: 'labels', selector: { object: {} } },
+        { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
+        { name: 'transparent', selector: { boolean: {} } },
+        ...window.applianceTileFields(),
+        { name: 'entity_battery', selector: { entity: { domain: 'sensor', device_class: 'battery' } } },
+        { name: 'entity_area', selector: { entity: { domain: 'sensor' } } },
+        { name: 'entity_time', selector: { entity: { domain: 'sensor' } } },
+        { name: 'entity_status', selector: { entity: { domain: 'sensor' } } },
+        { name: 'entity_filter', selector: { entity: { domain: 'sensor' } } },
+        { name: 'entity_brush', selector: { entity: { domain: 'sensor' } } },
+        { type: 'grid', name: '', schema: [
+          { name: 'show_battery', selector: { boolean: {} }, default: true },
+          { name: 'show_area', selector: { boolean: {} }, default: true },
+          { name: 'show_time', selector: { boolean: {} }, default: true },
+          { name: 'show_fan', selector: { boolean: {} }, default: true },
+          { name: 'show_status', selector: { boolean: {} }, default: true },
+          { name: 'show_consumables', selector: { boolean: {} }, default: true },
+          { name: 'show_buttons', selector: { boolean: {} }, default: true },
+        ] },
+        { name: 'layout', selector: { select: { mode: 'dropdown', options: ['default', 'compact'] } } },
+        { name: 'image', selector: { text: {} } },
+        ...window.applianceActionFields,
+        window.applianceLanguageField(I18N_VAC),
+      ],
+      computeLabel: (s) => window.applianceEditorLabel(s.name),
+    };
+  }
+
+  setConfig(config) {
+    if (window.applianceSize) window.applianceSize(this, config);
+    if (!config.entity) throw new Error('entity (vacuum.xxx) requise');
+    this._config = { show_battery: true, show_area: true, show_time: true, show_fan: true, show_status: true,
+      show_consumables: true, show_buttons: true, ...config };
+    this._built = false; this._build();
+  }
+  set hass(h) {
+    // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
+    const l = this._config && lang(h, this._config);
+    if (l && l !== this._lng) { this._lng = l; this._hass = h; this._built = false; this._build(); }
+    this._hass = h; if (window.applianceChanged(this, h, this._config)) this._update(); }
+  getCardSize() { return this._config && this._config.layout === 'compact' ? 3 : 6; }
+  getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
+  _t(k) { return (I18N_VAC[lang(this._hass, this._config)] || I18N_VAC.en)[k] ?? I18N_VAC.en[k] ?? k; }
+  // libellé perso (option labels) sinon traduction
+  _l(k) { const L = this._config && this._config.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
+
+  _call(action) {
+    if (!this._hass) return;
+    const svc = { start: 'start', pause: 'pause', dock: 'return_to_base' }[action];
+    this._hass.callService('vacuum', svc, { entity_id: this._config.entity });
+  }
+
+  _st(id) { return id && this._hass && this._hass.states[id]; }
+  _num(id) {
+    const s = this._st(id); if (!s || ['unavailable', 'unknown'].includes(s.state)) return null;
+    const n = parseFloat(s.state); return Number.isFinite(n) ? n : null;
+  }
+
+  _update() {
+    if (!this._built || !this._hass) return;
+    const c = this._config, r = this.shadowRoot, e = this._st(c.entity);
+    if (!e) return;
+    const a = e.attributes || {};
+    const status = String((this._st(c.entity_status) || {}).state || a.status || '').toLowerCase();
+    let st = ['cleaning', 'docked', 'returning', 'paused', 'idle', 'error'].includes(e.state) ? e.state : 'idle';
+    if (st === 'docked' && /charg/.test(status)) st = 'charging';
+    const emptying = /empt|vidage|evacu|self.?clean/.test(status);
+
+    const svg = r.getElementById('svg');
+    const prev = this._lastSt;
+    svg.setAttribute('class', `${st}${emptying ? ' emptying' : ''}${st === 'charging' ? ' docked' : ''}`);
+    r.getElementById('card').classList.toggle('error', st === 'error');
+    r.getElementById('err').textContent = st === 'error' ? (a.error || this._t('error')) : '';
+    this._lastSt = st;
+
+    // Boutons : met en évidence l'action correspondant à l'état
+    const active = { cleaning: 'start', paused: 'pause', returning: 'dock', docked: 'dock', charging: 'dock' }[st];
+    r.querySelectorAll('.btn').forEach((b) => b.classList.toggle('on', b.dataset.a === active));
+    r.getElementById('btns').style.display = c.show_buttons ? '' : 'none';
+
+    const batt = this._num(c.entity_battery) ?? (a.battery_level ?? null);
+    const area = this._num(c.entity_area), time = this._num(c.entity_time);
+    const it = [], compact = c.layout === 'compact';
+    if (compact) {
+      r.getElementById('card').dataset.st = st;
+      r.getElementById('cst').textContent = this._t(emptying ? 'emptying' : st);
+    }
+    if (c.show_battery) it.push([this._l('battery'), batt === null ? '—' : `${Math.round(batt)} %`, c.entity_battery || c.entity]);
+    if (c.show_status && !compact) it.push([this._l('status'), this._t(emptying ? 'emptying' : st), c.entity_status || c.entity]);
+    if (c.show_area) it.push([this._l('area'), area === null ? '—' : `${Math.round(area)} m²`, c.entity_area]);
+    if (c.show_time) it.push([this._l('time'), time === null ? '—' : `${Math.round(time)} min`, c.entity_time]);
+    if (c.show_fan && a.fan_speed) it.push([this._l('fan'), String(a.fan_speed), c.entity]);
+    if (c.show_consumables) {
+      const fl = this._num(c.entity_filter), br = this._num(c.entity_brush);
+      if (fl !== null) it.push([this._l('filter'), `${Math.round(fl)} %`, c.entity_filter]);
+      if (br !== null) it.push([this._l('brush'), `${Math.round(br)} %`, c.entity_brush]);
+    }
+    const stats = r.getElementById('stats');
+    window.applianceLinkTiles(stats, this);
+    if (compact) { stats.innerHTML = it.map(([l, v, id]) => `<div class="tile"${window.applianceTileAttrs(id)}><span class="val">${esc(v)}</span><span class="lbl">${esc(l)}</span></div>`).join(''); return; }
+    stats.style.gridTemplateColumns = `repeat(${it.length > 4 ? Math.ceil(it.length / 2) : it.length}, 1fr)`;
+    stats.innerHTML = it.map(([l, v, id]) => `<div class="stat"${window.applianceTileAttrs(id)}><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
+  }
+}
+window.customCards = window.customCards || [];
+
+/* ───────────────────────────────────────────────────────────────
+ * Variante « robot seul » : pas de fond, pas de station, animation sur place
+ * type: custom:appliance-robot-vacuum-solo-card  (mêmes options que la carte complète)
+ * ─────────────────────────────────────────────────────────────── */
+const COMMON_CSS_VAC = `
+  :host { display:block; }:host{height:100%} ha-card{height:100%;box-sizing:border-box}
+  ha-card { padding:12px; overflow:hidden; }
+  .title { font-weight:600; margin:0 4px 4px; display:flex; justify-content:space-between; align-items:center; }
+  .badge { font-size:.75em; color:#fff; background:#e53935; border-radius:10px; padding:2px 8px; display:none; animation:blink 1s infinite; }
+  .error .badge { display:inline-block; }
+  svg { width:100%; max-width:calc(100% * var(--illus-scale,1)); margin-left:auto; margin-right:auto; height:auto; display:block; overflow:visible; }
+  .btns { display:flex; gap:8px; margin-top:8px; }
+  .btn { flex:1; display:flex; align-items:center; justify-content:center; gap:6px; border:none; cursor:pointer; border-radius:999px; padding:8px 6px;
+    background:var(--secondary-background-color, rgba(127,127,127,.15)); color:var(--primary-text-color,#222); font:600 .85em system-ui,sans-serif; transition:transform .1s, background .2s; }
+  .btn:active { transform:scale(.95); } .btn svg { width:18px; height:18px; fill:currentColor; }
+  .btn.on { background:var(--primary-color,#03a9f4); color:#fff; }
+  .stats { display:grid; gap:8px; margin-top:8px; }
+  .stat { text-align:center; display:flex; flex-direction:column; background:var(--ac-tile-bg, rgba(127,127,127,.09)); border-radius:10px; padding:6px 4px; }
+  :host([tile-order="name"]) .stat { flex-direction:column-reverse; }
+  .stat .v { font-weight:700; font-size:1.02em; } .stat .l { font-size:.7em; opacity:.65; text-transform:uppercase; letter-spacing:.04em; }
+  @keyframes blink { 50% { opacity:.3 } } @keyframes breathe { 50% { opacity:.4 } }
+  /* format compact : vignette à gauche, nom + état, tuiles, boutons dessous */
+  .compact { padding:14px; }
+  .compact .top { display:grid; grid-template-columns:auto minmax(0,1fr); grid-template-areas:"illus head" "illus stats"; column-gap:14px; row-gap:10px; align-items:start; }
+  .compact .illus { grid-area:illus; width:var(--appliance-illustration-size,116px); aspect-ratio:120/140; border-radius:16px; padding:4px; box-sizing:content-box;
+    display:flex; align-items:center; background:radial-gradient(circle at 50% 40%, rgba(127,127,127,.10), rgba(127,127,127,.03) 70%); }
+  .compact .illus svg { width:100%; height:auto; }
+  .compact .head { grid-area:head; display:flex; flex-direction:column; gap:3px; min-width:0; }
+  .compact .name { font-size:16px; font-weight:600; color:var(--primary-text-color); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .compact .status { display:flex; align-items:center; gap:6px; font-size:13px; color:var(--secondary-text-color); }
+  .compact .dot { width:8px; height:8px; border-radius:50%; flex:none; background:var(--disabled-text-color,#9e9e9e); }
+  .compact[data-st=cleaning] .dot, .compact[data-st=mowing] .dot { background:var(--appliance-ok-color,#43a047); box-shadow:0 0 0 3px rgba(67,160,71,.25); }
+  .compact[data-st=cleaning] .status, .compact[data-st=mowing] .status { color:var(--primary-text-color); }
+  .compact[data-st=returning] .dot { background:#3fa9ff; } .compact[data-st=paused] .dot { background:#ffb300; } .compact[data-st=error] .dot { background:#e53935; }
+  .compact .badge { align-self:flex-start; }
+  .compact .stats { grid-area:stats; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; margin-top:0; }
+  .compact .tile { display:flex; flex-direction:column; padding:6px 9px; border-radius:10px; min-width:0; background:var(--ac-tile-bg, rgba(127,127,127,.09)); }
+  :host([tile-order=\"name\"]) .compact .tile { flex-direction:column-reverse; }
+  .compact .val { font-size:14px; font-weight:600; color:var(--primary-text-color); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .compact .lbl { font-size:11px; color:var(--secondary-text-color); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .compact .btns { margin-top:10px; } .compact .btn { border-radius:10px; }
+  /* image perso (option image) : atténuée à l'arrêt, nette en marche */
+  .uimg { transition:opacity .4s, filter .4s; opacity:.8; }
+  .cleaning .uimg, .mowing .uimg, .returning .uimg { opacity:1; }
+  .error .uimg { filter:drop-shadow(0 0 4px #e53935); }`;
+
+class ApplianceRobotVacuumSoloCard extends ApplianceRobotVacuumCard {
+  _build() {
+    if (!this.shadowRoot) this.attachShadow({ mode: 'open' });
+    const brush = (x) => `<g transform="translate(${x} 113)"><g class="brush">
+      ${[0, 120, 240].map((a) => `<line x1="0" y1="0" x2="17" y2="0" transform="rotate(${a}) scale(1 .35)" stroke="#6b7178" stroke-width="2.4" stroke-linecap="round"/>`).join('')}
+      <circle r="3" fill="#30343a"/></g></g>`;
+    const dust = Array.from({ length: 12 }, (_, i) =>
+      `<circle class="dust" cx="${70 + (i * 37) % 100}" cy="${132 + (i % 3) * 3}" r="${1.2 + (i % 3) * .5}" style="animation-delay:${(i * .17) % 1.4}s"/>`).join('');
+    const compact = this._config.layout === 'compact', img = String(this._config.image || '').trim();
+    // option image : la photo de l'utilisateur remplace le dessin (mêmes classes d'état pour l'atténuer à l'arrêt)
+    const art = img ? `<svg viewBox="${compact ? '0 0 120 140' : '0 0 240 142'}" id="svg"><image class="uimg" href="${esc(img)}" width="${compact ? 120 : 240}" height="${compact ? 140 : 142}" preserveAspectRatio="xMidYMid meet"/></svg>` : `
+      <svg viewBox="${compact ? '28 4 196 136' : '0 0 240 142'}" id="svg">
+        <defs>
+          <linearGradient id="top" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d3d8dd"/></linearGradient>
+          <linearGradient id="side" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9bfc5"/><stop offset="1" stop-color="#868d94"/></linearGradient>
+        </defs>
+        ${dust}
+        <g class="bot">
+          <ellipse cx="120" cy="122" rx="96" ry="11" fill="rgba(0,0,0,.25)"/>
+          ${brush(64)}${brush(176)}
+          <path d="M30 78 V96 Q30 120 120 120 Q210 120 210 96 V78 Z" fill="url(#side)"/>
+          <path d="M34 92 Q40 116 120 117 Q200 116 206 92 V100 Q200 121 120 121 Q40 121 34 100 Z" fill="#2b2f35"/>
+          <ellipse cx="120" cy="78" rx="90" ry="30" fill="url(#top)"/>
+          <ellipse class="track" cx="120" cy="80" rx="74" ry="23"/>
+          <ellipse class="ring" id="ring" cx="120" cy="80" rx="74" ry="23" pathLength="100" stroke-dasharray="0 100" transform="rotate(180 120 80)"/>
+          <circle cx="104" cy="94" r="3.5" fill="#cfd4d9" stroke="#b5bbc1"/><circle cx="136" cy="94" r="3.5" fill="#cfd4d9" stroke="#b5bbc1"/>
+          <rect x="102" y="54" width="36" height="18" rx="9" fill="#2b2f35"/>
+          <ellipse cx="120" cy="55" rx="18" ry="5.5" fill="#4a4f56"/>
+          <rect x="108" y="62" width="24" height="4" rx="2" fill="#111"/>
+          <rect class="scan" x="108" y="62" width="6" height="4" rx="2"/>
+        </g>
+        <path class="ico bolt" d="M206 8 l-10 16 h7 l-3 13 l11 -17 h-7 z" fill="#ffd43b"/>
+        <path class="ico home" d="M206 10 l-12 11 h4 v10 h6 v-7 h4 v7 h6 v-10 h4 z" fill="#3fa9ff"/>
+        <path class="ico pz" d="M198 12 h5 v18 h-5z M208 12 h5 v18 h-5z" fill="#ffb300"/>
+      </svg>`;
+    const btns = `<div class="btns" id="btns">${['start', 'pause', 'dock'].map((a) => `<button class="btn" data-a="${a}"><svg viewBox="0 0 24 24">${ICONS_VAC[a]}</svg>${this._t(a)}</button>`).join('')}</div>`;
+    this.shadowRoot.innerHTML = `
+    <style>${COMMON_CSS_VAC}
+      .bot { transform-origin:120px 100px; }
+      .cleaning .bot { animation:wiggle 2.4s ease-in-out infinite; }
+      .returning .bot { animation:wiggle 1.6s ease-in-out infinite; }
+      .error .bot { animation:shake .4s ease-in-out infinite; }
+      .brush { transform:rotate(0); } .cleaning .brush { animation:spin .3s linear infinite; } .returning .brush { animation:spin 1s linear infinite; }
+      .dust { fill:#9a9a9a; opacity:0; } .cleaning .dust { animation:suck 1.4s ease-in infinite; }
+      .scan { fill:#7fe0ff; opacity:.0; } .cleaning .scan, .returning .scan { opacity:.9; animation:scan 1.2s linear infinite; }
+      .track { fill:none; stroke:rgba(0,0,0,.12); stroke-width:3.5; }
+      .ring { fill:none; stroke:var(--rc,#43a047); stroke-width:3.5; stroke-linecap:round; transition:stroke-dasharray 1s ease, stroke .6s;
+        filter:drop-shadow(0 0 3px var(--rc,#43a047)); }
+      .charging .ring, .docked .ring { animation:breathe 2.4s ease-in-out infinite; }
+      .paused .ring { stroke:#ffb300; animation:blink 1s infinite; } .error .ring { stroke:#ff3b30; animation:blink .5s infinite; }
+      .ico { opacity:0; transition:opacity .4s; }
+      .charging .bolt, .docked .bolt { opacity:1; animation:breathe 1.6s ease-in-out infinite; }
+      .returning .home { opacity:1; animation:hop 1s ease-in-out infinite; }
+      .paused .pz { opacity:1; }
+      @keyframes wiggle { 0%,100% { transform:translateX(0) rotate(0) } 25% { transform:translateX(-6px) rotate(-1.5deg) } 75% { transform:translateX(6px) rotate(1.5deg) } }
+      @keyframes shake { 0%,100% { transform:rotate(0) } 25% { transform:rotate(-2deg) } 75% { transform:rotate(2deg) } }
+      @keyframes spin { to { transform:rotate(360deg) } }
+      @keyframes suck { 0% { opacity:0; transform:translateY(0) } 30% { opacity:.9 } 100% { opacity:0; transform:translateY(-20px) scale(.4) } }
+      @keyframes scan { from { transform:translateX(0) } to { transform:translateX(18px) } }
+      @keyframes hop { 50% { transform:translateY(-4px) } }
+    </style>
+    <ha-card id="card"${compact ? ' class="compact"' : ''}>${compact ? `
+      <div class="top"><div class="illus">${art}</div>
+        <div class="head"><div class="name">${esc(this._config.name || this._t('name'))}</div>
+          <div class="status"><span class="dot"></span><span id="cst"></span></div><span class="badge" id="err"></span></div>
+        <div class="stats" id="stats"></div></div>${btns}` : `
+      <div class="title"><span>${esc(this._config.name || this._t('name'))}</span><span class="badge" id="err"></span></div>
+      ${art}${btns}
+      <div class="stats" id="stats"></div>`}
+    </ha-card>`;
+    this.shadowRoot.querySelectorAll('.btn').forEach((b) => { b.onclick = () => this._call(b.dataset.a); });
+    window.applianceBindIllus(this, this.shadowRoot.querySelector('.illus'), () => window.applianceMore(this, this._config.entity));
+    this._built = true;
+  }
+
+  _update() {
+    super._update();
+    if (!this._built || !this._hass) return;
+    const e = this._st(this._config.entity); if (!e) return;
+    // Anneau lumineux = niveau de batterie
+    const b = this._num(this._config.entity_battery) ?? (e.attributes.battery_level ?? null);
+    const pct = b === null ? 100 : Math.max(0, Math.min(100, b));
+    const ring = this.shadowRoot.getElementById('ring');
+    if (!ring) return; // image perso : pas d'anneau de batterie
+    ring.setAttribute('stroke-dasharray', `${pct} 100`);
+    this.shadowRoot.getElementById('svg').style.setProperty('--rc', pct < 20 ? '#e53935' : pct < 50 ? '#fb8c00' : '#43a047');
+  }
+}
+define('appliance-robot-vacuum-solo-card', ApplianceRobotVacuumSoloCard);
+window.customCards.push({ type: 'appliance-robot-vacuum-solo-card', name: 'Appliance – Robot vacuum (solo) / Robot aspirateur (seul)', names: Object.fromEntries(Object.keys(I18N_VAC).map((l) => [l, `${I18N_VAC[l].name} (${l === 'fr' ? 'seul' : 'solo'})`])), description: 'Robot aspirateur seul (sans fond ni station), animé, avec commandes', preview: true });
+})();

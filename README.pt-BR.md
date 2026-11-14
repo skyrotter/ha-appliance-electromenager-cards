@@ -64,7 +64,7 @@ A versão de teste está em [Releases](https://github.com/asekijima/ha-appliance
 
 **Instalação manual**
 
-1. Copie `dist/ha-appliance-electromenager-cards.js` para `/config/www/`.
+1. Copie todo o conteúdo de `dist/` (o arquivo `.js` *e* a pasta `cards/`) para `/config/www/`.
 2. No Home Assistant, abra Configurações → Painéis → ⋮ → Recursos e adicione `/local/ha-appliance-electromenager-cards.js` como **módulo JavaScript**.
 
 ## Primeiros passos

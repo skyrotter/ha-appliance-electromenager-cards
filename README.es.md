@@ -63,7 +63,7 @@ Si la búsqueda aún no lo encuentra: HACS → ⋮ → *Repositorios personaliza
 
 **Manual**
 
-1. Copia `dist/ha-appliance-electromenager-cards.js` en `/config/www/`.
+1. Copia todo el contenido de `dist/` (el archivo `.js` *y* la carpeta `cards/`) en `/config/www/`.
 2. Ajustes → Paneles de control → ⋮ → Recursos → añade `/local/ha-appliance-electromenager-cards.js` (módulo JavaScript).
 
 ## Inicio rápido

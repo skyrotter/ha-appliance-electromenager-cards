@@ -28,3 +28,4 @@ jobs:
       - run: find src -name '*.js' -print0 | xargs -0 -n1 node --check
       - run: node build.js --check
       - run: node --check dist/ha-appliance-electromenager-cards.js
+      - run: find dist/cards -name '*.js' -print0 | xargs -0 -n1 node --check
