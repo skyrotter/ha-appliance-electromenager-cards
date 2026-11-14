@@ -1007,6 +1007,9 @@
     "source_threshold": "Source pump threshold (W)",
     "status_position": "Status position",
     "tiles_right": "Values in a column on the right",
+    "hot_water": "Hot water (red)",
+    "today_decimals": "Decimals of the Today tile",
+    "index_decimals": "Decimals of the Index tile (m³)",
     "subscribed_power": "Subscribed power (kVA)",
     "target_temp": "Target temperature",
     "temp_max": "Maximum temperature",
@@ -1526,7 +1529,9 @@
     "pressure": "Pressure",
     "freeze": "Freezing risk",
     "freeze_risk": "Freezing risk: {t}",
-    "leak_detected_by": "Leak detected by: {n}"
+    "leak_detected_by": "Leak detected by: {n}",
+    "unit_m3": "m³",
+    "unit_l": "L"
   },
   "gas_meter": {
     "name": "Gas meter",

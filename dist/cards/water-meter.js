@@ -34,7 +34,9 @@
       "pressure": "Pressure",
       "freeze": "Freezing risk",
       "freeze_risk": "Freezing risk: {t}",
-      "leak_detected_by": "Leak detected by: {n}"
+      "leak_detected_by": "Leak detected by: {n}",
+      "unit_m3": "m³",
+      "unit_l": "L"
     },
     "cs": {
       "name": "Vodoměr",
@@ -139,7 +141,9 @@
       "pressure": "Pression",
       "freeze": "Risque de gel",
       "freeze_risk": "Risque de gel : {t}",
-      "leak_detected_by": "Fuite détectée par : {n}"
+      "leak_detected_by": "Fuite détectée par : {n}",
+      "unit_m3": "m³",
+      "unit_l": "L"
     },
     "hu": {
       "name": "Vízóra",
@@ -383,7 +387,7 @@
   const CSS = `
 :host{display:block}:host{height:100%} ha-card{height:100%;box-sizing:border-box}
 ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--wm-ok:var(--appliance-ok-color,#43a047);--wm-cold:var(--appliance-cold-color,#2b9af9);
-  --wm-alert:var(--appliance-alert-color,#db4437);--spd:1s}
+  --wm-alert:var(--appliance-alert-color,#db4437);--wm-hot:var(--appliance-hot-color,#e53935);--spd:1s}
 .head{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
@@ -409,9 +413,13 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 /* ---- illustration ---- */
 .wm-star{transform-box:fill-box;transform-origin:50% 50%}
 .flowing .wm-star,.leak.moving .wm-star{animation:wmrot var(--spd) linear infinite}
-.wm-flow{fill:none;stroke:#3ba7ff;stroke-width:3;stroke-dasharray:4 5;opacity:0;transition:opacity .4s}
+.wm-flow{fill:none;stroke:var(--wm-flowc,#3ba7ff);stroke-width:3;stroke-dasharray:4 5;opacity:0;transition:opacity .4s}
 .flowing .wm-flow,.leak.moving .wm-flow{opacity:1;animation:wmflow calc(var(--spd) * .8) linear infinite}
 .wm-alert{opacity:0}.leak .wm-alert{opacity:1;animation:wmblink 1s ease-in-out infinite}
+.wm-ring{fill:#1f6fbf}.wm-unit{fill:#1f6fbf}
+.hot .wm-ring{fill:#c62828}.hot .wm-unit{fill:#c62828}.hot{--wm-flowc:#ff6a4d}
+.hot.flowing .badge{background:color-mix(in srgb,var(--wm-hot) 22%,transparent);color:var(--wm-hot)}
+.hot .wm-valve{fill:#ff7043}
 .wm-valve{fill:#2b9af9;transition:transform .4s,fill .3s;transform-box:fill-box;transform-origin:50% 100%}
 .valve_closed .wm-valve{fill:#db4437;transform:rotate(90deg)}
 .unavailable svg{filter:grayscale(.7) opacity(.7)}
@@ -433,13 +441,13 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     <rect x="8" y="76" width="8" height="6" rx="1" fill="#8d959e"/><rect class="wm-valve" x="4" y="70" width="16" height="5" rx="2.5"/>
     <rect x="24" y="76" width="10" height="22" rx="2" fill="url(#wmbrass)"/><rect x="86" y="76" width="10" height="22" rx="2" fill="url(#wmbrass)"/>
     <circle cx="60" cy="72" r="38" fill="url(#wmbrass)" stroke="#7a5520" stroke-width="1"/>
-    <circle cx="60" cy="72" r="32" fill="#1f6fbf"/><circle cx="60" cy="72" r="29" fill="#f4f7fb"/>
-    <text x="60" y="56" text-anchor="middle" font-size="5" fill="#1f6fbf" font-family="sans-serif" font-weight="700">m³</text>
+    <circle class="wm-ring" cx="60" cy="72" r="32" fill="#1f6fbf"/><circle cx="60" cy="72" r="29" fill="#f4f7fb"/>
+    <text class="wm-unit wm-um" x="60" y="56" text-anchor="middle" font-size="5" fill="#1f6fbf" font-family="sans-serif" font-weight="700">m³</text>
     <rect x="36" y="60" width="48" height="10" rx="1.5" fill="#20252b"/>
     ${[0, 1, 2, 3, 4].map((i) => `<rect x="${37 + i * 6.6}" y="61" width="5.8" height="8" fill="#111"/><text class="wm-d" x="${(39.9 + i * 6.6).toFixed(1)}" y="67.6" text-anchor="middle" font-size="7" fill="#fff" font-family="monospace" font-weight="700">0</text>`).join('')}
     <rect x="52" y="72" width="22" height="9" rx="1.5" fill="#20252b"/>
     ${[0, 1, 2].map((i) => `<rect x="${53 + i * 7}" y="73" width="6" height="7" fill="#b71c1c"/><text class="wm-l" x="${56 + i * 7}" y="79" text-anchor="middle" font-size="6.4" fill="#fff" font-family="monospace" font-weight="700">0</text>`).join('')}
-    <text x="76" y="79" font-size="4" fill="#b71c1c" font-family="sans-serif">L</text>
+    <text class="wm-ul" x="76" y="79" font-size="4" fill="#b71c1c" font-family="sans-serif">L</text>
     <g class="wm-star"><circle cx="46" cy="86" r="5" fill="#fff" stroke="#b71c1c" stroke-width=".6"/>${[0, 1, 2, 3, 4, 5].map((k) => `<path d="M46 86l${(4.4 * Math.cos(k * Math.PI / 3)).toFixed(2)} ${(4.4 * Math.sin(k * Math.PI / 3)).toFixed(2)}" stroke="#b71c1c" stroke-width="1.6"/>`).join('')}</g>
     <circle cx="70" cy="90" r="4.6" fill="#fff" stroke="#9aa2ab" stroke-width=".5"/><path class="wm-star" d="M70 90v-3.6" stroke="#b71c1c" stroke-width="1"/>
     <circle cx="60" cy="72" r="29" fill="url(#wmglass)"/>
@@ -553,7 +561,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card;
       const { st, idx, flow, moving, leakSensor, leakLong, valveS, valveClosed, wet, freeze } = this._compute();
-      card.className = `${st}${moving ? ' moving' : ''}${c.animations === false ? ' noanim' : ''}`;
+      card.className = `${st}${c.hot_water === true ? ' hot' : ''}${moving ? ' moving' : ''}${c.animations === false ? ' noanim' : ''}`;
       // vitesse de l'étoile : un tour par seconde à 6 L/min, bornée
       card.style.setProperty('--spd', `${Math.max(.15, Math.min(4, 6 / Math.max(.1, flow || 0))).toFixed(2)}s`);
       // totalisateur : 5 chiffres de m³ et 3 chiffres de litres
@@ -561,6 +569,10 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       const m3 = String(Math.floor(L / 1000) % 100000).padStart(5, '0'), li = String(L % 1000).padStart(3, '0');
       r.querySelectorAll('.wm-d').forEach((el, i) => { el.textContent = m3[i]; });
       r.querySelectorAll('.wm-l').forEach((el, i) => { el.textContent = li[i]; });
+      // textes du cadran modifiables avec labels (unit_m3, unit_l) ; police réduite si le texte est long
+      const um = r.querySelector('.wm-um'), ul = r.querySelector('.wm-ul'), tm = this._l('unit_m3'), tl = this._l('unit_l');
+      um.textContent = tm; um.setAttribute('font-size', tm.length > 8 ? 3.2 : tm.length > 4 ? 4 : 5);
+      ul.textContent = tl; ul.setAttribute('font-size', tl.length > 6 ? 2.6 : tl.length > 3 ? 3.2 : 4);
 
       r.getElementById('wmtitle').textContent = c.name || this._t('name');
       const badge = r.getElementById('wmbadge');
@@ -583,13 +595,15 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       btn.disabled = !valveS;
 
       const today = this._liters(c.entity_today, 'L'), cost = this._num(c.entity_cost);
-      const [tv, tu] = this._vol(today);
+      const [tv0, tu] = this._vol(today), td = c.today_decimals === '' || c.today_decimals == null ? NaN : Number(c.today_decimals);
+      const tv = isNaN(td) || isNaN(today) ? tv0 : this._fmt(tu === 'm³' ? today / 1000 : today, td);
+      const idd = c.index_decimals === '' || c.index_decimals == null ? 3 : Number(c.index_decimals);
       // pression : unité du capteur, sans conversion ; 0 décimale pour psi/kPa/hPa/mbar/mmHg/Pa, sinon 2
       const pU = this._unit(c.entity_pressure, 'bar'), pD = /^(psi|kpa|hpa|mbar|mmhg|pa)$/i.test(pU) ? 0 : 2;
       const V = {
         flow: [c.entity_flow || c.entity_index, isNaN(flow) ? '--' : this._fmt(flow, 1), 'L/min'],
         today: [c.entity_today, tv, tu],
-        index: [c.entity_index, this._fmt(idx / 1000, 3), 'm³'],
+        index: [c.entity_index, this._fmt(idx / 1000, idd), 'm³'],
         cost: [c.entity_cost, this._fmt(cost, 2), this._unit(c.entity_cost, '€')],
         temperature: [c.entity_temperature, this._fmt(tempRaw, 1), this._unit(c.entity_temperature, '°C')],
         pressure: [c.entity_pressure, this._fmt(this._num(c.entity_pressure), pD), pU],
@@ -634,6 +648,8 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         ent('entity_index', 'sensor'), ent('entity_flow', 'sensor'), ent('entity_today', 'sensor'), ent('entity_cost', ['sensor', 'input_number']),
         ent('entity_temperature', 'sensor', { device_class: 'temperature' }), ent('entity_pressure', 'sensor', { device_class: 'pressure' }),
         ent('entity_leak', ['binary_sensor', 'input_boolean'], { multiple: true }), ent('entity_valve', ['valve', 'switch', 'input_boolean']),
+        { name: 'hot_water', selector: { boolean: {} }, default: false },
+        { type: 'grid', name: '', schema: [{ name: 'today_decimals', selector: { number: { min: 0, max: 3, step: 1, mode: 'box' } } }, { name: 'index_decimals', selector: { number: { min: 0, max: 3, step: 1, mode: 'box' } } }] },
         { type: 'grid', name: '', schema: [num('leak_minutes', 0, 1440, 5, 60, 'min'), num('flow_threshold', 0, 5, 0.01, 0.05, 'L/min'), num('freeze_threshold', -10, 15, 0.5, 3, '°C')] },
         ...window.applianceActionFields,
         window.applianceLanguageField(T),
