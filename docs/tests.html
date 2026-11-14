@@ -19,7 +19,7 @@ const has=(c,cls)=>c.wrap.classList.contains(cls);
 const tags=['thermomix','cookeo','washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','smart-speaker','fan','generic','tool-charger','ceiling-fan','dehumidifier','air-purifier','monitor','kettle','toaster','power-strip','phone-charger','piano','garland','wet-vacuum','ps5','smart-plug','dosing-pump','printer','elliptical','exercise-bike','rowing-machine'];
 tags.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 // card picker: every core card and every self-contained card listed exactly once
-const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','ceiling-spot','roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','awning','water-meter','gas-meter','electric-meter','trv','room-climate','mailbox','smoke-detector','leak-detector','mini-pc','nas','tv-box','scale','smart-lock','cat-flap','pet-fountain','thermo-heater','smart-tap','water-valve','water-softener','rain-gauge','plant-monitor','humidifier','fan-heater','inflatable-spa'];
+const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','diesel-heater','jacuzzi','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','ceiling-spot','roller-shutter','sliding-curtain','venetian-blind','swing-shutter','pergola','roof-window','awning','water-meter','gas-meter','electric-meter','trv','room-climate','mailbox','smoke-detector','leak-detector','mini-pc','nas','tv-box','scale','smart-lock','cat-flap','pet-fountain','thermo-heater','smart-tap','water-valve','water-softener','rain-gauge','plant-monitor','humidifier','fan-heater','inflatable-spa'];
 solo.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 const picked=window.customCards.map(c=>c.type), wanted=[...tags,...solo].map(t=>`appliance-${t}-card`).concat('appliance-card'); // + the single card (picker.js)
 ok(`customCards = ${wanted.length}`,picked.length===wanted.length&&wanted.every(t=>picked.filter(p=>p===t).length===1),
@@ -752,7 +752,7 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  document.querySelectorAll('appliance-roller-shutter-card').forEach((e)=>e.remove());
 }
 // volet sans retour d'état : capteur contact (entity_state) et capteur de position (entity_position), toutes variantes
-{const kinds=['roller-shutter','venetian-blind','swing-shutter','pergola','roof-window','awning'], cv=mk('cover.v','unknown',{supported_features:15,assumed_state:true}), bdg=(c)=>c.sr.getElementById('shbadge').textContent, cls=(c)=>c.sr.querySelector('ha-card').className;
+{const kinds=['roller-shutter','sliding-curtain','venetian-blind','swing-shutter','pergola','roof-window','awning'], cv=mk('cover.v','unknown',{supported_features:15,assumed_state:true}), bdg=(c)=>c.sr.getElementById('shbadge').textContent, cls=(c)=>c.sr.querySelector('ha-card').className;
  kinds.forEach((k)=>{
   let c=card(k,{entity:'cover.v',entity_state:'binary_sensor.c'},[cv,mk('binary_sensor.c','on')]); ok(`${k}: contact on -> open`,/open/.test(cls(c)),cls(c));
   c=card(k,{entity:'cover.v',entity_state:'binary_sensor.c'},[cv,mk('binary_sensor.c','off')]); ok(`${k}: contact off -> closed`,/closed/.test(cls(c)),cls(c));
@@ -1608,6 +1608,44 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
 {let c=card('washer',{power:'sensor.p',transparent:true},[mk('sensor.p',0,W)]); ok('transparent: core card',c.el.style.getPropertyValue('--ha-card-background')==='transparent'&&c.el.style.getPropertyValue('--ha-card-box-shadow')==='none');
  c=card('roller-shutter',{entity:'cover.v',transparent:true},[mk('cover.v','open')]); ok('transparent: shutter card',c.el.style.getPropertyValue('--ha-card-background')==='transparent');
  c.el.setConfig({entity:'cover.v'}); ok('transparent: off again',c.el.style.getPropertyValue('--ha-card-background')==='');}
+// Sliding curtains: horizontal fabric motion, cover commands and hidden controls.
+{
+ const state=(p,st='open',sf=15)=>mk('cover.curtains',st,{current_position:p,supported_features:sf});
+ const css=c=>c.sr.querySelector('ha-card').style;
+ for(const p of [0,60,100]){
+  const c=card('sliding-curtain',{entity:'cover.curtains',animations:false},[state(p,p===0?'closed':'open')],'en');
+  ok(`curtains ${p}%: two fabric panels`,c.sr.querySelectorAll('.curtain-panel').length===2);
+  const matrix=new DOMMatrixReadOnly(getComputedStyle(c.sr.querySelector('.curtain-left')).transform);
+  ok(`curtains ${p}%: compress horizontally only`,Math.abs(matrix.a-(1-p*.0075))<.001&&matrix.d===1,matrix.toString());
+  ok(`curtains ${p}%: position feedback`,css(c).getPropertyValue('--p')===String(p));
+ }
+ let c=card('sliding-curtain',{entity:'cover.curtains',color:'#c8ad91'},[state(60),mk('sun.sun','below_horizon')],'en');
+ ok('curtains: translated name, partial badge, fabric colour and night',c.sr.getElementById('shtitle').textContent==='Sliding curtains'&&c.sr.getElementById('shbadge').textContent==='Open 60 %'&&css(c).getPropertyValue('--sc')==='#c8ad91'&&c.sr.querySelector('ha-card').classList.contains('isnight'));
+ ok('curtains: horizontal icons',c.sr.querySelector('[data-a=open] ha-icon').getAttribute('icon')==='mdi:arrow-expand-horizontal'&&c.sr.querySelector('[data-a=close] ha-icon').getAttribute('icon')==='mdi:arrow-collapse-horizontal');
+ ok('curtains: rendering sends no commands',c.h.calls.length===0);
+ ['open','stop','close'].forEach(a=>c.sr.querySelector(`[data-a=${a}]`).click());
+ ok('curtains: Open Stop Close services',JSON.stringify(c.h.calls)===JSON.stringify(['open','stop','close'].map(a=>['cover',`${a}_cover`,{entity_id:'cover.curtains'}])),JSON.stringify(c.h.calls));
+ const input=c.sr.querySelector('#shpos input');input.value='35';input.dispatchEvent(new Event('input'));
+ ok('curtains: dragging sends no commands',c.h.calls.length===3);
+ input.dispatchEvent(new Event('change'));
+ ok('curtains: release sets position',JSON.stringify(c.h.calls[3])==='["cover","set_cover_position",{"entity_id":"cover.curtains","position":35}]',JSON.stringify(c.h.calls));
+ c=card('sliding-curtain',{entity:'cover.curtains',show_slider:false,show_position:false,show_since:false},[state(60)]);
+ ok('curtains: hide slider and position while retaining buttons',c.sr.getElementById('shpos').classList.contains('hide')&&c.sr.querySelector('.tile[data-k=position]').classList.contains('hide')&&!c.sr.getElementById('shctl').classList.contains('hide'));
+ c=card('sliding-curtain',{entity:'cover.curtains',show_controls:false},[state(60)]);
+ ok('curtains: controls optional',c.sr.getElementById('shctl').classList.contains('hide'));
+ c=card('sliding-curtain',{entity:'cover.curtains'},[state(60,'open',3)]);
+ ok('curtains: unsupported Stop and slider hidden',c.sr.querySelector('[data-a=stop]').classList.contains('hide')&&c.sr.getElementById('shpos').classList.contains('hide'));
+ c=card('sliding-curtain',{entity:'cover.curtains'},[mk('cover.curtains','unavailable',{supported_features:15})]);
+ ok('curtains: unavailable controls disabled',[...c.sr.querySelectorAll('#shctl button')].every(b=>b.disabled));
+ c=card('sliding-curtain',{entity:'cover.curtains'},[mk('cover.curtains','open',{supported_features:15})]);
+ ok('curtains: missing feedback hides slider',c.sr.getElementById('shpos').classList.contains('hide'));
+ c=card('sliding-curtain',{entity:'cover.curtains',invert:true},[state(25)],'fr');
+ ok('curtains: reversed feedback and French name',css(c).getPropertyValue('--p')==='75'&&c.sr.getElementById('shtitle').textContent==='Rideaux coulissants');
+ c=card('sliding-curtain',{entity:'cover.curtains',animations:false,color:'red;background:url(x)'},[state(60)]);
+ ok('curtains: animations disabled and unsafe colour ignored',c.sr.querySelector('ha-card').classList.contains('noanim')&&css(c).getPropertyValue('--sc')==='#b6a997');
+ const stub=customElements.get('appliance-sliding-curtain-card').getStubConfig(hassOf([state(60),mk('cover.blinds','closed')]));
+ ok('curtains: stub selects curtain entity',stub.entity==='cover.curtains',JSON.stringify(stub));
+}
 // shutters: position, tilt, day / night, controls and sliders
 {const cls=(c)=>c.sr.querySelector('ha-card').className, v=(c,k)=>c.sr.querySelector('ha-card').style.getPropertyValue(k), badge=(c)=>c.sr.getElementById('shbadge').textContent;
  let c=card('roller-shutter',{entity:'cover.v'},[mk('cover.v','open',{current_position:40,supported_features:15}),mk('sun.sun','above_horizon')]);

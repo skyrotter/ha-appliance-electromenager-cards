@@ -1415,6 +1415,7 @@
     "slider_right": "Right"
   },
   "shutter": {
+    "sliding_curtain": "Sliding curtains",
     "roller_shutter": "Roller shutter",
     "venetian_blind": "Venetian blind",
     "swing_shutter": "Swing shutters",

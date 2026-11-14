@@ -1102,6 +1102,7 @@
 "ceiling_spot": "Innfelte spotter"
 },
 "shutter": {
+    "sliding_curtain": "Skyvegardiner",
 "roller_shutter": "Rullegardin",
 "venetian_blind": "Persienne",
 "swing_shutter": "Vinduslemmer",
