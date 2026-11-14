@@ -429,7 +429,16 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 @keyframes wmblink{50%{opacity:.3}}
 `;
 
-  const SVG = (label) => `<svg viewBox="0 22 120 104" role="img" aria-label="${esc(label)}"><defs>
+  // roues des litres : 3 chiffres, plus d décimales (0 à 2) séparées par un point ; plus d décimales = roues plus étroites
+  const LITRES = (d) => {
+    const n = 3 + d, p = d ? 5.6 : 7, w = d ? 5 : 6, total = n * p + (d ? 2.4 : 0) + 1, x0 = 63 - total / 2, fs = d ? 5.2 : 6.4;
+    const xs = (k) => x0 + 0.5 + k * p + (k >= 3 ? 2.4 : 0);
+    return `<rect x="${x0.toFixed(1)}" y="72" width="${total.toFixed(1)}" height="9" rx="1.5" fill="#20252b"/>`
+      + Array.from({ length: n }, (_, k) => `<rect x="${xs(k).toFixed(2)}" y="73" width="${w}" height="7" fill="${k < 3 ? '#b71c1c' : '#7a1212'}"/><text class="wm-l" x="${(xs(k) + w / 2).toFixed(2)}" y="${d ? 78.8 : 79}" text-anchor="middle" font-size="${fs}" fill="#fff" font-family="monospace" font-weight="700">0</text>`).join('')
+      + (d ? `<circle cx="${(xs(3) - 1.2).toFixed(2)}" cy="79" r=".8" fill="#fff"/>` : '')
+      + `<text class="wm-ul" x="${(x0 + total + 2).toFixed(1)}" y="79" font-size="4" fill="#b71c1c" font-family="sans-serif">L</text>`;
+  };
+  const SVG = (label, d = 0) => `<svg viewBox="0 22 120 104" role="img" aria-label="${esc(label)}"><defs>
     <radialGradient id="wmsh"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
     <linearGradient id="wmbrass" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#f3d68b"/><stop offset=".45" stop-color="#c9973f"/><stop offset="1" stop-color="#8a6324"/></linearGradient>
     <linearGradient id="wmpipe" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9edf1"/><stop offset=".5" stop-color="#b6bec6"/><stop offset="1" stop-color="#7f8891"/></linearGradient>
@@ -445,9 +454,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     <text class="wm-unit wm-um" x="60" y="56" text-anchor="middle" font-size="5" fill="#1f6fbf" font-family="sans-serif" font-weight="700">m³</text>
     <rect x="36" y="60" width="48" height="10" rx="1.5" fill="#20252b"/>
     ${[0, 1, 2, 3, 4].map((i) => `<rect x="${37 + i * 6.6}" y="61" width="5.8" height="8" fill="#111"/><text class="wm-d" x="${(39.9 + i * 6.6).toFixed(1)}" y="67.6" text-anchor="middle" font-size="7" fill="#fff" font-family="monospace" font-weight="700">0</text>`).join('')}
-    <rect x="52" y="72" width="22" height="9" rx="1.5" fill="#20252b"/>
-    ${[0, 1, 2].map((i) => `<rect x="${53 + i * 7}" y="73" width="6" height="7" fill="#b71c1c"/><text class="wm-l" x="${56 + i * 7}" y="79" text-anchor="middle" font-size="6.4" fill="#fff" font-family="monospace" font-weight="700">0</text>`).join('')}
-    <text class="wm-ul" x="76" y="79" font-size="4" fill="#b71c1c" font-family="sans-serif">L</text>
+    ${LITRES(d)}
     <g class="wm-star"><circle cx="46" cy="86" r="5" fill="#fff" stroke="#b71c1c" stroke-width=".6"/>${[0, 1, 2, 3, 4, 5].map((k) => `<path d="M46 86l${(4.4 * Math.cos(k * Math.PI / 3)).toFixed(2)} ${(4.4 * Math.sin(k * Math.PI / 3)).toFixed(2)}" stroke="#b71c1c" stroke-width="1.6"/>`).join('')}</g>
     <circle cx="70" cy="90" r="4.6" fill="#fff" stroke="#9aa2ab" stroke-width=".5"/><path class="wm-star" d="M70 90v-3.6" stroke="#b71c1c" stroke-width="1"/>
     <circle cx="60" cy="72" r="29" fill="url(#wmglass)"/>
@@ -493,6 +500,8 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     // volume en litres et débit en L/min, quelle que soit l'unité du capteur
     _liters(id, d = 'm³') { const v = this._num(id); return isNaN(v) ? NaN : v * (VOL[this._unit(id, d).toLowerCase()] ?? 1); }
     _lpm(id) { const v = this._num(id); return isNaN(v) ? NaN : v * (FLOW[this._unit(id, 'L/min').toLowerCase().replace('litre', 'l').replace('liter', 'l')] ?? 1); }
+    // décimales des roues des litres (0 à 2)
+    _dec() { const n = Math.round(Number(this._c && this._c.dial_decimals)); return n >= 1 ? Math.min(2, n) : 0; }
     _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _vol(l) { return isNaN(l) ? ['--', 'L'] : l >= 10000 ? [this._fmt(l / 1000, 1), 'm³'] : [this._fmt(l, 0), 'L']; }
     // température ramenée en °C quel que soit l'unité du capteur (°F, K)
@@ -507,7 +516,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="wmtitle"></div><div class="badge" id="wmbadge"></div></div>
-        ${SVG(this._c.name || this._t('name'))}
+        ${SVG(this._c.name || this._t('name'), this._dec())}
         <div class="alert" id="wmalert"></div>
         <div class="ctl" id="wmctl"><button><ha-icon icon="mdi:valve"></ha-icon><span></span></button></div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
@@ -565,8 +574,8 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       // vitesse de l'étoile : un tour par seconde à 6 L/min, bornée
       card.style.setProperty('--spd', `${Math.max(.15, Math.min(4, 6 / Math.max(.1, flow || 0))).toFixed(2)}s`);
       // totalisateur : 5 chiffres de m³ et 3 chiffres de litres
-      const L = isNaN(idx) ? 0 : Math.max(0, Math.floor(idx));
-      const m3 = String(Math.floor(L / 1000) % 100000).padStart(5, '0'), li = String(L % 1000).padStart(3, '0');
+      const dd = this._dec(), f = 10 ** dd, tot = isNaN(idx) ? 0 : Math.max(0, Math.floor(idx * f + 1e-6)), L = Math.floor(tot / f);
+      const m3 = String(Math.floor(L / 1000) % 100000).padStart(5, '0'), li = String(L % 1000).padStart(3, '0') + (dd ? String(tot % f).padStart(dd, '0') : '');
       r.querySelectorAll('.wm-d').forEach((el, i) => { el.textContent = m3[i]; });
       r.querySelectorAll('.wm-l').forEach((el, i) => { el.textContent = li[i]; });
       // textes du cadran modifiables avec labels (unit_m3, unit_l) ; police réduite si le texte est long
@@ -649,6 +658,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         ent('entity_temperature', 'sensor', { device_class: 'temperature' }), ent('entity_pressure', 'sensor', { device_class: 'pressure' }),
         ent('entity_leak', ['binary_sensor', 'input_boolean'], { multiple: true }), ent('entity_valve', ['valve', 'switch', 'input_boolean']),
         { name: 'hot_water', selector: { boolean: {} }, default: false },
+        { name: 'dial_decimals', selector: { number: { min: 0, max: 2, step: 1, mode: 'box' } } },
         { type: 'grid', name: '', schema: [{ name: 'today_decimals', selector: { number: { min: 0, max: 3, step: 1, mode: 'box' } } }, { name: 'index_decimals', selector: { number: { min: 0, max: 3, step: 1, mode: 'box' } } }] },
         { type: 'grid', name: '', schema: [num('leak_minutes', 0, 1440, 5, 60, 'min'), num('flow_threshold', 0, 5, 0.01, 0.05, 'L/min'), num('freeze_threshold', -10, 15, 0.5, 3, '°C')] },
         ...window.applianceActionFields,

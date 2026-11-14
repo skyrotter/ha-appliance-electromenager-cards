@@ -1009,6 +1009,7 @@
     "source_threshold": "Source pump threshold (W)",
     "status_position": "Status position",
     "tiles_right": "Values in a column on the right",
+    "dial_decimals": "Decimals on the dial litre wheels",
     "title_layout": "Title and status",
     "hot_water": "Hot water (red)",
     "today_decimals": "Decimals of the Today tile",
