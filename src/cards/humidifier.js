@@ -325,7 +325,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
           { name: 'water_low', default: 20, selector: { number: { min: 1, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
           { name: 'target_step', default: 5, selector: { number: { min: 1, max: 20, step: 1, mode: 'box', unit_of_measurement: '%' } } }] },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        window.applianceLanguageField(T),
         { type: 'grid', name: '', schema: [bool('compact', false), bool('show_status'), bool('show_controls'), ...TILES.map(([, , o]) => bool(o)), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);

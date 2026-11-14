@@ -428,7 +428,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         window.applianceTempField,
         ent('entity_pressure', 'sensor'), ent('entity_power', 'sensor'), ent('entity_cost', ['sensor', 'input_number']),
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(m.T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        window.applianceLanguageField(m.T),
         { type: 'grid', name: '', schema: [bool('show_status'), bool('compact', false), bool('show_buttons'), ...m.tiles.map((k) => bool('show_' + k)), bool('animations')] },
       ].filter(Boolean);
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);

@@ -242,7 +242,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { type: 'grid', name: '', schema: [num('min_moisture', 20, 0, 100, 1, '%'), num('min_temperature', undefined, -20, 60, 0.5, '°C'), num('min_conductivity', undefined, 0, 5000, 10, 'µS/cm'),
           num('min_brightness', undefined, 0, 100000, 100, 'lx'), num('min_battery', 15, 0, 100, 1, '%')] },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        window.applianceLanguageField(T),
         { type: 'grid', name: '', schema: [bool('compact', false), bool('show_status'), ...TILES.map(([, , o]) => bool(o)), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);

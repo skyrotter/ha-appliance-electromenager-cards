@@ -278,7 +278,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         ent('entity_leak', ['binary_sensor', 'input_boolean'], { multiple: true }), ent('entity_valve', ['valve', 'switch', 'input_boolean']),
         { type: 'grid', name: '', schema: [num('leak_minutes', 0, 1440, 5, 60, 'min'), num('flow_threshold', 0, 5, 0.01, 0.05, 'L/min'), num('freeze_threshold', -10, 15, 0.5, 3, '°C')] },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        window.applianceLanguageField(T),
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_flow'), bool('show_today'), bool('show_index'), bool('show_cost'), bool('show_temperature'), bool('show_pressure'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);

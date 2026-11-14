@@ -531,7 +531,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ] },
         // spots encastrés : nombre de spots pilotés par la même entité
         ...(this.kind === 'ceiling_spot' ? [{ name: 'spot_count', default: 1, selector: { number: { min: 1, max: 4, step: 1, mode: 'slider' } } }] : []),
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        window.applianceLanguageField(T),
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('compact', false), bool('show_controls'), bool('show_button_labels'), bool('show_brightness'), bool('show_power'), bool('show_energy'), bool('animations'),
         ] },

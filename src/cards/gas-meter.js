@@ -258,8 +258,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       const ent = (name, domain, extra) => ({ name, selector: { entity: { ...(domain ? { domain } : {}), ...(extra || {}) } } });
       const num = (name, min, max, step, def, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
       const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
-      const lang = (this._hass && (this._hass.locale?.language || this._hass.language)) || 'en';
-      const tr = T[lang] || T[String(lang).slice(0, 2)] || T.en;
+      const tr = T[window.applianceLang(T, null, this._hass)] || T.en;
       this._form.hass = this._hass;
       this._form.data = { ...this._c, entity_leak: asList(this._c && this._c.entity_leak) }; // le form attend un array
       this._form.schema = [
@@ -273,7 +272,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         ent('entity_leak', ['binary_sensor', 'input_boolean'], { multiple: true }), ent('entity_valve', ['valve', 'switch', 'input_boolean']),
         { type: 'grid', name: '', schema: [num('flow_threshold', 0, 5, 0.01, 0.01)] },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        window.applianceLanguageField(T),
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_flow'), bool('show_today'), bool('show_index'), bool('show_cost'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);

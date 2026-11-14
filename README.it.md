@@ -1,5 +1,7 @@
 # Appliance Cards per Home Assistant — Italiano
 
+[🇬🇧 English](README.md) · [🇫🇷 Français](README.fr.md) · 🇮🇹 Italiano · [🇩🇪 Deutsch](README.de.md) · [🇪🇸 Español](README.es.md) · [🇵🇹 Português (Portugal)](README.pt-PT.md) · [🇧🇷 Português (Brasil)](README.pt-BR.md)
+
 <p align="center"><a href="https://github.com/sponsors/skyrotter">❤️ Sponsor su GitHub</a> · <a href="https://paypal.me/skyrotter">💙 Dona con PayPal.me</a><br><a href="https://buymeacoffee.com/skyrotter"><img src="https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=%E2%98%95&slug=skyrotter&button_colour=FFDD00&font_colour=000000&font_family=Poppins&outline_colour=000000&coffee_colour=ffffff" alt="Buy me a coffee"></a></p>
 
 [![HACS](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://hacs.xyz)

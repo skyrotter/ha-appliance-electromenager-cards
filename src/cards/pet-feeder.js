@@ -315,7 +315,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'food_low', default: 25, selector: { number: { min: 0, max: 100, step: 5, mode: 'box', unit_of_measurement: '%' } } },
         { name: 'daily_goal', default: 6, selector: { number: { min: 1, max: 20, step: 1, mode: 'box' } } },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', cs: 'Čeština', hu: 'Magyar', sr: 'Српски', 'sr-Latn': 'Srpski' }[value] || value })) } } },
+        window.applianceLanguageField(T),
         { type: 'grid', name: '', schema: [bool('show_status'), bool('compact', false), bool('show_controls'), bool('show_portions'), bool('show_weight'), bool('show_serving'), bool('show_source'), bool('show_mode'), bool('show_level'), bool('show_autonomy'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'pet_feeder_model' : s.name, this._hass);

@@ -11,12 +11,10 @@
   const label = (c) => String(c.name || c.type).replace(/^Appliance\s*[–-]\s*/, '');
   // ordre d'origine (noms « anglais / français ») : sert seulement à choisir le type par défaut d'une nouvelle carte
   const OPTIONS = ours.map((c) => ({ value: c.type, label: label(c) })).sort((a, b) => a.label.localeCompare(b.label));
-  // langue de Home Assistant (no / nn → nb, sr-Latn gardé tel quel)
-  const haLang = (hass) => {
-    const full = String((hass && (hass.locale?.language || hass.language)) || navigator.language || 'en');
-    const l = /^sr[-_]latn/i.test(full) ? 'sr-Latn' : full.slice(0, 2).toLowerCase();
-    return l === 'no' || l === 'nn' ? 'nb' : l;
-  };
+  // Resolve against all registered names, preserving regional language variants.
+  const nameLanguages = Object.assign({}, ...ours.map((c) => c.names));
+  const haLang = (hass) => window.applianceResolveLanguage(nameLanguages,
+    (hass && (hass.locale?.language || hass.language)) || navigator.language || 'en');
   // liste des types d'appareils dans la langue de Home Assistant, triée dans cette langue
   // names : noms traduits déclarés par chaque carte ; à défaut, le nom « anglais / français » d'origine
   const optionsFor = (hass) => {
@@ -51,8 +49,14 @@
     en: { appliance: 'Appliance type', name: 'Appliance – Single card (pick the type)', desc: 'One single entry in the card picker: choose the appliance in the editor.', empty: 'Pick an appliance type in the editor.',
       opts: 'Card picker (on this device)', single: 'Only show the single Appliance card', previews: 'Show Appliance card previews in the picker (slower)', nopreview: 'Turn off previews of all custom cards',
       hint: 'Saved in this browser (set it again on your phone). Reload the page to apply it.' },
+    'pt-PT': { appliance: 'Tipo de aparelho', name: 'Appliance – Cartão único (escolha do tipo)', desc: 'Uma única entrada no seletor de cartões: escolha o aparelho no editor.', empty: 'Escolha um tipo de aparelho no editor.',
+      opts: 'Seletor de cartões (neste dispositivo)', single: 'Mostrar apenas o cartão único Appliance', previews: 'Mostrar pré-visualizações dos cartões Appliance no seletor (mais lento)', nopreview: 'Desativar as pré-visualizações de todos os cartões personalizados',
+      hint: 'Definição guardada neste navegador (configure novamente no telemóvel). Recarregue a página para aplicar.' },
+    'pt-BR': { appliance: 'Tipo de aparelho', name: 'Appliance – Cartão único (escolha do tipo)', desc: 'Uma única entrada no seletor de cartões: escolha o aparelho no editor.', empty: 'Escolha um tipo de aparelho no editor.',
+      opts: 'Seletor de cartões (neste dispositivo)', single: 'Mostrar apenas o cartão único Appliance', previews: 'Mostrar prévias dos cartões Appliance no seletor (mais lento)', nopreview: 'Desativar as prévias de todos os cartões personalizados',
+      hint: 'Configuração salva neste navegador (configure novamente no celular). Recarregue a página para aplicar.' },
   };
-  const tx = (hass) => TXT[(hass && hass.language || '').slice(0, 2)] || TXT.en;
+  const tx = (hass) => TXT[window.applianceLang(TXT, null, hass)] || TXT.en;
 
   // Config enveloppe -> config de la vraie carte
   const inner = (cfg) => { const { appliance, ...rest } = cfg; return { ...rest, type: 'custom:' + appliance }; };
@@ -68,11 +72,16 @@
         this._child = tag ? document.createElement(tag) : null;
         this.replaceChildren();
         if (this._child) this.appendChild(this._child);
-        else this.innerHTML = `<ha-card><div style="padding:16px">${tx(this._hass).empty}</div></ha-card>`;
       }
       if (this._child) { this._child.setConfig(inner(config)); if (this._hass) this._child.hass = this._hass; }
+      else this._renderEmpty();
     }
-    set hass(hass) { this._hass = hass; if (this._child) this._child.hass = hass; }
+    set hass(hass) {
+      this._hass = hass;
+      if (this._child) this._child.hass = hass;
+      else if (this._config) this._renderEmpty();
+    }
+    _renderEmpty() { this.innerHTML = `<ha-card><div style="padding:16px">${tx(this._hass).empty}</div></ha-card>`; }
     getCardSize() { return this._child && this._child.getCardSize ? this._child.getCardSize() : 3; }
     getGridOptions() { return this._child && this._child.getGridOptions ? this._child.getGridOptions() : undefined; }
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
@@ -86,7 +95,12 @@
 
   class ApplianceCardEditor extends HTMLElement {
     setConfig(config) { this._config = config; this._render(); }
-    set hass(hass) { this._hass = hass; if (this._form) this._form.hass = hass; if (this._sub) this._sub.hass = hass; }
+    set hass(hass) {
+      const changed = haLang(hass) !== haLang(this._hass);
+      this._hass = hass;
+      if (changed && this._config) this._render();
+      else { if (this._form) this._form.hass = hass; if (this._sub) this._sub.hass = hass; }
+    }
     _render() {
       if (!this._form) {
         this._form = document.createElement('ha-form');

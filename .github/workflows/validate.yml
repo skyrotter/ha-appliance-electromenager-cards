@@ -24,6 +24,7 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 24
+      - run: node tests/portuguese.cjs
       - run: find src -name '*.js' -print0 | xargs -0 -n1 node --check
       - run: node build.js --check
       - run: node --check dist/ha-appliance-electromenager-cards.js

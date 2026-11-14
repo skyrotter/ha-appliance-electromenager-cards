@@ -11,7 +11,7 @@ window.customCards = window.customCards || [];
  */
 const I18N_BAT = /*@i18n battery*/{};
 // Home Assistant language, used when `language` option is not explicitly set
-const lang = (h) => window.applianceLang(I18N_BAT, null, h);
+const lang = (h, cfg) => window.applianceLang(I18N_BAT, cfg, h);
 class ApplianceBatteryCard extends HTMLElement {
   static getStubConfig(hass) {
     // batterie domestique : niveau (device_class battery) et puissance dont le nom évoque une batterie
@@ -50,7 +50,7 @@ class ApplianceBatteryCard extends HTMLElement {
         { name: 'layout', selector: { select: { mode: 'dropdown', options: ['default', 'split'] } } },
         { name: 'status_position', selector: { select: { mode: 'dropdown', options: ['auto', 'inside', 'below'] } } },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(I18N_BAT) } } },
+        window.applianceLanguageField(I18N_BAT),
       ],
       computeLabel: (s) => window.applianceEditorLabel(s.name),
     };
@@ -66,13 +66,13 @@ class ApplianceBatteryCard extends HTMLElement {
   set hass(h) {
     this._hass = h;
     // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
-    const l = this._config.language || lang(h);
+    const l = lang(h, this._config);
     if (l !== this._lng) { this._lng = l; this._built = false; this._build(); }
     if (window.applianceChanged(this, h, this._config)) this._update();
   }
   getCardSize() { return 5; }
   getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
-  _t(k) { return (I18N_BAT[this._config.language || lang(this._hass)] || I18N_BAT.en)[k] ?? I18N_BAT.en[k] ?? k; }
+  _t(k) { return (I18N_BAT[lang(this._hass, this._config)] || I18N_BAT.en)[k] ?? I18N_BAT.en[k] ?? k; }
   // libellé perso (option labels) sinon traduction
   _l(k) { const L = this._config && this._config.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
 

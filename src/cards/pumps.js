@@ -675,7 +675,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         ] },
         window.applianceTempField,
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        window.applianceLanguageField(T),
         { type: 'grid', name: '', schema: [
           bool('show_status'), bool('show_controls'), bool('show_flow'), bool('show_pressure'), bool('show_power'), bool('show_temp'),
           bool('show_level'), bool('show_runtime'), bool('show_starts'), bool('show_energy'), bool('show_cost'), ...(KINDS[this.kind].tank ? [bool('show_tank_volume'), bool('show_mains')] : []), bool('animations'),

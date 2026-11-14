@@ -442,7 +442,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ent('entity_wifi_24', 'switch'), ent('entity_wifi_5', 'switch'), ent('entity_wifi_6', 'switch'), ent('entity_wifi_guest', 'switch'), ent('entity_wifi_iot', 'switch'),
         { name: 'max_speed', default: 1000, selector: { number: { min: 10, max: 10000, step: 10, mode: 'box', unit_of_measurement: 'Mb/s' } } },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', cs: 'Čeština', hu: 'Magyar', sr: 'Српски', 'sr-Latn': 'Srpski' }[value] || value })) } } },
+        window.applianceLanguageField(T),
         { type: 'grid', name: '', schema: [bool('show_status'), bool('compact', false), bool('show_controls'), bool('show_download'), bool('show_upload'), bool('show_devices'), bool('show_wifi'), bool('show_ping'), bool('show_wan_ip'), bool('show_uptime'), bool('show_cpu'), bool('show_memory'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'internet_box_model' : s.name, this._hass);

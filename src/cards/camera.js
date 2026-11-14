@@ -253,7 +253,6 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         this.appendChild(this._form);
       }
       this._form.hass = this._hass; this._form.data = { ...this._c };
-      const lang = { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' };
       this._form.schema = [
         { name: 'name', selector: { text: {} } }, { name: 'labels', selector: { object: {} } },
         ...this.top(),
@@ -263,7 +262,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ...window.applianceTileFields(this._hass),
         ...this.entities(),
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: lang[value] || value })) } } },
+        window.applianceLanguageField(T),
         { type: 'grid', name: '', schema: [{ name: 'show_status', selector: { boolean: {} }, default: true }, { name: 'compact', selector: { boolean: {} }, default: false }, { name: 'animations', selector: { boolean: {} }, default: true }, ...this.flags().map((name) => ({ name, selector: { boolean: {} }, default: true }))] },
       ];
       this._form.computeLabel = (s) => { const l = window.applianceLang(T, this._c, this._hass); return T[l][`f_${s.name}`] ?? T.en[`f_${s.name}`] ?? window.applianceEditorLabel(s.name, this._hass); };
