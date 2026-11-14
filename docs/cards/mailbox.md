@@ -19,6 +19,8 @@ It is generic and works with whatever your mailbox sensor provides (Zigbee door 
 | `entity_count` | letter counter (`counter`, `sensor`, `input_number`): badge and tile. Without it, a numeric `entity_mail` is used |
 | `entity_reset` | **Mark as collected** button: `button` / `input_button` (press), `input_boolean` / `switch` (turn off), `counter` (reset), `script`, `automation`, `scene`, `input_number` (set to 0) |
 | `entity_battery` | battery of the mailbox sensor; the tile turns red below 20 % |
+| `entity_battery_back`, `entity_battery_back_low` | battery (%) and low-battery flag of the rear door sensor, for double-door mailboxes: a **Rear battery** tile (red below 20 % or when the flag is on). Hidden when not set; `show_battery_back: false` hides it |
+| `entity_presence` | presence or motion sensor (`binary_sensor`, `input_boolean`): a **Presence** tile showing *Detected* / *None*. Hidden when not set; `show_presence: false` hides it |
 | `mail_states`, `parcel_states` | extra text states, comma separated (`amazon, dhl`) |
 | `box_color` | `anthracite` (default), `black`, `grey`, `white`, `green`, `red`, `blue`, `yellow`, `brown` or any `#hex` |
 | `show_status`, `show_since`, `show_count`, `show_battery`, `show_buttons`, `animations`, `labels`, `language`, `show_doors`, `illustration_size`, `transparent` | |
