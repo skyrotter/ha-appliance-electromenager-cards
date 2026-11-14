@@ -1,5 +1,7 @@
 {
   "common": {
+    "header_inline": "Titre à gauche, état à droite (défaut)",
+    "header_stacked": "Empilés : titre puis état",
     "washer": "Lave-linge",
     "dryer": "Sèche-linge",
     "dishwasher": "Lave-vaisselle",
@@ -997,6 +999,7 @@
     "source_threshold": "Seuil de la pompe de captage (W)",
     "status_position": "Position de l'état",
     "tiles_right": "Valeurs en colonne à droite",
+    "title_layout": "Titre et état",
     "hot_water": "Eau chaude (rouge)",
     "today_decimals": "Décimales de la tuile Aujourd'hui",
     "index_decimals": "Décimales de la tuile Index (m³)",

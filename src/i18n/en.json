@@ -1,5 +1,7 @@
 {
   "common": {
+    "header_inline": "Title left, status right (default)",
+    "header_stacked": "Stacked: title, then status",
     "washer": "Washing machine",
     "dryer": "Dryer",
     "dishwasher": "Dishwasher",
@@ -1007,6 +1009,7 @@
     "source_threshold": "Source pump threshold (W)",
     "status_position": "Status position",
     "tiles_right": "Values in a column on the right",
+    "title_layout": "Title and status",
     "hot_water": "Hot water (red)",
     "today_decimals": "Decimals of the Today tile",
     "index_decimals": "Decimals of the Index tile (m³)",
