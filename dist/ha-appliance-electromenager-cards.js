@@ -14337,12 +14337,17 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
 /* Lazy-loaded card chunks (dist/cards/*.js, fetched by HACS like any other
  * file in dist/). card-helpers and editor-labels define the window.appliance*
  * helpers the other chunks call, so they load first and are awaited; the
- * rest load in parallel. Requires this file to be registered as an ES module
- * (import()/import.meta need it), which is how HACS/Lovelace load it. */
+ * rest load in parallel (their relative finish order isn't guaranteed).
+ * Requires this file to be registered as an ES module (import()/import.meta
+ * need it), which is how HACS/Lovelace load it. */
 (async () => {
   const base = import.meta.url;
   const chunk = (name) => import(new URL(`cards/${name}.js`, base).href);
   await chunk("card-helpers");
   await chunk("editor-labels");
   await Promise.all(["aquarium", "reef-aquarium", "linky", "battery", "ev-charger", "robot-vacuum", "robot-mower", "pellet-boiler", "gas-boiler", "water-heat-pump", "air-water-heat-pump", "diesel-heater", "jacuzzi", "internet-box", "pet-feeder", "portable-ac", "access", "sauna", "pumps", "pool-robot", "ups", "underfloor-heating", "lights", "shutters", "water-meter", "gas-meter", "electric-meter", "trv", "room-climate", "mailbox", "smoke-detector", "smart-lock", "cat-flap", "pet-fountain", "leak-detector", "mini-pc", "nas", "tv-box", "scale", "thermo-heater", "water-valves", "water-softener", "camera", "poe-switch", "raspberry-pi", "water-filter", "irrigation", "led-strip", "rain-gauge", "plant-monitor", "humidifier", "fan-heater", "inflatable-spa", "heat-meter", "picker", "zigbee-coordinator"].map(chunk));
+  // Fires once every chunk has finished registering its card(s): anything that
+  // needs to see the complete window.customCards list (e.g. the single-card
+  // picker) must wait for this instead of assuming load order.
+  window.dispatchEvent(new Event("appliance-cards-ready"));
 })();
