@@ -8,13 +8,15 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.139.0";
+const VERSION = "1.140.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
 /* ------------------------------------------------------------------ */
 const STRINGS = {
   "en": {
+    "header_inline": "Title left, status right (default)",
+    "header_stacked": "Stacked: title, then status",
     "washer": "Washing machine",
     "dryer": "Dryer",
     "dishwasher": "Dishwasher",
@@ -2171,6 +2173,8 @@ const STRINGS = {
     "f_calories": "Sensor de calorías"
   },
   "fr": {
+    "header_inline": "Titre à gauche, état à droite (défaut)",
+    "header_stacked": "Empilés : titre puis état",
     "washer": "Lave-linge",
     "dryer": "Sèche-linge",
     "dishwasher": "Lave-vaisselle",
@@ -12369,6 +12373,7 @@ function buildForm(kind) {
           ] : []),
           { name: "illustration_size", selector: { number: { min: 30, max: 300, step: 5, mode: "slider", unit_of_measurement: "%" } } },
           { name: "transparent", selector: { boolean: {} } },
+          { name: "title_layout", selector: { select: { mode: "dropdown", options: [{ value: "inline", label: tr(null, "header_inline") }, { value: "stacked", label: tr(null, "header_stacked") }] } } },
           ...window.applianceTileFields(),
           { name: "animations", selector: { boolean: {} }, default: true },
           { name: "hide_when_inactive", selector: { boolean: {} } },
@@ -12885,40 +12890,40 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
   margin-top: 1.5px !important;
 }
 
-/* tile_order: name → titre et état en ligne du haut, au-dessus du dessin (comme les cartes récentes) ; sans l'option, disposition historique.
+/* En-tête par défaut : titre et état en ligne du haut, au-dessus du dessin (comme les cartes récentes). title_layout: stacked rend l'ancienne disposition (titre puis état, empilés).
    Rien ne change pour la disposition « split ». */
-:host([tile-order="name"]) .wrap:not(.layout-split) .top { grid-template-areas: "head head" "illus stats"; }
-:host([tile-order="name"]) .wrap:not(.layout-split) .stats { align-self: center; }
+:host(:not([title-layout="stacked"])) .wrap:not(.layout-split) .top { grid-template-areas: "head head" "illus stats"; }
+:host(:not([title-layout="stacked"])) .wrap:not(.layout-split) .stats { align-self: center; }
 @container (max-width: 400px) {
-  :host([tile-order="name"]) .wrap:not(.layout-split) .top { grid-template-areas: "head head" "illus illus" "stats stats"; }
-  :host([tile-order="name"]) .wrap:not(.layout-split) .illus { justify-self: center; }
+  :host(:not([title-layout="stacked"])) .wrap:not(.layout-split) .top { grid-template-areas: "head head" "illus illus" "stats stats"; }
+  :host(:not([title-layout="stacked"])) .wrap:not(.layout-split) .illus { justify-self: center; }
 }
 @container (max-width: 280px) {
-  :host([tile-order="name"]) .wrap:not(.layout-split) .top { grid-template-areas: "head" "illus" "stats"; }
+  :host(:not([title-layout="stacked"])) .wrap:not(.layout-split) .top { grid-template-areas: "head" "illus" "stats"; }
 }
 @container (max-width: 320px) {
-  :host([tile-order="name"][illus-big]) .wrap:not(.layout-split) .top { grid-template-areas: "head" "illus" "stats"; }
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .top { grid-template-areas: "head" "illus" "stats"; }
 }
 
 /* lcd_big : grande valeur posée sur le dessin (contour sombre pour rester lisible sur toutes les teintes) */
 .bigval { filter: drop-shadow(0 0 1.2px rgba(0, 0, 0, .85)); pointer-events: none; }
 .bigval text { fill: #fff; stroke: rgba(20, 22, 28, .75); stroke-width: 2.4px; paint-order: stroke; stroke-linejoin: round; font: 700 16px var(--paper-font-body1_-_font-family, Roboto, sans-serif); text-anchor: middle; dominant-baseline: central; }
 
-/* tile_order: name → titre à gauche et état à droite sur la même ligne (comme les cartes récentes) ; alertes et sous-titre dessous, pleine largeur.
+/* titre à gauche et état à droite sur la même ligne (comme les cartes récentes), sauf title_layout: stacked ; alertes et sous-titre dessous, pleine largeur.
    Sous 280 px (320 px avec illustration agrandie) la carte passe en disposition empilée centrée : on ne touche à rien. */
 @container (min-width: 281px) {
-  :host([tile-order="name"]:not([illus-big])) .wrap:not(.layout-split) .info { flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: 10px; row-gap: 3px; }
-  :host([tile-order="name"]:not([illus-big])) .wrap:not(.layout-split) .info .name { flex: 1 1 0; min-width: 0; }
-  :host([tile-order="name"]:not([illus-big])) .wrap:not(.layout-split) .info .status { flex: 0 1 auto; max-width: 62%; justify-content: flex-end; }
-  :host([tile-order="name"]:not([illus-big])) .wrap:not(.layout-split) .info .alert-line,
-  :host([tile-order="name"]:not([illus-big])) .wrap:not(.layout-split) .info .sub { flex: 0 0 100%; }
+  :host(:not([title-layout="stacked"]):not([illus-big])) .wrap:not(.layout-split) .info { flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: 10px; row-gap: 3px; }
+  :host(:not([title-layout="stacked"]):not([illus-big])) .wrap:not(.layout-split) .info .name { flex: 1 1 0; min-width: 0; }
+  :host(:not([title-layout="stacked"]):not([illus-big])) .wrap:not(.layout-split) .info .status { flex: 0 1 auto; max-width: 62%; justify-content: flex-end; }
+  :host(:not([title-layout="stacked"]):not([illus-big])) .wrap:not(.layout-split) .info .alert-line,
+  :host(:not([title-layout="stacked"]):not([illus-big])) .wrap:not(.layout-split) .info .sub { flex: 0 0 100%; }
 }
 @container (min-width: 321px) {
-  :host([tile-order="name"][illus-big]) .wrap:not(.layout-split) .info { flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: 10px; row-gap: 3px; }
-  :host([tile-order="name"][illus-big]) .wrap:not(.layout-split) .info .name { flex: 1 1 0; min-width: 0; }
-  :host([tile-order="name"][illus-big]) .wrap:not(.layout-split) .info .status { flex: 0 1 auto; max-width: 62%; justify-content: flex-end; }
-  :host([tile-order="name"][illus-big]) .wrap:not(.layout-split) .info .alert-line,
-  :host([tile-order="name"][illus-big]) .wrap:not(.layout-split) .info .sub { flex: 0 0 100%; }
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info { flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: 10px; row-gap: 3px; }
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .name { flex: 1 1 0; min-width: 0; }
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .status { flex: 0 1 auto; max-width: 62%; justify-content: flex-end; }
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .alert-line,
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .sub { flex: 0 0 100%; }
 }
 
 ﻿/* ---------- illustration: shared ---------- */
@@ -13516,9 +13521,6 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-server_rack .lcd { font-size: 5.6px; fill: #24404f; }
 .k-server_rack.active .lcd { fill: var(--ac-lcd); }
 @keyframes rk-blink { 0% { opacity: 1; } 20% { opacity: .25; } 35% { opacity: 1; } 62% { opacity: .35; } 78% { opacity: 1; } 100% { opacity: 1; } }
-/* tuiles lisibles aussi en mode transparent (comme mini-pc / NAS) : fond opaque du thème au lieu d'un gris à 9 % */
-.k-server_rack .tile { background: var(--secondary-background-color, rgba(127,127,127,.2)); }
-.k-server_rack .tile:hover { background: color-mix(in srgb, var(--primary-text-color) 8%, var(--secondary-background-color, rgba(127,127,127,.2))); }
 
 /* ---------- desktop PC ---------- */
 .pc-screen, .lp-screen { opacity: 0; transition: opacity .5s; }

@@ -24,6 +24,8 @@
     // tile_order : « name » (nom au-dessus) ou « value » (valeur au-dessus) → attribut tile-order sur la carte ; absent = ordre historique de la carte
     if (cfg && (cfg.tile_order === 'name' || cfg.tile_order === 'value')) el.setAttribute('tile-order', cfg.tile_order);
     else el.removeAttribute('tile-order');
+    // title_layout: stacked → ancienne disposition des cartes de base (titre puis état, empilés) ; par défaut titre à gauche et état à droite
+    if (cfg && cfg.title_layout === 'stacked') el.setAttribute('title-layout', 'stacked'); else el.removeAttribute('title-layout');
   };
   // Températures (multi-pays) : unité d'affichage = option temperature_unit (C / F), sinon celle de Home Assistant, sinon °C.
   // conv() convertit la valeur d'une entité depuis son unit_of_measurement (à défaut l'unité de HA : climate / water_heater

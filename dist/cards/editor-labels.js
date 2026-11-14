@@ -205,6 +205,7 @@
       "source_threshold": "Source pump threshold (W)",
       "status_position": "Status position",
       "tiles_right": "Values in a column on the right",
+      "title_layout": "Title and status",
       "hot_water": "Hot water (red)",
       "today_decimals": "Decimals of the Today tile",
       "index_decimals": "Decimals of the Index tile (m³)",
@@ -2865,6 +2866,7 @@
       "source_threshold": "Seuil de la pompe de captage (W)",
       "status_position": "Position de l'état",
       "tiles_right": "Valeurs en colonne à droite",
+      "title_layout": "Titre et état",
       "hot_water": "Eau chaude (rouge)",
       "today_decimals": "Décimales de la tuile Aujourd'hui",
       "index_decimals": "Décimales de la tuile Index (m³)",
@@ -8743,6 +8745,8 @@
     // tile_order : « name » (nom au-dessus) ou « value » (valeur au-dessus) → attribut tile-order sur la carte ; absent = ordre historique de la carte
     if (cfg && (cfg.tile_order === 'name' || cfg.tile_order === 'value')) el.setAttribute('tile-order', cfg.tile_order);
     else el.removeAttribute('tile-order');
+    // title_layout: stacked → ancienne disposition des cartes de base (titre puis état, empilés) ; par défaut titre à gauche et état à droite
+    if (cfg && cfg.title_layout === 'stacked') el.setAttribute('title-layout', 'stacked'); else el.removeAttribute('title-layout');
   };
   // Températures (multi-pays) : unité d'affichage = option temperature_unit (C / F), sinon celle de Home Assistant, sinon °C.
   // conv() convertit la valeur d'une entité depuis son unit_of_measurement (à défaut l'unité de HA : climate / water_heater

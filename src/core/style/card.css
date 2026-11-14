@@ -231,38 +231,38 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
   margin-top: 1.5px !important;
 }
 
-/* tile_order: name → titre et état en ligne du haut, au-dessus du dessin (comme les cartes récentes) ; sans l'option, disposition historique.
+/* En-tête par défaut : titre et état en ligne du haut, au-dessus du dessin (comme les cartes récentes). title_layout: stacked rend l'ancienne disposition (titre puis état, empilés).
    Rien ne change pour la disposition « split ». */
-:host([tile-order="name"]) .wrap:not(.layout-split) .top { grid-template-areas: "head head" "illus stats"; }
-:host([tile-order="name"]) .wrap:not(.layout-split) .stats { align-self: center; }
+:host(:not([title-layout="stacked"])) .wrap:not(.layout-split) .top { grid-template-areas: "head head" "illus stats"; }
+:host(:not([title-layout="stacked"])) .wrap:not(.layout-split) .stats { align-self: center; }
 @container (max-width: 400px) {
-  :host([tile-order="name"]) .wrap:not(.layout-split) .top { grid-template-areas: "head head" "illus illus" "stats stats"; }
-  :host([tile-order="name"]) .wrap:not(.layout-split) .illus { justify-self: center; }
+  :host(:not([title-layout="stacked"])) .wrap:not(.layout-split) .top { grid-template-areas: "head head" "illus illus" "stats stats"; }
+  :host(:not([title-layout="stacked"])) .wrap:not(.layout-split) .illus { justify-self: center; }
 }
 @container (max-width: 280px) {
-  :host([tile-order="name"]) .wrap:not(.layout-split) .top { grid-template-areas: "head" "illus" "stats"; }
+  :host(:not([title-layout="stacked"])) .wrap:not(.layout-split) .top { grid-template-areas: "head" "illus" "stats"; }
 }
 @container (max-width: 320px) {
-  :host([tile-order="name"][illus-big]) .wrap:not(.layout-split) .top { grid-template-areas: "head" "illus" "stats"; }
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .top { grid-template-areas: "head" "illus" "stats"; }
 }
 
 /* lcd_big : grande valeur posée sur le dessin (contour sombre pour rester lisible sur toutes les teintes) */
 .bigval { filter: drop-shadow(0 0 1.2px rgba(0, 0, 0, .85)); pointer-events: none; }
 .bigval text { fill: #fff; stroke: rgba(20, 22, 28, .75); stroke-width: 2.4px; paint-order: stroke; stroke-linejoin: round; font: 700 16px var(--paper-font-body1_-_font-family, Roboto, sans-serif); text-anchor: middle; dominant-baseline: central; }
 
-/* tile_order: name → titre à gauche et état à droite sur la même ligne (comme les cartes récentes) ; alertes et sous-titre dessous, pleine largeur.
+/* titre à gauche et état à droite sur la même ligne (comme les cartes récentes), sauf title_layout: stacked ; alertes et sous-titre dessous, pleine largeur.
    Sous 280 px (320 px avec illustration agrandie) la carte passe en disposition empilée centrée : on ne touche à rien. */
 @container (min-width: 281px) {
-  :host([tile-order="name"]:not([illus-big])) .wrap:not(.layout-split) .info { flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: 10px; row-gap: 3px; }
-  :host([tile-order="name"]:not([illus-big])) .wrap:not(.layout-split) .info .name { flex: 1 1 0; min-width: 0; }
-  :host([tile-order="name"]:not([illus-big])) .wrap:not(.layout-split) .info .status { flex: 0 1 auto; max-width: 62%; justify-content: flex-end; }
-  :host([tile-order="name"]:not([illus-big])) .wrap:not(.layout-split) .info .alert-line,
-  :host([tile-order="name"]:not([illus-big])) .wrap:not(.layout-split) .info .sub { flex: 0 0 100%; }
+  :host(:not([title-layout="stacked"]):not([illus-big])) .wrap:not(.layout-split) .info { flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: 10px; row-gap: 3px; }
+  :host(:not([title-layout="stacked"]):not([illus-big])) .wrap:not(.layout-split) .info .name { flex: 1 1 0; min-width: 0; }
+  :host(:not([title-layout="stacked"]):not([illus-big])) .wrap:not(.layout-split) .info .status { flex: 0 1 auto; max-width: 62%; justify-content: flex-end; }
+  :host(:not([title-layout="stacked"]):not([illus-big])) .wrap:not(.layout-split) .info .alert-line,
+  :host(:not([title-layout="stacked"]):not([illus-big])) .wrap:not(.layout-split) .info .sub { flex: 0 0 100%; }
 }
 @container (min-width: 321px) {
-  :host([tile-order="name"][illus-big]) .wrap:not(.layout-split) .info { flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: 10px; row-gap: 3px; }
-  :host([tile-order="name"][illus-big]) .wrap:not(.layout-split) .info .name { flex: 1 1 0; min-width: 0; }
-  :host([tile-order="name"][illus-big]) .wrap:not(.layout-split) .info .status { flex: 0 1 auto; max-width: 62%; justify-content: flex-end; }
-  :host([tile-order="name"][illus-big]) .wrap:not(.layout-split) .info .alert-line,
-  :host([tile-order="name"][illus-big]) .wrap:not(.layout-split) .info .sub { flex: 0 0 100%; }
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info { flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: 10px; row-gap: 3px; }
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .name { flex: 1 1 0; min-width: 0; }
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .status { flex: 0 1 auto; max-width: 62%; justify-content: flex-end; }
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .alert-line,
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .sub { flex: 0 0 100%; }
 }
