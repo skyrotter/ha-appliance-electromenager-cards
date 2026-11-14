@@ -246,6 +246,23 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
   :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .top { grid-template-areas: "head" "illus" "stats"; }
 }
 
+/* carte étroite (≤ 280 px, ou ≤ 320 px avec illustration agrandie) : l'illustration reste au-dessus, mais le titre (à gauche) et l'état (à droite)
+   restent sur la même ligne comme sur les cartes récentes ; si le titre est long, l'état passe dessous. title_layout: stacked garde le centrage historique. */
+@container (max-width: 280px) {
+  :host(:not([title-layout="stacked"])) .wrap:not(.layout-split) .info { flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: 8px; row-gap: 2px; width: 100%; text-align: left; }
+  :host(:not([title-layout="stacked"])) .wrap:not(.layout-split) .info .name { flex: 1 1 0; min-width: 40%; text-align: left; }
+  :host(:not([title-layout="stacked"])) .wrap:not(.layout-split) .info .status { flex: 0 1 auto; justify-content: flex-end; flex-wrap: nowrap; }
+  :host(:not([title-layout="stacked"])) .wrap:not(.layout-split) .info .alert-line,
+  :host(:not([title-layout="stacked"])) .wrap:not(.layout-split) .info .sub { flex: 0 0 100%; text-align: center; }
+}
+@container (max-width: 320px) {
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info { flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: 8px; row-gap: 2px; width: 100%; text-align: left; }
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .name { flex: 1 1 0; min-width: 40%; text-align: left; }
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .status { flex: 0 1 auto; justify-content: flex-end; flex-wrap: nowrap; }
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .alert-line,
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .sub { flex: 0 0 100%; text-align: center; }
+}
+
 /* lcd_big : grande valeur posée sur le dessin (contour sombre pour rester lisible sur toutes les teintes) */
 .bigval { filter: drop-shadow(0 0 1.2px rgba(0, 0, 0, .85)); pointer-events: none; }
 .bigval text { fill: #fff; stroke: rgba(20, 22, 28, .75); stroke-width: 2.4px; paint-order: stroke; stroke-linejoin: round; font: 700 16px var(--paper-font-body1_-_font-family, Roboto, sans-serif); text-anchor: middle; dominant-baseline: central; }
