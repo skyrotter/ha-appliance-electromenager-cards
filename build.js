@@ -126,14 +126,19 @@ const loader = `
 /* Lazy-loaded card chunks (dist/cards/*.js, fetched by HACS like any other
  * file in dist/). card-helpers and editor-labels define the window.appliance*
  * helpers the other chunks call, so they load first and are awaited; the
- * rest load in parallel. Requires this file to be registered as an ES module
- * (import()/import.meta need it), which is how HACS/Lovelace load it. */
+ * rest load in parallel (their relative finish order isn't guaranteed).
+ * Requires this file to be registered as an ES module (import()/import.meta
+ * need it), which is how HACS/Lovelace load it. */
 (async () => {
   const base = import.meta.url;
   const chunk = (name) => import(new URL(\`cards/\${name}.js\`, base).href);
   await chunk(${JSON.stringify(first)});
   await chunk(${JSON.stringify(second)});
   await Promise.all([${rest.map((n) => JSON.stringify(n)).join(", ")}].map(chunk));
+  // Fires once every chunk has finished registering its card(s): anything that
+  // needs to see the complete window.customCards list (e.g. the single-card
+  // picker) must wait for this instead of assuming load order.
+  window.dispatchEvent(new Event("appliance-cards-ready"));
 })();
 `;
 const out = load("header.js") + core + loader;
