@@ -82,6 +82,12 @@ svg{display:block;flex:0 1 calc(190px * var(--illus-scale,1));width:calc(190px *
 .noanim *{animation:none!important}
 /* service sans débit : tout est figé */
 .still *{animation:none!important}.still .pflow,.still .drop{opacity:0!important}
+/* ---- tiles_right : titre, état et dessin à gauche, tuiles en colonne à droite, depuis le haut de la carte ---- */
+ha-card.side{display:grid;grid-template-columns:minmax(0,1fr) minmax(105px,.85fr);column-gap:12px;align-content:start;align-items:start}
+.side .head,.side .leak,.side .prog{grid-column:1}
+.side .body{display:contents}
+.side svg{grid-column:1;width:100%;max-width:calc(190px * var(--illus-scale,1));margin:4px auto 0;flex:none}
+.side .tiles{grid-column:2;grid-row:1 / span 4;grid-template-columns:1fr;align-self:start}
 /* ---- compact : petits emplacements fixes ; l'illustration prend la hauteur restante, tuiles en colonne ---- */
 ha-card.compact{display:flex;flex-direction:column;padding:6px}
 .compact .head{flex:none;gap:4px}.compact .title{font-size:12px;line-height:16px}.compact .badge{font-size:10px;padding:0 6px}
@@ -329,7 +335,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card;
       const { phase, flow, salt, pct, low, still } = this._compute();
-      card.className = `${phase}${still ? ' still' : ''}${low ? ' lowsalt' : ''}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`;
+      card.className = `${phase}${still ? ' still' : ''}${low ? ' lowsalt' : ''}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}${c.tiles_right === true && c.compact !== true ? ' side' : ''}`;
       card.style.setProperty('--spd', `${(isNaN(flow) ? 1.2 : Math.max(.5, Math.min(2.4, 2.4 - flow / 12))).toFixed(2)}s`);
       card.style.setProperty('--salt', String(isNaN(pct) ? .6 : Math.max(.03, Math.min(1, pct / 100)).toFixed(3)));
       r.getElementById('wstitle').textContent = c.name || this._t('name');
@@ -425,7 +431,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'salt_low', default: 20, selector: { number: { min: 0, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
         ...window.applianceActionFields,
         window.applianceLanguageField(T),
-        { type: 'grid', name: '', schema: [bool('compact', false), ...TILES.map(([, , o]) => bool(o)), bool('animations')] },
+        { type: 'grid', name: '', schema: [bool('compact', false), bool('tiles_right', false), ...TILES.map(([, , o]) => bool(o)), bool('animations')] },
       ];
       this._form.computeLabel = (s) => (s.name === 'model' ? this._lbl('f_model') : window.applianceEditorLabel(s.name, this._hass));
     }

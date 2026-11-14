@@ -996,6 +996,7 @@
     "small": "Compact",
     "source_threshold": "Seuil de la pompe de captage (W)",
     "status_position": "Position de l'état",
+    "tiles_right": "Valeurs en colonne à droite",
     "subscribed_power": "Puissance souscrite (kVA)",
     "target_temp": "Température de consigne",
     "temp_max": "Température maximale",
