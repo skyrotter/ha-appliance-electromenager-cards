@@ -1006,6 +1006,7 @@
     "small": "Compact",
     "source_threshold": "Source pump threshold (W)",
     "status_position": "Status position",
+    "tiles_right": "Values in a column on the right",
     "subscribed_power": "Subscribed power (kVA)",
     "target_temp": "Target temperature",
     "temp_max": "Maximum temperature",
