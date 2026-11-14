@@ -11,7 +11,7 @@ window.customCards = window.customCards || [];
  */
 const I18N_PB = /*@i18n pellet_boiler*/{};
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
-const lang = (h) => window.applianceLang(I18N_PB, null, h);
+const lang = (h, cfg) => window.applianceLang(I18N_PB, cfg, h);
 
 class AppliancePelletBoilerCard extends HTMLElement {
   static getStubConfig(hass) {
@@ -53,7 +53,7 @@ class AppliancePelletBoilerCard extends HTMLElement {
           { name: 'show_status', selector: { boolean: {} }, default: true },
         ] },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(I18N_PB) } } },
+        window.applianceLanguageField(I18N_PB),
       ],
       computeLabel: (s) => window.applianceEditorLabel(s.name),
     };
@@ -67,12 +67,12 @@ class AppliancePelletBoilerCard extends HTMLElement {
   }
   set hass(h) {
     // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
-    const l = this._config && (this._config.language || lang(h));
+    const l = this._config && lang(h, this._config);
     if (l && l !== this._lng) { this._lng = l; this._hass = h; this._built = false; this._build(); }
     this._hass = h; if (window.applianceChanged(this, h, this._config)) this._update(); }
   getCardSize() { return 6; }
   getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
-  _t(k) { return (I18N_PB[this._config.language || lang(this._hass)] || I18N_PB.en)[k] ?? I18N_PB.en[k] ?? k; }
+  _t(k) { return (I18N_PB[lang(this._hass, this._config)] || I18N_PB.en)[k] ?? I18N_PB.en[k] ?? k; }
   // libellé perso (option labels) sinon traduction
   _l(k) { const L = this._config && this._config.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
 

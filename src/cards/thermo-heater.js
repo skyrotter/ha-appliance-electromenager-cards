@@ -308,7 +308,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
         { name: 'last_cycle', selector: { boolean: {} } },
         { type: 'grid', name: '', schema: [num('green_above', 0, 2000, 1, 150, 'W'), num('boost_above', 100, 5000, 10, 1000, 'W')] },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        window.applianceLanguageField(T),
         { name: 'lcd_value', selector: { select: { mode: 'dropdown', options: [{ value: 'current', label: window.applianceEditorLabel('lcd_value_current', this._hass) }, { value: 'target', label: window.applianceEditorLabel('lcd_value_target', this._hass) }] } } },
         { type: 'grid', name: '', schema: [bool('lcd_big', false), bool('show_status'), bool('show_energy'), bool('show_power'), bool('show_mode'), bool('show_temp'), bool('show_bottom'), bool('show_target'), bool('show_reserve'), bool('show_volume'), bool('show_cycle'), bool('animations')] },
       ];

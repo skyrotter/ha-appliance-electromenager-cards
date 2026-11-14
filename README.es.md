@@ -6,7 +6,7 @@
 [![Validate](https://github.com/skyrotter/ha-appliance-electromenager-cards/actions/workflows/validate.yml/badge.svg)](https://github.com/skyrotter/ha-appliance-electromenager-cards/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/LICENSE)
 
-[🇬🇧 English](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/README.md) · [🇫🇷 Version française](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/README.fr.md) · [🇮🇹 Italiano](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/README.it.md) · [🇩🇪 Deutsch](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/README.de.md) · 🇪🇸 Español
+[🇬🇧 English](README.md) · [🇫🇷 Français](README.fr.md) · [🇮🇹 Italiano](README.it.md) · [🇩🇪 Deutsch](README.de.md) · 🇪🇸 Español · [🇵🇹 Português (Portugal)](README.pt-PT.md) · [🇧🇷 Português (Brasil)](README.pt-BR.md)
 
 ## ❤️ Apoya el proyecto
 
@@ -190,6 +190,7 @@ Pulsa una tarjeta para ver sus opciones y ejemplos (documentación en inglés).
 | Tarjeta | Tipo |
 |---|---|
 | [Persiana enrollable](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/shutters.md) | `custom:appliance-roller-shutter-card` |
+| [Cortinas correderas](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/sliding-curtain.md) | `custom:appliance-sliding-curtain-card` |
 | [Persiana veneciana](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/shutters.md) | `custom:appliance-venetian-blind-card` |
 | [Contraventanas batientes](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/shutters.md) | `custom:appliance-swing-shutter-card` |
 | [Pérgola bioclimática](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/shutters.md) | `custom:appliance-pergola-card` |

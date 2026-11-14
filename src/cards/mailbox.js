@@ -365,8 +365,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       }
       const ent = (name, domain, extra) => ({ name, selector: { entity: { ...(domain ? { domain } : {}), ...(extra || {}) } } });
       const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
-      const lang = this._hass && (this._hass.locale?.language || this._hass.language) || 'en';
-      const tr = T[lang] || T[String(lang).slice(0, 2)] || T.en;
+      const tr = T[window.applianceLang(T, null, this._hass)] || T.en;
       this._form.hass = this._hass;
       // entity_last_open : une entité ou une liste ; le sélecteur multiple attend un array
       const lo = this._c && this._c.entity_last_open;
@@ -396,7 +395,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         { type: 'grid', name: '', schema: [{ name: 'mail_states', selector: { text: {} } }, { name: 'parcel_states', selector: { text: {} } }] },
         ...(boks ? [] : [{ name: 'box_color', selector: { select: { mode: 'dropdown', custom_value: true, options: Object.keys(COLORS).map((value) => ({ value, label: tr['color_' + value] || value })) } } }]),
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        window.applianceLanguageField(T),
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_since'), bool('show_count'), bool('show_battery'), bool('show_battery_back'), bool('show_presence'), bool('show_buttons'), bool('show_doors'), bool('show_last_open'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);

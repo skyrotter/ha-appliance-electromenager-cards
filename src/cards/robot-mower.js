@@ -12,7 +12,7 @@ window.customCards = window.customCards || [];
  */
 const I18N_MOW = /*@i18n robot_mower*/{};
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
-const lang = (h) => window.applianceLang(I18N_MOW, null, h);
+const lang = (h, cfg) => window.applianceLang(I18N_MOW, cfg, h);
 const ICONS_MOW = {
   start: '<path d="M8 5v14l11-7z"/>',
   pause: '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>',
@@ -51,7 +51,7 @@ class ApplianceRobotMowerCard extends HTMLElement {
         { name: 'layout', selector: { select: { mode: 'dropdown', options: ['default', 'compact'] } } },
         { name: 'image', selector: { text: {} } },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(I18N_MOW) } } },
+        window.applianceLanguageField(I18N_MOW),
       ],
       computeLabel: (s) => window.applianceEditorLabel(s.name),
     };
@@ -66,12 +66,12 @@ class ApplianceRobotMowerCard extends HTMLElement {
   }
   set hass(h) {
     // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
-    const l = this._config && (this._config.language || lang(h));
+    const l = this._config && lang(h, this._config);
     if (l && l !== this._lng) { this._lng = l; this._hass = h; this._built = false; this._build(); }
     this._hass = h; if (window.applianceChanged(this, h, this._config)) this._update(); }
   getCardSize() { return this._config && this._config.layout === 'compact' ? 3 : 6; }
   getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
-  _t(k) { return (I18N_MOW[this._config.language || lang(this._hass)] || I18N_MOW.en)[k] ?? I18N_MOW.en[k] ?? k; }
+  _t(k) { return (I18N_MOW[lang(this._hass, this._config)] || I18N_MOW.en)[k] ?? I18N_MOW.en[k] ?? k; }
   // libellé perso (option labels) sinon traduction
   _l(k) { const L = this._config && this._config.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
 

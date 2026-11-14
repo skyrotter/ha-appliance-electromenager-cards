@@ -11,7 +11,7 @@ window.customCards = window.customCards || [];
  */
 const I18N_LINKY = /*@i18n linky*/{};
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
-const lang = (h) => window.applianceLang(I18N_LINKY, null, h);
+const lang = (h, cfg) => window.applianceLang(I18N_LINKY, cfg, h);
 // Aiguilles L1 / L2 / L3 (mode « needles ») : couleurs distinctes du vert / orange / rouge de la jauge
 const PHASE_COLORS = ['#1e88e5', '#8e24aa', '#00897b'];
 
@@ -57,7 +57,7 @@ class ApplianceLinkyCard extends HTMLElement {
           { name: 'show_cost', selector: { boolean: {} }, default: true },
         ] },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(I18N_LINKY) } } },
+        window.applianceLanguageField(I18N_LINKY),
       ],
       computeLabel: (s) => window.applianceEditorLabel(s.name),
     };
@@ -80,12 +80,12 @@ class ApplianceLinkyCard extends HTMLElement {
 
   set hass(hass) {
     // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
-    const l = this._config && (this._config.language || lang(hass));
+    const l = this._config && lang(hass, this._config);
     if (l && l !== this._lng) { this._lng = l; this._hass = hass; this._built = false; this._build(); }
     this._hass = hass; if (window.applianceChanged(this, hass, this._config)) this._update(); }
   getCardSize() { return 5; }
   getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
-  _t(k) { return (I18N_LINKY[this._config.language || lang(this._hass)] || I18N_LINKY.en)[k] ?? I18N_LINKY.en[k] ?? k; }
+  _t(k) { return (I18N_LINKY[lang(this._hass, this._config)] || I18N_LINKY.en)[k] ?? I18N_LINKY.en[k] ?? k; }
   // libellé perso (option labels) sinon traduction
   _l(k) { const L = this._config && this._config.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
 

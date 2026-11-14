@@ -604,7 +604,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       }
       const ent = (name, domain, dc) => ({ name, selector: { entity: { ...(domain ? { domain } : {}), ...(dc ? { device_class: dc } : {}) } } });
       const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
-      const lang = String(this._hass && (this._hass.locale?.language || this._hass.language) || 'en').slice(0, 2);
+      const lang = window.applianceLang(T, null, this._hass);
       this._form.hass = this._hass;
       this._form.data = this._c;
       this._form.schema = [
@@ -620,7 +620,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         { type: 'grid', name: '', schema: [{ name: 'header', selector: { select: { mode: 'dropdown', options: ['name', 'icon', 'both'] } } }, { name: 'icon', selector: { icon: {} } }] },
         { name: 'big_value', selector: { select: { mode: 'dropdown', options: ['target', 'current'] } } },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        window.applianceLanguageField(T),
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_hvac_modes'), bool('show_temperature'), bool('show_valve'), bool('show_battery'), bool('show_window'), bool('show_humidity'), { name: 'minimal', selector: { boolean: {} } }, bool('animations')] },
       ];
       // « model » : libellé propre à la carte (le libellé partagé de l'éditeur parle d'un modèle de détecteur)

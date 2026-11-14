@@ -1,6 +1,7 @@
 /* Fonctions partagées par les cartes autonomes (chargées avant elles, une seule fois).
  * window.applianceLang(T, cfg, hass)   → langue des textes : option language, sinon langue de Home Assistant,
- *                                        si elle existe dans T (sr-Latn, puis code à 2 lettres, no / nn → nb), sinon en.
+ *                                        si elle existe dans T (région conservée, pt → pt-PT, no / nn → nb), sinon en.
+ * window.applianceLanguageField(T)    → champ language de l'éditeur, limité aux traductions de T.
  * window.applianceLocale(cfg, hass, dates) → locale des nombres et dates : option language, sinon langue de Home Assistant,
  *                                        même sans traduction (un utilisateur polonais garde « 1,5 »).
  *                                        Pour les nombres, le réglage « Format des nombres » du profil HA (number_format) prime
@@ -14,14 +15,19 @@
     const h = hass || document.querySelector('home-assistant')?.hass;
     return String((cfg && cfg.language) || (h && (h.locale?.language || h.language)) || document.documentElement.lang || 'en').replace('_', '-');
   };
-  window.applianceLang = (T, cfg, hass) => {
-    const full = haLang(cfg, hass);
-    if (T[full]) return full;
-    if (/^sr-latn$/i.test(full) && T['sr-Latn']) return 'sr-Latn';
-    let l = full.toLowerCase().slice(0, 2);
-    if (l === 'no' || l === 'nn') l = 'nb'; // norvégien : no / nn → nb (bokmål)
-    return T[l] ? l : 'en';
+  window.applianceLang = (T, cfg, hass) => window.applianceResolveLanguage(T, haLang(cfg, hass));
+  // Shared native language names: adding a translation never requires editing every card.
+  const LANGUAGE_NAMES = {
+    en: 'English', fr: 'Français', de: 'Deutsch', es: 'Español', it: 'Italiano',
+    cs: 'Čeština', da: 'Dansk', hu: 'Magyar', nb: 'Norsk bokmål', nl: 'Nederlands',
+    pl: 'Polski', ro: 'Română', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)',
+    'pt-PT': 'Português (Portugal)', 'pt-BR': 'Português (Brasil)',
   };
+  window.applianceLanguageField = (T) => ({
+    name: 'language', selector: { select: {
+      options: Object.keys(T).map((value) => ({ value, label: LANGUAGE_NAMES[value] || value })),
+    } },
+  });
   // Réglage « Format des nombres » du profil HA (hass.locale.number_format) → locale équivalente
   const NUM_FMT = { comma_decimal: 'en-US', decimal_comma: 'de-DE', space_comma: 'fr-FR' };
   window.applianceLocale = (cfg, hass, dates) => {

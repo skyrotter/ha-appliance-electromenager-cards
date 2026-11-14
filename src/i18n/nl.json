@@ -1221,6 +1221,7 @@
     "ceiling_spot": "Inbouwspots"
   },
   "shutter": {
+    "sliding_curtain": "Schuifgordijnen",
     "roller_shutter": "Rolluik",
     "venetian_blind": "Jaloezie",
     "swing_shutter": "Luiken",

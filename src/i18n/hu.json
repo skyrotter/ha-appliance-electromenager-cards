@@ -794,6 +794,7 @@
     "ceiling_spot": "Süllyesztett spotok"
   },
   "shutter": {
+    "sliding_curtain": "Elhúzható függönyök",
     "roller_shutter": "Redőny",
     "venetian_blind": "Reluxa",
     "swing_shutter": "Nyíló zsalugáter",

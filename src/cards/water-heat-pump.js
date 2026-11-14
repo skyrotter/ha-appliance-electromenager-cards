@@ -193,7 +193,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
           { type: 'grid', name: '', schema: SHOW.map((name) => ({ name, selector: { boolean: {} }, default: true })) },
           window.applianceTempField,
           ...window.applianceActionFields,
-          { name: 'language', selector: { select: { options: Object.keys(T) } } },
+          window.applianceLanguageField(T),
         ],
         computeLabel: (s) => window.applianceEditorLabel(s.name),
       };

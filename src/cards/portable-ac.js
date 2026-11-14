@@ -313,7 +313,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ent('entity_temperature', 'sensor'), ent('entity_target', 'number'), ent('entity_fan'), ent('entity_timer'), ent('entity_tank'), ent('entity_power', 'sensor'),
         { name: 'temp_step', default: 1, selector: { number: { min: 0.5, max: 5, step: 0.5, mode: 'box' } } },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', cs: 'Čeština', hu: 'Magyar', sr: 'Српски', 'sr-Latn': 'Srpski' }[value] || value })) } } },
+        window.applianceLanguageField(T),
         { type: 'grid', name: '', schema: [bool('show_status'), bool('compact', false), bool('show_controls'), bool('show_temperature'), bool('show_target'), bool('show_fan'), bool('show_timer'), bool('show_tank'), bool('show_power'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);

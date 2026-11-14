@@ -11,7 +11,7 @@ window.customCards = window.customCards || [];
  */
 const I18N_EV = /*@i18n ev_charger*/{};
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
-const lang = (h) => window.applianceLang(I18N_EV, null, h);
+const lang = (h, cfg) => window.applianceLang(I18N_EV, cfg, h);
 
 class ApplianceEvChargerCard extends HTMLElement {
   static getStubConfig(hass) {
@@ -47,7 +47,7 @@ class ApplianceEvChargerCard extends HTMLElement {
           { name: 'show_cost', selector: { boolean: {} }, default: true },
         ] },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(I18N_EV) } } },
+        window.applianceLanguageField(I18N_EV),
       ],
       computeLabel: (s) => window.applianceEditorLabel(s.name),
     };
@@ -62,7 +62,7 @@ class ApplianceEvChargerCard extends HTMLElement {
   set hass(h) {
     this._hass = h;
     // Sans `language` dans la config, on suit la langue de Home Assistant (reconstruit si elle change)
-    const l = this._config.language || lang(h);
+    const l = lang(h, this._config);
     if (l !== this._lng) { this._lng = l; this._built = false; this._build(); }
     if (window.applianceChanged(this, h, this._config)) this._update();
   }
@@ -70,7 +70,7 @@ class ApplianceEvChargerCard extends HTMLElement {
   getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
   connectedCallback() { this._timer = setInterval(() => this._update(), 30000); } // rafraîchit la durée
   disconnectedCallback() { clearInterval(this._timer); }
-  _t(k) { return (I18N_EV[this._config.language || lang(this._hass)] || I18N_EV.en)[k] ?? I18N_EV.en[k] ?? k; }
+  _t(k) { return (I18N_EV[lang(this._hass, this._config)] || I18N_EV.en)[k] ?? I18N_EV.en[k] ?? k; }
   // libellé perso (option labels) sinon traduction
   _l(k) { const L = this._config && this._config.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
 

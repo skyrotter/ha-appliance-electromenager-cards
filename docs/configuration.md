@@ -3,6 +3,20 @@
 
 All cards have a visual editor. When added from the card picker, entities are detected automatically by name (`lave_linge`, `washer`, `dryer`, `frigo`, `ballon`…).
 
+## Portuguese languages
+
+Cards, visual editor labels and appliance names in the card picker follow the Home Assistant language. Home Assistant identifies Portuguese (Portugal) as `pt` and Portuguese (Brazil) as `pt-BR`. These select the `pt-PT` and `pt-BR` translations respectively. Explicit `pt-PT` and other Portuguese regions also select `pt-PT`. Language matching accepts case differences and underscores, such as `pt-br` and `pt_BR`.
+
+On standalone cards that expose the `language` option, you can override the card language:
+
+```yaml
+type: custom:appliance-battery-card
+entity_power: sensor.battery_power
+language: pt-BR  # or pt-PT
+```
+
+Shared visual editor labels follow Home Assistant's language; card-specific editor labels may follow the card's explicit language override. Number formatting continues to respect the Home Assistant profile settings; an explicit card language takes precedence on standalone cards. Currency and temperature units follow the existing card settings.
+
 ## Common options
 
 | Option | Description |
