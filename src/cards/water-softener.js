@@ -18,6 +18,9 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--ws-ok:var(--appli
   --ws-alert:var(--appliance-alert-color,#db4437);--ws-cold:var(--appliance-cold-color,#2b9af9);--spd:1.2s;--salt:.65;--lvl:.2}
 .head{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.head.below{flex-direction:column;align-items:flex-start;gap:3px}
+.leak{display:none;align-items:center;gap:6px;font-size:11px;font-weight:600;margin-top:3px;padding:2px 8px;border-radius:12px;width:fit-content;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--secondary-background-color);color:var(--secondary-text-color);cursor:pointer}
+.leak.on{display:inline-flex}.leak.ok{background:color-mix(in srgb,var(--ws-ok) 22%,transparent);color:var(--ws-ok)}.leak.bad{background:color-mix(in srgb,var(--ws-alert) 22%,transparent);color:var(--ws-alert)}
 .badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
 .service .badge{background:color-mix(in srgb,var(--ws-cold) 22%,transparent);color:var(--ws-cold)}
 .backwash .badge,.brine .badge,.rinse .badge,.refill .badge{background:color-mix(in srgb,var(--ws-warn) 24%,transparent);color:var(--ws-warn)}
@@ -227,7 +230,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     _build() {
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
       root.innerHTML = `<style>${CSS}</style><ha-card>
-        <div class="head"><div class="title" id="wstitle"></div><div class="badge" id="wsbadge"></div></div>
+        <div class="head${this._c.status_position === 'below' ? ' below' : ''}"><div class="title" id="wstitle"></div><div class="badge" id="wsbadge"></div></div>
+        <div class="leak" id="wsleak"></div>
         <div class="body">${(this._c.model === 'generic' ? SVG_GENERIC : SVG_CULLIGAN)((this._c.name || this._t('name')).replace(/"/g, ''))}
           <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
         </div></ha-card>`;
@@ -235,6 +239,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
         const c = this._c; this._more({ flow: c.entity_flow, capacity: c.entity_capacity, salt: c.entity_salt, hardness: c.entity_hardness_out || c.entity_hardness_in, today: c.entity_today, regen: c.entity_regen_days, last_regen: c.entity_last_regen, cycle_volume: c.entity_cycle_volume, salt_year: c.entity_salt_year, power: c.entity_power }[el.dataset.k]);
       }));
+      root.getElementById('wsleak').addEventListener('click', () => this._more(this._c.entity_leak));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
 
@@ -280,6 +285,18 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       // dessin générique : écran étroit, texte long (CONTRE-LAVAGE…) compressé pour rester dans la fenêtre
       const lcd = r.getElementById('wslcd');
       if (c.model === 'generic' && lcd.textContent.length > 7) { lcd.setAttribute('textLength', '28'); lcd.setAttribute('lengthAdjust', 'spacingAndGlyphs'); } else lcd.removeAttribute('textLength');
+      // fuites : état texte d'une entité (ex. template) ; vert si l'état est dans la liste « normale », rouge sinon
+      const lk = r.getElementById('wsleak'), ls0 = this._st(c.entity_leak);
+      lk.classList.toggle('on', !!ls0);
+      if (ls0) {
+        const raw = String(ls0.state).trim(), low = raw.toLowerCase();
+        const okList = (Array.isArray(c.leak_ok_states) ? c.leak_ok_states : String(c.leak_ok_states || 'off, ok, none, no, false, normal, aucune, pas de fuite, no leak, rejet égout, rejet egout, sewer discharge').split(','))
+          .map((x) => String(x).trim().toLowerCase()).filter(Boolean);
+        const gone = /^(unavailable|unknown)$/.test(low);
+        lk.classList.toggle('ok', !gone && okList.includes(low));
+        lk.classList.toggle('bad', !gone && !okList.includes(low));
+        lk.textContent = gone ? '--' : raw;
+      }
       const fu = this._unit(c.entity_flow, 'L/min'), tu = this._unit(c.entity_today, 'L');
       const hin = this._num(c.entity_hardness_in), hout = this._num(c.entity_hardness_out), hu = this._unit(c.entity_hardness_out || c.entity_hardness_in, '°f');
       let lastTxt = null;
@@ -344,9 +361,11 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ...window.applianceTileFields(this._hass),
         ent('entity', ['sensor', 'binary_sensor', 'switch', 'input_boolean', 'select']),
         ent('entity_backwash', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_brine', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_rinse', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_refill', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_service', ['binary_sensor', 'switch', 'input_boolean', 'sensor']),
-        ent('entity_flow', 'sensor'), ent('entity_capacity', 'sensor'), ent('entity_salt', 'sensor'), ent('entity_salt_max', ['sensor', 'input_number', 'number']), { name: 'salt_max', selector: { number: { min: 0, max: 2000, step: 1, mode: 'box' } } },
-        ent('entity_hardness_in', 'sensor'), ent('entity_hardness_out', 'sensor'),
-        ent('entity_today', 'sensor'), ent('entity_regen_days', 'sensor'), ent('entity_last_regen', ['sensor', 'input_datetime']), ent('entity_cycle_volume', 'sensor'), ent('entity_salt_year', 'sensor'), ent('entity_power', 'sensor'),
+        ent('entity_flow', ['sensor', 'input_number', 'number']), ent('entity_capacity', ['sensor', 'input_number', 'number']), ent('entity_salt', ['sensor', 'input_number', 'number']), ent('entity_salt_max', ['sensor', 'input_number', 'number']), { name: 'salt_max', selector: { number: { min: 0, max: 2000, step: 1, mode: 'box' } } },
+        ent('entity_hardness_in', ['sensor', 'input_number', 'number']), ent('entity_hardness_out', ['sensor', 'input_number', 'number']),
+        ent('entity_leak', ['sensor', 'binary_sensor', 'input_text', 'input_select']), { name: 'leak_ok_states', selector: { text: {} } },
+        { name: 'status_position', selector: { select: { mode: 'dropdown', options: ['right', 'below'] } } },
+        ent('entity_today', ['sensor', 'input_number', 'number']), ent('entity_regen_days', ['sensor', 'input_number', 'number']), ent('entity_last_regen', ['sensor', 'input_datetime']), ent('entity_cycle_volume', ['sensor', 'input_number', 'number']), ent('entity_salt_year', ['sensor', 'input_number', 'number']), ent('entity_power', ['sensor', 'input_number', 'number']),
         { name: 'salt_low', default: 20, selector: { number: { min: 0, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
