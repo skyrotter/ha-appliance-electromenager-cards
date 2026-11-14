@@ -7,19 +7,21 @@
   if (customElements.get(TAG)) return;
 
   const isOurs = (c) => c && /^appliance-.+-card$/.test(c.type) && c.type !== TAG;
-  const ours = (window.customCards || []).filter(isOurs);
+  // Les 56 autres cartes se chargent en parallèle (dist/cards/*.js) et peuvent finir dans
+  // n'importe quel ordre : on ne fige jamais la liste, on la relit à chaque usage pour ne
+  // pas rater celles pas encore enregistrées au moment où ce fichier s'exécute.
+  const getOurs = () => (window.customCards || []).filter(isOurs);
   const label = (c) => String(c.name || c.type).replace(/^Appliance\s*[–-]\s*/, '');
   // ordre d'origine (noms « anglais / français ») : sert seulement à choisir le type par défaut d'une nouvelle carte
-  const OPTIONS = ours.map((c) => ({ value: c.type, label: label(c) })).sort((a, b) => a.label.localeCompare(b.label));
+  const OPTIONS = () => getOurs().map((c) => ({ value: c.type, label: label(c) })).sort((a, b) => a.label.localeCompare(b.label));
   // Resolve against all registered names, preserving regional language variants.
-  const nameLanguages = Object.assign({}, ...ours.map((c) => c.names));
-  const haLang = (hass) => window.applianceResolveLanguage(nameLanguages,
+  const haLang = (hass) => window.applianceResolveLanguage(Object.assign({}, ...getOurs().map((c) => c.names)),
     (hass && (hass.locale?.language || hass.language)) || navigator.language || 'en');
   // liste des types d'appareils dans la langue de Home Assistant, triée dans cette langue
   // names : noms traduits déclarés par chaque carte ; à défaut, le nom « anglais / français » d'origine
   const optionsFor = (hass) => {
     const l = haLang(hass);
-    return ours.map((c) => ({ value: c.type, label: (c.names && (c.names[l] || c.names.en)) || label(c) }))
+    return getOurs().map((c) => ({ value: c.type, label: (c.names && (c.names[l] || c.names.en)) || label(c) }))
       .sort((a, b) => a.label.localeCompare(b.label, l, { sensitivity: 'base' }));
   };
 
@@ -30,8 +32,22 @@
 
   // Aperçu live désactivé par défaut sur chaque entrée : c'est lui qui ralentit l'onglet « Par carte ».
   // Case « Aperçus des cartes Appliance » de l'éditeur de la carte unique (ou localStorage applianceCardsPreviews = '1') pour le réactiver.
-  const setPreviews = (on) => { for (const c of ours) c.preview = on; };
-  setPreviews(!!window.applianceCardsPreviews || getPref(PREV_KEY));
+  const setPreviews = (on) => { for (const c of getOurs()) c.preview = on; };
+
+  // « single » et « previews » dépendent de voir la liste complète des cartes, mais les 56
+  // chunks se chargent en parallèle et peuvent finir après ce fichier. On applique une
+  // première fois tout de suite (cas déjà couvert si tout est chargé), puis une seconde fois
+  // quand le chargeur principal signale que tous les chunks ont terminé (voir build.js).
+  const applySelectorPrefs = () => {
+    setPreviews(!!window.applianceCardsPreviews || getPref(PREV_KEY));
+    if (window.applianceCardsSinglePicker || getPref(SINGLE_KEY)) {
+      const keep = window.customCards.filter((c) => !isOurs(c));
+      window.customCards.length = 0;
+      window.customCards.push(...keep);
+    }
+  };
+  applySelectorPrefs();
+  window.addEventListener('appliance-cards-ready', applySelectorPrefs, { once: true });
 
   // Option : aucun aperçu live dans le sélecteur, y compris pour les cartes d'autres dépôts.
   // Les entrées déjà déclarées sont modifiées, celles déclarées plus tard le sont au moment du push.
@@ -86,7 +102,8 @@
     getGridOptions() { return this._child && this._child.getGridOptions ? this._child.getGridOptions() : undefined; }
     static getConfigElement() { return document.createElement(TAG + '-editor'); }
     static getStubConfig(hass) {
-      const first = OPTIONS[0] && OPTIONS[0].value;
+      const opts = OPTIONS();
+      const first = opts[0] && opts[0].value;
       const C = first && customElements.get(first);
       const stub = C && C.getStubConfig ? C.getStubConfig(hass) : {};
       return first ? wrap(first, stub || {}) : { type: 'custom:' + TAG };
@@ -192,14 +209,4 @@
     type: TAG, name: t.name, description: t.desc, preview: false,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
   });
-
-  // Option : ne garder que la carte unique dans le sélecteur.
-  // Case à cocher dans l'éditeur de la carte unique, ou window.applianceCardsSinglePicker = true
-  // (avant le chargement du module), ou localStorage applianceCardsSinglePicker = '1'.
-  const single = !!window.applianceCardsSinglePicker || getPref(SINGLE_KEY);
-  if (single) {
-    const keep = window.customCards.filter((c) => !isOurs(c));
-    window.customCards.length = 0;
-    window.customCards.push(...keep);
-  }
 })();
