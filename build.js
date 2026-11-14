@@ -134,6 +134,8 @@ const loader = `
   const chunk = (name) => import(new URL(\`cards/\${name}.js\`, base).href);
   await chunk(${JSON.stringify(first)});
   await chunk(${JSON.stringify(second)});
+  // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre
+  window.dispatchEvent(new Event("appliance-helpers-ready"));
   await Promise.all([${rest.map((n) => JSON.stringify(n)).join(", ")}].map(chunk));
   // Fires once every chunk has finished registering its card(s): anything that
   // needs to see the complete window.customCards list (e.g. the single-card
