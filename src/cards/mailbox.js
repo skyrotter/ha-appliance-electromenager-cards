@@ -156,7 +156,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
   </svg>`;
 
   const TILES = [['last', 'mdi:clock-outline', 'show_since'], ['count', 'mdi:email-multiple-outline', 'show_count'], ['battery', 'mdi:battery', 'show_battery'], ['battery_back', 'mdi:battery', 'show_battery_back'],
-    ['door_front', 'mdi:door', 'show_doors'], ['door_back', 'mdi:door', 'show_doors'], ['last_open', 'mdi:door-open', 'show_last_open']]; // les 4 premières : 1re ligne, portes et dernière ouverture : 2e ligne
+    ['door_front', 'mdi:door', 'show_doors'], ['door_back', 'mdi:door', 'show_doors'], ['last_open', 'mdi:door-open', 'show_last_open'], ['presence', 'mdi:motion-sensor', 'show_presence']]; // les 4 premières : 1re ligne, portes et dernière ouverture : 2e ligne
 
   class ApplianceMailboxCard extends HTMLElement {
 
@@ -175,7 +175,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { show_status: true, show_since: true, show_count: true, show_battery: true, show_battery_back: true, show_buttons: true, show_doors: true, show_last_open: true, box_color: 'anthracite', ...c };
+      this._c = { show_status: true, show_since: true, show_count: true, show_battery: true, show_battery_back: true, show_presence: true, show_buttons: true, show_doors: true, show_last_open: true, box_color: 'anthracite', ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -278,7 +278,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       root.querySelector('#mbcollect').addEventListener('click', () => this._collect());
       root.querySelector('#mbopen').addEventListener('click', () => this._openDoor());
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
-        const c = this._c; this._more({ last: c.entity_mail || c.entity_parcel, count: c.entity_count || c.entity_mail, battery: c.entity_battery, battery_back: c.entity_battery_back, door_front: c.entity_door, door_back: c.entity_door_back, last_open: this._ids(c.entity_last_open)[0] }[el.dataset.k]);
+        const c = this._c; this._more({ last: c.entity_mail || c.entity_parcel, count: c.entity_count || c.entity_mail, battery: c.entity_battery, battery_back: c.entity_battery_back, door_front: c.entity_door, door_back: c.entity_door_back, last_open: this._ids(c.entity_last_open)[0], presence: c.entity_presence }[el.dataset.k]);
       }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
@@ -325,6 +325,8 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         door_front: [dbl && c.entity_door, this._doorTxt(c.entity_door, opened), ''],
         door_back: [c.entity_door_back, this._doorTxt(c.entity_door_back, openedBack), ''],
         last_open: [this._ids(c.entity_last_open)[0], this._when(lastOpen), ''],
+        // capteur de présence / mouvement : « Détectée » tant qu'il est actif, « Aucune » sinon
+        presence: [c.entity_presence, !this._ok(this._st(c.entity_presence)) ? '--' : ON_RE.test(String(this._st(c.entity_presence).state)) ? this._t('detected') : this._t('none'), ''],
       };
       TILES.forEach(([k, defIcon, opt]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`); const [show, val, unit] = V[k];
@@ -386,6 +388,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         ent('entity_reset', ['button', 'input_button', 'input_boolean', 'switch', 'counter', 'script', 'automation', 'scene', 'input_number']),
         ent('entity_battery', 'sensor'),
         ent('entity_battery_low', ['binary_sensor', 'input_boolean']),
+        ent('entity_presence', ['binary_sensor', 'input_boolean']),
         ent('entity_battery_back', 'sensor'),
         ent('entity_battery_back_low', ['binary_sensor', 'input_boolean']),
         ent('entity_open', ['button', 'input_button', 'lock', 'script', 'switch', 'input_boolean']),
@@ -394,7 +397,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         ...(boks ? [] : [{ name: 'box_color', selector: { select: { mode: 'dropdown', custom_value: true, options: Object.keys(COLORS).map((value) => ({ value, label: tr['color_' + value] || value })) } } }]),
         ...window.applianceActionFields,
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', es: 'Español', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
-        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_since'), bool('show_count'), bool('show_battery'), bool('show_battery_back'), bool('show_buttons'), bool('show_doors'), bool('show_last_open'), bool('animations')] },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_since'), bool('show_count'), bool('show_battery'), bool('show_battery_back'), bool('show_presence'), bool('show_buttons'), bool('show_doors'), bool('show_last_open'), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
