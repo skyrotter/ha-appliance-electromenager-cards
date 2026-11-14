@@ -997,6 +997,9 @@
     "source_threshold": "Seuil de la pompe de captage (W)",
     "status_position": "Position de l'état",
     "tiles_right": "Valeurs en colonne à droite",
+    "hot_water": "Eau chaude (rouge)",
+    "today_decimals": "Décimales de la tuile Aujourd'hui",
+    "index_decimals": "Décimales de la tuile Index (m³)",
     "subscribed_power": "Puissance souscrite (kVA)",
     "target_temp": "Température de consigne",
     "temp_max": "Température maximale",
@@ -1517,7 +1520,9 @@
     "pressure": "Pression",
     "freeze": "Risque de gel",
     "freeze_risk": "Risque de gel : {t}",
-    "leak_detected_by": "Fuite détectée par : {n}"
+    "leak_detected_by": "Fuite détectée par : {n}",
+    "unit_m3": "m³",
+    "unit_l": "L"
   },
   "gas_meter": {
     "name": "Compteur de gaz",

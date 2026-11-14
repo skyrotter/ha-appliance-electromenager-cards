@@ -12,6 +12,9 @@ Every sensor is optional, so it works with whatever your meter integration provi
 | `entity_flow` | flow rate; `L/min`, `L/h`, `L/s`, `m³/h`, `gal/min` are converted to L/min. **Without it, the flow is derived from the index changes** |
 | `entity_today` | today's consumption (any volume unit) |
 | `entity_cost` | cost sensor (any currency) |
+| `hot_water` | `true` for a **hot water** meter: the blue dial ring, the flow dashes, the flow badge and the valve turn red / orange |
+| `labels` | `unit_m3` and `unit_l` change the two texts printed on the dial (default `m³` and `L`), e.g. `labels: {unit_m3: Today, unit_l: Shower}`; the tile names (`flow`, `today`, `index`…) are also renamed there |
+| `today_decimals`, `index_decimals` | decimals of the Today tile (automatic by default) and of the Index tile in m³ (3 by default), from 0 to 3 |
 | `entity_leak` | leak sensor (`binary_sensor` / `input_boolean`, on = leak). **One entity or a list**: the alert banner names the wet sensors |
 | `entity_temperature` | water temperature sensor (1 decimal, unit read from the sensor) |
 | `entity_pressure` | water pressure sensor (unit read from the sensor, no conversion, no alert) |
