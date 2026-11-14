@@ -120,6 +120,7 @@ Klicke auf eine Karte für ihre Optionen und Beispiele.
 | [Gaskessel](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/gas-boiler.md) | `custom:appliance-gas-boiler-card` |
 | [Dieselheizung](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/diesel-heater.md) | `custom:appliance-diesel-heater-card` |
 | [Wasser-Wasser- / Erdwärmepumpe](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/water-heat-pump.md) | `custom:appliance-water-heat-pump-card` |
+| [Luft-Wasser-Wärmepumpe, 2 Zonen](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/air-water-heat-pump.md) | `custom:appliance-air-water-heat-pump-card` |
 | [Klimaanlage, Split-Innengerät](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/air-conditioning.md) | `custom:appliance-ac-split-card` |
 | [Wärmepumpe, Außengerät](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/air-conditioning.md) | `custom:appliance-heat-pump-card` |
 | [Badlüfter / Wohnraumlüftung (VMC)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/vmc.md) | `custom:appliance-vmc-card` |

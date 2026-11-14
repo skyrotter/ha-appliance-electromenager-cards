@@ -114,6 +114,7 @@ Clique sur une carte pour ses options et ses exemples (pages en anglais).
 | [Chaudière gaz](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/gas-boiler.md) | `custom:appliance-gas-boiler-card` |
 | [Chauffage diesel](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/diesel-heater.md) | `custom:appliance-diesel-heater-card` |
 | [PAC eau/eau (géothermie)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/water-heat-pump.md) | `custom:appliance-water-heat-pump-card` |
+| [PAC air/eau, 2 zones](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/air-water-heat-pump.md) | `custom:appliance-air-water-heat-pump-card` |
 | [Climatiseur, split intérieur](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/air-conditioning.md) | `custom:appliance-ac-split-card` |
 | [Pompe à chaleur, unité extérieure](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/air-conditioning.md) | `custom:appliance-heat-pump-card` |
 | [VMC de salle de bain](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/vmc.md) | `custom:appliance-vmc-card` |

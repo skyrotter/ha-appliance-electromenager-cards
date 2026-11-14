@@ -778,6 +778,24 @@ const SCEN = [
       set('sensor.whp_energy', 12.4, KWH); set('sensor.whp_heat_energy', 43.1, KWH);
       ctl.append(document.createElement('span'), Object.assign(document.createElement('span'), { textContent: 'COP calculé = thermique / électrique · débit à 0 = l’eau s’arrête · élec. > 150 W : pompes de captage, > 800 W : compresseur · ballon tampon : le circulateur alimente les émetteurs même compresseur arrêté', style: 'color:var(--secondary-text-color);font-size:12px' }), document.createElement('span'));
     } },
+  { kind: 'air-water-heat-pump', title: 'PAC air/eau 2 zones', lang: true,
+    cfg: { entity_power: 'sensor.awhp_power', entity_heat_power: 'sensor.awhp_heat', entity_frequency: 'sensor.awhp_freq', entity_demand: 'sensor.awhp_demand',
+      entity_flow_temp: 'sensor.awhp_flow', entity_return_temp: 'sensor.awhp_return', entity_dhw_temp: 'sensor.awhp_dhw', entity_outdoor_temp: 'sensor.awhp_outdoor',
+      entity_energy: 'sensor.awhp_energy', entity_heat_energy: 'sensor.awhp_heat_energy', entity_pump_1: 'switch.awhp_pump_1', entity_pump_2: 'switch.awhp_pump_2',
+      entity_valve: 'switch.awhp_valve', entity_backup: 'switch.awhp_backup', entity_immersion: 'switch.awhp_immersion' },
+    build(ctl) {
+      range(ctl, 'Fréquence compresseur', 'sensor.awhp_freq', 0, 90, 1, 36, 'Hz', { unit_of_measurement: 'Hz' });
+      range(ctl, 'Demande', 'sensor.awhp_demand', 0, 100, 1, 100, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Puissance élec.', 'sensor.awhp_power', 0, 4000, 50, 1400, 'W', W);
+      range(ctl, 'Puissance thermique', 'sensor.awhp_heat', 0, 12, 0.1, 6, 'kW', { unit_of_measurement: 'kW', device_class: 'power' });
+      range(ctl, 'Départ', 'sensor.awhp_flow', 15, 60, 0.5, 32.5, '°C', T);
+      range(ctl, 'Retour', 'sensor.awhp_return', 15, 60, 0.5, 29, '°C', T);
+      range(ctl, 'Ballon ECS', 'sensor.awhp_dhw', 15, 65, 0.5, 48, '°C', T);
+      range(ctl, 'Extérieur', 'sensor.awhp_outdoor', -15, 35, 0.5, 9, '°C', T);
+      checks(ctl, [['Circulateur zone 1', 'switch.awhp_pump_1', true], ['Circulateur zone 2', 'switch.awhp_pump_2', true], ['Vanne 3 voies (eau chaude)', 'switch.awhp_valve', false],
+        ['Appoint', 'switch.awhp_backup', false], ['Résistance d’immersion', 'switch.awhp_immersion', false]]);
+      set('sensor.awhp_energy', 17.8, KWH); set('sensor.awhp_heat_energy', 85.5, KWH);
+    } },
   { kind: 'diesel-heater', title: 'Chauffage diesel', lang: true,
     cfg: { entity_status: 'sensor.diesel_status', entity_power: 'sensor.diesel_power', entity_fuel_level: 'sensor.diesel_fuel', entity_fuel_used: 'sensor.diesel_used', entity_temp: 'sensor.diesel_room', entity_flue_temp: 'sensor.diesel_flue', entity_energy: 'sensor.diesel_energy', price_per_liter: 1.6 },
     build(ctl) {
