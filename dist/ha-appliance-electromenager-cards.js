@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.140.0";
+const VERSION = "1.140.1";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -10503,7 +10503,15 @@ class ApplianceCardBase extends HTMLElement {
 
   setConfig(config) {
     if (!config) throw new Error("Invalid configuration");
+    // les aides (applianceSize : transparence, taille, disposition du titre) viennent d'un morceau chargé en parallèle : s'il n'est pas encore là,
+    // on applique le tout dès qu'il arrive (sinon la carte reste sans transparence ni disposition)
+    const tok = (this._cfgTok = {});
     if (window.applianceSize) window.applianceSize(this, config);
+    else window.addEventListener("appliance-helpers-ready", () => {
+      if (this._cfgTok !== tok) return; // la carte a reçu une autre config entre-temps
+      window.applianceSize(this, config);
+      if (this._hass && this._config) this._update(true);
+    }, { once: true });
     // multiprise : les prises commandées (outlets) suffisent, sans entité globale (ex. Lidl TS011F, un switch par prise)
     if (!["entity", "power", "power_solar", "switch", "switch_low", "switch_high", "temperature", "zone_1"].some((f) => config[f]) && !(Array.isArray(config.outlets) && config.outlets.some((i) => typeof i === "string" && i))) {
       throw new Error(tr(undefined, "err_need_entity"));
@@ -12905,6 +12913,23 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
   :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .top { grid-template-areas: "head" "illus" "stats"; }
 }
 
+/* carte étroite (≤ 280 px, ou ≤ 320 px avec illustration agrandie) : l'illustration reste au-dessus, mais le titre (à gauche) et l'état (à droite)
+   restent sur la même ligne comme sur les cartes récentes ; si le titre est long, l'état passe dessous. title_layout: stacked garde le centrage historique. */
+@container (max-width: 280px) {
+  :host(:not([title-layout="stacked"])) .wrap:not(.layout-split) .info { flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: 8px; row-gap: 2px; width: 100%; text-align: left; }
+  :host(:not([title-layout="stacked"])) .wrap:not(.layout-split) .info .name { flex: 1 1 0; min-width: 40%; text-align: left; }
+  :host(:not([title-layout="stacked"])) .wrap:not(.layout-split) .info .status { flex: 0 1 auto; justify-content: flex-end; flex-wrap: nowrap; }
+  :host(:not([title-layout="stacked"])) .wrap:not(.layout-split) .info .alert-line,
+  :host(:not([title-layout="stacked"])) .wrap:not(.layout-split) .info .sub { flex: 0 0 100%; text-align: center; }
+}
+@container (max-width: 320px) {
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info { flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: 8px; row-gap: 2px; width: 100%; text-align: left; }
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .name { flex: 1 1 0; min-width: 40%; text-align: left; }
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .status { flex: 0 1 auto; justify-content: flex-end; flex-wrap: nowrap; }
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .alert-line,
+  :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .sub { flex: 0 0 100%; text-align: center; }
+}
+
 /* lcd_big : grande valeur posée sur le dessin (contour sombre pour rester lisible sur toutes les teintes) */
 .bigval { filter: drop-shadow(0 0 1.2px rgba(0, 0, 0, .85)); pointer-events: none; }
 .bigval text { fill: #fff; stroke: rgba(20, 22, 28, .75); stroke-width: 2.4px; paint-order: stroke; stroke-linejoin: round; font: 700 16px var(--paper-font-body1_-_font-family, Roboto, sans-serif); text-anchor: middle; dominant-baseline: central; }
@@ -14347,6 +14372,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
   const chunk = (name) => import(new URL(`cards/${name}.js`, base).href);
   await chunk("card-helpers");
   await chunk("editor-labels");
+  // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre
+  window.dispatchEvent(new Event("appliance-helpers-ready"));
   await Promise.all(["aquarium", "reef-aquarium", "linky", "battery", "ev-charger", "robot-vacuum", "robot-mower", "pellet-boiler", "gas-boiler", "water-heat-pump", "air-water-heat-pump", "diesel-heater", "jacuzzi", "internet-box", "pet-feeder", "portable-ac", "access", "sauna", "pumps", "pool-robot", "ups", "underfloor-heating", "lights", "shutters", "water-meter", "gas-meter", "electric-meter", "trv", "room-climate", "mailbox", "smoke-detector", "smart-lock", "cat-flap", "pet-fountain", "leak-detector", "mini-pc", "nas", "tv-box", "scale", "thermo-heater", "water-valves", "water-softener", "camera", "poe-switch", "raspberry-pi", "water-filter", "irrigation", "led-strip", "rain-gauge", "plant-monitor", "humidifier", "fan-heater", "inflatable-spa", "heat-meter", "picker", "zigbee-coordinator"].map(chunk));
   // Fires once every chunk has finished registering its card(s): anything that
   // needs to see the complete window.customCards list (e.g. the single-card

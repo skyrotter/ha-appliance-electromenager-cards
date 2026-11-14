@@ -22,7 +22,15 @@ class ApplianceCardBase extends HTMLElement {
 
   setConfig(config) {
     if (!config) throw new Error("Invalid configuration");
+    // les aides (applianceSize : transparence, taille, disposition du titre) viennent d'un morceau chargé en parallèle : s'il n'est pas encore là,
+    // on applique le tout dès qu'il arrive (sinon la carte reste sans transparence ni disposition)
+    const tok = (this._cfgTok = {});
     if (window.applianceSize) window.applianceSize(this, config);
+    else window.addEventListener("appliance-helpers-ready", () => {
+      if (this._cfgTok !== tok) return; // la carte a reçu une autre config entre-temps
+      window.applianceSize(this, config);
+      if (this._hass && this._config) this._update(true);
+    }, { once: true });
     // multiprise : les prises commandées (outlets) suffisent, sans entité globale (ex. Lidl TS011F, un switch par prise)
     if (!["entity", "power", "power_solar", "switch", "switch_low", "switch_high", "temperature", "zone_1"].some((f) => config[f]) && !(Array.isArray(config.outlets) && config.outlets.some((i) => typeof i === "string" && i))) {
       throw new Error(tr(undefined, "err_need_entity"));
