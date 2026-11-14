@@ -31,6 +31,9 @@ The phase comes from the state of `entity` (a sensor, select, switch or binary s
 | `entity_leak` | leak status as text (e.g. a template sensor): a pill under the phase, **green** when the state is a normal one, **red** otherwise (`unavailable` / `unknown` stay grey). Tap opens the entity |
 | `leak_ok_states` | normal states of `entity_leak`, comma separated (case-insensitive). Default: `off, ok, none, no, false, normal, aucune, pas de fuite, no leak, rejet égout, rejet egout, sewer discharge`. Example: `pas de fuite, rejet égout` |
 | `status_position` | `right` (default, phase badge at the top right) or `below` (phase under the name) |
+| `entity_backwash_timer`, `entity_brine_timer`, `entity_rinse_timer`, `entity_refill_timer` | one HA `timer` per phase (backwash, brine draw, rinse, water return). During a regeneration, a **progress bar** appears under the phase: one segment per phase, as wide as its timer (`duration`), finished phases full, the current one filling in real time |
+| `entity_timer` | `timer` of the whole regeneration cycle: shows the time left next to the bar. Alone (without phase timers), it gives a single bar |
+| `show_progress` | `false` hides the progress bar (default `true`; the bar only shows during a regeneration) |
 | `entity_today` | water softened today |
 | `entity_regen_days` | days before the next regeneration |
 | `entity_last_regen` | date of the last cycle (`sensor` with a date / timestamp, or `input_datetime`; plain text is shown as is) |

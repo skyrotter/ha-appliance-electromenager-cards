@@ -21,6 +21,11 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--ws-ok:var(--appli
 .head.below{flex-direction:column;align-items:flex-start;gap:3px}
 .leak{display:none;align-items:center;gap:6px;font-size:11px;font-weight:600;margin-top:3px;padding:2px 8px;border-radius:12px;width:fit-content;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--secondary-background-color);color:var(--secondary-text-color);cursor:pointer}
 .leak.on{display:inline-flex}.leak.ok{background:color-mix(in srgb,var(--ws-ok) 22%,transparent);color:var(--ws-ok)}.leak.bad{background:color-mix(in srgb,var(--ws-alert) 22%,transparent);color:var(--ws-alert)}
+.prog{display:none;margin:6px 0 2px}.prog.on{display:block}
+.prog .bar{display:flex;gap:3px;height:8px}.prog .seg{position:relative;overflow:hidden;border-radius:4px;background:var(--secondary-background-color);min-width:6px}
+.prog .seg i{position:absolute;inset:0 auto 0 0;width:0;background:var(--ws-warn);border-radius:4px;transition:width .9s linear}
+.prog .seg.cur i{background:var(--ws-cold)}
+.prog .txt{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--secondary-text-color);margin-top:3px}
 .badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
 .service .badge{background:color-mix(in srgb,var(--ws-cold) 22%,transparent);color:var(--ws-cold)}
 .backwash .badge,.brine .badge,.rinse .badge,.refill .badge{background:color-mix(in srgb,var(--ws-warn) 24%,transparent);color:var(--ws-warn)}
@@ -225,6 +230,54 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     _unit(id, d) { const s = this._st(id); return String((s && s.attributes && s.attributes.unit_of_measurement) || d).trim(); }
     _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _on(id) { const s = this._st(id); return !!s && /^(on|true|active|running|open)$/i.test(String(s.state)); }
+    // timer HA (timer.xxx) : durée totale, temps restant et état, calculés à partir de ses attributs (duration, finishes_at, remaining)
+    _tsec(v) { if (v == null || v === '') return NaN; if (typeof v === 'number') return v; const p = String(v).split(':').map(Number); return p.some(isNaN) ? NaN : p.length === 3 ? p[0] * 3600 + p[1] * 60 + p[2] : p.length === 2 ? p[0] * 60 + p[1] : p[0]; }
+    _timer(id) {
+      const s = this._st(id); if (!s) return null;
+      const a = s.attributes || {}, dur = this._tsec(a.duration), st = String(s.state).toLowerCase();
+      let rem = dur;
+      if (st === 'active') { const t = Date.parse(a.finishes_at); rem = isNaN(t) ? dur : Math.max(0, (t - Date.now()) / 1000); }
+      else if (st === 'paused') { const r = this._tsec(a.remaining); rem = isNaN(r) ? dur : r; }
+      return { dur, rem, running: st === 'active' || st === 'paused' };
+    }
+    _hms(sec) { const n = Math.max(0, Math.round(sec)), h = Math.floor(n / 3600), m = Math.floor(n % 3600 / 60), s = n % 60; return h ? `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}` : `${m}:${String(s).padStart(2, '0')}`; }
+    // barre de progression de la régénération : un segment par phase (largeur = durée de son timer), visible seulement pendant le cycle
+    _progress(phase) {
+      const c = this._c, r = this._root, box = r.getElementById('wsprog');
+      const ORDER = ['backwash', 'brine', 'rinse', 'refill'], KEY = { backwash: 'entity_backwash_timer', brine: 'entity_brine_timer', rinse: 'entity_rinse_timer', refill: 'entity_refill_timer' };
+      const cur = ORDER.indexOf(phase), phases = ORDER.filter((p) => c[KEY[p]]), total = c.entity_timer && this._timer(c.entity_timer);
+      const show = c.show_progress !== false && cur >= 0 && (phases.length || (total && total.running));
+      box.classList.toggle('on', !!show);
+      clearInterval(this._tick); this._tick = null;
+      if (!show) return;
+      const bar = r.getElementById('wsbar');
+      const segs = phases.length ? phases : ['total'];
+      if (bar.children.length !== segs.length || bar.dataset.k !== segs.join()) {
+        bar.dataset.k = segs.join();
+        bar.innerHTML = segs.map((p) => `<div class="seg" data-p="${p}" title="${p === 'total' ? '' : this._t(p)}"><i></i></div>`).join('');
+      }
+      const paint = () => {
+        const pt = phases.length ? null : total;
+        segs.forEach((p, i) => {
+          const el = bar.children[i], t = p === 'total' ? pt : this._timer(c[KEY[p]]);
+          const dur = t && t.dur > 0 ? t.dur : 1;
+          el.style.flex = `${p === 'total' ? 1 : dur} 1 0`;
+          let f = 0;
+          if (p === 'total') f = t && t.dur > 0 ? 1 - t.rem / t.dur : 0;
+          else if (ORDER.indexOf(p) < cur) f = 1;
+          else if (p === phase) f = t && t.running && t.dur > 0 ? 1 - t.rem / t.dur : 0;
+          el.firstChild.style.width = `${Math.max(0, Math.min(1, f)) * 100}%`;
+          el.classList.toggle('cur', p === phase);
+        });
+        const tt = c.entity_timer && this._timer(c.entity_timer);
+        r.getElementById('wsptxt').textContent = this._t(phase);
+        r.getElementById('wsprem').textContent = tt && tt.running ? `${this._t('remaining')} ${this._hms(tt.rem)}` : '';
+      };
+      paint();
+      // HA n'envoie pas d'état chaque seconde : on fait avancer la barre localement tant que le cycle tourne
+      this._tick = setInterval(paint, 1000);
+    }
+    disconnectedCallback() { clearInterval(this._tick); this._tick = null; }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
 
     _build() {
@@ -232,6 +285,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head${this._c.status_position === 'below' ? ' below' : ''}"><div class="title" id="wstitle"></div><div class="badge" id="wsbadge"></div></div>
         <div class="leak" id="wsleak"></div>
+        <div class="prog" id="wsprog"><div class="bar" id="wsbar"></div><div class="txt"><span id="wsptxt"></span><span id="wsprem"></span></div></div>
         <div class="body">${(this._c.model === 'generic' ? SVG_GENERIC : SVG_CULLIGAN)((this._c.name || this._t('name')).replace(/"/g, ''))}
           <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
         </div></ha-card>`;
@@ -286,6 +340,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const lcd = r.getElementById('wslcd');
       if (c.model === 'generic' && lcd.textContent.length > 7) { lcd.setAttribute('textLength', '28'); lcd.setAttribute('lengthAdjust', 'spacingAndGlyphs'); } else lcd.removeAttribute('textLength');
       // fuites : état texte d'une entité (ex. template) ; vert si l'état est dans la liste « normale », rouge sinon
+      this._progress(phase);
       const lk = r.getElementById('wsleak'), ls0 = this._st(c.entity_leak);
       lk.classList.toggle('on', !!ls0);
       if (ls0) {
@@ -365,6 +420,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ent('entity_hardness_in', ['sensor', 'input_number', 'number']), ent('entity_hardness_out', ['sensor', 'input_number', 'number']),
         ent('entity_leak', ['sensor', 'binary_sensor', 'input_text', 'input_select']), { name: 'leak_ok_states', selector: { text: {} } },
         { name: 'status_position', selector: { select: { mode: 'dropdown', options: ['right', 'below'] } } },
+        ent('entity_timer', 'timer'), ent('entity_backwash_timer', 'timer'), ent('entity_brine_timer', 'timer'), ent('entity_rinse_timer', 'timer'), ent('entity_refill_timer', 'timer'), bool('show_progress'),
         ent('entity_today', ['sensor', 'input_number', 'number']), ent('entity_regen_days', ['sensor', 'input_number', 'number']), ent('entity_last_regen', ['sensor', 'input_datetime']), ent('entity_cycle_volume', ['sensor', 'input_number', 'number']), ent('entity_salt_year', ['sensor', 'input_number', 'number']), ent('entity_power', ['sensor', 'input_number', 'number']),
         { name: 'salt_low', default: 20, selector: { number: { min: 0, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
         ...window.applianceActionFields,
