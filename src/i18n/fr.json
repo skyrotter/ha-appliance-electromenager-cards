@@ -1247,6 +1247,8 @@
     "entity_salt": "Niveau de sel",
     "entity_hardness_in": "Dureté entrée (eau brute)",
     "entity_hardness_out": "Dureté sortie (adoucie)",
+    "entity_leak": "État des fuites (texte)",
+    "leak_ok_states": "États normaux des fuites (séparés par des virgules, en vert)",
     "entity_regen_days": "Jours avant la prochaine régénération",
     "salt_low": "Alerte sel bas (%)",
     "show_capacity": "Afficher la capacité",

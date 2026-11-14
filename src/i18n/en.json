@@ -1257,6 +1257,8 @@
     "entity_salt": "Salt level",
     "entity_hardness_in": "Hardness in (raw water)",
     "entity_hardness_out": "Hardness out (softened)",
+    "entity_leak": "Leak status (text)",
+    "leak_ok_states": "Normal leak states (comma separated, shown in green)",
     "entity_regen_days": "Days to next regeneration",
     "salt_low": "Low salt alert (%)",
     "show_capacity": "Show capacity",

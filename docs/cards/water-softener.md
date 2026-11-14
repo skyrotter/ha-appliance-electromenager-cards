@@ -27,7 +27,10 @@ The phase comes from the state of `entity` (a sensor, select, switch or binary s
 | `entity_capacity` | remaining capacity (%) |
 | `entity_salt` | salt level: in **%**, the salt height in the tank follows it; in **kg / lb / g**, add the tank capacity (`entity_salt_max` or `salt_max`). Alert at or below `salt_low` (20 % of the tank) |
 | `entity_salt_max`, `salt_max` | maximum salt the brine tank holds, in the same unit as `entity_salt`: an entity (`sensor`, `input_number`, `number`) or a fixed value. With it, the salt height in the drawing is `salt / maximum` (96 kg out of 150 kg = 64 %) |
-| `entity_hardness_in`, `entity_hardness_out` | hardness before and after, shown as `32 → 2 °f` |
+| `entity_hardness_in`, `entity_hardness_out` | hardness before and after, shown as `32 → 2 °f`. Accept a `sensor`, an `input_number` or a `number` (so do the other numeric entities: flow, capacity, salt, today, regeneration days, cycle volume, salt per year, power) |
+| `entity_leak` | leak status as text (e.g. a template sensor): a pill under the phase, **green** when the state is a normal one, **red** otherwise (`unavailable` / `unknown` stay grey). Tap opens the entity |
+| `leak_ok_states` | normal states of `entity_leak`, comma separated (case-insensitive). Default: `off, ok, none, no, false, normal, aucune, pas de fuite, no leak, rejet égout, rejet egout, sewer discharge`. Example: `pas de fuite, rejet égout` |
+| `status_position` | `right` (default, phase badge at the top right) or `below` (phase under the name) |
 | `entity_today` | water softened today |
 | `entity_regen_days` | days before the next regeneration |
 | `entity_last_regen` | date of the last cycle (`sensor` with a date / timestamp, or `input_datetime`; plain text is shown as is) |
