@@ -13625,6 +13625,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_scop": "SCOP",
       "entity_session_energy": "Session energy",
       "entity_soc": "State of charge",
+      "entity_calibration": "Next calibration (date sensor)",
       "entity_source_in_temp": "Source inlet temperature",
       "entity_source_out_temp": "Source outlet temperature",
       "entity_source_pump": "Source pump",
@@ -13733,6 +13734,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_temperature": "Temperature tile",
       "show_temps": "Show temperatures",
       "show_time": "Show time",
+      "show_calibration": "Show next calibration",
       "show_voltage": "Show voltages",
       "show_water": "Show water temperature",
       "show_water_level": "Show water level",
@@ -16197,6 +16199,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "entity_scop": "SCOP",
       "entity_session_energy": "Énergie de la session",
       "entity_soc": "Niveau de charge",
+      "entity_calibration": "Prochaine calibration (capteur de date)",
       "entity_source_in_temp": "Température d'entrée source",
       "entity_source_out_temp": "Température de sortie source",
       "entity_source_pump": "Pompe de captage",
@@ -16305,6 +16308,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "show_temperature": "Tuile température",
       "show_temps": "Afficher les températures",
       "show_time": "Afficher le temps",
+      "show_calibration": "Afficher la prochaine calibration",
       "show_voltage": "Afficher les tensions",
       "show_water": "Afficher la température de l'eau",
       "show_water_level": "Afficher le niveau d'eau",
@@ -22408,6 +22412,7 @@ window.customCards = window.customCards || [];
 const I18N_BAT = {
   "en": {
     "name": "Solar battery",
+    "calibration": "Next calibration",
     "soc": "Charge",
     "power": "Power",
     "energy": "Energy",
@@ -22473,6 +22478,7 @@ const I18N_BAT = {
   },
   "fr": {
     "name": "Batterie solaire",
+    "calibration": "Prochaine calibration",
     "soc": "Charge",
     "power": "Puissance",
     "energy": "Énergie",
@@ -22608,7 +22614,7 @@ class ApplianceBatteryCard extends HTMLElement {
   static getStubConfig(hass) {
     // batterie domestique : niveau (device_class battery) et puissance dont le nom évoque une batterie
     const S = (hass && hass.states) || {}, ids = Object.keys(S).filter((i) => i.startsWith('sensor.') && /batter|storage|powerwall/i.test(i)), dc = (i) => (S[i].attributes || {}).device_class;
-    return { entity_soc: ids.find((i) => dc(i) === 'battery') || '', entity_power: ids.find((i) => dc(i) === 'power') || '', entity_energy: '', entity_temperature: '', capacity_kwh: 10, max_power: 5000 };
+    return { entity_soc: ids.find((i) => dc(i) === 'battery') || '', entity_power: ids.find((i) => dc(i) === 'power') || '', entity_energy: '', entity_temperature: '', entity_calibration: '', capacity_kwh: 10, max_power: 5000 };
   }
 
   static getConfigForm() {
@@ -22624,6 +22630,8 @@ class ApplianceBatteryCard extends HTMLElement {
         { name: 'invert_power', selector: { boolean: {} } },
         { name: 'entity_energy', selector: { entity: { domain: 'sensor', device_class: 'energy' } } },
         { name: 'entity_temperature', selector: { entity: { domain: 'sensor', device_class: 'temperature' } } },
+        // date de la prochaine calibration (ex. batteries Zendure) : capteur date/horodatage ou input_datetime
+        { name: 'entity_calibration', selector: { entity: { domain: ['sensor', 'input_datetime'] } } },
         { type: 'grid', name: '', schema: [
           { name: 'capacity_kwh', selector: { number: { min: 1, max: 100, step: 0.1, mode: 'box', unit_of_measurement: 'kWh' } } },
           { name: 'max_power', selector: { number: { min: 500, max: 20000, step: 100, mode: 'box', unit_of_measurement: 'W' } } },
@@ -22634,6 +22642,7 @@ class ApplianceBatteryCard extends HTMLElement {
           { name: 'show_energy', selector: { boolean: {} }, default: true },
           { name: 'show_temperature', selector: { boolean: {} }, default: true },
           { name: 'show_time', selector: { boolean: {} }, default: true },
+          { name: 'show_calibration', selector: { boolean: {} }, default: true },
         ] },
         window.applianceTempField,
         { name: 'layout', selector: { select: { mode: 'dropdown', options: ['default', 'split'] } } },
@@ -22648,7 +22657,7 @@ class ApplianceBatteryCard extends HTMLElement {
   setConfig(config) {
     if (window.applianceSize) window.applianceSize(this, config);
     // Convention : puissance > 0 = charge (inverser avec invert_power si ton capteur est l'inverse)
-    this._config = { show_power: true, show_energy: true, show_temperature: true, show_time: true,
+    this._config = { show_power: true, show_energy: true, show_temperature: true, show_time: true, show_calibration: true,
       capacity_kwh: 10, max_power: 5000, low_threshold: 15, invert_power: false, status_position: 'auto', layout: 'default', ...config };
     this._built = false; this._build();
   }
@@ -22761,6 +22770,17 @@ class ApplianceBatteryCard extends HTMLElement {
     const n = parseFloat(s.state); return Number.isFinite(n) ? n : null;
   }
 
+  // date d'une entité (sensor timestamp/date, input_datetime) formatée dans la langue de HA ; texte brut si non datable
+  _date(id) {
+    const st = this._hass && this._hass.states[id];
+    if (!st || ['unavailable', 'unknown', ''].includes(st.state)) return '—';
+    const d = new Date(/^\d{4}-\d{2}-\d{2}$/.test(st.state) ? `${st.state}T12:00:00` : st.state);
+    if (isNaN(d)) return st.state;
+    const opt = { day: 'numeric', month: 'short' };
+    if (d.getFullYear() !== new Date().getFullYear()) opt.year = 'numeric';
+    return d.toLocaleDateString(window.applianceLocale(this._config, this._hass), opt);
+  }
+
   _update() {
     if (!this._built || !this._hass) return;
     const c = this._config, r = this.shadowRoot;
@@ -22798,6 +22818,8 @@ class ApplianceBatteryCard extends HTMLElement {
     if (c.show_energy) it.push([this._l('energy'), f(energy !== null ? energy : (soc === null ? null : c.capacity_kwh * pct / 100), 1, 'kWh'), c.entity_energy || c.entity_soc]);
     if (c.show_temperature) it.push([this._l('temp'), f(temp, 0, tc.unit), c.entity_temperature]);
     if (time) it.push(['⏱', time, c.entity_soc]);
+    // prochaine calibration : date lue sur l'entité (ISO date / horodatage), sinon l'état tel quel
+    if (c.show_calibration && c.entity_calibration) it.push([this._l('calibration'), this._date(c.entity_calibration), c.entity_calibration]);
     r.getElementById('stats').innerHTML = it.map(([l, v, id]) => `<div class="stat"${window.applianceTileAttrs(id)}><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
     window.applianceLinkTiles(r.getElementById('stats'), this);
   }

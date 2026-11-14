@@ -480,6 +480,7 @@
   },
   "battery": {
     "name": "Solar battery",
+    "calibration": "Next calibration",
     "soc": "Charge",
     "power": "Power",
     "energy": "Energy",
@@ -860,6 +861,7 @@
     "entity_scop": "SCOP",
     "entity_session_energy": "Session energy",
     "entity_soc": "State of charge",
+    "entity_calibration": "Next calibration (date sensor)",
     "entity_source_in_temp": "Source inlet temperature",
     "entity_source_out_temp": "Source outlet temperature",
     "entity_source_pump": "Source pump",
@@ -968,6 +970,7 @@
     "show_temperature": "Temperature tile",
     "show_temps": "Show temperatures",
     "show_time": "Show time",
+    "show_calibration": "Show next calibration",
     "show_voltage": "Show voltages",
     "show_water": "Show water temperature",
     "show_water_level": "Show water level",
