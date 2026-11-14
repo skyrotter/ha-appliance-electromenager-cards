@@ -985,6 +985,7 @@
     "multicolor": "Guirlande multicolore",
     "show_brightness": "Afficher la luminosité",
     "labels": "Libellés perso des tuiles (clé : texte)",
+    "icons": "Icônes perso des tuiles (clé : mdi:icône)",
     "sun_entity": "Entité soleil (jour / nuit)",
     "shutter_color": "Couleur du volet",
     "show_slider": "Afficher les curseurs",

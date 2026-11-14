@@ -67,6 +67,8 @@
     { name: 'tile_order', selector: { select: { mode: 'dropdown', options: [
       { value: 'name', label: window.applianceEditorLabel('tile_order_name', hass) }, { value: 'value', label: window.applianceEditorLabel('tile_order_value', hass) }] } } },
   ];
+  // Icône perso d'une tuile : `icons: { clé: mdi:xxx }` (mêmes clés que `labels`), sinon l'icône par défaut de la carte
+  window.applianceIcon = (cfg, key, def) => { const v = cfg && cfg.icons && cfg.icons[key]; return typeof v === 'string' && /^[\w-]+:[\w-]+$/.test(v.trim()) ? v.trim() : def; };
   // Fiche d'une entité (more-info de Home Assistant)
   window.applianceMore = (el, id) => { if (id) el.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); };
   // Tuile cliquable : attributs à ajouter à une tuile liée à une entité (rien sans entité)

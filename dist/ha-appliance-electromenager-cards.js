@@ -13759,6 +13759,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "multicolor": "Multicolour lights",
       "show_brightness": "Show brightness",
       "labels": "Custom tile labels (key: text)",
+      "icons": "Custom tile icons (key: mdi:icon)",
       "sun_entity": "Sun entity (day / night)",
       "shutter_color": "Shutter colour",
       "show_slider": "Show sliders",
@@ -16333,6 +16334,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       "multicolor": "Guirlande multicolore",
       "show_brightness": "Afficher la luminosité",
       "labels": "Libellés perso des tuiles (clé : texte)",
+      "icons": "Icônes perso des tuiles (clé : mdi:icône)",
       "sun_entity": "Entité soleil (jour / nuit)",
       "shutter_color": "Couleur du volet",
       "show_slider": "Afficher les curseurs",
@@ -20840,6 +20842,8 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
     { name: 'tile_order', selector: { select: { mode: 'dropdown', options: [
       { value: 'name', label: window.applianceEditorLabel('tile_order_name', hass) }, { value: 'value', label: window.applianceEditorLabel('tile_order_value', hass) }] } } },
   ];
+  // Icône perso d'une tuile : `icons: { clé: mdi:xxx }` (mêmes clés que `labels`), sinon l'icône par défaut de la carte
+  window.applianceIcon = (cfg, key, def) => { const v = cfg && cfg.icons && cfg.icons[key]; return typeof v === 'string' && /^[\w-]+:[\w-]+$/.test(v.trim()) ? v.trim() : def; };
   // Fiche d'une entité (more-info de Home Assistant)
   window.applianceMore = (el, id) => { if (id) el.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); };
   // Tuile cliquable : attributs à ajouter à une tuile liée à une entité (rien sans entité)
@@ -42375,7 +42379,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         <div class="head"><div class="title" id="mbtitle"></div><div class="badge" id="mbbadge"></div></div>
         <div class="scene">${(this._boks() ? SVG_BOKS : SVG)(this._c.name || this._t('name'))}<div class="count" id="mbcount"></div></div>
         <div class="ctl" id="mbctl"><button id="mbcollect"><ha-icon icon="mdi:email-check-outline"></ha-icon><span></span></button><button id="mbopen"><ha-icon icon="mdi:door-open"></ha-icon><span></span></button></div>
-        ${[TILES.slice(0, 3), TILES.slice(3)].map((row, i) => `<div class="tiles" id="mbrow${i}">${row.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>`).join('')}
+        ${[TILES.slice(0, 3), TILES.slice(3)].map((row, i) => `<div class="tiles" id="mbrow${i}">${row.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${window.applianceIcon(this._c, k, ic)}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>`).join('')}
       </ha-card>`;
       window.applianceBindIllus(this, root.querySelector('.scene'), () => this._more(this._c.entity_mail || this._c.entity_parcel || this._c.entity_door));
       root.querySelector('#mbcollect').addEventListener('click', () => this._collect());
@@ -42427,15 +42431,18 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         door_back: [c.entity_door_back, this._doorTxt(c.entity_door_back, openedBack), ''],
         last_open: [this._ids(c.entity_last_open)[0], this._when(lastOpen), ''],
       };
-      TILES.forEach(([k, , opt]) => {
+      TILES.forEach(([k, defIcon, opt]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`); const [show, val, unit] = V[k];
         el.classList.toggle('hide', !show || c[opt] === false);
         el.classList.toggle('bad', k === 'battery' && (batV < 20 || batLow) || k === 'door_front' && opened || k === 'door_back' && openedBack);
         el.querySelector('.lbl').textContent = this._l(k);
+        // icône perso (option `icons`), sinon celle par défaut ; les portes gardent leur icône selon l'état
+        el.querySelector('ha-icon').setAttribute('icon', window.applianceIcon(c, k, defIcon));
         const small = document.createElement('small'); small.textContent = unit ?? '';
         el.querySelector('.v').replaceChildren(String(val ?? ''), small);
         // icône des portes selon l'état : porte ouverte / porte fermée
-        if (k === 'door_front' || k === 'door_back') {
+        // (sauf si l'utilisateur a choisi son icône dans `icons`)
+        if ((k === 'door_front' || k === 'door_back') && window.applianceIcon(c, k, '') === '') {
           const o = k === 'door_front' ? opened : openedBack;
           el.querySelector('ha-icon').setAttribute('icon', !this._ok(this._st(show)) ? 'mdi:door' : o ? 'mdi:door-open' : 'mdi:door-closed');
         }
@@ -42472,6 +42479,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         { name: 'box_model', selector: { select: { mode: 'dropdown', options: [{ value: 'standard', label: tr.model_standard || 'Standard' }, { value: 'boks', label: tr.model_boks || 'BOKS' }] } } },
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
+        { name: 'icons', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ...window.applianceTileFields(this._hass),
