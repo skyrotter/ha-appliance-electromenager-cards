@@ -79,6 +79,18 @@ labels:
 | Underfloor heating | `temp`, `target`, `floor`, `water`, `power`, `energy`, `cost` |
 | Lights (all 10) | `brightness`, `power`, `energy` |
 
+### Custom tile icons
+
+`icons` changes the icon of a tile, with the **same keys as `labels`**. Give the tile key and an icon (`mdi:…`); tiles you leave out keep their default icon. In the visual editor, the **Custom tile icons** field takes the same `key: icon` lines. Currently supported by the mailbox card (more cards to follow).
+
+```yaml
+type: custom:appliance-mailbox-card
+labels:
+  count: Parcels
+icons:
+  count: mdi:mailbox
+```
+
 ## Type-specific options
 
 | Option | Cards |

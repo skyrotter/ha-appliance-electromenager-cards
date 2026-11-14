@@ -995,6 +995,7 @@
     "multicolor": "Multicolour lights",
     "show_brightness": "Show brightness",
     "labels": "Custom tile labels (key: text)",
+    "icons": "Custom tile icons (key: mdi:icon)",
     "sun_entity": "Sun entity (day / night)",
     "shutter_color": "Shutter colour",
     "show_slider": "Show sliders",
