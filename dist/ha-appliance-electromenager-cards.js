@@ -10937,7 +10937,7 @@ class ApplianceCardBase extends HTMLElement {
           if (m.ink.some((i) => i.low) && m.status !== "unavailable") m.alerts.push("ink_low");
         }
         const msg = c.status_message ? S(c.status_message) : null, mt = msg ? String(msg.state).trim() : "";
-        if (mt && !BAD.includes(mt.toLowerCase()) && !/^(ok|ready|idle|waiting|sleep|none|no error|aucun|pr[eê]te?|normal)$/i.test(mt)) m.alerts.push(mt);
+        if (mt && !BAD.includes(mt.toLowerCase()) && !/^(ok|ready|idle|waiting|sleep|none|no error|aucun|pr[eê]te?|normal|(en )?espera|listo|lista|reposo|inactiv[oa]|ninguno|sin errores?|bereit|leerlauf|in attesa|pronto|inattiv[oa]|em espera|pronta)$/i.test(mt)) m.alerts.push(mt);
       }
     } else if (kind === "printer_3d") {
       const raw = main ? `${main.state}`.toLowerCase() : "";
@@ -14331,7 +14331,8 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .ink-row .ink-v { text-align: right; font-weight: 600; color: var(--primary-text-color); }
 .ink-bar { height: 8px; border-radius: 4px; background: rgba(127,127,127,.2); overflow: hidden; }
 .ink-fill { height: 100%; border-radius: 4px; background: var(--ink); transition: width .6s; }
-.ink-row.k { --ink: #4a4d52; } .ink-row.c { --ink: #00b4e6; } .ink-row.m { --ink: #e6007e; } .ink-row.y { --ink: #ffd400; }
+.ink-row.k { --ink: #0a0a0c; } .ink-row.c { --ink: #00b4e6; } .ink-row.m { --ink: #e6007e; } .ink-row.y { --ink: #ffd400; }
+.ink-row.k .ink-bar { box-sizing: border-box; border: 1px solid color-mix(in srgb, var(--primary-text-color, #fff) 45%, transparent); }
 .ink-row.low .ink-v { color: var(--error-color, #db4437); }
 .ink-row.low .ink-fill { animation: ink-low 1.2s ease-in-out infinite; }
 .no-anim .ink-row.low .ink-fill { animation: none; }

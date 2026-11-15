@@ -456,7 +456,7 @@ class ApplianceCardBase extends HTMLElement {
           if (m.ink.some((i) => i.low) && m.status !== "unavailable") m.alerts.push("ink_low");
         }
         const msg = c.status_message ? S(c.status_message) : null, mt = msg ? String(msg.state).trim() : "";
-        if (mt && !BAD.includes(mt.toLowerCase()) && !/^(ok|ready|idle|waiting|sleep|none|no error|aucun|pr[eê]te?|normal)$/i.test(mt)) m.alerts.push(mt);
+        if (mt && !BAD.includes(mt.toLowerCase()) && !/^(ok|ready|idle|waiting|sleep|none|no error|aucun|pr[eê]te?|normal|(en )?espera|listo|lista|reposo|inactiv[oa]|ninguno|sin errores?|bereit|leerlauf|in attesa|pronto|inattiv[oa]|em espera|pronta)$/i.test(mt)) m.alerts.push(mt);
       }
     } else if (kind === "printer_3d") {
       const raw = main ? `${main.state}`.toLowerCase() : "";
