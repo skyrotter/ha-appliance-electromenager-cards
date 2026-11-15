@@ -810,6 +810,7 @@
     "water_hot": "Eau trop chaude"
   },
   "editor": {
+    "index_unit": "Unité de la tuile Index (auto = unité du capteur)",
     "title_size": "Taille du titre (px, 14 par défaut)",
     "title_bold": "Titre en gras",
     "presets": "Couleurs de la palette (liste de couleurs RVB)",

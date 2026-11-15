@@ -813,6 +813,7 @@
     "water_hot": "Water too hot"
   },
   "editor": {
+    "index_unit": "Unit of the Index tile (auto = sensor unit)",
     "title_size": "Title size (px, default 14)",
     "title_bold": "Bold title",
     "presets": "Colour presets (list of RGB colours)",

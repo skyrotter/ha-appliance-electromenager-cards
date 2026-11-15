@@ -813,6 +813,7 @@
     "water_hot": "Água demasiado quente"
   },
   "editor": {
+    "index_unit": "Unidade do bloco Índice (auto = unidade do sensor)",
     "title_size": "Tamanho do título (px, predefinido 14)",
     "title_bold": "Título a negrito",
     "presets": "Cores da paleta (lista de cores RGB)",

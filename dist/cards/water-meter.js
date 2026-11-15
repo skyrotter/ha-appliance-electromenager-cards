@@ -633,13 +633,16 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       const today = this._liters(c.entity_today, 'L'), cost = this._num(c.entity_cost);
       const [tv0, tu] = this._vol(today), td = c.today_decimals === '' || c.today_decimals == null ? NaN : Number(c.today_decimals);
       const tv = isNaN(td) || isNaN(today) ? tv0 : this._fmt(tu === 'm³' ? today / 1000 : today, td);
-      const idd = c.index_decimals === '' || c.index_decimals == null ? 3 : Number(c.index_decimals);
+      // tuile Index : unité du capteur (auto : litres si le capteur est en litres, sinon m³), ou index_unit: L / m³
+      const iu = String(c.index_unit || 'auto').toLowerCase(), srcU = this._unit(c.entity_index, 'm³').toLowerCase();
+      const useL = iu === 'l' || (iu === 'auto' && /^(l|litre|litres|liter|liters)$/.test(srcU));
+      const idd = c.index_decimals === '' || c.index_decimals == null ? (useL ? 0 : 3) : Number(c.index_decimals);
       // pression : unité du capteur, sans conversion ; 0 décimale pour psi/kPa/hPa/mbar/mmHg/Pa, sinon 2
       const pU = this._unit(c.entity_pressure, 'bar'), pD = /^(psi|kpa|hpa|mbar|mmhg|pa)$/i.test(pU) ? 0 : 2;
       const V = {
         flow: [c.entity_flow || c.entity_index, isNaN(flow) ? '--' : this._fmt(flow, 1), 'L/min'],
         today: [c.entity_today, tv, tu],
-        index: [c.entity_index, this._fmt(idx / 1000, idd), 'm³'],
+        index: [c.entity_index, this._fmt(useL ? idx : idx / 1000, idd), useL ? 'L' : 'm³'],
         cost: [c.entity_cost, this._fmt(cost, 2), this._unit(c.entity_cost, '€')],
         temperature: [c.entity_temperature, this._fmt(tempRaw, 1), this._unit(c.entity_temperature, '°C')],
         pressure: [c.entity_pressure, this._fmt(this._num(c.entity_pressure), pD), pU],
@@ -685,6 +688,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         ent('entity_temperature', 'sensor', { device_class: 'temperature' }), ent('entity_pressure', 'sensor', { device_class: 'pressure' }),
         ent('entity_leak', ['binary_sensor', 'input_boolean'], { multiple: true }), ent('entity_valve', ['valve', 'switch', 'input_boolean']),
         { name: 'hot_water', selector: { boolean: {} }, default: false },
+        { name: 'index_unit', default: 'auto', selector: { select: { mode: 'dropdown', options: [{ value: 'auto', label: 'Auto' }, { value: 'L', label: 'L' }, { value: 'm³', label: 'm³' }] } } },
         { name: 'dial_decimals', selector: { number: { min: 0, max: 2, step: 1, mode: 'box' } } },
         { type: 'grid', name: '', schema: [{ name: 'today_decimals', selector: { number: { min: 0, max: 3, step: 1, mode: 'box' } } }, { name: 'index_decimals', selector: { number: { min: 0, max: 3, step: 1, mode: 'box' } } }] },
         { type: 'grid', name: '', schema: [num('leak_minutes', 0, 1440, 5, 60, 'min'), num('flow_threshold', 0, 5, 0.01, 0.05, 'L/min'), num('freeze_threshold', -10, 15, 0.5, 3, '°C')] },
