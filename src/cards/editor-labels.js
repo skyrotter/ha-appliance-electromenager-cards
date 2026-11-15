@@ -24,6 +24,10 @@
     // tile_order : « name » (nom au-dessus) ou « value » (valeur au-dessus) → attribut tile-order sur la carte ; absent = ordre historique de la carte
     if (cfg && (cfg.tile_order === 'name' || cfg.tile_order === 'value')) el.setAttribute('tile-order', cfg.tile_order);
     else el.removeAttribute('tile-order');
+    // title_size : taille du titre des cartes de base en px (défaut 14, comme les cartes récentes) ; title_bold : titre en gras
+    const ts = Number(cfg && cfg.title_size);
+    if (ts >= 8 && ts <= 40) el.style.setProperty('--ac-title-size', `${ts}px`); else el.style.removeProperty('--ac-title-size');
+    if (cfg && cfg.title_bold === true) el.style.setProperty('--ac-title-weight', '600'); else el.style.removeProperty('--ac-title-weight');
     // vertical_align: center → contenu des cartes de base centré verticalement dans une case plus haute (sinon calé en haut)
     el.toggleAttribute('valign-center', !!cfg && cfg.vertical_align === 'center');
     // title_layout: stacked → ancienne disposition des cartes de base (titre puis état, empilés) ; par défaut titre à gauche et état à droite

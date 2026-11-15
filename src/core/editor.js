@@ -134,6 +134,8 @@ function buildForm(kind) {
           { name: "illustration_size", selector: { number: { min: 30, max: 300, step: 5, mode: "slider", unit_of_measurement: "%" } } },
           { name: "transparent", selector: { boolean: {} } },
           { name: "vertical_align", selector: { select: { mode: "dropdown", options: [{ value: "top", label: tr(null, "valign_top") }, { value: "center", label: tr(null, "valign_center") }] } } },
+          { name: "title_size", selector: { number: { min: 10, max: 28, step: 1, mode: "box", unit_of_measurement: "px" } } },
+          { name: "title_bold", selector: { boolean: {} } },
           { name: "title_layout", selector: { select: { mode: "dropdown", options: [{ value: "inline", label: tr(null, "header_inline") }, { value: "stacked", label: tr(null, "header_stacked") }] } } },
           ...window.applianceTileFields(),
           { name: "animations", selector: { boolean: {} }, default: true },

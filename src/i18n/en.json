@@ -813,6 +813,8 @@
     "water_hot": "Water too hot"
   },
   "editor": {
+    "title_size": "Title size (px, default 14)",
+    "title_bold": "Bold title",
     "presets": "Colour presets (list of RGB colours)",
     "image_background": "Dark background behind the photo",
     "surface": "Installation (floor or wall)",
