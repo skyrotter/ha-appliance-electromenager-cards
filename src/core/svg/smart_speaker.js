@@ -67,7 +67,7 @@ SPK_IMG.echo_flex = "data:image/svg+xml;utf8," + encodeURIComponent(`<svg xmlns=
 <circle cx="98" cy="127" r="5.2" fill="none" stroke="#6b737c" stroke-width="1.8"/><path d="M90 119l16 16" stroke="#6b737c" stroke-width="1.8" stroke-linecap="round"/>
 <rect x="64" y="166" width="68" height="4.5" rx="2.2" fill="#b3b9c1"/><rect x="64" y="177" width="68" height="4.5" rx="2.2" fill="#b3b9c1"/>
 </svg>`);
-// w, h : taille de la photo ; led : anneau [cx, cy, rx, ry, rotation] ; bar : barre lumineuse [x, y, largeur, hauteur] (Echo Flex) ; scr : coins de l'écran TL, TR, BR, BL ;
+// w, h : taille de la photo ; tube : tube lumineux d'une lampe [x, y, largeur, hauteur, rayon] ; led : anneau [cx, cy, rx, ry, rotation] ; bar : barre lumineuse [x, y, largeur, hauteur] (Echo Flex) ; scr : coins de l'écran TL, TR, BR, BL ;
 // circ : écran rond [cx, cy, rx, ry] ; dots : points Google [x0, x1, y, r] ; sled : voyant Sonos [cx, cy] ; bass : 1 enceinte, 2 caisson
 const SPK_GEO = {
   echo_pop: { w: 266, h: 257, led: [133, 10.3, 69, 12.9, -20] },
@@ -101,7 +101,7 @@ const SPK_GEO = {
   sonos_play_5: { w: 280, h: 171, bass: 1 },
   // IKEA SYMFONISK : cadre (reflet qui balaie le panneau : sweep = coins TL, TR, BR, BL), lampe (lueur chaude : led), étagère (voyant : sled)
   symfonisk_frame: { w: 190, h: 285, sweep: [[24.1, 2.2], [187.1, 15.3], [161.5, 281.3], [2.2, 249.9]], bass: 1 },
-  symfonisk_lamp: { w: 160, h: 304, led: [77.3, 84.4, 38.6, 80.1, 0], bass: 1 },
+  symfonisk_lamp: { w: 160, h: 304, led: [77.3, 84.4, 38.6, 80.1, 0], tube: [40.8, 2.1, 73.0, 165.9, 5.7], bass: 1 },
   symfonisk_bookshelf: { w: 220, h: 275, sled: [50.8, 247.1], bass: 1 },
   // Devialet Phantom et HomePod : une photo par couleur (clé modèle__couleur, option finish) ; top : halo Siri [cx, cy, rx, ry]
   devialet_phantom__white: { w: 242, h: 216, bass: 1 },
@@ -196,7 +196,12 @@ ${g.scr ? eq(TL, TR, BL, 0.83, 0.92, 5, 0.026) : eq(TL, TR, BL, 0.43, 0.8, 3, 0.
   if (g.led) {
     const [lx, ly, rx, ry, rot] = g.led;
     defs += `<radialGradient id="ID-led"><stop offset="0" stop-color="#bdf0ff"/><stop offset=".55" style="stop-color:var(--sp-led)"/><stop offset="1" style="stop-color:var(--sp-led)" stop-opacity="0"/></radialGradient>`;
-    over += `<ellipse class="sp-led" cx="${lx}" cy="${ly}" rx="${rx}" ry="${ry}" fill="url(#ID-led)" transform="rotate(${rot} ${lx} ${ly})"/>`;
+    over += `<g class="sp-lum"><ellipse class="sp-led" cx="${lx}" cy="${ly}" rx="${rx}" ry="${ry}" fill="url(#ID-led)" transform="rotate(${rot} ${lx} ${ly})"/></g>`;
+  }
+  if (g.tube) {
+    // lampe éteinte (entité light) : le tube lumineux s'assombrit
+    const [tx, ty, tw, th, tr] = g.tube;
+    over += `<rect class="sp-lamp-off" x="${tx}" y="${ty}" width="${tw}" height="${th}" rx="${tr}"/>`;
   }
   if (g.bar) {
     const [bx0, by0, bw0, bh0] = g.bar;

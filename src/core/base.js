@@ -1142,6 +1142,12 @@ class ApplianceCardBase extends HTMLElement {
     // illustration dynamic parts
     if (kind === "av_receiver") $("wrap").style.setProperty("--amp", (m.amp ?? .6).toFixed(2));
     if (kind === "smart_speaker") $("wrap").style.setProperty("--amp", (m.amp ?? .5).toFixed(2));
+    // enceinte avec lampe (SYMFONISK) : entité light facultative, l'abat-jour suit son état et sa luminosité (sans entité : toujours allumé)
+    if (kind === "smart_speaker") {
+      const lt = c.light ? hass.states[c.light] : undefined;
+      if (lt && !["unavailable", "unknown"].includes(String(lt.state))) $("wrap").style.setProperty("--lum", (isOn(lt) ? Math.max(.25, lt.attributes && lt.attributes.brightness != null ? Number(lt.attributes.brightness) / 255 : 1) : 0).toFixed(2));
+      else $("wrap").style.removeProperty("--lum");
+    }
     // dosing_pump : color = couleur du boîtier (n'importe quelle couleur CSS), pour repérer chaque produit (pH+, fer, potassium…)
     if (kind === "dosing_pump") { if (c.color) $("wrap").style.setProperty("--dp-color", String(c.color)); else $("wrap").style.removeProperty("--dp-color"); }
     if (kind === "beer_tap") $("wrap").style.setProperty("--keg", ((m.keg ?? 70) / 100).toFixed(2));

@@ -77,3 +77,7 @@
 @keyframes sb-up { 0% { opacity: 0; transform: translateY(2px); } 30% { opacity: .85; } 100% { opacity: 0; transform: translateY(-9px); } }
 .k-smart_speaker.st-playing .sb-up.px path { animation-name: sb-upx; }
 @keyframes sb-upx { 0% { opacity: 0; transform: translateY(6px); } 30% { opacity: .85; } 100% { opacity: 0; transform: translateY(-32px); } }
+
+/* lampe SYMFONISK : l'abat-jour suit l'entité light (option light) ; sans entité, toujours allumé */
+.sp-lum { opacity: var(--lum, 1); transition: opacity .5s; }
+.sp-lamp-off { fill: #3b3a40; opacity: calc((1 - var(--lum, 1)) * .88); transition: opacity .5s; pointer-events: none; }
