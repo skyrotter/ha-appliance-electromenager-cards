@@ -252,6 +252,7 @@ Click a card for its options and examples.
 | [Raspberry Pi 4 (CPU, temperature, RAM, disk, network, undervoltage)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/raspberry-pi.md) | `custom:appliance-raspberry-pi-card` |
 | [Water filter (under-sink, 1 to 3 cartridges)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/water-filter.md) | `custom:appliance-water-filter-card` |
 | [Zigbee coordinator (SMLIGHT SLZB-06, Zigbee2MQTT)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/zigbee-coordinator.md) | `custom:appliance-zigbee-coordinator-card` |
+| [Wall tablet (kiosk screen: on / off / slideshow, reload the page, restart the PC)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/wall-tablet.md) | `custom:appliance-wall-tablet-card` |
 | [Cat flap (microchip, pets in / out)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/cat-flap.md) | `custom:appliance-cat-flap-card` |
 | [Pet water fountain](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/pet-fountain.md) | `custom:appliance-pet-fountain-card` |
 | [Generic appliance (your own image)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/generic.md) | `custom:appliance-generic-card` |
