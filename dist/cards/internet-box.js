@@ -205,6 +205,30 @@
       "wifi_6": "Wi-Fi 6 GHz",
       "wifi_guest": "Wi-Fi za goste",
       "wifi_iot": "IoT Wi-Fi"
+    },
+    "uk": {
+      "name": "Інтернет-роутер",
+      "online": "У мережі",
+      "offline": "Не в мережі",
+      "unavailable": "Недоступно",
+      "download": "Завантаження",
+      "upload": "Вивантаження",
+      "devices": "Пристрої",
+      "wifi": "Wi-Fi",
+      "on": "Увімк.",
+      "off": "Вимк.",
+      "reboot": "Перезапустити",
+      "reboot_confirm": "Перезапустити роутер? Інтернет-з'єднання зникне на кілька хвилин.",
+      "ping": "Пінг",
+      "wan_ip": "WAN IP",
+      "uptime": "Час роботи",
+      "cpu": "ЦП",
+      "memory": "Пам'ять",
+      "wifi_24": "Wi-Fi 2,4 ГГц",
+      "wifi_5": "Wi-Fi 5 ГГц",
+      "wifi_6": "Wi-Fi 6 ГГц",
+      "wifi_guest": "Гостьовий Wi-Fi",
+      "wifi_iot": "Wi-Fi для IoT"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));

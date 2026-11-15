@@ -20,7 +20,7 @@
   const LANGUAGE_NAMES = {
     en: 'English', fr: 'Français', de: 'Deutsch', es: 'Español', it: 'Italiano',
     cs: 'Čeština', da: 'Dansk', hu: 'Magyar', nb: 'Norsk bokmål', nl: 'Nederlands',
-    pl: 'Polski', ro: 'Română', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)',
+    pl: 'Polski', ro: 'Română', ru: 'Русский', uk: 'Українська', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)',
     'pt-PT': 'Português (Portugal)', 'pt-BR': 'Português (Brasil)',
   };
   window.applianceLanguageField = (T) => ({

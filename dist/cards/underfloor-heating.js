@@ -338,6 +338,27 @@
       "wall": "Zid",
       "wall_hot": "Zid je previše topao",
       "water_hot": "Voda je previše topla"
+    },
+    "uk": {
+      "name": "Тепла підлога",
+      "off": "Вимк.",
+      "heating": "Нагрівання",
+      "idle": "Очікування",
+      "fault": "Несправність",
+      "temp": "Кімната",
+      "target": "Ціль",
+      "floor": "Підлога",
+      "water": "Подача",
+      "power": "Потужність",
+      "energy": "Енергія",
+      "cost": "Вартість",
+      "turn_on": "Увімкнути",
+      "turn_off": "Вимкнути",
+      "floor_hot": "Підлога надто гаряча",
+      "name_wall": "Тепла стіна",
+      "wall": "Стіна",
+      "wall_hot": "Стіна надто гаряча",
+      "water_hot": "Вода надто гаряча"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr

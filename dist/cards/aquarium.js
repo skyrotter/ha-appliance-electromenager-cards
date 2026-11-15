@@ -162,6 +162,15 @@ const I18N_AQUARIUM = {
     "name": "Akvarijum",
     "alert": "Temperatura je van opsega",
     "unavailable": "Nedostupno"
+  },
+  "uk": {
+    "power": "Потужність",
+    "energy": "Енергія",
+    "temp": "Вода",
+    "cost": "Вартість",
+    "name": "Акваріум",
+    "alert": "Температура поза межами норми",
+    "unavailable": "Недоступно"
   }
 };
 // Home Assistant language, used when `language` option is not explicitly set

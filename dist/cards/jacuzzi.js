@@ -314,6 +314,24 @@
       "lowph": "pH prenizak",
       "highph": "pH previsok",
       "hot": "Voda prevruća"
+    },
+    "uk": {
+      "name": "Джакузі",
+      "off": "Вимк.",
+      "standby": "Режим очікування",
+      "filtering": "Фільтрація",
+      "heating": "Нагрівання",
+      "jets": "Форсунки",
+      "alarm": "Несправність",
+      "power": "Електрика",
+      "energy": "Ел. енергія",
+      "temp": "Вода",
+      "target": "Ціль",
+      "ph": "pH",
+      "cost": "Вартість",
+      "lowph": "pH занадто низький",
+      "highph": "pH занадто високий",
+      "hot": "Вода надто гаряча"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr

@@ -264,6 +264,29 @@
       "style_svg": "Crtež (SVG)",
       "style_smartmi": "Smartmi Evaporative Humidifier 2 (fotografija)",
       "target_tile": "Ciljna"
+    },
+    "uk": {
+      "name": "Зволожувач",
+      "off": "Вимк.",
+      "humidifying": "Зволоження",
+      "target": "Ціль досягнуто",
+      "dry": "Режим осушення",
+      "clean": "Очищення",
+      "unavailable": "Недоступно",
+      "low_water": "Мало води",
+      "low_water_alert": "Бак для води майже порожній",
+      "turn_on": "Увімкнути",
+      "turn_off": "Вимкнути",
+      "humidity": "Вологість",
+      "temperature": "Температура",
+      "tank": "Бак для води",
+      "fan": "Вентилятор",
+      "mode": "Режим",
+      "low": "Низький",
+      "ok": "ОК",
+      "style_svg": "Малюнок (SVG)",
+      "style_smartmi": "Smartmi Evaporative Humidifier 2 (фото)",
+      "target_tile": "Ціль"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));

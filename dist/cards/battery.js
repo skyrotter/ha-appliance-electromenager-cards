@@ -234,6 +234,20 @@ const I18N_BAT = {
     "full": "Puna za",
     "empty": "Prazna za",
     "low": "Baterija je niska"
+  },
+  "uk": {
+    "name": "Сонячний акумулятор",
+    "calibration": "Наступне калібрування",
+    "soc": "Заряд",
+    "power": "Потужність",
+    "energy": "Енергія",
+    "temp": "Температура",
+    "charging": "Заряджається",
+    "discharging": "Розряджається",
+    "idle": "Очікування",
+    "full": "Повний через",
+    "empty": "Порожній через",
+    "low": "Низький заряд"
   }
 };
 // Home Assistant language, used when `language` option is not explicitly set

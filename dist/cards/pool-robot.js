@@ -437,6 +437,31 @@
       "energy": "Energija",
       "filter_full": "Filter zahteva čišćenje",
       "low_water": "Nizak nivo vode"
+    },
+    "uk": {
+      "name": "Басейновий робот",
+      "cleaning": "Прибирання",
+      "paused": "На паузі",
+      "returning": "Підіймається",
+      "idle": "Очікування",
+      "error": "Помилка",
+      "unavailable": "Недоступно",
+      "start": "Старт",
+      "pause": "Пауза",
+      "dock": "Підняти",
+      "turn_on": "Увімкнути",
+      "turn_off": "Вимкнути",
+      "status": "Стан",
+      "filter": "Фільтр",
+      "water_level": "Рівень води",
+      "water_temp": "Вода",
+      "time": "Залишилось",
+      "battery": "Акумулятор",
+      "mode": "Режим",
+      "power": "Потужність",
+      "energy": "Енергія",
+      "filter_full": "Фільтр потрібно очистити",
+      "low_water": "Низький рівень води"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr

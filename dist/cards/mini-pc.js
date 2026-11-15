@@ -426,6 +426,34 @@
       "disk_full": "Disk je skoro pun",
       "ram_full": "Memorija je puna",
       "d": "d"
+    },
+    "uk": {
+      "name": "Міні-ПК",
+      "off": "Вимк.",
+      "idle": "Очікування",
+      "running": "Працює",
+      "busy": "Зайнятий",
+      "hot": "Перегрів",
+      "unavailable": "Недоступно",
+      "cpu": "ЦП",
+      "temp": "Темп. ЦП",
+      "ram": "ОЗП",
+      "disk": "Диск",
+      "down": "Завантаження",
+      "up": "Вивантаження",
+      "uptime": "Час роботи",
+      "model_minisforum_x1": "Minisforum X1 (міні-ПК)",
+      "model_mac_mini": "Mac mini",
+      "model_lenovo_m720s": "Lenovo ThinkCentre M720s SFF",
+      "model_lenovo_m920q": "Lenovo ThinkCentre M920q Tiny",
+      "model_bmax_b9": "BMAX B9 Max (міні-ПК)",
+      "model_home_assistant_green": "Home Assistant Green",
+      "power": "Потужність",
+      "energy": "Енергія",
+      "overheating": "Перегрів",
+      "disk_full": "Диск майже повний",
+      "ram_full": "Пам'ять переповнена",
+      "d": "д"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));

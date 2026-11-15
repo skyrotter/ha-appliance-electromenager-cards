@@ -346,6 +346,26 @@
       "lowp": "Nizak pritisak",
       "highp": "Visok pritisak",
       "hotf": "Polaz prevruć"
+    },
+    "uk": {
+      "name": "Газовий котел",
+      "off": "Вимк.",
+      "standby": "Режим очікування",
+      "heating": "Нагрівання",
+      "dhw": "Гаряча вода",
+      "alarm": "Несправність",
+      "power": "Електрика",
+      "energy": "Ел. енергія",
+      "gas": "Газ",
+      "cost": "Вартість",
+      "flow": "Подача",
+      "ret": "Зворот",
+      "pressure": "Тиск",
+      "mod": "Модуляція",
+      "delta": "ΔT",
+      "lowp": "Низький тиск",
+      "highp": "Високий тиск",
+      "hotf": "Подача надто гаряча"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr

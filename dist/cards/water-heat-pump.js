@@ -381,6 +381,28 @@
       "heat_energy": "Toplotna energija",
       "scop": "SCOP",
       "buffer": "Bufer rezervoar"
+    },
+    "uk": {
+      "name": "Тепловий насос вода-вода",
+      "off": "Вимк.",
+      "standby": "Режим очікування",
+      "heating": "Нагрівання",
+      "dhw": "Гаряча вода",
+      "cooling": "Охолодження",
+      "alarm": "Несправність",
+      "power": "Електрика",
+      "heat": "Теплова потужність",
+      "cop": "COP",
+      "flow": "Подача",
+      "ret": "Зворот",
+      "delta": "ΔT",
+      "src_in": "Джерело, вхід",
+      "src_out": "Джерело, вихід",
+      "rate": "Витрата",
+      "energy": "Ел. енергія",
+      "heat_energy": "Теплова енергія",
+      "scop": "SCOP",
+      "buffer": "Буферна ємність"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr

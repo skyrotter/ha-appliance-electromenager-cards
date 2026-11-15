@@ -215,6 +215,32 @@
       "v_remote": "Daljinski",
       "v_unknown": "Nepoznato",
       "v_none": "Ništa"
+    },
+    "uk": {
+      "name": "Годівниця для тварин",
+      "ready": "Готово",
+      "feeding": "Годування",
+      "error": "Помилка",
+      "unavailable": "Недоступно",
+      "feed": "Нагодувати",
+      "led": "LED-індикатор",
+      "child_lock": "Захист від дітей",
+      "portions": "Порції",
+      "weight": "Вага",
+      "serving": "Порція",
+      "source": "Останнє годування",
+      "mode": "Режим",
+      "level": "Бункер",
+      "autonomy": "Автономність",
+      "refill": "Поповнити",
+      "low_food": "Корм закінчується",
+      "days_short": "дн.",
+      "portions_unit": "порцій",
+      "v_schedule": "За розкладом",
+      "v_manual": "Вручну",
+      "v_remote": "Віддалено",
+      "v_unknown": "Невідомо",
+      "v_none": "Немає"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));

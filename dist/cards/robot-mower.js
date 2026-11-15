@@ -350,6 +350,26 @@ const I18N_MOW = {
     "paused": "Pauzirano",
     "idle": "U stanju mirovanja",
     "error": "Greška"
+  },
+  "uk": {
+    "name": "Робот-газонокосарка",
+    "battery": "Акумулятор",
+    "area": "Площа",
+    "time": "Кошення",
+    "next": "Наступний запуск",
+    "status": "Стан",
+    "blade": "Ніж",
+    "rain": "Дощ",
+    "start": "Косити",
+    "pause": "Пауза",
+    "dock": "На базу",
+    "mowing": "Кошення",
+    "docked": "На базі",
+    "charging": "Заряджається",
+    "returning": "Повертається",
+    "paused": "На паузі",
+    "idle": "Очікування",
+    "error": "Помилка"
   }
 };
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré

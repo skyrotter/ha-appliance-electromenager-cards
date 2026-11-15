@@ -393,6 +393,38 @@
       "hot": "Voda je prevruća",
       "alarm_alert": "Kvar {e}",
       "alarm_short": "Kvar: proverite đakuzi"
+    },
+    "uk": {
+      "name": "Надувне спа",
+      "off": "Вимк.",
+      "standby": "Режим очікування",
+      "filtering": "Фільтрація",
+      "heating": "Нагрівання",
+      "bubbles": "Бульбашки",
+      "jets": "Форсунки",
+      "alarm": "Несправність",
+      "unavailable": "Недоступно",
+      "temp": "Вода",
+      "target": "Ціль",
+      "power": "Електрика",
+      "energy": "Ел. енергія",
+      "cost": "Вартість",
+      "ph": "pH",
+      "chlorine": "Хлор",
+      "timer": "Таймер",
+      "cover": "Накриття",
+      "cover_closed": "Зачинено",
+      "cover_open": "Відчинено",
+      "btn_heater": "Нагрівач",
+      "btn_filter": "Фільтр",
+      "btn_bubbles": "Бульбашки",
+      "btn_jets": "Форсунки",
+      "btn_light": "Світло",
+      "lowph": "pH занадто низький",
+      "highph": "pH занадто високий",
+      "hot": "Вода надто гаряча",
+      "alarm_alert": "Несправність {e}",
+      "alarm_short": "Несправність: перевірте спа"
     }
   };
   const NO_ERR = /^(|0|none|no|ok|off|false|normal|no_error|aucune?|kein|unknown|unavailable)$/i;

@@ -307,6 +307,24 @@
       "cost": "Trošak",
       "variant_classic": "Klasični (žuti membranski gasomer)",
       "variant_modern": "Moderni (sivi gasomer, žuta cev)"
+    },
+    "uk": {
+      "name": "Лічильник газу",
+      "idle": "Немає потоку",
+      "flowing": "Газ тече",
+      "leak": "Витік газу",
+      "valve_closed": "Кран зачинено",
+      "unavailable": "Недоступно",
+      "leak_detected": "Датчик виявив газ",
+      "leak_detected_by": "Газ виявлено: {n}",
+      "open_valve": "Відкрити кран",
+      "close_valve": "Закрити кран",
+      "flow": "Витрата",
+      "today": "Сьогодні",
+      "index": "Показання",
+      "cost": "Вартість",
+      "variant_classic": "Класичний (жовтий мембранний лічильник)",
+      "variant_modern": "Сучасний (сірий лічильник, жовта труба)"
     }
   };
   const asList = (v) => (Array.isArray(v) ? v : v ? [v] : []); // entity_leak : string ou array → array

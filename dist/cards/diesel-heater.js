@@ -313,6 +313,24 @@
       "flue": "Izduv",
       "lowfuel": "Malo dizela",
       "hotflue": "Izduv prevruć"
+    },
+    "uk": {
+      "name": "Дизельний обігрівач",
+      "off": "Вимк.",
+      "standby": "Режим очікування",
+      "ignition": "Розпалювання",
+      "heating": "Нагрівання",
+      "cooldown": "Продування вентилятором",
+      "alarm": "Несправність",
+      "power": "Електрика",
+      "energy": "Ел. енергія",
+      "fuel": "Дизель",
+      "used": "Витрачено",
+      "cost": "Вартість",
+      "temp": "Кімната",
+      "flue": "Димохід",
+      "lowfuel": "Мало дизеля",
+      "hotflue": "Димохід надто гарячий"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr

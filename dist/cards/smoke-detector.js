@@ -536,6 +536,37 @@
       "level": "Nivo gasa",
       "open_valve": "Otvori ventil",
       "close_valve": "Zatvori ventil"
+    },
+    "uk": {
+      "name": "Димовий датчик",
+      "ok": "ОК",
+      "alarm": "Дим!",
+      "co": "Чадний газ",
+      "test": "Тест",
+      "fault": "Несправність",
+      "low_battery": "Низький заряд",
+      "unavailable": "Недоступно",
+      "alarm_at": "Дим виявлено о {t}",
+      "co_ppm": "Чадний газ: {n} ppm, провітріть!",
+      "co_detected": "Виявлено чадний газ, провітріть!",
+      "co_detected_short": "Виявлено",
+      "fault_detail": "Датчик повідомляє про несправність",
+      "test_button": "Тест",
+      "silence": "Вимкнути сигнал",
+      "since": "Остання зміна",
+      "alarm_tile": "Тривога",
+      "co_level": "CO",
+      "battery": "Акумулятор",
+      "temperature": "Температура",
+      "low": "Низький",
+      "model_cylinder": "Компактний циліндр",
+      "model_round": "Круглий",
+      "gas_name": "Датчик газу",
+      "gas_alarm": "Газ!",
+      "gas_alarm_at": "Газ виявлено о {t}",
+      "level": "Рівень газу",
+      "open_valve": "Відкрити кран",
+      "close_valve": "Закрити кран"
     }
   };
 

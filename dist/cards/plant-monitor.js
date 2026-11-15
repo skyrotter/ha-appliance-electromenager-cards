@@ -231,6 +231,26 @@
       "style_sensor": "Senzor (SVG)",
       "style_plant_photo": "Biljka (fotografija)",
       "style_sensor_photo": "Senzor (fotografija)"
+    },
+    "uk": {
+      "name": "Датчик рослини",
+      "ok": "Здорова",
+      "dry": "Потрібна вода",
+      "cold": "Занадто холодно",
+      "dark": "Мало світла",
+      "hungry": "Потрібне добриво",
+      "low_battery": "Низький заряд",
+      "unavailable": "Недоступно",
+      "moisture": "Вологість ґрунту",
+      "temperature": "Температура",
+      "conductivity": "Родючість",
+      "brightness": "Світло",
+      "battery": "Акумулятор",
+      "rssi": "Сигнал",
+      "style_plant": "Рослина (SVG)",
+      "style_sensor": "Датчик (SVG)",
+      "style_plant_photo": "Рослина (фото)",
+      "style_sensor_photo": "Датчик (фото)"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));

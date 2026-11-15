@@ -341,6 +341,27 @@
       "beeper": "Zujalica",
       "overload": "Preopterećenje",
       "replace_battery": "Zamenite bateriju"
+    },
+    "uk": {
+      "name": "ДБЖ",
+      "online": "Від мережі",
+      "charging": "Заряджається",
+      "on_battery": "Від акумулятора",
+      "low_battery": "Низький заряд",
+      "offline": "Вимк.",
+      "unavailable": "Недоступно",
+      "charge": "Акумулятор",
+      "runtime": "Час роботи",
+      "load": "Навантаження",
+      "power": "Потужність",
+      "input": "Вхід",
+      "output": "Вихід",
+      "energy": "Енергія",
+      "battery_voltage": "Напруга акумулятора",
+      "nominal_power": "Номінальна потужність",
+      "beeper": "Зумер",
+      "overload": "Перевантаження",
+      "replace_battery": "Замініть акумулятор"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr

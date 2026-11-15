@@ -229,6 +229,37 @@
       "fan_medium": "Srednje",
       "fan_high": "Visoko",
       "fan_auto": "Automatski"
+    },
+    "uk": {
+      "name": "Мобільний кондиціонер",
+      "off": "Вимк.",
+      "cooling": "Охолодження",
+      "dry": "Осушення",
+      "fan": "Вентилятор",
+      "heating": "Нагрівання",
+      "idle": "Ціль досягнуто",
+      "unavailable": "Недоступно",
+      "lcd_cooling": "ХОЛОД",
+      "lcd_dry": "ОСУШ.",
+      "lcd_fan": "ВЕНТ.",
+      "lcd_heating": "ТЕПЛО",
+      "lcd_idle": "ГОТОВО",
+      "tank_full": "Бак для води повний: спорожніть його",
+      "temperature": "Температура",
+      "target": "Ціль",
+      "fan_label": "Вентилятор",
+      "timer": "Таймер",
+      "tank": "Бак",
+      "power": "Потужність",
+      "full": "Повний",
+      "ok": "ОК",
+      "temp_down": "Знизити",
+      "temp_up": "Підвищити",
+      "mode": "Режим",
+      "fan_low": "Низька",
+      "fan_medium": "Середня",
+      "fan_high": "Висока",
+      "fan_auto": "Авто"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));

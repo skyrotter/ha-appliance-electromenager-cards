@@ -122,6 +122,20 @@
       "energy": "Energija",
       "volume": "Zapremina",
       "room": "Prostorija"
+    },
+    "uk": {
+      "name": "Лічильник тепла",
+      "idle": "Немає нагрівання",
+      "heating": "Нагрівання",
+      "unavailable": "Недоступно",
+      "supply": "Подача (Tv)",
+      "return": "Зворот (Tr)",
+      "delta": "ΔT",
+      "power": "Потужність",
+      "flow": "Витрата",
+      "energy": "Енергія",
+      "volume": "Об'єм",
+      "room": "Кімната"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr

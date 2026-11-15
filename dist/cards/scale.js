@@ -451,6 +451,32 @@
       "normal": "Normalno",
       "over": "Prekomerno",
       "obese": "Gojaznost"
+    },
+    "uk": {
+      "name": "Розумні ваги",
+      "weight": "Вага",
+      "fat": "Жир у тілі",
+      "fat_mass": "Жирова маса",
+      "muscle": "М'язи",
+      "bone": "Кістки",
+      "water": "Вода",
+      "visceral": "Вісцеральний жир",
+      "pulse": "Пульс",
+      "goal": "Ціль",
+      "battery": "Акумулятор",
+      "bmi": "ІМТ",
+      "goal_reached": "Ціль досягнуто",
+      "last": "Зважування",
+      "just_now": "щойно",
+      "min_ago": "{n} хв тому",
+      "h_ago": "{n} год тому",
+      "d_ago": "{n} дн. тому",
+      "unavailable": "Недоступно",
+      "trend": "{n} дн.",
+      "under": "Недостатня",
+      "normal": "Норма",
+      "over": "Надмірна",
+      "obese": "Ожиріння"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));

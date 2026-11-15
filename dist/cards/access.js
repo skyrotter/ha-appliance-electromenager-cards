@@ -380,6 +380,28 @@
       "btn_close": "Zatvori",
       "btn_command": "Komanda",
       "btn_pedestrian": "Pešački"
+    },
+    "uk": {
+      "barrier": "Шлагбаум",
+      "sliding_gate": "Відкатні ворота",
+      "swing_gate": "Розпашні ворота",
+      "garage_door": "Гаражні ворота",
+      "open": "Відчинено",
+      "closed": "Зачинено",
+      "opening": "Відчиняється",
+      "closing": "Зачиняється",
+      "partial": "Частково відчинено",
+      "unavailable": "Недоступно",
+      "position": "Положення",
+      "power": "Двигун",
+      "energy": "Енергія",
+      "cost": "Вартість",
+      "since": "Остання зміна",
+      "btn_open": "Відчинити",
+      "btn_stop": "Стоп",
+      "btn_close": "Зачинити",
+      "btn_command": "Команда",
+      "btn_pedestrian": "Хвіртка"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
