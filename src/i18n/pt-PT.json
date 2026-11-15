@@ -813,6 +813,7 @@
     "water_hot": "Água demasiado quente"
   },
   "editor": {
+    "image_background": "Fundo escuro atrás da foto",
     "color_palette": "Paleta de cores (RGB + brancos)",
     "tiles_right": "Valores numa coluna à direita",
     "tiles_order": "Ordem dos blocos (lista de chaves)",

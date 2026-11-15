@@ -7,6 +7,7 @@
   if (window.applianceEditorLabel) return;
   const L = {
     "en": {
+      "image_background": "Dark background behind the photo",
       "surface": "Installation (floor or wall)",
       "food_low": "Low hopper alert (%)",
       "hopper_capacity": "Hopper capacity (g)",
@@ -2679,6 +2680,7 @@
       "show_backup": "Mostrar apoyos y caldera"
     },
     "fr": {
+      "image_background": "Fond sombre derrière la photo",
       "surface": "Installation (sol ou mur)",
       "food_low": "Alerte réserve basse (%)",
       "hopper_capacity": "Capacité du bac (g)",
@@ -5523,6 +5525,7 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "pt-BR": {
+      "image_background": "Fundo escuro atrás da foto",
       "color_palette": "Paleta de cores (RGB + brancos)",
       "tiles_right": "Valores numa coluna à direita",
       "tiles_order": "Ordem dos blocos (lista de chaves)",
@@ -6153,6 +6156,7 @@
       "show_backup": "Mostrar apoios e caldeira"
     },
     "pt-PT": {
+      "image_background": "Fundo escuro atrás da foto",
       "color_palette": "Paleta de cores (RGB + brancos)",
       "tiles_right": "Valores numa coluna à direita",
       "tiles_order": "Ordem dos blocos (lista de chaves)",
@@ -8753,6 +8757,7 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "uk": {
+      "image_background": "Темне тло за фото",
       "color_palette": "Палітра кольорів (RGB + білі)",
       "surface": "Встановлення (підлога або стіна)",
       "food_low": "Тривога про мало корму в бункері (%)",
