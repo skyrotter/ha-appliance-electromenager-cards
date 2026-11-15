@@ -30,7 +30,7 @@ The phase comes from the state of `entity` (a sensor, select, switch or binary s
 | `entity_hardness_in`, `entity_hardness_out` | hardness before and after, shown as `32 → 2 °f`. Accept a `sensor`, an `input_number` or a `number` (so do the other numeric entities: flow, capacity, salt, today, regeneration days, cycle volume, salt per year, power) |
 | `entity_leak` | leak status as text (e.g. a template sensor): a pill under the phase, **green** when the state is a normal one, **red** otherwise (`unavailable` / `unknown` stay grey). Tap opens the entity |
 | `leak_ok_states` | normal states of `entity_leak`, comma separated (case-insensitive). Default: `off, ok, none, no, false, normal, aucune, pas de fuite, no leak, rejet égout, rejet egout, sewer discharge`. Example: `pas de fuite, rejet égout` |
-| `tiles_order` | order of the value tiles: a list of keys (`flow`, `capacity`, `salt`, `hardness`, `today`, `regen`, `last_regen`, `cycle_volume`, `salt_year`, `power`), e.g. `[salt, capacity, flow]`; the others follow in the default order |
+| `tiles_order` | order of the value tiles: a list of keys (`flow`, `capacity`, `salt`, `hardness`, `today`, `regen`, `last_regen`, `cycle_volume`, `salt_year`, `power`), e.g. `[salt, capacity, flow]`; the others follow in the default order. In the visual editor field, type only the list (one `- key` per line), not `tiles_order:` again |
 | `labels` | rename a tile or a text, e.g. `labels: {salt: Stock sel restant}` (keys = the tile keys above) |
 | `tiles_right` | `true`: title, status and drawing on the left, the value tiles in one column on the right from the top of the card (more compact). Default `false` |
 | `status_position` | `right` (default, phase badge at the top right) or `below` (phase under the name) |

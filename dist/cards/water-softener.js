@@ -742,6 +742,14 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
 
+    // ordre des tuiles : liste de clés ; tolère aussi « a, b, c » et la liste collée avec sa clé tiles_order: dans le champ de l'éditeur
+    _order() {
+      let o = this._c && this._c.tiles_order;
+      if (o && !Array.isArray(o) && typeof o === 'object') o = o.tiles_order;
+      if (typeof o === 'string') o = o.split(/[,\s]+/);
+      return Array.isArray(o) ? o.map((x) => String(x).trim()) : [];
+    }
+
     _compute() {
       const c = this._c, e = this._st(c.entity);
       const flow = this._num(c.entity_flow), salt = this._num(c.entity_salt);
@@ -826,7 +834,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         el.classList.toggle('bad', k === 'salt' && low);
         el.querySelector('.lbl').textContent = this._l(k);
         // tiles_order : liste de clés de tuiles (ex. [salt, capacity, flow]) ; les autres suivent dans l'ordre d'origine
-        const oi = Array.isArray(c.tiles_order) ? c.tiles_order.indexOf(k) : -1;
+        const oi = this._order().indexOf(k);
         el.style.order = String(oi >= 0 ? oi : 100 + TILES.findIndex((t) => t[0] === k));
         const small = document.createElement('small'); small.textContent = unit ?? '';
         el.querySelector('.v').replaceChildren(String(val ?? ''), small);
