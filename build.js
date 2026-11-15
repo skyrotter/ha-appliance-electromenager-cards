@@ -122,6 +122,7 @@ for (const ns of Object.keys(i18n.en).filter((ns) => !usedI18n.has(ns))) warn(`e
 
 /* ---- main file: header + core + the loader for the card chunks ---- */
 const [first, second, ...rest] = chunkNames; // card-helpers, editor-labels, then the 56 lazy cards
+const VERSION_STR = /const VERSION = "([^"]+)"/.exec(load("core/version.js"))[1];
 const loader = `
 /* Lazy-loaded card chunks (dist/cards/*.js, fetched by HACS like any other
  * file in dist/). card-helpers and editor-labels define the window.appliance*
@@ -131,7 +132,8 @@ const loader = `
  * need it), which is how HACS/Lovelace load it. */
 (async () => {
   const base = import.meta.url;
-  const chunk = (name) => import(new URL(\`cards/\${name}.js\`, base).href);
+  // ?v=<version> : après une mise à jour, le navigateur ne ressert pas d'anciens morceaux depuis son cache
+  const chunk = (name) => import(new URL(\`cards/\${name}.js?v=${VERSION_STR}\`, base).href);
   await chunk(${JSON.stringify(first)});
   await chunk(${JSON.stringify(second)});
   // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre
