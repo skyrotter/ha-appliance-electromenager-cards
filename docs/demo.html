@@ -74,8 +74,10 @@ customElements.define('ha-icon', class extends HTMLElement {
   }
 });
 </script>
-<script src="../dist/ha-appliance-electromenager-cards.js"></script>
+<!-- le fichier principal est un module : il charge ses cartes en parallèle puis émet « appliance-cards-ready » ; la page attend cet événement -->
+<script type="module" src="../dist/ha-appliance-electromenager-cards.js"></script>
 <script>
+window.addEventListener('appliance-cards-ready', () => {
 const W = { unit_of_measurement: 'W', device_class: 'power' };
 const T = { unit_of_measurement: '°C', device_class: 'temperature' };
 const KWH = { unit_of_measurement: 'kWh', device_class: 'energy' };
@@ -1461,6 +1463,7 @@ seg('anim', (v) => { animations = v === '1'; buildAll(); });
 buildAll();
 const ver = window.customCards ? `${window.customCards.length} cartes chargées` : 'erreur de chargement';
 document.getElementById('ver').textContent += ` · ${ver}`;
+});
 </script>
 </body>
 </html>
