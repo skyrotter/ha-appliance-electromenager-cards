@@ -7,6 +7,7 @@
   if (window.applianceEditorLabel) return;
   const L = {
     "en": {
+      "index_unit": "Unit of the Index tile (auto = sensor unit)",
       "title_size": "Title size (px, default 14)",
       "title_bold": "Bold title",
       "presets": "Colour presets (list of RGB colours)",
@@ -2683,6 +2684,7 @@
       "show_backup": "Mostrar apoyos y caldera"
     },
     "fr": {
+      "index_unit": "Unité de la tuile Index (auto = unité du capteur)",
       "title_size": "Taille du titre (px, 14 par défaut)",
       "title_bold": "Titre en gras",
       "presets": "Couleurs de la palette (liste de couleurs RVB)",
@@ -5531,6 +5533,7 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "pt-BR": {
+      "index_unit": "Unidade do bloco Índice (auto = unidade do sensor)",
       "title_size": "Tamanho do título (px, padrão 14)",
       "title_bold": "Título em negrito",
       "presets": "Cores da paleta (lista de cores RGB)",
@@ -6165,6 +6168,7 @@
       "show_backup": "Mostrar apoios e caldeira"
     },
     "pt-PT": {
+      "index_unit": "Unidade do bloco Índice (auto = unidade do sensor)",
       "title_size": "Tamanho do título (px, predefinido 14)",
       "title_bold": "Título a negrito",
       "presets": "Cores da paleta (lista de cores RGB)",
@@ -8769,6 +8773,7 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "uk": {
+      "index_unit": "Одиниця плитки «Показання» (auto = одиниця датчика)",
       "title_size": "Розмір назви (px, типово 14)",
       "title_bold": "Напівжирна назва",
       "presets": "Кольори палітри (список кольорів RGB)",
