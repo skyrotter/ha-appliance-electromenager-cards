@@ -51,6 +51,10 @@ const DEF = {
   air_compressor: { accent: "active", threshold: 20,
     fields: ["entity", "power", "energy", "cost", "pressure", "usage_time", "runtime_total", "switch"],
     keys: ["compresseur", "kompressor", "air_compressor", "compressor", "compresor"] },
+  // gril de contact / presse à panini (ex. Tefal Inicio Grill) sur prise connectée : chauffe au-dessus de threshold, prêt après preheat_minutes
+  contact_grill: { accent: "heat", threshold: 50,
+    fields: ["entity", "power", "energy", "cost", "switch"],
+    keys: ["gril", "grill", "panini", "croque", "contact_grill", "tefal", "inicio"] },
   wet_vacuum: { accent: "cold", threshold: 3,
     fields: ["entity", "power", "energy", "cost", "battery_level", "clean_water", "dirty_water", "mode", "switch"],
     keys: ["aspirateur_laveur", "aspirateur_lavant", "nettoyeur_sol", "wet_vacuum", "wet_dry", "floor_washer", "floor_one", "tineco", "laveur"] },
