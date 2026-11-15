@@ -23,11 +23,11 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--cm-ok:var(--appli
 .idle .badge,.running .badge{background:color-mix(in srgb,var(--cm-ok) 20%,transparent);color:var(--cm-ok)}
 .motion .badge,.person .badge,.animal .badge,.vehicle .badge,.busy .badge,.disk_low .badge{background:color-mix(in srgb,var(--dc) 24%,transparent);color:var(--dc)}
 ha-card.motion,ha-card.person,ha-card.animal,ha-card.vehicle,ha-card.disk_low{box-shadow:0 0 0 1px color-mix(in srgb,var(--dc) 60%,transparent),0 0 18px color-mix(in srgb,var(--dc) 25%,transparent)}
-.stage{position:relative;margin:4px auto 0;max-width:calc(260px * var(--illus-scale,1));min-height:150px;padding:16px 0;box-sizing:border-box;border-radius:14px;background:radial-gradient(ellipse at 50% 55%,#252c36,#14181e 78%);overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .6s}
-.nvr .stage{max-width:calc(380px * var(--illus-scale,1));min-height:100px;padding:12px 0}
+.stage{position:relative;margin:4px auto 0;max-width:calc(260px * var(--illus-scale,1));min-height:calc(150px * var(--illus-scale,1));padding:16px 0;box-sizing:border-box;border-radius:14px;background:radial-gradient(ellipse at 50% 55%,#252c36,#14181e 78%);overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .6s}
+.nvr .stage{max-width:calc(380px * var(--illus-scale,1));min-height:calc(100px * var(--illus-scale,1));padding:12px 0}
 .night .stage{background:radial-gradient(ellipse at 50% 55%,#1d2a52,#0a0f24 78%)}
 .ph{position:relative;display:flex;max-width:76%}.nvr .ph{max-width:88%}
-.stage img{display:block;max-width:100%;max-height:118px;object-fit:contain;transition:filter .6s;filter:drop-shadow(0 6px 8px rgba(0,0,0,.45))}
+.stage img{display:block;max-width:100%;max-height:calc(118px * var(--illus-scale,1));object-fit:contain;transition:filter .6s;filter:drop-shadow(0 6px 8px rgba(0,0,0,.45))}
 .nvr .stage img{max-height:96px}
 .night .stage img{filter:brightness(.78) saturate(.8) drop-shadow(0 6px 8px rgba(0,0,0,.45))}
 .off .stage img,.unavailable .stage img{filter:grayscale(1) brightness(.6)}
