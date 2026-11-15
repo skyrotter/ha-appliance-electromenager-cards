@@ -1209,7 +1209,7 @@ const SCEN = [
       range(ctl, 'Puissance', 'sensor.generic_power', 0, 120, 1, 28, 'W', W);
       set('sensor.generic_energy', 0.6, KWH);
     } },
-  ...[['sonos_play_1', 'Sonos Play:1'], ['sonos_play_3', 'Sonos Play:3'], ['sonos_play_5', 'Sonos Play:5']].map(([model, title]) => ({
+  ...[['symfonisk_frame', 'IKEA SYMFONISK cadre'], ['symfonisk_lamp', 'IKEA SYMFONISK lampe'], ['symfonisk_bookshelf', 'IKEA SYMFONISK étagère'], ['sonos_play_1', 'Sonos Play:1'], ['sonos_play_3', 'Sonos Play:3'], ['sonos_play_5', 'Sonos Play:5']].map(([model, title]) => ({
     kind: 'smart-speaker', title: `Enceinte ${title}`,
     cfg: { name: title, entity: `media_player.demo_${model}`, model, power: `sensor.demo_${model}_power`, energy: `sensor.demo_${model}_energy` },
     build(ctl) {

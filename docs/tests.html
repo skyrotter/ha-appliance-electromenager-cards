@@ -375,7 +375,9 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  let c=card('water-meter',{entity_index:'sensor.i',entity_flow:'sensor.f',entity_today:'sensor.t'},[mk('sensor.i',412.537,L('m³')),mk('sensor.f',0.57,L('m³/h')),mk('sensor.t',212,L('L'))]);
  ok('water flowing, m³/h -> L/min, odometer',/flowing/.test(wm(c).className)&&wb(c)==='9,5 L/min'&&[...c.sr.querySelectorAll('.wm-d')].map(e=>e.textContent).join('')==='00412'&&[...c.sr.querySelectorAll('.wm-l')].map(e=>e.textContent).join('')==='537',wm(c).className+' '+wb(c));
  c=card('water-meter',{entity_index:'sensor.i',entity_flow:'sensor.f'},[mk('sensor.i',412537,L('L')),mk('sensor.f',0,L('L/min'))]);
- ok('water idle, index in litres',/idle/.test(wm(c).className)&&/Pas de consommation/.test(wb(c))&&/412,537/.test(c.sr.querySelector('.tiles').textContent),wm(c).className+' '+c.sr.querySelector('.tiles').textContent);
+ ok('water idle, index in litres (tile in the sensor unit)',/idle/.test(wm(c).className)&&/Pas de consommation/.test(wb(c))&&/412[\s\u202f\u00a0]537L/.test(c.sr.querySelector('.tiles').textContent),wm(c).className+' '+c.sr.querySelector('.tiles').textContent);
+ c=card('water-meter',{entity_index:'sensor.i',index_unit:'m³'},[mk('sensor.i',412537,L('L'))]);
+ ok('water index_unit m³ forces m³ for a litre sensor',/412,537m³/.test(c.sr.querySelector('.tiles').textContent),c.sr.querySelector('.tiles').textContent);
  c=card('water-meter',{entity_index:'sensor.i',entity_leak:'binary_sensor.l'},[mk('sensor.i',12,L('m³')),mk('binary_sensor.l','on')]);
  ok('water leak sensor',/leak/.test(wm(c).className)&&/Fuite détectée/.test(c.sr.getElementById('wmalert').textContent),wm(c).className);
  c=card('water-meter',{entity_flow:'sensor.f',leak_minutes:0.0001},[mk('sensor.f',0.4,L('L/min'))]); c.el._flowSince=Date.now()-60000; c.el.hass=hassOf([mk('sensor.f',0.4,L('L/min'))]);

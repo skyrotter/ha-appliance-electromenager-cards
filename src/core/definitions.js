@@ -57,7 +57,7 @@ const DEF = {
     keys: ["ampli", "amplificateur", "home_cinema", "homecinema", "avr", "receiver", "denon", "yamaha", "onkyo", "marantz", "pioneer"] },
   smart_speaker: { accent: "active", threshold: 3,
     fields: ["entity", "power", "energy", "cost", "switch"],
-    keys: ["enceinte", "speaker", "echo", "alexa", "nest", "google_home", "home_mini", "sonos", "homepod"] },
+    keys: ["enceinte", "speaker", "echo", "alexa", "nest", "google_home", "home_mini", "sonos", "symfonisk", "homepod"] },
   tv: { accent: "active", threshold: 25,
     fields: ["entity", "power", "energy", "cost", "usage_time", "lamp_hours", "picture_mode", "temperature", "switch"],
     keys: ["tv", "tele", "television", "televiseur", "bravia", "webos", "android_tv", "tizen", "salon_tv", "projecteur", "videoprojecteur", "projector", "beamer"] },

@@ -3,6 +3,7 @@
 .spk { --sp-wave: #2bb6f9; --sp-led: #1aa7ff; }
 .spk-nest { --sp-wave: #8ab4f8; }
 .spk-sonos { --sp-wave: #e8e8e8; }
+.spk-symfonisk { --sp-wave: #f1e6cf; --sp-led: #ffcf70; }
 .spk-devialet { --sp-wave: #e6dcc8; }
 .spk-apple { --sp-wave: #c58af9; }
 /* photo : grisée éteinte / en veille, atténuée en pause */
