@@ -120,6 +120,8 @@
     "canister_vacuum": "Canister vacuum",
     "direction": "Airflow",
     "f_direction": "Airflow direction",
+    "vx_supply": "Supply",
+    "vx_extract": "Extract",
     "hob": "Cooktop",
     "radiator": "Electric radiator",
     "comfort": "Comfort",

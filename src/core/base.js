@@ -546,7 +546,7 @@ class ApplianceCardBase extends HTMLElement {
         const ds = String(dr.state).toLowerCase(), at = dr.attributes || {}, dst = Number(at.dstate), spd = Number(at.speed);
         m.vxDir = /bef|supply|intake|zuluft|souffl|insuff/.test(ds) || (!/elsz|extract|exhaust|abluft|evac/.test(ds) && dst === 2) ? "supply"
           : /elsz|extract|exhaust|abluft|evac|aspir/.test(ds) || dst === 1 ? "extract" : null;
-        m.vxState = stateText(hass, dr);
+        m.vxState = m.vxDir ? tr(hass, m.vxDir === "supply" ? "vx_supply" : "vx_extract") : stateText(hass, dr);
         if (m.vxDir && Number.isFinite(spd) && spd > 0) { m.vxSpeed = Math.max(1, Math.min(3, Math.round(spd))); m.status = m.vxSpeed >= 3 ? "speed2" : "speed1"; }
         else if (!m.vxDir) m.status = "off";
       } else if (m.status === "speed1" || m.status === "speed2") { m.vxSpeed = m.status === "speed2" ? 3 : 1; }
