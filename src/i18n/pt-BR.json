@@ -813,6 +813,7 @@
     "water_hot": "Água muito quente"
   },
   "editor": {
+    "color_palette": "Paleta de cores (RGB + brancos)",
     "tiles_right": "Valores numa coluna à direita",
     "tiles_order": "Ordem dos blocos (lista de chaves)",
     "dial_decimals": "Casas decimais nas rodas dos litros do mostrador",
@@ -1443,6 +1444,9 @@
     "show_backup": "Mostrar apoios e caldeira"
   },
   "light": {
+    "white_warm": "Branco quente",
+    "white_neutral": "Branco neutro",
+    "white_cold": "Branco frio",
     "light_bulb": "Lâmpada",
     "color_bulb": "Lâmpada de cor",
     "filament_bulb": "Lâmpada de filamento",

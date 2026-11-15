@@ -11,6 +11,9 @@
 
   const T = {
     "en": {
+      "white_warm": "Warm white",
+      "white_neutral": "Neutral white",
+      "white_cold": "Cold white",
       "light_bulb": "Bulb",
       "color_bulb": "Colour bulb",
       "filament_bulb": "Filament bulb",
@@ -127,6 +130,9 @@
       "ceiling_spot": "Focos empotrados"
     },
     "fr": {
+      "white_warm": "Blanc chaud",
+      "white_neutral": "Blanc neutre",
+      "white_cold": "Blanc froid",
       "light_bulb": "Ampoule",
       "color_bulb": "Ampoule couleur",
       "filament_bulb": "Ampoule à filament",
@@ -262,6 +268,9 @@
       "ceiling_spot": "Oprawy wpuszczane"
     },
     "pt-BR": {
+      "white_warm": "Branco quente",
+      "white_neutral": "Branco neutro",
+      "white_cold": "Branco frio",
       "light_bulb": "Lâmpada",
       "color_bulb": "Lâmpada de cor",
       "filament_bulb": "Lâmpada de filamento",
@@ -287,6 +296,9 @@
       "slider_right": "Direita"
     },
     "pt-PT": {
+      "white_warm": "Branco quente",
+      "white_neutral": "Branco neutro",
+      "white_cold": "Branco frio",
       "light_bulb": "Lâmpada",
       "color_bulb": "Lâmpada de cor",
       "filament_bulb": "Lâmpada de filamento",
@@ -400,6 +412,9 @@
       "ceiling_spot": "Ugradni spotovi"
     },
     "uk": {
+      "white_warm": "Теплий білий",
+      "white_neutral": "Нейтральний білий",
+      "white_cold": "Холодний білий",
       "light_bulb": "Лампочка",
       "color_bulb": "Кольорова лампочка",
       "filament_bulb": "Філаментна лампочка",
@@ -445,6 +460,11 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--lc:#ffb347;--b:1;
 svg{display:block;width:100%;height:auto;overflow:visible}
 .ctl{display:flex;justify-content:center;gap:6px;margin-top:8px}
 .ctl.hide,.ctl button.hide{display:none}
+/* palette de couleurs (option color_palette) : teintes RGB et blancs chaud / neutre / froid, un clic = allume avec cette couleur */
+.pal{display:none;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:8px}.pal.on{display:flex}
+.pal button{width:24px;height:24px;padding:0;border-radius:50%;border:2px solid color-mix(in srgb,var(--primary-text-color) 22%,transparent);cursor:pointer;background:var(--sw);transition:transform .15s}
+.pal button:hover{transform:scale(1.15)}.pal button.sel{border-color:var(--primary-text-color)}
+.pal .sep{width:1px;background:color-mix(in srgb,var(--primary-text-color) 22%,transparent);margin:2px 0}
 .ctl button{flex:1 1 0;max-width:110px;display:flex;align-items:center;justify-content:center;gap:4px;border:0;border-radius:10px;padding:6px 4px;cursor:pointer;
   background:var(--secondary-background-color);color:var(--primary-text-color);font:500 12px/16px var(--paper-font-body1_-_font-family,Roboto,sans-serif);transition:background .3s,color .3s}
 .ctl button.sel{background:var(--lt-ok);color:#2a2112}
@@ -702,6 +722,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     ceiling_spot: { color: '#ffd9a0', re: /spot|encastr|downlight|recessed|plafond|ceiling/i, icon: 'mdi:light-recessed' },
   };
   // couleurs proposées par le bouton « Couleur » de l'ampoule couleur
+  const modesOf = (a) => (Array.isArray(a.supported_color_modes) ? a.supported_color_modes : []);
   const PRESETS = [[255, 122, 217], [64, 156, 255], [52, 211, 153], [255, 196, 70], [255, 82, 82], [167, 114, 255]];
 
   // température de blanc (K) → couleur affichable
@@ -754,6 +775,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
           ${color ? '<button data-a="color"><ha-icon icon="mdi:palette"></ha-icon><span></span></button>' : ''}
           <button data-a="off"><ha-icon icon="mdi:lightbulb-off-outline"></ha-icon><span></span></button>
         </div>
+        <div class="pal" id="ltpal"></div>
         <div class="tiles">${[['brightness', 'mdi:brightness-6'], ['power', 'mdi:flash'], ['energy', 'mdi:lightning-bolt-circle']].map(([k, ic]) =>
           `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
@@ -774,6 +796,12 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       ['pointerup', 'pointerleave', 'pointercancel'].forEach((t) => stage.addEventListener(t, stop));
       stage.addEventListener('contextmenu', (ev) => { if (this._c.hold_action) ev.preventDefault(); });
       root.querySelectorAll('.ctl button').forEach((b) => b.addEventListener('click', () => this._action(b.dataset.a)));
+      root.getElementById('ltpal').addEventListener('click', (e) => {
+        const b = e.target.closest('button[data-sw]'); if (!b || !this._hass || !this._c.entity) return;
+        const [kind, v] = b.dataset.sw.split(':'), data = { entity_id: this._c.entity };
+        if (kind === 'k') data.color_temp_kelvin = Number(v); else data.rgb_color = v.split(',').map(Number);
+        this._hass.callService('light', 'turn_on', data);
+      });
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
         const k = el.dataset.k; this._more(k === 'brightness' ? this._c.entity : this._c[`entity_${k}`]);
       }));
@@ -878,6 +906,20 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         if (k === 'color') b.classList.toggle('hide', d !== 'light');
       });
 
+      // palette de couleurs (option color_palette) : seulement pour une entité light qui gère la couleur ou le blanc réglable
+      const pal = r.getElementById('ltpal');
+      const rgbOk = modesOf(a).some((m) => ['hs', 'xy', 'rgb', 'rgbw', 'rgbww'].includes(m)), ctOk = modesOf(a).some((m) => ['color_temp', 'rgbw', 'rgbww'].includes(m)) || a.min_color_temp_kelvin != null;
+      const showPal = c.color_palette === true && d === 'light' && st !== 'unavailable' && (rgbOk || ctOk);
+      pal.classList.toggle('on', showPal);
+      if (showPal) {
+        const list = Array.isArray(c.presets) && c.presets.length ? c.presets : PRESETS;
+        const lo = Number(a.min_color_temp_kelvin) || 2000, hi = Number(a.max_color_temp_kelvin) || 6500;
+        const WHITES = [[Math.max(lo, 2700), 'warm', 'rgb(255,167,87)'], [Math.min(Math.max(lo, 4000), hi), 'neutral', 'rgb(255,228,206)'], [Math.min(hi, 6500), 'cold', 'rgb(206,224,255)']];
+        const html = (ctOk ? WHITES.map(([k, n, col]) => `<button type="button" style="--sw:${col}" data-sw="k:${k}" title="${esc(this._l('white_' + n))}" aria-label="${esc(this._l('white_' + n))}"></button>`).join('') : '')
+          + (ctOk && rgbOk ? '<span class="sep"></span>' : '')
+          + (rgbOk ? list.map((rgb) => `<button type="button" style="--sw:rgb(${rgb.join(',')})" data-sw="c:${rgb.join(',')}" aria-label="rgb(${rgb.join(',')})"></button>`).join('') : '');
+        if (pal.dataset.h !== html) { pal.innerHTML = html; pal.dataset.h = html; }
+      }
       const energy = this._num(c.entity_energy);
       // curseur : option brightness_slider (par défaut sur les spots encastrés), entité light réglable en intensité
       const modes = Array.isArray(a.supported_color_modes) ? a.supported_color_modes : [];
@@ -942,6 +984,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'color', selector: { color_rgb: {} } },
         { type: 'grid', name: '', schema: [
           bool('follow_light_color'),
+          bool('color_palette', false),
           bool('brightness_slider', this.kind === 'ceiling_spot'),
           ...(this.kind === 'color_bulb' ? [bool('color_cycle', false)] : []),
           ...(this.kind === 'christmas_tree' ? [bool('multicolor')] : []),

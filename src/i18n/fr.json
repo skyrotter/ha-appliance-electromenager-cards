@@ -1001,6 +1001,7 @@
     "source_threshold": "Seuil de la pompe de captage (W)",
     "status_position": "Position de l'état",
     "tiles_right": "Valeurs en colonne à droite",
+    "color_palette": "Palette de couleurs (RVB + blancs)",
     "tiles_order": "Ordre des tuiles (liste de clés)",
     "dial_decimals": "Décimales sur les roues des litres du cadran",
     "title_layout": "Titre et état",
@@ -1436,6 +1437,9 @@
     "show_backup": "Afficher les appoints et la chaudière"
   },
   "light": {
+    "white_warm": "Blanc chaud",
+    "white_neutral": "Blanc neutre",
+    "white_cold": "Blanc froid",
     "light_bulb": "Ampoule",
     "color_bulb": "Ampoule couleur",
     "filament_bulb": "Ampoule à filament",
