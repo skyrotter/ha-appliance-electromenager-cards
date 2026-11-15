@@ -3,6 +3,7 @@
 .spk { --sp-wave: #2bb6f9; --sp-led: #1aa7ff; }
 .spk-nest { --sp-wave: #8ab4f8; }
 .spk-sonos { --sp-wave: #e8e8e8; }
+.spk-symfonisk { --sp-wave: #f1e6cf; --sp-led: #ffcf70; }
 .spk-devialet { --sp-wave: #e6dcc8; }
 .spk-apple { --sp-wave: #c58af9; }
 /* photo : grisée éteinte / en veille, atténuée en pause */
@@ -76,3 +77,7 @@
 @keyframes sb-up { 0% { opacity: 0; transform: translateY(2px); } 30% { opacity: .85; } 100% { opacity: 0; transform: translateY(-9px); } }
 .k-smart_speaker.st-playing .sb-up.px path { animation-name: sb-upx; }
 @keyframes sb-upx { 0% { opacity: 0; transform: translateY(6px); } 30% { opacity: .85; } 100% { opacity: 0; transform: translateY(-32px); } }
+
+/* lampe SYMFONISK : l'abat-jour suit l'entité light (option light) ; sans entité, toujours allumé */
+.sp-lum { opacity: var(--lum, 1); transition: opacity .5s; }
+.sp-lamp-off { fill: #3b3a40; opacity: calc((1 - var(--lum, 1)) * .88); transition: opacity .5s; pointer-events: none; }
