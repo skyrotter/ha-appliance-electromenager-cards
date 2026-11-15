@@ -810,6 +810,14 @@
     "water_hot": "Eau trop chaude"
   },
   "editor": {
+    "entity_drive_5": "Disque 5",
+    "entity_drive_5_temp": "Température du disque 5",
+    "entity_drive_6": "Disque 6",
+    "entity_drive_6_temp": "Température du disque 6",
+    "entity_drive_7": "Disque 7",
+    "entity_drive_7_temp": "Température du disque 7",
+    "entity_drive_8": "Disque 8",
+    "entity_drive_8_temp": "Température du disque 8",
     "index_unit": "Unité de la tuile Index (auto = unité du capteur)",
     "title_size": "Taille du titre (px, 14 par défaut)",
     "title_bold": "Titre en gras",
@@ -1950,6 +1958,12 @@
     "d": "j"
   },
   "nas": {
+    "model_generic_1": "NAS générique (1 baie)",
+    "model_generic_2": "NAS générique (2 baies)",
+    "model_generic_4": "NAS générique (4 baies)",
+    "model_generic_5": "NAS générique (5 baies)",
+    "model_generic_6": "NAS générique (6 baies)",
+    "model_generic_8": "NAS générique (8 baies)",
     "name": "NAS",
     "off": "Éteint",
     "idle": "Au repos",

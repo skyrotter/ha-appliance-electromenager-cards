@@ -813,6 +813,14 @@
     "water_hot": "Вода надто гаряча"
   },
   "editor": {
+    "entity_drive_5": "Диск 5",
+    "entity_drive_5_temp": "Температура диска 5",
+    "entity_drive_6": "Диск 6",
+    "entity_drive_6_temp": "Температура диска 6",
+    "entity_drive_7": "Диск 7",
+    "entity_drive_7_temp": "Температура диска 7",
+    "entity_drive_8": "Диск 8",
+    "entity_drive_8_temp": "Температура диска 8",
     "index_unit": "Одиниця плитки «Показання» (auto = одиниця датчика)",
     "title_size": "Розмір назви (px, типово 14)",
     "title_bold": "Напівжирна назва",
@@ -1961,6 +1969,12 @@
     "d": "д"
   },
   "nas": {
+    "model_generic_1": "Універсальний NAS (1 відсік)",
+    "model_generic_2": "Універсальний NAS (2 відсіків)",
+    "model_generic_4": "Універсальний NAS (4 відсіків)",
+    "model_generic_5": "Універсальний NAS (5 відсіків)",
+    "model_generic_6": "Універсальний NAS (6 відсіків)",
+    "model_generic_8": "Універсальний NAS (8 відсіків)",
     "name": "NAS",
     "off": "Вимк.",
     "idle": "Очікування",

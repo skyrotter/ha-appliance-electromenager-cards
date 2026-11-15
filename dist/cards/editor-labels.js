@@ -7,6 +7,14 @@
   if (window.applianceEditorLabel) return;
   const L = {
     "en": {
+      "entity_drive_5": "Disk 5",
+      "entity_drive_5_temp": "Disk 5 temperature",
+      "entity_drive_6": "Disk 6",
+      "entity_drive_6_temp": "Disk 6 temperature",
+      "entity_drive_7": "Disk 7",
+      "entity_drive_7_temp": "Disk 7 temperature",
+      "entity_drive_8": "Disk 8",
+      "entity_drive_8_temp": "Disk 8 temperature",
       "index_unit": "Unit of the Index tile (auto = sensor unit)",
       "title_size": "Title size (px, default 14)",
       "title_bold": "Bold title",
@@ -2684,6 +2692,14 @@
       "show_backup": "Mostrar apoyos y caldera"
     },
     "fr": {
+      "entity_drive_5": "Disque 5",
+      "entity_drive_5_temp": "Température du disque 5",
+      "entity_drive_6": "Disque 6",
+      "entity_drive_6_temp": "Température du disque 6",
+      "entity_drive_7": "Disque 7",
+      "entity_drive_7_temp": "Température du disque 7",
+      "entity_drive_8": "Disque 8",
+      "entity_drive_8_temp": "Température du disque 8",
       "index_unit": "Unité de la tuile Index (auto = unité du capteur)",
       "title_size": "Taille du titre (px, 14 par défaut)",
       "title_bold": "Titre en gras",
@@ -5533,6 +5549,14 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "pt-BR": {
+      "entity_drive_5": "Disco 5",
+      "entity_drive_5_temp": "Temperatura do disco 5",
+      "entity_drive_6": "Disco 6",
+      "entity_drive_6_temp": "Temperatura do disco 6",
+      "entity_drive_7": "Disco 7",
+      "entity_drive_7_temp": "Temperatura do disco 7",
+      "entity_drive_8": "Disco 8",
+      "entity_drive_8_temp": "Temperatura do disco 8",
       "index_unit": "Unidade do bloco Índice (auto = unidade do sensor)",
       "title_size": "Tamanho do título (px, padrão 14)",
       "title_bold": "Título em negrito",
@@ -6168,6 +6192,14 @@
       "show_backup": "Mostrar apoios e caldeira"
     },
     "pt-PT": {
+      "entity_drive_5": "Disco 5",
+      "entity_drive_5_temp": "Temperatura do disco 5",
+      "entity_drive_6": "Disco 6",
+      "entity_drive_6_temp": "Temperatura do disco 6",
+      "entity_drive_7": "Disco 7",
+      "entity_drive_7_temp": "Temperatura do disco 7",
+      "entity_drive_8": "Disco 8",
+      "entity_drive_8_temp": "Temperatura do disco 8",
       "index_unit": "Unidade do bloco Índice (auto = unidade do sensor)",
       "title_size": "Tamanho do título (px, predefinido 14)",
       "title_bold": "Título a negrito",
@@ -8773,6 +8805,14 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "uk": {
+      "entity_drive_5": "Диск 5",
+      "entity_drive_5_temp": "Температура диска 5",
+      "entity_drive_6": "Диск 6",
+      "entity_drive_6_temp": "Температура диска 6",
+      "entity_drive_7": "Диск 7",
+      "entity_drive_7_temp": "Температура диска 7",
+      "entity_drive_8": "Диск 8",
+      "entity_drive_8_temp": "Температура диска 8",
       "index_unit": "Одиниця плитки «Показання» (auto = одиниця датчика)",
       "title_size": "Розмір назви (px, типово 14)",
       "title_bold": "Напівжирна назва",
