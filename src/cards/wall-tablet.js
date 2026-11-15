@@ -129,7 +129,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass && this._hass.states[id]; }
     _ok(s) { return !!s && !/^(unavailable|unknown)$/i.test(String(s.state)); }
-    _on(id) { const s = this._st(id); return this._ok(s) && /^(on|true|1|home|playing|active)$/i.test(String(s.state).trim()); }
+    _on(id) { const s = this._st(id); return this._ok(s) && /^(on|true|1|home|playing|active|poweron|power_on|awake|wake|waking)$/i.test(String(s.state).trim()); }
     _num(id) { const s = this._st(id); if (!this._ok(s)) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
     _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _unit(id, d) { return String((this._st(id)?.attributes || {}).unit_of_measurement || d || '').trim(); }
@@ -154,7 +154,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     // état : indisponible / éteint / allumé / fond d'écran (diaporama)
     _state() {
       const c = this._c, scr = this._st(c.entity_screen), wp = this._st(c.entity_wallpaper);
-      const seen = [scr, wp, this._st(c.entity_reload), this._st(c.entity_cpu), this._st(c.entity_battery), this._st(c.entity_brightness), this._st(c.entity_power)].filter(Boolean);
+      const seen = [scr, wp, this._st(c.entity_reload), this._st(c.entity_screen_on), this._st(c.entity_cpu), this._st(c.entity_battery), this._st(c.entity_brightness), this._st(c.entity_power)].filter(Boolean);
       if (!seen.length || !seen.some((s) => this._ok(s))) return 'unavailable';
       const wall = c.entity_wallpaper && this._on(c.entity_wallpaper);
       const screenOn = c.entity_screen ? this._on(c.entity_screen) : true;
@@ -165,7 +165,12 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const c = this._c, h = this._hass; if (!h) return;
       const toggle = (id) => { const d = this._dom(id); h.callService(['switch', 'input_boolean', 'light'].includes(d) ? d : 'homeassistant', 'toggle', { entity_id: id }); };
       const press = (id) => { const d = this._dom(id), svc = { button: ['button', 'press'], input_button: ['input_button', 'press'], script: ['script', 'turn_on'], scene: ['scene', 'turn_on'], automation: ['automation', 'trigger'] }[d] || ['homeassistant', 'toggle']; h.callService(svc[0], svc[1], { entity_id: id }); };
-      if (k === 'screen' && c.entity_screen) toggle(c.entity_screen);
+      // écran piloté par deux boutons (veille / réveil) : on appelle celui qui change l'état courant
+      const wantOn = !this._on(c.entity_screen), pair = wantOn ? c.entity_screen_on : c.entity_screen_off;
+      if (k === 'screen' && c.entity_screen && pair) press(pair);
+      else if (k === 'screen_on' && c.entity_screen_on) press(c.entity_screen_on);
+      else if (k === 'screen_off' && c.entity_screen_off) press(c.entity_screen_off);
+      else if (k === 'screen' && c.entity_screen) toggle(c.entity_screen);
       else if (k === 'wallpaper' && c.entity_wallpaper) toggle(c.entity_wallpaper);
       else if (k === 'reload' && c.entity_reload) press(c.entity_reload);
       else if (k === 'reboot' && c.entity_reboot && (!window.confirm || window.confirm(this._t('reboot_confirm')))) press(c.entity_reboot);
@@ -190,7 +195,10 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 
       const ctr = r.getElementById('wtctrls'), wallOn = c.entity_wallpaper && this._on(c.entity_wallpaper), scrOn = c.entity_screen && this._on(c.entity_screen);
       const btns = [
-        c.entity_screen && ['switch', 'input_boolean', 'light'].includes(this._dom(c.entity_screen)) ? ['screen', scrOn ? 'mdi:monitor' : 'mdi:monitor-off', 'screen', scrOn] : null,
+        c.entity_screen && (['switch', 'input_boolean', 'light'].includes(this._dom(c.entity_screen)) || (c.entity_screen_on && c.entity_screen_off)) ? ['screen', scrOn ? 'mdi:monitor' : 'mdi:monitor-off', 'screen', scrOn] : null,
+        // veille / réveil par deux boutons sans entité d'état : un bouton chacun
+        !c.entity_screen && c.entity_screen_on ? ['screen_on', 'mdi:monitor', 'screen_on', false] : null,
+        !c.entity_screen && c.entity_screen_off ? ['screen_off', 'mdi:monitor-off', 'screen_off', false] : null,
         c.entity_wallpaper && ['switch', 'input_boolean'].includes(this._dom(c.entity_wallpaper)) ? ['wallpaper', 'mdi:image-multiple', 'wallpaper', wallOn] : null,
         c.entity_reload ? ['reload', 'mdi:refresh', 'reload', false] : null,
         c.entity_reboot ? ['reboot', 'mdi:restart', 'reboot', false] : null,
@@ -241,7 +249,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._form.schema = [
         { name: 'name', selector: { text: {} } }, { name: 'labels', selector: { object: {} } },
         { name: 'orientation', default: 'landscape', selector: { select: { mode: 'dropdown', options: ['landscape', 'portrait'].map((value) => ({ value, label: T[window.applianceLang(T, this._c, this._hass)]['o_' + value] || value })) } } },
-        ent('entity_screen', ['binary_sensor', 'switch', 'input_boolean', 'sensor', 'light']), ent('entity_wallpaper', ['switch', 'input_boolean', 'binary_sensor']),
+        ent('entity_screen', ['binary_sensor', 'switch', 'input_boolean', 'sensor', 'light']), ent('entity_screen_on', ['button', 'input_button', 'script', 'automation']), ent('entity_screen_off', ['button', 'input_button', 'script', 'automation']), ent('entity_wallpaper', ['switch', 'input_boolean', 'binary_sensor']),
         ent('entity_reload', ['button', 'input_button', 'script', 'automation']), ent('entity_reboot', ['button', 'input_button', 'script', 'automation']),
         ent('entity_brightness', ['sensor', 'number', 'input_number']), ent('entity_battery', 'sensor'), ent('entity_cpu', 'sensor'), ent('entity_ram', 'sensor'),
         ent('entity_uptime', 'sensor'), ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'),

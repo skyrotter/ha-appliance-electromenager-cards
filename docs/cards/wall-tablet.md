@@ -17,6 +17,7 @@ orientation: landscape                           # or portrait
 | Option | What it does |
 |---|---|
 | `entity_screen` | screen state: `binary_sensor`, `switch`, `input_boolean`, `light`, `sensor` (`on` = screen on). A `switch` / `input_boolean` / `light` also adds a **Screen** button |
+| `entity_screen_on`, `entity_screen_off` | wake / sleep the screen with two `button`s (or `script`…). `PowerOn` / `PowerOff` states are understood by `entity_screen`. With `entity_screen`, one **Screen** button calls the right one; without it, two buttons are shown |
 | `entity_wallpaper` | wallpaper / slideshow mode: `switch` (adds a button) or `binary_sensor` (on = slideshow, shown while the screen is on) |
 | `entity_reload` | reload the kiosk page: `button`, `input_button`, `script`, `automation` (adds a button) |
 | `entity_reboot` | restart the PC: same domains, with a **confirmation** before it runs |
