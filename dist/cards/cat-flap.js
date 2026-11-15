@@ -348,6 +348,30 @@
       "off": "Isključeno",
       "low": "Nisko",
       "ok": "U redu"
+    },
+    "uk": {
+      "name": "Котячий лаз",
+      "mode_unlocked": "Відчинено",
+      "mode_locked_all": "Зачинено",
+      "mode_locked_in": "Лише всередину",
+      "mode_locked_out": "Лише назовні",
+      "mode_curfew": "Комендантська година",
+      "mode_unknown": "Невідомо",
+      "mode_unavailable": "Недоступно",
+      "curfew": "Комендантська година",
+      "inside": "Всередині",
+      "outside": "Надворі",
+      "unknown": "Невідомо",
+      "went_in": "{n} зайшов",
+      "went_out": "{n} вийшов",
+      "intruder_detail": "Невідома тварина біля лазу",
+      "battery_low": "Низький заряд: замініть батарейки",
+      "battery": "Акумулятор",
+      "since": "Останній прохід",
+      "on": "Увімк.",
+      "off": "Вимк.",
+      "low": "Низький",
+      "ok": "ОК"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr

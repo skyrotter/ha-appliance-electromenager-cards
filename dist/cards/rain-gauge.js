@@ -237,6 +237,25 @@
       "last": "Poslednja kiša",
       "battery": "Baterija",
       "signal": "Signal"
+    },
+    "uk": {
+      "name": "Дощомір",
+      "dry": "Сухо",
+      "light": "Легкий дощ",
+      "moderate": "Дощ",
+      "heavy": "Сильний дощ",
+      "violent": "Злива",
+      "unavailable": "Недоступно",
+      "low_battery": "Низький заряд",
+      "rate": "Інтенсивність",
+      "hour": "Остання година",
+      "day": "Сьогодні",
+      "week": "Цього тижня",
+      "month": "Цього місяця",
+      "year": "Цього року",
+      "last": "Останній дощ",
+      "battery": "Акумулятор",
+      "signal": "Сигнал"
     }
   };
 

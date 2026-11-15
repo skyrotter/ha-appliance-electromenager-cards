@@ -298,6 +298,23 @@
       "turn_on": "Uključi",
       "turn_off": "Isključi",
       "overheat": "Previše toplo"
+    },
+    "uk": {
+      "name": "Сауна",
+      "off": "Вимк.",
+      "heating": "Нагрівання",
+      "ready": "Готово",
+      "cooling": "Охолодження",
+      "fault": "Несправність",
+      "temp": "Кабіна",
+      "target": "Ціль",
+      "humidity": "Вологість",
+      "power": "Нагрівач",
+      "energy": "Енергія",
+      "cost": "Вартість",
+      "turn_on": "Увімкнути",
+      "turn_off": "Вимкнути",
+      "overheat": "Надто гаряче"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr

@@ -285,6 +285,29 @@
       "mode_low": "Slabo",
       "mode_high": "Jako",
       "alarm_alert": "Aktivirana zaštita od prevrtanja ili pregrevanja"
+    },
+    "uk": {
+      "name": "Тепловентилятор",
+      "off": "Вимк.",
+      "standby": "Режим очікування",
+      "fan": "Лише вентилятор",
+      "low": "Нагрівання · слабке",
+      "high": "Нагрівання · сильне",
+      "alarm": "Несправність",
+      "unavailable": "Недоступно",
+      "power": "Електрика",
+      "energy": "Ел. енергія",
+      "cost": "Вартість",
+      "temp": "Кімната",
+      "target": "Ціль",
+      "mode": "Режим",
+      "timer": "Таймер",
+      "btn_on": "Увімкнути",
+      "btn_off": "Вимкнути",
+      "mode_fan": "Лише вентилятор",
+      "mode_low": "Слабке",
+      "mode_high": "Сильне",
+      "alarm_alert": "Спрацював захист від перекидання або перегріву"
     }
   };
   const ALARM_RE = /(alarm|alarme|error|erreur|fault|d[ée]faut|tip|overheat|surchauffe|renvers|kipp|ribalt)/i;

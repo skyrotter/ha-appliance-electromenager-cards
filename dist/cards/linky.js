@@ -332,6 +332,25 @@ const I18N_LINKY = {
     "injection": "INDEKS IZVOZA",
     "injection_power": "IZVOZ",
     "prod": "izvoz"
+  },
+  "uk": {
+    "power": "ПОТУЖНІСТЬ",
+    "hp": "ЛІЧИЛЬНИК ПІК",
+    "hc": "ЛІЧИЛЬНИК НІЧ",
+    "tariff": "ПЕРІОД",
+    "cost": "ВАРТІСТЬ СЬОГОДНІ",
+    "subscribed": "Підписано",
+    "name": "Linky",
+    "conso": "споживання",
+    "alert": "Перевантаження",
+    "active": "АКТИВНА ПОТУЖНІСТЬ",
+    "active_short": "Актив.",
+    "per_phase": "на фазу",
+    "peak": "ПІКОВІ ГОДИНИ",
+    "offpeak": "НІЧНІ ГОДИНИ",
+    "injection": "ЛІЧИЛЬНИК ЕКСПОРТУ",
+    "injection_power": "ЕКСПОРТ",
+    "prod": "експорт"
   }
 };
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré

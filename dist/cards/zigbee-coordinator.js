@@ -158,6 +158,36 @@
       "f_entity_uptime": "Tempo de atividade Zigbee (sensor, segundos ou carimbo de data/hora)",
       "f_entity_version": "Versão da ponte Zigbee2MQTT (sensor)",
       "f_entity_devices": "Número de dispositivos emparelhados (sensor, opcional)"
+    },
+    "uk": {
+      "name": "Координатор Zigbee",
+      "online": "У мережі",
+      "offline": "Не в мережі",
+      "unavailable": "Недоступно",
+      "join": "Дозволити підключення",
+      "restart_core": "Перезапустити ядро",
+      "restart_zigbee": "Перезапустити Zigbee",
+      "join_confirm": "Дозволити новим пристроям Zigbee приєднуватися до мережі?",
+      "restart_confirm": "Перезапустити координатор? Пристрої Zigbee ненадовго стануть недоступними.",
+      "temp_core": "Темп. ядра",
+      "temp_zigbee": "Темп. чипа Zigbee",
+      "ram": "ОЗП",
+      "uptime": "Час роботи Zigbee",
+      "version": "Версія моста",
+      "devices": "Пристрої",
+      "f_model": "Модель координатора",
+      "f_entity_connection": "З'єднання моста Zigbee2MQTT (binary_sensor)",
+      "f_entity_restart_required": "Потрібен перезапуск моста (binary_sensor, необов'язково)",
+      "f_entity_ethernet": "Ethernet-з'єднання (binary_sensor)",
+      "f_entity_permit_join": "Дозвіл на підключення (switch)",
+      "f_entity_restart_core": "Перезапуск ядра (button)",
+      "f_entity_restart_zigbee": "Перезапуск Zigbee (button)",
+      "f_entity_temp_core": "Температура чипа ядра (sensor)",
+      "f_entity_temp_zigbee": "Температура чипа Zigbee (sensor)",
+      "f_entity_ram": "Використання ОЗП (sensor, %)",
+      "f_entity_uptime": "Час роботи Zigbee (sensor, секунди або мітка часу)",
+      "f_entity_version": "Версія моста Zigbee2MQTT (sensor)",
+      "f_entity_devices": "Кількість підключених пристроїв (sensor, необов'язково)"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));

@@ -281,6 +281,22 @@ const I18N_PB = {
     "extinguishing": "Gašenje",
     "alarm": "Alarm",
     "low": "Malo peleta"
+  },
+  "uk": {
+    "name": "Пелетний котел",
+    "power": "Потужність",
+    "energy": "Енергія",
+    "cost": "Вартість",
+    "flow": "Подача",
+    "ret": "Зворот",
+    "pellets": "Пелети",
+    "status": "Стан",
+    "off": "Вимк.",
+    "ignition": "Розпалювання",
+    "heating": "Нагрівання",
+    "extinguishing": "Вимикання",
+    "alarm": "Тривога",
+    "low": "Мало пелет"
   }
 };
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré

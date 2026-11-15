@@ -230,6 +230,19 @@ const I18N_EV = {
     "plugged": "Priključen",
     "done": "Završeno",
     "disconnected": "Isključen"
+  },
+  "uk": {
+    "name": "Зарядна станція для EV",
+    "power": "Потужність",
+    "energy": "Сесія",
+    "soc": "Акумулятор",
+    "status": "Стан",
+    "duration": "Тривалість",
+    "cost": "Вартість",
+    "charging": "Заряджається",
+    "plugged": "Підключено",
+    "done": "Завершено",
+    "disconnected": "Відключено"
   }
 };
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré

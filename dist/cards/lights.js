@@ -398,6 +398,31 @@
       "power": "Snaga",
       "energy": "Energija",
       "ceiling_spot": "Ugradni spotovi"
+    },
+    "uk": {
+      "light_bulb": "Лампочка",
+      "color_bulb": "Кольорова лампочка",
+      "filament_bulb": "Філаментна лампочка",
+      "pendant_light": "Підвісний світильник",
+      "pendant_cluster": "Група підвісних світильників",
+      "desk_lamp": "Настільна лампа",
+      "floor_lamp": "Торшер",
+      "chandelier": "Люстра",
+      "garden_spotlight": "Садовий прожектор",
+      "christmas_tree": "Ялинка",
+      "on": "Увімк.",
+      "off": "Вимк.",
+      "unavailable": "Недоступно",
+      "turn_on": "Увімк.",
+      "turn_off": "Вимк.",
+      "color": "Колір",
+      "brightness": "Яскравість",
+      "power": "Потужність",
+      "energy": "Енергія",
+      "ceiling_spot": "Вбудовані світильники",
+      "slider_bottom": "Під лампочкою",
+      "slider_left": "Ліворуч",
+      "slider_right": "Праворуч"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr

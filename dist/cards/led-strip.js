@@ -107,6 +107,20 @@
       "next_effect": "Sledeći efekat",
       "power": "Snaga",
       "energy": "Energija"
+    },
+    "uk": {
+      "name": "LED-стрічка",
+      "on": "Увімк.",
+      "off": "Вимк.",
+      "unavailable": "Недоступно",
+      "turn_on": "Увімкнути",
+      "turn_off": "Вимкнути",
+      "brightness": "Яскравість",
+      "effect": "Ефект",
+      "none": "Немає",
+      "next_effect": "Наступний ефект",
+      "power": "Потужність",
+      "energy": "Енергія"
     }
   };
   const ON_RE = /^(on|true|1)$/i;

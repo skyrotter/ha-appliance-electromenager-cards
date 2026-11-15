@@ -366,6 +366,27 @@ const I18N_VAC = {
     "idle": "U stanju mirovanja",
     "error": "Greška",
     "emptying": "Pražnjenje kontejnera"
+  },
+  "uk": {
+    "name": "Робот-пилосос",
+    "battery": "Акумулятор",
+    "area": "Площа",
+    "time": "Час",
+    "fan": "Потужність всмоктування",
+    "status": "Стан",
+    "filter": "Фільтр",
+    "brush": "Щітка",
+    "start": "Старт",
+    "pause": "Пауза",
+    "dock": "На базу",
+    "cleaning": "Прибирання",
+    "docked": "На базі",
+    "charging": "Заряджається",
+    "returning": "Повертається",
+    "paused": "На паузі",
+    "idle": "Очікування",
+    "error": "Помилка",
+    "emptying": "Спорожнення"
   }
 };
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré

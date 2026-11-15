@@ -379,6 +379,29 @@
       "freeze": "Rizik od smrzavanja",
       "freeze_risk": "Rizik od smrzavanja: {t}",
       "leak_detected_by": "Curenje detektovano senzorom: {n}"
+    },
+    "uk": {
+      "name": "Лічильник води",
+      "idle": "Немає потоку",
+      "flowing": "Тече",
+      "leak": "Можливий витік",
+      "valve_closed": "Кран зачинено",
+      "unavailable": "Недоступно",
+      "leak_detected": "Датчик виявив витік",
+      "leak_continuous": "Вода тече без перерви понад {n} хв",
+      "open_valve": "Відкрити кран",
+      "close_valve": "Закрити кран",
+      "flow": "Витрата",
+      "today": "Сьогодні",
+      "index": "Показання",
+      "cost": "Вартість",
+      "temperature": "Температура",
+      "pressure": "Тиск",
+      "freeze": "Ризик замерзання",
+      "freeze_risk": "Ризик замерзання: {t}",
+      "leak_detected_by": "Витік виявлено: {n}",
+      "unit_m3": "м³",
+      "unit_l": "л"
     }
   };
   const asList = (v) => (Array.isArray(v) ? v : v ? [v] : []); // entity_leak : string ou array → array

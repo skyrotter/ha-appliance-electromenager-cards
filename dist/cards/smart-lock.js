@@ -538,6 +538,37 @@
       "ok": "OK",
       "door": "Vrata",
       "since": "Od"
+    },
+    "uk": {
+      "name": "Розумний замок",
+      "model_nuki_3_pro": "Nuki Smart Lock 3.0 Pro",
+      "model_nuki_pro_5": "Nuki Smart Lock Pro (5-те покоління)",
+      "locked": "Зачинено на ключ",
+      "unlocked": "Відімкнено",
+      "locking": "Замикається",
+      "unlocking": "Відмикається",
+      "open": "Засув відкрито",
+      "opening": "Засув відкривається",
+      "jammed": "Заклинило",
+      "unknown": "Невідомо",
+      "unavailable": "Недоступно",
+      "door_open": "Двері відчинені",
+      "door_closed": "Зачинені",
+      "door_opened": "Відчинені",
+      "jammed_detail": "Двигун заблоковано: перевірте двері та ключ",
+      "battery_critical": "Критичний заряд: замініть або зарядіть акумулятор",
+      "btn_lock": "Замкнути",
+      "btn_unlock": "Відімкнути",
+      "btn_open": "Відкрити засув",
+      "btn_confirm": "Підтвердити?",
+      "btn_lock_n_go": "Lock 'n' Go",
+      "btn_lock_n_go_unlatch": "Lock 'n' Go + відкрити засув",
+      "battery": "Акумулятор",
+      "charging": "Заряджається",
+      "critical": "Критично",
+      "ok": "ОК",
+      "door": "Двері",
+      "since": "З"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr

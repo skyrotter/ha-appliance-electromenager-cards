@@ -194,6 +194,25 @@
       "target": "Ciljna",
       "bottom": "Dno",
       "reserve": "Topla voda"
+    },
+    "uk": {
+      "name": "Термодинамічний бойлер",
+      "mode_off": "Вимк.",
+      "mode_pause": "Пауза",
+      "mode_green": "Еко",
+      "mode_boost": "Форсаж",
+      "mode_unavailable": "Недоступно",
+      "energy": "Енергія",
+      "power": "Потужність",
+      "mode": "Режим",
+      "temp": "Температура",
+      "target": "Ціль",
+      "bottom": "Низ",
+      "reserve": "Гаряча вода",
+      "volume": "Об'єм",
+      "cycle": "Останній цикл",
+      "duration": "Тривалість циклу",
+      "cycle_kwh": "Енергія циклу"
     }
   };
   const asList = (v) => (Array.isArray(v) ? v : v ? [v] : []);

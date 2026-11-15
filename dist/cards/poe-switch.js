@@ -113,6 +113,32 @@
       "f_show_voltage": "Bloco de tensão",
       "f_show_poe": "Bloco de portas PoE",
       "f_show_links": "Bloco de ligações"
+    },
+    "uk": {
+      "name": "PoE-комутатор",
+      "unavailable": "Недоступно",
+      "up": "Є зв'язок",
+      "down": "Немає зв'язку",
+      "on": "Увімк.",
+      "off": "Вимк.",
+      "total": "Загальна потужність",
+      "voltage": "Напруга",
+      "poe": "PoE-порти",
+      "links": "З'єднання",
+      "port": "Порт",
+      "power": "Потужність",
+      "extend": "Extend",
+      "uplink": "UPLINK",
+      "hint": "Натисніть порт, щоб побачити подробиці",
+      "confirm_off": "Вимкнути живлення PoE порту {port}? Підключений пристрій вимкнеться.",
+      "f_model": "Модель комутатора",
+      "f_prefix": "Префікс сутностей (напр. gps208xxxx_arubg3l)",
+      "f_entity_total_power": "Загальна потужність (необов'язково, замінює префікс)",
+      "f_entity_voltage": "Напруга (необов'язково, замінює префікс)",
+      "f_show_total": "Плитка загальної потужності",
+      "f_show_voltage": "Плитка напруги",
+      "f_show_poe": "Плитка PoE-портів",
+      "f_show_links": "Плитка з'єднань"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
