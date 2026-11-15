@@ -1102,7 +1102,7 @@ const SCEN = [
       ['1', '2', '4'].forEach((n) => set(`sensor.ds423_drive_${n}_status`, 'normal'));
       [34, 36, 37, 35].forEach((t, i) => set(`sensor.ds423_drive_${i + 1}_temperature`, t, T));
     } },
-  ...[['shield_tv_pro', 'NVIDIA Shield TV Pro', 'Netflix', 'Stranger Things', 'S4 · E1'], ['xiaomi_tv_box_s', 'Xiaomi TV Box S', 'YouTube', 'Lo-fi beats', 'Lofi Girl'], ['freebox_pop', 'Freebox Player Pop', 'Freebox TV', 'France 2', 'Journal de 20h']].map(([model, title, app, mt, ma]) => ({
+  ...[['apple_tv_4k', 'Apple TV 4K', 'Netflix', 'Stranger Things', 'S4 · E1'], ['shield_tv_pro', 'NVIDIA Shield TV Pro', 'Netflix', 'Stranger Things', 'S4 · E1'], ['xiaomi_tv_box_s', 'Xiaomi TV Box S', 'YouTube', 'Lo-fi beats', 'Lofi Girl'], ['freebox_pop', 'Freebox Player Pop', 'Freebox TV', 'France 2', 'Journal de 20h']].map(([model, title, app, mt, ma]) => ({
     kind: 'tv-box', title: `Box TV (${title})`, lang: true,
     cfg: { entity: `media_player.${model}`, model, entity_power: `sensor.${model}_power` },
     build(ctl) {
