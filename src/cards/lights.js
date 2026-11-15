@@ -342,7 +342,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         <div class="stage${img ? ' ph' : this.kind === 'ceiling_spot' ? ' ceil' : ''}">${img ? `<div class="uph"><div class="glow"></div><img src="${esc(img)}" alt="${esc(this._c.name || this._t(this.kind))}"></div>` : `<svg viewBox="0 0 200 180" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${SVGS[this.kind](this._c)}</svg>`}<div class="sb" id="ltsb"><input class="bs" id="ltbs" type="range" min="0" max="100" step="1"><span class="sv" id="ltsv"></span></div></div>
         <div class="ctl" id="ltctl">
           <button data-a="on"><ha-icon icon="mdi:lightbulb-on"></ha-icon><span></span></button>
-          ${color ? '<button data-a="color"><ha-icon icon="mdi:palette"></ha-icon><span></span></button>' : ''}
+          <button data-a="color" class="hide"><ha-icon icon="mdi:palette"></ha-icon><span></span></button>
           <button data-a="off"><ha-icon icon="mdi:lightbulb-off-outline"></ha-icon><span></span></button>
         </div>
         <div class="pal" id="ltpal"></div>
@@ -371,6 +371,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         const [kind, v] = b.dataset.sw.split(':'), data = { entity_id: this._c.entity };
         if (kind === 'k') data.color_temp_kelvin = Number(v); else data.rgb_color = v.split(',').map(Number);
         this._hass.callService('light', 'turn_on', data);
+        this._palOpen = false; this._render();
       });
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
         const k = el.dataset.k; this._more(k === 'brightness' ? this._c.entity : this._c[`entity_${k}`]);
@@ -405,6 +406,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     _action(a) {
       const c = this._c, h = this._hass; if (!h || !c.entity) return;
       const d = c.entity.split('.')[0];
+      if (a === 'color' && c.color_palette === true) { this._palOpen = !this._palOpen; this._render(); return; } // ouvre ou ferme la palette
       if (a === 'color') {
         // couleur suivante de la liste (presets en configuration, sinon une palette de six teintes)
         const list = Array.isArray(c.presets) && c.presets.length ? c.presets : PRESETS;
@@ -473,13 +475,18 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         b.title = icoOnly ? txt : '';
         if (icoOnly) b.setAttribute('aria-label', txt); else b.removeAttribute('aria-label');
         b.classList.toggle('sel', k === 'on' ? st === 'on' && !cycle : k === 'off' ? st !== 'on' : cycle);
-        if (k === 'color') b.classList.toggle('hide', d !== 'light');
+        if (k === 'color') {
+          const m = modesOf(a), can = m.some((x) => ['hs', 'xy', 'rgb', 'rgbw', 'rgbww', 'color_temp'].includes(x)) || a.min_color_temp_kelvin != null;
+          // bouton Couleur : ampoule couleur (défilement des teintes) ou, avec color_palette, toute lumière qui gère la couleur / le blanc réglable
+          b.classList.toggle('hide', d !== 'light' || !(c.color_palette === true ? can : this.kind === 'color_bulb'));
+          if (c.color_palette === true) b.classList.toggle('sel', !!this._palOpen);
+        }
       });
 
       // palette de couleurs (option color_palette) : seulement pour une entité light qui gère la couleur ou le blanc réglable
       const pal = r.getElementById('ltpal');
       const rgbOk = modesOf(a).some((m) => ['hs', 'xy', 'rgb', 'rgbw', 'rgbww'].includes(m)), ctOk = modesOf(a).some((m) => ['color_temp', 'rgbw', 'rgbww'].includes(m)) || a.min_color_temp_kelvin != null;
-      const showPal = c.color_palette === true && d === 'light' && st !== 'unavailable' && (rgbOk || ctOk);
+      const showPal = c.color_palette === true && d === 'light' && st !== 'unavailable' && (rgbOk || ctOk) && !!this._palOpen;
       pal.classList.toggle('on', showPal);
       if (showPal) {
         const list = Array.isArray(c.presets) && c.presets.length ? c.presets : PRESETS;
