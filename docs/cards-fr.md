@@ -522,3 +522,5 @@ travel_time: 20
 ```
 
 **Développement et traductions** : `dist/` est généré, on modifie `src/` puis on lance `node build.js` (sans dépendance). Le code est découpé en petits fichiers : `src/core/` pour les 28 cartes de base (un dessin par appareil dans `svg/`, un fichier CSS par appareil dans `style/`), `src/cards/` pour les cartes autonomes, et les textes dans un fichier par langue (`src/i18n/en.json`, `src/i18n/fr.json`, `src/i18n/de.json`, `src/i18n/nb.json`, `src/i18n/nl.json`, `src/i18n/ro.json`). Voir *Development and translations* plus haut.
+
+**Tablette murale** (`custom:appliance-wall-tablet-card`) : tablette tactile fixée au mur (couloir, cuisine…) dessinée en SVG : écran éteint, allumé (tableau de bord avec l'heure) ou en diaporama (mode fond d'écran). Boutons écran, fond d'écran, recharger la page du kiosque et redémarrer le PC (avec confirmation) ; tuiles luminosité, batterie, CPU, RAM, puissance. Voir [la page de la carte](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/wall-tablet.md).

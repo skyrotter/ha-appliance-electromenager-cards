@@ -1357,6 +1357,17 @@ const SCEN = [
       range(ctl, 'Puissance', 'sensor.demo_nvr_power', 0, 60, 0.5, 18, 'W', W);
       set('sensor.demo_nvr_energy', 12.4, KWH); set('sensor.demo_nvr_uptime', new Date(Date.now() - 12.5 * 864e5).toISOString());
     } },
+  { kind: 'wall-tablet', title: 'Tablette murale (couloir)', lang: true,
+    cfg: { name: 'Tablette couloir', entity_screen: 'binary_sensor.demo_tablet_screen', entity_wallpaper: 'switch.demo_tablet_wallpaper', entity_reload: 'button.demo_tablet_reload', entity_reboot: 'button.demo_tablet_reboot',
+      entity_brightness: 'sensor.demo_tablet_brightness', entity_battery: 'sensor.demo_tablet_battery', entity_cpu: 'sensor.demo_tablet_cpu', entity_power: 'sensor.demo_tablet_power' },
+    build(ctl) {
+      checks(ctl, [['Écran allumé', 'binary_sensor.demo_tablet_screen', true], ['Fond d\'écran (diaporama)', 'switch.demo_tablet_wallpaper', false]]);
+      set('button.demo_tablet_reload', 'unknown'); set('button.demo_tablet_reboot', 'unknown');
+      range(ctl, 'Luminosité', 'sensor.demo_tablet_brightness', 0, 100, 1, 70, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Batterie', 'sensor.demo_tablet_battery', 0, 100, 1, 82, '%', { unit_of_measurement: '%' });
+      range(ctl, 'CPU', 'sensor.demo_tablet_cpu', 0, 100, 1, 23, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Puissance', 'sensor.demo_tablet_power', 0, 60, 0.5, 18, 'W', W);
+    } },
   { kind: 'poe-switch', title: 'Switch PoE (GPS208)', lang: true,
     cfg: { name: 'Switch caméras', model: 'gps208', prefix: 'demo_gps208' },
     build(ctl) {
