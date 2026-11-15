@@ -48,5 +48,5 @@ const drumInside = (cx, cy, r) => `
 
 const feet = (xs, y) => xs.map((x) => `<rect x="${x}" y="${y}" width="10" height="7" rx="1.5" fill="#3a3f45"/>`).join("");
 
-const cfStyle = (c) => ({ filtre: "filtre", filter: "filtre", drip: "filtre", dosette: "dosette", dosettes: "dosette", pod: "dosette", capsule: "dosette", capsules: "dosette", senseo: "dosette", nespresso: "dosette", expresso: "expresso", espresso: "expresso", grains: "expresso", bean: "expresso", beans: "expresso" }[String(c?.style || "filtre").toLowerCase()] || "filtre");
+const cfStyle = (c) => ({ filtre: "filtre", filter: "filtre", drip: "filtre", dosette: "dosette", dosettes: "dosette", pod: "dosette", capsule: "dosette", capsules: "dosette", senseo: "dosette", nespresso: "dosette", expresso: "expresso", espresso: "expresso", grains: "expresso", bean: "expresso", beans: "expresso", latte: "latte", lattego: "latte", ep544x: "latte", philips: "latte", philips5400: "latte", photo: "latte" }[String(c?.style || "filtre").toLowerCase()] || "filtre");
 const SVG = {};

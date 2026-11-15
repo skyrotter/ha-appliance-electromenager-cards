@@ -17,5 +17,13 @@ power: sensor.coffee_power
 energy: sensor.coffee_energy_today
 ```
 
+## Philips 5400 LatteGo (photo)
+
+`style: latte` shows the Philips EP544X (5400 series, LatteGo) as a cut-out photo: the screen lights up, a coffee stream falls into the cup, which fills while brewing (power above `threshold`), then steam.
+
+## Samsung MS23F301TAK microwave (photo)
+
+On the microwave card, `model: samsung_ms23f301tak` shows the Samsung MS23F301TAK as a cut-out photo: lit window, turning plate, steam, clock / countdown on the display.
+
 
 [← All cards](../../README.md#the-cards)

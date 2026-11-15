@@ -1,0 +1,20 @@
+/* ---------- VMC décentralisée Ventoxx Harmony ---------- */
+.vx text { font-family: system-ui, sans-serif; }
+.vx-disp text { font-size: 9px; font-weight: 700; fill: #2b3138; opacity: 0; }
+.vx-disp { fill: #c8cdd2; }
+.vx-tri { fill: #ff3b30; opacity: 0; }
+.k-vmc.st-speed1 .vx-d1, .k-vmc.st-speed2 .vx-d3 { opacity: 1; }
+.k-vmc.vx-s1 .vx-d1, .k-vmc.vx-s2 .vx-d2, .k-vmc.vx-s3 .vx-d3 { opacity: 1; }
+.k-vmc.vx-s2 .vx-d1, .k-vmc.vx-s3 .vx-d1 { opacity: 0; }
+.k-vmc.st-speed1 .vx-tri, .k-vmc.st-speed2 .vx-tri { opacity: 1; animation: ac-pulse 1.6s ease-in-out infinite; }
+.vx-l { fill: none; stroke: #8fb6d8; stroke-width: 2.2; stroke-linecap: round; opacity: 0; }
+.vx-l1, .vx-l2 { display: none; }
+.k-vmc.vx-s2 .vx-l1, .k-vmc.vx-s3 .vx-l1, .k-vmc.vx-s3 .vx-l2 { display: inline; }
+.k-vmc.vx-supply .vx-l { stroke: #4fc3f7; }
+.k-vmc.vx-extract .vx-l { stroke: #f4a259; }
+.k-vmc.st-speed1.vx-supply .vx-l, .k-vmc.st-speed2.vx-supply .vx-l { animation: vx-out 2.2s ease-out infinite; }
+.k-vmc.st-speed1.vx-extract .vx-l, .k-vmc.st-speed2.vx-extract .vx-l { animation: vx-in 2.2s ease-in infinite; }
+.k-vmc.vx-s2.vx-supply .vx-l { animation-duration: 1.5s; } .k-vmc.vx-s2.vx-extract .vx-l { animation-duration: 1.5s; }
+.k-vmc.vx-s3.vx-supply .vx-l { animation-duration: .9s; } .k-vmc.vx-s3.vx-extract .vx-l { animation-duration: .9s; }
+@keyframes vx-out { 0% { opacity: 0; transform: translate(0, 0); } 30% { opacity: .9; } 100% { opacity: 0; transform: translate(calc(var(--dx) * 8px), calc(var(--dy) * 8px)); } }
+@keyframes vx-in { 0% { opacity: 0; transform: translate(calc(var(--dx) * 8px), calc(var(--dy) * 8px)); } 70% { opacity: .9; } 100% { opacity: 0; transform: translate(0, 0); } }

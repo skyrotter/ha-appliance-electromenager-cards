@@ -26,5 +26,16 @@ switch_low: switch.vmc_low_speed
 switch_high: switch.vmc_high_speed
 humidity: sensor.bathroom_humidity
 ```
+## Ventoxx Harmony (decentralised push-pull)
+
+`model: ventoxx` draws the Ventoxx Harmony front cover. `direction` takes the direction sensor (state `Befúvás` = supply, `Elszívás` = extract, `Inaktív` = off; attributes `speed` 1 to 3 and `dstate` 1 = extract / 2 = supply). Air lines move out of (supply, blue) or into (extract, orange) the cover edges; speed 1 to 3 sets their pace and number, and the display shows the speed digit.
+
+```yaml
+type: custom:appliance-vmc-card
+model: ventoxx
+direction: sensor.ventoxx_1_irany
+power: sensor.ventoxx_harmony_szellozteto_power
+```
+
 
 [← All cards](../../README.md#the-cards)
