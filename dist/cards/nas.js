@@ -13,6 +13,12 @@
 
   const T = {
     "en": {
+      "model_generic_1": "Generic NAS (1 bay)",
+      "model_generic_2": "Generic NAS (2 bays)",
+      "model_generic_4": "Generic NAS (4 bays)",
+      "model_generic_5": "Generic NAS (5 bays)",
+      "model_generic_6": "Generic NAS (6 bays)",
+      "model_generic_8": "Generic NAS (8 bays)",
       "name": "NAS",
       "off": "Off",
       "idle": "Idle",
@@ -208,6 +214,12 @@
       "nvme_alert": "SSD {n}: problema"
     },
     "fr": {
+      "model_generic_1": "NAS générique (1 baie)",
+      "model_generic_2": "NAS générique (2 baies)",
+      "model_generic_4": "NAS générique (4 baies)",
+      "model_generic_5": "NAS générique (5 baies)",
+      "model_generic_6": "NAS générique (6 baies)",
+      "model_generic_8": "NAS générique (8 baies)",
       "name": "NAS",
       "off": "Éteint",
       "idle": "Au repos",
@@ -413,6 +425,12 @@
       "nvme_alert": "SSD {n}: problem"
     },
     "pt-BR": {
+      "model_generic_1": "NAS genérico (1 baia)",
+      "model_generic_2": "NAS genérico (2 baias)",
+      "model_generic_4": "NAS genérico (4 baias)",
+      "model_generic_5": "NAS genérico (5 baias)",
+      "model_generic_6": "NAS genérico (6 baias)",
+      "model_generic_8": "NAS genérico (8 baias)",
       "name": "NAS",
       "off": "Desligado",
       "idle": "Inativo",
@@ -455,6 +473,12 @@
       "nvme_alert": "SSD {n}: problema"
     },
     "pt-PT": {
+      "model_generic_1": "NAS genérico (1 baia)",
+      "model_generic_2": "NAS genérico (2 baias)",
+      "model_generic_4": "NAS genérico (4 baias)",
+      "model_generic_5": "NAS genérico (5 baias)",
+      "model_generic_6": "NAS genérico (6 baias)",
+      "model_generic_8": "NAS genérico (8 baias)",
       "name": "NAS",
       "off": "Desligado",
       "idle": "Inativo",
@@ -635,6 +659,12 @@
       "nvme_alert": "SSD {n}: problem"
     },
     "uk": {
+      "model_generic_1": "Універсальний NAS (1 відсік)",
+      "model_generic_2": "Універсальний NAS (2 відсіків)",
+      "model_generic_4": "Універсальний NAS (4 відсіків)",
+      "model_generic_5": "Універсальний NAS (5 відсіків)",
+      "model_generic_6": "Універсальний NAS (6 відсіків)",
+      "model_generic_8": "Універсальний NAS (8 відсіків)",
       "name": "NAS",
       "off": "Вимк.",
       "idle": "Очікування",
@@ -811,6 +841,23 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     synology_ds224: { img: 'data:image/webp;base64,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', x: 41.1, y: 22, w: 141.7, h: 149.5, bays: [[49.9, 33.0], [84.8, 33.0]], by: 28.8, bh: 127.2,
       leds: [{x: 128.4, y: 69.0, m: "#424245"}, {x: 128.5, y: 80.2, m: "#464849"}], st: {x: 128.5, y: 39.4, m: "#545356"}, link: {x: 128.0, y: 49.3, m: "#4b4a4a"}, pwr: [125.6, 141.4, 6.8], col: '#9be04a' },
   };
+  // NAS générique de 1, 2, 4, 5, 6 ou 8 baies : dessiné en SVG (pas de photo), mêmes calques animés que les modèles photo.
+  // Le dessin occupe toute la scène 300 × 180 : ses coordonnées sont celles de la scène (baies côte à côte, LED des disques sous chaque baie).
+  const genericNas = (n) => {
+    const W = { 1: 66, 2: 100, 4: 152, 5: 178, 6: 196, 8: 200 }[n], x0 = 112 - W / 2, m = n === 8 ? 7 : 9, g = n === 8 ? 2 : 3, by = 44, bh = 84, ly = 142;
+    const bw = (W - 2 * m - g * (n - 1)) / n, bays = Array.from({ length: n }, (_, i) => [+(x0 + m + i * (bw + g)).toFixed(1), +bw.toFixed(1)]);
+    const px = (v) => +v.toFixed(1), leds = bays.map(([x, w]) => ({ x: px(x + w / 2), y: ly, m: '#202328' }));
+    const st = { x: px(x0 + 13), y: 36, m: '#202328' }, pwr = [px(x0 + W - 13), ly, 5];
+    const tray = bays.map(([x, w]) => `<rect x="${x}" y="${by}" width="${w}" height="${bh}" rx="2" fill="#14161a" stroke="#383d45" stroke-width=".8"/>`
+      + Array.from({ length: 6 }, (_, k) => `<rect x="${px(x + 3)}" y="${by + 5 + k * 3.2}" width="${px(w - 6)}" height="1.1" rx=".5" fill="#23272d"/>`).join('')
+      + `<rect x="${px(x + w * 0.2)}" y="${by + bh - 11}" width="${px(w * 0.6)}" height="4" rx="2" fill="#3b4048"/>`).join('');
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 180" width="300" height="180">
+<rect x="${px(x0)}" y="28" width="${W}" height="132" rx="8" fill="#202328" stroke="#4a5059" stroke-width="1.2"/>
+<rect x="${px(x0 + 2)}" y="29" width="${W - 4}" height="5" rx="2.5" fill="#2f343b"/>${tray}
+<circle cx="${pwr[0]}" cy="${pwr[1]}" r="6.4" fill="#15171a" stroke="#4a5059" stroke-width="1"/></svg>`;
+    return { img: 'data:image/svg+xml;utf8,' + encodeURIComponent(svg), x: 0, y: 0, w: 300, h: 180, bays, by, bh, leds, st, link: null, pwr, col: '#3ddc5a' };
+  };
+  [1, 2, 4, 5, 6, 8].forEach((n) => { MODELS[`generic_${n}`] = genericNas(n); });
   const modelOf = (c) => MODELS[c && c.model] || MODELS.synology_ds423;
   const SVG = (label, M) => `
 <svg viewBox="0 0 300 180" role="img" aria-label="${esc(label)}" style="--ledc:${M.col}">

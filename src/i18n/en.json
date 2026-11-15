@@ -813,6 +813,14 @@
     "water_hot": "Water too hot"
   },
   "editor": {
+    "entity_drive_5": "Disk 5",
+    "entity_drive_5_temp": "Disk 5 temperature",
+    "entity_drive_6": "Disk 6",
+    "entity_drive_6_temp": "Disk 6 temperature",
+    "entity_drive_7": "Disk 7",
+    "entity_drive_7_temp": "Disk 7 temperature",
+    "entity_drive_8": "Disk 8",
+    "entity_drive_8_temp": "Disk 8 temperature",
     "index_unit": "Unit of the Index tile (auto = sensor unit)",
     "title_size": "Title size (px, default 14)",
     "title_bold": "Bold title",
@@ -1964,6 +1972,12 @@
     "d": "d"
   },
   "nas": {
+    "model_generic_1": "Generic NAS (1 bay)",
+    "model_generic_2": "Generic NAS (2 bays)",
+    "model_generic_4": "Generic NAS (4 bays)",
+    "model_generic_5": "Generic NAS (5 bays)",
+    "model_generic_6": "Generic NAS (6 bays)",
+    "model_generic_8": "Generic NAS (8 bays)",
     "name": "NAS",
     "off": "Off",
     "idle": "Idle",
