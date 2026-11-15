@@ -14332,7 +14332,7 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .ink-bar { height: 8px; border-radius: 4px; background: rgba(127,127,127,.2); overflow: hidden; }
 .ink-fill { height: 100%; border-radius: 4px; background: var(--ink); transition: width .6s; }
 .ink-row.k { --ink: #0a0a0c; } .ink-row.c { --ink: #00b4e6; } .ink-row.m { --ink: #e6007e; } .ink-row.y { --ink: #ffd400; }
-.ink-row.k .ink-bar { box-sizing: border-box; border: 1px solid rgba(255,255,255,.4); }
+.ink-row.k .ink-bar { box-sizing: border-box; border: 1px solid color-mix(in srgb, var(--primary-text-color, #fff) 45%, transparent); }
 .ink-row.low .ink-v { color: var(--error-color, #db4437); }
 .ink-row.low .ink-fill { animation: ink-low 1.2s ease-in-out infinite; }
 .no-anim .ink-row.low .ink-fill { animation: none; }
