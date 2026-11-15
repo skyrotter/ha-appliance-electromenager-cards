@@ -207,6 +207,7 @@
       "tiles_right": "Values in a column on the right",
       "dial_decimals": "Decimals on the dial litre wheels",
       "title_layout": "Title and status",
+      "vertical_align": "Content position (tall cell)",
       "hot_water": "Hot water (red)",
       "today_decimals": "Decimals of the Today tile",
       "index_decimals": "Decimals of the Index tile (m³)",
@@ -2869,6 +2870,7 @@
       "tiles_right": "Valeurs en colonne à droite",
       "dial_decimals": "Décimales sur les roues des litres du cadran",
       "title_layout": "Titre et état",
+      "vertical_align": "Position du contenu (case haute)",
       "hot_water": "Eau chaude (rouge)",
       "today_decimals": "Décimales de la tuile Aujourd'hui",
       "index_decimals": "Décimales de la tuile Index (m³)",
@@ -8747,6 +8749,8 @@
     // tile_order : « name » (nom au-dessus) ou « value » (valeur au-dessus) → attribut tile-order sur la carte ; absent = ordre historique de la carte
     if (cfg && (cfg.tile_order === 'name' || cfg.tile_order === 'value')) el.setAttribute('tile-order', cfg.tile_order);
     else el.removeAttribute('tile-order');
+    // vertical_align: center → contenu des cartes de base centré verticalement dans une case plus haute (sinon calé en haut)
+    el.toggleAttribute('valign-center', !!cfg && cfg.vertical_align === 'center');
     // title_layout: stacked → ancienne disposition des cartes de base (titre puis état, empilés) ; par défaut titre à gauche et état à droite
     if (cfg && cfg.title_layout === 'stacked') el.setAttribute('title-layout', 'stacked'); else el.removeAttribute('title-layout');
   };

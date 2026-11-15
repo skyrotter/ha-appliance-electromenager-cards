@@ -8,13 +8,15 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.141.1";
+const VERSION = "1.141.2";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
 /* ------------------------------------------------------------------ */
 const STRINGS = {
   "en": {
+    "valign_top": "Top (default)",
+    "valign_center": "Centered",
     "header_inline": "Title left, status right (default)",
     "header_stacked": "Stacked: title, then status",
     "washer": "Washing machine",
@@ -2173,6 +2175,8 @@ const STRINGS = {
     "f_calories": "Sensor de calorías"
   },
   "fr": {
+    "valign_top": "En haut (défaut)",
+    "valign_center": "Centré",
     "header_inline": "Titre à gauche, état à droite (défaut)",
     "header_stacked": "Empilés : titre puis état",
     "washer": "Lave-linge",
@@ -12381,6 +12385,7 @@ function buildForm(kind) {
           ] : []),
           { name: "illustration_size", selector: { number: { min: 30, max: 300, step: 5, mode: "slider", unit_of_measurement: "%" } } },
           { name: "transparent", selector: { boolean: {} } },
+          { name: "vertical_align", selector: { select: { mode: "dropdown", options: [{ value: "top", label: tr(null, "valign_top") }, { value: "center", label: tr(null, "valign_center") }] } } },
           { name: "title_layout", selector: { select: { mode: "dropdown", options: [{ value: "inline", label: tr(null, "header_inline") }, { value: "stacked", label: tr(null, "header_stacked") }] } } },
           ...window.applianceTileFields(),
           { name: "animations", selector: { boolean: {} }, default: true },
@@ -12675,8 +12680,9 @@ const STYLE = `
   display: block; height: 100%;
 }
 /* carte plus haute que son contenu (grille en sections) : contenu centré verticalement ; « safe » garde le haut visible si ça déborde */
-ha-card { display: flex; flex-direction: column; justify-content: safe center; height: 100%; cursor: pointer; overflow: hidden; container-type: inline-size; }
-.wrap { padding: 14px; display: flex; flex-direction: column; gap: 12px; --c: var(--ac-accent, var(--ac-active)); }
+ha-card { display: flex; flex-direction: column; justify-content: flex-start; height: 100%; cursor: pointer; overflow: hidden; container-type: inline-size; }
+:host([valign-center]) ha-card { justify-content: safe center; }
+.wrap { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 12px; --c: var(--ac-accent, var(--ac-active)); }
 .wrap.accent-heat { --c: var(--ac-accent, var(--ac-heat)); }
 .wrap.accent-cold { --c: var(--ac-accent, var(--ac-cold)); }
 .top {
