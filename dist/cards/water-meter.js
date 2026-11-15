@@ -251,6 +251,8 @@
       "leak_detected_by": "Wyciek wykryty przez: {n}"
     },
     "pt-BR": {
+      "unit_m3": "m³",
+      "unit_l": "L",
       "name": "Medidor de água",
       "idle": "Sem vazão",
       "flowing": "Com vazão",
@@ -272,6 +274,8 @@
       "leak_detected_by": "Vazamento detectado por: {n}"
     },
     "pt-PT": {
+      "unit_m3": "m³",
+      "unit_l": "L",
       "name": "Contador de água",
       "idle": "Sem caudal",
       "flowing": "Com caudal",

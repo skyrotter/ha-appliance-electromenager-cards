@@ -5521,6 +5521,14 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "pt-BR": {
+      "tiles_right": "Valores numa coluna à direita",
+      "tiles_order": "Ordem dos blocos (lista de chaves)",
+      "dial_decimals": "Casas decimais nas rodas dos litros do mostrador",
+      "title_layout": "Título e estado",
+      "vertical_align": "Posição do conteúdo (célula alta)",
+      "hot_water": "Água quente (vermelho)",
+      "today_decimals": "Casas decimais do bloco Hoje",
+      "index_decimals": "Casas decimais do bloco Índice (m³)",
       "surface": "Instalação (piso ou parede)",
       "food_low": "Alerta de nível baixo no reservatório (%)",
       "hopper_capacity": "Capacidade do reservatório (g)",
@@ -6142,6 +6150,14 @@
       "show_backup": "Mostrar apoios e caldeira"
     },
     "pt-PT": {
+      "tiles_right": "Valores numa coluna à direita",
+      "tiles_order": "Ordem dos blocos (lista de chaves)",
+      "dial_decimals": "Casas decimais nas rodas dos litros do mostrador",
+      "title_layout": "Título e estado",
+      "vertical_align": "Posição do conteúdo (célula alta)",
+      "hot_water": "Água quente (vermelho)",
+      "today_decimals": "Casas decimais do bloco Hoje",
+      "index_decimals": "Casas decimais do bloco Índice (m³)",
       "surface": "Instalação (pavimento ou parede)",
       "food_low": "Alerta de nível baixo no reservatório (%)",
       "hopper_capacity": "Capacidade do reservatório (g)",
