@@ -1,5 +1,7 @@
 {
   "common": {
+    "valign_top": "Top (default)",
+    "valign_center": "Centered",
     "header_inline": "Title left, status right (default)",
     "header_stacked": "Stacked: title, then status",
     "washer": "Washing machine",
@@ -1011,6 +1013,7 @@
     "tiles_right": "Values in a column on the right",
     "dial_decimals": "Decimals on the dial litre wheels",
     "title_layout": "Title and status",
+    "vertical_align": "Content position (tall cell)",
     "hot_water": "Hot water (red)",
     "today_decimals": "Decimals of the Today tile",
     "index_decimals": "Decimals of the Index tile (m³)",

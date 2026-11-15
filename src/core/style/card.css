@@ -8,8 +8,9 @@
   display: block; height: 100%;
 }
 /* carte plus haute que son contenu (grille en sections) : contenu centré verticalement ; « safe » garde le haut visible si ça déborde */
-ha-card { display: flex; flex-direction: column; justify-content: safe center; height: 100%; cursor: pointer; overflow: hidden; container-type: inline-size; }
-.wrap { padding: 14px; display: flex; flex-direction: column; gap: 12px; --c: var(--ac-accent, var(--ac-active)); }
+ha-card { display: flex; flex-direction: column; justify-content: flex-start; height: 100%; cursor: pointer; overflow: hidden; container-type: inline-size; }
+:host([valign-center]) ha-card { justify-content: safe center; }
+.wrap { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 12px; --c: var(--ac-accent, var(--ac-active)); }
 .wrap.accent-heat { --c: var(--ac-accent, var(--ac-heat)); }
 .wrap.accent-cold { --c: var(--ac-accent, var(--ac-cold)); }
 .top {
