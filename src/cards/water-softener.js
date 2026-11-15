@@ -84,7 +84,7 @@ svg{display:block;flex:0 1 calc(190px * var(--illus-scale,1));width:calc(190px *
 .still *{animation:none!important}.still .pflow,.still .drop{opacity:0!important}
 /* ---- tiles_right : titre, état et dessin à gauche, tuiles en colonne à droite, depuis le haut de la carte ---- */
 ha-card.side{display:grid;grid-template-rows:auto auto auto 1fr;grid-template-columns:minmax(0,1fr) minmax(105px,.85fr);column-gap:12px;align-content:start;align-items:start}
-.side .head{grid-column:1;grid-row:1}.side .leak{grid-column:1;grid-row:2}.side .prog{grid-column:1;grid-row:3}
+.side .head{grid-column:1;grid-row:1;min-width:0}.side .title{min-width:0;white-space:normal;overflow-wrap:anywhere}.side .leak{grid-column:1;grid-row:2}.side .prog{grid-column:1;grid-row:3}
 .side .body{display:contents}
 .side svg{grid-column:1;grid-row:4;align-self:center;width:100%;max-width:calc(190px * var(--illus-scale,1));margin:4px auto 0;flex:none}
 .side .tiles{grid-column:2;grid-row:1 / span 4;grid-template-columns:1fr;align-self:start}
@@ -386,6 +386,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         el.classList.toggle('hide', !show || c[opt] === false);
         el.classList.toggle('bad', k === 'salt' && low);
         el.querySelector('.lbl').textContent = this._l(k);
+        // tiles_order : liste de clés de tuiles (ex. [salt, capacity, flow]) ; les autres suivent dans l'ordre d'origine
+        const oi = Array.isArray(c.tiles_order) ? c.tiles_order.indexOf(k) : -1;
+        el.style.order = String(oi >= 0 ? oi : 100 + TILES.findIndex((t) => t[0] === k));
         const small = document.createElement('small'); small.textContent = unit ?? '';
         el.querySelector('.v').replaceChildren(String(val ?? ''), small);
       });
@@ -431,6 +434,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'salt_low', default: 20, selector: { number: { min: 0, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
         ...window.applianceActionFields,
         window.applianceLanguageField(T),
+        { name: 'tiles_order', selector: { object: {} } },
         { type: 'grid', name: '', schema: [bool('compact', false), bool('tiles_right', false), ...TILES.map(([, , o]) => bool(o)), bool('animations')] },
       ];
       this._form.computeLabel = (s) => (s.name === 'model' ? this._lbl('f_model') : window.applianceEditorLabel(s.name, this._hass));

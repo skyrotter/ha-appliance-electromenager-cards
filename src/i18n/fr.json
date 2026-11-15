@@ -1001,6 +1001,7 @@
     "source_threshold": "Seuil de la pompe de captage (W)",
     "status_position": "Position de l'état",
     "tiles_right": "Valeurs en colonne à droite",
+    "tiles_order": "Ordre des tuiles (liste de clés)",
     "dial_decimals": "Décimales sur les roues des litres du cadran",
     "title_layout": "Titre et état",
     "vertical_align": "Position du contenu (case haute)",

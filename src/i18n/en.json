@@ -1011,6 +1011,7 @@
     "source_threshold": "Source pump threshold (W)",
     "status_position": "Status position",
     "tiles_right": "Values in a column on the right",
+    "tiles_order": "Order of the tiles (list of keys)",
     "dial_decimals": "Decimals on the dial litre wheels",
     "title_layout": "Title and status",
     "vertical_align": "Content position (tall cell)",
