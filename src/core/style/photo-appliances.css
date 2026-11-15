@@ -1,0 +1,19 @@
+/* ---------- cafetière Philips 5400 (style latte), micro-ondes Samsung (photo), aspirateur traîneau ---------- */
+.s-latte { --cf-fill: 14s; }
+.cf-scr { fill: #38d9ff; opacity: 0; transition: opacity .4s; }
+.k-coffee_maker.st-brewing .cf-scr { animation: cf-scr 1.4s ease-in-out infinite; }
+.k-coffee_maker.st-ready .cf-scr { opacity: .1; }
+@keyframes cf-scr { 0%, 100% { opacity: .04; } 50% { opacity: .16; } }
+.mw-samsung .lcd { font-size: 3.8px; }
+.mw-samsung .bowl { transform-box: fill-box; transform-origin: 50% 50%; }
+.k-microwave.active .mw-samsung .bowl { animation: ac-turn 5s linear infinite; }
+.cv-glow, .cv-lamp, .cv-dust, .cv-spin { opacity: 0; transition: opacity .4s; }
+.cv-spin { fill: none; stroke: #0b6b5b; stroke-width: 1.4; stroke-linecap: round; transform-box: view-box; transform-origin: 74.8px 91.8px; }
+.cv-dust circle { fill: #8a8f96; }
+.k-canister_vacuum.active .cv-glow { opacity: .7; animation: ac-pulse 1.4s ease-in-out infinite; }
+.k-canister_vacuum.active .cv-spin { opacity: .9; animation: ac-rot .5s linear infinite; }
+.k-canister_vacuum.active .cv-lamp { opacity: .55; }
+.k-canister_vacuum.active .cv-dust { opacity: 1; }
+.k-canister_vacuum.active .cv-dust circle { animation: cv-suck 1s ease-in infinite; }
+.cv-dust circle:nth-child(2n) { animation-delay: -.35s !important; } .cv-dust circle:nth-child(3n) { animation-delay: -.7s !important; }
+@keyframes cv-suck { 0% { opacity: 0; transform: translate(0, 0); } 30% { opacity: .9; } 100% { opacity: 0; transform: translate(-14px, 0); } }

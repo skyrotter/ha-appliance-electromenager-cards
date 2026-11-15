@@ -94,7 +94,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "switch_low", "switch_high", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water", "power_level", "pellet_level", "ph", "orp", "dose_interval", "dose_timer", "dose_volume", "dose_time", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "switch_low", "switch_high", "direction", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water", "power_level", "pellet_level", "ph", "orp", "dose_interval", "dose_timer", "dose_volume", "dose_time", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -540,6 +540,16 @@ class ApplianceCardBase extends HTMLElement {
       else if (spn === 0) m.status = "off";
       else if (watts != null) m.status = watts > hi ? "speed2" : powered ? "speed1" : (base === "standby" ? "standby" : "off");
       else m.status = base === "running" ? "speed1" : base;
+      // Ventoxx Harmony (push-pull) : entité de sens (Befúvás = soufflage, Elszívás = extraction, Inaktív) avec attributs speed (1-3) et dstate (1 = extraction, 2 = soufflage)
+      const dr = c.direction ? hass.states[c.direction] : null;
+      if (dr && !BAD.includes(String(dr.state).toLowerCase())) {
+        const ds = String(dr.state).toLowerCase(), at = dr.attributes || {}, dst = Number(at.dstate), spd = Number(at.speed);
+        m.vxDir = /bef|supply|intake|zuluft|souffl|insuff/.test(ds) || (!/elsz|extract|exhaust|abluft|evac/.test(ds) && dst === 2) ? "supply"
+          : /elsz|extract|exhaust|abluft|evac|aspir/.test(ds) || dst === 1 ? "extract" : null;
+        m.vxState = stateText(hass, dr);
+        if (m.vxDir && Number.isFinite(spd) && spd > 0) { m.vxSpeed = Math.max(1, Math.min(3, Math.round(spd))); m.status = m.vxSpeed >= 3 ? "speed2" : "speed1"; }
+        else if (!m.vxDir) m.status = "off";
+      } else if (m.status === "speed1" || m.status === "speed2") { m.vxSpeed = m.status === "speed2" ? 3 : 1; }
       if (m.humidity != null && m.humidity > (c.humidity_max ?? 70)) m.alerts.push("humid");
     } else if (kind === "solar") {
       const sunSt = hass.states[c.sun_entity || "sun.sun"];
@@ -1136,7 +1146,7 @@ class ApplianceCardBase extends HTMLElement {
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
       active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
       m.alerts.length ? "alert" : "", isOn(m.door) ? "door-open" : "", isOn(m.fdoor) ? "fz-open" : "",
-      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", kind === "smart_plug" ? this._indClasses() : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", m.solarHeat ? "solar-heat" : "", hideWouldApply ? "would-hide" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "",
+      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", kind === "smart_plug" ? this._indClasses() : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", m.solarHeat ? "solar-heat" : "", hideWouldApply ? "would-hide" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "", m.vxDir ? `vx-${m.vxDir}` : kind === "vmc" ? "vx-extract" : "", m.vxSpeed ? `vx-s${m.vxSpeed}` : "",
     ].filter(Boolean).join(" ");
 
     // illustration dynamic parts
@@ -1633,6 +1643,7 @@ class ApplianceCardBase extends HTMLElement {
     } else if (kind === "hob") {
       /* no extra tile */
     } else if (kind === "vmc") {
+      if (m.vxDir || m.vxState) tile(m.vxDir === "supply" ? "mdi:arrow-up-bold-box-outline" : "mdi:arrow-down-bold-box-outline", m.vxSpeed ? `${m.vxState} · ${m.vxSpeed}` : m.vxState, lb("direction"), c.direction);
       if (m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0)} %`, lb("humidity"), c.humidity, m.alerts.includes("humid") ? "warn" : "");
     } else if (kind === "printer_3d") {
       if (m.progress != null) tile("mdi:progress-check", `${fmtNum(hass, m.progress, 0)} %`, lb("progress"), c.progress);
