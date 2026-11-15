@@ -7,6 +7,7 @@
   if (window.applianceEditorLabel) return;
   const L = {
     "en": {
+      "presets": "Colour presets (list of RGB colours)",
       "image_background": "Dark background behind the photo",
       "surface": "Installation (floor or wall)",
       "food_low": "Low hopper alert (%)",
@@ -2680,6 +2681,7 @@
       "show_backup": "Mostrar apoyos y caldera"
     },
     "fr": {
+      "presets": "Couleurs de la palette (liste de couleurs RVB)",
       "image_background": "Fond sombre derrière la photo",
       "surface": "Installation (sol ou mur)",
       "food_low": "Alerte réserve basse (%)",
@@ -5525,6 +5527,7 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "pt-BR": {
+      "presets": "Cores da paleta (lista de cores RGB)",
       "image_background": "Fundo escuro atrás da foto",
       "color_palette": "Paleta de cores (RGB + brancos)",
       "tiles_right": "Valores numa coluna à direita",
@@ -6156,6 +6159,7 @@
       "show_backup": "Mostrar apoios e caldeira"
     },
     "pt-PT": {
+      "presets": "Cores da paleta (lista de cores RGB)",
       "image_background": "Fundo escuro atrás da foto",
       "color_palette": "Paleta de cores (RGB + brancos)",
       "tiles_right": "Valores numa coluna à direita",
@@ -8757,6 +8761,7 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "uk": {
+      "presets": "Кольори палітри (список кольорів RGB)",
       "image_background": "Темне тло за фото",
       "color_palette": "Палітра кольорів (RGB + білі)",
       "surface": "Встановлення (підлога або стіна)",

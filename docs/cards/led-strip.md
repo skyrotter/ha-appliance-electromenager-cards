@@ -20,6 +20,8 @@ The drawing is just the **strip** (a flexible band with its LEDs) and its glow, 
 | `color2` | with `shape: bars`: color of the right half of the wall and the right bar (`"#00c8b4"`…). By default, the light's color with its hue shifted by 150°, like the teal / pink of the photo |
 | `color` | forces the glow color (`"#ff6600"`, `orange`…), for strips that do not report their color |
 | `entity_power`, `entity_energy` | power and energy tiles |
+| `color_palette` | `true`: adds a **Colour** button that opens a palette: a warm / neutral / cold white (if the light has a colour temperature) and RGB colours (if it supports colour). One tap turns the strip on with that colour and closes the palette. Default `false` |
+| `presets` | the RGB colours of the palette, e.g. `presets: [[255, 0, 0], [0, 255, 0], [0, 0, 255]]` (default: 6 shades) |
 | `compact`, `show_status`, `show_controls`, `show_brightness`, `show_effect`, `show_power`, `show_energy`, `animations`, `labels`, `language`, `illustration_size`, `transparent`, `tap_action`, `hold_action` | |
 
 ```yaml

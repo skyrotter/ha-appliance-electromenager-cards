@@ -38,7 +38,7 @@ With a `light` entity the card shows **On / Off** (and **Colour** on the colour 
 - `color` (RGB, e.g. `[255, 180, 90]`, or a CSS colour)
 - `follow_light_color` (default true)
 - `color_cycle` (colour bulb, default false)
-- `presets` (list of RGB colours for the Colour button and the palette)
+- `presets` (list of RGB colours for the Colour button and the palette, e.g. `presets: [[255, 0, 0], [0, 255, 0], [0, 0, 255]]`)
 - `color_palette` (default false): on any light card whose entity supports colour or colour temperature, the **Colour** button opens a **palette**: a warm / neutral / cold white (if the light has a colour temperature) and the RGB `presets` colours (if it supports colour). One tap turns the light on with that colour and closes the palette
 - `multicolor` (Christmas tree, default true)
 - `threshold` (W, without an entity)
