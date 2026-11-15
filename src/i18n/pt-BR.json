@@ -813,6 +813,8 @@
     "water_hot": "Água muito quente"
   },
   "editor": {
+    "title_size": "Tamanho do título (px, padrão 14)",
+    "title_bold": "Título em negrito",
     "presets": "Cores da paleta (lista de cores RGB)",
     "image_background": "Fundo escuro atrás da foto",
     "color_palette": "Paleta de cores (RGB + brancos)",

@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.144.1";
+const VERSION = "1.145.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -12849,6 +12849,8 @@ function buildForm(kind) {
           { name: "illustration_size", selector: { number: { min: 30, max: 300, step: 5, mode: "slider", unit_of_measurement: "%" } } },
           { name: "transparent", selector: { boolean: {} } },
           { name: "vertical_align", selector: { select: { mode: "dropdown", options: [{ value: "top", label: tr(null, "valign_top") }, { value: "center", label: tr(null, "valign_center") }] } } },
+          { name: "title_size", selector: { number: { min: 10, max: 28, step: 1, mode: "box", unit_of_measurement: "px" } } },
+          { name: "title_bold", selector: { boolean: {} } },
           { name: "title_layout", selector: { select: { mode: "dropdown", options: [{ value: "inline", label: tr(null, "header_inline") }, { value: "stacked", label: tr(null, "header_stacked") }] } } },
           ...window.applianceTileFields(),
           { name: "animations", selector: { boolean: {} }, default: true },
@@ -13161,7 +13163,7 @@ ha-card { display: flex; flex-direction: column; justify-content: flex-start; he
 svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .head { display: flex; gap: 8px; align-items: flex-start; min-width: 0; }
 .info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
-.name { font-size: 16px; font-weight: 600; color: var(--primary-text-color); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.name { font-size: var(--ac-title-size, 14px); font-weight: var(--ac-title-weight, 500); color: var(--primary-text-color); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .status { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--secondary-text-color); min-width: 0; }
 .status span:last-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; background: var(--disabled-text-color, #9e9e9e); }
@@ -14840,7 +14842,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
 (async () => {
   const base = import.meta.url;
   // ?v=<version> : après une mise à jour, le navigateur ne ressert pas d'anciens morceaux depuis son cache
-  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.144.1`, base).href);
+  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.145.0`, base).href);
   await chunk("card-helpers");
   await chunk("editor-labels");
   // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre

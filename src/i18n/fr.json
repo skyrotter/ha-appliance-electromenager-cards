@@ -810,6 +810,8 @@
     "water_hot": "Eau trop chaude"
   },
   "editor": {
+    "title_size": "Taille du titre (px, 14 par défaut)",
+    "title_bold": "Titre en gras",
     "presets": "Couleurs de la palette (liste de couleurs RVB)",
     "image_background": "Fond sombre derrière la photo",
     "surface": "Installation (sol ou mur)",
