@@ -5,8 +5,10 @@ customElements.define('ha-card', class extends HTMLElement{});
 customElements.define('ha-icon', class extends HTMLElement{});
 window.__errors=[]; window.addEventListener('error',e=>__errors.push(e.message));
 </script>
-<script src="../dist/ha-appliance-electromenager-cards.js"></script>
+<!-- le fichier principal est un module : il charge ses cartes en parallèle puis émet « appliance-cards-ready » ; la page attend cet événement -->
+<script type="module" src="../dist/ha-appliance-electromenager-cards.js"></script>
 <script>
+window.addEventListener('appliance-cards-ready', () => {
 const R=[]; const ok=(name,cond,info='')=>R.push({name,pass:!!cond,info:cond?'':String(info)});
 const now=new Date().toISOString();
 const mk=(id,state,attrs={})=>({entity_id:id,state:String(state),attributes:attrs,last_changed:now});
@@ -2065,4 +2067,5 @@ window.RESULTS=R;
 const fails=R.filter(r=>!r.pass).length;
 document.getElementById('sum').innerHTML=`<b class="${fails?'f':'p'}">${R.length-fails} / ${R.length} tests réussis</b> — fichier testé : <code>dist/ha-appliance-electromenager-cards.js</code>`;
 document.getElementById('res').innerHTML=R.map(r=>`<tr><td class="${r.pass?'p':'f'}">${r.pass?'✔':'✘'}</td><td>${r.name}</td><td>${r.info||''}</td></tr>`).join('');
+});
 </script></body></html>
