@@ -205,6 +205,7 @@
       "source_threshold": "Source pump threshold (W)",
       "status_position": "Status position",
       "tiles_right": "Values in a column on the right",
+      "color_palette": "Colour palette (RGB + whites)",
       "tiles_order": "Order of the tiles (list of keys)",
       "dial_decimals": "Decimals on the dial litre wheels",
       "title_layout": "Title and status",
@@ -2869,6 +2870,7 @@
       "source_threshold": "Seuil de la pompe de captage (W)",
       "status_position": "Position de l'état",
       "tiles_right": "Valeurs en colonne à droite",
+      "color_palette": "Palette de couleurs (RVB + blancs)",
       "tiles_order": "Ordre des tuiles (liste de clés)",
       "dial_decimals": "Décimales sur les roues des litres du cadran",
       "title_layout": "Titre et état",
@@ -5521,6 +5523,7 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "pt-BR": {
+      "color_palette": "Paleta de cores (RGB + brancos)",
       "tiles_right": "Valores numa coluna à direita",
       "tiles_order": "Ordem dos blocos (lista de chaves)",
       "dial_decimals": "Casas decimais nas rodas dos litros do mostrador",
@@ -6150,6 +6153,7 @@
       "show_backup": "Mostrar apoios e caldeira"
     },
     "pt-PT": {
+      "color_palette": "Paleta de cores (RGB + brancos)",
       "tiles_right": "Valores numa coluna à direita",
       "tiles_order": "Ordem dos blocos (lista de chaves)",
       "dial_decimals": "Casas decimais nas rodas dos litros do mostrador",
@@ -8749,6 +8753,7 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "uk": {
+      "color_palette": "Палітра кольорів (RGB + білі)",
       "surface": "Встановлення (підлога або стіна)",
       "food_low": "Тривога про мало корму в бункері (%)",
       "hopper_capacity": "Ємність бункера (г)",
