@@ -11,6 +11,10 @@
 
   const T = {
     "en": {
+      "color": "Colour",
+      "white_warm": "Warm white",
+      "white_neutral": "Neutral white",
+      "white_cold": "Cold white",
       "name": "LED strip",
       "on": "On",
       "off": "Off",
@@ -39,6 +43,10 @@
       "energy": "Energie"
     },
     "fr": {
+      "color": "Couleur",
+      "white_warm": "Blanc chaud",
+      "white_neutral": "Blanc neutre",
+      "white_cold": "Blanc froid",
       "name": "Ruban LED",
       "on": "Allumé",
       "off": "Éteint",
@@ -53,6 +61,10 @@
       "energy": "Énergie"
     },
     "pt-BR": {
+      "color": "Cor",
+      "white_warm": "Branco quente",
+      "white_neutral": "Branco neutro",
+      "white_cold": "Branco frio",
       "name": "Fita LED",
       "on": "Ligada",
       "off": "Desligado",
@@ -67,6 +79,10 @@
       "energy": "Energia"
     },
     "pt-PT": {
+      "color": "Cor",
+      "white_warm": "Branco quente",
+      "white_neutral": "Branco neutro",
+      "white_cold": "Branco frio",
       "name": "Fita LED",
       "on": "Ligada",
       "off": "Desligado",
@@ -109,6 +125,10 @@
       "energy": "Energija"
     },
     "uk": {
+      "color": "Колір",
+      "white_warm": "Теплий білий",
+      "white_neutral": "Нейтральний білий",
+      "white_cold": "Холодний білий",
       "name": "LED-стрічка",
       "on": "Увімк.",
       "off": "Вимк.",
@@ -140,6 +160,11 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
 .ctl button.hide{display:none}.ctl button:disabled{opacity:.4;cursor:default}
 .ctl input[type=range]{flex:1 1 auto;min-width:60px;max-width:160px;accent-color:rgb(var(--ls-c));cursor:pointer}
 .ctl input.hide{display:none}
+/* palette de couleurs (option color_palette) : blancs chaud / neutre / froid et teintes RVB, un clic = allume avec cette couleur puis referme */
+.pal{display:none;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:8px}.pal.on{display:flex}
+.pal button{width:24px;height:24px;padding:0;border-radius:50%;border:2px solid color-mix(in srgb,var(--primary-text-color) 22%,transparent);cursor:pointer;background:var(--sw);transition:transform .15s}
+.pal button:hover{transform:scale(1.15)}
+.pal .sep{width:1px;background:color-mix(in srgb,var(--primary-text-color) 22%,transparent);margin:2px 0}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:6px;margin-top:6px}
 .tile{box-sizing:border-box;display:flex;flex-direction:column;background:var(--ac-tile-bg,rgba(127,127,127,.09));border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
 :host([tile-order="value"]) .tile{flex-direction:column-reverse}:host([tile-order="value"]) .tile .v{margin:0 0 2px}
@@ -192,6 +217,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
   const SVG_BARS = (label) => `<svg viewBox="0 0 270 200" role="img" aria-label="${label}"><defs><linearGradient id="lspic" x1="0" x2="1" y1="0.2" y2="0.8"><stop offset="0" style="stop-color:rgb(var(--ls-c))"/><stop offset="1" style="stop-color:rgb(var(--ls-c2))"/></linearGradient></defs><rect class="wall" width="270" height="168" rx="8"/><rect class="wl" x="6" y="14" width="140" height="140"/><rect class="wr" x="124" y="14" width="140" height="140"/><path class="bglow bgl" d="${BARL}"/><path class="bglow bgr" d="${BARR}"/><rect class="tvscr" x="58" y="30" width="154" height="90" rx="2"/><rect class="tvpic" x="60" y="32" width="150" height="86" fill="url(#lspic)"/><rect class="cam" x="130" y="24" width="10" height="6" rx="3"/><rect class="board" x="10" y="150" width="250" height="20" rx="2"/><path class="boardl" d="M95 150V170M175 150V170"/><path class="bbase" d="${BARL}"/><path class="bled bledl" d="${BARL}"/><path class="bbase" d="${BARR}"/><path class="bled bledr" d="${BARR}"/><rect class="bfoot" x="26" y="148" width="12" height="3" rx="1.5"/><rect class="bfoot" x="232" y="148" width="12" height="3" rx="1.5"/><ellipse class="table" cx="135" cy="182" rx="56" ry="7"/><rect class="tleg" x="125" y="184" width="20" height="14" rx="2"/><ellipse class="spk" cx="118" cy="180" rx="6" ry="2.5"/></svg>`;
   const SVG = (label, shape) => (shape === 'bars' ? SVG_BARS : SVG_STRIP)(label);
 
+  const PRESETS = [[255, 122, 217], [64, 156, 255], [52, 211, 153], [255, 196, 70], [255, 82, 82], [167, 114, 255]];
   const TILES = [['brightness', 'mdi:brightness-6', 'show_brightness'], ['effect', 'mdi:palette-swatch-variant', 'show_effect'],
     ['power', 'mdi:flash', 'show_power'], ['energy', 'mdi:lightning-bolt-circle', 'show_energy']];
 
@@ -250,7 +276,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="lstitle"></div><div class="badge" id="lsbadge"></div></div>
         ${SVG((c.name || this._t('name')).replace(/"/g, ''), c.shape)}
-        <div class="ctl" id="lsctl"><button id="lspw" aria-pressed="false"><ha-icon icon="mdi:power"></ha-icon></button><input id="lsbr" class="hide" type="range" min="1" max="100" step="1" aria-label="${this._t('brightness')}"><button id="lsfx" class="hide"><ha-icon icon="mdi:palette-swatch-variant"></ha-icon></button></div>
+        <div class="ctl" id="lsctl"><button id="lspw" aria-pressed="false"><ha-icon icon="mdi:power"></ha-icon></button><input id="lsbr" class="hide" type="range" min="1" max="100" step="1" aria-label="${this._t('brightness')}"><button id="lsfx" class="hide"><ha-icon icon="mdi:palette-swatch-variant"></ha-icon></button><button id="lscol" class="hide"><ha-icon icon="mdi:palette"></ha-icon></button></div>
+        <div class="pal" id="lspal"></div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
       window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(c.entity));
@@ -263,6 +290,14 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       root.getElementById('lsfx').addEventListener('click', () => {
         const s = this._st(c.entity), list = (s && s.attributes && s.attributes.effect_list) || [];
         if (list.length) this._hass.callService('light', 'turn_on', { entity_id: c.entity, effect: list[(list.indexOf(s.attributes.effect) + 1) % list.length] });
+      });
+      root.getElementById('lscol').addEventListener('click', () => { this._palOpen = !this._palOpen; this._render(); });
+      root.getElementById('lspal').addEventListener('click', (e) => {
+        const b = e.target.closest('button[data-sw]'); if (!b || !this._hass) return;
+        const [kind, v] = b.dataset.sw.split(':'), data = { entity_id: c.entity };
+        if (kind === 'k') data.color_temp_kelvin = Number(v); else data.rgb_color = v.split(',').map(Number);
+        this._hass.callService('light', 'turn_on', data);
+        this._palOpen = false; this._render();
       });
       const tgt = { brightness: c.entity, effect: c.entity, power: c.entity_power, energy: c.entity_energy };
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => this._more(tgt[el.dataset.k])));
@@ -308,6 +343,22 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       if (!this._dragging) br.value = String(Math.round(bri * 100));
       const hasFx = Array.isArray(a.effect_list) && a.effect_list.length > 1;
       fxb.classList.toggle('hide', !hasFx || st === 'unavailable'); fxb.title = this._t('next_effect');
+      // palette de couleurs (option color_palette) : entité light qui gère la couleur ou le blanc réglable
+      const modes = Array.isArray(a.supported_color_modes) ? a.supported_color_modes : [];
+      const rgbOk = modes.some((m) => ['hs', 'xy', 'rgb', 'rgbw', 'rgbww'].includes(m)), ctOk = modes.some((m) => ['color_temp', 'rgbw', 'rgbww'].includes(m)) || a.min_color_temp_kelvin != null;
+      const palCan = c.color_palette === true && this._dom() === 'light' && st !== 'unavailable' && (rgbOk || ctOk);
+      const colb = r.getElementById('lscol'), pal = r.getElementById('lspal');
+      colb.classList.toggle('hide', !palCan); colb.classList.toggle('on', !!(palCan && this._palOpen)); colb.title = this._t('color');
+      pal.classList.toggle('on', !!(palCan && this._palOpen));
+      if (palCan) {
+        const list = Array.isArray(c.presets) && c.presets.length ? c.presets : PRESETS;
+        const lo = Number(a.min_color_temp_kelvin) || 2000, hi = Number(a.max_color_temp_kelvin) || 6500;
+        const WHITES = [[Math.max(lo, 2700), 'warm', 'rgb(255,167,87)'], [Math.min(Math.max(lo, 4000), hi), 'neutral', 'rgb(255,228,206)'], [Math.min(hi, 6500), 'cold', 'rgb(206,224,255)']];
+        const html = (ctOk ? WHITES.map(([k, n, col]) => `<button type="button" style="--sw:${col}" data-sw="k:${k}" title="${this._t('white_' + n)}" aria-label="${this._t('white_' + n)}"></button>`).join('') : '')
+          + (ctOk && rgbOk ? '<span class="sep"></span>' : '')
+          + (rgbOk ? list.map((rgb) => `<button type="button" style="--sw:rgb(${rgb.join(',')})" data-sw="c:${rgb.join(',')}" aria-label="rgb(${rgb.join(',')})"></button>`).join('') : '');
+        if (pal.dataset.h !== html) { pal.innerHTML = html; pal.dataset.h = html; }
+      }
 
       // tuiles
       const V = {
@@ -352,9 +403,10 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'shape', selector: { select: { mode: 'dropdown', options: [{ value: 'strip', label: window.applianceEditorLabel('shape_strip', this._hass) }, { value: 'bars', label: window.applianceEditorLabel('shape_bars', this._hass) }] } } },
         ent('entity', ['light', 'switch', 'input_boolean']), { name: 'color', selector: { text: {} } }, { name: 'color2', selector: { text: {} } },
         ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'),
+        { name: 'presets', selector: { object: {} } },
         ...window.applianceActionFields,
         window.applianceLanguageField(T),
-        { type: 'grid', name: '', schema: [bool('compact', false), bool('show_status'), bool('show_controls'), ...TILES.map(([, , o]) => bool(o)), bool('animations')] },
+        { type: 'grid', name: '', schema: [bool('compact', false), bool('show_status'), bool('show_controls'), bool('color_palette', false), ...TILES.map(([, , o]) => bool(o)), bool('animations')] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }

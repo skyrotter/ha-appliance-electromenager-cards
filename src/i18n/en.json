@@ -813,6 +813,7 @@
     "water_hot": "Water too hot"
   },
   "editor": {
+    "presets": "Colour presets (list of RGB colours)",
     "image_background": "Dark background behind the photo",
     "surface": "Installation (floor or wall)",
     "food_low": "Low hopper alert (%)",
@@ -2203,6 +2204,10 @@
     "low": "Low"
   },
   "led_strip": {
+    "color": "Colour",
+    "white_warm": "Warm white",
+    "white_neutral": "Neutral white",
+    "white_cold": "Cold white",
     "name": "LED strip",
     "on": "On",
     "off": "Off",

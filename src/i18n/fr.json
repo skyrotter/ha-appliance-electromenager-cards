@@ -810,6 +810,7 @@
     "water_hot": "Eau trop chaude"
   },
   "editor": {
+    "presets": "Couleurs de la palette (liste de couleurs RVB)",
     "image_background": "Fond sombre derrière la photo",
     "surface": "Installation (sol ou mur)",
     "food_low": "Alerte réserve basse (%)",
@@ -2189,6 +2190,10 @@
     "low": "Faible"
   },
   "led_strip": {
+    "color": "Couleur",
+    "white_warm": "Blanc chaud",
+    "white_neutral": "Blanc neutre",
+    "white_cold": "Blanc froid",
     "name": "Ruban LED",
     "on": "Allumé",
     "off": "Éteint",

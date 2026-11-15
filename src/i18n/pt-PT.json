@@ -813,6 +813,7 @@
     "water_hot": "Água demasiado quente"
   },
   "editor": {
+    "presets": "Cores da paleta (lista de cores RGB)",
     "image_background": "Fundo escuro atrás da foto",
     "color_palette": "Paleta de cores (RGB + brancos)",
     "tiles_right": "Valores numa coluna à direita",
@@ -2201,6 +2202,10 @@
     "low": "Baixo"
   },
   "led_strip": {
+    "color": "Cor",
+    "white_warm": "Branco quente",
+    "white_neutral": "Branco neutro",
+    "white_cold": "Branco frio",
     "name": "Fita LED",
     "on": "Ligada",
     "off": "Desligado",
