@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.151.0";
+const VERSION = "1.152.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -133,6 +133,10 @@ const STRINGS = {
     "solar": "Solar panels",
     "vmc": "Extractor fan",
     "canister_vacuum": "Canister vacuum",
+    "air_compressor": "Air compressor",
+    "runtime_total": "Total runtime",
+    "f_runtime_total": "Total runtime sensor (optional)",
+    "f_pressure_tank": "Tank pressure sensor (optional)",
     "direction": "Airflow",
     "f_direction": "Airflow direction",
     "vx_supply": "Supply",
@@ -2298,6 +2302,10 @@ const STRINGS = {
     "solar": "Panneaux solaires",
     "vmc": "VMC",
     "canister_vacuum": "Aspirateur traîneau",
+    "air_compressor": "Compresseur d'air",
+    "runtime_total": "Durée de fonctionnement cumulée",
+    "f_runtime_total": "Capteur durée cumulée (facultatif)",
+    "f_pressure_tank": "Capteur de pression de la cuve (facultatif)",
     "direction": "Flux d'air",
     "f_direction": "Sens du flux d'air",
     "vx_supply": "Soufflage",
@@ -2750,6 +2758,10 @@ const STRINGS = {
     "solar": "Napelemek",
     "vmc": "Elszívó ventilátor",
     "canister_vacuum": "Porzsák nélküli porszívó",
+    "air_compressor": "Légkompresszor",
+    "runtime_total": "Összes üzemidő",
+    "f_runtime_total": "Összes üzemidő érzékelő (opcionális)",
+    "f_pressure_tank": "Tartály nyomás érzékelő (opcionális)",
     "direction": "Légáram",
     "f_direction": "Légáram iránya",
     "vx_supply": "Befúvás",
@@ -7709,6 +7721,40 @@ SVG.ac_split = () => `
 <g class="ac-ico ico-fan" transform="translate(-9 3)" stroke="#cfd6dd" stroke-width="1" stroke-linecap="round" fill="none"><path d="M78 63q-3-4 0-4.5M78 63q4-1 3.5 2.4M78 63q-1 4-4 2"/></g>
 <circle class="led l1" cx="18" cy="64" r="1.1"/>`;
 
+/* Compresseur d'air à courroie (cuve horizontale, moteur, volant, tête de piston), sur prise connectée (Shelly…) :
+   en marche, le moteur et le volant tournent, la courroie défile, le piston monte et descend et la cuve vibre. */
+SVG.air_compressor = () => `
+<defs>${DEFS}
+<linearGradient id="ID-cptank" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9bec4"/><stop offset=".45" stop-color="#8d939a"/><stop offset="1" stop-color="#5c6269"/></linearGradient>
+<linearGradient id="ID-cpmot" x1="0" x2="1"><stop offset="0" stop-color="#6c727a"/><stop offset=".5" stop-color="#a9afb6"/><stop offset="1" stop-color="#6c727a"/></linearGradient></defs>
+<ellipse cx="58" cy="133" rx="52" ry="4.5" fill="url(#ID-shadow)"/>
+<g class="cp-body">
+  <path d="M96 84L106 72V52q0-3 4-3h4" fill="none" stroke="#2a2f35" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M96 84L106 72V52q0-3 4-3h4" fill="none" stroke="#9aa1a8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="9" y="84" width="94" height="38" rx="19" fill="url(#ID-cptank)" stroke="#2a2f35" stroke-width="1.8"/>
+  <path d="M20 90h72" stroke="#fff" stroke-opacity=".35" stroke-width="2" stroke-linecap="round"/>
+  <circle class="cp-led" cx="90" cy="103" r="2.6"/>
+  <rect x="94" y="116" width="8" height="14" rx="2" fill="#7a8088" stroke="#2a2f35" stroke-width="1.4"/><rect x="92" y="128" width="12" height="4" rx="1.5" fill="#2a2f35"/>
+  <circle cx="26" cy="124" r="8.5" fill="#6f757c" stroke="#2a2f35" stroke-width="1.8"/><circle cx="26" cy="124" r="2.4" fill="#2a2f35"/>
+  <rect x="18" y="62" width="26" height="24" rx="4" fill="url(#ID-cpmot)" stroke="#2a2f35" stroke-width="1.4"/>
+  <path d="M20 68h22M20 73h22M20 78h22" stroke="#4c5259" stroke-width="1.1"/>
+  <g class="cp-piston">
+    <rect x="68" y="8" width="16" height="30" rx="2" fill="url(#ID-cpmot)" stroke="#2a2f35" stroke-width="1.2"/>
+    <path d="M66 12h20M66 17h20M66 22h20M66 27h20" stroke="#4c5259" stroke-width="2.2" stroke-linecap="round"/>
+    <rect x="72" y="4" width="8" height="5" rx="1.5" fill="#5c6269" stroke="#2a2f35" stroke-width="1"/>
+  </g>
+  <path class="cp-belt" d="M31 64L72 38M31 74L80 70" fill="none" stroke="#14171a" stroke-width="2.4" stroke-linecap="round"/>
+  <path class="cp-belt-run" d="M31 64L72 38M31 74L80 70" fill="none" stroke="#9aa1a8" stroke-width="1" stroke-linecap="round"/>
+  <g class="cp-fly">
+    <circle cx="76" cy="56" r="19" fill="#dfe3e7" fill-opacity=".55" stroke="#2a2f35" stroke-width="2.2"/>
+    <circle cx="76" cy="56" r="3.6" fill="#4c5259"/>
+    <path d="M76 38v36M58 56h36M63.3 43.3l25.4 25.4M63.3 68.7l25.4-25.4" stroke="#3a4047" stroke-width="1.3"/>
+    <circle cx="76" cy="44" r="2" fill="#2a2f35"/>
+  </g>
+  <g class="cp-pul"><circle cx="31" cy="69" r="6.4" fill="#2a2f35"/><circle cx="31" cy="69" r="5" fill="#c9ced4"/><path d="M31 64v10M26 69h10" stroke="#2a2f35" stroke-width="1.1"/></g>
+</g>
+<g class="cp-air"><path d="M108 46q4-4 8-2"/><path d="M110 40q5-5 9-2"/></g>`;
+
 SVG.air_fryer = () => `
 <defs>${DEFS}<clipPath id="ID-w1"><rect x="14" y="58" width="39" height="31" rx="3"/></clipPath><clipPath id="ID-w2"><rect x="67" y="58" width="39" height="31" rx="3"/></clipPath>
 <linearGradient id="ID-cav" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3f45"/><stop offset="1" stop-color="#15181b"/></linearGradient>
@@ -10764,6 +10810,10 @@ const DEF = {
   canister_vacuum: { accent: "active", threshold: 150,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["aspirateur_traineau", "canister_vacuum", "vacuum_cleaner", "staubsauger", "fc9557", "powerpro"] },
+  // compresseur d'air sur prise connectée (Shelly…) : en marche au-dessus de threshold ; pression, durée du jour et durée cumulée facultatives
+  air_compressor: { accent: "active", threshold: 20,
+    fields: ["entity", "power", "energy", "cost", "pressure", "usage_time", "runtime_total", "switch"],
+    keys: ["compresseur", "kompressor", "air_compressor", "compressor", "compresor"] },
   wet_vacuum: { accent: "cold", threshold: 3,
     fields: ["entity", "power", "energy", "cost", "battery_level", "clean_water", "dirty_water", "mode", "switch"],
     keys: ["aspirateur_laveur", "aspirateur_lavant", "nettoyeur_sol", "wet_vacuum", "wet_dry", "floor_washer", "floor_one", "tineco", "laveur"] },
@@ -11082,7 +11132,7 @@ const PERIODS = ["day", "week", "month", ...Object.keys(ROLLING)];
 // cartes avec la tuile « durée d'utilisation du jour » (capteur usage_time, sinon calcul depuis l'historique)
 // fitness (vélo elliptique, vélo d'appartement, rameur) : allure de l'animation et tuiles de séance
 const FIT_KINDS = ["elliptical", "exercise_bike", "rowing_machine"];
-const USAGE_KINDS = ["tv", "monitor", "ps5", "desktop_pc", "laptop", ...FIT_KINDS];
+const USAGE_KINDS = ["tv", "monitor", "ps5", "desktop_pc", "laptop", "air_compressor", ...FIT_KINDS];
 const USAGE_ON = ["on", "playing", "paused", "idle", "buffering", "home"];
 
 // piscine : équipements commandables [option, icône, clé de libellé]
@@ -11167,7 +11217,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "switch_low", "switch_high", "direction", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water", "power_level", "pellet_level", "ph", "orp", "dose_interval", "dose_timer", "dose_volume", "dose_time", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "switch_low", "switch_high", "direction", "pressure", "runtime_total", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water", "power_level", "pellet_level", "ph", "orp", "dose_interval", "dose_timer", "dose_volume", "dose_time", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -11391,7 +11441,7 @@ class ApplianceCardBase extends HTMLElement {
       level: num(S(c.power_level)), pellets: num(S(c.pellet_level)),
       pool: kind === "pool_pump" || kind === "dosing_pump" ? Object.fromEntries(["ph", "orp", "pressure", "tds", "salt", "chlorine"].map((k) => [k, S(c[k])])) : null,
       fit: FIT_KINDS.includes(kind) ? { cadence: S(c.cadence), distance: S(c.distance), hr: S(c.heart_rate), kcal: S(c.calories) } : null,
-      runtime: parseRemaining(S(c.runtime)), usage: parseRemaining(S(c.usage_time)), speed: S(c.speed), bedTemp: num(S(c.bed_temperature)), humidity: num(S(c.humidity)), mode: S(c.mode), window: S(c.window), light: S(c.light), keg: num(S(c.keg_level)), pouring: S(c.pouring), batt: num(S(c.battery_level)), zone2: num(S(c.zone2_temperature)), zone2Ent: S(c.zone2_temperature),
+      runtime: parseRemaining(S(c.runtime)), runtimeTotal: parseRemaining(S(c.runtime_total)), usage: parseRemaining(S(c.usage_time)), speed: S(c.speed), bedTemp: num(S(c.bed_temperature)), humidity: num(S(c.humidity)), mode: S(c.mode), window: S(c.window), light: S(c.light), keg: num(S(c.keg_level)), pouring: S(c.pouring), batt: num(S(c.battery_level)), zone2: num(S(c.zone2_temperature)), zone2Ent: S(c.zone2_temperature),
       lampE: S(c.lamp_hours), picMode: S(c.picture_mode), tank: S(c.tank_full), fanSpeed: S(c.fan_speed), targetHum: S(c.target_humidity), cleanW: S(c.clean_water), dirtyW: S(c.dirty_water), pm25: S(c.pm25), filterE: S(c.filter),
       status: "idle", phase: null, alerts: [],
     };
@@ -12835,6 +12885,12 @@ class ApplianceCardBase extends HTMLElement {
       const min = m.usage != null ? m.usage : today ? u.min + (u.on && active ? (Date.now() - u.at) / 60000 : 0) : null;
       if (min != null) tile("mdi:timer-outline", fmtDuration(min), lb("usage_today"), c.usage_time || c.power || c.entity);
     }
+    // compresseur : durée cumulée et pression du réservoir (capteurs facultatifs)
+    if (kind === "air_compressor") {
+      if (m.runtimeTotal != null) tile("mdi:timer-sand", fmtDuration(m.runtimeTotal), lb("runtime_total"), c.runtime_total);
+      const ps = c.pressure ? hass.states[c.pressure] : null;
+      if (ps && !BAD.includes(String(ps.state).toLowerCase())) tile("mdi:gauge", fmtUnit(hass, ps, 1), lb("pressure"), c.pressure);
+    }
     // dernier cycle (option last_cycle), affiché hors cycle
     const cy = c.last_cycle && !active ? this._cycle : null;
     if (cy) {
@@ -12892,6 +12948,7 @@ const SEL = {
   power_level: { entity: { domain: ["sensor", "number", "input_number", "select", "input_select"] } },
   pellet_level: { entity: { domain: ["sensor", "number", "input_number"] } },
   runtime: { entity: { domain: ["sensor"] } },
+  runtime_total: { entity: { domain: ["sensor"] } },
   usage_time: { entity: { domain: ["sensor"] } },
   // vidéoprojecteur : heures de lampe / laser et mode d'image
   lamp_hours: { entity: { domain: ["sensor", "number", "input_number"] } },
@@ -13213,7 +13270,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "cookeo" && s.name === "style" ? "f_cookeo_style" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "fridge" && s.name === "finish" ? "f_fridge_finish" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : ["thermomix", "microwave", "vmc"].includes(kind) && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : ["printer_3d", "printer"].includes(kind) && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix", "printer"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "air_compressor" && s.name === "pressure" ? "f_pressure_tank" : kind === "cookeo" && s.name === "style" ? "f_cookeo_style" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "fridge" && s.name === "finish" ? "f_fridge_finish" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : ["thermomix", "microwave", "vmc"].includes(kind) && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : ["printer_3d", "printer"].includes(kind) && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix", "printer"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
   };
 }
 
@@ -15002,6 +15059,24 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-canister_vacuum.active .cv-dust circle { animation: cv-suck 1s ease-in infinite; }
 .cv-dust circle:nth-child(2n) { animation-delay: -.35s !important; } .cv-dust circle:nth-child(3n) { animation-delay: -.7s !important; }
 @keyframes cv-suck { 0% { opacity: 0; transform: translate(0, 0); } 30% { opacity: .9; } 100% { opacity: 0; transform: translate(-14px, 0); } }
+
+/* ---------- compresseur d'air ---------- */
+.cp-led { fill: #3a424b; stroke: #1b1f23; stroke-width: .8; transition: fill .3s; }
+.k-air_compressor.active .cp-led { fill: #3ddc84; filter: drop-shadow(0 0 1.6px #3ddc84); }
+.cp-fly { transform-box: view-box; transform-origin: 76px 56px; }
+.cp-pul { transform-box: view-box; transform-origin: 31px 69px; }
+.cp-piston { transform-box: view-box; transform-origin: 76px 20px; }
+.cp-belt-run { stroke-dasharray: 2.4 4; opacity: 0; }
+.cp-air path { fill: none; stroke: #8fb6d8; stroke-width: 1.4; stroke-linecap: round; opacity: 0; }
+.k-air_compressor.active .cp-fly { animation: ac-rot 1.4s linear infinite; }
+.k-air_compressor.active .cp-pul { animation: ac-rot .6s linear infinite; }
+.k-air_compressor.active .cp-belt-run { opacity: .9; animation: cp-belt .35s linear infinite; }
+.k-air_compressor.active .cp-piston { animation: cp-pump .7s ease-in-out infinite alternate; }
+.k-air_compressor.active .cp-body { animation: ac-shake-soft .35s linear infinite; }
+.k-air_compressor.active .cp-air path { animation: ac-steam 1.8s ease-out infinite; }
+.cp-air path:nth-child(2) { animation-delay: .9s !important; }
+@keyframes cp-belt { to { stroke-dashoffset: -6.8; } }
+@keyframes cp-pump { from { transform: translateY(-1.5px); } to { transform: translateY(2.5px); } }
 `;
 
 /* ------------------------------------------------------------------ */
@@ -15036,7 +15111,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
 (async () => {
   const base = import.meta.url;
   // ?v=<version> : après une mise à jour, le navigateur ne ressert pas d'anciens morceaux depuis son cache
-  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.151.0`, base).href);
+  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.152.0`, base).href);
   await chunk("card-helpers");
   await chunk("editor-labels");
   // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre
