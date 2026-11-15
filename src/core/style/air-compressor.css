@@ -1,0 +1,17 @@
+/* ---------- compresseur d'air ---------- */
+.cp-led { fill: #3a424b; stroke: #1b1f23; stroke-width: .8; transition: fill .3s; }
+.k-air_compressor.active .cp-led { fill: #3ddc84; filter: drop-shadow(0 0 1.6px #3ddc84); }
+.cp-fly { transform-box: view-box; transform-origin: 76px 56px; }
+.cp-pul { transform-box: view-box; transform-origin: 31px 69px; }
+.cp-piston { transform-box: view-box; transform-origin: 76px 20px; }
+.cp-belt-run { stroke-dasharray: 2.4 4; opacity: 0; }
+.cp-air path { fill: none; stroke: #8fb6d8; stroke-width: 1.4; stroke-linecap: round; opacity: 0; }
+.k-air_compressor.active .cp-fly { animation: ac-rot 1.4s linear infinite; }
+.k-air_compressor.active .cp-pul { animation: ac-rot .6s linear infinite; }
+.k-air_compressor.active .cp-belt-run { opacity: .9; animation: cp-belt .35s linear infinite; }
+.k-air_compressor.active .cp-piston { animation: cp-pump .7s ease-in-out infinite alternate; }
+.k-air_compressor.active .cp-body { animation: ac-shake-soft .35s linear infinite; }
+.k-air_compressor.active .cp-air path { animation: ac-steam 1.8s ease-out infinite; }
+.cp-air path:nth-child(2) { animation-delay: .9s !important; }
+@keyframes cp-belt { to { stroke-dashoffset: -6.8; } }
+@keyframes cp-pump { from { transform: translateY(-1.5px); } to { transform: translateY(2.5px); } }

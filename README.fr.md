@@ -231,6 +231,7 @@ Clique sur une carte pour ses options et ses exemples (pages en anglais).
 | Carte | Type |
 |---|---|
 | [Robot aspirateur](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/robots.md) | `custom:appliance-robot-vacuum-solo-card` |
+| [Compresseur d'air](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/air-compressor.md) | `custom:appliance-air-compressor-card` |
 | [Aspirateur traîneau](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/canister-vacuum.md) | `custom:appliance-canister-vacuum-card` |
 | [Aspirateur laveur](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/wet-vacuum.md) | `custom:appliance-wet-vacuum-card` |
 | [Robot tondeuse](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/robots.md) | `custom:appliance-robot-mower-solo-card` |

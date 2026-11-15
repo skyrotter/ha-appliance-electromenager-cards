@@ -237,6 +237,7 @@ Click a card for its options and examples.
 | Card | Type |
 |---|---|
 | [Robot vacuum](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/robots.md) | `custom:appliance-robot-vacuum-solo-card` |
+| [Air compressor](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/air-compressor.md) | `custom:appliance-air-compressor-card` |
 | [Canister vacuum](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/canister-vacuum.md) | `custom:appliance-canister-vacuum-card` |
 | [Wet & dry vacuum](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/wet-vacuum.md) | `custom:appliance-wet-vacuum-card` |
 | [Robot mower](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/robots.md) | `custom:appliance-robot-mower-solo-card` |
