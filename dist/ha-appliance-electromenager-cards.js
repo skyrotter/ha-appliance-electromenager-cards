@@ -4609,6 +4609,10 @@ const STRINGS = {
     "f_hide_zero_power": "Ukryj moc, gdy wynosi 0"
   },
   "pt-BR": {
+    "valign_top": "No topo (predefinido)",
+    "valign_center": "Centrado",
+    "header_inline": "Título à esquerda, estado à direita (predefinido)",
+    "header_stacked": "Empilhados: título e depois estado",
     "washer": "Lavadora de roupas",
     "dryer": "Secadora de roupas",
     "dishwasher": "Lava-louças",
@@ -5060,6 +5064,10 @@ const STRINGS = {
     "f_calories": "Sensor de calorias"
   },
   "pt-PT": {
+    "valign_top": "No topo (predefinido)",
+    "valign_center": "Centrado",
+    "header_inline": "Título à esquerda, estado à direita (predefinido)",
+    "header_stacked": "Empilhados: título e depois estado",
     "washer": "Máquina de lavar roupa",
     "dryer": "Máquina de secar roupa",
     "dishwasher": "Máquina de lavar loiça",

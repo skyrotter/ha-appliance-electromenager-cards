@@ -1,5 +1,9 @@
 {
   "common": {
+    "valign_top": "No topo (predefinido)",
+    "valign_center": "Centrado",
+    "header_inline": "Título à esquerda, estado à direita (predefinido)",
+    "header_stacked": "Empilhados: título e depois estado",
     "washer": "Máquina de lavar roupa",
     "dryer": "Máquina de secar roupa",
     "dishwasher": "Máquina de lavar loiça",
@@ -809,6 +813,14 @@
     "water_hot": "Água demasiado quente"
   },
   "editor": {
+    "tiles_right": "Valores numa coluna à direita",
+    "tiles_order": "Ordem dos blocos (lista de chaves)",
+    "dial_decimals": "Casas decimais nas rodas dos litros do mostrador",
+    "title_layout": "Título e estado",
+    "vertical_align": "Posição do conteúdo (célula alta)",
+    "hot_water": "Água quente (vermelho)",
+    "today_decimals": "Casas decimais do bloco Hoje",
+    "index_decimals": "Casas decimais do bloco Índice (m³)",
     "surface": "Instalação (pavimento ou parede)",
     "food_low": "Alerta de nível baixo no reservatório (%)",
     "hopper_capacity": "Capacidade do reservatório (g)",
@@ -1505,6 +1517,8 @@
     "temperature": "Temperatura"
   },
   "water_meter": {
+    "unit_m3": "m³",
+    "unit_l": "L",
     "name": "Contador de água",
     "idle": "Sem caudal",
     "flowing": "Com caudal",
