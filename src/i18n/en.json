@@ -1148,6 +1148,8 @@
     "battery_model": "Battery model",
     "battery_entity_backup": "Backup output (off-grid power)",
     "battery_show_backup": "Backup tile",
+    "backup_color": "Backup colour (name or #hex, default orange)",
+    "battery_flip": "Mirror the photo (backup socket on the other side)",
     "battery_count": "Number of units side by side",
     "battery_model_default": "Drawn modules (default)",
     "battery_model_marstek_venus_e3": "Marstek Venus E 3.0 (photo)",
