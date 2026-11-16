@@ -22,11 +22,11 @@ Every entity is optional. Without `entity`, the valve counts as open when `entit
 | `entity_battery` | % or battery binary sensor (list: the lowest), low below `battery_low` (20 %) |
 | `entity_signal`, `entity_pressure`, `entity_power`, `entity_cost` | extra tiles |
 | `entity_temperature` | freezing alert below `freeze_temp` (3 °C) |
-| `compact`, `show_status`, `show_buttons`, `show_position`, `show_flow`, `show_volume`, `show_remaining`, `show_today`, `show_total`, `show_next`, `show_mode`, `show_pressure`, `show_temperature`, `show_power`, `show_battery`, `show_signal`, `show_cost`, `animations`, `labels`, `language`, `illustration_size`, `transparent`, `tap_action`, `hold_action`, `temperature_unit` | |
+| `compact`, `show_status`, `show_buttons`, `show_position`, `show_flow`, `show_volume`, `show_remaining`, `show_today`, `show_total`, `show_next`, `show_mode`, `show_pressure`, `show_temperature`, `show_power`, `show_battery`, `show_signal`, `show_cost`, `animations`, `labels`, `language`, `illustration_size`, `handle_color`, `transparent`, `tap_action`, `hold_action`, `temperature_unit` | |
 
 Alerts by priority: **Unavailable**, **Leak!**, **Fault**, **Freezing risk**, **Low battery**; the open / closed state stays drawn underneath.
 
-`compact: true` is for small fixed slots (smaller title, buttons and tiles, the illustration takes the remaining height); `transparent: true` removes the card background; `illustration_size` scales the drawing (%).
+`compact: true` is for small fixed slots (smaller title, buttons and tiles, the illustration takes the remaining height); `transparent: true` removes the card background; `illustration_size` scales the drawing (%); `handle_color` (valve card only) sets the lever colour: `blue`, `red`, `yellow`, `black`, `pink` (default), `green`, `orange`, `white`, `grey`, a hex code (`"#1e88e5"`) or `[r, g, b]`.
 
 ```yaml
 type: custom:appliance-water-valve-card
