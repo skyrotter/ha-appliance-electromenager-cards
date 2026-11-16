@@ -520,7 +520,8 @@
     "idle": "Repos",
     "full": "Plein dans",
     "empty": "Vide dans",
-    "low": "Batterie faible"
+    "low": "Batterie faible",
+    "backup": "Secours"
   },
   "ev_charger": {
     "name": "Borne de recharge",
@@ -1135,6 +1136,8 @@
     "illustration_size": "Taille de l'illustration",
     "lcd_humidity": "Humidité sur l'écran",
     "battery_model": "Modèle de batterie",
+    "battery_entity_backup": "Sortie de secours (puissance off-grid)",
+    "battery_show_backup": "Tuile secours",
     "battery_count": "Nombre d’unités côte à côte",
     "battery_model_default": "Modules dessinés (défaut)",
     "battery_model_marstek_venus_e3": "Marstek Venus E 3.0 (photo)",

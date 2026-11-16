@@ -520,7 +520,8 @@
     "idle": "Inativo",
     "full": "Cheia em",
     "empty": "Vazia em",
-    "low": "Bateria fraca"
+    "low": "Bateria fraca",
+    "backup": "Backup"
   },
   "ev_charger": {
     "name": "Carregador de veículo elétrico",
@@ -1131,6 +1132,8 @@
     "illustration_size": "Tamanho da ilustração",
     "lcd_humidity": "Humidade no ecrã",
     "battery_model": "Modelo da bateria",
+    "battery_entity_backup": "Saída de backup (potência off-grid)",
+    "battery_show_backup": "Mosaico de backup",
     "battery_count": "Número de unidades lado a lado",
     "battery_model_default": "Módulos desenhados (predefinição)",
     "battery_model_marstek_venus_e3": "Marstek Venus E 3.0 (foto)",

@@ -22,7 +22,8 @@ const I18N_BAT = {
     "idle": "Idle",
     "full": "Full in",
     "empty": "Empty in",
-    "low": "Low battery"
+    "low": "Low battery",
+    "backup": "Backup"
   },
   "cs": {
     "name": "Solární baterie",
@@ -88,7 +89,8 @@ const I18N_BAT = {
     "idle": "Repos",
     "full": "Plein dans",
     "empty": "Vide dans",
-    "low": "Batterie faible"
+    "low": "Batterie faible",
+    "backup": "Secours"
   },
   "hu": {
     "name": "Napelem akkumulátor",
@@ -167,7 +169,8 @@ const I18N_BAT = {
     "idle": "Inativo",
     "full": "Cheia em",
     "empty": "Vazia em",
-    "low": "Bateria fraca"
+    "low": "Bateria fraca",
+    "backup": "Backup"
   },
   "pt-PT": {
     "name": "Bateria solar",
@@ -181,7 +184,8 @@ const I18N_BAT = {
     "idle": "Inativo",
     "full": "Cheia em",
     "empty": "Vazia em",
-    "low": "Bateria fraca"
+    "low": "Bateria fraca",
+    "backup": "Backup"
   },
   "ro": {
     "name": "Baterie solară",
@@ -282,6 +286,8 @@ class ApplianceBatteryCard extends HTMLElement {
         { name: 'invert_power', selector: { boolean: {} } },
         { name: 'entity_energy', selector: { entity: { domain: 'sensor', device_class: 'energy' } } },
         { name: 'entity_temperature', selector: { entity: { domain: 'sensor', device_class: 'temperature' } } },
+        // sortie de secours (off-grid) : puissance en W, tuile « Secours » et prise allumée sur la photo Marstek
+        { name: 'entity_backup', selector: { entity: { domain: 'sensor', device_class: 'power' } } },
         // date de la prochaine calibration (ex. batteries Zendure) : capteur date/horodatage ou input_datetime
         { name: 'entity_calibration', selector: { entity: { domain: ['sensor', 'input_datetime'] } } },
         { type: 'grid', name: '', schema: [
@@ -293,6 +299,7 @@ class ApplianceBatteryCard extends HTMLElement {
           { name: 'show_power', selector: { boolean: {} }, default: true },
           { name: 'show_energy', selector: { boolean: {} }, default: true },
           { name: 'show_temperature', selector: { boolean: {} }, default: true },
+          { name: 'show_backup', selector: { boolean: {} }, default: true },
           { name: 'show_time', selector: { boolean: {} }, default: true },
           { name: 'show_calibration', selector: { boolean: {} }, default: true },
         ] },
@@ -302,14 +309,14 @@ class ApplianceBatteryCard extends HTMLElement {
         ...window.applianceActionFields,
         window.applianceLanguageField(I18N_BAT),
       ],
-      computeLabel: (s) => window.applianceEditorLabel(s.name === 'model' ? 'battery_model' : s.name === 'count' ? 'battery_count' : s.name),
+      computeLabel: (s) => window.applianceEditorLabel(s.name === 'model' ? 'battery_model' : s.name === 'count' ? 'battery_count' : s.name === 'entity_backup' ? 'battery_entity_backup' : s.name === 'show_backup' ? 'battery_show_backup' : s.name),
     };
   }
 
   setConfig(config) {
     if (window.applianceSize) window.applianceSize(this, config);
     // Convention : puissance > 0 = charge (inverser avec invert_power si ton capteur est l'inverse)
-    this._config = { show_power: true, show_energy: true, show_temperature: true, show_time: true, show_calibration: true,
+    this._config = { show_power: true, show_energy: true, show_temperature: true, show_backup: true, show_time: true, show_calibration: true,
       capacity_kwh: 10, max_power: 5000, low_threshold: 15, invert_power: false, status_position: 'auto', layout: 'default', model: 'default', count: 1, ...config };
     this._built = false; this._build();
   }
@@ -337,6 +344,7 @@ class ApplianceBatteryCard extends HTMLElement {
         <rect x="${M.bar.x1 - 8}" y="${M.bar.y - 5}" width="${len + 16}" height="10" rx="2" fill="#121317"/>
         <rect x="${M.led.x - 9}" y="${M.led.y - 4}" width="18" height="8" rx="2" fill="#121317"/>
         <line x1="${M.bar.x1}" y1="${M.bar.y}" x2="${M.bar.x2}" y2="${M.bar.y}" stroke="#fff" stroke-opacity=".2" stroke-width="2.6" stroke-linecap="round"/>
+        <rect class="mk-bk" x="11" y="140" width="38" height="36" rx="5"/>
         <line class="mk-bar" x1="${M.bar.x1}" y1="${M.bar.y}" x2="${M.bar.x1}" y2="${M.bar.y}" stroke-width="3.4" stroke-linecap="round"/>
         <rect class="led" x="${M.led.x - 7}" y="${M.led.y - 1.6}" width="14" height="3.2" rx="1.6"/>
         <path class="bolt" d="M${M.cx + 6} 196 l-28 38 h17 l-9 32 l30 -41 h-18 z"/>
@@ -407,6 +415,8 @@ class ApplianceBatteryCard extends HTMLElement {
       .layout-split .stat { padding:4px 6px; text-align:left; }
       .layout-split .stat { min-width:0; overflow-wrap:anywhere; }
       .layout-split .stat .v { font-size:.95em; }
+      .mk-bk { fill:#ffb02e; opacity:0; pointer-events:none; filter:drop-shadow(0 0 5px #ffb02e); transition:opacity .5s; }
+      .backup-on .mk-bk { opacity:.8; animation:blink 1.6s infinite; }
       .mk-bar { stroke:var(--lc,#43a047); filter:drop-shadow(0 0 3px var(--lc,#43a047)); transition:stroke .8s; }
       .charging .mk-bar { stroke-dasharray:9 4; animation:dash var(--fs,1s) linear infinite reverse; }
       .discharging .mk-bar { stroke-dasharray:9 4; animation:dash var(--fs,1s) linear infinite; }
@@ -499,6 +509,10 @@ class ApplianceBatteryCard extends HTMLElement {
     if (c.show_power) it.push([this._l('power'), f(p === null ? null : Math.abs(p), 0, 'W'), c.entity_power]);
     if (c.show_energy) it.push([this._l('energy'), f(energy !== null ? energy : (soc === null ? null : c.capacity_kwh * pct / 100), 1, 'kWh'), c.entity_energy || c.entity_soc]);
     if (c.show_temperature) it.push([this._l('temp'), f(temp, 0, tc.unit), c.entity_temperature]);
+    // sortie de secours (off-grid) : puissance en W (kW convertis), la prise s'allume sur la photo dès 10 W
+    const bs = c.entity_backup && this._hass.states[c.entity_backup], bw = this._num(c.entity_backup) === null ? null : Math.abs(window.applianceWatts && bs ? window.applianceWatts(bs) : this._num(c.entity_backup));
+    r.getElementById('svg').classList.toggle('backup-on', bw !== null && bw >= 10);
+    if (c.show_backup !== false && c.entity_backup) it.push([this._l('backup'), f(bw, 0, 'W'), c.entity_backup]);
     if (time) it.push(['⏱', time, c.entity_soc]);
     // prochaine calibration : date lue sur l'entité (ISO date / horodatage), sinon l'état tel quel
     if (c.show_calibration && c.entity_calibration) it.push([this._l('calibration'), this._date(c.entity_calibration), c.entity_calibration]);
