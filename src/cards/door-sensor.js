@@ -169,7 +169,7 @@ svg{display:block;width:100%;max-width:calc(240px * var(--illus-scale,1));height
       const t = s && Date.parse(s.last_changed); if (!t) return '--';
       const sec = Math.max(0, (Date.now() - t) / 1000);
       const [n, u] = sec < 60 ? [sec, 'second'] : sec < 3600 ? [sec / 60, 'minute'] : sec < 86400 ? [sec / 3600, 'hour'] : [sec / 86400, 'day'];
-      try { return new Intl.NumberFormat(this._lang(), { style: 'unit', unit: u, unitDisplay: 'short', maximumFractionDigits: 0 }).format(Math.floor(n)); }
+      try { return new Intl.NumberFormat(window.applianceLocale(this._c, this._hass, true), { style: 'unit', unit: u, unitDisplay: 'short', maximumFractionDigits: 0 }).format(Math.floor(n)); }
       catch (e) { return `${Math.floor(n)} ${u[0]}`; }
     }
 
