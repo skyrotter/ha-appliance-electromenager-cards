@@ -153,11 +153,12 @@ svg{display:block;width:100%;max-width:calc(240px * var(--illus-scale,1));height
       g += poly(R(.16, .58, .84, .94), '#eceef1', EDGE) + poly(R(.23, .64, .77, .88), '#f6f7f9', 'stroke="#c4c9cf" stroke-width=".8"');
       g += poly(R(.855, .36, .935, .72), '#dfe2e6', 'stroke="#9aa3ad" stroke-width=".7"') + poly(R(.885, .40, .905, .60), '#aeb6bf', 'stroke="#6f7881" stroke-width=".8"') + poly(R(.884, .40, .896, .60), '#e8ecf0', 'opacity=".8"');
       return g + cyl(dp(.895, .665)); } },
+    // porte de service type baie vitrée : vitrage du haut jusqu'en bas, seule une fine traverse PVC reste sous la vitre
     service_door: { ow: 90, oh: 160, floor: true, nameKey: 'name_service_door', decor: (R, dp) => {
-      let g = poly(R(.14, .06, .86, .62), '#e3e6ea', EDGE) + poly(R(.19, .095, .81, .585), 'url(#dsglass)', 'stroke="#8d949b" stroke-width=".7"') + GLINT(dp, .19, .095, .81, .585);
-      g += poly(R(.14, .68, .86, .95), '#eceef1', EDGE) + poly(R(.21, .73, .79, .90), '#f6f7f9', 'stroke="#c4c9cf" stroke-width=".8"');
-      g += poly(R(.855, .42, .935, .76), '#dfe2e6', 'stroke="#9aa3ad" stroke-width=".7"') + poly(R(.885, .47, .905, .63), '#aeb6bf', 'stroke="#6f7881" stroke-width=".8"');
-      return g + cyl(dp(.895, .70)); } },
+      let g = poly(R(.07, .035, .93, .975), '#e3e6ea', EDGE) + poly(R(.125, .07, .875, .905), 'url(#dsglass)', 'stroke="#8d949b" stroke-width=".7"') + GLINT(dp, .125, .07, .875, .905);
+      g += poly(R(.07, .905, .93, .975), '#eceef1', 'stroke="#c4c9cf" stroke-width=".8"');
+      g += poly(R(.855, .46, .935, .62), '#dfe2e6', 'stroke="#9aa3ad" stroke-width=".7"') + poly(R(.875, .44, .915, .56), '#aeb6bf', 'stroke="#6f7881" stroke-width=".8"') + poly(R(.885, .44, .905, .52), '#e8ecf0', 'opacity=".8"');
+      return g + cyl(dp(.895, .595)); } },
     window: { ow: 90, oh: 120, floor: false, nameKey: 'name_window', decor: (R, dp) => {
       let g = poly(R(.07, .06, .93, .94), '#e3e6ea', EDGE) + poly(R(.13, .10, .87, .90), 'url(#dsglass)', 'stroke="#8d949b" stroke-width=".7"') + GLINT(dp, .13, .10, .87, .90);
       g += poly(R(.855, .44, .935, .56), '#dfe2e6', 'stroke="#9aa3ad" stroke-width=".7"') + poly(R(.875, .42, .915, .62), '#c9ced4', 'stroke="#7d858d" stroke-width=".8"') + poly(R(.885, .42, .905, .50), '#e8ecf0', 'opacity=".8"');   // poignée de fenêtre
