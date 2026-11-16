@@ -1318,46 +1318,78 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
     const e = Math.max(0, Math.min(1, p / 100)), { O, X, Y, H } = DW;
     const P = (x, y, z) => [O[0] + x * X[0] + y * Y[0], O[1] + x * X[1] + y * Y[1] - z];
     const ln = (a, b, c, w, x = '') => `<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" stroke="${c}" stroke-width="${w}" stroke-linecap="round" ${x}/>`;
-    const ext = 84 * e, drop = 24 * e;
+    const off = (q, dy) => [q[0], q[1] + dy];
+    const ext = 84 * e, drop = 24 * e, N = 8;
     const side = (sd) => {
       const y0 = sd * 6, y1 = sd * (6 + ext), z1 = H - drop;
       let fab = '', arms = '';
       if (e > .03) {
-        const q = pts([P(0, y0, H - 1), P(1, y0, H - 1), P(1, y1, z1), P(0, y1, z1)]);
-        fab += `<polygon points="${q}" fill="var(--sc)"/><polygon points="${q}" fill="${sd < 0 ? '#000' : '#fff'}" opacity="${sd < 0 ? .1 : .13}"/><polygon points="${q}" fill="none" stroke="#000" stroke-opacity=".14" stroke-width=".5" stroke-linejoin="round"/>`;
-        for (const t of [.33, .66]) fab += ln(P(t, y0, H - 1), P(t, y1, z1), '#000', .5, 'opacity=".16"');
-        const v = pts([P(0, y1, z1), P(1, y1, z1), P(1, y1, z1 - 3.6), P(0, y1, z1 - 3.6)]);
-        fab += `<polygon points="${v}" fill="var(--sc)"/><polygon points="${v}" fill="#000" opacity=".16"/>`;
-        fab += ln(P(-.012, y1, z1 - 1.2), P(1.012, y1, z1 - 1.2), '#363b41', 3.4);
-        for (const x of [.05, .95]) {
-          const A = P(x, y0, H - 1), F = P(x, y1, z1 - .6), M = lerp(A, F, .5), E = [M[0], M[1] - 2 + 4 * (1 - e)], Q = pts([A, E, F]);
-          arms += `<polyline points="${Q}" fill="none" stroke="#2c3136" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${E[0].toFixed(1)}" cy="${E[1].toFixed(1)}" r="1.3" fill="#8b9299"/>`;
+        // toile en 8 laizes, avec un léger affaissement du bord avant
+        const sag = 1.6 * e, edge = (t) => P(t, y1, z1), cut = (t0, t1) => {
+          const A = P(t0, y0, H - 1), B = P(t1, y0, H - 1), C = off(edge(t1), t1 > .5 ? sag * (1 - t1) * 2 : sag * t1 * 2), D = off(edge(t0), t0 > .5 ? sag * (1 - t0) * 2 : sag * t0 * 2);
+          return pts([A, B, C, D]);
+        };
+        for (let i = 0; i < N; i++) {
+          const q = cut(i / N, (i + 1) / N);
+          fab += `<polygon points="${q}" fill="var(--sc)"/>${i % 2 ? `<polygon points="${q}" fill="#fff" opacity=".1"/>` : ''}<polygon points="${q}" fill="${sd < 0 ? '#000' : '#fff'}" opacity="${sd < 0 ? .12 : .05}"/><polygon points="${q}" fill="none" stroke="#000" stroke-opacity=".13" stroke-width=".35" stroke-linejoin="round"/>`;
+        }
+        const whole = pts([P(0, y0, H - 1), P(1, y0, H - 1), off(edge(1), 0), off(edge(0), 0)]);
+        fab += `<polygon points="${whole}" fill="url(#ID-awfab)"/>`;
+        // retombée de toile + barre de charge en alu
+        const v = pts([edge(0), edge(1), off(edge(1), 4), off(edge(0), 4)]);
+        fab += `<polygon points="${v}" fill="var(--sc)"/><polygon points="${v}" fill="#000" opacity=".18"/>`;
+        fab += ln(P(-.012, y1, z1 - .4), P(1.012, y1, z1 - .4), '#23272b', 3.6) + ln(P(-.012, y1, z1 - .9), P(1.012, y1, z1 - .9), '#8a929a', 2) + ln(P(0, y1, z1 - 1.6), P(1, y1, z1 - 1.6), '#4a5057', .8);
+        fab += `<circle cx="${P(-.012, y1, z1 - .4)[0].toFixed(1)}" cy="${P(-.012, y1, z1 - .4)[1].toFixed(1)}" r="1.9" fill="#1c1f23"/><circle cx="${P(1.012, y1, z1 - .4)[0].toFixed(1)}" cy="${P(1.012, y1, z1 - .4)[1].toFixed(1)}" r="1.9" fill="#1c1f23"/>`;
+        // bras articulés : deux segments, coude et pivots
+        for (const x of [.045, .955]) {
+          const A = P(x, y0, H - 1.5), F = P(x, y1, z1 - .8), M = lerp(A, F, .52), E = [M[0], M[1] - 2.6 * (1 - e * .6) - 1.5], Q = pts([A, E, F]);
+          arms += `<polyline points="${Q}" fill="none" stroke="#1d2024" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><polyline points="${Q}" fill="none" stroke="#6b737b" stroke-width=".8" stroke-linejoin="round" stroke-linecap="round" transform="translate(0 -.5)"/>`
+            + `<circle cx="${E[0].toFixed(1)}" cy="${E[1].toFixed(1)}" r="1.6" fill="#1d2024"/><circle cx="${E[0].toFixed(1)}" cy="${E[1].toFixed(1)}" r=".7" fill="#9aa2aa"/><circle cx="${A[0].toFixed(1)}" cy="${A[1].toFixed(1)}" r="1.3" fill="#2a2e33"/>`;
         }
       }
       return [`<g class="aw-flap">${fab}</g>${arms}`, y1, z1];
     };
-    const pole = (x) => { const b = P(x, 0, 0), t = P(x, 0, H - 2); return `<ellipse cx="${b[0].toFixed(1)}" cy="${(b[1] + .8).toFixed(1)}" rx="6.2" ry="2.2" fill="#2b2f34"/>${ln(b, t, '#383d43', 3.8)}${ln([b[0] - .8, b[1] - 1], [t[0] - .8, t[1]], '#5f666d', 1)}`; };
+    const pole = (x) => {
+      const b = P(x, 0, 0), t = P(x, 0, H - 2), plate = pts([[b[0] - 8, b[1] + .5], [b[0] + 2, b[1] - 2.6], [b[0] + 9, b[1] + .2], [b[0] - 1, b[1] + 3.4]]);
+      return `<polygon points="${plate}" fill="#23272b"/><polygon points="${plate}" fill="none" stroke="#6b737b" stroke-width=".4"/><circle cx="${b[0] - 5}" cy="${b[1] + .8}" r=".6" fill="#8b939b"/><circle cx="${b[0] + 6}" cy="${b[1] - .1}" r=".6" fill="#8b939b"/>`
+        + `${ln(b, t, '#202429', 4.6)}${ln([b[0] + .3, b[1] - 1], [t[0] + .3, t[1]], '#454b52', 3.2)}${ln([b[0] - 1, b[1] - 1.5], [t[0] - 1, t[1]], '#7f8890', .9)}`;
+    };
     const a = P(0, 0, H + 1), b = P(1, 0, H + 1), [L, yl, zl] = side(-1), [R, yr, zr] = side(1);
-    const box = `${ln(a, b, '#2f3439', 11.5)}${ln(a, b, '#9aa1a8', 8.6)}${ln([a[0], a[1] - 2.4], [b[0], b[1] - 2.4], '#d3d8dc', 2.4, 'opacity=".85"')}
-      <ellipse cx="${b[0].toFixed(1)}" cy="${b[1].toFixed(1)}" rx="3.6" ry="5.6" fill="#3a3f45"/>`;
-    const near = `<ellipse cx="${a[0].toFixed(1)}" cy="${a[1].toFixed(1)}" rx="3.6" ry="5.6" fill="#454b52"/><ellipse cx="${a[0].toFixed(1)}" cy="${a[1].toFixed(1)}" rx="1.7" ry="2.7" fill="#aeb4ba"/>`;
-    const sh = `<polygon points="${pts([P(0, -6 - ext, 0), P(1, -6 - ext, 0), P(1, 6 + ext, 0), P(0, 6 + ext, 0)])}"/>`;
+    // coffre : cylindre en alu anthracite, étriers aux poteaux, bouchons aux extrémités
+    const lay = (c, w, dy) => ln(off(a, dy), off(b, dy), c, w);
+    const box = `${lay('#1f2327', 12.6, 0)}${lay('#4d545b', 11, -.3)}${lay('#6d757d', 8.4, -1.1)}${lay('#9ba3aa', 4.6, -2.3)}${lay('#d9dde0', 1.2, -3.1)}${lay('#262a2e', 2, 4.1)}
+      ${ln(P(.015, 0, H + 1), P(.075, 0, H + 1), '#1b1e22', 13.4)}${ln(P(.925, 0, H + 1), P(.985, 0, H + 1), '#1b1e22', 13.4)}
+      <ellipse cx="${b[0].toFixed(1)}" cy="${b[1].toFixed(1)}" rx="3.7" ry="6.1" fill="#2c3136"/><ellipse cx="${b[0].toFixed(1)}" cy="${b[1].toFixed(1)}" rx="2.4" ry="4.2" fill="#434a51"/>`;
+    const near = `<ellipse cx="${a[0].toFixed(1)}" cy="${a[1].toFixed(1)}" rx="3.7" ry="6.1" fill="#3a4047"/><ellipse cx="${a[0].toFixed(1)}" cy="${a[1].toFixed(1)}" rx="2.4" ry="4.2" fill="#59616a"/><circle cx="${a[0].toFixed(1)}" cy="${a[1].toFixed(1)}" r="1" fill="#aab1b8"/>`;
+    const sh = `<polygon points="${pts([P(0, -6 - ext, 0), P(1, -6 - ext, 0), P(1, 6 + ext, 0), P(0, 6 + ext, 0)].map((q) => [q[0] + 5, q[1] + 2]))}"/>`;
     const led = e > .05 ? `${ln(P(.02, yl, zl - 3.4), P(.98, yl, zl - 3.4), '#ffe08a', 1, 'stroke-dasharray="2.6 2" class="aw-strip"')}${ln(P(.02, yr, zr - 3.4), P(.98, yr, zr - 3.4), '#ffe08a', 1, 'stroke-dasharray="2.6 2" class="aw-strip"')}
       <ellipse class="aw-pool" cx="${P(.5, 0, 0)[0].toFixed(1)}" cy="${(P(.5, 0, 0)[1] + 2).toFixed(1)}" rx="${(20 + e * 44).toFixed(1)}" ry="${(7 + e * 6).toFixed(1)}" fill="url(#ID-awpool)"/>` : '';
     return [`${L}${pole(1)}${box}${pole(0)}${near}${R}`, sh, led];
   };
   const DAWNING = () => {
-    const tile = [0, 1, 2, 3].map((k) => `<path d="M${-10 + k * 6} ${134 + k * 11}L${252 + k * 6} ${134 + k * 11}" stroke="#b9ab94" stroke-width=".5" opacity=".6"/>`).join('');
-    const chair = (x, y, f) => `<g transform="translate(${x} ${y}) scale(${f} 1)"><rect x="-1" y="-8" width="2.4" height="8" rx="1" fill="#6b6459"/><rect x="-1" y="-8" width="8" height="2.4" rx="1" fill="#6b6459"/><rect x="-1" y="-2.6" width="8" height="2.6" rx="1" fill="#7c7466"/><rect x="0" y="0" width="1.2" height="5" fill="#3a3f45"/><rect x="5" y="0" width="1.2" height="5" fill="#3a3f45"/></g>`;
-    return `<rect x="0" y="0" width="240" height="180" fill="url(#shskyd)" class="day"/><rect x="0" y="0" width="240" height="180" fill="url(#shskyn)" class="night"/>
-      <g class="day" fill="#fff" opacity=".85"><ellipse cx="42" cy="26" rx="20" ry="5"/><ellipse cx="56" cy="22" rx="12" ry="5"/><ellipse cx="190" cy="40" rx="18" ry="4.5"/></g>
-      <g class="night" fill="#fff"><circle cx="30" cy="22" r=".9"/><circle cx="82" cy="14" r="1"/><circle cx="150" cy="24" r=".8"/><circle cx="208" cy="16" r="1"/><circle cx="224" cy="46" r=".8"/></g>
-      <path d="M0 112q40 -14 80 -4t90 -6 70 4V128H0Z" fill="#5f9a52"/><path d="M0 120q60 -10 120 -2t120 -4V180H0Z" fill="#6fae58"/>
-      <polygon points="0,122 240,122 240,180 0,180" fill="#cfc6b4"/>${tile}
-      <ellipse cx="121" cy="140" rx="26" ry="4" fill="#000" opacity=".12"/>
-      ${chair(94, 142, 1)}${chair(142, 134, -1)}
-      <rect x="119.8" y="132" width="2.6" height="8" fill="#8a8274"/><ellipse cx="121" cy="131" rx="18" ry="4.4" fill="#efece6" stroke="#cfc8b8" stroke-width=".5"/>
-      <g clip-path="none"><g class="aw-shadow" fill="#000"></g></g>
+    // terrasse en dalles vues en perspective (lignes qui convergent vers le point de fuite)
+    const V = [124, 70];
+    let tile = '';
+    for (let i = -9; i <= 9; i++) tile += `<line x1="${V[0]}" y1="${V[1]}" x2="${(V[0] + i * 46).toFixed(0)}" y2="180" stroke="#a89c86" stroke-width=".55" opacity=".55"/>`;
+    for (let k = 0; k < 7; k++) { const y = 124 + k * k * 1.7 + k * 4; tile += `<line x1="0" y1="${y.toFixed(1)}" x2="240" y2="${y.toFixed(1)}" stroke="#a89c86" stroke-width=".55" opacity=".55"/>`; }
+    const bush = (x, y, r, c) => `<ellipse cx="${x}" cy="${y}" rx="${r * 1.35}" ry="${r}" fill="${c}"/>`;
+    const chair = (x, y, f) => `<g transform="translate(${x} ${y}) scale(${f} 1)"><path d="M-1 -10q-1 -2 1 -2.6h7q2 .6 1 2.6l-1 6h-7z" fill="#8c7a5e"/><path d="M0 -9.2h6M-.2 -7h6.2M-.4 -4.8h6.4" stroke="#6e5f48" stroke-width=".5" opacity=".7"/><rect x="-1.5" y="-3.4" width="9.6" height="3.2" rx="1.4" fill="#a08c6c"/><rect x="-.6" y="-.4" width="1.3" height="5.4" fill="#25292d"/><rect x="5.6" y="-.4" width="1.3" height="5.4" fill="#25292d"/></g>`;
+    return `<defs><filter id="dw-blur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.2"/></filter><filter id="dw-bl2" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation=".9"/></filter>
+      <linearGradient id="dw-ter" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d7cdb9"/><stop offset="1" stop-color="#c3b8a1"/></linearGradient></defs>
+      <rect x="0" y="0" width="240" height="180" fill="url(#shskyd)" class="day"/><rect x="0" y="0" width="240" height="180" fill="url(#shskyn)" class="night"/>
+      <g class="day" fill="#fff" opacity=".8" filter="url(#dw-bl2)"><ellipse cx="42" cy="26" rx="22" ry="5"/><ellipse cx="58" cy="21" rx="13" ry="5"/><ellipse cx="190" cy="38" rx="20" ry="4.5"/><ellipse cx="150" cy="18" rx="12" ry="3"/></g>
+      <g class="night" fill="#fff"><circle cx="30" cy="22" r=".9"/><circle cx="82" cy="14" r="1"/><circle cx="150" cy="24" r=".8"/><circle cx="208" cy="16" r="1"/><circle cx="224" cy="46" r=".8"/><circle cx="196" cy="30" r="3" fill="#f3f0d8"/></g>
+      <path d="M0 96q40 -12 80 -3t90 -5 70 3V124H0Z" fill="#4f7f46" opacity=".9"/>
+      <g filter="url(#dw-bl2)">${bush(18, 106, 11, '#3f6f3a')}${bush(46, 110, 9, '#4c7f43')}${bush(86, 108, 10, '#3f6f3a')}${bush(130, 110, 8, '#527f48')}${bush(172, 107, 11, '#3f6f3a')}${bush(210, 108, 12, '#4c7f43')}${bush(232, 112, 8, '#3f6f3a')}
+        ${bush(30, 114, 6, '#6aa05a')}${bush(104, 113, 6, '#6aa05a')}${bush(190, 114, 7, '#6aa05a')}<circle cx="14" cy="100" r="1.6" fill="#f2e6f6"/><circle cx="20" cy="104" r="1.4" fill="#f2e6f6"/><circle cx="214" cy="102" r="1.6" fill="#fff"/><circle cx="222" cy="106" r="1.4" fill="#fff"/></g>
+      <path d="M0 118q60 -6 120 -1t120 -3V124H0Z" fill="#6aa65a"/>
+      <polygon points="0,122 240,122 240,180 0,180" fill="url(#dw-ter)"/><g clip-path="inset(122px 0 0 0)">${tile}</g>
+      <polygon points="52,148 168,148 190,166 30,166" fill="#9d8b6c" opacity=".55"/><polygon points="60,150 160,150 178,163 42,163" fill="none" stroke="#7d6d52" stroke-width=".5" stroke-dasharray="1.5 1.2" opacity=".6"/>
+      <ellipse cx="116" cy="146" rx="26" ry="4.2" fill="#000" opacity=".16"/>
+      ${chair(88, 148, 1)}${chair(138, 140, -1)}${chair(94, 156, 1)}${chair(148, 152, -1)}
+      <polygon points="96,132 138,128 148,134 106,139" fill="#b08d63"/><polygon points="96,132 106,139 106,141 96,134" fill="#8a6c48"/><polygon points="106,139 148,134 148,136 106,141" fill="#7a5f40"/>
+      <path d="M99 134v12M145 135v11M107 141v10" stroke="#25292d" stroke-width="1.3"/><ellipse cx="124" cy="132.4" rx="3.4" ry="1.4" fill="#e9e3d4"/><path d="M124 131q-3 -6 -7 -5M124 131q3 -7 7 -6M124 131q0 -8 -1 -9" stroke="#4e8a46" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <g class="aw-shadow" fill="#000" filter="url(#dw-blur)"></g>
       <rect class="pg-dim" x="0" y="0" width="240" height="180" fill="#0a1020"/>
       <g class="aw-wind" fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity=".0"><path d="M2 54q14 -5 30 0t26 -2"/><path d="M0 70q12 -4 24 0t22 -2"/><path d="M4 86q10 -3 20 0t18 -1"/></g>
       <g class="aw-dyn"></g><g class="aw-leds"></g>
