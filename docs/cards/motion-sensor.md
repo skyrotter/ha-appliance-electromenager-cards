@@ -6,7 +6,11 @@
 
 A flat-style room corner (greige walls, white ceiling, wooden floor, pictures and a plant) with a white detector fixed high on the wall. Works with any motion / occupancy / presence `binary_sensor`.
 
-Five looks (`model`): `room` (default, the room scene above) and four cut-out detector photos with no background, with detection waves from the lens: `aqara` (stand sensor), `luminea` (flat sensor), `wall` (round wall sensor), `radar` (PIR + radar sensor).
+Five looks (`model`): `room` (default, the room scene above) and four cut-out detector photos with no background, with detection waves from the lens:
+
+<p align="center"><img src="../motion-sensor-models.gif" width="720" alt="The five looks of the motion sensor card"></p>
+
+ `aqara` (stand sensor), `luminea` (flat sensor), `wall` (round wall sensor), `radar` (PIR + radar sensor).
 
 - **No motion**: green LED, soft green arcs sweep the room.
 - **Motion detected**: fast red arcs, the lens and the room glow red, a silhouette with a torch walks on the floor, its shadow on the wall, and « Motion detected for X ».
