@@ -10,7 +10,9 @@
 
 Cut-out photos of real cars on a Legrand Green'up pedestal, with the same animations (`car_model`, `charger_model`):
 
-<p align="center"><img src="../ev-charger-photos.png" width="720" alt="Renault Zoé and Volkswagen ID.3 on a Legrand Green'up charger"></p>
+<p align="center"><img src="../ev-charger.gif" width="720" alt="Renault Zoé and Volkswagen ID.3 on a Legrand Green'up charger: unplugged, plugged, charging, climate, doors open"></p>
+
+<p align="center"><img src="../ev-charger-photos.png" width="720" alt="The photo scenes in their different states"></p>
 
 - `car_model`: `generic` (default, drawn side-view car), `zoe` (white Renault Zoé) or `id3` (grey Volkswagen ID.3).
 - `charger_model`: `green_up` (Legrand Green'up pedestal, default with a photo car) or `wallbox` (drawn wall box).
