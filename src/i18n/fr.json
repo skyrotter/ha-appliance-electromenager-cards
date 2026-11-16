@@ -1138,6 +1138,8 @@
     "battery_model": "Modèle de batterie",
     "battery_entity_backup": "Sortie de secours (puissance off-grid)",
     "battery_show_backup": "Tuile secours",
+    "backup_color": "Couleur du secours (nom ou #hex, orange par défaut)",
+    "battery_flip": "Inverser la photo (prise de secours de l’autre côté)",
     "battery_count": "Nombre d’unités côte à côte",
     "battery_model_default": "Modules dessinés (défaut)",
     "battery_model_marstek_venus_e3": "Marstek Venus E 3.0 (photo)",

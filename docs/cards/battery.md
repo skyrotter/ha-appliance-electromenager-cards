@@ -20,6 +20,10 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 
 - `entity_backup`: power of the **backup (off-grid) output** in W (e.g. Marstek Venus E 3.0 AC off-grid power), shown in a **Backup** tile; with `model: marstek_venus_e3` the backup socket of the unit lights up on the picture while it supplies 10 W or more
 - `show_backup` (default true): hides the Backup tile
+<p align="center"><img src="../battery-backup-color.png" width="700" alt="Marstek: default orange, backup_color red, flip, flip with two units in blue"></p>
+
+- `backup_color`: colour of the Backup tile value and of the backup socket on the picture: a CSS name (`orange`, `red`…), `#hex` or `rgb()` (default orange)
+- `flip` (`true` / `false`, default false): mirrors the Marstek photo, to put the side panel with the backup socket on the other side (the MARSTEK logo is mirrored too)
 - `entity_soc` (%)
 - `entity_power` (positive = charging, `invert_power: true` if yours is reversed)
 - `entity_energy`

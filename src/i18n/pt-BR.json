@@ -1134,6 +1134,8 @@
     "battery_model": "Modelo da bateria",
     "battery_entity_backup": "Saída de backup (potência off-grid)",
     "battery_show_backup": "Bloco de backup",
+    "backup_color": "Cor do backup (nome ou #hex, laranja por padrão)",
+    "battery_flip": "Espelhar a foto (tomada de backup do outro lado)",
     "battery_count": "Número de unidades lado a lado",
     "battery_model_default": "Módulos desenhados (padrão)",
     "battery_model_marstek_venus_e3": "Marstek Venus E 3.0 (foto)",
