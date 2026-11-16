@@ -1374,6 +1374,36 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
     for (let k = 0; k < 7; k++) { const y = 124 + k * k * 1.7 + k * 4; tile += `<line x1="0" y1="${y.toFixed(1)}" x2="240" y2="${y.toFixed(1)}" stroke="#a89c86" stroke-width=".55" opacity=".55"/>`; }
     const bush = (x, y, r, c) => `<ellipse cx="${x}" cy="${y}" rx="${r * 1.35}" ry="${r}" fill="${c}"/>`;
     const chair = (x, y, f) => `<g transform="translate(${x} ${y}) scale(${f} 1)"><path d="M-1 -10q-1 -2 1 -2.6h7q2 .6 1 2.6l-1 6h-7z" fill="#8c7a5e"/><path d="M0 -9.2h6M-.2 -7h6.2M-.4 -4.8h6.4" stroke="#6e5f48" stroke-width=".5" opacity=".7"/><rect x="-1.5" y="-3.4" width="9.6" height="3.2" rx="1.4" fill="#a08c6c"/><rect x="-.6" y="-.4" width="1.3" height="5.4" fill="#25292d"/><rect x="5.6" y="-.4" width="1.3" height="5.4" fill="#25292d"/></g>`;
+    const dn = (q, d) => [q[0], q[1] + d];
+    // salon de jardin centré sous le store (table dans l'axe du coffre, quatre chaises) + déco de chaque côté
+    const C = [117, 143], u = [.94, -.34], w = [.965, .26], at = (a, b, z = 0) => [C[0] + a * u[0] + b * w[0], C[1] + a * u[1] + b * w[1] - z];
+    const rug = pts([at(-30, -19), at(30, -19), at(30, 19), at(-30, 19)]), rug2 = pts([at(-27, -16), at(27, -16), at(27, 16), at(-27, 16)]);
+    const top = [at(-16, -8, 10), at(16, -8, 10), at(16, 8, 10), at(-16, 8, 10)];
+    const leg = (a, b) => { const g = at(a, b), t = at(a, b, 10); return `<line x1="${g[0].toFixed(1)}" y1="${g[1].toFixed(1)}" x2="${t[0].toFixed(1)}" y2="${t[1].toFixed(1)}" stroke="#25292d" stroke-width="1.3"/>`; };
+    const chairAt = (a, b, f) => { const q = at(a, b); return chair(q[0].toFixed(1), q[1].toFixed(1), f); };
+    const pot = (x, y, r, c = '#8a6a4f') => `<path d="M${x - r} ${y - r * 1.1}h${r * 2}l-${r * .25} ${r * 1.1}h-${r * 1.5}z" fill="${c}"/><ellipse cx="${x}" cy="${y - r * 1.1}" rx="${r}" ry="${r * .3}" fill="#5a4636"/>`;
+    const leaves = (x, y, r, c1, c2) => `<ellipse cx="${x}" cy="${y}" rx="${r}" ry="${r * .85}" fill="${c1}"/><ellipse cx="${x - r * .3}" cy="${y - r * .25}" rx="${r * .55}" ry="${r * .5}" fill="${c2}"/><ellipse cx="${x + r * .4}" cy="${y + r * .1}" rx="${r * .5}" ry="${r * .45}" fill="${c1}" opacity=".8"/>`;
+    const GARDEN = `<g>
+      <polygon points="${rug}" fill="#a8977a"/><polygon points="${rug2}" fill="none" stroke="#7d6d52" stroke-width=".5" stroke-dasharray="1.6 1.2" opacity=".7"/>
+      <ellipse cx="${C[0]}" cy="${C[1] + 4}" rx="30" ry="6" fill="#000" opacity=".13"/>
+      ${chairAt(-9, -15, 1)}${chairAt(9, -15, -1)}
+      ${leg(-14, -6)}${leg(14, -6)}${leg(-14, 6)}${leg(14, 6)}
+      <polygon points="${pts(top)}" fill="#b08d63"/><polygon points="${pts([top[3], top[2], dn(top[2], 2), dn(top[3], 2)])}" fill="#7a5f40"/><polygon points="${pts([top[2], top[1], dn(top[1], 2), dn(top[2], 2)])}" fill="#8a6c48"/>
+      <path d="M${at(-12, -6, 10).map((v) => v.toFixed(1)).join(' ')}L${at(-12, 6, 10).map((v) => v.toFixed(1)).join(' ')}M${at(0, -7, 10).map((v) => v.toFixed(1)).join(' ')}L${at(0, 7, 10).map((v) => v.toFixed(1)).join(' ')}M${at(12, -6, 10).map((v) => v.toFixed(1)).join(' ')}L${at(12, 6, 10).map((v) => v.toFixed(1)).join(' ')}" stroke="#8a6c48" stroke-width=".5" opacity=".7"/>
+      <ellipse cx="${at(0, 0, 11.4)[0].toFixed(1)}" cy="${at(0, 0, 11.4)[1].toFixed(1)}" rx="3.2" ry="1.3" fill="#e9e3d4"/><path d="M${at(0, 0, 11.6)[0].toFixed(1)} ${at(0, 0, 11.6)[1].toFixed(1)}q-3 -6 -7 -5M${at(0, 0, 11.6)[0].toFixed(1)} ${at(0, 0, 11.6)[1].toFixed(1)}q3 -7 7 -6" stroke="#4e8a46" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      ${chairAt(-9, 15, 1)}${chairAt(9, 15, -1)}
+      <!-- déco à gauche : olivier en pot, jardinière fleurie -->
+      <ellipse cx="26" cy="156" rx="13" ry="2.6" fill="#000" opacity=".14"/>
+      <path d="M26 148v-12" stroke="#6b5440" stroke-width="1.6"/>${leaves(26, 128, 11, '#6f9a5a', '#8fb877')}${pot(26, 156, 6.5, '#9b7a5a')}
+      ${pot(46, 160, 4.4, '#b58a62')}${leaves(46, 150, 5.6, '#4f8a46', '#6fae5c')}
+      <rect x="4" y="150" width="14" height="6" rx="1" fill="#7d6045"/>${leaves(7, 148, 3, '#d96aa5', '#f09bc6')}${leaves(12, 147, 3, '#f2e6f6', '#fff')}${leaves(16, 148.5, 2.8, '#d96aa5', '#f09bc6')}
+      <!-- déco à droite : palmier / graminées en grand pot, lanterne, buis -->
+      <ellipse cx="212" cy="157" rx="14" ry="2.8" fill="#000" opacity=".14"/>
+      <g stroke="#4f8a46" stroke-width="1.6" fill="none" stroke-linecap="round"><path d="M212 148q-10 -10 -17 -9M212 148q-5 -14 -9 -17M212 148q0 -15 0 -19M212 148q5 -14 9 -17M212 148q10 -10 17 -9"/></g>
+      ${pot(212, 157, 7, '#6b6f75')}
+      ${pot(192, 162, 4.6, '#b58a62')}${leaves(192, 152, 5.6, '#3f7a3c', '#5b9a52')}
+      <path d="M228 160v-9" stroke="#25292d" stroke-width="1.2"/><rect x="225.6" y="144" width="4.8" height="7" rx="1" fill="#2c3136"/><rect x="226.4" y="145" width="3.2" height="5" fill="#ffd27a" opacity=".85" class="night-lamp"/>
+    </g>`;
     return `<defs><filter id="dw-blur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.2"/></filter><filter id="dw-bl2" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation=".9"/></filter>
       <linearGradient id="dw-ter" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d7cdb9"/><stop offset="1" stop-color="#c3b8a1"/></linearGradient></defs>
       <rect x="0" y="0" width="240" height="180" fill="url(#shskyd)" class="day"/><rect x="0" y="0" width="240" height="180" fill="url(#shskyn)" class="night"/>
@@ -1384,11 +1414,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         ${bush(30, 114, 6, '#6aa05a')}${bush(104, 113, 6, '#6aa05a')}${bush(190, 114, 7, '#6aa05a')}<circle cx="14" cy="100" r="1.6" fill="#f2e6f6"/><circle cx="20" cy="104" r="1.4" fill="#f2e6f6"/><circle cx="214" cy="102" r="1.6" fill="#fff"/><circle cx="222" cy="106" r="1.4" fill="#fff"/></g>
       <path d="M0 118q60 -6 120 -1t120 -3V124H0Z" fill="#6aa65a"/>
       <polygon points="0,122 240,122 240,180 0,180" fill="url(#dw-ter)"/><g clip-path="inset(122px 0 0 0)">${tile}</g>
-      <polygon points="52,148 168,148 190,166 30,166" fill="#9d8b6c" opacity=".55"/><polygon points="60,150 160,150 178,163 42,163" fill="none" stroke="#7d6d52" stroke-width=".5" stroke-dasharray="1.5 1.2" opacity=".6"/>
-      <ellipse cx="116" cy="146" rx="26" ry="4.2" fill="#000" opacity=".16"/>
-      ${chair(88, 148, 1)}${chair(138, 140, -1)}${chair(94, 156, 1)}${chair(148, 152, -1)}
-      <polygon points="96,132 138,128 148,134 106,139" fill="#b08d63"/><polygon points="96,132 106,139 106,141 96,134" fill="#8a6c48"/><polygon points="106,139 148,134 148,136 106,141" fill="#7a5f40"/>
-      <path d="M99 134v12M145 135v11M107 141v10" stroke="#25292d" stroke-width="1.3"/><ellipse cx="124" cy="132.4" rx="3.4" ry="1.4" fill="#e9e3d4"/><path d="M124 131q-3 -6 -7 -5M124 131q3 -7 7 -6M124 131q0 -8 -1 -9" stroke="#4e8a46" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      ${GARDEN}
       <g class="aw-shadow" fill="#000" filter="url(#dw-blur)"></g>
       <rect class="pg-dim" x="0" y="0" width="240" height="180" fill="#0a1020"/>
       <g class="aw-wind" fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity=".0"><path d="M2 54q14 -5 30 0t26 -2"/><path d="M0 70q12 -4 24 0t22 -2"/><path d="M4 86q10 -3 20 0t18 -1"/></g>
