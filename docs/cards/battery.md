@@ -6,6 +6,10 @@
 
 **Home battery**: three modules wired with orange cables, no background. The charge level rises in the modules (green → orange → red), energy flows along the cables in one direction when charging and the other when discharging, with time to full / empty.
 
+## Marstek Venus E 3.0 (photo)
+
+<p align="center"><img src="../battery-marstek.gif" width="420" alt="Two Marstek Venus E 3.0 batteries: charging then discharging"></p>
+
 ## Options
 
 Every value tile can be hidden with its `show_…` option, and `language: fr|en|de|it|es|nb|nl|pl|ro|ru|sr|sr-Latn` forces the language. Temperatures follow `temperature_unit: C|F`, otherwise the unit of Home Assistant: each sensor is converted from its own unit, and temperature thresholds are entered in that unit (the defaults below are in °C and are converted, e.g. 40 °C → 104 °F).
