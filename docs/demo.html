@@ -1309,6 +1309,19 @@ const SCEN = [
   { kind: 'double-awning', title: 'Store double sur pied', lang: true,
     cfg: { entity: 'cover.demo_double_awning', entity_power: 'sensor.demo_double_awning_power', travel_time: 10 },
     build(ctl) { shutterCtl(ctl, 'cover.demo_double_awning', 'sensor.demo_double_awning_power', 10, 60); } },
+  { kind: 'hue-sync-box', title: 'Hue Sync Box', lang: true,
+    cfg: { entity_power: 'switch.demo_sync_power', entity_sync: 'switch.demo_sync_lights', entity_dolby: 'switch.demo_sync_dolby', entity_brightness: 'number.demo_sync_brightness',
+      entity_area: 'select.demo_sync_area', entity_intensity: 'select.demo_sync_intensity', entity_mode: 'select.demo_sync_mode', entity_input: 'select.demo_sync_input',
+      entity_hdmi1: 'binary_sensor.demo_sync_hdmi1', entity_hdmi2: 'binary_sensor.demo_sync_hdmi2', entity_hdmi3: 'binary_sensor.demo_sync_hdmi3', entity_hdmi4: 'binary_sensor.demo_sync_hdmi4' },
+    build(ctl) {
+      checks(ctl, [['Alimentation', 'switch.demo_sync_power', true], ['Synchro lumières', 'switch.demo_sync_lights', true], ['Dolby Vision', 'switch.demo_sync_dolby', false],
+        ['HDMI 1', 'binary_sensor.demo_sync_hdmi1', false], ['HDMI 2', 'binary_sensor.demo_sync_hdmi2', true]]);
+      range(ctl, 'Luminosité', 'number.demo_sync_brightness', 0, 100, 1, 50, '%', { min: 0, max: 100 });
+      states['select.demo_sync_area'] = { entity_id: 'select.demo_sync_area', state: 'Salon', attributes: { options: ['Salon', 'Chambre'] }, last_changed: new Date().toISOString() };
+      states['select.demo_sync_intensity'] = { entity_id: 'select.demo_sync_intensity', state: 'Elevé', attributes: { options: ['Subtil', 'Modéré', 'Elevé', 'Intense'] }, last_changed: new Date().toISOString() };
+      states['select.demo_sync_mode'] = { entity_id: 'select.demo_sync_mode', state: 'Vidéo', attributes: { options: ['Vidéo', 'Musique', 'Jeu'] }, last_changed: new Date().toISOString() };
+      states['select.demo_sync_input'] = { entity_id: 'select.demo_sync_input', state: 'Nvidia Shield TV Pro', attributes: { options: ['Nvidia Shield TV Pro', 'Console', 'Lecteur'] }, last_changed: new Date().toISOString() };
+    } },
   { kind: 'smart-lock', title: 'Serrure connectée (Nuki)', lang: true,
     cfg: { model: 'nuki_pro_5', entity: 'lock.demo_front_door', entity_battery: 'sensor.demo_lock_battery', entity_door: 'binary_sensor.demo_lock_door' },
     build(ctl) {

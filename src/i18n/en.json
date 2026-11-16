@@ -1986,6 +1986,23 @@
     "door": "Door",
     "since": "Since"
   },
+  "hue_sync_box": {
+    "name": "Hue Sync Box",
+    "off": "Off",
+    "on": "On",
+    "syncing": "Syncing",
+    "unavailable": "Unavailable",
+    "btn_power": "Power",
+    "btn_sync": "Light sync",
+    "btn_dolby": "Dolby Vision",
+    "area": "Entertainment area",
+    "intensity": "Intensity",
+    "mode": "Sync mode",
+    "input": "HDMI input",
+    "led": "LED indicator",
+    "plugged": "Plugged",
+    "unplugged": "Unplugged"
+  },
   "mini_pc": {
     "name": "Mini PC",
     "off": "Off",

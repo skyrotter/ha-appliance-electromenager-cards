@@ -175,6 +175,7 @@ Clique em um cartão para consultar as opções e os exemplos.
 | [Caixa de correio (cartas e encomendas)](docs/cards/mailbox.md) | `custom:appliance-mailbox-card` |
 | [Detector de fumaça (fumaça, CO, 2 modelos)](docs/cards/smoke-detector.md) | `custom:appliance-smoke-detector-card` |
 | [Fechadura inteligente (Nuki, 2 modelos)](docs/cards/smart-lock.md) | `custom:appliance-smart-lock-card` |
+| [Hue Play HDMI Sync Box](docs/cards/hue-sync-box.md) | `custom:appliance-hue-sync-box-card` |
 | [Detector de vazamentos de água](docs/cards/leak-detector.md) | `custom:appliance-leak-detector-card` |
 | [Irrigação (zonas, bomba, chuva)](docs/cards/irrigation.md) | `custom:appliance-irrigation-card` |
 | [Fita LED (cor, brilho, efeito)](docs/cards/led-strip.md) | `custom:appliance-led-strip-card` |
