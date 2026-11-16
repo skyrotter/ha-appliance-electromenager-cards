@@ -139,6 +139,7 @@ function buildForm(kind) {
           { name: "title_size", selector: { number: { min: 10, max: 28, step: 1, mode: "box", unit_of_measurement: "px" } } },
           { name: "title_bold", selector: { boolean: {} } },
           { name: "title_layout", selector: { select: { mode: "dropdown", options: [{ value: "inline", label: tr(null, "header_inline") }, { value: "stacked", label: tr(null, "header_stacked") }] } } },
+          { name: "illustration_position", selector: { select: { mode: "dropdown", options: [{ value: "center", label: tr(null, "illus_pos_center") }, { value: "left", label: tr(null, "illus_pos_left") }, { value: "right", label: tr(null, "illus_pos_right") }] } } },
           ...window.applianceTileFields(),
           { name: "animations", selector: { boolean: {} }, default: true },
           { name: "hide_when_inactive", selector: { boolean: {} } },

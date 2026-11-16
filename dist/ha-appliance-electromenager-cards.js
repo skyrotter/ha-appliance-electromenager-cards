@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.156.2";
+const VERSION = "1.157.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -19,6 +19,9 @@ const STRINGS = {
     "valign_center": "Centered",
     "header_inline": "Title left, status right (default)",
     "header_stacked": "Stacked: title, then status",
+    "illus_pos_center": "Centered (default)",
+    "illus_pos_left": "Left, first 2 tiles on the right",
+    "illus_pos_right": "Right, first 2 tiles on the left",
     "washer": "Washing machine",
     "dryer": "Dryer",
     "dishwasher": "Dishwasher",
@@ -2193,6 +2196,9 @@ const STRINGS = {
     "valign_center": "Centré",
     "header_inline": "Titre à gauche, état à droite (défaut)",
     "header_stacked": "Empilés : titre puis état",
+    "illus_pos_center": "Au centre (défaut)",
+    "illus_pos_left": "À gauche, 2 premières tuiles à droite",
+    "illus_pos_right": "À droite, 2 premières tuiles à gauche",
     "washer": "Lave-linge",
     "dryer": "Sèche-linge",
     "dishwasher": "Lave-vaisselle",
@@ -13099,6 +13105,7 @@ function buildForm(kind) {
           { name: "title_size", selector: { number: { min: 10, max: 28, step: 1, mode: "box", unit_of_measurement: "px" } } },
           { name: "title_bold", selector: { boolean: {} } },
           { name: "title_layout", selector: { select: { mode: "dropdown", options: [{ value: "inline", label: tr(null, "header_inline") }, { value: "stacked", label: tr(null, "header_stacked") }] } } },
+          { name: "illustration_position", selector: { select: { mode: "dropdown", options: [{ value: "center", label: tr(null, "illus_pos_center") }, { value: "left", label: tr(null, "illus_pos_left") }, { value: "right", label: tr(null, "illus_pos_right") }] } } },
           ...window.applianceTileFields(),
           { name: "animations", selector: { boolean: {} }, default: true },
           { name: "hide_when_inactive", selector: { boolean: {} } },
@@ -13677,6 +13684,20 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
   :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .alert-line,
   :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .sub { flex: 0 0 100%; }
 }
+
+/* illustration_position: left | right : dessin à côté des 2 premières tuiles (empilées), les autres tuiles dessous sur 2 colonnes.
+   .stats et .right-col passent en display: contents pour que les tuiles deviennent des cellules de la grille .top (2 colonnes égales). */
+:host([illus-pos]) .wrap:not(.layout-split) .top { grid-template-areas: none; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto; column-gap: 6px; row-gap: 6px; align-items: stretch; }
+:host([illus-pos]) .wrap:not(.layout-split) .right-col,
+:host([illus-pos]) .wrap:not(.layout-split) .stats { display: contents; }
+:host([illus-pos]) .wrap:not(.layout-split) .head { grid-area: auto; grid-column: 1 / -1; grid-row: 1; }
+:host([illus-pos]) .wrap:not(.layout-split) .illus { grid-area: auto; grid-row: 2 / span 2; align-self: center; justify-self: center; }
+:host([illus-pos="left"]) .wrap:not(.layout-split) .illus { grid-column: 1; }
+:host([illus-pos="right"]) .wrap:not(.layout-split) .illus { grid-column: 2; }
+:host([illus-pos]) .wrap:not(.layout-split) .stats .tile:nth-child(1) { grid-row: 2; }
+:host([illus-pos]) .wrap:not(.layout-split) .stats .tile:nth-child(2) { grid-row: 3; }
+:host([illus-pos="left"]) .wrap:not(.layout-split) .stats .tile:nth-child(-n+2) { grid-column: 2; }
+:host([illus-pos="right"]) .wrap:not(.layout-split) .stats .tile:nth-child(-n+2) { grid-column: 1; }
 
 ﻿/* ---------- illustration: shared ---------- */
 .lcd { font: 700 8.5px ui-monospace, "Courier New", monospace; letter-spacing: .25px; fill: #7ec8e3 !important; font-weight: 700; dominant-baseline: central; transition: fill .3s; }
@@ -15176,7 +15197,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
 (async () => {
   const base = import.meta.url;
   // ?v=<version> : après une mise à jour, le navigateur ne ressert pas d'anciens morceaux depuis son cache
-  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.156.2`, base).href);
+  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.157.0`, base).href);
   await chunk("card-helpers");
   await chunk("editor-labels");
   // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre

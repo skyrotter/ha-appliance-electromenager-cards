@@ -30,6 +30,8 @@
     if (cfg && cfg.title_bold === true) el.style.setProperty('--ac-title-weight', '600'); else el.style.removeProperty('--ac-title-weight');
     // vertical_align: center → contenu des cartes de base centré verticalement dans une case plus haute (sinon calé en haut)
     el.toggleAttribute('valign-center', !!cfg && cfg.vertical_align === 'center');
+    // illustration_position: left | right → dessin à côté des 2 premières tuiles (attribut illus-pos, voir card.css) ; absent = centré (défaut)
+    if (cfg && (cfg.illustration_position === 'left' || cfg.illustration_position === 'right')) el.setAttribute('illus-pos', cfg.illustration_position); else el.removeAttribute('illus-pos');
     // title_layout: stacked → ancienne disposition des cartes de base (titre puis état, empilés) ; par défaut titre à gauche et état à droite
     if (cfg && cfg.title_layout === 'stacked') el.setAttribute('title-layout', 'stacked'); else el.removeAttribute('title-layout');
   };

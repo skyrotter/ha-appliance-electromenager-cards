@@ -234,6 +234,7 @@
       "tiles_order": "Order of the tiles (list of keys)",
       "dial_decimals": "Decimals on the dial litre wheels",
       "title_layout": "Title and status",
+      "illustration_position": "Drawing position",
       "vertical_align": "Content position (tall cell)",
       "hot_water": "Hot water (red)",
       "today_decimals": "Decimals of the Today tile",
@@ -2924,6 +2925,7 @@
       "tiles_order": "Ordre des tuiles (liste de clés)",
       "dial_decimals": "Décimales sur les roues des litres du cadran",
       "title_layout": "Titre et état",
+      "illustration_position": "Position du dessin",
       "vertical_align": "Position du contenu (case haute)",
       "hot_water": "Eau chaude (rouge)",
       "today_decimals": "Décimales de la tuile Aujourd'hui",
@@ -9508,6 +9510,8 @@
     if (cfg && cfg.title_bold === true) el.style.setProperty('--ac-title-weight', '600'); else el.style.removeProperty('--ac-title-weight');
     // vertical_align: center → contenu des cartes de base centré verticalement dans une case plus haute (sinon calé en haut)
     el.toggleAttribute('valign-center', !!cfg && cfg.vertical_align === 'center');
+    // illustration_position: left | right → dessin à côté des 2 premières tuiles (attribut illus-pos, voir card.css) ; absent = centré (défaut)
+    if (cfg && (cfg.illustration_position === 'left' || cfg.illustration_position === 'right')) el.setAttribute('illus-pos', cfg.illustration_position); else el.removeAttribute('illus-pos');
     // title_layout: stacked → ancienne disposition des cartes de base (titre puis état, empilés) ; par défaut titre à gauche et état à droite
     if (cfg && cfg.title_layout === 'stacked') el.setAttribute('title-layout', 'stacked'); else el.removeAttribute('title-layout');
   };
