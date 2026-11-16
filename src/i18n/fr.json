@@ -2023,6 +2023,11 @@
   },
   "motion_sensor": {
     "name": "Détecteur de mouvement",
+    "model_room": "Scène de pièce (défaut)",
+    "model_aqara": "Détecteur sur pied (type Aqara)",
+    "model_luminea": "Détecteur plat (type Luminea)",
+    "model_wall": "Détecteur mural rond",
+    "model_radar": "Détecteur PIR + radar (type Tuya)",
     "clear": "Aucun mouvement",
     "motion": "Mouvement détecté",
     "recent": "Mouvement récent",

@@ -1992,6 +1992,11 @@
   },
   "motion_sensor": {
     "name": "Sensor de movimento",
+    "model_room": "Cena de divisão (predefinição)",
+    "model_aqara": "Sensor com suporte (tipo Aqara)",
+    "model_luminea": "Sensor plano (tipo Luminea)",
+    "model_wall": "Sensor de parede redondo",
+    "model_radar": "Sensor PIR + radar (tipo Tuya)",
     "clear": "Sem movimento",
     "motion": "Movimento detetado",
     "recent": "Movimento recente",
