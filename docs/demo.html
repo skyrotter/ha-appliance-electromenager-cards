@@ -1328,6 +1328,14 @@ const SCEN = [
       checks(ctl, [['Porte ouverte', 'binary_sensor.demo_front_door', false]]);
       range(ctl, 'Batterie', 'sensor.demo_front_door_battery', 0, 100, 1, 82, '%', { unit_of_measurement: '%', device_class: 'battery' });
     } },
+  { kind: 'motion-sensor', title: 'Détecteur de mouvement', lang: true,
+    cfg: { entity: 'binary_sensor.demo_motion', entity_battery: 'sensor.demo_motion_battery', entity_illuminance: 'sensor.demo_motion_lux', entity_temperature: 'sensor.demo_motion_temp' },
+    build(ctl) {
+      checks(ctl, [['Mouvement', 'binary_sensor.demo_motion', true]]);
+      range(ctl, 'Batterie', 'sensor.demo_motion_battery', 0, 100, 1, 82, '%', { unit_of_measurement: '%', device_class: 'battery' });
+      range(ctl, 'Luminosité', 'sensor.demo_motion_lux', 0, 1000, 5, 120, 'lx', { unit_of_measurement: 'lx', device_class: 'illuminance' });
+      range(ctl, 'Température', 'sensor.demo_motion_temp', 5, 35, 0.5, 21.5, '°C', { unit_of_measurement: '°C', device_class: 'temperature' });
+    } },
   { kind: 'smart-lock', title: 'Serrure connectée (Nuki)', lang: true,
     cfg: { model: 'nuki_pro_5', entity: 'lock.demo_front_door', entity_battery: 'sensor.demo_lock_battery', entity_door: 'binary_sensor.demo_lock_door' },
     build(ctl) {
