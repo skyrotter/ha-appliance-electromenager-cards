@@ -815,7 +815,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       // émetteur de chaque zone : radiateur ou plancher chauffant
       [1, 2].forEach((n) => {
         const ty = c['zone' + n + '_type'] === 'floor' ? 'floor' : c['zone' + n + '_type'] === 'radiator' ? 'radiator' : n === 1 ? 'radiator' : 'floor';
-        r.querySelectorAll(`#em${n} .em`).forEach((el) => { el.hidden = el.dataset.em !== ty; });
+        r.querySelectorAll(`#em${n} .em`).forEach((el) => el.toggleAttribute('hidden', el.dataset.em !== ty));
       });
       // départ chaud (rouge-orangé) et retour froid (bleu), comme sur le schéma d'une PAC
       card.style.setProperty('--ah-flowc', '#ee5a3a');
