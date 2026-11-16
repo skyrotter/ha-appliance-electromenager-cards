@@ -1988,6 +1988,8 @@
   },
   "hue_sync_box": {
     "name": "Hue Sync Box",
+    "model_top": "Top view",
+    "model_ports": "Ports view (power, USB, HDMI)",
     "off": "Off",
     "on": "On",
     "syncing": "Syncing",
