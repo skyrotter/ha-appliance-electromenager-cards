@@ -457,7 +457,21 @@
     "f_cadence": "Sensor de cadência (rpm ou remadas/min para o remo)",
     "f_distance": "Sensor de distância",
     "f_heart_rate": "Sensor de frequência cardíaca",
-    "f_calories": "Sensor de calorias"
+    "f_calories": "Sensor de calorias",
+    "canister_vacuum": "Aspirador de trenó",
+    "contact_grill": "Grelhador de contacto",
+    "grilling": "A aquecer",
+    "grill_ready": "Pronto a grelhar!",
+    "f_preheat_minutes": "Tempo de pré-aquecimento (min)",
+    "f_grill_ready_minutes": "Pronto durante (min após desligar)",
+    "air_compressor": "Compressor de ar",
+    "runtime_total": "Tempo de funcionamento total",
+    "f_runtime_total": "Sensor de tempo de funcionamento total (opcional)",
+    "f_pressure_tank": "Sensor de pressão do depósito (opcional)",
+    "direction": "Fluxo de ar",
+    "f_direction": "Direção do fluxo de ar",
+    "vx_supply": "Insuflação",
+    "vx_extract": "Extração"
   },
   "aquarium": {
     "power": "Potência",
@@ -1497,7 +1511,19 @@
     "show_heat": "Mostrar potência térmica",
     "show_cop": "Mostrar COP",
     "show_compressor": "Mostrar compressor (frequência, procura)",
-    "show_backup": "Mostrar apoios e caldeira"
+    "show_backup": "Mostrar apoios e caldeira",
+    "entity_import_t1": "Importação tarifa 1",
+    "entity_import_t2": "Importação tarifa 2",
+    "entity_export_t1": "Exportação tarifa 1",
+    "entity_export_t2": "Exportação tarifa 2",
+    "entity_export": "Exportação total",
+    "entity_peak": "Potência máxima mensal",
+    "entity_avg": "Potência média",
+    "entity_voltage": "Tensão",
+    "entity_current": "Corrente",
+    "show_tariffs": "Mostrar os mosaicos de importação / exportação",
+    "show_peak": "Mostrar a potência máxima e média",
+    "show_electrics": "Mostrar a tensão e a corrente"
   },
   "light": {
     "white_warm": "Branco quente",
@@ -1632,7 +1658,17 @@
     "tariff": "Tarifa",
     "l1": "L1",
     "l2": "L2",
-    "l3": "L3"
+    "l3": "L3",
+    "import_t1": "Importação T1",
+    "import_t2": "Importação T2",
+    "export_t1": "Exportação T1",
+    "export_t2": "Exportação T2",
+    "export": "Exportação",
+    "peak": "Máximo (mês)",
+    "avg": "Potência média",
+    "voltage": "Tensão",
+    "current": "Corrente",
+    "battery": "Baterias"
   },
   "trv": {
     "name": "Válvula do radiador",

@@ -6312,7 +6312,19 @@
       "show_heat": "Mostrar potência térmica",
       "show_cop": "Mostrar COP",
       "show_compressor": "Mostrar compressor (frequência, procura)",
-      "show_backup": "Mostrar apoios e caldeira"
+      "show_backup": "Mostrar apoios e caldeira",
+      "entity_import_t1": "Importação tarifa 1",
+      "entity_import_t2": "Importação tarifa 2",
+      "entity_export_t1": "Exportação tarifa 1",
+      "entity_export_t2": "Exportação tarifa 2",
+      "entity_export": "Exportação total",
+      "entity_peak": "Demanda máxima mensal",
+      "entity_avg": "Demanda média",
+      "entity_voltage": "Tensão",
+      "entity_current": "Corrente",
+      "show_tariffs": "Mostrar os blocos de importação / exportação",
+      "show_peak": "Mostrar a demanda máxima e média",
+      "show_electrics": "Mostrar a tensão e a corrente"
     },
     "pt-PT": {
       "entity_drive_5": "Disco 5",
@@ -6984,7 +6996,19 @@
       "show_heat": "Mostrar potência térmica",
       "show_cop": "Mostrar COP",
       "show_compressor": "Mostrar compressor (frequência, procura)",
-      "show_backup": "Mostrar apoios e caldeira"
+      "show_backup": "Mostrar apoios e caldeira",
+      "entity_import_t1": "Importação tarifa 1",
+      "entity_import_t2": "Importação tarifa 2",
+      "entity_export_t1": "Exportação tarifa 1",
+      "entity_export_t2": "Exportação tarifa 2",
+      "entity_export": "Exportação total",
+      "entity_peak": "Potência máxima mensal",
+      "entity_avg": "Potência média",
+      "entity_voltage": "Tensão",
+      "entity_current": "Corrente",
+      "show_tariffs": "Mostrar os mosaicos de importação / exportação",
+      "show_peak": "Mostrar a potência máxima e média",
+      "show_electrics": "Mostrar a tensão e a corrente"
     },
     "ro": {
       "animations": "Animații",
