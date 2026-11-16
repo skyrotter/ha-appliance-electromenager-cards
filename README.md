@@ -167,6 +167,7 @@ Click a card for its options and examples.
 | [Smart lock (Nuki, 2 models)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/smart-lock.md) | `custom:appliance-smart-lock-card` |
 | [Hue Play HDMI Sync Box](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/hue-sync-box.md) | `custom:appliance-hue-sync-box-card` |
 | [Door sensor](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/door-sensor.md) | `custom:appliance-door-sensor-card` |
+| [Motion sensor](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/motion-sensor.md) | `custom:appliance-motion-sensor-card` |
 | [Water leak detector](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/leak-detector.md) | `custom:appliance-leak-detector-card` |
 | [Irrigation (zones, pump, rain)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/irrigation.md) | `custom:appliance-irrigation-card` |
 | [LED strip (colour, brightness, effect)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/led-strip.md) | `custom:appliance-led-strip-card` |
