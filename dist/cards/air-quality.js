@@ -95,6 +95,27 @@
       "hcho": "Formaldeído",
       "humidity": "Humidade",
       "temperature": "Temperatura"
+    },
+    "uk": {
+      "name": "Якість повітря",
+      "good": "Добра",
+      "moderate": "Помірна",
+      "poor": "Погана",
+      "bad": "Дуже погана",
+      "unavailable": "Недоступно",
+      "all_good": "Усі показники в нормі",
+      "main": "Головний забруднювач",
+      "last24": "останні 24 год",
+      "now": "зараз",
+      "loading": "Завантаження історії…",
+      "no_history": "Історія недоступна",
+      "co2": "CO₂",
+      "pm25": "PM2.5",
+      "pm10": "PM10",
+      "voc": "ЛОС",
+      "hcho": "Формальдегід",
+      "humidity": "Вологість",
+      "temperature": "Температура"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));

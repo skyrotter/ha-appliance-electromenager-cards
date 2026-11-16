@@ -85,6 +85,25 @@
       "led": "Indicador LED",
       "plugged": "Ligado",
       "unplugged": "Desligado"
+    },
+    "uk": {
+      "name": "Hue Sync Box",
+      "model_top": "Вигляд згори",
+      "model_ports": "Вигляд з боку роз'ємів (живлення, USB, HDMI)",
+      "off": "Вимк.",
+      "on": "Увімк.",
+      "syncing": "Синхронізація",
+      "unavailable": "Недоступно",
+      "btn_power": "Живлення",
+      "btn_sync": "Синхронізація світла",
+      "btn_dolby": "Dolby Vision",
+      "area": "Зона розваг",
+      "intensity": "Інтенсивність",
+      "mode": "Режим синхронізації",
+      "input": "Вхід HDMI",
+      "led": "Світлодіодний індикатор",
+      "plugged": "Підключено",
+      "unplugged": "Відключено"
     }
   };
 

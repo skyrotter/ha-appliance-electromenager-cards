@@ -556,7 +556,7 @@
       "since": "Остання зміна",
       "alarm_tile": "Тривога",
       "co_level": "CO",
-      "battery": "Акумулятор",
+      "battery": "Батарея",
       "temperature": "Температура",
       "low": "Низький",
       "model_cylinder": "Компактний циліндр",
