@@ -227,6 +227,8 @@
     "ph_dry": "Szárítás",
     "ph_cool": "Hűlés",
     "power": "Teljesítmény",
+    "current": "Áram",
+    "voltage": "Feszültség",
     "energy": "Energia",
     "cost": "Költség",
     "remaining": "Hátralévő",

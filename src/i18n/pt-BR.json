@@ -224,6 +224,8 @@
     "ph_dry": "Secando",
     "ph_cool": "Resfriando",
     "power": "Potência",
+    "current": "Corrente",
+    "voltage": "Tensão",
     "energy": "Energia",
     "cost": "Custo",
     "remaining": "Restante",

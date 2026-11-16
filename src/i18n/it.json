@@ -193,6 +193,8 @@
     "ph_dry": "Asciugatura",
     "ph_cool": "Raffreddamento",
     "power": "Potenza",
+    "current": "Corrente",
+    "voltage": "Tensione",
     "energy": "Energia",
     "cost": "Costo",
     "remaining": "Rimanente",

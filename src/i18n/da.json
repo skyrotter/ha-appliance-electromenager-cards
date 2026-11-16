@@ -213,6 +213,8 @@
     "ph_dry": "Tørring",
     "ph_cool": "Afkøling",
     "power": "Effekt",
+    "current": "Strøm",
+    "voltage": "Spænding",
     "energy": "Energi",
     "cost": "Pris",
     "remaining": "Tilbage",

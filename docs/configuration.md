@@ -23,6 +23,7 @@ Shared visual editor labels follow Home Assistant's language; card-specific edit
 |---|---|
 | `entity` | Status entity: `switch`, `input_boolean`, `binary_sensor`, `sensor`, `input_select`, `water_heater`… |
 | `power` | Power sensor (W or kW) |
+| `current`, `voltage` | Smart plug only: current (A) and voltage (V) sensors, shown as two extra tiles after the power. Units come from the entity (A, mA, V…) |
 | `energy` | Energy sensor (Wh, kWh or MWh, shown in kWh) — e.g. today's consumption |
 | `cost` | Cost sensor (any currency) |
 | `energy_period` | `day`, `week` or `month` (calendar: since midnight, Monday, the 1st), or `24h`, `7d`, `30d` (rolling: last 24 hours, 7 days, 30 days): show the energy used in that period instead of the raw counter, computed by Home Assistant from the long-term statistics of `energy` (like the Energy dashboard), so a cumulative smart-plug counter works without a Utility Meter. Needs a sensor with statistics (`state_class: total_increasing`); otherwise the counter is shown. `none` hides the energy tile (the `energy` sensor still feeds the last cycle) |

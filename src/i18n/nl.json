@@ -193,6 +193,8 @@
     "ph_dry": "Drogen",
     "ph_cool": "Afkoelen",
     "power": "Vermogen",
+    "current": "Stroom",
+    "voltage": "Spanning",
     "energy": "Energie",
     "cost": "Kost",
     "remaining": "Resterend",

@@ -210,6 +210,8 @@
     "ph_dry": "Osuszanie",
     "ph_cool": "Schładzanie",
     "power": "Moc",
+    "current": "Prąd",
+    "voltage": "Napięcie",
     "energy": "Energia",
     "cost": "Koszt",
     "remaining": "Pozostało",

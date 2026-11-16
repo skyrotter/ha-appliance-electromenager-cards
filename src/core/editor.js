@@ -5,6 +5,8 @@ const SEL = {
   entity: { entity: {} },
   power: { entity: { domain: "sensor", device_class: "power" } },
   energy: { entity: { domain: "sensor", device_class: "energy" } },
+  current: { entity: { domain: "sensor", device_class: "current" } },
+  voltage: { entity: { domain: "sensor", device_class: "voltage" } },
   power_solar: { entity: { domain: "sensor", device_class: "power" } },
   energy_solar: { entity: { domain: "sensor", device_class: "energy" } },
   cost: { entity: { domain: ["sensor", "input_number"] } },
@@ -389,6 +391,12 @@ function stubFor(kind, hass) {
   if (wh) cfg.entity = wh;
   if (flag) cfg.entity = flag;
   if (power) cfg.power = power;
+  // prise connectée : intensité (A) et tension (V) si la prise les expose
+  if (kind === "smart_plug") {
+    const cur = pick((i, st) => i.startsWith("sensor.") && dc(st) === "current"), vol = pick((i, st) => i.startsWith("sensor.") && dc(st) === "voltage");
+    if (cur) cfg.current = cur;
+    if (vol) cfg.voltage = vol;
+  }
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
   if (sw && ["water_heater", "oven", "microwave", "pool_pump", "dosing_pump", "elliptical", "exercise_bike", "rowing_machine", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "smart_plug", "printer", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier"].includes(kind)) cfg.switch = sw;

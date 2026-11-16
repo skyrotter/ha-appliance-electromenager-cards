@@ -238,6 +238,8 @@
     "ph_dry": "Drying",
     "ph_cool": "Cooling down",
     "power": "Power",
+    "current": "Current",
+    "voltage": "Voltage",
     "energy": "Energy",
     "cost": "Cost",
     "remaining": "Remaining",

@@ -273,6 +273,8 @@
 "ph_dry": "Tørker",
 "ph_cool": "Kjøler ned",
 "power": "Effekt",
+"current": "Strøm",
+"voltage": "Spenning",
 "energy": "Energi",
 "cost": "Kostnad",
 "remaining": "Gjenstår",

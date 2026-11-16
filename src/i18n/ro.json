@@ -193,6 +193,8 @@
     "ph_dry": "Uscare",
     "ph_cool": "Răcire",
     "power": "Putere",
+    "current": "Curent",
+    "voltage": "Tensiune",
     "energy": "Energie",
     "cost": "Cost",
     "remaining": "Rămas",

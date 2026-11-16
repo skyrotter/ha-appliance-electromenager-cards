@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.164.0";
+const VERSION = "1.165.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -253,6 +253,8 @@ const STRINGS = {
     "ph_dry": "Drying",
     "ph_cool": "Cooling down",
     "power": "Power",
+    "current": "Current",
+    "voltage": "Voltage",
     "energy": "Energy",
     "cost": "Cost",
     "remaining": "Remaining",
@@ -696,6 +698,8 @@ const STRINGS = {
     "ph_dry": "Sušení",
     "ph_cool": "Chladnutí",
     "power": "Výkon",
+    "current": "Proud",
+    "voltage": "Napětí",
     "energy": "Energie",
     "cost": "Cena",
     "remaining": "Zbývá",
@@ -1078,6 +1082,8 @@ const STRINGS = {
     "ph_dry": "Tørring",
     "ph_cool": "Afkøling",
     "power": "Effekt",
+    "current": "Strøm",
+    "voltage": "Spænding",
     "energy": "Energi",
     "cost": "Pris",
     "remaining": "Tilbage",
@@ -1496,6 +1502,8 @@ const STRINGS = {
     "ph_dry": "Trocknen",
     "ph_cool": "Abkühlen",
     "power": "Leistung",
+    "current": "Strom",
+    "voltage": "Spannung",
     "energy": "Energie",
     "cost": "Kosten",
     "remaining": "Restzeit",
@@ -1967,6 +1975,8 @@ const STRINGS = {
     "ph_dry": "Secando",
     "ph_cool": "Enfriando",
     "power": "Potencia",
+    "current": "Corriente",
+    "voltage": "Tensión",
     "energy": "Energía",
     "cost": "Coste",
     "remaining": "Restante",
@@ -2430,6 +2440,8 @@ const STRINGS = {
     "ph_dry": "Séchage",
     "ph_cool": "Refroidissement",
     "power": "Puissance",
+    "current": "Intensité",
+    "voltage": "Tension",
     "energy": "Énergie",
     "cost": "Coût",
     "remaining": "Restant",
@@ -2891,6 +2903,8 @@ const STRINGS = {
     "ph_dry": "Szárítás",
     "ph_cool": "Hűlés",
     "power": "Teljesítmény",
+    "current": "Áram",
+    "voltage": "Feszültség",
     "energy": "Energia",
     "cost": "Költség",
     "remaining": "Hátralévő",
@@ -3298,6 +3312,8 @@ const STRINGS = {
     "ph_dry": "Asciugatura",
     "ph_cool": "Raffreddamento",
     "power": "Potenza",
+    "current": "Corrente",
+    "voltage": "Tensione",
     "energy": "Energia",
     "cost": "Costo",
     "remaining": "Rimanente",
@@ -3783,6 +3799,8 @@ const STRINGS = {
     "ph_dry": "Tørker",
     "ph_cool": "Kjøler ned",
     "power": "Effekt",
+    "current": "Strøm",
+    "voltage": "Spenning",
     "energy": "Energi",
     "cost": "Kostnad",
     "remaining": "Gjenstår",
@@ -4066,6 +4084,8 @@ const STRINGS = {
     "ph_dry": "Drogen",
     "ph_cool": "Afkoelen",
     "power": "Vermogen",
+    "current": "Stroom",
+    "voltage": "Spanning",
     "energy": "Energie",
     "cost": "Kost",
     "remaining": "Resterend",
@@ -4488,6 +4508,8 @@ const STRINGS = {
     "ph_dry": "Osuszanie",
     "ph_cool": "Schładzanie",
     "power": "Moc",
+    "current": "Prąd",
+    "voltage": "Napięcie",
     "energy": "Energia",
     "cost": "Koszt",
     "remaining": "Pozostało",
@@ -4881,6 +4903,8 @@ const STRINGS = {
     "ph_dry": "Secando",
     "ph_cool": "Resfriando",
     "power": "Potência",
+    "current": "Corrente",
+    "voltage": "Tensão",
     "energy": "Energia",
     "cost": "Custo",
     "remaining": "Restante",
@@ -5339,6 +5363,8 @@ const STRINGS = {
     "ph_dry": "A secar",
     "ph_cool": "A arrefecer",
     "power": "Potência",
+    "current": "Corrente",
+    "voltage": "Tensão",
     "energy": "Energia",
     "cost": "Custo",
     "remaining": "Restante",
@@ -5766,6 +5792,8 @@ const STRINGS = {
     "ph_dry": "Uscare",
     "ph_cool": "Răcire",
     "power": "Putere",
+    "current": "Curent",
+    "voltage": "Tensiune",
     "energy": "Energie",
     "cost": "Cost",
     "remaining": "Rămas",
@@ -6129,6 +6157,8 @@ const STRINGS = {
     "ph_dry": "Сушка",
     "ph_cool": "Остывание",
     "power": "Мощность",
+    "current": "Ток",
+    "voltage": "Напряжение",
     "energy": "Энергия",
     "cost": "Стоимость",
     "remaining": "Осталось",
@@ -6516,6 +6546,8 @@ const STRINGS = {
     "ph_dry": "Сушење",
     "ph_cool": "Хлађење",
     "power": "Снага",
+    "current": "Струја",
+    "voltage": "Напон",
     "energy": "Енергија",
     "cost": "Трошак",
     "remaining": "Преостало",
@@ -6967,6 +6999,8 @@ const STRINGS = {
     "ph_dry": "Sušenje",
     "ph_cool": "Hlađenje",
     "power": "Snaga",
+    "current": "Struja",
+    "voltage": "Napon",
     "energy": "Energija",
     "cost": "Trošak",
     "remaining": "Preostalo",
@@ -7422,6 +7456,8 @@ const STRINGS = {
     "ph_dry": "Сушіння",
     "ph_cool": "Охолодження",
     "power": "Потужність",
+    "current": "Струм",
+    "voltage": "Напруга",
     "energy": "Енергія",
     "cost": "Вартість",
     "remaining": "Залишилось",
@@ -10905,7 +10941,7 @@ const DEF = {
     keys: ["multiprise", "power_strip", "powerstrip", "steckdosenleiste", "bloc_prise"] },
   // Prise connectée : variante de la multiprise (une prise), image / icône de l'appareil branché et voyants configurables
   smart_plug: { accent: "active", threshold: 1,
-    fields: ["entity", "power", "energy", "cost", "switch"],
+    fields: ["entity", "power", "current", "voltage", "energy", "cost", "switch"],
     keys: ["smartplug", "smart_plug", "prise_connectee", "prise", "plug", "steckdose", "socket"] },
   phone_charger: { accent: "active", threshold: 2,
     fields: ["entity", "power", "energy", "cost", "battery_level", "switch"],
@@ -11263,7 +11299,7 @@ class ApplianceCardBase extends HTMLElement {
 
   _ids() {
     const c = this._config;
-    return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
+    return ["entity", "power", "current", "voltage", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
       "switch_low", "switch_high", "direction", "pressure", "runtime_total", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water", "power_level", "pellet_level", "ph", "orp", "dose_interval", "dose_timer", "dose_volume", "dose_time", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
@@ -12907,6 +12943,15 @@ class ApplianceCardBase extends HTMLElement {
     // hide_zero_power (activé par défaut) : tuiles de puissance masquées quand elles valent 0 (moins de 1 W), ex. chauffe-eau au repos
     const zero = (st) => c.hide_zero_power !== false && Math.abs(powerW(st) ?? 0) < 1;
     if (m.pw && showOpt("show_power") && !zero(m.pw)) tile(solar ? "mdi:solar-power" : "mdi:flash", fmtPower(hass, m.pw) ?? "—", lb(solar ? "production" : dual ? "grid" : "power"), c.power);
+    // prise connectée : intensité (A) et tension (V), à la suite de la puissance
+    if (kind === "smart_plug") {
+      [["current", "mdi:current-ac", c.current], ["voltage", "mdi:sine-wave", c.voltage]].forEach(([k, ic, id]) => {
+        const st = id && hass.states[id], v = st ? num(st) : null;
+        if (v == null || !Number.isFinite(v)) return;
+        const u = (st.attributes && st.attributes.unit_of_measurement) || (k === "current" ? "A" : "V"), a = Math.abs(v);
+        tile(ic, `${fmtNum(hass, v, k === "current" ? (a < 10 ? 2 : 1) : (a >= 100 ? 0 : 1))} ${u}`, lb(k), id);
+      });
+    }
     if (m.pwS && !zero(m.pwS)) tile("mdi:solar-power", fmtPower(hass, m.pwS) ?? "—", lb("solar_surplus"), c.power_solar);
     // display : "energy" (kWh seuls), "cost" (€ seuls, si price_per_kwh est valide), sinon les deux
     const pr = typeof c.price_per_kwh === "string" ? num(hass.states[c.price_per_kwh]) : Number(c.price_per_kwh);
@@ -12977,6 +13022,8 @@ const SEL = {
   entity: { entity: {} },
   power: { entity: { domain: "sensor", device_class: "power" } },
   energy: { entity: { domain: "sensor", device_class: "energy" } },
+  current: { entity: { domain: "sensor", device_class: "current" } },
+  voltage: { entity: { domain: "sensor", device_class: "voltage" } },
   power_solar: { entity: { domain: "sensor", device_class: "power" } },
   energy_solar: { entity: { domain: "sensor", device_class: "energy" } },
   cost: { entity: { domain: ["sensor", "input_number"] } },
@@ -13361,6 +13408,12 @@ function stubFor(kind, hass) {
   if (wh) cfg.entity = wh;
   if (flag) cfg.entity = flag;
   if (power) cfg.power = power;
+  // prise connectée : intensité (A) et tension (V) si la prise les expose
+  if (kind === "smart_plug") {
+    const cur = pick((i, st) => i.startsWith("sensor.") && dc(st) === "current"), vol = pick((i, st) => i.startsWith("sensor.") && dc(st) === "voltage");
+    if (cur) cfg.current = cur;
+    if (vol) cfg.voltage = vol;
+  }
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
   if (sw && ["water_heater", "oven", "microwave", "pool_pump", "dosing_pump", "elliptical", "exercise_bike", "rowing_machine", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "smart_plug", "printer", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier"].includes(kind)) cfg.switch = sw;
@@ -15203,7 +15256,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
 (async () => {
   const base = import.meta.url;
   // ?v=<version> : après une mise à jour, le navigateur ne ressert pas d'anciens morceaux depuis son cache
-  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.164.0`, base).href);
+  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.165.0`, base).href);
   await chunk("card-helpers");
   await chunk("editor-labels");
   // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre
