@@ -16,6 +16,7 @@ A garden watering card with **generic entities** (no brand): 1 to 8 zones, a wel
 | `image` | your own picture or plan (`/local/garden.jpg`, `/api/image/...` or a URL) shown **instead of the drawing**. A zone with `x` and `y` becomes a round button placed on the image (lit and pulsing while it waters); the other zones stay as buttons below |
 | `marker_names` | with `image`: shows the name of each zone next to its marker (default `false`, the name is then the tooltip) |
 | `entity_pump` | well pump (switch, input_boolean or binary_sensor) |
+| `pump_x`, `pump_y`, `pump_icon` | with `image` and `entity_pump`: places a round pump button on the image (`x` / `y` in %, `pump_icon` defaults to `mdi:pump`); lit while the pump runs. Tap = on / off for a `switch` / `input_boolean`, otherwise opens the entity |
 | `entity_master` | « Auto watering » switch (on = enabled), shown as a button |
 | `entity_rain` | rain sensor: `binary_sensor` (on = rain) or `sensor` (rate above 0) |
 | `block_on_rain` | blocks starting a zone from the card while it rains (default `false`) |
