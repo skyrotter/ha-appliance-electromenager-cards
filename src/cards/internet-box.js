@@ -110,8 +110,8 @@
     // TP-Link Deco M4 : dessin vectoriel (la photo disponible est trop petite et blanche sur blanc pour un détourage net)
     tplink_deco_m4: {
       label: 'TP-Link Deco M4 (mesh)', pw: 240, ph: 504, box: [114, 15, 72, 151], wave: [120, 30],
-      // anneau lumineux autour de la grille noire du dessus
-      led: `<ellipse class="ledglow" cx="120" cy="56" rx="120" ry="38"/><ellipse class="led" cx="120" cy="86" rx="100" ry="5"/>`,
+      // fin anneau lumineux entre la grille noire et le corps (halo doux autour, grille non teintée)
+      led: `<path class="ledglow" fill-rule="evenodd" d="M6 56a114 33 0 1 0 228 0a114 33 0 1 0 -228 0ZM20 56a100 26 0 1 1 200 0a100 26 0 1 1 -200 0Z"/><path class="led" fill-rule="evenodd" d="M16 56a104 28 0 1 0 208 0a104 28 0 1 0 -208 0ZM19 56a101 25.6 0 1 1 202 0a101 25.6 0 1 1 -202 0Z"/>`,
       svg: `<defs>
           <linearGradient id="ib-dcbody" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c9ced4"/><stop offset=".12" stop-color="#eef0f3"/><stop offset=".38" stop-color="#ffffff"/><stop offset=".62" stop-color="#f6f7f9"/><stop offset=".88" stop-color="#dfe2e6"/><stop offset="1" stop-color="#b9bfc6"/></linearGradient>
           <linearGradient id="ib-dcrim" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e6e9ed"/><stop offset=".5" stop-color="#fff"/><stop offset="1" stop-color="#d3d7dc"/></linearGradient>
