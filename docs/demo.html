@@ -1322,6 +1322,12 @@ const SCEN = [
       states['select.demo_sync_mode'] = { entity_id: 'select.demo_sync_mode', state: 'Vidéo', attributes: { options: ['Vidéo', 'Musique', 'Jeu'] }, last_changed: new Date().toISOString() };
       states['select.demo_sync_input'] = { entity_id: 'select.demo_sync_input', state: 'Nvidia Shield TV Pro', attributes: { options: ['Nvidia Shield TV Pro', 'Console', 'Lecteur'] }, last_changed: new Date().toISOString() };
     } },
+  { kind: 'door-sensor', title: "Détecteur d'ouverture", lang: true,
+    cfg: { entity: 'binary_sensor.demo_front_door', entity_battery: 'sensor.demo_front_door_battery' },
+    build(ctl) {
+      checks(ctl, [['Porte ouverte', 'binary_sensor.demo_front_door', false]]);
+      range(ctl, 'Batterie', 'sensor.demo_front_door_battery', 0, 100, 1, 82, '%', { unit_of_measurement: '%', device_class: 'battery' });
+    } },
   { kind: 'smart-lock', title: 'Serrure connectée (Nuki)', lang: true,
     cfg: { model: 'nuki_pro_5', entity: 'lock.demo_front_door', entity_battery: 'sensor.demo_lock_battery', entity_door: 'binary_sensor.demo_lock_door' },
     build(ctl) {

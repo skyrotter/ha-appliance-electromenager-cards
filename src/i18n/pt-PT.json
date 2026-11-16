@@ -835,6 +835,7 @@
     "dial_decimals": "Casas decimais nas rodas dos litros do mostrador",
     "title_layout": "Título e estado",
     "illustration_position": "Posição do desenho",
+    "open_alert_minutes": "Alerta de porta aberta após (min)",
     "vertical_align": "Posição do conteúdo (célula alta)",
     "hot_water": "Água quente (vermelho)",
     "today_decimals": "Casas decimais do bloco Hoje",
@@ -1964,6 +1965,21 @@
     "led": "Indicador LED",
     "plugged": "Ligado",
     "unplugged": "Desligado"
+  },
+  "door_sensor": {
+    "name": "Sensor de porta",
+    "closed": "Fechada",
+    "open": "Aberta",
+    "left_open": "Deixada aberta",
+    "unavailable": "Indisponível",
+    "unknown": "Indisponível",
+    "battery": "Bateria",
+    "since": "Desde",
+    "open_since": "Aberta desde",
+    "closed_since": "Fechada desde",
+    "open_for": "Aberta há {time}",
+    "low": "Fraca",
+    "ok": "OK"
   },
   "mini_pc": {
     "name": "Mini PC",
