@@ -16,6 +16,8 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 
 - `model`: `default` (the three drawn modules) or `marstek_venus_e3` (cut-out photo of the **Marstek Venus E 3.0**: its light strip fills with the state of charge, in green / orange / red, and runs in the direction of the energy flow when charging or discharging; the percentage and state are shown on the black front)
 - `count` (1 to 4, default 1): number of units drawn side by side with `model: marstek_venus_e3`, e.g. `2` for two batteries combined in a single charge sensor
+<p align="center"><img src="../battery-backup.png" width="560" alt="Marstek Venus E 3.0: backup socket lit at 185 W, off at 0 W"></p>
+
 - `entity_backup`: power of the **backup (off-grid) output** in W (e.g. Marstek Venus E 3.0 AC off-grid power), shown in a **Backup** tile; with `model: marstek_venus_e3` the backup socket of the unit lights up on the picture while it supplies 10 W or more
 - `show_backup` (default true): hides the Backup tile
 - `entity_soc` (%)
