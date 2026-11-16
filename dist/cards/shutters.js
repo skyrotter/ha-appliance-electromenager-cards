@@ -51,6 +51,7 @@
       "blind_down": "Blind down",
       "btn_blind": "Blind",
       "awning": "Retractable awning",
+      "double_awning": "Free-standing double awning",
       "aw_open": "Extended",
       "aw_closed": "Retracted",
       "aw_partial": "Extended",
@@ -296,6 +297,7 @@
       "blind_down": "Volet baissé",
       "btn_blind": "Volet",
       "awning": "Store banne",
+      "double_awning": "Store double sur pied",
       "aw_open": "Déployé",
       "aw_closed": "Rentré",
       "aw_partial": "Déployé",
@@ -590,6 +592,7 @@
       "blind_down": "Persiana abaixada",
       "btn_blind": "Persiana",
       "awning": "Toldo retrátil",
+      "double_awning": "Toldo duplo autoportante",
       "aw_open": "Estendido",
       "aw_closed": "Retraído",
       "aw_partial": "Estendido",
@@ -639,6 +642,7 @@
       "blind_down": "Estore descido",
       "btn_blind": "Estore",
       "awning": "Toldo retrátil",
+      "double_awning": "Toldo duplo autoportante",
       "aw_open": "Estendido",
       "aw_closed": "Recolhido",
       "aw_partial": "Estendido",
@@ -884,6 +888,7 @@
       "blind_down": "Штора опущена",
       "btn_blind": "Штора",
       "awning": "Висувна маркіза",
+      "double_awning": "Подвійна вільностояча маркіза",
       "aw_open": "Висунуто",
       "aw_closed": "Складено",
       "aw_partial": "Висунуто",
@@ -1306,6 +1311,59 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       <circle class="led" cx="${BR[0] + 10}" cy="32" r="1.9"/>${ARROW(BR[0] + 6, 58)}`;
   };
 
+  /* ---- store double sur pied : repère 240 × 180, vue 3/4 ; deux poteaux, coffre central, toile des deux côtés ; tout est redessiné
+     image par image (dawDyn) selon le déploiement (0-100) ---- */
+  const DW = { O: [80, 150], X: [74, -27], Y: [.37, .10], H: 46 };
+  const dawDyn = (p) => {
+    const e = Math.max(0, Math.min(1, p / 100)), { O, X, Y, H } = DW;
+    const P = (x, y, z) => [O[0] + x * X[0] + y * Y[0], O[1] + x * X[1] + y * Y[1] - z];
+    const ln = (a, b, c, w, x = '') => `<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" stroke="${c}" stroke-width="${w}" stroke-linecap="round" ${x}/>`;
+    const ext = 84 * e, drop = 24 * e;
+    const side = (sd) => {
+      const y0 = sd * 6, y1 = sd * (6 + ext), z1 = H - drop;
+      let fab = '', arms = '';
+      if (e > .03) {
+        const q = pts([P(0, y0, H - 1), P(1, y0, H - 1), P(1, y1, z1), P(0, y1, z1)]);
+        fab += `<polygon points="${q}" fill="var(--sc)"/><polygon points="${q}" fill="${sd < 0 ? '#000' : '#fff'}" opacity="${sd < 0 ? .1 : .13}"/><polygon points="${q}" fill="none" stroke="#000" stroke-opacity=".14" stroke-width=".5" stroke-linejoin="round"/>`;
+        for (const t of [.33, .66]) fab += ln(P(t, y0, H - 1), P(t, y1, z1), '#000', .5, 'opacity=".16"');
+        const v = pts([P(0, y1, z1), P(1, y1, z1), P(1, y1, z1 - 3.6), P(0, y1, z1 - 3.6)]);
+        fab += `<polygon points="${v}" fill="var(--sc)"/><polygon points="${v}" fill="#000" opacity=".16"/>`;
+        fab += ln(P(-.012, y1, z1 - 1.2), P(1.012, y1, z1 - 1.2), '#363b41', 3.4);
+        for (const x of [.05, .95]) {
+          const A = P(x, y0, H - 1), F = P(x, y1, z1 - .6), M = lerp(A, F, .5), E = [M[0], M[1] - 2 + 4 * (1 - e)], Q = pts([A, E, F]);
+          arms += `<polyline points="${Q}" fill="none" stroke="#2c3136" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${E[0].toFixed(1)}" cy="${E[1].toFixed(1)}" r="1.3" fill="#8b9299"/>`;
+        }
+      }
+      return [`<g class="aw-flap">${fab}</g>${arms}`, y1, z1];
+    };
+    const pole = (x) => { const b = P(x, 0, 0), t = P(x, 0, H - 2); return `<ellipse cx="${b[0].toFixed(1)}" cy="${(b[1] + .8).toFixed(1)}" rx="6.2" ry="2.2" fill="#2b2f34"/>${ln(b, t, '#383d43', 3.8)}${ln([b[0] - .8, b[1] - 1], [t[0] - .8, t[1]], '#5f666d', 1)}`; };
+    const a = P(0, 0, H + 1), b = P(1, 0, H + 1), [L, yl, zl] = side(-1), [R, yr, zr] = side(1);
+    const box = `${ln(a, b, '#2f3439', 11.5)}${ln(a, b, '#9aa1a8', 8.6)}${ln([a[0], a[1] - 2.4], [b[0], b[1] - 2.4], '#d3d8dc', 2.4, 'opacity=".85"')}
+      <ellipse cx="${b[0].toFixed(1)}" cy="${b[1].toFixed(1)}" rx="3.6" ry="5.6" fill="#3a3f45"/>`;
+    const near = `<ellipse cx="${a[0].toFixed(1)}" cy="${a[1].toFixed(1)}" rx="3.6" ry="5.6" fill="#454b52"/><ellipse cx="${a[0].toFixed(1)}" cy="${a[1].toFixed(1)}" rx="1.7" ry="2.7" fill="#aeb4ba"/>`;
+    const sh = `<polygon points="${pts([P(0, -6 - ext, 0), P(1, -6 - ext, 0), P(1, 6 + ext, 0), P(0, 6 + ext, 0)])}"/>`;
+    const led = e > .05 ? `${ln(P(.02, yl, zl - 3.4), P(.98, yl, zl - 3.4), '#ffe08a', 1, 'stroke-dasharray="2.6 2" class="aw-strip"')}${ln(P(.02, yr, zr - 3.4), P(.98, yr, zr - 3.4), '#ffe08a', 1, 'stroke-dasharray="2.6 2" class="aw-strip"')}
+      <ellipse class="aw-pool" cx="${P(.5, 0, 0)[0].toFixed(1)}" cy="${(P(.5, 0, 0)[1] + 2).toFixed(1)}" rx="${(20 + e * 44).toFixed(1)}" ry="${(7 + e * 6).toFixed(1)}" fill="url(#ID-awpool)"/>` : '';
+    return [`${L}${pole(1)}${box}${pole(0)}${near}${R}`, sh, led];
+  };
+  const DAWNING = () => {
+    const tile = [0, 1, 2, 3].map((k) => `<path d="M${-10 + k * 6} ${134 + k * 11}L${252 + k * 6} ${134 + k * 11}" stroke="#b9ab94" stroke-width=".5" opacity=".6"/>`).join('');
+    const chair = (x, y, f) => `<g transform="translate(${x} ${y}) scale(${f} 1)"><rect x="-1" y="-8" width="2.4" height="8" rx="1" fill="#6b6459"/><rect x="-1" y="-8" width="8" height="2.4" rx="1" fill="#6b6459"/><rect x="-1" y="-2.6" width="8" height="2.6" rx="1" fill="#7c7466"/><rect x="0" y="0" width="1.2" height="5" fill="#3a3f45"/><rect x="5" y="0" width="1.2" height="5" fill="#3a3f45"/></g>`;
+    return `<rect x="0" y="0" width="240" height="180" fill="url(#shskyd)" class="day"/><rect x="0" y="0" width="240" height="180" fill="url(#shskyn)" class="night"/>
+      <g class="day" fill="#fff" opacity=".85"><ellipse cx="42" cy="26" rx="20" ry="5"/><ellipse cx="56" cy="22" rx="12" ry="5"/><ellipse cx="190" cy="40" rx="18" ry="4.5"/></g>
+      <g class="night" fill="#fff"><circle cx="30" cy="22" r=".9"/><circle cx="82" cy="14" r="1"/><circle cx="150" cy="24" r=".8"/><circle cx="208" cy="16" r="1"/><circle cx="224" cy="46" r=".8"/></g>
+      <path d="M0 112q40 -14 80 -4t90 -6 70 4V128H0Z" fill="#5f9a52"/><path d="M0 120q60 -10 120 -2t120 -4V180H0Z" fill="#6fae58"/>
+      <polygon points="0,122 240,122 240,180 0,180" fill="#cfc6b4"/>${tile}
+      <ellipse cx="121" cy="140" rx="26" ry="4" fill="#000" opacity=".12"/>
+      ${chair(94, 142, 1)}${chair(142, 134, -1)}
+      <rect x="119.8" y="132" width="2.6" height="8" fill="#8a8274"/><ellipse cx="121" cy="131" rx="18" ry="4.4" fill="#efece6" stroke="#cfc8b8" stroke-width=".5"/>
+      <g clip-path="none"><g class="aw-shadow" fill="#000"></g></g>
+      <rect class="pg-dim" x="0" y="0" width="240" height="180" fill="#0a1020"/>
+      <g class="aw-wind" fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity=".0"><path d="M2 54q14 -5 30 0t26 -2"/><path d="M0 70q12 -4 24 0t22 -2"/><path d="M4 86q10 -3 20 0t18 -1"/></g>
+      <g class="aw-dyn"></g><g class="aw-leds"></g>
+      <circle class="led" cx="226" cy="26" r="1.9"/>${ARROW(222, 52)}`;
+  };
+
   /* ---- fenêtre de toit : pan de toit en tuiles, ouvrant à rotation (transform posé par JS), volet roulant extérieur ---- */
   const RW = { X: 58, Y: 40, W: 84, H: 96 };
   // ouvrant pour une ouverture a (0 à 100) : il pivote sur son axe médian, le bas sort vers l'extérieur
@@ -1363,6 +1421,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
     venetian_blind: { color: '#ece2cf', re: /venitien|vénitien|venetian|blind|jalousie|lamel|store/i, icon: 'mdi:blinds-horizontal' },
     swing_shutter: { color: '#4f7d5c', re: /volet|shutter|battant|persienne|swing/i, icon: 'mdi:window-shutter-open' },
     pergola: { color: '#d5dae0', re: /pergola|bioclim|lame|louvre|lamelle/i, icon: 'mdi:pergola' },
+    double_awning: { color: '#c9bfa5', re: /double|autoport|pied|free|stand|sunsquare|store_banne|banne|awning/i, icon: 'mdi:umbrella-beach-outline' },
     awning: { color: '#b3a086', re: /store_banne|banne|awning|markise|toldo|tenda|luifel|markiza|markyza|store/i, icon: 'mdi:awning-outline' },
     roof_window: { color: '#4b525b', re: /velux|fenetre_toit|fenetre_de_toit|roof|skylight|dachfenster|tabatiere|fakro/i, icon: 'mdi:window-open-variant' },
   };
@@ -1397,11 +1456,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
 
     _t(k) {
       // pergola : libellés au féminin (« Ouverte », « Fermée ») et « Lames » au lieu de « Position »
-      const L = T[this._lang()], pre = { pergola: 'pg_', roof_window: 'rw_', awning: 'aw_' }[this.kind], pk = pre ? `${pre}${k}` : null;
+      const L = T[this._lang()], pre = { pergola: 'pg_', roof_window: 'rw_', awning: 'aw_', double_awning: 'aw_' }[this.kind], pk = pre ? `${pre}${k}` : null;
       return (pk && (L[pk] ?? T.en[pk])) ?? L[k] ?? T.en[k] ?? k;
     }
     // libellé perso (option labels) sinon traduction
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
+    get _aw() { return this.kind === 'awning' || this.kind === 'double_awning'; }
     _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
     _num(id) { return window.applianceNum(this._st(id)); }
@@ -1426,10 +1486,10 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
 
     _build() {
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
-      const swing = this.kind === 'swing_shutter', pergola = this.kind === 'pergola', roof = this.kind === 'roof_window', awning = this.kind === 'awning', curtain = this.kind === 'sliding_curtain';
+      const swing = this.kind === 'swing_shutter', pergola = this.kind === 'pergola', roof = this.kind === 'roof_window', awning = this.kind === 'awning' || this.kind === 'double_awning', dbl = this.kind === 'double_awning', curtain = this.kind === 'sliding_curtain';
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="shtitle"></div><div class="badge" id="shbadge"></div></div>
-        <div class="scene${swing ? ' sw' : pergola || awning ? ' pg' : ''}"><svg viewBox="${pergola || awning ? '0 0 240 180' : '0 0 200 172'}" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${pergola ? PERGOLA() : awning ? AWNING() : roof ? ROOF() : SVGS[this.kind]()}</svg>
+        <div class="scene${swing ? ' sw' : pergola || awning ? ' pg' : ''}"><svg viewBox="${pergola || awning ? '0 0 240 180' : '0 0 200 172'}" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${pergola ? PERGOLA() : dbl ? DAWNING() : awning ? AWNING() : roof ? ROOF() : SVGS[this.kind]()}</svg>
           ${swing ? `<div class="leaf l mv">${LEAF(false)}</div><div class="leaf r mv">${LEAF(true)}</div>` : ''}</div>
         <div class="rng ps" id="shpos"><span></span><input type="range" min="0" max="100" step="1"></div>
         <div class="rng tl" id="shtilt"><span></span><input type="range" min="0" max="100" step="1"></div>
@@ -1562,8 +1622,8 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       const draw = (a) => {
         this._ang = a;
         if (this.kind === 'roof_window') { this._root.querySelector('.rw-sash').setAttribute('transform', rwSash(a)); return; }
-        if (this.kind === 'awning') {
-          const [dyn, sh, led] = awDyn(a, this._awTilt);
+        if (this._aw) {
+          const [dyn, sh, led] = this.kind === 'double_awning' ? dawDyn(a) : awDyn(a, this._awTilt);
           this._root.querySelector('.aw-dyn').innerHTML = dyn;
           this._root.querySelector('.aw-shadow').innerHTML = sh;
           this._root.querySelector('.aw-leds').innerHTML = led;
@@ -1591,7 +1651,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       const sun = this._st(c.sun_entity), night = !!sun && sun.state === 'below_horizon';
       const rainS = this._st(c.entity_rain), rain = !!rainS && (/^(on|true|wet|rain|pluie|raining)$/i.test(String(rainS.state)) || this._num(c.entity_rain) > 0);
       const lightS = this._st(c.entity_light), leds = !!lightS && /^on$/i.test(String(lightS.state));
-      const wk = this.kind === 'awning' ? this._windKmh() : NaN, windy = !isNaN(wk) && wk >= (Number(c.wind_max) > 0 ? Number(c.wind_max) : 40);
+      const wk = this._aw ? this._windKmh() : NaN, windy = !isNaN(wk) && wk >= (Number(c.wind_max) > 0 ? Number(c.wind_max) : 40);
       card.className = `${st}${windy ? ' windy' : ''}${night ? ' isnight' : ''}${c.animations === false ? ' noanim' : ''}${this._tiltOnly ? ' tonly' : ''}${rain ? ' rain' : ''}${leds ? ' leds' : ''}`;
       const blS = this._st(c.entity_blind), blA = (blS && blS.attributes) || {};
       const blPos = blS ? (isFinite(Number(blA.current_position)) && blA.current_position != null ? Number(blA.current_position) : /^(closed|closing)$/i.test(blS.state) ? 0 : 100) : 100;
@@ -1605,7 +1665,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         card.style.setProperty('--sh-d', `${dur.toFixed(2)}s`);
         // avec un temps de course, la cover envoie sa position par paliers : mouvement linéaire pour enchaîner sans à-coups
         card.style.setProperty('--sh-e', tt > 0 ? 'linear' : 'ease-in-out');
-        if (this.kind === 'pergola' || this.kind === 'roof_window' || this.kind === 'awning') this._tween(pos, c.animations === false ? 0 : dur, tt > 0);
+        if (this.kind === 'pergola' || this.kind === 'roof_window' || this._aw) this._tween(pos, c.animations === false ? 0 : dur, tt > 0);
         this._pos = pos;
       }
       // store banne : l'inclinaison change l'angle de la toile, sans déplacer le store
@@ -1690,10 +1750,10 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         tilt: [(this.kind === 'venetian_blind' || this.kind === 'awning') && !isNaN(tilt), this._fmt(tilt, 0), '%'],
         power: [c.entity_power, isNaN(pw) ? '--' : this._fmt(pw, 0), isNaN(pw) ? '' : 'W'],
         blind: [this.kind === 'roof_window' && blS, this._fmt(blPos, 0), '%'],
-        rain: [['pergola', 'roof_window', 'awning'].includes(this.kind) && rainS, this._t(rain ? 'yes' : 'no'), ''],
-        wind: [(this.kind === 'pergola' || this.kind === 'awning') && c.entity_wind, this._fmt(this._num(c.entity_wind), 0), this._unit(c.entity_wind, 'km/h')],
-        lux: [this.kind === 'awning' && c.entity_lux, this._fmt(this._num(c.entity_lux), 0), this._unit(c.entity_lux, 'lx')],
-        temperature: [this.kind === 'awning' && c.entity_temperature, this._fmt(this._num(c.entity_temperature), 1), this._unit(c.entity_temperature, '°C')],
+        rain: [['pergola', 'roof_window', 'awning', 'double_awning'].includes(this.kind) && rainS, this._t(rain ? 'yes' : 'no'), ''],
+        wind: [(this.kind === 'pergola' || this._aw) && c.entity_wind, this._fmt(this._num(c.entity_wind), 0), this._unit(c.entity_wind, 'km/h')],
+        lux: [this._aw && c.entity_lux, this._fmt(this._num(c.entity_lux), 0), this._unit(c.entity_lux, 'lx')],
+        temperature: [this._aw && c.entity_temperature, this._fmt(this._num(c.entity_temperature), 1), this._unit(c.entity_temperature, '°C')],
         since: [s, this._since(s), ''],
       };
       TILES.forEach(([k, , opt]) => {
@@ -1732,7 +1792,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         ...window.applianceTileFields(this._hass),
         ent('entity', 'cover'), ent('entity_state'), ent('entity_position', 'sensor'), ent('entity_power', 'sensor'), ent('sun_entity', 'sun'),
         ...(this.kind === 'pergola' ? [ent('entity_rain'), ent('entity_light'), ent('entity_wind', 'sensor')] : []),
-        ...(this.kind === 'awning' ? [ent('entity_wind', 'sensor'), ent('entity_rain'), ent('entity_light'), ent('entity_lux', 'sensor'), ent('entity_temperature', 'sensor'),
+        ...(this.kind === 'awning' || this.kind === 'double_awning' ? [ent('entity_wind', 'sensor'), ent('entity_rain'), ent('entity_light'), ent('entity_lux', 'sensor'), ent('entity_temperature', 'sensor'),
           { name: 'wind_max', selector: { number: { min: 5, max: 120, step: 1, mode: 'box', unit_of_measurement: 'km/h' } } }] : []),
         ...(this.kind === 'roof_window' ? [ent('entity_blind', 'cover'), ent('entity_rain')] : []),
         { type: 'grid', name: '', schema: [
@@ -1748,12 +1808,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
           bool('show_status'), bool('show_controls'), bool('show_slider'), bool('show_position'),
           ...(this.kind === 'venetian_blind' || this.kind === 'awning' ? [bool('show_tilt')] : []), bool('show_power'),
           ...(this.kind === 'pergola' ? [bool('show_rain'), bool('show_wind')] : []),
-          ...(this.kind === 'awning' ? [bool('show_rain'), bool('show_wind'), bool('show_lux'), bool('show_temperature')] : []),
+          ...(this.kind === 'awning' || this.kind === 'double_awning' ? [bool('show_rain'), bool('show_wind'), bool('show_lux'), bool('show_temperature')] : []),
           ...(this.kind === 'roof_window' ? [bool('show_blind'), bool('show_rain')] : []), bool('show_since'), bool('animations'),
         ] },
       ];
       // « color » a le libellé « couleur de la lumière » pour les lampes : ici, couleur du volet
-      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'color' ? (this.kind === 'pergola' ? 'louvre_color' : this.kind === 'awning' || this.kind === 'sliding_curtain' ? 'fabric_color' : 'shutter_color') : s.name === 'invert' ? 'invert_position' : s.name, this._hass);
+      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'color' ? (this.kind === 'pergola' ? 'louvre_color' : this.kind === 'awning' || this.kind === 'double_awning' || this.kind === 'sliding_curtain' ? 'fabric_color' : 'shutter_color') : s.name === 'invert' ? 'invert_position' : s.name, this._hass);
     }
   }
 
@@ -1771,7 +1831,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
     });
     customElements.define(tag + '-editor', class extends ApplianceShutterCardEditor { get kind() { return kind; } });
     window.customCards.push({ type: tag, name: `Appliance – ${T.en[kind]} / ${T.fr[kind]}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l][kind]])), preview: true,
-      description: kind === 'sliding_curtain' ? `Animated sliding curtains: two fabric panels, open / stop / close controls, position, and day / night view.` : kind === 'awning' ? `${T.fr[kind]} animé : toile qui se déploie, bras articulés, ombre sur la terrasse, vent fort, pluie, éclairage LED et vue jour / nuit.` : kind === 'roof_window' ? `${T.fr[kind]} animée : ouvrant à rotation, volet roulant extérieur, pluie et vue jour / nuit.` : kind === 'pergola' ? `${T.fr[kind]} animée : lames orientables, pluie, éclairage LED et vue jour / nuit.` : `${T.fr[kind]} animé : position, inclinaison, mouvement et vue jour / nuit.`,
+      description: kind === 'sliding_curtain' ? `Animated sliding curtains: two fabric panels, open / stop / close controls, position, and day / night view.` : kind === 'double_awning' ? `${T.fr[kind]} animé : toile des deux côtés, bras articulés, ombre, vent fort, pluie, éclairage LED et vue jour / nuit.` : kind === 'awning' ? `${T.fr[kind]} animé : toile qui se déploie, bras articulés, ombre sur la terrasse, vent fort, pluie, éclairage LED et vue jour / nuit.` : kind === 'roof_window' ? `${T.fr[kind]} animée : ouvrant à rotation, volet roulant extérieur, pluie et vue jour / nuit.` : kind === 'pergola' ? `${T.fr[kind]} animée : lames orientables, pluie, éclairage LED et vue jour / nuit.` : `${T.fr[kind]} animé : position, inclinaison, mouvement et vue jour / nuit.`,
       documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards' });
   }
 })();

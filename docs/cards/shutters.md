@@ -1,6 +1,6 @@
 # Shutters and blinds
 
-`custom:appliance-roller-shutter-card · custom:appliance-venetian-blind-card · custom:appliance-swing-shutter-card · custom:appliance-sliding-curtain-card · custom:appliance-pergola-card · custom:appliance-roof-window-card · custom:appliance-awning-card`
+`custom:appliance-roller-shutter-card · custom:appliance-venetian-blind-card · custom:appliance-swing-shutter-card · custom:appliance-sliding-curtain-card · custom:appliance-pergola-card · custom:appliance-roof-window-card · custom:appliance-awning-card · custom:appliance-double-awning-card`
 
 <p align="center"><img src="../shutters.gif" width="600" alt="Animated shutter cards"></p>
 
@@ -155,4 +155,19 @@ type: custom:appliance-roller-shutter-card
 entity: cover.living_room_shutter
 entity_state: binary_sensor.shutter_contact
 entity_position: sensor.shutter_position   # optional
+```
+
+## Free-standing double awning
+
+<p align="center"><img src="../double-awning.gif" width="420" alt="Animated free-standing double awning card: the fabric unrolls on both sides"></p>
+
+`custom:appliance-double-awning-card`: a free-standing double awning (two posts, a central box, folding arms and a front bar on each side) in a garden. The fabric unrolls **on both sides at once** with `current_position` (0 = retracted in the box, 100 = fully extended). Buttons **Extend / Stop / Retract**; `invert: true` if the motor reports the opposite. Same options as the retractable awning (`entity_wind` + `wind_max`, `entity_rain`, `entity_light`, `entity_lux`, `entity_temperature`, `entity_power`, `color`, `show_*`), without the tilt.
+
+```yaml
+type: custom:appliance-double-awning-card
+entity: cover.garden_double_awning
+entity_wind: sensor.wind_speed
+wind_max: 35
+entity_rain: binary_sensor.rain
+color: "#d9cfb4"
 ```
