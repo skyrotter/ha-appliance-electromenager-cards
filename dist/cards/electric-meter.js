@@ -233,7 +233,17 @@
       "tariff": "Tarifa",
       "l1": "L1",
       "l2": "L2",
-      "l3": "L3"
+      "l3": "L3",
+      "import_t1": "Importação T1",
+      "import_t2": "Importação T2",
+      "export_t1": "Exportação T1",
+      "export_t2": "Exportação T2",
+      "export": "Exportação",
+      "peak": "Máxima (mês)",
+      "avg": "Demanda média",
+      "voltage": "Tensão",
+      "current": "Corrente",
+      "battery": "Baterias"
     },
     "pt-PT": {
       "name": "Contador elétrico",
@@ -249,7 +259,17 @@
       "tariff": "Tarifa",
       "l1": "L1",
       "l2": "L2",
-      "l3": "L3"
+      "l3": "L3",
+      "import_t1": "Importação T1",
+      "import_t2": "Importação T2",
+      "export_t1": "Exportação T1",
+      "export_t2": "Exportação T2",
+      "export": "Exportação",
+      "peak": "Máximo (mês)",
+      "avg": "Potência média",
+      "voltage": "Tensão",
+      "current": "Corrente",
+      "battery": "Baterias"
     },
     "ro": {
       "name": "Contor electric",
