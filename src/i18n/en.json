@@ -2032,6 +2032,11 @@
   },
   "motion_sensor": {
     "name": "Motion sensor",
+    "model_room": "Room scene (default)",
+    "model_aqara": "Stand sensor (Aqara type)",
+    "model_luminea": "Flat sensor (Luminea type)",
+    "model_wall": "Round wall sensor",
+    "model_radar": "PIR + radar sensor (Tuya type)",
     "clear": "No motion",
     "motion": "Motion detected",
     "recent": "Recent motion",
