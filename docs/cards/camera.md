@@ -37,6 +37,8 @@ entity_night: switch.garden_ir
 
 ## NVR
 
+<p align="center"><img src="../nvr-xiongmai.png" width="720" alt="Xiongmai NVR: idle, motion with recording, disk problem"></p>
+
 The NVR recorder photo with its **PWR (green) and HDD (red) LEDs animated** (the HDD LED blinks faster when the CPU works). The card turns red when the disk is almost full, orange on a high CPU load.
 
 | Option | What it does |
