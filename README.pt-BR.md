@@ -178,6 +178,7 @@ Clique em um cartão para consultar as opções e os exemplos.
 | [Hue Play HDMI Sync Box](docs/cards/hue-sync-box.md) | `custom:appliance-hue-sync-box-card` |
 | [Sensor de porta](docs/cards/door-sensor.md) | `custom:appliance-door-sensor-card` |
 | [Sensor de movimento](docs/cards/motion-sensor.md) | `custom:appliance-motion-sensor-card` |
+| [Qualidade do ar](docs/cards/air-quality.md) | `custom:appliance-air-quality-card` |
 | [Detector de vazamentos de água](docs/cards/leak-detector.md) | `custom:appliance-leak-detector-card` |
 | [Irrigação (zonas, bomba, chuva)](docs/cards/irrigation.md) | `custom:appliance-irrigation-card` |
 | [Fita LED (cor, brilho, efeito)](docs/cards/led-strip.md) | `custom:appliance-led-strip-card` |
