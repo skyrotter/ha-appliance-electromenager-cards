@@ -287,7 +287,16 @@ const I18N_EV = {
     "charging": "Заряджається",
     "plugged": "Підключено",
     "done": "Завершено",
-    "disconnected": "Відключено"
+    "disconnected": "Відключено",
+    "climate_pill": "Кондиціонер",
+    "climate_heat_pill": "Обігрів",
+    "climate": "Клімат",
+    "climate_heat": "Обігрів",
+    "climate_cool": "Охолодження",
+    "climate_off": "Вимк.",
+    "doors": "Двері",
+    "doors_open": "Відчинені",
+    "doors_closed": "Зачинені"
   }
 };
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré

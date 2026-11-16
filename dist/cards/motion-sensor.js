@@ -102,6 +102,28 @@
       "temperature": "Temperatura",
       "low": "Fraca",
       "ok": "OK"
+    },
+    "uk": {
+      "name": "Датчик руху",
+      "model_room": "Кімната (типово)",
+      "model_aqara": "Датчик на підставці (типу Aqara)",
+      "model_luminea": "Плаский датчик (типу Luminea)",
+      "model_wall": "Круглий настінний датчик",
+      "model_radar": "Датчик PIR + радар (типу Tuya)",
+      "clear": "Руху немає",
+      "motion": "Виявлено рух",
+      "recent": "Нещодавно був рух",
+      "unavailable": "Недоступно",
+      "unknown": "Недоступно",
+      "battery": "Батарея",
+      "since_motion": "Рух триває",
+      "since_clear": "Тихо вже",
+      "motion_for": "Рух уже {time}",
+      "last_motion": "Останній рух {time} тому",
+      "illuminance": "Освітленість",
+      "temperature": "Температура",
+      "low": "Низький",
+      "ok": "ОК"
     }
   };
 

@@ -245,7 +245,7 @@
       "temperature": "Температура",
       "conductivity": "Родючість",
       "brightness": "Світло",
-      "battery": "Акумулятор",
+      "battery": "Батарея",
       "rssi": "Сигнал",
       "style_plant": "Рослина (SVG)",
       "style_sensor": "Датчик (SVG)",

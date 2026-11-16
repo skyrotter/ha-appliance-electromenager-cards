@@ -92,6 +92,26 @@
       "open_for": "Aberta há {time}",
       "low": "Fraca",
       "ok": "OK"
+    },
+    "uk": {
+      "name": "Датчик дверей",
+      "name_service_door": "Датчик засклених дверей",
+      "name_window": "Датчик вікна",
+      "model_front_door": "Вхідні двері",
+      "model_service_door": "Засклені двері",
+      "model_window": "Вікно",
+      "closed": "Зачинено",
+      "open": "Відчинено",
+      "left_open": "Залишено відчиненим",
+      "unavailable": "Недоступно",
+      "unknown": "Недоступно",
+      "battery": "Батарея",
+      "since": "Триває",
+      "open_since": "Відчинено вже",
+      "closed_since": "Зачинено вже",
+      "open_for": "Відчинено вже {time}",
+      "low": "Низький",
+      "ok": "ОК"
     }
   };
 
