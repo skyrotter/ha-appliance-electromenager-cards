@@ -10,7 +10,7 @@ Three models (`model`), same white PVC style:
 |---|---|
 | `front_door` (default) | Front door: glazing, moulded panel, stainless bar handle |
 | `service_door` | Service door, glazed door style: glass all the way down, thin PVC rail at the bottom |
-| `window` | Window: full glazing and window handle |
+| `window` | Window: four panes (white PVC cross bars) and window handle |
 
 <p align="center"><img src="../door-sensor-models.png" width="640" alt="Front door, service door and window"></p>
 

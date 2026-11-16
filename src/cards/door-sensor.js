@@ -80,6 +80,7 @@ svg{display:block;width:100%;max-width:calc(240px * var(--illus-scale,1));height
       return g + cyl(dp(.895, .595)); } },
     window: { ow: 90, oh: 120, floor: false, nameKey: 'name_window', decor: (R, dp) => {
       let g = poly(R(.07, .06, .93, .94), '#e3e6ea', EDGE) + poly(R(.13, .10, .87, .90), 'url(#dsglass)', 'stroke="#8d949b" stroke-width=".7"') + GLINT(dp, .13, .10, .87, .90);
+      g += poly(R(.465, .10, .535, .90), '#eef0f3', 'stroke="#b4bac1" stroke-width=".7"') + poly(R(.13, .465, .87, .535), '#eef0f3', 'stroke="#b4bac1" stroke-width=".7"');   // croisillon PVC : traverse horizontale et montant vertical
       g += poly(R(.855, .44, .935, .56), '#dfe2e6', 'stroke="#9aa3ad" stroke-width=".7"') + poly(R(.875, .42, .915, .62), '#c9ced4', 'stroke="#7d858d" stroke-width=".8"') + poly(R(.885, .42, .905, .50), '#e8ecf0', 'opacity=".8"');   // poignée de fenêtre
       return g; } },
   };
