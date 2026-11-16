@@ -28,6 +28,9 @@ Every group of tiles can be hidden with its `show_…` option, and `language: fr
 - `entity_backup`, `entity_immersion` and `entity_boiler` (backup heater, immersion heater, boiler: shown as On / Off)
 - `threshold` (compressor running above this electric power, default 100 W, used without `entity_frequency`)
 - `frequency_threshold` (compressor running above this frequency, default 0 Hz)
+- `standby_threshold` (W, default 0 = off): without a status entity, an electric power above this value (but below `threshold`) shows **Standby** instead of **Off**, and keeps the flow temperature on the module display. For a heat pump that stays powered (about 27 W) while waiting for a heat demand
+- `zones` (`1` or `2`, default `2`): `1` hides the second zone (circulator, pipes, emitter and label)
+- `zone1_type`, `zone2_type` (`radiator` or `floor`, defaults `radiator` and `floor`): the emitter drawn for each zone, e.g. `floor` for both zones with two underfloor heating manifolds
 - `show_status`
 - `show_heat`
 - `show_power`
@@ -39,3 +42,5 @@ Every group of tiles can be hidden with its `show_…` option, and `language: fr
 - `animations`
 
 [← All cards](../../README.md#the-cards)
+
+Long custom `labels` wrap on two lines in the tiles instead of being cut off (the full label is also shown as a tooltip).

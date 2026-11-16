@@ -26,7 +26,8 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
 .tile{box-sizing:border-box;display:flex;flex-direction:column;background:var(--ac-tile-bg,rgba(127,127,127,.09));border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
 :host([tile-order="value"]) .tile{flex-direction:column-reverse}:host([tile-order="value"]) .tile .v{margin:0 0 2px}
 .tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
-.tile .l span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* libellé long : passe sur 2 lignes au lieu d'être coupé (le libellé complet est aussi en infobulle) */
+.tile .l span{min-width:0;overflow:hidden;white-space:normal;overflow-wrap:anywhere;text-align:center;line-height:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .tile .l ha-icon{--mdc-icon-size:13px;flex:none}
 .tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
@@ -53,7 +54,9 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
 .off .body-shade{opacity:.55}
 .zlabel{fill:var(--secondary-text-color);font:600 9px/1 var(--paper-font-body1_-_font-family,Roboto,sans-serif);text-anchor:middle}
 .rad{fill:#e9edf1;transition:fill .8s}
-.z1 .rad{fill:color-mix(in srgb,var(--ah-flowc,#e5533d) 38%,#f4f6f8)}
+.z1 .rad1{fill:color-mix(in srgb,var(--ah-flowc,#e5533d) 38%,#f4f6f8)}.z2 .rad2{fill:color-mix(in srgb,var(--ah-flowc,#e5533d) 38%,#f4f6f8)}
+.one [data-z="2"]{display:none}
+.em[hidden]{display:none}
 .zoff{transition:opacity .6s}
 .dhwmode .zone{opacity:.45}
 .noanim *{animation:none!important}
@@ -106,36 +109,48 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
  <!-- collecteurs : départ (rouge) à gauche, retour (bleu) à droite -->
  <g class="zone zoff" fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
   <path d="M198 108 H222 V70 H302 V62" style="stroke:var(--ah-retc,#3b8fe8)"/>
-  <path d="M222 108 V166 H292 V158" style="stroke:var(--ah-retc,#3b8fe8)"/>
+  <path data-z="2" d="M222 108 V166 H292 V158" style="stroke:var(--ah-retc,#3b8fe8)"/>
   <path d="M198 76 H210 V40 H238" style="stroke:var(--ah-flowc,#e5533d)"/>
-  <path d="M210 76 V134 H238" style="stroke:var(--ah-flowc,#e5533d)"/>
+  <path data-z="2" d="M210 76 V134 H238" style="stroke:var(--ah-flowc,#e5533d)"/>
   <path d="M262 40 H284" style="stroke:var(--ah-flowc,#e5533d)"/>
-  <path d="M262 134 H286" style="stroke:var(--ah-flowc,#e5533d)"/>
+  <path data-z="2" d="M262 134 H286" style="stroke:var(--ah-flowc,#e5533d)"/>
  </g>
- <!-- zone 1 : circulateur + radiateur -->
- <g class="zone">
+ <!-- zone 1 : circulateur + émetteur (radiateur ou plancher chauffant, option zone1_type) -->
+ <g class="zone" id="em1">
   <g class="pump p1"><circle cx="250" cy="40" r="12" fill="#cfd6de" stroke="#8f99a4" stroke-width="1.6"/><circle cx="250" cy="40" r="8.6" fill="#2b3440"/><path class="tri" d="M247 35 L255 40 L247 45Z"/></g>
-  <g transform="translate(286 20)">
+  <g class="em" data-em="radiator" transform="translate(286 20)">
    <rect x="1" y="1" width="40" height="40" rx="4" fill="#000" opacity=".1"/>
-   <g class="rad" stroke="#aab3bd" stroke-width="1">
+   <g class="rad rad1" stroke="#aab3bd" stroke-width="1">
     <rect x="0" y="0" width="40" height="6" rx="2.5"/><rect x="0" y="34" width="40" height="6" rx="2.5"/>
     <rect x="3" y="3" width="5" height="34" rx="2.5"/><rect x="11" y="3" width="5" height="34" rx="2.5"/>
     <rect x="19" y="3" width="5" height="34" rx="2.5"/><rect x="27" y="3" width="5" height="34" rx="2.5"/><rect x="35" y="3" width="3" height="34" rx="1.5"/>
    </g>
   </g>
-  <!-- zone 2 : circulateur + plancher chauffant -->
+  <g class="em" data-em="floor"><rect x="284" y="19" width="44" height="42" rx="4" fill="#2a3340" opacity=".12"/>
+  <path d="M286 40 H320 V28 H292 V34 H314 V46 H294 V52 H320 V60 H294" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--ah-flowc,#e5533d)"/></g>
+ </g>
+ <!-- zone 2 : circulateur + émetteur (plancher chauffant ou radiateur, option zone2_type) -->
+ <g class="zone" id="em2" data-z="2">
   <g class="pump p2"><circle cx="250" cy="134" r="12" fill="#cfd6de" stroke="#8f99a4" stroke-width="1.6"/><circle cx="250" cy="134" r="8.6" fill="#2b3440"/><path class="tri" d="M247 129 L255 134 L247 139Z"/></g>
-  <rect x="284" y="116" width="44" height="42" rx="4" fill="#2a3340" opacity=".12"/>
-  <path d="M286 134 H320 V122 H292 V128 H314 V140 H294 V146 H320 V154 H294" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--ah-flowc,#e5533d)"/>
+  <g class="em" data-em="radiator" transform="translate(286 114)">
+   <rect x="1" y="1" width="40" height="40" rx="4" fill="#000" opacity=".1"/>
+   <g class="rad rad2" stroke="#aab3bd" stroke-width="1">
+    <rect x="0" y="0" width="40" height="6" rx="2.5"/><rect x="0" y="34" width="40" height="6" rx="2.5"/>
+    <rect x="3" y="3" width="5" height="34" rx="2.5"/><rect x="11" y="3" width="5" height="34" rx="2.5"/>
+    <rect x="19" y="3" width="5" height="34" rx="2.5"/><rect x="27" y="3" width="5" height="34" rx="2.5"/><rect x="35" y="3" width="3" height="34" rx="1.5"/>
+   </g>
+  </g>
+  <g class="em" data-em="floor"><rect x="284" y="116" width="44" height="42" rx="4" fill="#2a3340" opacity=".12"/>
+  <path d="M286 134 H320 V122 H292 V128 H314 V140 H294 V146 H320 V154 H294" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--ah-flowc,#e5533d)"/></g>
  </g>
  <!-- animation de l'eau dans les deux zones -->
  <g class="zone" stroke="#fff" stroke-width="1.8" stroke-linecap="round" fill="none">
   <path class="dash z1" d="M198 76 H210 V40 H238 M262 40 H286"/>
   <path class="dash z1" d="M302 62 V70 H222 V108 H198"/>
-  <path class="dash z2" d="M210 76 V134 H238 M262 134 H286 M320 122 H292 M294 154 H292 V166 H222"/>
+  <path class="dash z2" data-z="2" d="M210 76 V134 H238 M262 134 H286 M320 122 H292 M294 154 H292 V166 H222"/>
  </g>
  <text class="zlabel" id="zl1" x="306" y="14">Zone 1</text>
- <text class="zlabel" id="zl2" x="306" y="180">Zone 2</text>
+ <text class="zlabel" data-z="2" id="zl2" x="306" y="180">Zone 2</text>
 </svg>`;
 
   const TILES = [
@@ -173,6 +188,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
     }
     static getConfigForm() {
       const ent = (name, domain, extra = {}) => ({ name, selector: { entity: { domain, ...extra } } });
+      const EMITTERS = (h) => [{ value: 'radiator', label: window.applianceEditorLabel('emitter_radiator', h) }, { value: 'floor', label: window.applianceEditorLabel('emitter_floor', h) }];
       const RELAY = ['binary_sensor', 'switch', 'input_boolean', 'sensor'];
       return {
         schema: [
@@ -192,6 +208,12 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
           { type: 'grid', name: '', schema: [
             { name: 'threshold', selector: { number: { min: 0, max: 5000, step: 5, mode: 'box', unit_of_measurement: 'W' } } },
             { name: 'frequency_threshold', selector: { number: { min: 0, max: 200, step: 1, mode: 'box', unit_of_measurement: 'Hz' } } },
+            { name: 'standby_threshold', selector: { number: { min: 0, max: 5000, step: 1, mode: 'box', unit_of_measurement: 'W' } } },
+          ] },
+          { type: 'grid', name: '', schema: [
+            { name: 'zones', selector: { number: { min: 1, max: 2, step: 1, mode: 'box' } } },
+            { name: 'zone1_type', selector: { select: { mode: 'dropdown', options: EMITTERS(this._hass) } } },
+            { name: 'zone2_type', selector: { select: { mode: 'dropdown', options: EMITTERS(this._hass) } } },
           ] },
           { type: 'grid', name: '', schema: SHOW.map((name) => ({ name, selector: { boolean: {} }, default: true })) },
           window.applianceTempField,
@@ -204,7 +226,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { ...Object.fromEntries(SHOW.map((k) => [k, true])), threshold: 100, frequency_threshold: 0, ...c };
+      this._c = { ...Object.fromEntries(SHOW.map((k) => [k, true])), threshold: 100, frequency_threshold: 0, standby_threshold: 0, zones: 2, zone1_type: 'radiator', zone2_type: 'floor', ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -269,6 +291,8 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       else if (s) st = 'standby';
       else if (run) st = valve ? 'dhw' : 'heating';
       else if (p1 || p2) st = 'standby';
+      // sous tension sans demande (ex. 27 W en saison de chauffe) : « Veille » plutôt qu'« Arrêt »
+      else if (+c.standby_threshold > 0 && !isNaN(pw) && pw > +c.standby_threshold) st = 'standby';
       else st = 'off';
       // en mode eau chaude, la vanne 3 voies ferme les zones : seul le circuit primaire est animé
       const dhw = st === 'dhw' || valve;
@@ -282,7 +306,12 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       // températures dans l'unité d'affichage (°C / °F)
       const tu = window.applianceTemp(this._hass, c), tv = (id) => tu.conv(this._num(id), this._st(id));
       const flow = tv(c.entity_flow_temp), ret = tv(c.entity_return_temp);
-      card.className = `${st} ${run ? 'run' : ''} ${z1 ? 'z1' : ''} ${z2 ? 'z2' : ''} ${dhw ? 'dhwmode' : ''} ${c.animations === false ? 'noanim' : ''}`;
+      card.className = `${st} ${run ? 'run' : ''} ${z1 ? 'z1' : ''} ${z2 ? 'z2' : ''} ${dhw ? 'dhwmode' : ''} ${+c.zones === 1 ? 'one' : ''} ${c.animations === false ? 'noanim' : ''}`;
+      // émetteur de chaque zone : radiateur ou plancher chauffant
+      [1, 2].forEach((n) => {
+        const ty = c['zone' + n + '_type'] === 'floor' ? 'floor' : c['zone' + n + '_type'] === 'radiator' ? 'radiator' : n === 1 ? 'radiator' : 'floor';
+        r.querySelectorAll(`#em${n} .em`).forEach((el) => { el.hidden = el.dataset.em !== ty; });
+      });
       // départ chaud (rouge-orangé) et retour froid (bleu), comme sur le schéma d'une PAC
       card.style.setProperty('--ah-flowc', '#ee5a3a');
       card.style.setProperty('--ah-retc', '#3b8fe8');
@@ -322,7 +351,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       TILES.forEach(([k, , opt, more]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`); const [shown, val, unit] = V[k];
         el.classList.toggle('hide', !shown || c[opt] === false);
-        el.querySelector('.lbl').textContent = this._l(k);
+        el.querySelector('.lbl').textContent = this._l(k); el.title = this._l(k);
         // valeur + unité en texte (l'unité vient de l'entité ou de la config)
         const small = document.createElement('small'); small.textContent = unit ?? '';
         el.querySelector('.v').replaceChildren(String(val ?? ''), small);
