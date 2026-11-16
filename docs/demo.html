@@ -1336,6 +1336,16 @@ const SCEN = [
       range(ctl, 'Luminosité', 'sensor.demo_motion_lux', 0, 1000, 5, 120, 'lx', { unit_of_measurement: 'lx', device_class: 'illuminance' });
       range(ctl, 'Température', 'sensor.demo_motion_temp', 5, 35, 0.5, 21.5, '°C', { unit_of_measurement: '°C', device_class: 'temperature' });
     } },
+  { kind: 'air-quality', title: "Qualité de l'air", lang: true,
+    cfg: { name: 'Salon', entity_co2: 'sensor.demo_aq_co2', entity_pm25: 'sensor.demo_aq_pm25', entity_pm10: 'sensor.demo_aq_pm10', entity_voc: 'sensor.demo_aq_voc', entity_humidity: 'sensor.demo_aq_hum', entity_temperature: 'sensor.demo_aq_temp' },
+    build(ctl) {
+      range(ctl, 'CO₂', 'sensor.demo_aq_co2', 350, 2500, 10, 620, 'ppm', { unit_of_measurement: 'ppm', device_class: 'carbon_dioxide' });
+      range(ctl, 'PM2.5', 'sensor.demo_aq_pm25', 0, 120, 1, 8, 'µg/m³', { unit_of_measurement: 'µg/m³', device_class: 'pm25' });
+      range(ctl, 'PM10', 'sensor.demo_aq_pm10', 0, 200, 1, 14, 'µg/m³', { unit_of_measurement: 'µg/m³', device_class: 'pm10' });
+      range(ctl, 'COV', 'sensor.demo_aq_voc', 0, 3000, 10, 150, 'ppb', { unit_of_measurement: 'ppb', device_class: 'volatile_organic_compounds_parts' });
+      range(ctl, 'Humidité', 'sensor.demo_aq_hum', 10, 90, 1, 48, '%', { unit_of_measurement: '%', device_class: 'humidity' });
+      range(ctl, 'Température', 'sensor.demo_aq_temp', 10, 35, 0.5, 21.5, '°C', { unit_of_measurement: '°C', device_class: 'temperature' });
+    } },
   { kind: 'smart-lock', title: 'Serrure connectée (Nuki)', lang: true,
     cfg: { model: 'nuki_pro_5', entity: 'lock.demo_front_door', entity_battery: 'sensor.demo_lock_battery', entity_door: 'binary_sensor.demo_lock_door' },
     build(ctl) {
