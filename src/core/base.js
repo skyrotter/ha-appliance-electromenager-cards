@@ -6,6 +6,8 @@ let SEQ = 0;
 // energy_period : périodes calendaires, puis glissantes (durée en jours)
 const ROLLING = { "24h": 1, "7d": 7, "30d": 30 };
 const PERIODS = ["day", "week", "month", ...Object.keys(ROLLING)];
+// energy_tile_period / cost_tile_period : période d'un capteur fourni par l'utilisateur (texte de l'en-tête seulement, rien n'est calculé)
+const TILE_PERIODS = [...PERIODS, "year", "total"];
 // cartes avec la tuile « durée d'utilisation du jour » (capteur usage_time, sinon calcul depuis l'historique)
 // fitness (vélo elliptique, vélo d'appartement, rameur) : allure de l'animation et tuiles de séance
 const FIT_KINDS = ["elliptical", "exercise_bike", "rowing_machine"];
@@ -1768,15 +1770,21 @@ class ApplianceCardBase extends HTMLElement {
     } else if (m.energy) {
       const eVal = fmtEnergy(hass, m.energy) ?? "—";
       const yp = m.energy.attributes && m.energy.attributes.last_period;
-      if (yp !== undefined && yp !== null && !isNaN(parseFloat(yp))) {
+      // en-tête choisi par l'utilisateur (labels.energy, ou energy_tile_period pour le capteur qu'il fournit) : prioritaire sur « hier »
+      const eHdr = c.labels && c.labels.energy ? lb("energy") : !solar && !dual && TILE_PERIODS.includes(c.energy_tile_period) ? tr(hass, `energy_${c.energy_tile_period}`) : null;
+      if (eHdr == null && yp !== undefined && yp !== null && !isNaN(parseFloat(yp))) {
         const ydayStr = parseFloat(yp).toFixed(1);
-        tile("mdi:history", eVal, `Yday ${ydayStr} kWh`, c.energy);
+        tile("mdi:history", eVal, `${tr(hass, "yday")} ${ydayStr} kWh`, c.energy);
       } else {
-        tile("mdi:lightning-bolt-circle", eVal, lb(solar ? "today" : dual ? "energy_grid" : "energy"), c.energy);
+        tile("mdi:lightning-bolt-circle", eVal, eHdr ?? lb(solar ? "today" : dual ? "energy_grid" : "energy"), c.energy);
       }
     }
     if (m.energyS) tile("mdi:solar-power-variant", fmtEnergy(hass, m.energyS) ?? "—", lb("energy_solar"), c.energy_solar);
-    if (m.cost && showOpt("show_cost")) tile(solar ? "mdi:piggy-bank-outline" : "mdi:cash", fmtUnit(hass, m.cost, 2, 2) ?? "—", lb(solar ? "savings" : "cost"), c.cost);
+    if (m.cost && showOpt("show_cost")) {
+      // labels.cost (text libre) > cost_tile_period (période du capteur de coût) > « Coût »
+      const cHdr = !solar && !(c.labels && c.labels.cost) && TILE_PERIODS.includes(c.cost_tile_period) ? tr(hass, `cost_${c.cost_tile_period}`) : lb(solar ? "savings" : "cost");
+      tile(solar ? "mdi:piggy-bank-outline" : "mdi:cash", fmtUnit(hass, m.cost, 2, 2) ?? "—", cHdr, c.cost);
+    }
     // durée d'utilisation du jour (écrans, consoles, PC) : capteur usage_time, sinon historique (+ temps écoulé depuis la lecture si toujours allumé)
     if (USAGE_KINDS.includes(kind) && c.show_usage_time !== false) {
       const u = this._use, today = u && this._useDay === new Date().toDateString();
