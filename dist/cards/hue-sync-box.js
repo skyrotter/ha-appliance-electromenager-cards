@@ -47,6 +47,44 @@
       "led": "Voyant LED",
       "plugged": "Branché",
       "unplugged": "Débranché"
+    },
+    "pt-BR": {
+      "name": "Hue Sync Box",
+      "model_top": "Vista de cima",
+      "model_ports": "Vista das portas (alimentação, USB, HDMI)",
+      "off": "Desligada",
+      "on": "Ligada",
+      "syncing": "Sincronizando",
+      "unavailable": "Indisponível",
+      "btn_power": "Alimentação",
+      "btn_sync": "Sincronizar luzes",
+      "btn_dolby": "Dolby Vision",
+      "area": "Área de entretenimento",
+      "intensity": "Intensidade",
+      "mode": "Modo de sincronização",
+      "input": "Saída HDMI",
+      "led": "Indicador LED",
+      "plugged": "Ligado",
+      "unplugged": "Desligado"
+    },
+    "pt-PT": {
+      "name": "Hue Sync Box",
+      "model_top": "Vista de cima",
+      "model_ports": "Vista das portas (alimentação, USB, HDMI)",
+      "off": "Desligada",
+      "on": "Ligada",
+      "syncing": "A sincronizar",
+      "unavailable": "Indisponível",
+      "btn_power": "Alimentação",
+      "btn_sync": "Sincronizar luzes",
+      "btn_dolby": "Dolby Vision",
+      "area": "Área de entretenimento",
+      "intensity": "Intensidade",
+      "mode": "Modo de sincronização",
+      "input": "Saída HDMI",
+      "led": "Indicador LED",
+      "plugged": "Ligado",
+      "unplugged": "Desligado"
     }
   };
 

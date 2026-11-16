@@ -2,6 +2,8 @@
 
 `custom:appliance-hue-sync-box-card`
 
+<p align="center"><img src="../hue-sync-box.gif" width="560" alt="Hue Sync Box card"></p>
+
 Philips Hue Play HDMI Sync Box (Hue integration of Home Assistant): cut-out photos of the box on a colour halo that animates (with waves) while the lights are synced; the LED lights up when the box is on. Two views (`model`): `top` (default, top view with its LED) and `ports` (power, USB and HDMI side). Every entity is optional: only the controls you configure are shown.
 
 Controls: **Power**, **Light sync**, **Dolby Vision** (switches), a **brightness** slider (`number`), and drop-downs for the entertainment area, intensity, sync mode, HDMI input and LED indicator (`select` entities, options read from the entity). Tiles: state of HDMI 1 to 4 (plugged / unplugged).
