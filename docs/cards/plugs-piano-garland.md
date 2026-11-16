@@ -16,6 +16,8 @@ Five cards driven by a smart plug (`power`), with an optional `switch`.
 type: custom:appliance-smart-plug-card
 switch: switch.vacuum_plug
 power: sensor.vacuum_plug_power
+current: sensor.vacuum_plug_current   # optional: current tile (A)
+voltage: sensor.vacuum_plug_voltage   # optional: voltage tile (V)
 icon: mdi:vacuum
 indicators: [led, bolt, ring]
 ---

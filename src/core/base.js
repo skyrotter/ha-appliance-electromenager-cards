@@ -93,7 +93,7 @@ class ApplianceCardBase extends HTMLElement {
 
   _ids() {
     const c = this._config;
-    return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
+    return ["entity", "power", "current", "voltage", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
       "switch_low", "switch_high", "direction", "pressure", "runtime_total", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water", "power_level", "pellet_level", "ph", "orp", "dose_interval", "dose_timer", "dose_volume", "dose_time", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
@@ -1737,6 +1737,15 @@ class ApplianceCardBase extends HTMLElement {
     // hide_zero_power (activé par défaut) : tuiles de puissance masquées quand elles valent 0 (moins de 1 W), ex. chauffe-eau au repos
     const zero = (st) => c.hide_zero_power !== false && Math.abs(powerW(st) ?? 0) < 1;
     if (m.pw && showOpt("show_power") && !zero(m.pw)) tile(solar ? "mdi:solar-power" : "mdi:flash", fmtPower(hass, m.pw) ?? "—", lb(solar ? "production" : dual ? "grid" : "power"), c.power);
+    // prise connectée : intensité (A) et tension (V), à la suite de la puissance
+    if (kind === "smart_plug") {
+      [["current", "mdi:current-ac", c.current], ["voltage", "mdi:sine-wave", c.voltage]].forEach(([k, ic, id]) => {
+        const st = id && hass.states[id], v = st ? num(st) : null;
+        if (v == null || !Number.isFinite(v)) return;
+        const u = (st.attributes && st.attributes.unit_of_measurement) || (k === "current" ? "A" : "V"), a = Math.abs(v);
+        tile(ic, `${fmtNum(hass, v, k === "current" ? (a < 10 ? 2 : 1) : (a >= 100 ? 0 : 1))} ${u}`, lb(k), id);
+      });
+    }
     if (m.pwS && !zero(m.pwS)) tile("mdi:solar-power", fmtPower(hass, m.pwS) ?? "—", lb("solar_surplus"), c.power_solar);
     // display : "energy" (kWh seuls), "cost" (€ seuls, si price_per_kwh est valide), sinon les deux
     const pr = typeof c.price_per_kwh === "string" ? num(hass.states[c.price_per_kwh]) : Number(c.price_per_kwh);

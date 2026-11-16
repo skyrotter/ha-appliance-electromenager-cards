@@ -217,6 +217,8 @@
     "ph_dry": "Sušenje",
     "ph_cool": "Hlađenje",
     "power": "Snaga",
+    "current": "Struja",
+    "voltage": "Napon",
     "energy": "Energija",
     "cost": "Trošak",
     "remaining": "Preostalo",

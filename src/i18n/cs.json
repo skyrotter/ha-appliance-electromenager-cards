@@ -209,6 +209,8 @@
     "ph_dry": "Sušení",
     "ph_cool": "Chladnutí",
     "power": "Výkon",
+    "current": "Proud",
+    "voltage": "Napětí",
     "energy": "Energie",
     "cost": "Cena",
     "remaining": "Zbývá",

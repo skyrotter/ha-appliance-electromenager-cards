@@ -193,6 +193,8 @@
     "ph_dry": "Trocknen",
     "ph_cool": "Abkühlen",
     "power": "Leistung",
+    "current": "Strom",
+    "voltage": "Spannung",
     "energy": "Energie",
     "cost": "Kosten",
     "remaining": "Restzeit",

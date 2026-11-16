@@ -238,6 +238,8 @@
     "ph_dry": "Séchage",
     "ph_cool": "Refroidissement",
     "power": "Puissance",
+    "current": "Intensité",
+    "voltage": "Tension",
     "energy": "Énergie",
     "cost": "Coût",
     "remaining": "Restant",
