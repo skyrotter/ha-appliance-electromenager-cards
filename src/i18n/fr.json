@@ -1050,6 +1050,7 @@
     "dial_decimals": "Décimales sur les roues des litres du cadran",
     "title_layout": "Titre et état",
     "illustration_position": "Position du dessin",
+    "open_alert_minutes": "Alerte porte ouverte après (min)",
     "vertical_align": "Position du contenu (case haute)",
     "hot_water": "Eau chaude (rouge)",
     "today_decimals": "Décimales de la tuile Aujourd'hui",
@@ -1995,6 +1996,21 @@
     "led": "Voyant LED",
     "plugged": "Branché",
     "unplugged": "Débranché"
+  },
+  "door_sensor": {
+    "name": "Détecteur d'ouverture",
+    "closed": "Fermée",
+    "open": "Ouverte",
+    "left_open": "Restée ouverte",
+    "unavailable": "Indisponible",
+    "unknown": "Indisponible",
+    "battery": "Batterie",
+    "since": "Depuis",
+    "open_since": "Ouverte depuis",
+    "closed_since": "Fermée depuis",
+    "open_for": "Ouverte depuis {time}",
+    "low": "Faible",
+    "ok": "OK"
   },
   "mini_pc": {
     "name": "Mini PC",

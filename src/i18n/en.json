@@ -1060,6 +1060,7 @@
     "dial_decimals": "Decimals on the dial litre wheels",
     "title_layout": "Title and status",
     "illustration_position": "Drawing position",
+    "open_alert_minutes": "Open alert after (min)",
     "vertical_align": "Content position (tall cell)",
     "hot_water": "Hot water (red)",
     "today_decimals": "Decimals of the Today tile",
@@ -2004,6 +2005,21 @@
     "led": "LED indicator",
     "plugged": "Plugged",
     "unplugged": "Unplugged"
+  },
+  "door_sensor": {
+    "name": "Door sensor",
+    "closed": "Closed",
+    "open": "Open",
+    "left_open": "Left open",
+    "unavailable": "Unavailable",
+    "unknown": "Unavailable",
+    "battery": "Battery",
+    "since": "Since",
+    "open_since": "Open since",
+    "closed_since": "Closed since",
+    "open_for": "Open for {time}",
+    "low": "Low",
+    "ok": "OK"
   },
   "mini_pc": {
     "name": "Mini PC",
