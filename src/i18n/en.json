@@ -872,6 +872,7 @@
     "buffer_tank": "Buffer tank",
     "capacity_kwh": "Capacity (kWh)",
     "car_color": "Car colour",
+    "car_image": "Car image (URL or /local/ file, side view, front on the right)",
     "compressor_threshold": "Compressor threshold (W)",
     "entity": "Main entity",
     "entity_active_power": "Active power",
