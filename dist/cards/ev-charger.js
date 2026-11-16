@@ -330,6 +330,7 @@ class ApplianceEvChargerCard extends HTMLElement {
         { type: 'grid', name: '', schema: [
           { name: 'max_power', selector: { number: { min: 1000, max: 22000, step: 100, mode: 'box', unit_of_measurement: 'W' } } },
           { name: 'price_per_kwh', selector: { number: { min: 0, max: 2, step: 0.0001, mode: 'box' } } },
+          { name: 'currency', selector: { text: {} } },
           { name: 'car_color', selector: { text: {} } },
           { name: 'car_image', selector: { text: {} } },
         ] },
@@ -622,7 +623,10 @@ class ApplianceEvChargerCard extends HTMLElement {
     if (c.show_soc && soc !== null) it.push([this._l('soc'), f(soc, 0, '%'), c.entity_car_soc]);
     if (c.show_status) it.push([this._l('status'), this._t(st), c.entity_status || c.entity_power]);
     if (c.show_duration) it.push([this._l('duration'), dur || '—', c.entity_status || c.entity_power]);
-    if (c.show_cost) it.push([this._l('cost'), f(cost, 2, '€'), c.entity_cost || c.entity_session_energy]);
+    // Devise : option `currency`, sinon l'unité du capteur de coût, sinon €.
+    const cs = c.entity_cost && this._hass.states[c.entity_cost];
+    const costU = c.currency || (cs && cs.attributes && cs.attributes.unit_of_measurement) || '€';
+    if (c.show_cost) it.push([this._l('cost'), f(cost, 2, costU), c.entity_cost || c.entity_session_energy]);
     if (c.show_climate && c.entity_climate && clim !== null) it.push([this._l('climate'), clim ? this._t(this._climMode() === 'heat' ? 'climate_heat' : 'climate_cool') : this._t('climate_off'), c.entity_climate]);
     if (c.show_doors && c.entity_doors && doors !== null) it.push([this._l('doors'), doors ? this._t('doors_open') : this._t('doors_closed'), [].concat(c.entity_doors)[0]]);
     // 5-6 valeurs → 2 lignes équilibrées
