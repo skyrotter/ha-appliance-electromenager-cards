@@ -1090,6 +1090,13 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 .leak .vv-pipe-glow{opacity:1}
 @keyframes vvflow{to{stroke-dashoffset:-18}}
 `;
+  // couleurs de poignée : eau froide / chaude / gaz / autres circuits (nom, #hex ou [r,g,b])
+  const HANDLE_COLORS = { pink: '#e91e8c', blue: '#1e88e5', red: '#e53935', yellow: '#fdd835', black: '#26292d', green: '#43a047', orange: '#fb8c00', white: '#eceff1', grey: '#78909c' };
+  const handleColor = (v) => {
+    if (Array.isArray(v) && v.length >= 3) return `rgb(${v.slice(0, 3).map((n) => Math.max(0, Math.min(255, Math.round(Number(n) || 0)))).join(',')})`;
+    const k = String(v == null ? '' : v).trim();
+    return HANDLE_COLORS[k.toLowerCase()] || (/^(#[0-9a-f]{3,8}|(rgb|hsl)a?\([\d\s.,%/-]+\))$/i.test(k) ? k : '');
+  };
   const VALVE_SVG = (label) => `<svg viewBox="0 0 200 150" role="img" aria-label="${String(label).replace(/[&<>"]/g, '')}"><defs>
     <linearGradient id="vvpipe" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#dfe3e8"/><stop offset="1" stop-color="#aab1b9"/></linearGradient>
     <linearGradient id="vvbrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0cd75"/><stop offset=".5" stop-color="#c9973f"/><stop offset="1" stop-color="#7e5d1f"/></linearGradient>
@@ -1105,7 +1112,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     <text x="100" y="118" font-size="7" font-family="sans-serif" font-weight="700" text-anchor="middle" fill="#5b4210">DN20</text>
     <rect x="93" y="70" width="14" height="12" rx="2" fill="#d6aa52"/>
     <!-- levier rose (tourne d'un quart de tour) -->
-    <g class="vv-lever"><rect x="34" y="68" width="66" height="7" rx="3.5" fill="#e91e8c"/><circle cx="38" cy="71.5" r="6" fill="#d11a7f"/></g>
+    <g class="vv-lever"><rect x="34" y="68" width="66" height="7" rx="3.5" style="fill:var(--vv-handle,#e91e8c)"/><circle cx="38" cy="71.5" r="6" style="fill:var(--vv-handle-dark,#d11a7f)"/></g>
     <!-- étrier métallique et collier de serrage -->
     <rect x="74" y="62" width="52" height="6" rx="2" fill="url(#vvmetal)"/><rect x="74" y="62" width="5" height="22" rx="2" fill="url(#vvmetal)"/>
     <path d="M124 65 H148 V86" fill="none" stroke="#b9c0c7" stroke-width="5" stroke-linejoin="round"/>
@@ -1276,6 +1283,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const c = this._c, r = this._root, card = this._card, m = this.constructor.META;
       const x = this._compute();
       card.className = `${x.sCls} ${x.alert}${x.still ? ' still' : ''}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`.trim();
+      const hc = handleColor(c.handle_color);
+      if (hc) { card.style.setProperty('--vv-handle', hc); card.style.setProperty('--vv-handle-dark', `color-mix(in srgb,${hc} 80%,#000)`); }
+      else { card.style.removeProperty('--vv-handle'); card.style.removeProperty('--vv-handle-dark'); }
       card.style.setProperty('--pos', String(x.frac));
       card.style.setProperty('--spd', String(isNaN(x.flow) ? 1 : Math.max(0.6, Math.min(3, 0.6 + x.flow / 10))));
       r.getElementById('title').textContent = c.name || this._t('name');
@@ -1363,6 +1373,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ...window.applianceTileFields(this._hass),
+        ...(m.single ? [] : [{ name: 'handle_color', selector: { select: { mode: 'dropdown', custom_value: true, options: Object.keys(HANDLE_COLORS).map((value) => ({ value, label: window.applianceEditorLabel('handle_' + value, this._hass) })) } } }]),
         ent('entity', ['valve', 'switch', 'input_boolean', 'cover', 'light']),
         ent('entity_flow', 'sensor'), ent('entity_volume', 'sensor'), ent('entity_today', 'sensor'), ent('entity_total', 'sensor'),
         ent('entity_remaining', ['sensor', 'number', 'input_number']),
