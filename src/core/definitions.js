@@ -22,7 +22,7 @@ const DEF = {
     fields: ["entity", "power", "energy", "cost", "remaining", "program", "temperature", "switch"],
     keys: ["air_fryer", "airfryer", "air_frier", "friteuse", "fryer", "cosori", "ninja_foodi", "dual_zone"] },
   ac_split: { accent: "cold", threshold: 60,
-    fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "switch"],
+    fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "humidity", "switch"],
     keys: ["clim", "climatisation", "climatiseur", "split", "air_conditioner", "aircon", "daikin", "mitsubishi", "atlantic", "toshiba"] },
   heat_pump: { accent: "heat", threshold: 60,
     fields: ["entity", "power", "energy", "cost", "temperature", "switch"],

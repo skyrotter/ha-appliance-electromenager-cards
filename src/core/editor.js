@@ -167,6 +167,7 @@ function buildForm(kind) {
               { value: "target", label: tr(null, "lcd_value_target") }, { value: "current", label: tr(null, "lcd_value_current") }] } } },
             { name: "lcd_big", selector: { boolean: {} }, default: false },
           ] : []),
+          ...(kind === "ac_split" ? [{ name: "lcd_humidity", selector: { boolean: {} }, default: true }] : []),
           ...(["ac_split", "heat_pump"].includes(kind) ? [
             { name: "hvac", selector: { select: { mode: "dropdown", options: [
               { value: "auto", label: "Auto (saison) / Auto (season)" }, { value: "cool", label: "Climatisation / Cooling" }, { value: "heat", label: "Chauffage / Heating" }] } } },

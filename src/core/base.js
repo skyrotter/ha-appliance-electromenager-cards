@@ -1230,6 +1230,19 @@ class ApplianceCardBase extends HTMLElement {
     const sr = this.shadowRoot;
     const lcdEl = sr.querySelector(".lcd");
     if (lcdEl) lcdEl.textContent = this._lcdText(m);
+    // split : l'humidité s'affiche sous la température sur l'écran (lcd_humidity: false pour la masquer)
+    if (kind === "ac_split" && lcdEl) {
+      const showH = c.lcd_humidity !== false && m.humidity != null && !["off", "unavailable"].includes(m.status);
+      let hEl = sr.querySelector(".lcdh");
+      if (showH && !hEl) {
+        hEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        hEl.setAttribute("class", "lcdh"); hEl.setAttribute("x", lcdEl.getAttribute("x")); hEl.setAttribute("y", "68.8");
+        lcdEl.parentNode.insertBefore(hEl, lcdEl.nextSibling);
+      }
+      if (showH) hEl.textContent = `${Math.round(m.humidity)}%`; else if (hEl) hEl.remove();
+      lcdEl.classList.toggle("with-hum", showH);
+      lcdEl.setAttribute("y", showH ? "62.2" : "63.4");
+    }
     // lcd_big : grande valeur lisible (icône + température) posée sur le dessin ; icône thermomètre = actuelle, cible = consigne (lcd_value)
     if (c.lcd_big === true && ["radiator", "towel_dryer", "ac_split"].includes(kind)) {
       const sv = sr.querySelector(".illus svg");
@@ -1729,6 +1742,7 @@ class ApplianceCardBase extends HTMLElement {
       // eau chaude restante : % (tuile « Eau chaude ») et litres (tuile « Volume ») — deux tuiles, sinon le texte est tronqué
       if (kind === "water_heater" && m.hotPct != null) tile("mdi:water-thermometer", `${fmtNum(hass, m.hotPct, 0)} %`, lb("hot_water"), c.hot_water_level || c.hot_water_volume);
       if (kind === "water_heater" && m.hotL != null) tile("mdi:water", `${fmtNum(hass, m.hotL, 0)} L`, lb("volume"), c.hot_water_volume || c.hot_water_level);
+      if (kind === "ac_split" && m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0)} %`, lb("humidity"), c.humidity || c.entity);
       if (kind === "towel_dryer" && m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0)} %`, lb("humidity"), c.humidity || c.entity);
     }
     if (m.remaining != null && m.remaining > 0 && active && kind !== "water_heater") tile("mdi:timer-sand", `${m.estimated ? "≈ " : ""}${fmtDuration(m.remaining)}`, lb("remaining"), c.remaining);

@@ -1129,6 +1129,7 @@
     "pump_y": "Posição Y da bomba na imagem (%, a partir do topo)",
     "pump_icon": "Ícone da bomba",
     "illustration_size": "Tamanho da ilustração",
+    "lcd_humidity": "Humidade no ecrã",
     "battery_model": "Modelo da bateria",
     "battery_count": "Número de unidades lado a lado",
     "battery_model_default": "Módulos desenhados (predefinição)",

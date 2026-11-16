@@ -12,10 +12,13 @@ Two cards meant to sit side by side, both driven by the same `climate` entity (a
 - With a power sensor only: running above `threshold` (60 W); set `hvac: cool` or `hvac: heat` (default `auto` = cooling May–September, heating otherwise).
 - `temperature` on the outdoor card can be an outdoor temperature sensor.
 
+**Humidity** (indoor split): shown under the temperature on the display and in a **Humidity** tile. It comes from the `climate` entity (`current_humidity` attribute, when your integration provides it) or from a humidity sensor set with `humidity`, which takes priority. `lcd_humidity: false` hides it from the display (the tile stays).
+
 ```yaml
 type: custom:appliance-ac-split-card
 entity: climate.living_room
 power: sensor.ac_power
+humidity: sensor.living_room_humidity   # optional, else the climate's current_humidity
 ---
 type: custom:appliance-heat-pump-card
 entity: climate.living_room

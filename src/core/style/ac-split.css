@@ -30,4 +30,6 @@
 .k-heat_pump.st-heating .hp-fins { stroke: #cfe9ff; }
 @keyframes ac-blow { to { stroke-dashoffset: -24; } }
 @keyframes ac-swing { 0%, 100% { transform: translateY(4.5px) scaleY(.75); } 50% { transform: translateY(5.5px) scaleY(.55); } }
-
+/* humidité sous la température sur l'écran du split */
+.wrap.k-ac_split svg text.lcd.with-hum { font-size: 7.6px !important; }
+.k-ac_split .lcdh { fill: var(--acc); font: 700 5.4px var(--paper-font-body1_-_font-family, Roboto, sans-serif); text-anchor: middle; opacity: .9; }

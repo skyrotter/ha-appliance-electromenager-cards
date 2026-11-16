@@ -1143,6 +1143,7 @@
     "pump_y": "Pump Y position on the image (%, from the top)",
     "pump_icon": "Pump icon",
     "illustration_size": "Illustration size",
+    "lcd_humidity": "Humidity on the display",
     "battery_model": "Battery model",
     "battery_count": "Number of units side by side",
     "battery_model_default": "Drawn modules (default)",
