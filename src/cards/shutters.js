@@ -137,7 +137,11 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
 @keyframes awgust{from{transform:translateX(-6px);opacity:.3}to{transform:translateX(10px);opacity:1}}
 .tile.warn{background:color-mix(in srgb,var(--sh-move) 30%,var(--secondary-background-color))}
 .windy .badge{background:color-mix(in srgb,var(--sh-move) 28%,transparent);color:var(--sh-move)}
-.noanim .aw-flap,.noanim .aw-wind path{animation:none}
+.aw-flap2{transform-box:view-box;transform-origin:50% 22%}
+.windy .aw-flap2{animation:awflap2 .6s ease-in-out infinite alternate}
+@keyframes awflap2{from{transform:skewX(-.7deg) translateY(-1px)}to{transform:skewX(.7deg) translateY(1.5px)}}
+.isnight .ph-dyn{filter:none}.rain .ph-dyn{filter:brightness(.88) saturate(.85)}
+.noanim .aw-flap,.noanim .aw-flap2,.noanim .aw-wind path{animation:none}
 .noanim .pg-water path,.noanim .windy .aw-flap,.noanim .pg-ray,.noanim .pg-candle circle,.noanim .pg-drops line,.noanim .pg-drain circle{animation:none}
 `;
 
@@ -423,116 +427,60 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       <circle class="led" cx="${BR[0] + 10}" cy="32" r="1.9"/>${ARROW(BR[0] + 6, 58)}`;
   };
 
-  /* ---- store double sur pied : repère 240 × 180, vue 3/4 ; deux poteaux, coffre central, toile des deux côtés ; tout est redessiné
-     image par image (dawDyn) selon le déploiement (0-100) ---- */
-  const DW = { O: [80, 150], X: [74, -27], Y: [.37, .10], H: 46 };
-  const dawDyn = (p) => {
-    const e = Math.max(0, Math.min(1, p / 100)), { O, X, Y, H } = DW;
-    const P = (x, y, z) => [O[0] + x * X[0] + y * Y[0], O[1] + x * X[1] + y * Y[1] - z];
-    const ln = (a, b, c, w, x = '') => `<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" stroke="${c}" stroke-width="${w}" stroke-linecap="round" ${x}/>`;
-    const off = (q, dy) => [q[0], q[1] + dy];
-    const ext = 84 * e, drop = 24 * e, N = 8;
-    const side = (sd) => {
-      const y0 = sd * 6, y1 = sd * (6 + ext), z1 = H - drop;
-      let fab = '', arms = '';
-      if (e > .03) {
-        // toile en 8 laizes, avec un léger affaissement du bord avant
-        const sag = 1.6 * e, edge = (t) => P(t, y1, z1), cut = (t0, t1) => {
-          const A = P(t0, y0, H - 1), B = P(t1, y0, H - 1), C = off(edge(t1), t1 > .5 ? sag * (1 - t1) * 2 : sag * t1 * 2), D = off(edge(t0), t0 > .5 ? sag * (1 - t0) * 2 : sag * t0 * 2);
-          return pts([A, B, C, D]);
-        };
-        for (let i = 0; i < N; i++) {
-          const q = cut(i / N, (i + 1) / N);
-          fab += `<polygon points="${q}" fill="var(--sc)"/>${i % 2 ? `<polygon points="${q}" fill="#fff" opacity=".1"/>` : ''}<polygon points="${q}" fill="${sd < 0 ? '#000' : '#fff'}" opacity="${sd < 0 ? .12 : .05}"/><polygon points="${q}" fill="none" stroke="#000" stroke-opacity=".13" stroke-width=".35" stroke-linejoin="round"/>`;
-        }
-        const whole = pts([P(0, y0, H - 1), P(1, y0, H - 1), off(edge(1), 0), off(edge(0), 0)]);
-        fab += `<polygon points="${whole}" fill="url(#ID-awfab)"/>`;
-        // retombée de toile + barre de charge en alu
-        const v = pts([edge(0), edge(1), off(edge(1), 4), off(edge(0), 4)]);
-        fab += `<polygon points="${v}" fill="var(--sc)"/><polygon points="${v}" fill="#000" opacity=".18"/>`;
-        fab += ln(P(-.012, y1, z1 - .4), P(1.012, y1, z1 - .4), '#23272b', 3.6) + ln(P(-.012, y1, z1 - .9), P(1.012, y1, z1 - .9), '#8a929a', 2) + ln(P(0, y1, z1 - 1.6), P(1, y1, z1 - 1.6), '#4a5057', .8);
-        fab += `<circle cx="${P(-.012, y1, z1 - .4)[0].toFixed(1)}" cy="${P(-.012, y1, z1 - .4)[1].toFixed(1)}" r="1.9" fill="#1c1f23"/><circle cx="${P(1.012, y1, z1 - .4)[0].toFixed(1)}" cy="${P(1.012, y1, z1 - .4)[1].toFixed(1)}" r="1.9" fill="#1c1f23"/>`;
-        // bras articulés : deux segments, coude et pivots
-        for (const x of [.045, .955]) {
-          const A = P(x, y0, H - 1.5), F = P(x, y1, z1 - .8), M = lerp(A, F, .52), E = [M[0], M[1] - 2.6 * (1 - e * .6) - 1.5], Q = pts([A, E, F]);
-          arms += `<polyline points="${Q}" fill="none" stroke="#1d2024" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><polyline points="${Q}" fill="none" stroke="#6b737b" stroke-width=".8" stroke-linejoin="round" stroke-linecap="round" transform="translate(0 -.5)"/>`
-            + `<circle cx="${E[0].toFixed(1)}" cy="${E[1].toFixed(1)}" r="1.6" fill="#1d2024"/><circle cx="${E[0].toFixed(1)}" cy="${E[1].toFixed(1)}" r=".7" fill="#9aa2aa"/><circle cx="${A[0].toFixed(1)}" cy="${A[1].toFixed(1)}" r="1.3" fill="#2a2e33"/>`;
-        }
-      }
-      return [`<g class="aw-flap">${fab}</g>${arms}`, y1, z1];
-    };
-    const pole = (x) => {
-      const b = P(x, 0, 0), t = P(x, 0, H - 2), plate = pts([[b[0] - 8, b[1] + .5], [b[0] + 2, b[1] - 2.6], [b[0] + 9, b[1] + .2], [b[0] - 1, b[1] + 3.4]]);
-      return `<polygon points="${plate}" fill="#23272b"/><polygon points="${plate}" fill="none" stroke="#6b737b" stroke-width=".4"/><circle cx="${b[0] - 5}" cy="${b[1] + .8}" r=".6" fill="#8b939b"/><circle cx="${b[0] + 6}" cy="${b[1] - .1}" r=".6" fill="#8b939b"/>`
-        + `${ln(b, t, '#202429', 4.6)}${ln([b[0] + .3, b[1] - 1], [t[0] + .3, t[1]], '#454b52', 3.2)}${ln([b[0] - 1, b[1] - 1.5], [t[0] - 1, t[1]], '#7f8890', .9)}`;
-    };
-    const a = P(0, 0, H + 1), b = P(1, 0, H + 1), [L, yl, zl] = side(-1), [R, yr, zr] = side(1);
-    // coffre : cylindre en alu anthracite, étriers aux poteaux, bouchons aux extrémités
-    const lay = (c, w, dy) => ln(off(a, dy), off(b, dy), c, w);
-    const box = `${lay('#1f2327', 12.6, 0)}${lay('#4d545b', 11, -.3)}${lay('#6d757d', 8.4, -1.1)}${lay('#9ba3aa', 4.6, -2.3)}${lay('#d9dde0', 1.2, -3.1)}${lay('#262a2e', 2, 4.1)}
-      ${ln(P(.015, 0, H + 1), P(.075, 0, H + 1), '#1b1e22', 13.4)}${ln(P(.925, 0, H + 1), P(.985, 0, H + 1), '#1b1e22', 13.4)}
-      <ellipse cx="${b[0].toFixed(1)}" cy="${b[1].toFixed(1)}" rx="3.7" ry="6.1" fill="#2c3136"/><ellipse cx="${b[0].toFixed(1)}" cy="${b[1].toFixed(1)}" rx="2.4" ry="4.2" fill="#434a51"/>`;
-    const near = `<ellipse cx="${a[0].toFixed(1)}" cy="${a[1].toFixed(1)}" rx="3.7" ry="6.1" fill="#3a4047"/><ellipse cx="${a[0].toFixed(1)}" cy="${a[1].toFixed(1)}" rx="2.4" ry="4.2" fill="#59616a"/><circle cx="${a[0].toFixed(1)}" cy="${a[1].toFixed(1)}" r="1" fill="#aab1b8"/>`;
-    const sh = `<polygon points="${pts([P(0, -6 - ext, 0), P(1, -6 - ext, 0), P(1, 6 + ext, 0), P(0, 6 + ext, 0)].map((q) => [q[0] + 5, q[1] + 2]))}"/>`;
-    const led = e > .05 ? `${ln(P(.02, yl, zl - 3.4), P(.98, yl, zl - 3.4), '#ffe08a', 1, 'stroke-dasharray="2.6 2" class="aw-strip"')}${ln(P(.02, yr, zr - 3.4), P(.98, yr, zr - 3.4), '#ffe08a', 1, 'stroke-dasharray="2.6 2" class="aw-strip"')}
-      <ellipse class="aw-pool" cx="${P(.5, 0, 0)[0].toFixed(1)}" cy="${(P(.5, 0, 0)[1] + 2).toFixed(1)}" rx="${(20 + e * 44).toFixed(1)}" ry="${(7 + e * 6).toFixed(1)}" fill="url(#ID-awpool)"/>` : '';
-    return [`${L}${pole(1)}${box}${pole(0)}${near}${R}`, sh, led];
+  /* ---- store double sur pied, d'après une photo : la photo (étiquettes retirées) sert de fond ; la toile (deux pans), les barres de charge et les bras
+     sont redessinés image par image selon le déploiement (0-100) : la toile est découpée jusqu'à la barre, qui glisse avec ses bras articulés ---- */
+  const PH = /*@asset double-awning-photo*/{};
+  const phDyn = (p) => {
+  const e = Math.max(0, Math.min(1, p / 100)), G = PH.G, f = (n) => n.toFixed(1);
+  const lerp2 = (a, b, k) => [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k];
+  const pts = (a) => a.map((q) => `${f(q[0])},${f(q[1])}`).join(' ');
+  const H0 = { L: G.L.H0, R: G.R.H0 }, H1 = { L: G.L.H1, R: G.R.H1 }, F0 = { L: G.L.F0, R: G.R.F0 }, F1 = { L: G.L.F1, R: G.R.F1 };
+  const side = (k) => {
+    const a0 = lerp2(H0[k], F0[k], e), a1 = lerp2(H1[k], F1[k], e);
+    return { a0, a1, clip: [H0[k], H1[k], a1, a0] };
   };
-  const DAWNING = () => {
-    // terrasse en dalles vues en perspective (lignes qui convergent vers le point de fuite)
-    const V = [124, 70];
-    let tile = '';
-    for (let i = -9; i <= 9; i++) tile += `<line x1="${V[0]}" y1="${V[1]}" x2="${(V[0] + i * 46).toFixed(0)}" y2="180" stroke="#a89c86" stroke-width=".55" opacity=".55"/>`;
-    for (let k = 0; k < 7; k++) { const y = 124 + k * k * 1.7 + k * 4; tile += `<line x1="0" y1="${y.toFixed(1)}" x2="240" y2="${y.toFixed(1)}" stroke="#a89c86" stroke-width=".55" opacity=".55"/>`; }
-    const bush = (x, y, r, c) => `<ellipse cx="${x}" cy="${y}" rx="${r * 1.35}" ry="${r}" fill="${c}"/>`;
-    const chair = (x, y, f) => `<g transform="translate(${x} ${y}) scale(${f} 1)"><path d="M-1 -10q-1 -2 1 -2.6h7q2 .6 1 2.6l-1 6h-7z" fill="#8c7a5e"/><path d="M0 -9.2h6M-.2 -7h6.2M-.4 -4.8h6.4" stroke="#6e5f48" stroke-width=".5" opacity=".7"/><rect x="-1.5" y="-3.4" width="9.6" height="3.2" rx="1.4" fill="#a08c6c"/><rect x="-.6" y="-.4" width="1.3" height="5.4" fill="#25292d"/><rect x="5.6" y="-.4" width="1.3" height="5.4" fill="#25292d"/></g>`;
-    const dn = (q, d) => [q[0], q[1] + d];
-    // salon de jardin centré sous le store (table dans l'axe du coffre, quatre chaises) + déco de chaque côté
-    const C = [117, 143], u = [.94, -.34], w = [.965, .26], at = (a, b, z = 0) => [C[0] + a * u[0] + b * w[0], C[1] + a * u[1] + b * w[1] - z];
-    const rug = pts([at(-30, -19), at(30, -19), at(30, 19), at(-30, 19)]), rug2 = pts([at(-27, -16), at(27, -16), at(27, 16), at(-27, 16)]);
-    const top = [at(-16, -8, 10), at(16, -8, 10), at(16, 8, 10), at(-16, 8, 10)];
-    const leg = (a, b) => { const g = at(a, b), t = at(a, b, 10); return `<line x1="${g[0].toFixed(1)}" y1="${g[1].toFixed(1)}" x2="${t[0].toFixed(1)}" y2="${t[1].toFixed(1)}" stroke="#25292d" stroke-width="1.3"/>`; };
-    const chairAt = (a, b, f) => { const q = at(a, b); return chair(q[0].toFixed(1), q[1].toFixed(1), f); };
-    const pot = (x, y, r, c = '#8a6a4f') => `<path d="M${x - r} ${y - r * 1.1}h${r * 2}l-${r * .25} ${r * 1.1}h-${r * 1.5}z" fill="${c}"/><ellipse cx="${x}" cy="${y - r * 1.1}" rx="${r}" ry="${r * .3}" fill="#5a4636"/>`;
-    const leaves = (x, y, r, c1, c2) => `<ellipse cx="${x}" cy="${y}" rx="${r}" ry="${r * .85}" fill="${c1}"/><ellipse cx="${x - r * .3}" cy="${y - r * .25}" rx="${r * .55}" ry="${r * .5}" fill="${c2}"/><ellipse cx="${x + r * .4}" cy="${y + r * .1}" rx="${r * .5}" ry="${r * .45}" fill="${c1}" opacity=".8"/>`;
-    const GARDEN = `<g>
-      <polygon points="${rug}" fill="#a8977a"/><polygon points="${rug2}" fill="none" stroke="#7d6d52" stroke-width=".5" stroke-dasharray="1.6 1.2" opacity=".7"/>
-      <ellipse cx="${C[0]}" cy="${C[1] + 4}" rx="30" ry="6" fill="#000" opacity=".13"/>
-      ${chairAt(-9, -15, 1)}${chairAt(9, -15, -1)}
-      ${leg(-14, -6)}${leg(14, -6)}${leg(-14, 6)}${leg(14, 6)}
-      <polygon points="${pts(top)}" fill="#b08d63"/><polygon points="${pts([top[3], top[2], dn(top[2], 2), dn(top[3], 2)])}" fill="#7a5f40"/><polygon points="${pts([top[2], top[1], dn(top[1], 2), dn(top[2], 2)])}" fill="#8a6c48"/>
-      <path d="M${at(-12, -6, 10).map((v) => v.toFixed(1)).join(' ')}L${at(-12, 6, 10).map((v) => v.toFixed(1)).join(' ')}M${at(0, -7, 10).map((v) => v.toFixed(1)).join(' ')}L${at(0, 7, 10).map((v) => v.toFixed(1)).join(' ')}M${at(12, -6, 10).map((v) => v.toFixed(1)).join(' ')}L${at(12, 6, 10).map((v) => v.toFixed(1)).join(' ')}" stroke="#8a6c48" stroke-width=".5" opacity=".7"/>
-      <ellipse cx="${at(0, 0, 11.4)[0].toFixed(1)}" cy="${at(0, 0, 11.4)[1].toFixed(1)}" rx="3.2" ry="1.3" fill="#e9e3d4"/><path d="M${at(0, 0, 11.6)[0].toFixed(1)} ${at(0, 0, 11.6)[1].toFixed(1)}q-3 -6 -7 -5M${at(0, 0, 11.6)[0].toFixed(1)} ${at(0, 0, 11.6)[1].toFixed(1)}q3 -7 7 -6" stroke="#4e8a46" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-      ${chairAt(-9, 15, 1)}${chairAt(9, 15, -1)}
-      <!-- déco à gauche : olivier en pot, jardinière fleurie -->
-      <ellipse cx="26" cy="156" rx="13" ry="2.6" fill="#000" opacity=".14"/>
-      <path d="M26 148v-12" stroke="#6b5440" stroke-width="1.6"/>${leaves(26, 128, 11, '#6f9a5a', '#8fb877')}${pot(26, 156, 6.5, '#9b7a5a')}
-      ${pot(46, 160, 4.4, '#b58a62')}${leaves(46, 150, 5.6, '#4f8a46', '#6fae5c')}
-      <rect x="4" y="150" width="14" height="6" rx="1" fill="#7d6045"/>${leaves(7, 148, 3, '#d96aa5', '#f09bc6')}${leaves(12, 147, 3, '#f2e6f6', '#fff')}${leaves(16, 148.5, 2.8, '#d96aa5', '#f09bc6')}
-      <!-- déco à droite : palmier / graminées en grand pot, lanterne, buis -->
-      <ellipse cx="212" cy="157" rx="14" ry="2.8" fill="#000" opacity=".14"/>
-      <g stroke="#4f8a46" stroke-width="1.6" fill="none" stroke-linecap="round"><path d="M212 148q-10 -10 -17 -9M212 148q-5 -14 -9 -17M212 148q0 -15 0 -19M212 148q5 -14 9 -17M212 148q10 -10 17 -9"/></g>
-      ${pot(212, 157, 7, '#6b6f75')}
-      ${pot(192, 162, 4.6, '#b58a62')}${leaves(192, 152, 5.6, '#3f7a3c', '#5b9a52')}
-      <path d="M228 160v-9" stroke="#25292d" stroke-width="1.2"/><rect x="225.6" y="144" width="4.8" height="7" rx="1" fill="#2c3136"/><rect x="226.4" y="145" width="3.2" height="5" fill="#ffd27a" opacity=".85" class="night-lamp"/>
-    </g>`;
-    return `<defs><filter id="dw-blur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.2"/></filter><filter id="dw-bl2" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation=".9"/></filter>
-      <linearGradient id="dw-ter" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d7cdb9"/><stop offset="1" stop-color="#c3b8a1"/></linearGradient></defs>
-      <rect x="0" y="0" width="240" height="180" fill="url(#shskyd)" class="day"/><rect x="0" y="0" width="240" height="180" fill="url(#shskyn)" class="night"/>
-      <g class="day" fill="#fff" opacity=".8" filter="url(#dw-bl2)"><ellipse cx="42" cy="26" rx="22" ry="5"/><ellipse cx="58" cy="21" rx="13" ry="5"/><ellipse cx="190" cy="38" rx="20" ry="4.5"/><ellipse cx="150" cy="18" rx="12" ry="3"/></g>
-      <g class="night" fill="#fff"><circle cx="30" cy="22" r=".9"/><circle cx="82" cy="14" r="1"/><circle cx="150" cy="24" r=".8"/><circle cx="208" cy="16" r="1"/><circle cx="224" cy="46" r=".8"/><circle cx="196" cy="30" r="3" fill="#f3f0d8"/></g>
-      <path d="M0 96q40 -12 80 -3t90 -5 70 3V124H0Z" fill="#4f7f46" opacity=".9"/>
-      <g filter="url(#dw-bl2)">${bush(18, 106, 11, '#3f6f3a')}${bush(46, 110, 9, '#4c7f43')}${bush(86, 108, 10, '#3f6f3a')}${bush(130, 110, 8, '#527f48')}${bush(172, 107, 11, '#3f6f3a')}${bush(210, 108, 12, '#4c7f43')}${bush(232, 112, 8, '#3f6f3a')}
-        ${bush(30, 114, 6, '#6aa05a')}${bush(104, 113, 6, '#6aa05a')}${bush(190, 114, 7, '#6aa05a')}<circle cx="14" cy="100" r="1.6" fill="#f2e6f6"/><circle cx="20" cy="104" r="1.4" fill="#f2e6f6"/><circle cx="214" cy="102" r="1.6" fill="#fff"/><circle cx="222" cy="106" r="1.4" fill="#fff"/></g>
-      <path d="M0 118q60 -6 120 -1t120 -3V124H0Z" fill="#6aa65a"/>
-      <polygon points="0,122 240,122 240,180 0,180" fill="url(#dw-ter)"/><g clip-path="inset(122px 0 0 0)">${tile}</g>
-      ${GARDEN}
-      <g class="aw-shadow" fill="#000" filter="url(#dw-blur)"></g>
-      <rect class="pg-dim" x="0" y="0" width="240" height="180" fill="#0a1020"/>
-      <g class="aw-wind" fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity=".0"><path d="M2 54q14 -5 30 0t26 -2"/><path d="M0 70q12 -4 24 0t22 -2"/><path d="M4 86q10 -3 20 0t18 -1"/></g>
-      <g class="aw-dyn"></g><g class="aw-leds"></g>
-      <circle class="led" cx="226" cy="26" r="1.9"/>${ARROW(222, 52)}`;
+  const S = { L: side('L'), R: side('R') };
+  // barre + retombée : transformation affine qui suit le bord avant
+  const barM = (k) => {
+    const s0 = F0[k], s1 = F1[k], d0 = S[k].a0, d1 = S[k].a1, u = [s1[0] - s0[0], s1[1] - s0[1]], U = [d1[0] - d0[0], d1[1] - d0[1]];
+    // (u, v=(0,1)) -> (U, (0,1)) : x' = U0/u0 * dx + ..., on résout a,c : [U0 = a*u0 + c*0]... avec v=(0,1) fixe
+    const a = U[0] / u[0], b = (U[1] - 0 * 0) / u[0] - 0, c = 0, d = 1;
+    // a*u0 = U0 ; b*u0 + d*u1.. : on impose l'image de (0,1) = (0,1) donc c=0,d=1 ; b = (U1 - u1*d)/u0
+    const bb = (U[1] - u[1]) / u[0];
+    const tx = d0[0] - a * s0[0] - c * s0[1], ty = d0[1] - bb * s0[0] - d * s0[1];
+    return `matrix(${a.toFixed(5)} ${bb.toFixed(5)} ${c} ${d} ${f(tx)} ${f(ty)})`;
   };
+  // bras articulés : deux segments de longueurs fixes, le genou reste du même côté
+  const barPt = (k, bar, pt) => { // pt (plein déploiement) -> position avec la barre déplacée
+    const s0 = F0[k], s1 = F1[k], u = [s1[0] - s0[0], s1[1] - s0[1]], l2 = u[0] * u[0] + u[1] * u[1];
+    const t = ((pt[0] - s0[0]) * u[0] + (pt[1] - s0[1]) * u[1]) / l2, base = [s0[0] + u[0] * t, s0[1] + u[1] * t], off = [pt[0] - base[0], pt[1] - base[1]];
+    const n = lerp2(S[k].a0, S[k].a1, t);
+    return [n[0] + off[0], n[1] + off[1]];
+  };
+  const arm = (key, k) => {
+    const a = PH.arms[key], A = a.A, E0 = a.E, Fp = barPt(k, null, a.F);
+    // le bras garde sa forme : même figure, réduite et tournée vers la barre ; le genou ressort un peu quand il est replié
+    const w0 = [a.F[0] - A[0], a.F[1] - A[1]], w = [Fp[0] - A[0], Fp[1] - A[1]], d0 = Math.hypot(w0[0], w0[1]), d = Math.hypot(w[0], w[1]) || 1;
+    const s = d / d0, ang = Math.atan2(w[1], w[0]) - Math.atan2(w0[1], w0[0]), c = Math.cos(ang), sn = Math.sin(ang), r = [E0[0] - A[0], E0[1] - A[1]];
+    let E = [A[0] + s * (c * r[0] - sn * r[1]), A[1] + s * (sn * r[0] + c * r[1])];
+    const u = [w[0] / d, w[1] / d], nrm = [-u[1], u[0]], q = (E[0] - A[0]) * nrm[0] + (E[1] - A[1]) * nrm[1], bulge = q * .45 * (1 - e);
+    E = [E[0] + nrm[0] * bulge, E[1] + nrm[1] * bulge];
+    const F = Fp, pl = pts([A, E, F]);
+    return `<polyline points="${pl}" fill="none" stroke="#14161a" stroke-width="15" stroke-linejoin="round" stroke-linecap="round"/><polyline points="${pl}" fill="none" stroke="#2a2d33" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/><polyline points="${pts([[A[0], A[1] - 2.5], [E[0], E[1] - 2.5], [F[0], F[1] - 2.5]])}" fill="none" stroke="#5b626a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" opacity=".8"/><circle cx="${f(E[0])}" cy="${f(E[1])}" r="9" fill="#14161a"/><circle cx="${f(E[0])}" cy="${f(E[1])}" r="4" fill="#7a8189"/>`;
+  };
+  const cv = (k) => `<g clip-path="url(#ID-phc${k})"><image href="${PH.img.canvas}" x="0" y="0" width="1388" height="1133"/></g>`;
+  const bar = (k) => `<g transform="${barM(k)}"><g clip-path="url(#ID-phb${k})"><image href="${PH.img.bars}" x="0" y="0" width="1388" height="1133"/></g></g>`;
+  const clips = `<clipPath id="ID-phcL"><polygon points="${pts(S.L.clip)}"/></clipPath><clipPath id="ID-phcR"><polygon points="${pts(S.R.clip)}"/></clipPath>`;
+  return `<defs>${clips}</defs><g class="aw-flap2">${cv('L')}${cv('R')}${bar('L')}${bar('R')}${arm('Lt', 'L')}${arm('Lb', 'L')}${arm('Rt', 'R')}${arm('Rb', 'R')}</g>`;
+};
+
+  const DAWNING = () => `<defs><clipPath id="ID-phbL"><polygon points="${PH.barL.map((q) => q.join(',')).join(' ')}"/></clipPath><clipPath id="ID-phbR"><polygon points="${PH.barR.map((q) => q.join(',')).join(' ')}"/></clipPath></defs>
+      <image href="${PH.img.plate}" x="0" y="0" width="1388" height="1133"/><g class="aw-shadow" fill="#000"></g>
+      <g class="aw-dyn ph-dyn"></g>
+      <image href="${PH.img.fg}" x="0" y="0" width="1388" height="1133"/><g class="aw-leds"></g>
+      <rect class="pg-dim" x="0" y="0" width="1388" height="1133" fill="#0a1020"/>
+      <g class="aw-wind" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".0"><path d="M90 190q70 -22 150 0t120 -8"/><path d="M60 260q60 -18 120 0t100 -6"/><path d="M110 330q50 -14 100 0t80 -4"/></g>
+      <circle class="led" cx="1340" cy="130" r="9"/><g transform="scale(4.6)">${ARROW(1296 / 4.6, 190 / 4.6)}</g>`;
 
   /* ---- fenêtre de toit : pan de toit en tuiles, ouvrant à rotation (transform posé par JS), volet roulant extérieur ---- */
   const RW = { X: 58, Y: 40, W: 84, H: 96 };
@@ -659,7 +607,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       const swing = this.kind === 'swing_shutter', pergola = this.kind === 'pergola', roof = this.kind === 'roof_window', awning = this.kind === 'awning' || this.kind === 'double_awning', dbl = this.kind === 'double_awning', curtain = this.kind === 'sliding_curtain';
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="shtitle"></div><div class="badge" id="shbadge"></div></div>
-        <div class="scene${swing ? ' sw' : pergola || awning ? ' pg' : ''}"><svg viewBox="${pergola || awning ? '0 0 240 180' : '0 0 200 172'}" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${pergola ? PERGOLA() : dbl ? DAWNING() : awning ? AWNING() : roof ? ROOF() : SVGS[this.kind]()}</svg>
+        <div class="scene${swing ? ' sw' : pergola || awning ? ' pg' : ''}"><svg viewBox="${dbl ? '50 70 1338 930' : pergola || awning ? '0 0 240 180' : '0 0 200 172'}" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${pergola ? PERGOLA() : dbl ? DAWNING() : awning ? AWNING() : roof ? ROOF() : SVGS[this.kind]()}</svg>
           ${swing ? `<div class="leaf l mv">${LEAF(false)}</div><div class="leaf r mv">${LEAF(true)}</div>` : ''}</div>
         <div class="rng ps" id="shpos"><span></span><input type="range" min="0" max="100" step="1"></div>
         <div class="rng tl" id="shtilt"><span></span><input type="range" min="0" max="100" step="1"></div>
@@ -793,7 +741,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         this._ang = a;
         if (this.kind === 'roof_window') { this._root.querySelector('.rw-sash').setAttribute('transform', rwSash(a)); return; }
         if (this._aw) {
-          const [dyn, sh, led] = this.kind === 'double_awning' ? dawDyn(a) : awDyn(a, this._awTilt);
+          const [dyn, sh, led] = this.kind === 'double_awning' ? [phDyn(a), '', ''] : awDyn(a, this._awTilt);
           this._root.querySelector('.aw-dyn').innerHTML = dyn;
           this._root.querySelector('.aw-shadow').innerHTML = sh;
           this._root.querySelector('.aw-leds').innerHTML = led;

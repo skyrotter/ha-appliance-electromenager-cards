@@ -116,7 +116,9 @@ core = substituteI18n(core);
 
 /* ---- cards: one chunk per file, substituted independently ---- */
 const chunkNames = CARD_FILES.map((f) => path.basename(f, ".js"));
-const chunks = Object.fromEntries(CARD_FILES.map((f) => [path.basename(f, ".js"), substituteI18n(load(f))]));
+// /*@asset nom*/{} : insère src/assets/<nom>.json tel quel (photos détourées en base64 pour les cartes en photo)
+const substituteAssets = (text) => text.replace(/\/\*@asset ([\w-]+)\*\/\{\}/g, (_, n) => fs.readFileSync(path.join(SRC, "assets", `${n}.json`), "utf8").trim());
+const chunks = Object.fromEntries(CARD_FILES.map((f) => [path.basename(f, ".js"), substituteAssets(substituteI18n(load(f)))]));
 
 for (const ns of Object.keys(i18n.en).filter((ns) => !usedI18n.has(ns))) warn(`en.json: namespace "${ns}" is not used by the source`);
 
