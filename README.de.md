@@ -196,6 +196,7 @@ Klicke auf eine Karte für ihre Optionen und Beispiele.
 | [Bioklimatische Pergola](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/shutters.md) | `custom:appliance-pergola-card` |
 | [Dachfenster (Velux)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/shutters.md) | `custom:appliance-roof-window-card` |
 | [Markise](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/shutters.md) | `custom:appliance-awning-card` |
+| [Freistehende Doppelmarkise](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/shutters.md) | `custom:appliance-double-awning-card` |
 
 ### Unterhaltung und IT
 

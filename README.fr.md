@@ -196,6 +196,7 @@ Clique sur une carte pour ses options et ses exemples (pages en anglais).
 | [Pergola bioclimatique](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/shutters.md) | `custom:appliance-pergola-card` |
 | [Fenêtre de toit (Velux)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/shutters.md) | `custom:appliance-roof-window-card` |
 | [Store banne](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/shutters.md) | `custom:appliance-awning-card` |
+| [Store double sur pied](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/shutters.md) | `custom:appliance-double-awning-card` |
 
 ### Loisirs et informatique
 

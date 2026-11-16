@@ -212,6 +212,7 @@ Clique em um cartão para consultar as opções e os exemplos.
 | [Pérgula bioclimática](docs/cards/shutters.md) | `custom:appliance-pergola-card` |
 | [Janela de telhado (Velux)](docs/cards/shutters.md) | `custom:appliance-roof-window-card` |
 | [Toldo retrátil](docs/cards/shutters.md) | `custom:appliance-awning-card` |
+| [Toldo duplo autoportante](docs/cards/shutters.md) | `custom:appliance-double-awning-card` |
 
 ### Entretenimento e informática
 

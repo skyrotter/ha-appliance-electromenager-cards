@@ -1306,6 +1306,9 @@ const SCEN = [
   { kind: 'awning', title: 'Store banne', lang: true,
     cfg: { entity: 'cover.demo_awning', entity_power: 'sensor.demo_awning_power', travel_time: 10 },
     build(ctl) { shutterCtl(ctl, 'cover.demo_awning', 'sensor.demo_awning_power', 10, 60); } },
+  { kind: 'double-awning', title: 'Store double sur pied', lang: true,
+    cfg: { entity: 'cover.demo_double_awning', entity_power: 'sensor.demo_double_awning_power', travel_time: 10 },
+    build(ctl) { shutterCtl(ctl, 'cover.demo_double_awning', 'sensor.demo_double_awning_power', 10, 60); } },
   { kind: 'smart-lock', title: 'Serrure connectée (Nuki)', lang: true,
     cfg: { model: 'nuki_pro_5', entity: 'lock.demo_front_door', entity_battery: 'sensor.demo_lock_battery', entity_door: 'binary_sensor.demo_lock_door' },
     build(ctl) {
