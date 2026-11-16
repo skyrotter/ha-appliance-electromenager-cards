@@ -320,7 +320,10 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     _map(label) {
       const e = (v) => String(v).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
       const mk = this._zones.map((z, i) => (z.x == null ? '' : `<button class="zb mk${this._c.marker_names === true ? ' lbl' : ''}" data-b="z${i}" data-id="${e(z.id)}" style="left:${z.x}%;top:${z.y}%"><ha-icon icon="${e(z.icon || (this._dom(z.id) === 'valve' ? 'mdi:valve' : 'mdi:sprinkler-variant'))}"></ha-icon><span></span></button>`)).join('');
-      return `<div class="map" role="img" aria-label="${e(label)}"><img src="${e(this._c.image)}" alt="" loading="lazy">${mk}</div>`;
+      // pompe de puits : pastille sur l'image si pump_x / pump_y + entity_pump (allumée quand la pompe tourne)
+      const c = this._c, pm = c.entity_pump && c.pump_x != null && c.pump_y != null
+        ? `<button class="zb mk pump${c.marker_names === true ? ' lbl' : ''}" data-b="pump" data-id="${e(c.entity_pump)}" style="left:${Number(c.pump_x)}%;top:${Number(c.pump_y)}%"><ha-icon icon="${e(c.pump_icon || 'mdi:pump')}"></ha-icon><span></span></button>` : '';
+      return `<div class="map" role="img" aria-label="${e(label)}"><img src="${e(c.image)}" alt="" loading="lazy">${mk}${pm}</div>`;
     }
 
     _build() {
@@ -346,6 +349,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ev.stopPropagation();
         const k = b.dataset.b;
         if (k === 'stop') { this._zones.forEach((z) => this._on(z.id) && this._set(z.id, false)); return; }
+        if (k === 'pump') { const id = this._c.entity_pump; /^(switch|input_boolean)\./.test(id) ? this._set(id, !this._on(id)) : this._more(id); return; }
         if (k === 'master') { this._set(this._c.entity_master, !this._on(this._c.entity_master)); return; }
         const z = this._zones[Number(k.slice(1))]; if (z) this._set(z.id, !this._on(z.id));
       }));
@@ -383,6 +387,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       r.querySelectorAll('.zb').forEach((b) => {
         const k = b.dataset.b, span = b.querySelector('span'), st = this._st(b.dataset.id);
         if (k === 'stop') { span.textContent = this._t('stop'); b.classList.toggle('on', active.length > 0); b.disabled = !active.length; return; }
+        if (k === 'pump') { span.textContent = this._t('pump'); b.title = this._t('pump'); b.classList.toggle('on', pump); b.disabled = !st || st.state === 'unavailable'; return; }
         if (k === 'master') { const on = this._on(c.entity_master); span.textContent = this._t('auto'); b.classList.toggle('on', on); b.disabled = !st || st.state === 'unavailable'; return; }
         const z = this._zones[Number(k.slice(1))], on = this._on(z.id);
         span.textContent = this._name(z); b.title = this._name(z); b.classList.toggle('on', on);
@@ -452,6 +457,10 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
           y: { label: window.applianceEditorLabel('zone_y', this._hass), selector: { number: { min: 0, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
         } } } },
         { name: 'image', selector: { text: {} } }, bool('marker_names', false),
+        { type: 'grid', name: '', schema: [
+          { name: 'pump_x', selector: { number: { min: 0, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
+          { name: 'pump_y', selector: { number: { min: 0, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
+          { name: 'pump_icon', selector: { icon: {} } }] },
         ent('entity_pump', ['switch', 'input_boolean', 'binary_sensor']), ent('entity_master', ['switch', 'input_boolean']),
         ent('entity_rain', ['binary_sensor', 'sensor', 'input_boolean']), bool('block_on_rain', false),
         ent('entity_flow', 'sensor'), ent('entity_soil', 'sensor'), ent('entity_today', 'sensor'), ent('entity_next', ['sensor', 'input_datetime']),
