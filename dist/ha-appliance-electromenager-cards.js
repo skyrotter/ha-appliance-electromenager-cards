@@ -329,6 +329,12 @@ const STRINGS = {
     "cost_24h": "Cost last 24 h",
     "cost_7d": "Cost last 7 days",
     "cost_30d": "Cost last 30 days",
+    "energy_year": "This year",
+    "energy_total": "Total",
+    "cost_year": "Cost this year",
+    "cost_total": "Total cost",
+    "f_energy_tile_period": "Period shown in the energy tile header (your own energy sensor)",
+    "f_cost_tile_period": "Period shown in the cost tile header (your own cost sensor)",
     "f_display": "Consumption shown as (kWh, cost or both)",
     "f_tap_action": "Tap action (illustration)",
     "f_hold_action": "Hold action (illustration)",
@@ -425,6 +431,7 @@ const STRINGS = {
     "cycle_energy": "Cycle energy",
     "cycle_cost": "Cycle cost",
     "yesterday": "yesterday",
+    "yday": "Yesterday",
     "f_last_cycle": "Show the last cycle (start, end, duration, energy, cost)",
     "f_estimate": "Estimate remaining time and progress (no sensor)",
     "f_price_per_kwh": "Price per kWh (number or entity, for costs)",
@@ -5897,6 +5904,12 @@ const STRINGS = {
     "cost_24h": "Cost ultimele 24 h",
     "cost_7d": "Cost ultimele 7 zile",
     "cost_30d": "Cost ultimele 30 de zile",
+    "energy_year": "Anul acesta",
+    "energy_total": "Total",
+    "cost_year": "Cost anul acesta",
+    "cost_total": "Cost total",
+    "f_energy_tile_period": "Perioada afișată în antetul plăcii de energie (senzorul tău de energie)",
+    "f_cost_tile_period": "Perioada afișată în antetul plăcii de cost (senzorul tău de cost)",
     "f_display": "Consum afișat ca (kWh, cost sau ambele)",
     "f_tap_action": "Acțiune la atingere (ilustrație)",
     "f_hold_action": "Acțiune la apăsare lungă (ilustrație)",
@@ -5968,6 +5981,7 @@ const STRINGS = {
     "cycle_energy": "Consumul ciclului",
     "cycle_cost": "Costul ciclului",
     "yesterday": "ieri",
+    "yday": "Ieri",
     "f_last_cycle": "Afișează ultimul ciclu (început, sfârșit, durată, consum, cost)",
     "f_estimate": "Estimează timpul rămas și progresul (fără senzor)",
     "f_price_per_kwh": "Preț pe kWh (număr sau entitate, pentru costuri)",
@@ -11257,6 +11271,8 @@ let SEQ = 0;
 // energy_period : périodes calendaires, puis glissantes (durée en jours)
 const ROLLING = { "24h": 1, "7d": 7, "30d": 30 };
 const PERIODS = ["day", "week", "month", ...Object.keys(ROLLING)];
+// energy_tile_period / cost_tile_period : période d'un capteur fourni par l'utilisateur (texte de l'en-tête seulement, rien n'est calculé)
+const TILE_PERIODS = [...PERIODS, "year", "total"];
 // cartes avec la tuile « durée d'utilisation du jour » (capteur usage_time, sinon calcul depuis l'historique)
 // fitness (vélo elliptique, vélo d'appartement, rameur) : allure de l'animation et tuiles de séance
 const FIT_KINDS = ["elliptical", "exercise_bike", "rowing_machine"];
@@ -13019,15 +13035,21 @@ class ApplianceCardBase extends HTMLElement {
     } else if (m.energy) {
       const eVal = fmtEnergy(hass, m.energy) ?? "—";
       const yp = m.energy.attributes && m.energy.attributes.last_period;
-      if (yp !== undefined && yp !== null && !isNaN(parseFloat(yp))) {
+      // en-tête choisi par l'utilisateur (labels.energy, ou energy_tile_period pour le capteur qu'il fournit) : prioritaire sur « hier »
+      const eHdr = c.labels && c.labels.energy ? lb("energy") : !solar && !dual && TILE_PERIODS.includes(c.energy_tile_period) ? tr(hass, `energy_${c.energy_tile_period}`) : null;
+      if (eHdr == null && yp !== undefined && yp !== null && !isNaN(parseFloat(yp))) {
         const ydayStr = parseFloat(yp).toFixed(1);
-        tile("mdi:history", eVal, `Yday ${ydayStr} kWh`, c.energy);
+        tile("mdi:history", eVal, `${tr(hass, "yday")} ${ydayStr} kWh`, c.energy);
       } else {
-        tile("mdi:lightning-bolt-circle", eVal, lb(solar ? "today" : dual ? "energy_grid" : "energy"), c.energy);
+        tile("mdi:lightning-bolt-circle", eVal, eHdr ?? lb(solar ? "today" : dual ? "energy_grid" : "energy"), c.energy);
       }
     }
     if (m.energyS) tile("mdi:solar-power-variant", fmtEnergy(hass, m.energyS) ?? "—", lb("energy_solar"), c.energy_solar);
-    if (m.cost && showOpt("show_cost")) tile(solar ? "mdi:piggy-bank-outline" : "mdi:cash", fmtUnit(hass, m.cost, 2, 2) ?? "—", lb(solar ? "savings" : "cost"), c.cost);
+    if (m.cost && showOpt("show_cost")) {
+      // labels.cost (text libre) > cost_tile_period (période du capteur de coût) > « Coût »
+      const cHdr = !solar && !(c.labels && c.labels.cost) && TILE_PERIODS.includes(c.cost_tile_period) ? tr(hass, `cost_${c.cost_tile_period}`) : lb(solar ? "savings" : "cost");
+      tile(solar ? "mdi:piggy-bank-outline" : "mdi:cash", fmtUnit(hass, m.cost, 2, 2) ?? "—", cHdr, c.cost);
+    }
     // durée d'utilisation du jour (écrans, consoles, PC) : capteur usage_time, sinon historique (+ temps écoulé depuis la lecture si toujours allumé)
     if (USAGE_KINDS.includes(kind) && c.show_usage_time !== false) {
       const u = this._use, today = u && this._useDay === new Date().toDateString();
@@ -13192,6 +13214,11 @@ function buildForm(kind) {
           ...(d.fields.includes("energy") ? [{ name: "energy_period", selector: { select: { mode: "dropdown", options: [
             { value: "", label: tr(null, "energy") }, ...PERIODS.map((value) => ({ value, label: tr(null, `energy_${value}`) })),
             { value: "none", label: tr(null, "energy_none") }] } } }] : []), // none : pas de tuile énergie
+          // période affichée dans l'en-tête des tuiles énergie / coût quand la valeur vient d'un capteur de l'utilisateur
+          ...(d.fields.includes("energy") ? [{ name: "energy_tile_period", selector: { select: { mode: "dropdown", options: [
+            { value: "", label: tr(null, "energy") }, ...TILE_PERIODS.map((value) => ({ value, label: tr(null, `energy_${value}`) }))] } } }] : []),
+          ...(d.fields.includes("cost") ? [{ name: "cost_tile_period", selector: { select: { mode: "dropdown", options: [
+            { value: "", label: tr(null, "cost") }, ...TILE_PERIODS.map((value) => ({ value, label: tr(null, `cost_${value}`) }))] } } }] : []),
           ...(d.fields.includes("energy") || ["washer", "dryer", "dishwasher"].includes(kind) ? [
             { name: "price_per_kwh", selector: { number: { min: 0, max: 2, step: 0.0001, mode: "box" } } },
             { name: "display", selector: { select: { mode: "dropdown", options: [

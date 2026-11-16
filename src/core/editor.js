@@ -130,6 +130,11 @@ function buildForm(kind) {
           ...(d.fields.includes("energy") ? [{ name: "energy_period", selector: { select: { mode: "dropdown", options: [
             { value: "", label: tr(null, "energy") }, ...PERIODS.map((value) => ({ value, label: tr(null, `energy_${value}`) })),
             { value: "none", label: tr(null, "energy_none") }] } } }] : []), // none : pas de tuile énergie
+          // période affichée dans l'en-tête des tuiles énergie / coût quand la valeur vient d'un capteur de l'utilisateur
+          ...(d.fields.includes("energy") ? [{ name: "energy_tile_period", selector: { select: { mode: "dropdown", options: [
+            { value: "", label: tr(null, "energy") }, ...TILE_PERIODS.map((value) => ({ value, label: tr(null, `energy_${value}`) }))] } } }] : []),
+          ...(d.fields.includes("cost") ? [{ name: "cost_tile_period", selector: { select: { mode: "dropdown", options: [
+            { value: "", label: tr(null, "cost") }, ...TILE_PERIODS.map((value) => ({ value, label: tr(null, `cost_${value}`) }))] } } }] : []),
           ...(d.fields.includes("energy") || ["washer", "dryer", "dishwasher"].includes(kind) ? [
             { name: "price_per_kwh", selector: { number: { min: 0, max: 2, step: 0.0001, mode: "box" } } },
             { name: "display", selector: { select: { mode: "dropdown", options: [
