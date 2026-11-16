@@ -10944,7 +10944,7 @@ const DEF = {
     fields: ["entity", "power", "energy", "cost", "remaining", "program", "temperature", "switch"],
     keys: ["air_fryer", "airfryer", "air_frier", "friteuse", "fryer", "cosori", "ninja_foodi", "dual_zone"] },
   ac_split: { accent: "cold", threshold: 60,
-    fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "switch"],
+    fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "humidity", "switch"],
     keys: ["clim", "climatisation", "climatiseur", "split", "air_conditioner", "aircon", "daikin", "mitsubishi", "atlantic", "toshiba"] },
   heat_pump: { accent: "heat", threshold: 60,
     fields: ["entity", "power", "energy", "cost", "temperature", "switch"],
@@ -12516,6 +12516,19 @@ class ApplianceCardBase extends HTMLElement {
     const sr = this.shadowRoot;
     const lcdEl = sr.querySelector(".lcd");
     if (lcdEl) lcdEl.textContent = this._lcdText(m);
+    // split : l'humidité s'affiche sous la température sur l'écran (lcd_humidity: false pour la masquer)
+    if (kind === "ac_split" && lcdEl) {
+      const showH = c.lcd_humidity !== false && m.humidity != null && !["off", "unavailable"].includes(m.status);
+      let hEl = sr.querySelector(".lcdh");
+      if (showH && !hEl) {
+        hEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        hEl.setAttribute("class", "lcdh"); hEl.setAttribute("x", lcdEl.getAttribute("x")); hEl.setAttribute("y", "68.8");
+        lcdEl.parentNode.insertBefore(hEl, lcdEl.nextSibling);
+      }
+      if (showH) hEl.textContent = `${Math.round(m.humidity)}%`; else if (hEl) hEl.remove();
+      lcdEl.classList.toggle("with-hum", showH);
+      lcdEl.setAttribute("y", showH ? "62.2" : "63.4");
+    }
     // lcd_big : grande valeur lisible (icône + température) posée sur le dessin ; icône thermomètre = actuelle, cible = consigne (lcd_value)
     if (c.lcd_big === true && ["radiator", "towel_dryer", "ac_split"].includes(kind)) {
       const sv = sr.querySelector(".illus svg");
@@ -13015,6 +13028,7 @@ class ApplianceCardBase extends HTMLElement {
       // eau chaude restante : % (tuile « Eau chaude ») et litres (tuile « Volume ») — deux tuiles, sinon le texte est tronqué
       if (kind === "water_heater" && m.hotPct != null) tile("mdi:water-thermometer", `${fmtNum(hass, m.hotPct, 0)} %`, lb("hot_water"), c.hot_water_level || c.hot_water_volume);
       if (kind === "water_heater" && m.hotL != null) tile("mdi:water", `${fmtNum(hass, m.hotL, 0)} L`, lb("volume"), c.hot_water_volume || c.hot_water_level);
+      if (kind === "ac_split" && m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0)} %`, lb("humidity"), c.humidity || c.entity);
       if (kind === "towel_dryer" && m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0)} %`, lb("humidity"), c.humidity || c.entity);
     }
     if (m.remaining != null && m.remaining > 0 && active && kind !== "water_heater") tile("mdi:timer-sand", `${m.estimated ? "≈ " : ""}${fmtDuration(m.remaining)}`, lb("remaining"), c.remaining);
@@ -13272,6 +13286,7 @@ function buildForm(kind) {
               { value: "target", label: tr(null, "lcd_value_target") }, { value: "current", label: tr(null, "lcd_value_current") }] } } },
             { name: "lcd_big", selector: { boolean: {} }, default: false },
           ] : []),
+          ...(kind === "ac_split" ? [{ name: "lcd_humidity", selector: { boolean: {} }, default: true }] : []),
           ...(["ac_split", "heat_pump"].includes(kind) ? [
             { name: "hvac", selector: { select: { mode: "dropdown", options: [
               { value: "auto", label: "Auto (saison) / Auto (season)" }, { value: "cool", label: "Climatisation / Cooling" }, { value: "heat", label: "Chauffage / Heating" }] } } },
@@ -14387,6 +14402,9 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-heat_pump.st-heating .hp-fins { stroke: #cfe9ff; }
 @keyframes ac-blow { to { stroke-dashoffset: -24; } }
 @keyframes ac-swing { 0%, 100% { transform: translateY(4.5px) scaleY(.75); } 50% { transform: translateY(5.5px) scaleY(.55); } }
+/* humidité sous la température sur l'écran du split */
+.wrap.k-ac_split svg text.lcd.with-hum { font-size: 7.6px !important; }
+.k-ac_split .lcdh { fill: var(--acc); font: 700 5.4px var(--paper-font-body1_-_font-family, Roboto, sans-serif); text-anchor: middle; opacity: .9; }
 
 /* ---------- air conditioning: outdoor heat pump ---------- */
 .hp-fan { transform-box: view-box; transform-origin: 46px 75px; }

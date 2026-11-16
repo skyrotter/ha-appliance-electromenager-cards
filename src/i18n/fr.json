@@ -1133,6 +1133,7 @@
     "pump_y": "Position Y de la pompe sur l'image (%, depuis le haut)",
     "pump_icon": "Icône de la pompe",
     "illustration_size": "Taille de l'illustration",
+    "lcd_humidity": "Humidité sur l'écran",
     "battery_model": "Modèle de batterie",
     "battery_count": "Nombre d’unités côte à côte",
     "battery_model_default": "Modules dessinés (défaut)",
