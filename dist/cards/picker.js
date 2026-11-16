@@ -10,7 +10,13 @@
   // Les 56 autres cartes se chargent en parallèle (dist/cards/*.js) et peuvent finir dans
   // n'importe quel ordre : on ne fige jamais la liste, on la relit à chaque usage pour ne
   // pas rater celles pas encore enregistrées au moment où ce fichier s'exécute.
-  const getOurs = () => (window.customCards || []).filter(isOurs);
+  // Mode « carte unique » : applySelectorPrefs retire nos cartes de window.customCards pour les masquer dans le sélecteur de HA.
+  // On les garde ici, sinon la liste déroulante du type d'appareil se retrouve vide (issue 514).
+  const hidden = [];
+  const getOurs = () => {
+    const live = (window.customCards || []).filter(isOurs);
+    return live.concat(hidden.filter((h) => !live.some((l) => l.type === h.type)));
+  };
   const label = (c) => String(c.name || c.type).replace(/^Appliance\s*[–-]\s*/, '');
   // ordre d'origine (noms « anglais / français ») : sert seulement à choisir le type par défaut d'une nouvelle carte
   const OPTIONS = () => getOurs().map((c) => ({ value: c.type, label: label(c) })).sort((a, b) => a.label.localeCompare(b.label));
@@ -41,6 +47,7 @@
   const applySelectorPrefs = () => {
     setPreviews(!!window.applianceCardsPreviews || getPref(PREV_KEY));
     if (window.applianceCardsSinglePicker || getPref(SINGLE_KEY)) {
+      window.customCards.filter(isOurs).forEach((c) => { if (!hidden.some((h) => h.type === c.type)) hidden.push(c); });
       const keep = window.customCards.filter((c) => !isOurs(c));
       window.customCards.length = 0;
       window.customCards.push(...keep);
