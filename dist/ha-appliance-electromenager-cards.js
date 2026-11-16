@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.156.2";
+const VERSION = "1.158.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -19,6 +19,9 @@ const STRINGS = {
     "valign_center": "Centered",
     "header_inline": "Title left, status right (default)",
     "header_stacked": "Stacked: title, then status",
+    "illus_pos_center": "Centered (default)",
+    "illus_pos_left": "Left, first 2 tiles on the right",
+    "illus_pos_right": "Right, first 2 tiles on the left",
     "washer": "Washing machine",
     "dryer": "Dryer",
     "dishwasher": "Dishwasher",
@@ -2193,6 +2196,9 @@ const STRINGS = {
     "valign_center": "Centré",
     "header_inline": "Titre à gauche, état à droite (défaut)",
     "header_stacked": "Empilés : titre puis état",
+    "illus_pos_center": "Au centre (défaut)",
+    "illus_pos_left": "À gauche, 2 premières tuiles à droite",
+    "illus_pos_right": "À droite, 2 premières tuiles à gauche",
     "washer": "Lave-linge",
     "dryer": "Sèche-linge",
     "dishwasher": "Lave-vaisselle",
@@ -4655,6 +4661,9 @@ const STRINGS = {
     "valign_center": "Centrado",
     "header_inline": "Título à esquerda, estado à direita (predefinido)",
     "header_stacked": "Empilhados: título e depois estado",
+    "illus_pos_center": "No centro (padrão)",
+    "illus_pos_left": "À esquerda, 2 primeiras peças à direita",
+    "illus_pos_right": "À direita, 2 primeiras peças à esquerda",
     "washer": "Lavadora de roupas",
     "dryer": "Secadora de roupas",
     "dishwasher": "Lava-louças",
@@ -5110,6 +5119,9 @@ const STRINGS = {
     "valign_center": "Centrado",
     "header_inline": "Título à esquerda, estado à direita (predefinido)",
     "header_stacked": "Empilhados: título e depois estado",
+    "illus_pos_center": "Ao centro (predefinição)",
+    "illus_pos_left": "À esquerda, 2 primeiros mosaicos à direita",
+    "illus_pos_right": "À direita, 2 primeiros mosaicos à esquerda",
     "washer": "Máquina de lavar roupa",
     "dryer": "Máquina de secar roupa",
     "dishwasher": "Máquina de lavar loiça",
@@ -13099,6 +13111,7 @@ function buildForm(kind) {
           { name: "title_size", selector: { number: { min: 10, max: 28, step: 1, mode: "box", unit_of_measurement: "px" } } },
           { name: "title_bold", selector: { boolean: {} } },
           { name: "title_layout", selector: { select: { mode: "dropdown", options: [{ value: "inline", label: tr(null, "header_inline") }, { value: "stacked", label: tr(null, "header_stacked") }] } } },
+          { name: "illustration_position", selector: { select: { mode: "dropdown", options: [{ value: "center", label: tr(null, "illus_pos_center") }, { value: "left", label: tr(null, "illus_pos_left") }, { value: "right", label: tr(null, "illus_pos_right") }] } } },
           ...window.applianceTileFields(),
           { name: "animations", selector: { boolean: {} }, default: true },
           { name: "hide_when_inactive", selector: { boolean: {} } },
@@ -13677,6 +13690,20 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
   :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .alert-line,
   :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .sub { flex: 0 0 100%; }
 }
+
+/* illustration_position: left | right : dessin à côté des 2 premières tuiles (empilées), les autres tuiles dessous sur 2 colonnes.
+   .stats et .right-col passent en display: contents pour que les tuiles deviennent des cellules de la grille .top (2 colonnes égales). */
+:host([illus-pos]) .wrap:not(.layout-split) .top { grid-template-areas: none; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto; column-gap: 6px; row-gap: 6px; align-items: stretch; }
+:host([illus-pos]) .wrap:not(.layout-split) .right-col,
+:host([illus-pos]) .wrap:not(.layout-split) .stats { display: contents; }
+:host([illus-pos]) .wrap:not(.layout-split) .head { grid-area: auto; grid-column: 1 / -1; grid-row: 1; }
+:host([illus-pos]) .wrap:not(.layout-split) .illus { grid-area: auto; grid-row: 2 / span 2; align-self: center; justify-self: center; }
+:host([illus-pos="left"]) .wrap:not(.layout-split) .illus { grid-column: 1; }
+:host([illus-pos="right"]) .wrap:not(.layout-split) .illus { grid-column: 2; }
+:host([illus-pos]) .wrap:not(.layout-split) .stats .tile:nth-child(1) { grid-row: 2; }
+:host([illus-pos]) .wrap:not(.layout-split) .stats .tile:nth-child(2) { grid-row: 3; }
+:host([illus-pos="left"]) .wrap:not(.layout-split) .stats .tile:nth-child(-n+2) { grid-column: 2; }
+:host([illus-pos="right"]) .wrap:not(.layout-split) .stats .tile:nth-child(-n+2) { grid-column: 1; }
 
 ﻿/* ---------- illustration: shared ---------- */
 .lcd { font: 700 8.5px ui-monospace, "Courier New", monospace; letter-spacing: .25px; fill: #7ec8e3 !important; font-weight: 700; dominant-baseline: central; transition: fill .3s; }
@@ -15176,12 +15203,12 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
 (async () => {
   const base = import.meta.url;
   // ?v=<version> : après une mise à jour, le navigateur ne ressert pas d'anciens morceaux depuis son cache
-  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.156.2`, base).href);
+  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.158.0`, base).href);
   await chunk("card-helpers");
   await chunk("editor-labels");
   // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre
   window.dispatchEvent(new Event("appliance-helpers-ready"));
-  await Promise.all(["aquarium", "reef-aquarium", "linky", "battery", "ev-charger", "robot-vacuum", "robot-mower", "pellet-boiler", "gas-boiler", "water-heat-pump", "air-water-heat-pump", "diesel-heater", "jacuzzi", "internet-box", "pet-feeder", "portable-ac", "access", "sauna", "pumps", "pool-robot", "ups", "underfloor-heating", "lights", "shutters", "water-meter", "gas-meter", "electric-meter", "trv", "room-climate", "mailbox", "smoke-detector", "smart-lock", "cat-flap", "pet-fountain", "leak-detector", "mini-pc", "nas", "tv-box", "scale", "thermo-heater", "water-valves", "water-softener", "camera", "poe-switch", "raspberry-pi", "water-filter", "irrigation", "led-strip", "rain-gauge", "plant-monitor", "humidifier", "fan-heater", "inflatable-spa", "heat-meter", "picker", "zigbee-coordinator", "wall-tablet"].map(chunk));
+  await Promise.all(["aquarium", "reef-aquarium", "linky", "battery", "ev-charger", "robot-vacuum", "robot-mower", "pellet-boiler", "gas-boiler", "water-heat-pump", "air-water-heat-pump", "diesel-heater", "jacuzzi", "internet-box", "hue-sync-box", "pet-feeder", "portable-ac", "access", "sauna", "pumps", "pool-robot", "ups", "underfloor-heating", "lights", "shutters", "water-meter", "gas-meter", "electric-meter", "trv", "room-climate", "mailbox", "smoke-detector", "smart-lock", "cat-flap", "pet-fountain", "leak-detector", "mini-pc", "nas", "tv-box", "scale", "thermo-heater", "water-valves", "water-softener", "camera", "poe-switch", "raspberry-pi", "water-filter", "irrigation", "led-strip", "rain-gauge", "plant-monitor", "humidifier", "fan-heater", "inflatable-spa", "heat-meter", "picker", "zigbee-coordinator", "wall-tablet"].map(chunk));
   // Fires once every chunk has finished registering its card(s): anything that
   // needs to see the complete window.customCards list (e.g. the single-card
   // picker) must wait for this instead of assuming load order.

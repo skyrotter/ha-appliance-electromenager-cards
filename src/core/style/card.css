@@ -284,3 +284,17 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
   :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .alert-line,
   :host(:not([title-layout="stacked"])[illus-big]) .wrap:not(.layout-split) .info .sub { flex: 0 0 100%; }
 }
+
+/* illustration_position: left | right : dessin à côté des 2 premières tuiles (empilées), les autres tuiles dessous sur 2 colonnes.
+   .stats et .right-col passent en display: contents pour que les tuiles deviennent des cellules de la grille .top (2 colonnes égales). */
+:host([illus-pos]) .wrap:not(.layout-split) .top { grid-template-areas: none; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto; column-gap: 6px; row-gap: 6px; align-items: stretch; }
+:host([illus-pos]) .wrap:not(.layout-split) .right-col,
+:host([illus-pos]) .wrap:not(.layout-split) .stats { display: contents; }
+:host([illus-pos]) .wrap:not(.layout-split) .head { grid-area: auto; grid-column: 1 / -1; grid-row: 1; }
+:host([illus-pos]) .wrap:not(.layout-split) .illus { grid-area: auto; grid-row: 2 / span 2; align-self: center; justify-self: center; }
+:host([illus-pos="left"]) .wrap:not(.layout-split) .illus { grid-column: 1; }
+:host([illus-pos="right"]) .wrap:not(.layout-split) .illus { grid-column: 2; }
+:host([illus-pos]) .wrap:not(.layout-split) .stats .tile:nth-child(1) { grid-row: 2; }
+:host([illus-pos]) .wrap:not(.layout-split) .stats .tile:nth-child(2) { grid-row: 3; }
+:host([illus-pos="left"]) .wrap:not(.layout-split) .stats .tile:nth-child(-n+2) { grid-column: 2; }
+:host([illus-pos="right"]) .wrap:not(.layout-split) .stats .tile:nth-child(-n+2) { grid-column: 1; }
