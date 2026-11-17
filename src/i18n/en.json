@@ -1081,6 +1081,9 @@
     "dial_decimals": "Decimals on the dial litre wheels",
     "title_layout": "Title and status",
     "illustration_position": "Drawing position",
+    "illus_pos_center": "Centered (default)",
+    "illus_pos_left": "Left, first 2 tiles on the right",
+    "illus_pos_right": "Right, first 2 tiles on the left",
     "door_model": "Model",
     "sync_box_model": "Box view",
     "open_alert_minutes": "Open alert after (min)",
@@ -1680,7 +1683,8 @@
     "index": "Index",
     "cost": "Cost",
     "variant_classic": "Classic (yellow bellows meter)",
-    "variant_modern": "Modern (grey meter, yellow pipe)"
+    "variant_modern": "Modern (grey meter, yellow pipe)",
+    "variant_belgian": "Belgian (communicating G4 meter, photo)"
   },
   "electric_meter": {
     "name": "Electric meter",

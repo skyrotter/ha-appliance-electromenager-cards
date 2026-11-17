@@ -868,6 +868,9 @@
     "dial_decimals": "Casas decimais nas rodas dos litros do mostrador",
     "title_layout": "Título e estado",
     "illustration_position": "Posição do desenho",
+    "illus_pos_center": "No centro (padrão)",
+    "illus_pos_left": "À esquerda, 2 primeiras peças à direita",
+    "illus_pos_right": "À direita, 2 primeiras peças à esquerda",
     "door_model": "Modelo",
     "sync_box_model": "Vista da caixa",
     "open_alert_minutes": "Alerta de porta aberta após (min)",
@@ -1676,7 +1679,8 @@
     "index": "Leitura",
     "cost": "Custo",
     "variant_classic": "Clássico (medidor de fole amarelo)",
-    "variant_modern": "Moderno (medidor cinza, tubo amarelo)"
+    "variant_modern": "Moderno (medidor cinza, tubo amarelo)",
+    "variant_belgian": "Belga (medidor comunicante G4, foto)"
   },
   "electric_meter": {
     "name": "Medidor de energia",

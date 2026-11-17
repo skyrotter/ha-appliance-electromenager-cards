@@ -868,6 +868,9 @@
     "dial_decimals": "Casas decimais nas rodas dos litros do mostrador",
     "title_layout": "Título e estado",
     "illustration_position": "Posição do desenho",
+    "illus_pos_center": "Ao centro (predefinição)",
+    "illus_pos_left": "À esquerda, 2 primeiros mosaicos à direita",
+    "illus_pos_right": "À direita, 2 primeiros mosaicos à esquerda",
     "door_model": "Modelo",
     "sync_box_model": "Vista da caixa",
     "open_alert_minutes": "Alerta de porta aberta após (min)",
@@ -1676,7 +1679,8 @@
     "index": "Índice",
     "cost": "Custo",
     "variant_classic": "Clássico (contador de fole amarelo)",
-    "variant_modern": "Moderno (contador cinzento, tubo amarelo)"
+    "variant_modern": "Moderno (contador cinzento, tubo amarelo)",
+    "variant_belgian": "Belga (contador comunicante G4, fotografia)"
   },
   "electric_meter": {
     "name": "Contador elétrico",

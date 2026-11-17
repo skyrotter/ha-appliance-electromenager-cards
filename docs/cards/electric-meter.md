@@ -14,6 +14,7 @@ Every sensor is optional:
 | `entity_power_l1`, `entity_power_l2`, `entity_power_l3` | power per phase (three tiles) |
 | `subscribed_power` | subscribed power in kVA: above it the state becomes **Overload** (red alert). `0` = off |
 | `power_threshold` | power below this counts as zero (5 W) |
+| `illustration_position` | `center` (default), `left` or `right`: the meter sits beside the first two tiles, the other tiles go below on two columns |
 | `show_status`, `show_power`, `show_today`, `show_index`, `show_cost`, `show_tariff`, `show_phases`, `animations`, `labels`, `language` | |
 
 States: **No consumption**, consuming (the badge shows the power), **Overload**.
