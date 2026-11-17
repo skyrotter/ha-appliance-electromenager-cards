@@ -1006,6 +1006,7 @@
     "power_max": "Maximum power",
     "pressure_max": "Overpressure alert (bar)",
     "price_per_kwh": "Price per kWh",
+    "currency": "Currency",
     "price_per_liter": "Price per litre",
     "price_per_unit": "Price per unit",
     "ready_margin": "Ready margin",
