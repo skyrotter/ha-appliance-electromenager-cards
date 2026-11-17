@@ -521,7 +521,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     static getStubConfig(hass) {
       const st = (hass && hass.states) || {}, ids = Object.keys(st), at = (i) => st[i].attributes || {};
       const FLAP = /chati[eè]re|cat_?flap|pet_?door|dog_?door|sure_?flap|petcare|flap|katzenklappe|gattaiola|kattenluik|katteluke/i;
-      const key = (i) => { const o = i.split('.')[1], ms = [...o.matchAll(new RegExp(FLAP.source, 'gi'))], m = ms[ms.length - 1]; return m ? o.slice(0, m.index + m[0].length) : ''; };
+      const key = (i) => { const o = (i || '').split('.')[1]; if (!o) return ''; const ms = [...o.matchAll(new RegExp(FLAP.source, 'gi'))], m = ms[ms.length - 1]; return m ? o.slice(0, m.index + m[0].length) : ''; };
       const dom = (d) => ids.filter((i) => i.startsWith(d + '.'));
       const locks = dom('lock').filter((i) => FLAP.test(i) || FLAP.test(at(i).friendly_name || ''));
       const sel = dom('select').find((i) => (FLAP.test(i) || /lock.*mode|locking/i.test(i)) && (at(i).options || []).some((o) => /lock|in|out/i.test(o)));
