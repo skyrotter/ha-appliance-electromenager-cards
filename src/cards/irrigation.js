@@ -46,6 +46,7 @@ svg{display:block;flex:0 1 calc(250px * var(--illus-scale,1));width:calc(250px *
 .zb.mk{position:absolute;transform:translate(-50%,-50%);flex-direction:column;gap:1px;padding:5px;min-width:32px;min-height:32px;border-radius:50%;line-height:1.1;
   background:rgba(20,24,30,.62);color:#fff;backdrop-filter:blur(2px);box-shadow:0 1px 4px rgba(0,0,0,.45)}
 .zb.mk.lbl{border-radius:12px;padding:4px 7px}
+.zb.mk.er,.zb.mk.el{transform:translate(0,-50%)}
 .zb.mk span{font-size:10px;max-width:84px}.zb.mk:not(.lbl) span{display:none}
 .zb.mk ha-icon{--mdc-icon-size:20px;display:inline-flex;width:20px;height:20px}
 .zb.mk.on{background:color-mix(in srgb,var(--ir-cold) 78%,#000);color:#fff;box-shadow:0 0 0 3px color-mix(in srgb,var(--ir-cold) 40%,transparent),0 0 12px var(--ir-cold)}
@@ -150,10 +151,14 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     // Image perso : <img> en fond, une pastille cliquable par zone qui a x / y (en % de l'image). Les autres zones restent en boutons dessous.
     _map(label) {
       const e = (v) => String(v).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
-      const mk = this._zones.map((z, i) => (z.x == null ? '' : `<button class="zb mk${this._c.marker_names === true ? ' lbl' : ''}" data-b="z${i}" data-id="${e(z.id)}" style="left:${z.x}%;top:${z.y}%"><ha-icon icon="${e(z.icon || (this._dom(z.id) === 'valve' ? 'mdi:valve' : 'mdi:sprinkler-variant'))}"></ha-icon><span></span></button>`)).join('');
+      // marqueur avec nom près d'un bord de l'image : ancré par son bord intérieur, pour que le libellé ne soit pas coupé
+      const edge = (x) => (this._c.marker_names === true ? (Number(x) >= 78 ? ' er' : Number(x) <= 22 ? ' el' : '') : '');
+      // à droite : ancré par `right` (sinon la largeur disponible se réduit à ce qui reste à droite et le nom est tronqué)
+      const pos = (x, y) => (edge(x) === ' er' ? `right:${100 - Number(x)}%;left:auto;top:${y}%` : `left:${x}%;top:${y}%`);
+      const mk = this._zones.map((z, i) => (z.x == null ? '' : `<button class="zb mk${this._c.marker_names === true ? ' lbl' : ''}${edge(z.x)}" data-b="z${i}" data-id="${e(z.id)}" style="${pos(z.x, z.y)}"><ha-icon icon="${e(z.icon || (this._dom(z.id) === 'valve' ? 'mdi:valve' : 'mdi:sprinkler-variant'))}"></ha-icon><span></span></button>`)).join('');
       // pompe de puits : pastille sur l'image si pump_x / pump_y + entity_pump (allumée quand la pompe tourne)
       const c = this._c, pm = c.entity_pump && c.pump_x != null && c.pump_y != null
-        ? `<button class="zb mk pump${c.marker_names === true ? ' lbl' : ''}" data-b="pump" data-id="${e(c.entity_pump)}" style="left:${Number(c.pump_x)}%;top:${Number(c.pump_y)}%"><ha-icon icon="${e(c.pump_icon || 'mdi:pump')}"></ha-icon><span></span></button>` : '';
+        ? `<button class="zb mk pump${c.marker_names === true ? ' lbl' : ''}${edge(c.pump_x)}" data-b="pump" data-id="${e(c.entity_pump)}" style="${pos(c.pump_x, c.pump_y)}"><ha-icon icon="${e(c.pump_icon || 'mdi:pump')}"></ha-icon><span></span></button>` : '';
       return `<div class="map" role="img" aria-label="${e(label)}"><img src="${e(c.image)}" alt="" loading="lazy">${mk}${pm}</div>`;
     }
 
@@ -217,9 +222,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const blocked = c.block_on_rain === true && rain;
       r.querySelectorAll('.zb').forEach((b) => {
         const k = b.dataset.b, span = b.querySelector('span'), st = this._st(b.dataset.id);
-        if (k === 'stop') { span.textContent = this._t('stop'); b.classList.toggle('on', active.length > 0); b.disabled = !active.length; return; }
-        if (k === 'pump') { span.textContent = this._t('pump'); b.title = this._t('pump'); b.classList.toggle('on', pump); b.disabled = !st || st.state === 'unavailable'; return; }
-        if (k === 'master') { const on = this._on(c.entity_master); span.textContent = this._t('auto'); b.classList.toggle('on', on); b.disabled = !st || st.state === 'unavailable'; return; }
+        if (k === 'stop') { span.textContent = this._l('stop'); b.classList.toggle('on', active.length > 0); b.disabled = !active.length; return; }
+        if (k === 'pump') { span.textContent = this._l('pump'); b.title = this._l('pump'); b.classList.toggle('on', pump); b.disabled = !st || st.state === 'unavailable'; return; }
+        if (k === 'master') { const on = this._on(c.entity_master); span.textContent = this._l('auto'); b.classList.toggle('on', on); b.disabled = !st || st.state === 'unavailable'; return; }
         const z = this._zones[Number(k.slice(1))], on = this._on(z.id);
         span.textContent = this._name(z); b.title = this._name(z); b.classList.toggle('on', on);
         b.disabled = !st || st.state === 'unavailable' || (blocked && !on);

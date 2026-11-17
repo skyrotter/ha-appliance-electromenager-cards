@@ -32,12 +32,9 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `entity_status` (charging / connected / complete…)
 - `entity_cost` or `price_per_kwh`
 - `max_power` (default 7400 W)
-<<<<<<< HEAD
 - `car_color` (drawn car only)
-=======
-- `car_color`
 - `car_image`: your own picture of the vehicle (`/local/tesla.png` or a URL) shown **instead of the drawn car**: side view, front on the right, transparent background (PNG / WebP). One card per vehicle (car, scooter…); the charge gauge stays on top
->>>>>>> 39f66c1 (Borne : option car_image pour afficher l'image perso du véhicule)
+- `car_image_align`: `right` (default), `center` or `left`: where the vehicle picture sits in its area. `left` puts it next to the charger, useful for a narrow picture such as a scooter
 - `show_power`
 - `show_energy`
 - `show_soc`
