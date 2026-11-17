@@ -46,3 +46,11 @@
 @keyframes pj-flick { 50% { opacity: .78; } }
 @keyframes pj-pulse { 50% { transform: scale(1.22); } }
 @keyframes pj-warm { 0% { opacity: 0; } 35% { opacity: .25; } 100% { opacity: 1; } }
+/* boutons de commande : 2 rangées de 4 ; marche vert, pause bleu, sourdine rouge */
+.k-tv .modes { grid-template-columns: repeat(4, 1fr); }
+.k-tv .sp-btn[data-sp="power"].on { background: #43a047; color: #fff; }
+.k-tv .sp-btn[data-sp="play_pause"].on { background: #1e88e5; color: #fff; }
+.k-tv .sp-btn[data-sp="mute"].on { background: #e53935; color: #fff; }
+/* volume en % sous l'état : lisible, rouge en sourdine */
+.k-tv .sub { font-size: 13px; font-weight: 500; color: var(--primary-text-color); opacity: .85; }
+.k-tv .sub.sub-mute { color: #e53935; opacity: 1; }
