@@ -29,6 +29,22 @@ subscribed_power: 9                        # optional, kVA
 ```
 
 
+## Belgian P1 meter (Landis+Gyr E360-3P)
+
+`model: landis_gyr_e360_3p` shows the Landis+Gyr E360-3P (three-phase) smart meter as a cut-out photo, read through its P1 port. Same options and the same scrolling LCD as the Sagemcom XS212 below, plus:
+
+- the **P+ / P-** indicators of the screen light up with the flow (P+ importing, P- exporting, from the sign of `entity_power`);
+- **L1 / L2 / L3** light up for each phase that draws power (`entity_power_l1` to `l3`, otherwise all three while power flows);
+- the **sun / moon** of the screen and the printed **active tariff** (1.8.1 / 1.8.2 import, 2.8.1 / 2.8.2 export when exporting) follow `entity_tariff` (`day` / `night`, `1` / `2`, `T1` / `T2`, `high` / `low`...).
+
+```yaml
+type: custom:appliance-electric-meter-card
+model: landis_gyr_e360_3p
+entity_power: sensor.p1_power
+entity_index: sensor.p1_energy_import
+entity_tariff: sensor.p1_tariff
+```
+
 ## Belgian P1 meter (Sagemcom XS212)
 
 `model: sagemcom_xs212` shows the Sagemcom / Siconia XS212 smart meter (P1 port) as a cut-out photo. Its LCD scrolls through the available values (OBIS code + value: `1.8.0` total import, `1.8.1` / `1.8.2` import tariff 1 / 2, `2.8.x` export, `1.7.0` power, `32.7` voltage, `31.7` current) and the pulse LED blinks while power flows. Feed it with the sensors of a P1 reader (e.g. HomeWizard):
