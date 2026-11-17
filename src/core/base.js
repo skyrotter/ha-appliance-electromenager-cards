@@ -471,14 +471,22 @@ class ApplianceCardBase extends HTMLElement {
       else if (raw && /deep.?sleep|hibernat|power.?off|[eé]teint|sommeil.?prof/.test(raw)) m.status = "off";
       else if (raw && /idle|ready|wait|sleep|standby|veille|attente|pr[eê]t|warm|cool|chauff|refroid|inactive/.test(raw)) m.status = "standby";
       else m.status = base === "running" || base === "on" ? "standby" : "off";
-      // Brother MFC-J5955DW : niveaux d'encre (barres colorées) et message de l'imprimante (alerte)
-      if (/^brother|mfc.?j5955/i.test(String(c.model || ""))) {
-        const inks = [["k", "ink_black", c.ink_black], ["c", "ink_cyan", c.ink_cyan], ["m", "ink_magenta", c.ink_magenta], ["y", "ink_yellow", c.ink_yellow]].filter((x) => x[2]);
+      // niveaux d'encre (barres colorées), quel que soit le modèle : noir, cyan, magenta, jaune, ou une cartouche tri-couleur (ink_color).
+      // Cyan, magenta et jaune pointant vers le même capteur (cartouche tri-couleur) donnent une seule jauge « Couleur ».
+      {
+        let inks = [["k", "ink_black", c.ink_black], ["c", "ink_cyan", c.ink_cyan], ["m", "ink_magenta", c.ink_magenta], ["y", "ink_yellow", c.ink_yellow], ["t", "ink_color", c.ink_color]].filter((x) => x[2]);
+        const cmy = inks.filter((x) => ["c", "m", "y"].includes(x[0]));
+        if (cmy.length > 1 && cmy.every((x) => x[2] === cmy[0][2]) && !inks.some((x) => x[0] === "t" && x[2] !== cmy[0][2])) {
+          inks = inks.filter((x) => !["c", "m", "y", "t"].includes(x[0])).concat([["t", "ink_color", cmy[0][2]]]);
+        }
         if (inks.length) {
           const low = Number(c.ink_low) > 0 ? Number(c.ink_low) : 15;
           m.ink = inks.map(([k, key, id]) => { const v = num(S(id)); return { k, key, id, v: v == null ? null : Math.max(0, Math.min(100, v)), low: v != null && v < low }; });
           if (m.ink.some((i) => i.low) && m.status !== "unavailable") m.alerts.push("ink_low");
         }
+      }
+      // Brother MFC-J5955DW : message de l'imprimante (alerte)
+      if (/^brother|mfc.?j5955/i.test(String(c.model || ""))) {
         const msg = c.status_message ? S(c.status_message) : null, mt = msg ? String(msg.state).trim() : "";
         if (mt && !BAD.includes(mt.toLowerCase()) && !/^(ok|ready|idle|waiting|sleep|none|no error|aucun|pr[eê]te?|normal|(en )?espera|listo|lista|reposo|inactiv[oa]|ninguno|sin errores?|bereit|leerlauf|in attesa|pronto|inattiv[oa]|em espera|pronta)$/i.test(mt)) m.alerts.push(mt);
       }
