@@ -58,6 +58,12 @@ const STRINGS = {
     "play": "Play",
     "pause": "Pause",
     "mute": "Mute",
+    "channel_up": "Channel up",
+    "channel_down": "Channel down",
+    "source_select": "Choose the input",
+    "sources_inputs": "Inputs",
+    "sources_apps": "Apps",
+    "close_dialog": "Close",
     "f_turbo_threshold": "Turbo above (W)",
     "f_heat_threshold": "Heating above (W)",
     "f_show_energy": "Show energy",
@@ -5720,6 +5726,12 @@ const STRINGS = {
     "play": "Redare",
     "pause": "Pauză",
     "mute": "Fără sunet",
+    "channel_up": "Canal următor",
+    "channel_down": "Canal anterior",
+    "source_select": "Alege intrarea",
+    "sources_inputs": "Intrări",
+    "sources_apps": "Aplicații",
+    "close_dialog": "Închide",
     "f_turbo_threshold": "Turbo peste (W)",
     "f_heat_threshold": "Încălzire peste (W)",
     "f_show_energy": "Afișează energia",
@@ -11376,7 +11388,7 @@ class ApplianceCardBase extends HTMLElement {
     // keep LCD clock / countdown fresh even when no entity changes
     this._tick = setInterval(() => { if (this._hass && this._config) this._update(false); }, 20000);
   }
-  disconnectedCallback() { clearInterval(this._tick); clearTimeout(this._cycTimer); this._cycBusy = false; }
+  disconnectedCallback() { clearInterval(this._tick); clearTimeout(this._cycTimer); this._cycBusy = false; this._closeSourcePopup(); }
 
   getCardSize() { return 4; }
 
@@ -12360,16 +12372,145 @@ class ApplianceCardBase extends HTMLElement {
     else hass.callService(d, "select_option", { entity_id: id, option: opt });
   }
 
-  // boutons de l'enceinte : services media_player (volume par pas de volume_step, 5 % par défaut, si volume_set est disponible)
+  // état de lecture d'un lecteur : { known, paused }. « playing » / « buffering » / « paused » sont fiables ; pour on / idle (téléviseurs qui
+  // ne remontent pas la lecture) l'état est supposé : lecture au départ, basculé par le bouton, remis à zéro si la source, l'appli ou le titre change
+  _playState(st) {
+    const a = st.attributes || {}, ms = String(st.state).toLowerCase();
+    if (ms === "playing" || ms === "buffering") return { known: true, paused: false };
+    if (ms === "paused") return { known: true, paused: true };
+    const sig = [ms, a.source, a.app_name, a.media_title].join("|");
+    if (!this._pp || this._pp.sig !== sig) this._pp = { sig, paused: false };
+    return { known: false, paused: this._pp.paused };
+  }
+
+  // retour tactile d'un bouton de commande : impulsion + événement « haptic » de Home Assistant (vibration sur mobile si activée dans le profil)
+  _press(btn) {
+    if (!btn || btn.disabled) return;
+    btn.classList.remove("pulse"); void btn.offsetWidth; btn.classList.add("pulse");
+    setTimeout(() => btn.classList.remove("pulse"), 450);
+    try { btn.dispatchEvent(new CustomEvent("haptic", { detail: "light", bubbles: true, composed: true })); } catch (e) { /* ignore */ }
+  }
+
+  // icône, type (entrée / appli) et pastille d'une source, d'après son nom : valable pour tout téléviseur (LG webOS, Samsung, Android TV, Sony, Philips…)
+  _srcInfo(name) {
+    const l = String(name).trim().toLowerCase(), num = (l.match(/(\d+)\s*$/) || l.match(/(\d+)/) || [])[1];
+    const R = [
+      [/hdmi/, "mdi:video-input-hdmi", "input", num],
+      [/^(av|cvbs|composite|video)\b|component|ypbpr|scart/, "mdi:video-input-component", "input", num],
+      [/usb/, "mdi:usb", "input"],
+      [/antenn|antenă|\bdvb|\bdtv|\batv\b|terrestr/, "mdi:antenna", "input"],
+      [/live\s*tv|^tv$|^tv\b|televiz|cable|cablu|satell/, "mdi:television-classic", "input"],
+      [/\bvga\b|\bdvi\b|\brgb\b|\bpc\b|computer|laptop/, "mdi:laptop", "input"],
+      [/ps[2-5]\b|playstation/, "mdi:sony-playstation", "input"],
+      [/xbox/, "mdi:microsoft-xbox", "input"],
+      [/nintendo|switch/, "mdi:nintendo-switch", "input"],
+      [/bluetooth/, "mdi:bluetooth", "input"],
+      [/screen\s*share|miracast|mirror|airplay|chromecast|\bcast\b|wi-?fi\s*display/, "mdi:cast", "input"],
+      [/soundbar|optical|\barc\b|audio|speaker/, "mdi:speaker", "input"],
+      [/set.?top|decoder|\bdigi\b|\brcs\b|orange|vodafone|telekom|\bupc\b/, "mdi:set-top-box", "input"],
+      [/netflix/, "mdi:netflix", "app"],
+      [/youtube/, "mdi:youtube", "app"],
+      [/spotify/, "mdi:spotify", "app"],
+      [/twitch/, "mdi:twitch", "app"],
+      [/plex/, "mdi:plex", "app"],
+      [/kodi/, "mdi:kodi", "app"],
+      [/vlc/, "mdi:vlc", "app"],
+      [/prime|amazon/, "mdi:movie-play", "app"],
+      [/disney|hbo|\bmax\b|hulu|paramount|peacock|voyo|pro\s*tv|apple\s*tv\+?/, "mdi:movie-star", "app"],
+      [/apple/, "mdi:apple", "app"],
+      [/facebook/, "mdi:facebook", "app"],
+      [/google\s*play|play\s*store/, "mdi:google-play", "app"],
+      [/browser|internet|\bweb\b|chrome|firefox/, "mdi:web", "app"],
+      [/setting|settings|setări|setari/, "mdi:cog", "app"],
+      [/gallery|galerie|photo|picture|foto/, "mdi:image-multiple", "app"],
+      [/music|muzic/, "mdi:music", "app"],
+      [/guide|epg/, "mdi:television-guide", "app"],
+      [/game|joc/, "mdi:gamepad-variant", "app"],
+      [/home|launcher|acas/, "mdi:home-outline", "app"],
+    ];
+    for (const [re, icon, kind, badge] of R) if (re.test(l)) return { icon, kind, badge: badge || "" };
+    return /input|source|port|intrare/.test(l) ? { icon: "mdi:import", kind: "input", badge: "" } : { icon: "mdi:apps", kind: "app", badge: "" };
+  }
+
+  // fenêtre de choix de la source : entrées (HDMI, TV, AV…) puis applis, avec icône / logo ; la source active est mise en évidence
+  _closeSourcePopup() {
+    if (this._srcEl) { this._srcEl.remove(); this._srcEl = null; }
+    if (this._srcKey) { document.removeEventListener("keydown", this._srcKey, true); this._srcKey = null; }
+  }
+  _sourcePopup() {
+    const hass = this._hass, c = this._config, id = c.entity, st = id && hass.states[id];
+    if (!st) return;
+    const a = st.attributes || {}, list = Array.isArray(a.source_list) ? a.source_list : [];
+    if (!list.length) return;
+    this._closeSourcePopup();
+    const items = list.map((name) => ({ name, ...this._srcInfo(name) }));
+    const groups = [["sources_inputs", items.filter((i) => i.kind === "input")], ["sources_apps", items.filter((i) => i.kind !== "input")]].filter((g) => g[1].length);
+    const title = c.name || a.friendly_name || id, host = document.createElement("div"), root = host.attachShadow({ mode: "open" });
+    root.innerHTML = `<style>
+      :host { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: flex-end; justify-content: center; font-family: var(--paper-font-body1_-_font-family, Roboto, sans-serif); }
+      .bd { position: absolute; inset: 0; background: rgba(0,0,0,.5); animation: fi .2s ease-out; }
+      .sheet { position: relative; box-sizing: border-box; width: 100%; max-width: 460px; max-height: 82vh; overflow: auto; background: var(--card-background-color, #fff); color: var(--primary-text-color, #212121); border-radius: 22px 22px 0 0; padding: 14px 14px calc(18px + env(safe-area-inset-bottom, 0px)); box-shadow: 0 -6px 30px rgba(0,0,0,.35); animation: up .25s ease-out; }
+      @media (min-width: 600px) { :host { align-items: center; } .sheet { border-radius: 22px; } }
+      .hd { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+      .tt { flex: 1; min-width: 0; } .tt b { display: block; font-size: 17px; font-weight: 600; } .tt span { display: block; font-size: 13px; opacity: .75; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .x { border: none; background: rgba(127,127,127,.16); color: inherit; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+      .sec { font-size: 13px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; opacity: .75; margin: 14px 4px 6px; }
+      .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .tile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; min-height: 84px; padding: 10px 6px; border: none; border-radius: 14px; background: rgba(127,127,127,.14); color: inherit; font: inherit; cursor: pointer; transition: transform .12s ease, background .2s; -webkit-tap-highlight-color: transparent; }
+      .tile:hover { background: rgba(127,127,127,.24); } .tile:active { transform: scale(.93); }
+      .tile.cur { background: #1e88e5; color: #fff; }
+      .ic { position: relative; display: flex; --mdc-icon-size: 30px; }
+      .ic i { position: absolute; right: -9px; bottom: -5px; font-style: normal; font-weight: 600; font-size: 12px; line-height: 16px; padding: 0 4px; border-radius: 8px; background: var(--card-background-color, #fff); color: var(--primary-text-color, #212121); border: 1px solid rgba(127,127,127,.45); }
+      .lb { font-size: 13px; line-height: 1.2; text-align: center; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; word-break: break-word; }
+      @keyframes fi { from { opacity: 0; } } @keyframes up { from { transform: translateY(40px); opacity: 0; } }
+      @media (prefers-reduced-motion: reduce) { .bd, .sheet { animation: none; } .tile { transition: none; } .tile:active { transform: none; } }
+    </style>
+    <div class="bd"></div>
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(tr(hass, "source_select"))}">
+      <div class="hd"><div class="tt"><b>${esc(tr(hass, "source_select"))}</b><span>${esc(title)}</span></div>
+        <button class="x" aria-label="${esc(tr(hass, "close_dialog"))}"><ha-icon icon="mdi:close"></ha-icon></button></div>
+      ${groups.map(([k, arr]) => `${groups.length > 1 ? `<div class="sec">${esc(tr(hass, k))}</div>` : ""}<div class="grid">${arr.map((i) => `<button class="tile${i.name === a.source ? " cur" : ""}" data-n="${esc(i.name)}"><span class="ic"><ha-icon icon="${i.icon}"></ha-icon>${i.badge ? `<i>${esc(i.badge)}</i>` : ""}</span><span class="lb">${esc(i.name)}</span></button>`).join("")}</div>`).join("")}
+    </div>`;
+    const close = () => this._closeSourcePopup();
+    root.querySelector(".bd").onclick = close;
+    root.querySelector(".x").onclick = close;
+    root.querySelectorAll(".tile").forEach((b) => {
+      b.onclick = () => {
+        this._press(b);
+        hass.callService("media_player", "select_source", { entity_id: id, source: b.dataset.n });
+        setTimeout(close, 180);
+      };
+    });
+    this._srcKey = (ev) => { if (ev.key === "Escape") { ev.stopPropagation(); close(); } };
+    document.addEventListener("keydown", this._srcKey, true);
+    document.body.appendChild(host);
+    this._srcEl = host;
+    const cur = root.querySelector(".tile.cur"); if (cur) cur.scrollIntoView({ block: "nearest" });
+  }
+
+  // boutons de l'enceinte / du téléviseur : services media_player (volume par pas de volume_step, 5 % par défaut (1 % pour un téléviseur), si volume_set est disponible)
   _spkCmd(key) {
     const hass = this._hass, id = this._config.entity, st = id && hass.states[id];
     if (!st) return;
-    const a = st.attributes || {}, sf = Number(a.supported_features), step = Number(this._config.volume_step) || 0.05;
+    // pas de volume par défaut : 1 % pour un téléviseur (échelle 0-100 : Samsung, LG…), 5 % pour une enceinte ; volume_step le remplace
+    const a = st.attributes || {}, sf = Number(a.supported_features), step = Number(this._config.volume_step) || (this._kind === "tv" ? 0.01 : 0.05);
     const call = (svc, data = {}) => hass.callService("media_player", svc, { entity_id: id, ...data });
     if (key === "power") call(["off", "standby"].includes(String(st.state).toLowerCase()) ? "turn_on" : "turn_off");
-    else if (key === "play_pause") call("media_play_pause");
+    else if (key === "play_pause") {
+      // État de lecture : « playing » / « paused » si l'intégration les remonte. Beaucoup de téléviseurs (LG webOS, Samsung…) ne
+      // signalent que on / off : l'état est alors supposé (lecture au départ, basculé à chaque appui) et on envoie
+      // media_pause / media_play explicitement, car media_play_pause de HA n'enverrait que « play » quand l'état est « on ».
+      const pp = this._playState(st);
+      const canPause = !Number.isFinite(sf) || (sf & 1), canPlay = !Number.isFinite(sf) || (sf & 16384);
+      if (pp.known) call(pp.paused ? (canPlay ? "media_play" : "media_play_pause") : (canPause ? "media_pause" : "media_play_pause"));
+      else if (canPause && canPlay) { this._pp.paused = !pp.paused; call(pp.paused ? "media_play" : "media_pause"); this._update(true); }
+      else call("media_play_pause");
+    }
+    else if (key === "ch_up") call("media_next_track");
+    else if (key === "ch_down") call("media_previous_track");
     else if (key === "prev_track") call("media_previous_track");
     else if (key === "next_track") call("media_next_track");
+    else if (key === "source_menu") this._sourcePopup();
     else if (key === "source") {
       // source suivante dans source_list (HDMI 1 → HDMI 2 → …)
       const list = Array.isArray(a.source_list) ? a.source_list : [];
@@ -12763,6 +12904,12 @@ class ApplianceCardBase extends HTMLElement {
       sub = `${tr(hass, m.estimated ? "ends_at_est" : "ends_at")} ${fmtClock(hass, new Date(Date.now() + m.remaining * 60000))}`;
     } else if (active && m.soon) sub = tr(hass, "almost_done");
     if (spOn && !sub && m.track && c.show_media !== false) sub = m.track;
+    // téléviseur avec boutons de commande : volume en % sous l'état (sourdine en rouge)
+    let subMute = false;
+    if (kind === "tv" && !sub && m.status === "screen_on" && (c.show_controls ?? tvProjector(c)) && m.main && domainOf(c.entity) === "media_player") {
+      const a = m.main.attributes || {}, v = Number(a.volume_level);
+      if (a.volume_level != null && Number.isFinite(v)) { subMute = !!a.is_volume_muted; sub = subMute ? tr(hass, "mute") : `${tr(hass, "volume")} ${Math.round(v * 100)} %`; }
+    }
     const alertTxt = m.alerts.map((a) => tr(hass, a)).join(" · ");
     let frPill = "";
     if (kind === "fridge" && m.tempVal != null) {
@@ -12785,13 +12932,13 @@ class ApplianceCardBase extends HTMLElement {
         </div>
         <div class="status"><span class="dot"></span><span>${esc(statusTxt)}${prog && prog !== statusTxt ? ` · ${esc(prog)}` : ""}</span></div>
         ${alertTxt ? `<div class="alert-line"><ha-icon icon="mdi:alert-circle-outline"></ha-icon>${esc(alertTxt)}</div>` : ""}
-        ${sub ? `<div class="sub">${esc(sub)}</div>` : ""}`;
+        ${sub ? `<div class="sub${subMute ? " sub-mute" : ""}">${esc(sub)}</div>` : ""}`;
     } else {
       $("info").innerHTML = `
         <div class="name">${esc(name)}</div>
         <div class="status"><span class="dot"></span><span>${esc(statusTxt)}${prog && prog !== statusTxt ? ` · ${esc(prog)}` : ""}</span>${frPill}</div>
         ${alertTxt ? `<div class="alert-line"><ha-icon icon="mdi:alert-circle-outline"></ha-icon>${esc(alertTxt)}</div>` : ""}
-        ${sub ? `<div class="sub">${esc(sub)}</div>` : ""}`;
+        ${sub ? `<div class="sub${subMute ? " sub-mute" : ""}">${esc(sub)}</div>` : ""}`;
     }
 
     const swId = c.switch || (kind === "dehumidifier" && domainOf(c.entity) === "humidifier" ? c.entity : null)
@@ -12898,7 +13045,7 @@ class ApplianceCardBase extends HTMLElement {
         const dis = m.status === "unavailable" || (off && k !== "power");
         return `<button class="mode-btn sp-btn ${on ? "on" : ""}" data-sp="${k}" title="${esc(tr(hass, lbl))}" aria-label="${esc(tr(hass, lbl))}"${on != null ? ` aria-pressed="${on}"` : ""}${dis ? " disabled" : ""}><ha-icon icon="${icon}"></ha-icon></button>`;
       }).join("");
-      modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._spkCmd(b.dataset.sp); }; });
+      modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._press(b); this._spkCmd(b.dataset.sp); }; });
     } else if (kind === "ceiling_fan" && c.show_controls !== false && domainOf(c.entity) === "fan" && hass.states[c.entity]) {
       // ventilateur de plafond : marche / arrêt, 3 vitesses, sens de rotation (selon les fonctions annoncées par l'entité)
       // FanEntityFeature : SET_SPEED 1, DIRECTION 4, TURN_OFF 16, TURN_ON 32
@@ -12949,7 +13096,7 @@ class ApplianceCardBase extends HTMLElement {
           const dis = m.status === "unavailable" || (off && k !== "power");
           return `<button class="mode-btn sp-btn ${on ? "on" : ""}" data-sp="${k}" title="${esc(tr(hass, lbl))}" aria-label="${esc(tr(hass, lbl))}"${on != null ? ` aria-pressed="${on}"` : ""}${dis ? " disabled" : ""}><ha-icon icon="${icon}"></ha-icon></button>`;
         }).join("");
-        modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._spkCmd(b.dataset.sp); }; });
+        modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._press(b); this._spkCmd(b.dataset.sp); }; });
         const rg = modesEl.querySelector(".av-vol");
         if (rg) {
           const lab = modesEl.querySelector(".av-vol-v");
@@ -12960,24 +13107,27 @@ class ApplianceCardBase extends HTMLElement {
         }
       }
     } else if (kind === "tv" && (c.show_controls ?? tvProjector(c)) && domainOf(c.entity) === "media_player" && hass.states[c.entity]) {
-      // télé / vidéoprojecteur : marche / arrêt, source suivante, volume −, lecture / pause, volume +, sourdine
+      // télé / vidéoprojecteur, en 2 rangées : marche / arrêt (vert), chaîne +, chaîne −, lecture / pause (bleu en pause) ;
+      // sourdine (rouge), volume +, volume −, source (fenêtre de choix avec icônes)
       const a = hass.states[c.entity].attributes || {}, sf = Number(a.supported_features);
-      // MediaPlayerEntityFeature : PAUSE 1, VOLUME_SET 4, VOLUME_MUTE 8, TURN_ON 128, TURN_OFF 256, VOLUME_STEP 1024, SELECT_SOURCE 2048, PLAY 16384
+      // MediaPlayerEntityFeature : PAUSE 1, VOLUME_SET 4, VOLUME_MUTE 8, PREVIOUS_TRACK 16, NEXT_TRACK 32, TURN_ON 128, TURN_OFF 256, VOLUME_STEP 1024, SELECT_SOURCE 2048, PLAY 16384
       const has = (bit) => !Number.isFinite(sf) || (sf & bit) !== 0;
-      const off = m.status !== "screen_on", ms = String(hass.states[c.entity].state).toLowerCase(), play = ms === "playing", muted = !!a.is_volume_muted, vol = has(4) || has(1024);
+      const off = m.status !== "screen_on", muted = !!a.is_volume_muted, vol = has(4) || has(1024), pp = this._playState(hass.states[c.entity]);
       const btns = [
         has(128) || has(256) ? ["power", "mdi:power", "toggle", !off] : null,
-        has(2048) && Array.isArray(a.source_list) && a.source_list.length > 1 ? ["source", "mdi:video-input-hdmi", "source_next", null] : null,
-        vol ? ["vol_down", "mdi:volume-minus", "volume_down", null] : null,
-        Number.isFinite(sf) && ((sf & 1) || (sf & 16384)) ? ["play_pause", play ? "mdi:pause" : "mdi:play", play ? "pause" : "play", play] : null,
-        vol ? ["vol_up", "mdi:volume-plus", "volume_up", null] : null,
+        has(32) ? ["ch_up", "mdi:chevron-up", "channel_up", null] : null,
+        has(16) ? ["ch_down", "mdi:chevron-down", "channel_down", null] : null,
+        Number.isFinite(sf) && ((sf & 1) || (sf & 16384)) ? ["play_pause", off ? "mdi:play-pause" : pp.paused ? "mdi:play" : "mdi:pause", pp.paused ? "play" : "pause", !off && pp.paused] : null,
         has(8) ? ["mute", muted ? "mdi:volume-off" : "mdi:volume-high", "mute", muted] : null,
+        vol ? ["vol_up", "mdi:volume-plus", "volume_up", null] : null,
+        vol ? ["vol_down", "mdi:volume-minus", "volume_down", null] : null,
+        has(2048) && Array.isArray(a.source_list) && a.source_list.length > 1 ? ["source_menu", "mdi:video-input-hdmi", "source_select", null] : null,
       ].filter(Boolean);
       modesEl.innerHTML = btns.map(([k, icon, lbl, on]) => {
         const dis = m.status === "unavailable" || (off && k !== "power");
         return `<button class="mode-btn sp-btn ${on ? "on" : ""}" data-sp="${k}" title="${esc(tr(hass, lbl))}" aria-label="${esc(tr(hass, lbl))}"${on != null ? ` aria-pressed="${on}"` : ""}${dis ? " disabled" : ""}><ha-icon icon="${icon}"></ha-icon></button>`;
       }).join("");
-      modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._spkCmd(b.dataset.sp); }; });
+      modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._press(b); this._spkCmd(b.dataset.sp); }; });
     } else if (kind === "dosing_pump" && c.dose_timer) {
       // doseuse programmée (aquarium) : bouton Timer, clic = bascule, allumé = distribue selon l'intervalle prévu
       const id = c.dose_timer, st = hass.states[id], on = isOn(st), name = tr(hass, "dose_timer");
@@ -14474,6 +14624,14 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 @keyframes pj-flick { 50% { opacity: .78; } }
 @keyframes pj-pulse { 50% { transform: scale(1.22); } }
 @keyframes pj-warm { 0% { opacity: 0; } 35% { opacity: .25; } 100% { opacity: 1; } }
+/* boutons de commande : 2 rangées de 4 ; marche vert, pause bleu, sourdine rouge */
+.k-tv .modes { grid-template-columns: repeat(4, 1fr); }
+.k-tv .sp-btn[data-sp="power"].on { background: #43a047; color: #fff; }
+.k-tv .sp-btn[data-sp="play_pause"].on { background: #1e88e5; color: #fff; }
+.k-tv .sp-btn[data-sp="mute"].on { background: #e53935; color: #fff; }
+/* volume en % sous l'état : lisible, rouge en sourdine */
+.k-tv .sub { font-size: 13px; font-weight: 500; color: var(--primary-text-color); opacity: .85; }
+.k-tv .sub.sub-mute { color: #e53935; opacity: 1; }
 
 /* ---------- range hood ---------- */
 .hd-fan { transform-box: view-box; transform-origin: 60px 60px; }
@@ -14796,6 +14954,12 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-smart_speaker .modes { grid-template-columns: repeat(auto-fit, minmax(42px, 1fr)); }
 .sp-btn ha-icon { --mdc-icon-size: 18px; }
 .sp-btn:disabled { opacity: .4; cursor: default; }
+/* retour tactile : léger écrasement à l'appui + impulsion (la vibration passe par l'événement « haptic » de HA) */
+.sp-btn { transition: transform .12s ease, background .2s, color .2s; -webkit-tap-highlight-color: transparent; }
+.sp-btn:active:not(:disabled) { transform: scale(.88); }
+.sp-btn.pulse { animation: sp-pulse .45s ease-out; }
+@keyframes sp-pulse { 0% { box-shadow: 0 0 0 0 rgba(255,255,255,.45); } 100% { box-shadow: 0 0 0 10px rgba(255,255,255,0); } }
+@media (prefers-reduced-motion: reduce) { .sp-btn, .sp-btn.pulse { animation: none; transition: none; } .sp-btn:active:not(:disabled) { transform: none; } }
 /* HomePod : halo Siri qui tourne et respire en lecture, discret en pause */
 .sp-siri { opacity: 0; mix-blend-mode: screen; filter: blur(1.5px); transform-box: fill-box; transform-origin: 50% 50%; }
 .k-smart_speaker.st-playing .sp-siri { animation: sp-siri 3s ease-in-out infinite; }

@@ -52,6 +52,12 @@
 .k-smart_speaker .modes { grid-template-columns: repeat(auto-fit, minmax(42px, 1fr)); }
 .sp-btn ha-icon { --mdc-icon-size: 18px; }
 .sp-btn:disabled { opacity: .4; cursor: default; }
+/* retour tactile : léger écrasement à l'appui + impulsion (la vibration passe par l'événement « haptic » de HA) */
+.sp-btn { transition: transform .12s ease, background .2s, color .2s; -webkit-tap-highlight-color: transparent; }
+.sp-btn:active:not(:disabled) { transform: scale(.88); }
+.sp-btn.pulse { animation: sp-pulse .45s ease-out; }
+@keyframes sp-pulse { 0% { box-shadow: 0 0 0 0 rgba(255,255,255,.45); } 100% { box-shadow: 0 0 0 10px rgba(255,255,255,0); } }
+@media (prefers-reduced-motion: reduce) { .sp-btn, .sp-btn.pulse { animation: none; transition: none; } .sp-btn:active:not(:disabled) { transform: none; } }
 /* HomePod : halo Siri qui tourne et respire en lecture, discret en pause */
 .sp-siri { opacity: 0; mix-blend-mode: screen; filter: blur(1.5px); transform-box: fill-box; transform-origin: 50% 50%; }
 .k-smart_speaker.st-playing .sp-siri { animation: sp-siri 3s ease-in-out infinite; }
