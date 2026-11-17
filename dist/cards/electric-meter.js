@@ -380,13 +380,14 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--em-on:var(--appli
 .alert.on{display:block}
 svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height:auto;margin:2px auto 0;cursor:pointer}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(68px,1fr));gap:6px;margin-top:6px}
-/* illustration_position: left | right : dessin à côté des 2 premières tuiles (attribut illus-pos posé par applianceSize), les autres dessous sur 2 colonnes */
-:host([illus-pos]) ha-card{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:6px;row-gap:6px;align-items:start}
+/* illustration_position: left | right : dessin sur un côté, toutes les tuiles de l'autre côté en 2 colonnes serrées (cartes à nombreuses tuiles : tarifs, tension…) */
+:host([illus-pos]) ha-card{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:8px;row-gap:0;align-items:start}
 :host([illus-pos]) .head{grid-column:1/-1;grid-row:1}
-:host([illus-pos]) svg{grid-row:2/span 2;align-self:center;justify-self:center;margin:0}
+:host([illus-pos]) svg{grid-row:2;align-self:start;justify-self:center;margin:6px 0 0;width:100%}
 :host([illus-pos="left"]) svg{grid-column:1}:host([illus-pos="right"]) svg{grid-column:2}
-:host([illus-pos]) .alert{grid-column:1/-1;grid-row:4;margin-top:0}
-:host([illus-pos]) .tiles{display:contents}
+:host([illus-pos]) .tiles{grid-row:2;margin-top:6px;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start}
+:host([illus-pos="left"]) .tiles{grid-column:2}:host([illus-pos="right"]) .tiles{grid-column:1}
+:host([illus-pos]) .alert{grid-column:1/-1;grid-row:3;margin-top:6px}
 .tile{box-sizing:border-box;display:flex;flex-direction:column;background:var(--ac-tile-bg,rgba(127,127,127,.09));border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
 :host([tile-order="value"]) .tile{flex-direction:column-reverse}:host([tile-order="value"]) .tile .v{margin:0 0 2px}
 .tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
