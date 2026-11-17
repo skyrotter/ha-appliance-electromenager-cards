@@ -1353,6 +1353,24 @@ const SCEN = [
       range(ctl, 'Batterie', 'sensor.demo_lock_battery', 0, 100, 1, 82, '%', { unit_of_measurement: '%', device_class: 'battery' });
       checks(ctl, [['Porte ouverte', 'binary_sensor.demo_lock_door', false]]);
     } },
+  { kind: 'soundbar', title: 'Barre de son + caisson (Bose)', lang: true,
+    cfg: { name: 'Salon', entity: 'media_player.demo_soundbar', entity_subwoofer: 'switch.demo_subwoofer', entity_subwoofer_gain: 'number.demo_sub_gain', entity_bass: 'number.demo_bass', entity_treble: 'number.demo_treble' },
+    build(ctl) {
+      select(ctl, 'Barre', 'media_player.demo_soundbar', [['playing', 'Lecture / Playing'], ['paused', 'Pause'], ['idle', 'Allumée / On'], ['off', 'Éteinte / Off'], ['unavailable', 'Indisponible']], 'playing');
+      states['media_player.demo_soundbar'].attributes = { supported_features: 4 | 8 | 128 | 256 | 1024 | 2048, volume_level: 0.35, is_volume_muted: false, source: 'TV', source_list: ['TV', 'Bluetooth', 'HDMI'] };
+      // volume et muet : attributs du media_player (range() / checks() modifieraient son état)
+      const mp = 'media_player.demo_soundbar', vl = document.createElement('label'), vi = Object.assign(document.createElement('input'), { type: 'range', min: 0, max: 100, step: 1, value: 35 }), vo = document.createElement('output');
+      vl.textContent = 'Volume'; vo.textContent = '35 %';
+      vi.oninput = () => { states[mp].attributes = { ...states[mp].attributes, volume_level: vi.value / 100 }; vo.textContent = `${vi.value} %`; refresh(); };
+      ctl.append(vl, vi, vo);
+      select(ctl, 'Caisson', 'switch.demo_subwoofer', [['on', 'Marche / On'], ['off', 'Arrêt / Off'], ['unavailable', 'Non relié / Not linked']], 'on');
+      range(ctl, 'Niveau caisson', 'number.demo_sub_gain', -100, 100, 1, 20, '', { unit_of_measurement: '' });
+      range(ctl, 'Graves', 'number.demo_bass', -100, 100, 1, 10, '', { unit_of_measurement: '' });
+      range(ctl, 'Aigus', 'number.demo_treble', -100, 100, 1, 0, '', { unit_of_measurement: '' });
+      const mw = document.createElement('div'); mw.className = 'chk'; const ml = document.createElement('label'), mc = Object.assign(document.createElement('input'), { type: 'checkbox' });
+      mc.onchange = () => { states[mp].attributes = { ...states[mp].attributes, is_volume_muted: mc.checked }; refresh(); };
+      ml.append(mc, 'Muet / Mute'); mw.append(ml); ctl.append(document.createElement('span'), mw);
+    } },
   { kind: 'thermo-heater', title: 'Chauffe-eau thermodynamique', lang: true,
     cfg: { name: 'Boiler', entity: 'water_heater.demo_boiler', entity_power: 'sensor.demo_boiler_power', entity_energy: 'sensor.demo_boiler_energy', entity_reserve: 'sensor.demo_boiler_reserve' },
     build(ctl) {
