@@ -119,6 +119,8 @@ entity_blind: cover.velux_bedroom_blind
 ## Options
 
 - `entity` (cover)
+- `entity_open`, `entity_close`, `entity_stop` (**independent devices** for the Open / Close / Stop buttons: a `button`, `input_button`, `script`, `switch`, `scene` or `cover`, one per command; they replace the `cover` service calls, and `entity` becomes optional). With only these commands and no `cover` nor sensor, the card cannot know the real state: it **assumes** the state of the last command sent from the card (remembered in the browser) and never greys the buttons
+- `entity_half`, `half_position` (**half-open** button: `entity_half` is a button / script that goes to the half-open position; or `half_position` (1-99 %) sends `cover.set_cover_position` to that value, for a cover that can go to a position; the button is lit when the shutter is at that position and hidden when neither is set)
 - `entity_state` (own open/closed sensor for a cover without state feedback: a `binary_sensor` contact, `on` = open and `off` = closed, or any entity with an `open` / `closed` state; replaces the cover state, `invert` applies)
 - `entity_position` (own position sensor, 0-100, replaces `current_position`; the position wins if both sensors disagree; a movement reported by the cover is kept)
 - `entity_power` (motor power sensor)
