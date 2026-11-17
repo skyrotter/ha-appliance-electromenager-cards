@@ -122,9 +122,10 @@ function buildForm(kind) {
             { name: "last_cycle", selector: { boolean: {} } },
             { name: "estimate", selector: { boolean: {} } },
           ] : []),
+          ...(kind === "oven" ? [{ name: "last_cycle", selector: { boolean: {} } }] : []),
           ...(kind === "water_heater" ? [{ name: "last_cycle", selector: { boolean: {} } },
             { name: "tank_volume", selector: { number: { min: 0, max: 1000, step: 1, mode: "box", unit_of_measurement: "L" } } }] : []),
-          ...(["washer", "dryer", "dishwasher", "water_heater"].includes(kind) ? [
+          ...(["washer", "dryer", "dishwasher", "water_heater", "oven"].includes(kind) ? [
             { name: "cycle_gap", selector: { number: { min: 0, max: 240, step: 1, mode: "box", unit_of_measurement: "min" } } },
           ] : []),
           ...(d.fields.includes("energy") ? [{ name: "energy_period", selector: { select: { mode: "dropdown", options: [

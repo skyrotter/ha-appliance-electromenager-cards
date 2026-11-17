@@ -207,15 +207,37 @@ class ApplianceCardBase extends HTMLElement {
   // relue au plus toutes les 5 min ou quand le compteur bouge
   _fetchPeriod() {
     const c = this._config, hass = this._hass, per = c.energy_period;
-    if (!PERIODS.includes(per) || !c.energy || !hass || typeof hass.callWS !== "function") return;
-    const st = hass.states[c.energy], sig = `${per}|${c.energy}|${st ? st.state : ""}`, now = Date.now();
+    // sans capteur d'énergie cumulée mais avec la puissance (prise connectée) : kWh = somme des moyennes horaires de la puissance
+    const fromPower = !c.energy && !!c.power;
+    const src = fromPower ? c.power : c.energy;
+    if (!PERIODS.includes(per) || !src || !hass || typeof hass.callWS !== "function") return;
+    const st = hass.states[src], sig = `${per}|${src}|${fromPower ? "" : st ? st.state : ""}`, now = Date.now();
     if (this._perBusy || (sig === this._perSig && now - (this._perAt || 0) < 300000) || (this._perAt && now - this._perAt < 60000)) return;
     this._perBusy = true; this._perSig = sig; this._perAt = now;
+    const done = () => { this._perBusy = false; if (this._hass) this._render(this._compute()); };
+    if (fromPower) {
+      // début de la période : minuit, lundi 0 h, le 1er à 0 h (calendaire) ou maintenant − N jours (glissante)
+      const d = new Date(now);
+      let start;
+      if (ROLLING[per]) start = new Date(now - ROLLING[per] * 86400000);
+      else if (per === "week") { start = new Date(d.getFullYear(), d.getMonth(), d.getDate() - ((d.getDay() + 6) % 7)); }
+      else if (per === "month") start = new Date(d.getFullYear(), d.getMonth(), 1);
+      else start = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+      const hourStart = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours());
+      const q = (period, from, to) => hass.callWS({ type: "recorder/statistics_during_period", start_time: from.toISOString(), end_time: to.toISOString(), statistic_ids: [src], period, types: ["mean"], units: { power: "W" } })
+        .then((r) => ((r && r[src]) || []).reduce((w, x) => w + (Number.isFinite(x.mean) ? x.mean : 0), 0));
+      // heures complètes (statistiques horaires) + heure en cours (statistiques de 5 min) ; chaque mesure est une moyenne en W sur sa durée
+      Promise.all([q("hour", start, hourStart), q("5minute", hourStart, new Date(now))])
+        .then(([h, m5]) => { this._perKwh = (h * 1 + m5 / 12) / 1000; })
+        .catch(() => { this._perKwh = null; })
+        .finally(done);
+      return;
+    }
     const win = ROLLING[per] ? { rolling_window: { duration: { days: ROLLING[per] } } } : { calendar: { period: per } };
     hass.callWS({ type: "recorder/statistic_during_period", statistic_id: c.energy, ...win, types: ["change"], units: { energy: "kWh" } })
       .then((r) => { this._perKwh = r && Number.isFinite(r.change) ? r.change : null; })
       .catch(() => { this._perKwh = null; })
-      .finally(() => { this._perBusy = false; if (this._hass) this._render(this._compute()); });
+      .finally(done);
   }
 
   // last_cycle : début, fin, durée, énergie et coût du dernier cycle, lus dans l'historique de Home Assistant (4 derniers jours).
@@ -224,7 +246,7 @@ class ApplianceCardBase extends HTMLElement {
   // (médiane des 7 derniers cycles) et le début du cycle en cours.
   // Chauffe-eau : last_cycle seulement (pas d'estimate), puissance réseau + solaire (power + power_solar), énergie idem.
   _fetchCycle(active) {
-    const c = this._config, hass = this._hass, wash = ["washer", "dryer", "dishwasher"].includes(this._kind), wh = this._kind === "water_heater";
+    const c = this._config, hass = this._hass, wash = ["washer", "dryer", "dishwasher"].includes(this._kind), wh = this._kind === "water_heater" || this._kind === "oven";
     const est = !!c.estimate && wash;
     if (!(c.last_cycle || est) || !(wash || wh) || !c.power || !hass || typeof hass.callWS !== "function") return;
     const was = this._cycActive, gap = (c.cycle_gap ?? 15) * 60000;
@@ -1808,6 +1830,10 @@ class ApplianceCardBase extends HTMLElement {
       if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.energy);
       // coût de la période (mode € ou les deux) : conso de la période × prix du kWh actuel
       if (showCost && c.display === "cost" && showOpt("show_cost")) tile("mdi:cash", money(this._perKwh * pr), tr(hass, `cost_${per}`), prEnt || c.energy);
+    } else if (!c.energy && !m.energy && per && c.power && !dual && !solar) {
+      // période calculée depuis la puissance de la prise (pas de compteur kWh) : kWh puis coût (avec price_per_kwh)
+      if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.power);
+      if (showCost && showOpt("show_cost")) tile("mdi:cash", money(this._perKwh * pr), tr(hass, `cost_${per}`), prEnt || c.power);
     } else if (m.energy) {
       const eVal = fmtEnergy(hass, m.energy) ?? "—";
       const yp = m.energy.attributes && m.energy.attributes.last_period;
