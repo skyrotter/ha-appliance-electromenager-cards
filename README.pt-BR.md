@@ -12,7 +12,7 @@
 
 Este projeto é gratuito e de código aberto, desenvolvido no tempo livre do seu autor. Se os cartões deixam seu painel mais bonito, uma pequena doação ajuda a adicionar novos cartões e a manter os existentes atualizados. Está faltando algum aparelho? [Sugira nas issues](https://github.com/skyrotter/ha-appliance-electromenager-cards/issues): foi assim que surgiram o aquecedor a diesel e a banheira de hidromassagem.
 
-<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/79-cartes.png" width="560" alt="79 cartões animados de eletrodomésticos para o Home Assistant"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/overview-social-en.png" width="560" alt="141 cartões animados de eletrodomésticos para o Home Assistant"></p>
 
 **Cartões Lovelace para eletrodomésticos**, cada um com uma ilustração animada realista: o tambor de uma lavadora de roupas girando, a chama de um aquecedor a pellets, um aquecedor a diesel com sua coroa azul, uma banheira de hidromassagem com jatos, um robô aspirador, um medidor Linky, uma bateria doméstica… Eles mostram o estado em tempo real, a potência, a energia e o custo, acompanham o tema do Home Assistant (claro/escuro) e estão disponíveis em inglês, francês, alemão, norueguês, neerlandês, romeno, russo, sérvio, italiano, espanhol, tcheco, dinamarquês, húngaro, polonês e português (Portugal e Brasil).
 

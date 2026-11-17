@@ -12,9 +12,9 @@
 
 Ce projet est gratuit et open source, développé sur mon temps libre. Si les cartes embellissent ton tableau de bord, un petit don m'aide à ajouter de nouvelles cartes et à maintenir les existantes. Il manque un appareil ? [Propose-le dans les issues](https://github.com/skyrotter/ha-appliance-electromenager-cards/issues) : c'est comme ça que le chauffage diesel et le jacuzzi sont arrivés.
 
-<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/79-cartes.png" width="560" alt="79 cartes animées pour Home Assistant"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/overview-social-fr.png" width="560" alt="141 cartes animées pour Home Assistant"></p>
 
-**124 cartes Lovelace pour l'électroménager**, chacune avec une illustration animée réaliste : tambour de lave-linge, flamme de poêle à granulés, chauffage diesel et sa couronne bleue, jacuzzi et ses jets, robot aspirateur, compteur Linky, batterie domestique… Elles affichent l'état en direct, la puissance, l'énergie et le coût, suivent le thème de Home Assistant (clair/sombre) et parlent français, anglais, allemand, norvégien, néerlandais, roumain, russe, serbe, italien, espagnol, tchèque, danois, hongrois et polonais, ukrainien.
+**141 cartes Lovelace pour l'électroménager**, chacune avec une illustration animée réaliste : tambour de lave-linge, flamme de poêle à granulés, chauffage diesel et sa couronne bleue, jacuzzi et ses jets, robot aspirateur, compteur Linky, batterie domestique… Elles affichent l'état en direct, la puissance, l'énergie et le coût, suivent le thème de Home Assistant (clair/sombre) et parlent français, anglais, allemand, norvégien, néerlandais, roumain, russe, serbe, italien, espagnol, tchèque, danois, hongrois et polonais, ukrainien.
 
 Une simple prise connectée avec un capteur de puissance suffit. Les appareils connectés peuvent ajouter le programme, le temps restant, la progression, la porte, les températures…
 

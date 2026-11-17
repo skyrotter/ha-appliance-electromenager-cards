@@ -12,9 +12,9 @@
 
 This project is free and open source, built in my spare time. If it makes your dashboard nicer, a small donation helps me add new cards and keep the existing ones up to date. Missing an appliance? [Suggest it in the issues](https://github.com/skyrotter/ha-appliance-electromenager-cards/issues), that is how the diesel heater and the hot tub got here.
 
-<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/79-cartes.png" width="560" alt="79 animated appliance cards for Home Assistant"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/overview-social-en.png" width="560" alt="141 animated appliance cards for Home Assistant"></p>
 
-**124 Lovelace cards for household appliances**, each with a realistic animated illustration: a tumbling washer drum, a flickering pellet-stove flame, a diesel heater with its blue burner crown, a hot tub with bubbling jets, a robot vacuum, a Linky meter, a home battery… They show the live status, power, energy and cost, follow your Home Assistant theme (light/dark) and speak English, French, German, Norwegian, Dutch, Romanian, Russian, Serbian, Italian, Spanish, Czech, Danish, Hungarian, Polish, Ukrainian and Portuguese (Portugal and Brazil).
+**141 Lovelace cards for household appliances**, each with a realistic animated illustration: a tumbling washer drum, a flickering pellet-stove flame, a diesel heater with its blue burner crown, a hot tub with bubbling jets, a robot vacuum, a Linky meter, a home battery… They show the live status, power, energy and cost, follow your Home Assistant theme (light/dark) and speak English, French, German, Norwegian, Dutch, Romanian, Russian, Serbian, Italian, Spanish, Czech, Danish, Hungarian, Polish, Ukrainian and Portuguese (Portugal and Brazil).
 
 A simple smart plug with a power sensor is enough. Connected appliances can add program, remaining time, progress, door, temperatures…
 
