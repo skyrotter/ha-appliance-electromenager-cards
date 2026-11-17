@@ -25,3 +25,14 @@
 @keyframes av-eq { from { transform: scaleY(.15); } to { transform: scaleY(calc(.3 + var(--amp, .6) * .7)); } }
 @keyframes av-wave { 0% { opacity: 0; } 30% { opacity: .85; } 100% { opacity: 0; } }
 @keyframes av-notes { 0% { opacity: 0; transform: translateY(6px); } 30% { opacity: .9; } 100% { opacity: 0; transform: translateY(-10px); } }
+/* pochette + morceau, curseur de volume et boutons de lecture */
+.k-av_receiver .modes { grid-template-columns: repeat(auto-fit, minmax(42px, 1fr)); }
+.av-media { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; min-width: 0; }
+.av-cover { flex: none; width: 48px; height: 48px; border-radius: 8px; object-fit: cover; background: rgba(127,127,127,.15); }
+.av-track { min-width: 0; flex: 1; text-align: left; }
+.av-title { font-size: 13px; font-weight: 600; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.av-artist { font-size: 11px; opacity: .7; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.av-vol-row { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; }
+.av-vol-row ha-icon { --mdc-icon-size: 18px; flex: none; }
+.av-vol { flex: 1; min-width: 0; accent-color: var(--c, #38d9ff); margin: 0; }
+.av-vol-v { flex: none; min-width: 3.2em; text-align: right; font-size: 12px; font-variant-numeric: tabular-nums; }
