@@ -21,7 +21,8 @@ A garden watering card with **generic entities** (no brand): 1 to 8 zones, a wel
 | `entity_rain` | rain sensor: `binary_sensor` (on = rain) or `sensor` (rate above 0) |
 | `block_on_rain` | blocks starting a zone from the card while it rains (default `false`) |
 | `entity_flow`, `entity_soil`, `entity_today`, `entity_next`, `entity_pressure`, `entity_power` | tiles: flow, soil moisture, water today, next run (timestamp or text), pressure, power |
-| `compact`, `show_buttons`, `show_flow`, `show_soil`, `show_today`, `show_next`, `show_pressure`, `show_pump`, `show_power`, `show_rain`, `animations`, `labels`, `language`, `illustration_size`, `transparent`, `tap_action`, `hold_action` | |
+| `labels` | rename texts, e.g. `labels: { pump: "Well", stop: "Stop", auto: "Auto" }` shortens the pump, stop and auto button names. With `marker_names`, a marker near the edge of the image keeps its name inside the image |
+| `compact`, `show_buttons`, `show_flow`, `show_soil`, `show_today`, `show_next`, `show_pressure`, `show_pump`, `show_power`, `show_rain`, `animations`, `language`, `illustration_size`, `transparent`, `tap_action`, `hold_action` | |
 
 ```yaml
 type: custom:appliance-irrigation-card

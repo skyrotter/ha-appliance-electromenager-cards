@@ -53,6 +53,7 @@ class ApplianceEvChargerCard extends HTMLElement {
           { name: 'currency', selector: { text: {} } },
           { name: 'car_color', selector: { text: {} } },
           { name: 'car_image', selector: { text: {} } },
+          { name: 'car_image_align', selector: { select: { mode: 'dropdown', options: [{ value: 'right', label: 'Droite (défaut) / Right (default)' }, { value: 'center', label: 'Centre / Center' }, { value: 'left', label: 'Gauche, près de la borne / Left, next to the charger' }] } } },
         ] },
         { type: 'grid', name: '', schema: [
           { name: 'show_power', selector: { boolean: {} }, default: true },
@@ -160,7 +161,7 @@ class ApplianceEvChargerCard extends HTMLElement {
         <ellipse cx="228" cy="160" rx="108" ry="5" fill="rgba(0,0,0,.18)"/>
         ${this._config.car_image
           // image perso du véhicule (PNG / WebP détouré, vu de profil, avant à droite) à la place du dessin
-          ? `<image href="${esc(this._config.car_image)}" x="122" y="52" width="216" height="94" preserveAspectRatio="xMaxYMax meet"/>`
+          ? `<image href="${esc(this._config.car_image)}" x="122" y="52" width="216" height="94" preserveAspectRatio="${{ left: 'xMinYMax', center: 'xMidYMax' }[this._config.car_image_align] || 'xMaxYMax'} meet"/>`
           : `
         <path d="M122 142 L122 120 Q124 108 142 104 L180 99 Q200 78 236 75 L272 75 Q300 77 318 98 L328 102 Q338 106 338 122 L338 142 Z" fill="url(#carb)"/>
         <path d="M188 99 Q206 82 236 80 L250 80 L250 99 Z" fill="url(#glass)"/>
