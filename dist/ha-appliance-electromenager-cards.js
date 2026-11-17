@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.173.2";
+const VERSION = "1.175.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -15513,7 +15513,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
 (async () => {
   const base = import.meta.url;
   // ?v=<version> : après une mise à jour, le navigateur ne ressert pas d'anciens morceaux depuis son cache
-  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.173.2`, base).href);
+  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.175.0`, base).href);
   await chunk("card-helpers");
   await chunk("editor-labels");
   // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre
