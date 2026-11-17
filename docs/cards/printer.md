@@ -24,7 +24,7 @@ scan_threshold: 45    # scanning (W)
 
 ## Brother MFC-J5955DW: ink levels, status and message
 
-`model: brother_mfcj5955dw` shows a cut-out photo of the Brother MFC-J5955DW (A3 inkjet multifunction) with the same animated layers (screen, green LED, scanner beam, sheet in the output tray) and, **for this model only**, four coloured ink bars (black, cyan, magenta, yellow).
+`model: brother_mfcj5955dw` shows a cut-out photo of the Brother MFC-J5955DW (A3 inkjet multifunction) with the same animated layers (screen, green LED, scanner beam, sheet in the output tray). The **ink bars work with every model** (drawing, Samsung, Brother); `status_message` is for the Brother only.
 
 ![Brother MFC-J5955DW: standby, printing, scanning, low ink and message, paper jam](https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/printer-brother.gif)
 
@@ -32,6 +32,7 @@ scan_threshold: 45    # scanning (W)
 |---|---|
 | `entity` | printer **status** sensor (`idle`, `waiting`, `sleep`, `printing`, `scanning`, `paper jam`…). It drives the animation without any smart plug |
 | `ink_black`, `ink_cyan`, `ink_magenta`, `ink_yellow` | remaining ink in %, one bar per colour (tap a bar for the history) |
+| `ink_color` | remaining ink of a **tri-colour cartridge** (cyan + magenta + yellow in one), as a single gradient bar. If `ink_cyan`, `ink_magenta` and `ink_yellow` all point to the same sensor, they are merged into this one bar too |
 | `ink_low` | a bar turns red and blinks, and the card shows **Low ink**, below this level (default 15 %) |
 | `status_message` | the printer message (e.g. `Paper tray1 low`), shown as an alert line. Neutral values (`Ready`, `OK`, `Idle`…) are ignored |
 

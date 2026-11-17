@@ -393,10 +393,12 @@ const STRINGS = {
     "scanning": "Scanning",
     "ink_low": "Low ink",
     "ink_black": "Black",
+    "ink_color": "Colour",
     "ink_cyan": "Cyan",
     "ink_magenta": "Magenta",
     "ink_yellow": "Yellow",
     "f_ink_black": "Black ink level",
+    "f_ink_color": "Tri-colour cartridge level (cyan + magenta + yellow)",
     "f_ink_cyan": "Cyan ink level",
     "f_ink_magenta": "Magenta ink level",
     "f_ink_yellow": "Yellow ink level",
@@ -2595,10 +2597,12 @@ const STRINGS = {
     "scanning": "Numérisation",
     "ink_low": "Encre faible",
     "ink_black": "Noir",
+    "ink_color": "Couleur",
     "ink_cyan": "Cyan",
     "ink_magenta": "Magenta",
     "ink_yellow": "Jaune",
     "f_ink_black": "Niveau d'encre noire",
+    "f_ink_color": "Niveau de la cartouche tri-couleur (cyan + magenta + jaune)",
     "f_ink_cyan": "Niveau d'encre cyan",
     "f_ink_magenta": "Niveau d'encre magenta",
     "f_ink_yellow": "Niveau d'encre jaune",
@@ -5072,10 +5076,12 @@ const STRINGS = {
     "scanning": "Digitalizando",
     "ink_low": "Pouca tinta",
     "ink_black": "Preto",
+    "ink_color": "Cor",
     "ink_cyan": "Ciano",
     "ink_magenta": "Magenta",
     "ink_yellow": "Amarelo",
     "f_ink_black": "Nível de tinta preta",
+    "f_ink_color": "Nível do cartucho tricolor (ciano + magenta + amarelo)",
     "f_ink_cyan": "Nível de tinta ciano",
     "f_ink_magenta": "Nível de tinta magenta",
     "f_ink_yellow": "Nível de tinta amarela",
@@ -5560,10 +5566,12 @@ const STRINGS = {
     "scanning": "A digitalizar",
     "ink_low": "Pouca tinta",
     "ink_black": "Preto",
+    "ink_color": "Cor",
     "ink_cyan": "Ciano",
     "ink_magenta": "Magenta",
     "ink_yellow": "Amarelo",
     "f_ink_black": "Nível de tinta preta",
+    "f_ink_color": "Nível do cartucho tricolor (ciano + magenta + amarelo)",
     "f_ink_cyan": "Nível de tinta ciano",
     "f_ink_magenta": "Nível de tinta magenta",
     "f_ink_yellow": "Nível de tinta amarela",
@@ -11785,14 +11793,22 @@ class ApplianceCardBase extends HTMLElement {
       else if (raw && /deep.?sleep|hibernat|power.?off|[eé]teint|sommeil.?prof/.test(raw)) m.status = "off";
       else if (raw && /idle|ready|wait|sleep|standby|veille|attente|pr[eê]t|warm|cool|chauff|refroid|inactive/.test(raw)) m.status = "standby";
       else m.status = base === "running" || base === "on" ? "standby" : "off";
-      // Brother MFC-J5955DW : niveaux d'encre (barres colorées) et message de l'imprimante (alerte)
-      if (/^brother|mfc.?j5955/i.test(String(c.model || ""))) {
-        const inks = [["k", "ink_black", c.ink_black], ["c", "ink_cyan", c.ink_cyan], ["m", "ink_magenta", c.ink_magenta], ["y", "ink_yellow", c.ink_yellow]].filter((x) => x[2]);
+      // niveaux d'encre (barres colorées), quel que soit le modèle : noir, cyan, magenta, jaune, ou une cartouche tri-couleur (ink_color).
+      // Cyan, magenta et jaune pointant vers le même capteur (cartouche tri-couleur) donnent une seule jauge « Couleur ».
+      {
+        let inks = [["k", "ink_black", c.ink_black], ["c", "ink_cyan", c.ink_cyan], ["m", "ink_magenta", c.ink_magenta], ["y", "ink_yellow", c.ink_yellow], ["t", "ink_color", c.ink_color]].filter((x) => x[2]);
+        const cmy = inks.filter((x) => ["c", "m", "y"].includes(x[0]));
+        if (cmy.length > 1 && cmy.every((x) => x[2] === cmy[0][2]) && !inks.some((x) => x[0] === "t" && x[2] !== cmy[0][2])) {
+          inks = inks.filter((x) => !["c", "m", "y", "t"].includes(x[0])).concat([["t", "ink_color", cmy[0][2]]]);
+        }
         if (inks.length) {
           const low = Number(c.ink_low) > 0 ? Number(c.ink_low) : 15;
           m.ink = inks.map(([k, key, id]) => { const v = num(S(id)); return { k, key, id, v: v == null ? null : Math.max(0, Math.min(100, v)), low: v != null && v < low }; });
           if (m.ink.some((i) => i.low) && m.status !== "unavailable") m.alerts.push("ink_low");
         }
+      }
+      // Brother MFC-J5955DW : message de l'imprimante (alerte)
+      if (/^brother|mfc.?j5955/i.test(String(c.model || ""))) {
         const msg = c.status_message ? S(c.status_message) : null, mt = msg ? String(msg.state).trim() : "";
         if (mt && !BAD.includes(mt.toLowerCase()) && !/^(ok|ready|idle|waiting|sleep|none|no error|aucun|pr[eê]te?|normal|(en )?espera|listo|lista|reposo|inactiv[oa]|ninguno|sin errores?|bereit|leerlauf|in attesa|pronto|inattiv[oa]|em espera|pronta)$/i.test(mt)) m.alerts.push(mt);
       }
@@ -13541,8 +13557,8 @@ function buildForm(kind) {
           ...(kind === "printer" ? [
             { name: "model", selector: { select: { mode: "dropdown", options: [
               { value: "", label: tr(null, "printer_drawing") }, { value: "samsung_c480", label: "Samsung Xpress C480W (photo)" }, { value: "brother_mfcj5955dw", label: "Brother MFC-J5955DW (photo)" }] } } },
-            // modèle Brother : niveaux d'encre, message d'état et seuil d'encre faible
-            ...["ink_black", "ink_cyan", "ink_magenta", "ink_yellow", "status_message"].map((name) => ({ name, selector: { entity: { domain: "sensor" } } })),
+            // niveaux d'encre (tous les modèles), message d'état (Brother) et seuil d'encre faible
+            ...["ink_black", "ink_cyan", "ink_magenta", "ink_yellow", "ink_color", "status_message"].map((name) => ({ name, selector: { entity: { domain: "sensor" } } })),
             { name: "ink_low", selector: { number: { min: 1, max: 100, step: 1, mode: "box", unit_of_measurement: "%" } } },
             { name: "scan_threshold", selector: { number: { min: 1, max: 500, step: 1, mode: "box", unit_of_measurement: "W" } } },
             { name: "standby_threshold", selector: { number: { min: 0, max: 20, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
@@ -15384,7 +15400,7 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .ink-row .ink-v { text-align: right; font-weight: 600; color: var(--primary-text-color); }
 .ink-bar { height: 8px; border-radius: 4px; background: rgba(127,127,127,.2); overflow: hidden; }
 .ink-fill { height: 100%; border-radius: 4px; background: var(--ink); transition: width .6s; }
-.ink-row.k { --ink: #0a0a0c; } .ink-row.c { --ink: #00b4e6; } .ink-row.m { --ink: #e6007e; } .ink-row.y { --ink: #ffd400; }
+.ink-row.k { --ink: #0a0a0c; } .ink-row.c { --ink: #00b4e6; } .ink-row.m { --ink: #e6007e; } .ink-row.y { --ink: #ffd400; } .ink-row.t { --ink: linear-gradient(90deg, #00b4e6, #e6007e, #ffd400); }
 .ink-row.k .ink-bar { box-sizing: border-box; border: 1px solid color-mix(in srgb, var(--primary-text-color, #fff) 45%, transparent); }
 .ink-row.low .ink-v { color: var(--error-color, #db4437); }
 .ink-row.low .ink-fill { animation: ink-low 1.2s ease-in-out infinite; }
