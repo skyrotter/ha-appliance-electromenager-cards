@@ -56,6 +56,7 @@ entity_tariff: sensor.p1_tariff
 | `entity_export`, `entity_export_t1`, `entity_export_t2` | total export / export tariff 1 / 2 |
 | `entity_peak`, `entity_avg` | monthly peak demand, average demand |
 | `entity_voltage`, `entity_current` | voltage, current |
+| `entity_voltage_l1` to `l3`, `entity_current_l1` to `l3` | voltage / current per phase (LCD screens `32.7` / `52.7` / `72.7` and `31.7` / `51.7` / `71.7`; a missing phase, e.g. L2 on a network without neutral, is skipped) |
 | `entity_battery` | battery group power |
 | `entity_power`, `entity_power_l1` to `l3` | power, power per phase |
 

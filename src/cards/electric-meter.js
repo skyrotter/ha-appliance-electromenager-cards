@@ -279,6 +279,10 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
           [c.entity_power && '1.7.0', isNaN(power) ? null : (power / 1000).toFixed(3), 'kW'],
           [c.entity_voltage && '32.7', isNaN(this._num(c.entity_voltage)) ? null : this._num(c.entity_voltage).toFixed(1), 'V'],
           [c.entity_current && '31.7', isNaN(this._num(c.entity_current)) ? null : this._num(c.entity_current).toFixed(2), 'A'],
+          // tension / courant par phase (codes OBIS 32.7 / 52.7 / 72.7 et 31.7 / 51.7 / 71.7) ; phase absente (réseau sans neutre) = écran ignoré
+          ...[['l1', '32.7', '31.7'], ['l2', '52.7', '51.7'], ['l3', '72.7', '71.7']].flatMap(([p, ov, oc]) => [
+            [c['entity_voltage_' + p] && ov, isNaN(this._num(c['entity_voltage_' + p])) ? null : this._num(c['entity_voltage_' + p]).toFixed(1), 'V'],
+            [c['entity_current_' + p] && oc, isNaN(this._num(c['entity_current_' + p])) ? null : this._num(c['entity_current_' + p]).toFixed(2), 'A']]),
         ].filter((i) => i[0] && i[1] != null);
         this._lcd = items.length ? items : [['1.8.0', '0.000', 'kWh']];
         this._lcdShow();
@@ -325,7 +329,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         ent('entity_power', 'sensor'), ent('entity_index', 'sensor'), ent('entity_today', 'sensor'), ent('entity_cost', ['sensor', 'input_number']), ent('entity_tariff', ['sensor', 'select', 'input_select']),
         ent('entity_power_l1', 'sensor'), ent('entity_power_l2', 'sensor'), ent('entity_power_l3', 'sensor'),
         { name: 'model', selector: { select: { mode: 'dropdown', options: [{ value: '', label: 'Disque / Disc (' + (this._hass && String(this._hass.language).startsWith('fr') ? 'défaut' : 'default') + ')' }, { value: 'sagemcom_xs212', label: 'Sagemcom XS212 (BE, P1)' }, { value: 'landis_gyr_e360_3p', label: 'Landis+Gyr E360-3P (BE, P1)' }] } } },
-        ...['entity_import_t1', 'entity_import_t2', 'entity_export_t1', 'entity_export_t2', 'entity_export', 'entity_peak', 'entity_avg', 'entity_voltage', 'entity_current', 'entity_battery'].map((n) => ent(n, 'sensor')),
+        ...['entity_import_t1', 'entity_import_t2', 'entity_export_t1', 'entity_export_t2', 'entity_export', 'entity_peak', 'entity_avg', 'entity_voltage', 'entity_current', 'entity_voltage_l1', 'entity_voltage_l2', 'entity_voltage_l3', 'entity_current_l1', 'entity_current_l2', 'entity_current_l3', 'entity_battery'].map((n) => ent(n, 'sensor')),
         { type: 'grid', name: '', schema: [num('subscribed_power', 0, 100, 0.5, 0, 'kVA')] },
         ...window.applianceActionFields,
         window.applianceLanguageField(T),
