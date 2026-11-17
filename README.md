@@ -214,6 +214,7 @@ Click a card for its options and examples.
 |---|---|
 | [Flat TV](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/tv-range-hood.md) | `custom:appliance-tv-card` |
 | [Home cinema amplifier (AV receiver)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/beer-tap-av-receiver.md) | `custom:appliance-av-receiver-card` |
+| [Soundbar + subwoofer (Bose)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/soundbar.md) | `custom:appliance-soundbar-card` |
 | [Smart speaker (Echo, Nest, Sonos, IKEA SYMFONISK, Devialet, HomePod)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/smart-speaker.md) | `custom:appliance-smart-speaker-card` |
 | [PlayStation 5](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/ps5.md) | `custom:appliance-ps5-card` |
 | [Cross trainer (elliptical)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/fitness.md) | `custom:appliance-elliptical-card` |

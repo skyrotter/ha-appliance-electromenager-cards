@@ -224,6 +224,7 @@ Clique em um cartão para consultar as opções e os exemplos.
 |---|---|
 | [TV de tela plana](docs/cards/tv-range-hood.md) | `custom:appliance-tv-card` |
 | [Amplificador de home theater (receiver AV)](docs/cards/beer-tap-av-receiver.md) | `custom:appliance-av-receiver-card` |
+| [Soundbar + subwoofer (Bose)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/soundbar.md) | `custom:appliance-soundbar-card` |
 | [Caixa de som inteligente (Echo, Nest, Sonos, Devialet, HomePod)](docs/cards/smart-speaker.md) | `custom:appliance-smart-speaker-card` |
 | [PlayStation 5](docs/cards/ps5.md) | `custom:appliance-ps5-card` |
 | [Bicicleta elíptica](docs/cards/fitness.md) | `custom:appliance-elliptical-card` |
