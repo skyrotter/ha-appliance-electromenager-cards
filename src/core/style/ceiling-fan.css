@@ -48,3 +48,10 @@
 .wrap.warm .fr-temp {
   fill: var(--ac-alert, #ff3b30) !important;
 }
+/* show_light: false : ventilateur sans lampe */
+.k-ceiling_fan.no-light .cf-lamp, .k-ceiling_fan.no-light .cf-glass, .k-ceiling_fan.no-light .cf-beam { display: none; }
+/* boutons : marche / arrêt, vitesses 1-2-3, sens (été / hiver) */
+.k-ceiling_fan .modes { grid-template-columns: repeat(auto-fit, minmax(42px, 1fr)); }
+.k-ceiling_fan .sp-btn ha-icon { --mdc-icon-size: 18px; }
+.k-ceiling_fan .sp-btn:disabled { opacity: .4; cursor: default; }
+.k-ceiling_fan .fan-n { font-weight: 700; font-size: 14px; line-height: 18px; min-width: 18px; text-align: center; }

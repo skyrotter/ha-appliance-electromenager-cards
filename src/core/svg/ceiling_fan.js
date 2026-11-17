@@ -29,9 +29,9 @@ SVG.ceiling_fan = () => {
 <path d="M44 38q16 6 32 0" stroke="#6f7781" stroke-width=".6" fill="none"/>
 <ellipse cx="60" cy="31" rx="15" ry="2.6" fill="#fff" opacity=".35"/>
 <!-- lampe -->
-<path d="M52 46h16l-1 3h-14z" fill="url(#ID-cfbody)" stroke="#6f7781" stroke-width=".4"/>
+<path class="cf-lamp" d="M52 46h16l-1 3h-14z" fill="url(#ID-cfbody)" stroke="#6f7781" stroke-width=".4"/>
 <path class="cf-glass" d="M51 49h18q0 12-9 12t-9-12z" fill="url(#ID-cfglass)" stroke="#aab2ba" stroke-width=".5"/>
-<path d="M54 51q1 6 4 8" stroke="#fff" stroke-width="1" fill="none" opacity=".8" stroke-linecap="round"/>
+<path class="cf-lamp" d="M54 51q1 6 4 8" stroke="#fff" stroke-width="1" fill="none" opacity=".8" stroke-linecap="round"/>
 <!-- chaînettes de tirage -->
 <g class="cf-chain c1"><path d="M47 44v14" stroke="#aab2ba" stroke-width=".7" stroke-dasharray="1 .6"/><circle cx="47" cy="59" r="1.3" fill="url(#ID-chrome)"/></g>
 <g class="cf-chain c2"><path d="M73 44v10" stroke="#aab2ba" stroke-width=".7" stroke-dasharray="1 .6"/><circle cx="73" cy="55" r="1.3" fill="url(#ID-chrome)"/></g>`;
