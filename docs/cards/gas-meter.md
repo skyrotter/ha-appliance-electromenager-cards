@@ -7,7 +7,7 @@ Every sensor is optional:
 | Option | What it does |
 |---|---|
 | `entity_index` | total index, shown in the sensor's unit (`m³`, `kWh`, `ft³`…), no conversion |
-| `entity_flow` | flow rate, shown in the sensor's unit. **Without it, the flow is derived from the index changes** (index unit per hour) |
+| `entity_flow` | flow rate, shown in the sensor's unit (`m³/h`, `L/min`…; the wheel speed is computed from the flow converted to `m³/h`). **Without it, the flow is derived from the index changes** (index unit per hour) |
 | `entity_today` | today's consumption |
 | `entity_cost` | cost sensor (any currency) |
 | `entity_leak` | gas detector (`binary_sensor` / `input_boolean`, on = gas). **One entity or a list**: the alert banner names the triggered detectors |

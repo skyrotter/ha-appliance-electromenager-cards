@@ -196,7 +196,9 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       const { st, idx, flow, moving, wet, valveS, valveClosed } = this._compute();
       card.className = `${st}${moving ? ' moving' : ''}${c.animations === false ? ' noanim' : ''}`;
       // vitesse de la roue et de la flamme : plus le débit est fort, plus elles vont vite (bornée)
-      card.style.setProperty('--spd', `${Math.max(.3, Math.min(4, 1.2 / Math.max(.05, flow || 0))).toFixed(2)}s`);
+      // le débit est ramené en unité d'index par heure (L/min → m³/h : ×60 ÷1000), sinon la roue s'emballe avec des L/min
+      const fu0 = this._unit(c.entity_flow, ''), perH = /\/\s*min/i.test(fu0) ? 60 : /\/\s*s$/i.test(fu0) ? 3600 : 1, inM3 = /^(l|litres?|liters?)\s*\//i.test(fu0) ? 1e-3 : 1;
+      card.style.setProperty('--spd', `${Math.max(.3, Math.min(4, 1.2 / Math.max(.05, (flow || 0) * perH * inM3))).toFixed(2)}s`);
       // totalisateur : 5 chiffres entiers et 3 décimales
       const base = isNaN(idx) ? 0 : Math.max(0, idx), whole = Math.floor(base);
       const ent = String(whole % 100000).padStart(5, '0'), dec = String(Math.floor((base - whole) * 1000)).padStart(3, '0');
