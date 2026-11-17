@@ -195,6 +195,8 @@ function buildForm(kind) {
             { name: "show_controls", selector: { boolean: {} }, default: true },
             { name: "show_source", selector: { boolean: {} }, default: true },
             { name: "show_sound_mode", selector: { boolean: {} }, default: true },
+            { name: "show_media", selector: { boolean: {} }, default: true },
+            { name: "show_volume_slider", selector: { boolean: {} }, default: true },
             { name: "volume_step", selector: { number: { min: 0.01, max: 0.2, step: 0.01, mode: "box" } } },
           ] : []),
           ...(kind === "smart_speaker" ? [

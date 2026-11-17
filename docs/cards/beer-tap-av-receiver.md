@@ -21,6 +21,7 @@ pouring: binary_sensor.beer_pouring        # optional
 - With a `media_player`: `on`/`playing` = playing, `paused`, `standby`, `off`, plus `volume_level`, `source`, `is_volume_muted`. With a plug: playing above 40 W, standby from 0.2 W.
 
 - With a `media_player`, the card shows **control buttons** (`show_controls`, default on; only those the entity supports): **mute**, **volume −**, **volume +**, **power**, **next source** (`source_list`) and **next audio mode** (`sound_mode_list`). The volume step is `volume_step` (0.05 = 5 %).
+- The card also shows the **cover, artist and title** of the playing track (`show_media`, default on), **previous / play-pause / next** buttons and a **volume slider** (`show_volume_slider`, default on; needs `volume_set`). The slider moves in `volume_step` steps (1 % if not set).
 - Two tiles show the **active source** (`source`) and the **current audio mode** (`sound_mode`): `show_source` and `show_sound_mode` hide them.
 
 ```yaml

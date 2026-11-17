@@ -44,6 +44,9 @@ const STRINGS = {
     "f_show_controls": "Show playback buttons",
     "f_show_media": "Show the playing track",
     "f_volume_step": "Volume step (0.05 = 5 %)",
+    "f_show_volume_slider": "Show the volume slider",
+    "previous_track": "Previous track",
+    "next_track": "Next track",
     "volume": "Volume",
     "source": "Source",
     "volume_up": "Volume up",
@@ -2238,6 +2241,9 @@ const STRINGS = {
     "f_show_controls": "Afficher les boutons de lecture",
     "f_show_media": "Afficher le morceau en cours",
     "f_volume_step": "Pas du volume (0,05 = 5 %)",
+    "f_show_volume_slider": "Afficher le curseur de volume",
+    "previous_track": "Piste précédente",
+    "next_track": "Piste suivante",
     "volume": "Volume",
     "source": "Source",
     "volume_up": "Volume +",
@@ -4722,6 +4728,9 @@ const STRINGS = {
     "f_show_controls": "Mostrar botões de reprodução",
     "f_show_media": "Mostrar a faixa em reprodução",
     "f_volume_step": "Incremento do volume (0,05 = 5 %)",
+    "f_show_volume_slider": "Mostrar o controle de volume",
+    "previous_track": "Faixa anterior",
+    "next_track": "Próxima faixa",
     "volume": "Volume",
     "source": "Fonte",
     "volume_up": "Aumentar volume",
@@ -5203,6 +5212,9 @@ const STRINGS = {
     "f_show_controls": "Mostrar botões de reprodução",
     "f_show_media": "Mostrar a faixa em reprodução",
     "f_volume_step": "Incremento do volume (0,05 = 5 %)",
+    "f_show_volume_slider": "Mostrar o controlo de volume",
+    "previous_track": "Faixa anterior",
+    "next_track": "Faixa seguinte",
     "volume": "Volume",
     "source": "Fonte",
     "volume_up": "Aumentar volume",
@@ -12302,6 +12314,8 @@ class ApplianceCardBase extends HTMLElement {
     const call = (svc, data = {}) => hass.callService("media_player", svc, { entity_id: id, ...data });
     if (key === "power") call(["off", "standby"].includes(String(st.state).toLowerCase()) ? "turn_on" : "turn_off");
     else if (key === "play_pause") call("media_play_pause");
+    else if (key === "prev_track") call("media_previous_track");
+    else if (key === "next_track") call("media_next_track");
     else if (key === "source") {
       // source suivante dans source_list (HDMI 1 → HDMI 2 → …)
       const list = Array.isArray(a.source_list) ? a.source_list : [];
@@ -12822,12 +12836,16 @@ class ApplianceCardBase extends HTMLElement {
       }).join("");
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._spkCmd(b.dataset.sp); }; });
     } else if (kind === "av_receiver" && c.show_controls !== false && domainOf(c.entity) === "media_player" && hass.states[c.entity]) {
-      // ampli : marche / arrêt, sourdine, volume −, volume +, source suivante, mode audio suivant (selon les fonctions annoncées par l'entité)
+      // ampli : pochette et morceau en cours, curseur de volume, puis marche / arrêt, sourdine, volume −, volume +, piste précédente / suivante, source suivante, mode audio suivant (selon les fonctions annoncées par l'entité)
       const a = hass.states[c.entity].attributes || {}, sf = Number(a.supported_features);
-      // MediaPlayerEntityFeature : VOLUME_SET 4, VOLUME_MUTE 8, TURN_ON 128, TURN_OFF 256, VOLUME_STEP 1024, SELECT_SOURCE 2048
+      // MediaPlayerEntityFeature : PAUSE 1, VOLUME_SET 4, VOLUME_MUTE 8, PREVIOUS_TRACK 16, NEXT_TRACK 32, TURN_ON 128, TURN_OFF 256, VOLUME_STEP 1024, SELECT_SOURCE 2048, PLAY 16384
       const has = (bit) => !Number.isFinite(sf) || (sf & bit) !== 0;
       const off = ["off", "standby", "unavailable"].includes(m.status), muted = m.status === "muted" || !!a.is_volume_muted, vol = has(4) || has(1024);
+      const ms = String(hass.states[c.entity].state).toLowerCase(), play = ms === "playing";
       const btns = [
+        has(16) ? ["prev_track", "mdi:skip-previous", "previous_track", null] : null,
+        has(1) || has(16384) ? ["play_pause", play ? "mdi:pause" : "mdi:play", play ? "pause" : "play", play] : null,
+        has(32) ? ["next_track", "mdi:skip-next", "next_track", null] : null,
         has(8) ? ["mute", muted ? "mdi:volume-off" : "mdi:volume-high", "mute", muted] : null,
         vol ? ["vol_down", "mdi:volume-minus", "volume_down", null] : null,
         vol ? ["vol_up", "mdi:volume-plus", "volume_up", null] : null,
@@ -12835,11 +12853,32 @@ class ApplianceCardBase extends HTMLElement {
         has(2048) && Array.isArray(a.source_list) && a.source_list.length > 1 ? ["source", "mdi:import", "source_next", null] : null,
         Array.isArray(a.sound_mode_list) && a.sound_mode_list.length > 1 ? ["sound_mode", "mdi:surround-sound", "sound_mode_next", null] : null,
       ].filter(Boolean);
-      modesEl.innerHTML = btns.map(([k, icon, lbl, on]) => {
-        const dis = m.status === "unavailable" || (off && k !== "power");
-        return `<button class="mode-btn sp-btn ${on ? "on" : ""}" data-sp="${k}" title="${esc(tr(hass, lbl))}" aria-label="${esc(tr(hass, lbl))}"${on != null ? ` aria-pressed="${on}"` : ""}${dis ? " disabled" : ""}><ha-icon icon="${icon}"></ha-icon></button>`;
-      }).join("");
-      modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._spkCmd(b.dataset.sp); }; });
+      // pochette (entity_picture, relative à HA ou absolue), artiste et titre
+      const pic = a.entity_picture_local || a.entity_picture;
+      const cover = pic && /^(https?:\/\/|\/)/.test(pic) && !off && c.show_media !== false ? (/^https?:/.test(pic) ? pic : typeof hass.hassUrl === "function" ? hass.hassUrl(pic) : pic) : "";
+      const title = a.media_title ? String(a.media_title) : "", artist = a.media_artist ? String(a.media_artist) : "";
+      const media = c.show_media !== false && !off && (cover || title || artist)
+        ? `<div class="av-media">${cover ? `<img class="av-cover" src="${esc(cover)}" alt="" loading="lazy">` : ""}<div class="av-track"><div class="av-title">${esc(title)}</div><div class="av-artist">${esc(artist)}</div></div></div>` : "";
+      // curseur de volume (volume_set) : pas = volume_step si défini, sinon 1 %
+      const stepPct = Math.max(1, Math.round((Number(c.volume_step) || 0.01) * 100)), vp = m.vol != null ? Math.round(m.vol * 100) : 0;
+      const slider = has(4) && c.show_volume_slider !== false && a.volume_level != null
+        ? `<label class="av-vol-row"><ha-icon icon="mdi:volume-medium"></ha-icon><input class="av-vol" type="range" min="0" max="100" step="${stepPct}" value="${vp}" aria-label="${esc(tr(hass, "volume"))}"${off ? " disabled" : ""}><span class="av-vol-v">${vp} %</span></label>` : "";
+      // pas de reconstruction pendant que le curseur est tenu (sinon il saute sous le doigt)
+      if (!this._avDrag) {
+        modesEl.innerHTML = media + slider + btns.map(([k, icon, lbl, on]) => {
+          const dis = m.status === "unavailable" || (off && k !== "power");
+          return `<button class="mode-btn sp-btn ${on ? "on" : ""}" data-sp="${k}" title="${esc(tr(hass, lbl))}" aria-label="${esc(tr(hass, lbl))}"${on != null ? ` aria-pressed="${on}"` : ""}${dis ? " disabled" : ""}><ha-icon icon="${icon}"></ha-icon></button>`;
+        }).join("");
+        modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._spkCmd(b.dataset.sp); }; });
+        const rg = modesEl.querySelector(".av-vol");
+        if (rg) {
+          const lab = modesEl.querySelector(".av-vol-v");
+          rg.onclick = (ev) => ev.stopPropagation();
+          rg.oninput = () => { this._avDrag = true; lab.textContent = `${rg.value} %`; };
+          rg.onchange = () => { this._avDrag = false; hass.callService("media_player", "volume_set", { entity_id: c.entity, volume_level: Number(rg.value) / 100 }); };
+          rg.onblur = () => { this._avDrag = false; };
+        }
+      }
     } else if (kind === "tv" && (c.show_controls ?? tvProjector(c)) && domainOf(c.entity) === "media_player" && hass.states[c.entity]) {
       // télé / vidéoprojecteur : marche / arrêt, source suivante, volume −, lecture / pause, volume +, sourdine
       const a = hass.states[c.entity].attributes || {}, sf = Number(a.supported_features);
@@ -13314,6 +13353,8 @@ function buildForm(kind) {
             { name: "show_controls", selector: { boolean: {} }, default: true },
             { name: "show_source", selector: { boolean: {} }, default: true },
             { name: "show_sound_mode", selector: { boolean: {} }, default: true },
+            { name: "show_media", selector: { boolean: {} }, default: true },
+            { name: "show_volume_slider", selector: { boolean: {} }, default: true },
             { name: "volume_step", selector: { number: { min: 0.01, max: 0.2, step: 0.01, mode: "box" } } },
           ] : []),
           ...(kind === "smart_speaker" ? [
@@ -14602,6 +14643,17 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 @keyframes av-eq { from { transform: scaleY(.15); } to { transform: scaleY(calc(.3 + var(--amp, .6) * .7)); } }
 @keyframes av-wave { 0% { opacity: 0; } 30% { opacity: .85; } 100% { opacity: 0; } }
 @keyframes av-notes { 0% { opacity: 0; transform: translateY(6px); } 30% { opacity: .9; } 100% { opacity: 0; transform: translateY(-10px); } }
+/* pochette + morceau, curseur de volume et boutons de lecture */
+.k-av_receiver .modes { grid-template-columns: repeat(auto-fit, minmax(42px, 1fr)); }
+.av-media { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; min-width: 0; }
+.av-cover { flex: none; width: 48px; height: 48px; border-radius: 8px; object-fit: cover; background: rgba(127,127,127,.15); }
+.av-track { min-width: 0; flex: 1; text-align: left; }
+.av-title { font-size: 13px; font-weight: 600; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.av-artist { font-size: 11px; opacity: .7; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.av-vol-row { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; }
+.av-vol-row ha-icon { --mdc-icon-size: 18px; flex: none; }
+.av-vol { flex: 1; min-width: 0; accent-color: var(--c, #38d9ff); margin: 0; }
+.av-vol-v { flex: none; min-width: 3.2em; text-align: right; font-size: 12px; font-variant-numeric: tabular-nums; }
 
 /* ---------- Enceinte connectée (photo + calques) ---------- */
 .k-smart_speaker svg { overflow: visible; }
