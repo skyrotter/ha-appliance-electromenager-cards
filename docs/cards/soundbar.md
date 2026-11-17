@@ -6,6 +6,8 @@ An animated soundbar with its subwoofer, drawn from photos: **Bose Smart Soundba
 
 <p align="center"><img src="../soundbar.png" width="760" alt="Soundbar and subwoofer: playing, muted, subwoofer not linked, off"></p>
 
+<p align="center"><img src="../soundbar-card.gif" width="300" alt="Soundbar card: playing, volume, muted, subwoofer not linked, subwoofer off, soundbar off"><br><a href="../soundbar-card.mp4">Watch the video (MP4)</a></p>
+
 - **Playing**: the light bar on top of the soundbar glows white and sound waves come out of it; **muted**: the bar turns orange with a mute icon; **standby / off**: everything is dark; **unavailable**: greyed out.
 - **Subwoofer** (`entity_subwoofer`, a `switch`): it pulses with low-frequency rings while the soundbar plays; it is greyed out when it is off, and shown as **not linked** when its switch is `unavailable`.
 - **Buttons** (only those the `media_player` supports): on / off, mute, volume − / +, next source and subwoofer on / off. A **volume slider** moves in `volume_step` steps (1 % if not set).
