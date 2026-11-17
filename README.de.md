@@ -12,9 +12,9 @@
 
 Dieses Projekt ist kostenlos und Open Source und entsteht in meiner Freizeit. Wenn es dein Dashboard schöner macht, hilft mir eine kleine Spende, neue Karten zu entwickeln und die bestehenden aktuell zu halten. Dir fehlt ein Gerät? [Schlag es in den Issues vor](https://github.com/skyrotter/ha-appliance-electromenager-cards/issues) – so haben es die Dieselheizung und der Whirlpool ins Projekt geschafft.
 
-<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/79-cartes.png" width="560" alt="79 animierte Gerätekarten für Home Assistant"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/overview-social-en.png" width="560" alt="141 animierte Gerätekarten für Home Assistant"></p>
 
-**124 Lovelace-Karten für Haushaltsgeräte**, jede mit einer realistischen animierten Illustration: eine rotierende Waschmaschinentrommel, eine flackernde Pelletofen-Flamme, eine Dieselheizung mit blauer Brennerkrone, ein Whirlpool mit sprudelnden Düsen, ein Saugroboter, ein Linky-Zähler, ein Heimspeicher … Sie zeigen Status, Leistung, Energie und Kosten live an, folgen deinem Home-Assistant-Theme (hell/dunkel) und sprechen Englisch, Französisch, Deutsch, Norwegisch, Niederländisch, Rumänisch, Russisch, Serbisch, Italienisch, Spanisch, Tschechisch, Dänisch, Ungarisch und Polnisch.
+**141 Lovelace-Karten für Haushaltsgeräte**, jede mit einer realistischen animierten Illustration: eine rotierende Waschmaschinentrommel, eine flackernde Pelletofen-Flamme, eine Dieselheizung mit blauer Brennerkrone, ein Whirlpool mit sprudelnden Düsen, ein Saugroboter, ein Linky-Zähler, ein Heimspeicher … Sie zeigen Status, Leistung, Energie und Kosten live an, folgen deinem Home-Assistant-Theme (hell/dunkel) und sprechen Englisch, Französisch, Deutsch, Norwegisch, Niederländisch, Rumänisch, Russisch, Serbisch, Italienisch, Spanisch, Tschechisch, Dänisch, Ungarisch und Polnisch.
 
 Eine einfache smarte Steckdose mit Leistungsmessung genügt. Vernetzte Geräte können zusätzlich Programm, Restzeit, Fortschritt, Tür, Temperaturen … anzeigen.
 

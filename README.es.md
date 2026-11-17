@@ -12,9 +12,9 @@
 
 Este proyecto es gratuito y de código abierto, desarrollado en mi tiempo libre. Si hace que tu panel de control se vea mejor, una pequeña donación me ayuda a añadir nuevas tarjetas y a mantener las existentes al día. ¿Te falta algún electrodoméstico? [Propónlo en las incidencias](https://github.com/skyrotter/ha-appliance-electromenager-cards/issues), así llegaron al proyecto el calefactor diésel y el jacuzzi.
 
-<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/79-cartes.png" width="560" alt="79 tarjetas animadas de electrodomésticos para Home Assistant"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/overview-social-en.png" width="560" alt="141 tarjetas animadas de electrodomésticos para Home Assistant"></p>
 
-**124 tarjetas Lovelace para electrodomésticos**, cada una con una ilustración animada realista: el tambor de una lavadora girando, la llama parpadeante de una estufa de pellets, un calefactor diésel con su corona azul de combustión, un jacuzzi con sus chorros burbujeantes, un robot aspirador, un contador Linky, una batería doméstica... Muestran el estado en directo, la potencia, la energía y el coste, siguen el tema de Home Assistant (claro/oscuro) y hablan inglés, francés, alemán, noruego, neerlandés, rumano, ruso, serbio, italiano, español, checo, danés, húngaro y polaco.
+**141 tarjetas Lovelace para electrodomésticos**, cada una con una ilustración animada realista: el tambor de una lavadora girando, la llama parpadeante de una estufa de pellets, un calefactor diésel con su corona azul de combustión, un jacuzzi con sus chorros burbujeantes, un robot aspirador, un contador Linky, una batería doméstica... Muestran el estado en directo, la potencia, la energía y el coste, siguen el tema de Home Assistant (claro/oscuro) y hablan inglés, francés, alemán, noruego, neerlandés, rumano, ruso, serbio, italiano, español, checo, danés, húngaro y polaco.
 
 Basta con un simple enchufe inteligente con sensor de potencia. Los electrodomésticos conectados pueden añadir programa, tiempo restante, progreso, puerta, temperaturas...
 
