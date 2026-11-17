@@ -13,7 +13,7 @@ Every sensor is optional:
 | `entity_leak` | gas detector (`binary_sensor` / `input_boolean`, on = gas). **One entity or a list**: the alert banner names the triggered detectors |
 | `entity_valve` | shut-off valve (`valve`, `switch` or `input_boolean`): **Close / Open valve** button, the handle turns red |
 | `flow_threshold` | flow below this counts as zero (0.01) |
-| `variant` | `classic` (default: yellow bellows meter, odometer, flame) or `modern` (grey meter with LCD, yellow pipe with flow arrows that pulse with the flow, check wheel; the pipe turns red when the valve is closed). Modern drawing by Ppatou |
+| `variant` | `classic` (default: yellow bellows meter, odometer, flame) or `modern` (grey meter with LCD, yellow pipe with flow arrows that pulse with the flow, check wheel; the pipe turns red when the valve is closed). Modern drawing by Ppatou; or `belgian` (photo of the Belgian communicating G4 meter, its LCD shows the index, same yellow pipe with flow arrows and check wheel) |
 | `show_status`, `show_flow`, `show_today`, `show_index`, `show_cost`, `animations`, `labels`, `language` | |
 
 States: **No consumption**, flowing (the badge shows the flow), **Gas leak** (red alert), **Valve closed**. Priority: leak > valve closed > flowing > idle.

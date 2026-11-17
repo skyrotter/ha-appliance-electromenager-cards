@@ -1674,7 +1674,8 @@
     "index": "Index",
     "cost": "Coût",
     "variant_classic": "Classique (compteur à soufflet jaune)",
-    "variant_modern": "Moderne (compteur gris, tuyau jaune)"
+    "variant_modern": "Moderne (compteur gris, tuyau jaune)",
+    "variant_belgian": "Belge (compteur communicant G4, photo)"
   },
   "electric_meter": {
     "name": "Compteur électrique",

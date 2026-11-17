@@ -1679,7 +1679,8 @@
     "index": "Leitura",
     "cost": "Custo",
     "variant_classic": "Clássico (medidor de fole amarelo)",
-    "variant_modern": "Moderno (medidor cinza, tubo amarelo)"
+    "variant_modern": "Moderno (medidor cinza, tubo amarelo)",
+    "variant_belgian": "Belga (medidor comunicante G4, foto)"
   },
   "electric_meter": {
     "name": "Medidor de energia",

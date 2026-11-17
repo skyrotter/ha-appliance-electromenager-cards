@@ -1679,7 +1679,8 @@
     "index": "Índice",
     "cost": "Custo",
     "variant_classic": "Clássico (contador de fole amarelo)",
-    "variant_modern": "Moderno (contador cinzento, tubo amarelo)"
+    "variant_modern": "Moderno (contador cinzento, tubo amarelo)",
+    "variant_belgian": "Belga (contador comunicante G4, fotografia)"
   },
   "electric_meter": {
     "name": "Contador elétrico",
