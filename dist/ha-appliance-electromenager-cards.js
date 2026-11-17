@@ -45,6 +45,10 @@ const STRINGS = {
     "f_show_media": "Show the playing track",
     "f_volume_step": "Volume step (0.05 = 5 %)",
     "f_show_volume_slider": "Show the volume slider",
+    "f_show_fan_controls": "Show the fan buttons (speed, direction)",
+    "f_show_light": "Show the lamp",
+    "fan_dir_forward": "Summer: air blown down",
+    "fan_dir_reverse": "Winter: air drawn up",
     "previous_track": "Previous track",
     "next_track": "Next track",
     "volume": "Volume",
@@ -2242,6 +2246,10 @@ const STRINGS = {
     "f_show_media": "Afficher le morceau en cours",
     "f_volume_step": "Pas du volume (0,05 = 5 %)",
     "f_show_volume_slider": "Afficher le curseur de volume",
+    "f_show_fan_controls": "Afficher les boutons du ventilateur (vitesse, sens)",
+    "f_show_light": "Afficher la lampe",
+    "fan_dir_forward": "Été : air soufflé vers le bas",
+    "fan_dir_reverse": "Hiver : air aspiré vers le haut",
     "previous_track": "Piste précédente",
     "next_track": "Piste suivante",
     "volume": "Volume",
@@ -4729,6 +4737,10 @@ const STRINGS = {
     "f_show_media": "Mostrar a faixa em reprodução",
     "f_volume_step": "Incremento do volume (0,05 = 5 %)",
     "f_show_volume_slider": "Mostrar o controle de volume",
+    "f_show_fan_controls": "Mostrar os botões do ventilador (velocidade, sentido)",
+    "f_show_light": "Mostrar a lâmpada",
+    "fan_dir_forward": "Verão: ar soprado para baixo",
+    "fan_dir_reverse": "Inverno: ar puxado para cima",
     "previous_track": "Faixa anterior",
     "next_track": "Próxima faixa",
     "volume": "Volume",
@@ -5213,6 +5225,10 @@ const STRINGS = {
     "f_show_media": "Mostrar a faixa em reprodução",
     "f_volume_step": "Incremento do volume (0,05 = 5 %)",
     "f_show_volume_slider": "Mostrar o controlo de volume",
+    "f_show_fan_controls": "Mostrar os botões do ventilador (velocidade, sentido)",
+    "f_show_light": "Mostrar a lâmpada",
+    "fan_dir_forward": "Verão: ar soprado para baixo",
+    "fan_dir_reverse": "Inverno: ar aspirado para cima",
     "previous_track": "Faixa anterior",
     "next_track": "Faixa seguinte",
     "volume": "Volume",
@@ -8111,9 +8127,9 @@ SVG.ceiling_fan = () => {
 <path d="M44 38q16 6 32 0" stroke="#6f7781" stroke-width=".6" fill="none"/>
 <ellipse cx="60" cy="31" rx="15" ry="2.6" fill="#fff" opacity=".35"/>
 <!-- lampe -->
-<path d="M52 46h16l-1 3h-14z" fill="url(#ID-cfbody)" stroke="#6f7781" stroke-width=".4"/>
+<path class="cf-lamp" d="M52 46h16l-1 3h-14z" fill="url(#ID-cfbody)" stroke="#6f7781" stroke-width=".4"/>
 <path class="cf-glass" d="M51 49h18q0 12-9 12t-9-12z" fill="url(#ID-cfglass)" stroke="#aab2ba" stroke-width=".5"/>
-<path d="M54 51q1 6 4 8" stroke="#fff" stroke-width="1" fill="none" opacity=".8" stroke-linecap="round"/>
+<path class="cf-lamp" d="M54 51q1 6 4 8" stroke="#fff" stroke-width="1" fill="none" opacity=".8" stroke-linecap="round"/>
 <!-- chaînettes de tirage -->
 <g class="cf-chain c1"><path d="M47 44v14" stroke="#aab2ba" stroke-width=".7" stroke-dasharray="1 .6"/><circle cx="47" cy="59" r="1.3" fill="url(#ID-chrome)"/></g>
 <g class="cf-chain c2"><path d="M73 44v10" stroke="#aab2ba" stroke-width=".7" stroke-dasharray="1 .6"/><circle cx="73" cy="55" r="1.3" fill="url(#ID-chrome)"/></g>`;
@@ -11918,7 +11934,7 @@ class ApplianceCardBase extends HTMLElement {
       if (kind === "fan") m.osc = isFan && main.attributes.oscillating != null ? !!main.attributes.oscillating : c.oscillating !== false;
       else {
         // ventilateur de plafond : lampe intégrée (entité `light`), « lumière seule » si les pales sont à l'arrêt
-        m.lights = isOn(m.light);
+        m.lights = c.show_light !== false && isOn(m.light);
         if (m.lights && m.status === "off" && base !== "unavailable") m.status = "lights";
       }
     } else if (kind === "air_purifier") {
@@ -12356,6 +12372,16 @@ class ApplianceCardBase extends HTMLElement {
     }
   }
 
+  // boutons du ventilateur de plafond (entité fan) : marche / arrêt, vitesse 1 / 2 / 3 (33 / 67 / 100 %), sens de rotation
+  _fanCmd(key) {
+    const hass = this._hass, id = this._config.entity, st = id && hass.states[id];
+    if (!st) return;
+    const call = (svc, data = {}) => hass.callService("fan", svc, { entity_id: id, ...data });
+    if (key === "power") call(String(st.state).toLowerCase() === "on" ? "turn_off" : "turn_on");
+    else if (key === "dir") call("set_direction", { direction: String(st.attributes.direction).toLowerCase() === "reverse" ? "forward" : "reverse" });
+    else if (/^speed[123]$/.test(key)) call("set_percentage", { percentage: [33, 67, 100][Number(key.slice(5)) - 1] });
+  }
+
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
     const hass = this._hass, kind = this._kind, c = this._config;
@@ -12482,7 +12508,7 @@ class ApplianceCardBase extends HTMLElement {
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
       active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
       m.alerts.length ? "alert" : "", isOn(m.door) ? "door-open" : "", isOn(m.fdoor) ? "fz-open" : "",
-      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", kind === "smart_plug" ? this._indClasses() : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", m.solarHeat ? "solar-heat" : "", hideWouldApply ? "would-hide" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "", m.vxDir ? `vx-${m.vxDir}` : kind === "vmc" ? "vx-extract" : "", m.vxSpeed ? `vx-s${m.vxSpeed}` : "",
+      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", kind === "smart_plug" ? this._indClasses() : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", kind === "ceiling_fan" && c.show_light === false ? "no-light" : "", m.solarHeat ? "solar-heat" : "", hideWouldApply ? "would-hide" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "", m.vxDir ? `vx-${m.vxDir}` : kind === "vmc" ? "vx-extract" : "", m.vxSpeed ? `vx-s${m.vxSpeed}` : "",
     ].filter(Boolean).join(" ");
 
     // illustration dynamic parts
@@ -12857,6 +12883,22 @@ class ApplianceCardBase extends HTMLElement {
         return `<button class="mode-btn sp-btn ${on ? "on" : ""}" data-sp="${k}" title="${esc(tr(hass, lbl))}" aria-label="${esc(tr(hass, lbl))}"${on != null ? ` aria-pressed="${on}"` : ""}${dis ? " disabled" : ""}><ha-icon icon="${icon}"></ha-icon></button>`;
       }).join("");
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._spkCmd(b.dataset.sp); }; });
+    } else if (kind === "ceiling_fan" && c.show_controls !== false && domainOf(c.entity) === "fan" && hass.states[c.entity]) {
+      // ventilateur de plafond : marche / arrêt, 3 vitesses, sens de rotation (selon les fonctions annoncées par l'entité)
+      // FanEntityFeature : SET_SPEED 1, DIRECTION 4, TURN_OFF 16, TURN_ON 32
+      const fst = hass.states[c.entity], a = fst.attributes || {}, sf = Number(a.supported_features);
+      const has = (bit) => !Number.isFinite(sf) || (sf & bit) !== 0;
+      const on = String(fst.state).toLowerCase() === "on", unav = m.status === "unavailable";
+      const lvl = on ? Number((/^fan_(\d)$/.exec(m.status) || [])[1]) || 0 : 0;
+      const rev = String(a.direction || "").toLowerCase() === "reverse";
+      const btns = [
+        ["power", `<ha-icon icon="mdi:power"></ha-icon>`, tr(hass, "toggle"), on, false],
+        ...(has(1) || a.percentage != null ? [1, 2, 3].map((n) => [`speed${n}`, `<span class="fan-n">${n}</span>`, `${tr(hass, "fan_speed")} ${n}`, lvl === n, !on]) : []),
+        ...(has(4) || a.direction != null ? [["dir", `<ha-icon icon="${rev ? "mdi:white-balance-sunny" : "mdi:snowflake"}"></ha-icon>`, tr(hass, rev ? "fan_dir_reverse" : "fan_dir_forward"), rev, !on]] : []),
+      ];
+      modesEl.innerHTML = btns.map(([k, inner, lbl, act, dis]) =>
+        `<button class="mode-btn sp-btn ${act ? "on" : ""}" data-fan="${k}" title="${esc(lbl)}" aria-label="${esc(lbl)}" aria-pressed="${!!act}"${unav || dis ? " disabled" : ""}>${inner}</button>`).join("");
+      modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._fanCmd(b.dataset.fan); }; });
     } else if (kind === "av_receiver" && c.show_controls !== false && domainOf(c.entity) === "media_player" && hass.states[c.entity]) {
       // ampli : pochette et morceau en cours, curseur de volume, puis marche / arrêt, sourdine, volume −, volume +, piste précédente / suivante, source suivante, mode audio suivant (selon les fonctions annoncées par l'entité)
       const a = hass.states[c.entity].attributes || {}, sf = Number(a.supported_features);
@@ -13358,6 +13400,8 @@ function buildForm(kind) {
               { value: "auto", label: "Auto (saison) / Auto (season)" }, { value: "cool", label: "Climatisation / Cooling" }, { value: "heat", label: "Chauffage / Heating" }] } } },
           ] : []),
           ...(kind === "ceiling_fan" ? [
+            { name: "show_controls", selector: { boolean: {} }, default: true },
+            { name: "show_light", selector: { boolean: {} }, default: true },
             { name: "mid_threshold", selector: { number: { min: 5, max: 200, step: 1, mode: "box", unit_of_measurement: "W" } } },
             { name: "high_threshold", selector: { number: { min: 5, max: 300, step: 1, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
@@ -13557,7 +13601,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "air_compressor" && s.name === "pressure" ? "f_pressure_tank" : kind === "contact_grill" && s.name === "ready_minutes" ? "f_grill_ready_minutes" : kind === "cookeo" && s.name === "style" ? "f_cookeo_style" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "fridge" && s.name === "finish" ? "f_fridge_finish" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : ["thermomix", "microwave", "vmc"].includes(kind) && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : ["printer_3d", "printer"].includes(kind) && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix", "printer"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "air_compressor" && s.name === "pressure" ? "f_pressure_tank" : kind === "contact_grill" && s.name === "ready_minutes" ? "f_grill_ready_minutes" : kind === "cookeo" && s.name === "style" ? "f_cookeo_style" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "fridge" && s.name === "finish" ? "f_fridge_finish" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "ceiling_fan" && s.name === "show_controls" ? "f_show_fan_controls" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : ["thermomix", "microwave", "vmc"].includes(kind) && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : ["printer_3d", "printer"].includes(kind) && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix", "printer"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
   };
 }
 
@@ -14881,6 +14925,13 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .wrap.warm .fr-temp {
   fill: var(--ac-alert, #ff3b30) !important;
 }
+/* show_light: false : ventilateur sans lampe */
+.k-ceiling_fan.no-light .cf-lamp, .k-ceiling_fan.no-light .cf-glass, .k-ceiling_fan.no-light .cf-beam { display: none; }
+/* boutons : marche / arrêt, vitesses 1-2-3, sens (été / hiver) */
+.k-ceiling_fan .modes { grid-template-columns: repeat(auto-fit, minmax(42px, 1fr)); }
+.k-ceiling_fan .sp-btn ha-icon { --mdc-icon-size: 18px; }
+.k-ceiling_fan .sp-btn:disabled { opacity: .4; cursor: default; }
+.k-ceiling_fan .fan-n { font-weight: 700; font-size: 14px; line-height: 18px; min-width: 18px; text-align: center; }
 
 /* ---------- dehumidifier ---------- */
 /* --spd : vitesse du ventilateur (0,5 lente → 1,6 rapide), --lvl : niveau du bac (0 → 1) */

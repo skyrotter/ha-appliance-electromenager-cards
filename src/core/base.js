@@ -620,7 +620,7 @@ class ApplianceCardBase extends HTMLElement {
       if (kind === "fan") m.osc = isFan && main.attributes.oscillating != null ? !!main.attributes.oscillating : c.oscillating !== false;
       else {
         // ventilateur de plafond : lampe intégrée (entité `light`), « lumière seule » si les pales sont à l'arrêt
-        m.lights = isOn(m.light);
+        m.lights = c.show_light !== false && isOn(m.light);
         if (m.lights && m.status === "off" && base !== "unavailable") m.status = "lights";
       }
     } else if (kind === "air_purifier") {
@@ -1058,6 +1058,16 @@ class ApplianceCardBase extends HTMLElement {
     }
   }
 
+  // boutons du ventilateur de plafond (entité fan) : marche / arrêt, vitesse 1 / 2 / 3 (33 / 67 / 100 %), sens de rotation
+  _fanCmd(key) {
+    const hass = this._hass, id = this._config.entity, st = id && hass.states[id];
+    if (!st) return;
+    const call = (svc, data = {}) => hass.callService("fan", svc, { entity_id: id, ...data });
+    if (key === "power") call(String(st.state).toLowerCase() === "on" ? "turn_off" : "turn_on");
+    else if (key === "dir") call("set_direction", { direction: String(st.attributes.direction).toLowerCase() === "reverse" ? "forward" : "reverse" });
+    else if (/^speed[123]$/.test(key)) call("set_percentage", { percentage: [33, 67, 100][Number(key.slice(5)) - 1] });
+  }
+
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
     const hass = this._hass, kind = this._kind, c = this._config;
@@ -1184,7 +1194,7 @@ class ApplianceCardBase extends HTMLElement {
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
       active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
       m.alerts.length ? "alert" : "", isOn(m.door) ? "door-open" : "", isOn(m.fdoor) ? "fz-open" : "",
-      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", kind === "smart_plug" ? this._indClasses() : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", m.solarHeat ? "solar-heat" : "", hideWouldApply ? "would-hide" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "", m.vxDir ? `vx-${m.vxDir}` : kind === "vmc" ? "vx-extract" : "", m.vxSpeed ? `vx-s${m.vxSpeed}` : "",
+      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", kind === "smart_plug" ? this._indClasses() : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", kind === "ceiling_fan" && c.show_light === false ? "no-light" : "", m.solarHeat ? "solar-heat" : "", hideWouldApply ? "would-hide" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "", m.vxDir ? `vx-${m.vxDir}` : kind === "vmc" ? "vx-extract" : "", m.vxSpeed ? `vx-s${m.vxSpeed}` : "",
     ].filter(Boolean).join(" ");
 
     // illustration dynamic parts
@@ -1559,6 +1569,22 @@ class ApplianceCardBase extends HTMLElement {
         return `<button class="mode-btn sp-btn ${on ? "on" : ""}" data-sp="${k}" title="${esc(tr(hass, lbl))}" aria-label="${esc(tr(hass, lbl))}"${on != null ? ` aria-pressed="${on}"` : ""}${dis ? " disabled" : ""}><ha-icon icon="${icon}"></ha-icon></button>`;
       }).join("");
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._spkCmd(b.dataset.sp); }; });
+    } else if (kind === "ceiling_fan" && c.show_controls !== false && domainOf(c.entity) === "fan" && hass.states[c.entity]) {
+      // ventilateur de plafond : marche / arrêt, 3 vitesses, sens de rotation (selon les fonctions annoncées par l'entité)
+      // FanEntityFeature : SET_SPEED 1, DIRECTION 4, TURN_OFF 16, TURN_ON 32
+      const fst = hass.states[c.entity], a = fst.attributes || {}, sf = Number(a.supported_features);
+      const has = (bit) => !Number.isFinite(sf) || (sf & bit) !== 0;
+      const on = String(fst.state).toLowerCase() === "on", unav = m.status === "unavailable";
+      const lvl = on ? Number((/^fan_(\d)$/.exec(m.status) || [])[1]) || 0 : 0;
+      const rev = String(a.direction || "").toLowerCase() === "reverse";
+      const btns = [
+        ["power", `<ha-icon icon="mdi:power"></ha-icon>`, tr(hass, "toggle"), on, false],
+        ...(has(1) || a.percentage != null ? [1, 2, 3].map((n) => [`speed${n}`, `<span class="fan-n">${n}</span>`, `${tr(hass, "fan_speed")} ${n}`, lvl === n, !on]) : []),
+        ...(has(4) || a.direction != null ? [["dir", `<ha-icon icon="${rev ? "mdi:white-balance-sunny" : "mdi:snowflake"}"></ha-icon>`, tr(hass, rev ? "fan_dir_reverse" : "fan_dir_forward"), rev, !on]] : []),
+      ];
+      modesEl.innerHTML = btns.map(([k, inner, lbl, act, dis]) =>
+        `<button class="mode-btn sp-btn ${act ? "on" : ""}" data-fan="${k}" title="${esc(lbl)}" aria-label="${esc(lbl)}" aria-pressed="${!!act}"${unav || dis ? " disabled" : ""}>${inner}</button>`).join("");
+      modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._fanCmd(b.dataset.fan); }; });
     } else if (kind === "av_receiver" && c.show_controls !== false && domainOf(c.entity) === "media_player" && hass.states[c.entity]) {
       // ampli : pochette et morceau en cours, curseur de volume, puis marche / arrêt, sourdine, volume −, volume +, piste précédente / suivante, source suivante, mode audio suivant (selon les fonctions annoncées par l'entité)
       const a = hass.states[c.entity].attributes || {}, sf = Number(a.supported_features);
