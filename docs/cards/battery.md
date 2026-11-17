@@ -23,7 +23,7 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 <p align="center"><img src="../battery-backup-color.png" width="700" alt="Marstek: default orange, backup_color red, flip, flip with two units in blue"></p>
 
 - `backup_color`: colour of the Backup tile value and of the backup socket on the picture: a CSS name (`orange`, `red`…), `#hex` or `rgb()` (default orange)
-- `flip` (`true` / `false`, default false): mirrors the Marstek photo, to put the side panel with the backup socket on the other side (the MARSTEK logo is mirrored too)
+- `flip` (`true` / `false`, default false): mirrors the Marstek photo (the side panel with the backup socket is on the right by default, as on the real device; the MARSTEK logo and labels are mirrored too)
 - `entity_soc` (%)
 - `entity_power` (positive = charging, `invert_power: true` if yours is reversed)
 - `entity_energy`
