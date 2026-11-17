@@ -28,6 +28,7 @@
       "btn_open": "Open",
       "btn_stop": "Stop",
       "btn_close": "Close",
+      "btn_half": "Half-open",
       "position": "Position",
       "tilt": "Tilt",
       "power": "Motor",
@@ -274,6 +275,7 @@
       "btn_open": "Ouvrir",
       "btn_stop": "Stop",
       "btn_close": "Fermer",
+      "btn_half": "Mi-ouvert",
       "position": "Position",
       "tilt": "Inclinaison",
       "power": "Moteur",
@@ -569,6 +571,7 @@
       "btn_open": "Abrir",
       "btn_stop": "Parar",
       "btn_close": "Fechar",
+      "btn_half": "Meio aberto",
       "position": "Posição",
       "tilt": "Inclinação",
       "power": "Motor",
@@ -619,6 +622,7 @@
       "btn_open": "Abrir",
       "btn_stop": "Parar",
       "btn_close": "Fechar",
+      "btn_half": "Meio aberto",
       "position": "Posição",
       "tilt": "Inclinação",
       "power": "Motor",
@@ -1453,6 +1457,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       // la position de la cover (0-100) sert d'angle des lames ; implique l'inclinaison seule
       this._tiltFromPos = this.kind === 'venetian_blind' && !!this._c.tilt_from_position;
       this._tiltOnly = this.kind === 'venetian_blind' && (!!this._c.tilt_only || this._tiltFromPos);
+      this._assume = undefined;
       this._built = false;
       if (this._hass) this._render();
     }
@@ -1507,6 +1512,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         </div>
         <div class="ctl" id="shctl">
           <button data-a="open"><ha-icon icon="${curtain ? 'mdi:arrow-expand-horizontal' : awning ? 'mdi:arrow-expand-down' : 'mdi:arrow-up'}"></ha-icon><span></span></button>
+          <button data-a="half"><ha-icon icon="mdi:arrow-collapse-vertical"></ha-icon><span></span></button>
           <button data-a="stop"><ha-icon icon="mdi:stop"></ha-icon><span></span></button>
           <button data-a="close"><ha-icon icon="${curtain ? 'mdi:arrow-collapse-horizontal' : awning ? 'mdi:arrow-collapse-up' : 'mdi:arrow-down'}"></ha-icon><span></span></button>
           ${pergola || awning ? '<button data-a="light"><ha-icon icon="mdi:led-strip-variant"></ha-icon><span></span></button>' : ''}
@@ -1522,11 +1528,13 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
           this._hass.callService('cover', this._blindDown > 0 ? 'open_cover' : 'close_cover', { entity_id: id }); return;
         }
         if (b.dataset.a === 'light') { if (this._hass && this._c.entity_light) this._hass.callService('homeassistant', 'toggle', { entity_id: this._c.entity_light }); return; }
-        if (this._hass && this._main()) {
-          // invert_buttons : moteur câblé à l'envers, « Ouvrir » ferme la cover et inversement (le dessin et la position ne changent pas)
-          const a = this._c.invert_buttons ? { open: 'close', close: 'open' }[b.dataset.a] || b.dataset.a : b.dataset.a;
-          this._hass.callService('cover', `${a}_cover`, { entity_id: this._main() });
-        }
+        if (b.dataset.a === 'half') { this._half(); return; }
+        // invert_buttons : moteur câblé à l'envers, « Ouvrir » ferme la cover et inversement (le dessin et la position ne changent pas)
+        const a = this._c.invert_buttons ? { open: 'close', close: 'open' }[b.dataset.a] || b.dataset.a : b.dataset.a;
+        // dispositifs indépendants : un bouton / script / interrupteur par commande (volets sans entité cover, ou commandes à part)
+        const own = this._c['entity_' + a];
+        if (own && ['open', 'close', 'stop'].includes(a)) { this._fire(own); this._remember(a); return; }
+        if (this._hass && this._main()) this._hass.callService('cover', `${a}_cover`, { entity_id: this._main() });
       }));
       root.querySelector('#shpos input').addEventListener('change', (e) => {
         if (!this._hass) return;
@@ -1566,6 +1574,30 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       return l.length ? [...new Set(l)] : [0, 25, 50, 75, 100];
     }
 
+    // commande par un dispositif : bouton (press), script / scène / interrupteur (turn_on), cover (open_cover)
+    _fire(id) {
+      const h = this._hass; if (!h || !id) return;
+      const d = id.split('.')[0];
+      if (d === 'button' || d === 'input_button') h.callService(d, 'press', { entity_id: id });
+      else if (d === 'cover') h.callService('cover', 'open_cover', { entity_id: id });
+      else h.callService(['script', 'scene', 'switch', 'input_boolean'].includes(d) ? d : 'homeassistant', 'turn_on', { entity_id: id });
+    }
+    // volet commandé seulement par des dispositifs, sans cover ni capteur : l'état affiché est celui de la dernière commande
+    _cmdOnly() { const c = this._c; return !this._main() && !c.entity_state && !c.entity_position && !!(c.entity_open || c.entity_close || c.entity_half); }
+    _memKey() { const c = this._c; return `appliance-shutter:${c.entity_open || ''}|${c.entity_close || ''}|${c.entity_half || ''}`; }
+    _remember(a) {
+      if (!this._cmdOnly() || !['open', 'close', 'half'].includes(a)) return;
+      this._assume = a; this._assumeAt = Date.now();
+      try { localStorage.setItem(this._memKey(), a); } catch (e) { /* stockage indisponible */ }
+      this._render();
+    }
+    // position mi-ouvert : entity_half (bouton / script), sinon set_cover_position à half_position (la cover doit savoir se placer)
+    _half() {
+      const c = this._c;
+      if (c.entity_half) { this._fire(c.entity_half); this._remember('half'); return; }
+      const hp = Number(c.half_position);
+      if (this._hass && this._main() && isFinite(hp)) this._hass.callService('cover', 'set_cover_position', { entity_id: this._main(), position: c.invert ? 100 - hp : hp });
+    }
     // entité pilotée par les boutons et le curseur : l'ouvrant, ou le volet en mode « volet seul »
     _main() { return this._c.entity || (this._blindOnly ? this._c.entity_blind : ''); }
 
@@ -1618,6 +1650,15 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       else if (st === 'open' && pos < 100) st = pos > 0 ? 'partial' : 'closed';
       // angle des lames porté par la position de la cover (tilt_from_position)
       if (this._tiltFromPos && st !== 'unavailable') tilt = pos;
+      // commandes seules (aucune cover ni capteur) : état supposé d'après la dernière commande envoyée
+      if (this._cmdOnly()) {
+        if (this._assume === undefined) { try { this._assume = localStorage.getItem(this._memKey()) || null; } catch (e) { this._assume = null; } }
+        const hp = Number(c.half_position), half = isFinite(hp) ? Math.max(1, Math.min(99, hp)) : 50;
+        if (this._assume === 'open') return { st: 'open', pos: 100, known: true, tilt: NaN, s: null, sensed: false };
+        if (this._assume === 'close') return { st: 'closed', pos: 0, known: true, tilt: NaN, s: null, sensed: false };
+        if (this._assume === 'half') return { st: 'partial', pos: half, known: true, tilt: NaN, s: null, sensed: false };
+        return { st: 'unknown', pos: 0, known: false, tilt: NaN, s: null, sensed: false };
+      }
       return { st, pos, known, tilt, s: s || es, sensed };
     }
 
@@ -1714,7 +1755,8 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       const assumed = !!(s && s.attributes && s.attributes.assumed_state === true);
       const posKnown = this._blindOnly ? blA.current_position != null && isFinite(Number(blA.current_position)) : known || sensed;
       const ctl = r.getElementById('shctl');
-      ctl.classList.toggle('hide', c.show_controls === false || !isCover || this._tiltOnly);
+      const dual = !!(c.entity_open || c.entity_close || c.entity_stop || c.entity_half);
+      ctl.classList.toggle('hide', c.show_controls === false || !(isCover || dual) || this._tiltOnly);
       const tiltSet = this._tiltFromPos ? has(4) : has(128);
       const pre = r.getElementById('shpre');
       pre.classList.toggle('hide', !(this._tiltOnly && isCover && tiltSet && c.show_controls !== false));
@@ -1730,13 +1772,17 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       ctl.querySelectorAll('button').forEach((b) => {
         const a = b.dataset.a;
         b.querySelector('span').textContent = this._t(`btn_${a}`);
-        b.classList.toggle('hide', (a === 'stop' && !has(8)) || (a === 'light' && !c.entity_light) || (a === 'blind' && (!c.entity_blind || this._blindOnly)));
+        // stop : fonction STOP de la cover, ou entity_stop ; mi-ouvert : seulement si configuré (entity_half, ou half_position avec une cover qui se place)
+        b.classList.toggle('hide', (a === 'stop' && !(c.entity_stop || (isCover && has(8)))) || (a === 'half' && !(c.entity_half || (isCover && has(4) && isFinite(Number(c.half_position))))) || (a === 'light' && !c.entity_light) || (a === 'blind' && (!c.entity_blind || this._blindOnly)));
         if (a === 'blind') { b.classList.toggle('on', this._blindDown > 0); b.disabled = !blS; return; }
         if (a === 'light') { b.classList.toggle('on', leds); b.disabled = !lightS; return; }
         // assumed_state (RFXCOM, Somfy RTS…) : l'état est supposé, pas mesuré, donc on laisse tout cliquable comme la carte HA,
         // sauf si la cover remonte une position (current_position) : on s'y fie et on grise Ouvrir à 100 %, Fermer à 0 %
         // Avec un capteur externe (entity_state / entity_position), l'état affiché est l'état réel du store : on grise selon le bouton affiché.
         // Sans capteur, l'état vient de la cover, qui suit la commande envoyée : on grise selon l'action réellement envoyée.
+        if (a === 'half') { const hp = Number(c.half_position); b.classList.toggle('on', isFinite(hp) && known && Math.abs(pos - hp) <= 3); b.disabled = st === 'unavailable'; return; }
+        // commandes seules, sans retour d'état : toujours cliquables (l'état affiché n'est que supposé)
+        if (this._cmdOnly()) { b.disabled = false; return; }
         const ea = c.invert_buttons && !sensed ? { open: 'close', close: 'open' }[a] || a : a;
         b.disabled = st === 'unavailable' || ((!assumed || posKnown) && ((ea === 'open' && (bst === 'open' || bst === 'opening')) || (ea === 'close' && (bst === 'closed' || bst === 'closing'))));
       });
@@ -1796,7 +1842,9 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ...window.applianceTileFields(this._hass),
-        ent('entity', 'cover'), ent('entity_state'), ent('entity_position', 'sensor'), ent('entity_power', 'sensor'), ent('sun_entity', 'sun'),
+        ent('entity', 'cover'), ent('entity_open', ['button', 'input_button', 'script', 'switch', 'scene', 'input_boolean', 'cover']), ent('entity_close', ['button', 'input_button', 'script', 'switch', 'scene', 'input_boolean', 'cover']), ent('entity_stop', ['button', 'input_button', 'script', 'switch', 'scene', 'input_boolean', 'cover']), ent('entity_half', ['button', 'input_button', 'script', 'switch', 'scene', 'input_boolean', 'cover']),
+        { name: 'half_position', selector: { number: { min: 1, max: 99, step: 1, mode: 'box', unit_of_measurement: '%' } } },
+        ent('entity_state'), ent('entity_position', 'sensor'), ent('entity_power', 'sensor'), ent('sun_entity', 'sun'),
         ...(this.kind === 'pergola' ? [ent('entity_rain'), ent('entity_light'), ent('entity_wind', 'sensor')] : []),
         ...(this.kind === 'awning' || this.kind === 'double_awning' ? [ent('entity_wind', 'sensor'), ent('entity_rain'), ent('entity_light'), ent('entity_lux', 'sensor'), ent('entity_temperature', 'sensor'),
           { name: 'wind_max', selector: { number: { min: 5, max: 120, step: 1, mode: 'box', unit_of_measurement: 'km/h' } } }] : []),
