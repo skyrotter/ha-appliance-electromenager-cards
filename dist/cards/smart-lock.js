@@ -591,8 +591,8 @@ ha-card.locking{--sl-c:var(--sl-ok)}
 ha-card.unlocking{--sl-c:var(--sl-warn)}
 ha-card.jammed{--sl-c:var(--sl-alert)}
 .locked .badge,.unlocked .badge,.open .badge,.opening .badge,.locking .badge,.unlocking .badge,.jammed .badge{background:color-mix(in srgb,var(--sl-c) 22%,transparent);color:var(--sl-c)}
-ha-card.jammed{box-shadow:0 0 0 1px color-mix(in srgb,var(--sl-alert) 60%,transparent),0 0 22px color-mix(in srgb,var(--sl-alert) 30%,transparent)}
-.alert{display:none;margin-top:2px;font-size:11px;color:var(--sl-alert);font-weight:500;text-align:center}
+ha-card.jammed{box-shadow:0 0 0 1px color-mix(in srgb,var(--sl-c) 60%,transparent),0 0 22px color-mix(in srgb,var(--sl-c) 30%,transparent)}
+.alert{display:none;margin-top:2px;font-size:11px;color:var(--sl-c);font-weight:500;text-align:center}
 .alert.on{display:block}.alert.warn{color:var(--sl-warn)}
 svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height:auto;margin:2px auto 0;cursor:pointer;overflow:visible}
 .ctl{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:6px}.ctl.hide,.ctl button.hide{display:none}
@@ -828,6 +828,11 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       const col = Array.isArray(c.color) && c.color.length >= 3 ? `rgb(${c.color.slice(0, 3).map((x) => Math.round(Number(x) || 0)).join(',')})`
         : typeof c.color === 'string' && /^[#a-z0-9(),.%\s-]+$/i.test(c.color.trim()) ? c.color.trim() : '';
       if (col) card.style.setProperty('--sl-id', col); else card.style.removeProperty('--sl-id');
+      // color_<état> : couleur du halo, de l'anneau LED et du badge pour cet état (même format que color) ; prend le pas sur le thème
+      const stCol = (v) => (Array.isArray(v) && v.length >= 3 ? `rgb(${v.slice(0, 3).map((x) => Math.round(Number(x) || 0)).join(',')})`
+        : typeof v === 'string' && /^[#a-z0-9(),.%\s-]+$/i.test(v.trim()) ? v.trim() : '');
+      const sc = stCol(c['color_' + st]);
+      if (sc) card.style.setProperty('--sl-c', sc); else card.style.removeProperty('--sl-c');
       card.className = `${col ? 'hasid ' : ''}${st}${door ? ' door' : ''}${low ? ' lowbat' : ''}${crit ? ' critbat' : ''}${c.animations === false ? ' noanim' : ''}`;
       r.getElementById('sltitle').textContent = c.name || this._t('name');
       const badge = r.getElementById('slbadge');
@@ -904,6 +909,12 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         { name: 'name', selector: { text: {} } },
         { name: 'model', selector: { select: { mode: 'dropdown', options: [{ value: 'nuki_3_pro', label: tr.model_nuki_3_pro }, { value: 'nuki_pro_5', label: tr.model_nuki_pro_5 }] } } },
         { name: 'color', selector: { color_rgb: {} } },
+        { name: 'color_locked', selector: { color_rgb: {} } },
+        { name: 'color_unlocked', selector: { color_rgb: {} } },
+        { name: 'color_jammed', selector: { color_rgb: {} } },
+        { name: 'color_locking', selector: { color_rgb: {} } },
+        { name: 'color_unlocking', selector: { color_rgb: {} } },
+        { name: 'color_open', selector: { color_rgb: {} } },
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
