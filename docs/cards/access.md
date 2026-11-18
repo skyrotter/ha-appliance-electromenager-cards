@@ -27,6 +27,7 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `entity_energy`
 - `entity_cost` or `price_per_kwh` (with `currency`)
 - `travel_time` (seconds, default 4 for the barrier, 15 for the sliding gate, 14 for the swing gate and the garage door)
+- `auto_close` (seconds, default 0 = off): for a gate **without position feedback** (a single push button, which closes by itself after a delay). After an opening (press on the card button, impulse of the `button` / `input_button` entity, or an "open" state), the card shows *opening* for `travel_time`, then *open*, and goes back to *closed* `auto_close` seconds after the opening started (with a closing movement of `travel_time`). Example for a gate that closes after 60 s: `auto_close: 60`. Don't use it with a real open/closed sensor that can stay open longer
 - `moving_threshold` (default 15 W: above it, the beacon flashes)
 - `invert` (default false: on = closed, for a contact sensor that is on when closed)
 - `leaves` (swing gate only: 1 or 2, default 2)

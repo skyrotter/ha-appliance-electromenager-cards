@@ -694,6 +694,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
       if (this._hass) this._render();
     }
     set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
+    disconnectedCallback() { clearTimeout(this._acTimer); }
     getCardSize() { return 5; }
     getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
@@ -756,8 +757,10 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
       if (a === 'pedestrian') { this._fire(c.entity_pedestrian); return; } // ouverture partielle : entité dédiée
       // contact sec double : une entité par commande (entity_open / entity_close / entity_stop)
       const own = { open: c.entity_open, close: c.entity_close, stop: c.entity_stop }[a];
-      if (own) { this._fire(own); return; }
+      if (own) { this._fire(own); if (a === 'open') { this._pressAt = Date.now(); this._render(); } return; }
       if (a === 'command') {
+        this._pressAt = Date.now(); // départ du compte à rebours auto_close
+        this._render();
         const id = c.entity_control || c.entity, d = id.split('.')[0];
         if (d === 'button' || d === 'input_button') h.callService(d, 'press', { entity_id: id });
         else if (d === 'script') h.callService('script', 'turn_on', { entity_id: id });
@@ -781,6 +784,23 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
         else {
           const on = /^(on|open|opened|ouvert|ouverte|offen|true|1|unlocked)$/.test(v);
           st = on !== !!c.invert ? 'open' : 'closed';
+        }
+      }
+      // auto_close : portail sans retour de position (bouton poussoir…). Après une ouverture (appui sur le bouton de la carte, impulsion de
+      // l'entité bouton, ou état « ouvert »), la carte passe par « ouverture » (travel_time) puis « ouvert », et revient sur « fermé » au bout de N secondes
+      const ac = Number(c.auto_close) || 0;
+      clearTimeout(this._acTimer);
+      if (ac > 0 && st !== 'unavailable' && isNaN(pos)) {
+        const now = Date.now(), T = Math.max(0, Number(c.travel_time) || 0), dom = c.entity.split('.')[0];
+        // entité bouton : son état (horodatage du dernier appui) change à chaque impulsion, même depuis ailleurs
+        if (s && ['button', 'input_button'].includes(dom)) { if (this._btn !== undefined && this._btn !== s.state) this._pressAt = now; this._btn = s.state; }
+        let t0 = this._pressAt || 0;
+        if ((st === 'open' || st === 'opening') && s) { const lc = Date.parse(s.last_changed); if (lc > t0) t0 = lc; }
+        if (t0) {
+          const el = (now - t0) / 1000;
+          st = el < T ? 'opening' : el < ac ? 'open' : el < ac + T ? 'closing' : 'closed';
+          const next = [T, ac, ac + T].find((b) => b > el);
+          if (next != null) this._acTimer = setTimeout(() => { if (this._hass && this._c) this._render(); }, (next - el) * 1000 + 60);
         }
       }
       const known = !isNaN(pos); // position réelle fournie par la cover
@@ -884,7 +904,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
         ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'), ent('entity_cost', 'sensor'),
         { name: 'price_per_kwh', selector: { number: { min: 0, step: 0.0001, mode: 'box' } } },
         { type: 'grid', name: '', schema: [
-          num('travel_time', 0, 120, 0.5, 's'), num('moving_threshold', 0, 2000, 1, 'W'),
+          num('travel_time', 0, 120, 0.5, 's'), num('auto_close', 0, 600, 1, 's'), num('moving_threshold', 0, 2000, 1, 'W'),
           ...(this.kind === 'swing_gate' ? [{ name: 'leaves', selector: { select: { options: [{ value: 1, label: '1' }, { value: 2, label: '2' }] } } }] : []),
           { name: 'invert', selector: { boolean: {} } },
         ] },
