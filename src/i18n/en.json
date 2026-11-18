@@ -140,6 +140,7 @@
     "deep_fryer": "Deep fryer",
     "fryer_heating": "Heating",
     "fryer_ready": "Oil ready!",
+    "display_both": "kWh + € (consumption and cost of the period)",
     "f_preheat_minutes": "Preheat time (min)",
     "f_grill_ready_minutes": "Ready for (min after switch-off)",
     "air_compressor": "Air compressor",

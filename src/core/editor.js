@@ -139,7 +139,7 @@ function buildForm(kind) {
           ...(d.fields.includes("energy") || ["washer", "dryer", "dishwasher"].includes(kind) ? [
             { name: "price_per_kwh", selector: { number: { min: 0, max: 2, step: 0.0001, mode: "box" } } },
             { name: "display", selector: { select: { mode: "dropdown", options: [
-              { value: "", label: "kWh + €" }, { value: "energy", label: "kWh" }, { value: "cost", label: "€" }] } } },
+              { value: "", label: "kWh + €" }, { value: "both", label: tr(null, "display_both") }, { value: "energy", label: "kWh" }, { value: "cost", label: "€" }] } } },
           ] : []),
           { name: "illustration_size", selector: { number: { min: 30, max: 300, step: 5, mode: "slider", unit_of_measurement: "%" } } },
           { name: "transparent", selector: { boolean: {} } },
