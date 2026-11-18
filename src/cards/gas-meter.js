@@ -30,6 +30,15 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 .ctl button ha-icon{--mdc-icon-size:16px}
 .ctl button.closed{background:color-mix(in srgb,var(--gm-alert) 20%,var(--secondary-background-color))}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(68px,1fr));gap:6px;margin-top:6px}
+/* illustration_position: left | right : dessin sur un côté, tuiles de l'autre côté en 2 colonnes (attribut illus-pos posé par applianceSize) */
+:host([illus-pos]) ha-card{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:8px;row-gap:0;align-items:start}
+:host([illus-pos]) .head{grid-column:1/-1;grid-row:1}
+:host([illus-pos]) svg{grid-row:2;align-self:start;justify-self:center;margin:6px 0 0;width:100%}
+:host([illus-pos="left"]) svg{grid-column:1}:host([illus-pos="right"]) svg{grid-column:2}
+:host([illus-pos]) .tiles{grid-row:2;margin-top:6px;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start}
+:host([illus-pos="left"]) .tiles{grid-column:2}:host([illus-pos="right"]) .tiles{grid-column:1}
+:host([illus-pos]) .alert{grid-column:1/-1;grid-row:3;margin-top:6px}
+:host([illus-pos]) .ctl{grid-column:1/-1;grid-row:4}
 .tile{box-sizing:border-box;display:flex;flex-direction:column;background:var(--ac-tile-bg,rgba(127,127,127,.09));border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
 :host([tile-order="value"]) .tile{flex-direction:column-reverse}:host([tile-order="value"]) .tile .v{margin:0 0 2px}
 .tile .l{display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;line-height:14px;color:var(--secondary-text-color);min-width:0}
@@ -287,6 +296,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
+        { name: 'illustration_position', selector: { select: { mode: 'dropdown', options: ['center', 'left', 'right'].map((value) => ({ value, label: window.applianceEditorLabel('illus_pos_' + value, this._hass) })) } } },
         ...window.applianceTileFields(this._hass),
         ent('entity_index', 'sensor'), ent('entity_flow', 'sensor'), ent('entity_today', 'sensor'), ent('entity_cost', ['sensor', 'input_number']),
         ent('entity_leak', ['binary_sensor', 'input_boolean'], { multiple: true }), ent('entity_valve', ['valve', 'switch', 'input_boolean']),
