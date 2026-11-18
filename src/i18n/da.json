@@ -1866,6 +1866,7 @@
     "model_qnap_ts251": "QNAP TS-251+ (2 båse)",
     "model_qnap_ts253": "QNAP TS-253 (2 båse)",
     "model_synology_ds224": "Synology DS224+ (2 båse)",
+    "model_synology_ds1812": "Synology DS1812+ (8 båse)",
     "model_ugreen_dxp4800_plus": "UGREEN DXP4800 Plus (4 båse)",
     "model_ugreen_idx6011_pro": "UGREEN iDX6011 Pro (6 båse)",
     "parity_alert": "Paritet ugyldig",
