@@ -159,8 +159,8 @@ c=card('tv',{entity:'media_player.tv'},[mk('media_player.tv','off')]); ok('tv me
  const tx=c.sr.getElementById('stats').textContent; ok('projector lamp / picture / temp chips',/2[\s ]?340 h/.test(tx)&&/Cinéma/.test(tx)&&/41/.test(tx),tx);
  c=PJ('on',{lamp_hours:'sensor.l',show_lamp:false},{},[mk('sensor.l',2340,{unit_of_measurement:'h'})]); ok('projector show_lamp false',!/2[\s ]?340/.test(c.sr.getElementById('stats').textContent));
  c=PJ('standby'); ok('projector standby',has(c,'st-standby'),c.wrap.className);
- const calls=[]; c=PJ('on'); c.h.callService=(d,s,data)=>calls.push([d,s,data]); c.el.hass={...c.h}; c.sr.querySelector('[data-sp="source"]').click();
- ok('projector next source',calls.some(([d,s,x])=>d==='media_player'&&s==='select_source'&&x.source==='HDMI 2'),JSON.stringify(calls));
+ const calls=[]; c=PJ('on'); c.h.callService=(d,s,data)=>calls.push([d,s,data]); c.el.hass={...c.h}; c.sr.querySelector('[data-sp="source_menu"]').click(); c.el._srcEl.shadowRoot.querySelector('.tile[data-n="HDMI 2"]').click();
+ ok('projector source picker -> select_source',calls.some(([d,s,x])=>d==='media_player'&&s==='select_source'&&x.source==='HDMI 2'),JSON.stringify(calls));
  c=card('tv',{entity:'media_player.pj',model:'projector_compact'},[mk('media_player.pj','off')]); ok('compact projector off',has(c,'st-off')&&!!c.sr.querySelector('.pj-photo'));
  c=card('tv',{entity:'media_player.tv'},[mk('media_player.tv','on',{source:'HDMI 1',supported_features:128|256|2048,source_list:['a','b']})]); ok('plain tv: no buttons by default',!c.sr.querySelector('#modes .sp-btn')&&!/HDMI/.test(c.sr.getElementById('stats').textContent));
 }
