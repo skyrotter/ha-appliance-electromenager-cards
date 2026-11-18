@@ -1605,6 +1605,10 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
  ok('labels: tile card',lbls(c).includes('Chauffe')&&!lbls(c).includes('Puissance'),lbls(c));
  c=card('battery',{entity_soc:'sensor.b',entity_power:'sensor.p',labels:{power:'Flux'}},[mk('sensor.b',50,{unit_of_measurement:'%'}),mk('sensor.p',300,W)]);
  ok('labels: stat card',lbls(c).includes('Flux'),lbls(c));
+ c=card('battery',{model:'zendure_ac2400',entity_soc:'sensor.b',entity_power:'sensor.p',entity_soc_min:'number.mn',entity_soc_max:'number.mx',entity_mode:'select.m'},[mk('sensor.b',58,{unit_of_measurement:'%'}),mk('sensor.p',300,W),mk('number.mn',10),mk('number.mx',100),mk('select.m','Smart')]);
+ {const lit=[...c.sr.querySelectorAll('.zd-seg.on')].length, tx=c.sr.getElementById('stats').textContent.replace(/\s+/g,' ');
+  ok('battery zendure_ac2400: photo, 4 segments, 3 lit at 58 %',c.sr.querySelector('image').getAttribute('href').startsWith('data:image/webp')&&c.sr.querySelectorAll('.zd-seg').length===4&&lit===3,lit);
+  ok('battery: min / max charge and mode tiles',/10 %\s*Charge min/.test(tx)&&/100 %\s*Charge max/.test(tx)&&/Smart\s*Mode/.test(tx),tx);}
  c=card('battery',{entity_soc:'sensor.b',entity_power:'sensor.p',labels:{power:''}},[mk('sensor.b',50,{unit_of_measurement:'%'}),mk('sensor.p',300,W)]);
  ok('labels: empty falls back',lbls(c).includes('Puissance'),lbls(c));
  c=card('battery',{entity_soc:'sensor.b',entity_power:'sensor.p',labels:{power:'<b class="xss">x</b>'}},[mk('sensor.b',50,{unit_of_measurement:'%'}),mk('sensor.p',300,W)]);

@@ -10,11 +10,27 @@
 
 <p align="center"><img src="../battery-marstek.gif" width="420" alt="Two Marstek Venus E 3.0 batteries: charging then discharging"></p>
 
+## Zendure SolarFlow 2400 AC+ (photo)
+
+`model: zendure_ac2400`: cut-out photo of the **Zendure SolarFlow 2400 AC+**. The battery icon of its screen is redrawn with 4 segments that follow the state of charge (green / orange / red, the last lit segment blinks while charging), the charge in % and the flow arrow are drawn on the front. `count` places several units side by side.
+
+```yaml
+type: custom:appliance-battery-card
+model: zendure_ac2400
+entity_soc: sensor.solarflow_2400_ac_plus_electric_level
+entity_power: sensor.solarflow_2400_ac_plus_power
+entity_soc_min: number.solarflow_2400_ac_plus_min_soc
+entity_soc_max: number.solarflow_2400_ac_plus_soc_set
+entity_mode: select.zendure_manager_operation
+capacity_kwh: 2.4
+max_power: 2400
+```
+
 ## Options
 
 Every value tile can be hidden with its `show_…` option, and `language: fr|en|de|it|es|nb|nl|pl|ro|ru|sr|sr-Latn` forces the language. Temperatures follow `temperature_unit: C|F`, otherwise the unit of Home Assistant: each sensor is converted from its own unit, and temperature thresholds are entered in that unit (the defaults below are in °C and are converted, e.g. 40 °C → 104 °F).
 
-- `model`: `default` (the three drawn modules) or `marstek_venus_e3` (cut-out photo of the **Marstek Venus E 3.0**: its light strip fills with the state of charge, in green / orange / red, and runs in the direction of the energy flow when charging or discharging; the percentage and state are shown on the black front)
+- `model`: `default` (the three drawn modules), `zendure_ac2400` (Zendure SolarFlow 2400 AC+, see below) or `marstek_venus_e3` (cut-out photo of the **Marstek Venus E 3.0**: its light strip fills with the state of charge, in green / orange / red, and runs in the direction of the energy flow when charging or discharging; the percentage and state are shown on the black front)
 - `count` (1 to 4, default 1): number of units drawn side by side with `model: marstek_venus_e3`, e.g. `2` for two batteries combined in a single charge sensor
 <p align="center"><img src="../battery-backup.png" width="560" alt="Marstek Venus E 3.0: backup socket lit at 185 W, off at 0 W"></p>
 
@@ -28,6 +44,8 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `entity_power` (positive = charging, `invert_power: true` if yours is reversed)
 - `entity_energy`
 - `entity_temperature`
+- `entity_soc_min` / `entity_soc_max`: minimum and maximum charge limits (a `number`, `input_number` or `sensor`, in %), shown in **Min charge** / **Max charge** tiles (`show_soc_min`, `show_soc_max`: default true)
+- `entity_mode`: operating mode (a `select`, `input_select` or `sensor`), shown in a **Mode** tile (`show_mode`: default true)
 - `entity_calibration`: date of the next calibration (e.g. Zendure batteries), from a `sensor` (date or timestamp) or an `input_datetime`; shown in a tile
 - `show_calibration` (default true)
 - `capacity_kwh` (default 10)
