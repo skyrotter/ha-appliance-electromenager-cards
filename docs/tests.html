@@ -1386,6 +1386,10 @@ ok('card size / grid',typeof c.el.getCardSize()==='number'&&c.el.getGridOptions(
  c=card('swing-gate',{entity:'binary_sensor.g',entity_control:'button.b'},[mk('binary_sensor.g','off')]);
  c.sr.querySelector('[data-a=command]').click(); ok('swing impulse -> button.press',JSON.stringify(c.h.calls[0])==='["button","press",{"entity_id":"button.b"}]',JSON.stringify(c.h.calls));
  ok('swing two leaves',c.sr.querySelectorAll('.leaf').length===2);
+ // auto_close : portail à bouton poussoir sans retour de position — l'impulsion (état de l'entité bouton qui change) lance « ouverture », sans auto_close rien ne change
+ c=card('swing-gate',{entity:'button.p',auto_close:60},[mk('button.p','2026-01-01T00:00:00+00:00')]); ok('auto_close: button idle -> closed',/closed/.test(cls(c)),cls(c));
+ c.el.hass=hassOf([mk('button.p','2026-01-01T00:00:09+00:00')]); ok('auto_close: button pulse -> opening',/opening/.test(cls(c)),cls(c));
+ c=card('swing-gate',{entity:'button.p'},[mk('button.p','2026-01-01T00:00:00+00:00')]); c.el.hass=hassOf([mk('button.p','2026-01-01T00:00:09+00:00')]); ok('no auto_close: button pulse -> still closed',/closed/.test(cls(c)),cls(c));
  c=card('garage-door',{entity:'cover.g'},[mk('cover.g','unavailable')]); ok('garage unavailable',/unavailable/.test(cls(c))&&badge(c)==='Indisponible',cls(c)+' '+badge(c));}
 // sauna: heating / ready / cooling / off, climate controls
 {const cls=(c)=>c.sr.querySelector('ha-card').className.trim().split(' ')[0];

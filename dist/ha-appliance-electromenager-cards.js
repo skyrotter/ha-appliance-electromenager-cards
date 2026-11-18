@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.177.0";
+const VERSION = "1.178.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -156,6 +156,7 @@ const STRINGS = {
     "fryer_heating": "Heating",
     "fryer_ready": "Oil ready!",
     "display_both": "kWh + € (consumption and cost of the period)",
+    "f_auto_close": "Auto close after (s, 0 = off)",
     "f_preheat_minutes": "Preheat time (min)",
     "f_grill_ready_minutes": "Ready for (min after switch-off)",
     "air_compressor": "Air compressor",
@@ -2363,6 +2364,7 @@ const STRINGS = {
     "fryer_heating": "Chauffe",
     "fryer_ready": "Huile prête !",
     "display_both": "kWh + € (conso et coût de la période)",
+    "f_auto_close": "Retour sur « fermé » après (s, 0 = désactivé)",
     "f_preheat_minutes": "Durée de préchauffage (min)",
     "f_grill_ready_minutes": "Prêt pendant (min après la coupure)",
     "air_compressor": "Compresseur d'air",
@@ -15748,7 +15750,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
 (async () => {
   const base = import.meta.url;
   // ?v=<version> : après une mise à jour, le navigateur ne ressert pas d'anciens morceaux depuis son cache
-  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.177.0`, base).href);
+  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.178.0`, base).href);
   await chunk("card-helpers");
   await chunk("editor-labels");
   // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre
