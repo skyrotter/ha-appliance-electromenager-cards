@@ -1,5 +1,7 @@
 # Deep fryer
 
+<p align="center"><img src="../deep-fryer.gif" width="300" alt="Animated deep fryer card"></p>
+
 `custom:appliance-deep-fryer-card`: an oil deep fryer (e.g. Tristar PD-8950, 3 L) as a cut-out photo, or a vector drawing, on a smart plug with power metering. The fryer itself is "dumb": the card follows its two lights from the power drawn.
 
 - **Heating** (power above `threshold`, 50 W by default): the red light is on and steam rises from the lid.
