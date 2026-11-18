@@ -55,6 +55,10 @@ const DEF = {
   contact_grill: { accent: "heat", threshold: 50,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["gril", "grill", "panini", "croque", "contact_grill", "tefal", "inicio"] },
+  // friteuse à bain d'huile sur prise connectée (ex. Tristar PD-8950) : chauffe au-dessus de threshold, huile prête après preheat_minutes
+  deep_fryer: { accent: "heat", threshold: 50,
+    fields: ["entity", "power", "energy", "cost", "switch"],
+    keys: ["deep_fryer", "deepfryer", "friteuse_huile", "friteuse_bain", "frituurpan", "fritteuse", "freidora", "pd_8950"] },
   wet_vacuum: { accent: "cold", threshold: 3,
     fields: ["entity", "power", "energy", "cost", "battery_level", "clean_water", "dirty_water", "mode", "switch"],
     keys: ["aspirateur_laveur", "aspirateur_lavant", "nettoyeur_sol", "wet_vacuum", "wet_dry", "floor_washer", "floor_one", "tineco", "laveur"] },

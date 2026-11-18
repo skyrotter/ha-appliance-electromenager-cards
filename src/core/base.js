@@ -895,17 +895,19 @@ class ApplianceCardBase extends HTMLElement {
       else if (on) m.status = kind === "kettle" ? "boiling" : "toasting";
       else if (kind === "kettle" && m.tempVal != null) m.status = m.tempVal >= (c.hot_temperature ?? 60) ? "hot_water" : "off";
       else m.status = this._onAt && now - this._onAt < keep ? (kind === "kettle" ? "hot_water" : "toast_ready") : "off";
-    } else if (kind === "contact_grill") {
+    } else if (kind === "contact_grill" || kind === "deep_fryer") {
       // prise : voyant rouge tant qu'il chauffe (premières preheat_minutes), voyant vert ensuite et pendant ready_minutes après la coupure
       // (le thermostat coupe et rallume la résistance) ; une coupure avant 2 min de chauffe = simple arrêt
+      // friteuse : même logique (voyant rouge = sous tension, vert = huile à température), mais 8 min de chauffe par défaut (bain d'huile)
+      const fry = kind === "deep_fryer", sHeat = fry ? "fryer_heating" : "grilling", sReady = fry ? "fryer_ready" : "grill_ready";
       const on = powered || (watts === null && base === "running"), now = Date.now();
-      const pre = (c.preheat_minutes ?? 4) * 60000, keep = (c.ready_minutes ?? 15) * 60000;
+      const pre = (c.preheat_minutes ?? (fry ? 8 : 4)) * 60000, keep = (c.ready_minutes ?? 15) * 60000;
       if (base === "unavailable") m.status = "unavailable";
       else if (on) {
         if (!this._gStart) this._gStart = now;
         this._gOn = now;
-        m.status = now - this._gStart >= pre ? "grill_ready" : "grilling";
-      } else if (this._gStart && this._gOn - this._gStart >= 120000 && now - this._gOn < keep) m.status = "grill_ready";
+        m.status = now - this._gStart >= pre ? sReady : sHeat;
+      } else if (this._gStart && this._gOn - this._gStart >= 120000 && now - this._gOn < keep) m.status = sReady;
       else { this._gStart = 0; m.status = "off"; }
     } else if (kind === "wine_cooler") {
       if (base === "off" || base === "unavailable") m.status = base;
@@ -1210,7 +1212,7 @@ class ApplianceCardBase extends HTMLElement {
     const hass = this._hass, kind = this._kind, c = this._config;
     // lcd_value : « current » affiche la température actuelle plutôt que la consigne (radiateur, sèche-serviettes, clim)
     const lcdT = () => (c.lcd_value === "current" ? m.tempVal ?? m.targetVal : m.targetVal ?? m.tempVal);
-    const active = ["grilling", "grill_ready", "running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "in_use", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
+    const active = ["grilling", "grill_ready", "fryer_heating", "fryer_ready", "running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "in_use", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
@@ -1324,7 +1326,7 @@ class ApplianceCardBase extends HTMLElement {
   _render(m) {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
-    const active = ["grilling", "grill_ready", "running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "in_use", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
+    const active = ["grilling", "grill_ready", "fryer_heating", "fryer_ready", "running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "in_use", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
     this._fetchCycle(active);
     const hideWouldApply = this._applyHide(active, m.alerts.length > 0);
     $("wrap").className = [

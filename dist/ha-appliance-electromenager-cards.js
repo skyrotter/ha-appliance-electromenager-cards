@@ -152,6 +152,9 @@ const STRINGS = {
     "contact_grill": "Contact grill",
     "grilling": "Heating",
     "grill_ready": "Ready to grill!",
+    "deep_fryer": "Deep fryer",
+    "fryer_heating": "Heating",
+    "fryer_ready": "Oil ready!",
     "f_preheat_minutes": "Preheat time (min)",
     "f_grill_ready_minutes": "Ready for (min after switch-off)",
     "air_compressor": "Air compressor",
@@ -2355,6 +2358,9 @@ const STRINGS = {
     "contact_grill": "Gril de contact",
     "grilling": "Chauffe",
     "grill_ready": "Prêt à griller !",
+    "deep_fryer": "Friteuse",
+    "fryer_heating": "Chauffe",
+    "fryer_ready": "Huile prête !",
     "f_preheat_minutes": "Durée de préchauffage (min)",
     "f_grill_ready_minutes": "Prêt pendant (min après la coupure)",
     "air_compressor": "Compresseur d'air",
@@ -8469,6 +8475,35 @@ ${st === "drawing" ? "" : CKO_PHOTO_STEAM}
 </g>`;
 };
 
+/* Friteuse à bain d'huile sur prise connectée (ex. Tristar PD-8950, 3 L) : photo détourée (par défaut) ou dessin vectoriel (model: drawing).
+   Voyant rouge dès qu'elle chauffe, voyant vert quand l'huile est à température, vapeur au-dessus du couvercle. */
+const DF_IMG = "data:image/webp;base64,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";
+SVG.deep_fryer = (c) => (c && c.model === "drawing" ? `<defs>${DEFS}
+<filter id="ID-dfled" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1"/></filter></defs>
+<g class="df">
+<ellipse cx="60" cy="116" rx="52" ry="4" fill="url(#ID-shadow)"/>
+<rect x="20" y="109" width="9" height="4" rx="1.5" fill="#15181b"/><rect x="91" y="109" width="9" height="4" rx="1.5" fill="#15181b"/>
+<rect x="12" y="52" width="96" height="58" rx="5" fill="url(#ID-inox)" stroke="#6f7780" stroke-width=".7"/>
+<path d="M17 55.5h86" stroke="#fff" stroke-opacity=".4" stroke-width="1" stroke-linecap="round"/>
+<rect x="9" y="30" width="30" height="24" rx="4" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".6"/>
+<circle class="df-red df-halo" cx="18" cy="40" r="2.6" filter="url(#ID-dfled)"/><circle class="df-red" cx="18" cy="40" r="1.7"/>
+<circle class="df-green df-halo" cx="28" cy="40" r="2.6" filter="url(#ID-dfled)"/><circle class="df-green" cx="28" cy="40" r="1.7"/>
+<rect x="18" y="44" width="14" height="5" rx="2" fill="#2a2f35" stroke="#7d8792" stroke-width=".4"/>
+<path d="M40 51l4-10h46l4 10z" fill="url(#ID-inox)" stroke="#6f7780" stroke-width=".6"/>
+<rect x="52" y="35" width="26" height="6" rx="3" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".5"/>
+<path d="M92 47l14-6h10q3 0 3 3q0 3-3 3h-9l-12 5" fill="none" stroke="#1b1f23" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="4" y="70" width="16" height="12" rx="3.5" fill="url(#ID-dark)" stroke="#05070a" stroke-width=".6"/>
+<g class="df-steam"><path d="M54 33q-3-5 0-9t0-9"/><path d="M65 33q-3-5 0-9t0-9"/><path d="M76 33q-3-5 0-9t0-9"/></g>
+</g>` : `<defs>${DEFS}
+<filter id="ID-dfled" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1"/></filter></defs>
+<g class="df">
+<ellipse cx="60" cy="114" rx="52" ry="4" fill="url(#ID-shadow)"/>
+<image href="${DF_IMG}" x="4" y="27" width="112" height="85.4" preserveAspectRatio="none"/>
+<circle class="df-red df-halo" cx="12.3" cy="33.8" r="1.5" filter="url(#ID-dfled)"/><circle class="df-red" cx="12.3" cy="33.8" r="1"/>
+<circle class="df-green df-halo" cx="15.9" cy="33.5" r="1.5" filter="url(#ID-dfled)"/><circle class="df-green" cx="15.9" cy="33.5" r="1"/>
+<g class="df-steam"><path d="M46 36q-3-5 0-9t0-9"/><path d="M58 36q-3-5 0-9t0-9"/><path d="M70 36q-3-5 0-9t0-9"/></g>
+</g>`);
+
 /* déshumidificateur mobile à bac : grille de sortie en haut, ventilateur derrière la grille avant, bac à eau transparent en bas */
 SVG.dehumidifier = () => `
 <defs>${DEFS}
@@ -11037,6 +11072,10 @@ const DEF = {
   contact_grill: { accent: "heat", threshold: 50,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["gril", "grill", "panini", "croque", "contact_grill", "tefal", "inicio"] },
+  // friteuse à bain d'huile sur prise connectée (ex. Tristar PD-8950) : chauffe au-dessus de threshold, huile prête après preheat_minutes
+  deep_fryer: { accent: "heat", threshold: 50,
+    fields: ["entity", "power", "energy", "cost", "switch"],
+    keys: ["deep_fryer", "deepfryer", "friteuse_huile", "friteuse_bain", "frituurpan", "fritteuse", "freidora", "pd_8950"] },
   wet_vacuum: { accent: "cold", threshold: 3,
     fields: ["entity", "power", "energy", "cost", "battery_level", "clean_water", "dirty_water", "mode", "switch"],
     keys: ["aspirateur_laveur", "aspirateur_lavant", "nettoyeur_sol", "wet_vacuum", "wet_dry", "floor_washer", "floor_one", "tineco", "laveur"] },
@@ -12241,17 +12280,19 @@ class ApplianceCardBase extends HTMLElement {
       else if (on) m.status = kind === "kettle" ? "boiling" : "toasting";
       else if (kind === "kettle" && m.tempVal != null) m.status = m.tempVal >= (c.hot_temperature ?? 60) ? "hot_water" : "off";
       else m.status = this._onAt && now - this._onAt < keep ? (kind === "kettle" ? "hot_water" : "toast_ready") : "off";
-    } else if (kind === "contact_grill") {
+    } else if (kind === "contact_grill" || kind === "deep_fryer") {
       // prise : voyant rouge tant qu'il chauffe (premières preheat_minutes), voyant vert ensuite et pendant ready_minutes après la coupure
       // (le thermostat coupe et rallume la résistance) ; une coupure avant 2 min de chauffe = simple arrêt
+      // friteuse : même logique (voyant rouge = sous tension, vert = huile à température), mais 8 min de chauffe par défaut (bain d'huile)
+      const fry = kind === "deep_fryer", sHeat = fry ? "fryer_heating" : "grilling", sReady = fry ? "fryer_ready" : "grill_ready";
       const on = powered || (watts === null && base === "running"), now = Date.now();
-      const pre = (c.preheat_minutes ?? 4) * 60000, keep = (c.ready_minutes ?? 15) * 60000;
+      const pre = (c.preheat_minutes ?? (fry ? 8 : 4)) * 60000, keep = (c.ready_minutes ?? 15) * 60000;
       if (base === "unavailable") m.status = "unavailable";
       else if (on) {
         if (!this._gStart) this._gStart = now;
         this._gOn = now;
-        m.status = now - this._gStart >= pre ? "grill_ready" : "grilling";
-      } else if (this._gStart && this._gOn - this._gStart >= 120000 && now - this._gOn < keep) m.status = "grill_ready";
+        m.status = now - this._gStart >= pre ? sReady : sHeat;
+      } else if (this._gStart && this._gOn - this._gStart >= 120000 && now - this._gOn < keep) m.status = sReady;
       else { this._gStart = 0; m.status = "off"; }
     } else if (kind === "wine_cooler") {
       if (base === "off" || base === "unavailable") m.status = base;
@@ -12556,7 +12597,7 @@ class ApplianceCardBase extends HTMLElement {
     const hass = this._hass, kind = this._kind, c = this._config;
     // lcd_value : « current » affiche la température actuelle plutôt que la consigne (radiateur, sèche-serviettes, clim)
     const lcdT = () => (c.lcd_value === "current" ? m.tempVal ?? m.targetVal : m.targetVal ?? m.tempVal);
-    const active = ["grilling", "grill_ready", "running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "in_use", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
+    const active = ["grilling", "grill_ready", "fryer_heating", "fryer_ready", "running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "in_use", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
@@ -12670,7 +12711,7 @@ class ApplianceCardBase extends HTMLElement {
   _render(m) {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
-    const active = ["grilling", "grill_ready", "running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "in_use", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
+    const active = ["grilling", "grill_ready", "fryer_heating", "fryer_ready", "running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "in_use", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
     this._fetchCycle(active);
     const hideWouldApply = this._applyHide(active, m.alerts.length > 0);
     $("wrap").className = [
@@ -13552,7 +13593,7 @@ function buildForm(kind) {
           { name: "title_bold", selector: { boolean: {} } },
           { name: "title_layout", selector: { select: { mode: "dropdown", options: [{ value: "inline", label: tr(null, "header_inline") }, { value: "stacked", label: tr(null, "header_stacked") }] } } },
           { name: "illustration_position", selector: { select: { mode: "dropdown", options: [{ value: "center", label: tr(null, "illus_pos_center") }, { value: "left", label: tr(null, "illus_pos_left") }, { value: "right", label: tr(null, "illus_pos_right") }] } } },
-          ...window.applianceTileFields(),
+          ...(window.applianceTileFields ? window.applianceTileFields() : []), // absent tant que le morceau editor-labels n'est pas chargé
           { name: "animations", selector: { boolean: {} }, default: true },
           { name: "hide_when_inactive", selector: { boolean: {} } },
           { name: "hide_delay", selector: { number: { min: 0, max: 1440, step: 1, mode: "box", unit_of_measurement: "min" } } },
@@ -13668,6 +13709,11 @@ function buildForm(kind) {
           ] : []),
           ...(kind === "range_hood" ? [
             { name: "high_threshold", selector: { number: { min: 40, max: 600, step: 5, mode: "box", unit_of_measurement: "W" } } },
+          ] : []),
+          ...(kind === "deep_fryer" ? [
+            { name: "model", selector: { select: { mode: "dropdown", options: [{ value: "", label: "Tristar PD-8950 (photo)" }, { value: "drawing", label: tr(null, "printer_drawing") }] } } },
+            { name: "preheat_minutes", selector: { number: { min: 1, max: 30, step: 1, mode: "box", unit_of_measurement: "min" } } },
+            { name: "ready_minutes", selector: { number: { min: 0, max: 120, step: 1, mode: "box", unit_of_measurement: "min" } } },
           ] : []),
           ...(kind === "contact_grill" ? [
             { name: "preheat_minutes", selector: { number: { min: 1, max: 30, step: 1, mode: "box", unit_of_measurement: "min" } } },
@@ -15655,6 +15701,17 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .cg-steam path { fill: none; stroke: #dfe6ee; stroke-width: 2.6; stroke-linecap: round; opacity: 0; }
 .k-contact_grill.st-grilling .cg-steam path, .k-contact_grill.st-grill_ready .cg-steam path { animation: ac-steam 2.6s ease-out infinite; }
 .cg-steam path:nth-child(2) { animation-delay: .8s !important; } .cg-steam path:nth-child(3) { animation-delay: 1.6s !important; }
+
+/* ---------- friteuse à bain d'huile ---------- */
+.df-red, .df-green { opacity: 0; transition: opacity .3s; }
+.df-red { fill: #ff3b30; }
+.df-green { fill: #34c759; }
+.df-halo { transform-box: fill-box; transform-origin: center; transform: scale(1.8); }
+.k-deep_fryer.st-fryer_heating .df-red, .k-deep_fryer.st-fryer_ready .df-red { opacity: .9; }
+.k-deep_fryer.st-fryer_ready .df-green { opacity: .95; }
+.df-steam path { fill: none; stroke: #dfe6ee; stroke-width: 2.4; stroke-linecap: round; opacity: 0; }
+.k-deep_fryer.st-fryer_heating .df-steam path, .k-deep_fryer.st-fryer_ready .df-steam path { animation: ac-steam 2.6s ease-out infinite; }
+.df-steam path:nth-child(2) { animation-delay: .8s !important; } .df-steam path:nth-child(3) { animation-delay: 1.6s !important; }
 `;
 
 /* ------------------------------------------------------------------ */
