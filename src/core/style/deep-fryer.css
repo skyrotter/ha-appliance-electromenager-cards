@@ -1,0 +1,10 @@
+/* ---------- friteuse à bain d'huile ---------- */
+.df-red, .df-green { opacity: 0; transition: opacity .3s; }
+.df-red { fill: #ff3b30; }
+.df-green { fill: #34c759; }
+.df-halo { transform-box: fill-box; transform-origin: center; transform: scale(1.8); }
+.k-deep_fryer.st-fryer_heating .df-red, .k-deep_fryer.st-fryer_ready .df-red { opacity: .9; }
+.k-deep_fryer.st-fryer_ready .df-green { opacity: .95; }
+.df-steam path { fill: none; stroke: #dfe6ee; stroke-width: 2.4; stroke-linecap: round; opacity: 0; }
+.k-deep_fryer.st-fryer_heating .df-steam path, .k-deep_fryer.st-fryer_ready .df-steam path { animation: ac-steam 2.6s ease-out infinite; }
+.df-steam path:nth-child(2) { animation-delay: .8s !important; } .df-steam path:nth-child(3) { animation-delay: 1.6s !important; }

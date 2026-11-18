@@ -265,6 +265,11 @@ function buildForm(kind) {
           ...(kind === "range_hood" ? [
             { name: "high_threshold", selector: { number: { min: 40, max: 600, step: 5, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
+          ...(kind === "deep_fryer" ? [
+            { name: "model", selector: { select: { mode: "dropdown", options: [{ value: "", label: "Tristar PD-8950 (photo)" }, { value: "drawing", label: tr(null, "printer_drawing") }] } } },
+            { name: "preheat_minutes", selector: { number: { min: 1, max: 30, step: 1, mode: "box", unit_of_measurement: "min" } } },
+            { name: "ready_minutes", selector: { number: { min: 0, max: 120, step: 1, mode: "box", unit_of_measurement: "min" } } },
+          ] : []),
           ...(kind === "contact_grill" ? [
             { name: "preheat_minutes", selector: { number: { min: 1, max: 30, step: 1, mode: "box", unit_of_measurement: "min" } } },
             { name: "ready_minutes", selector: { number: { min: 0, max: 120, step: 1, mode: "box", unit_of_measurement: "min" } } },
