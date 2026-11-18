@@ -21,7 +21,7 @@ const has=(c,cls)=>c.wrap.classList.contains(cls);
 const tags=['thermomix','cookeo','washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','smart-speaker','fan','generic','tool-charger','ceiling-fan','dehumidifier','air-purifier','monitor','kettle','toaster','deep-fryer','power-strip','phone-charger','piano','garland','wet-vacuum','ps5','smart-plug','dosing-pump','printer','elliptical','exercise-bike','rowing-machine'];
 tags.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 // card picker: every core card and every self-contained card listed exactly once
-const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','air-water-heat-pump','diesel-heater','jacuzzi','hue-sync-box','door-sensor','motion-sensor','air-quality','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','ceiling-spot','roller-shutter','sliding-curtain','venetian-blind','swing-shutter','pergola','roof-window','awning','water-meter','gas-meter','electric-meter','trv','room-climate','mailbox','smoke-detector','leak-detector','mini-pc','nas','tv-box','scale','smart-lock','cat-flap','pet-fountain','thermo-heater','smart-tap','water-valve','water-softener','rain-gauge','plant-monitor','humidifier','fan-heater','inflatable-spa'];
+const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','air-water-heat-pump','diesel-heater','jacuzzi','hue-sync-box','door-sensor','motion-sensor','air-quality','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','ceiling-spot','roller-shutter','sliding-curtain','venetian-blind','swing-shutter','pergola','roof-window','awning','water-meter','gas-meter','electric-meter','trv','room-climate','mailbox','smoke-detector','leak-detector','mini-pc','nas','tv-box','scale','smart-lock','cat-flap','pet-fountain','thermo-heater','smart-tap','water-valve','water-softener','rain-gauge','plant-monitor','humidifier','fan-heater','inflatable-spa','canister-vacuum','air-compressor','contact-grill','reef-aquarium','pet-feeder','portable-ac','internet-box','rainwater-tank','double-awning','soundbar','raspberry-pi','camera','nvr','irrigation','poe-switch','water-filter','led-strip','heat-meter','zigbee-coordinator','wall-tablet'];
 solo.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 const picked=window.customCards.map(c=>c.type), wanted=[...tags,...solo].map(t=>`appliance-${t}-card`).concat('appliance-card'); // + the single card (picker.js)
 ok(`customCards = ${wanted.length}`,picked.length===wanted.length&&wanted.every(t=>picked.filter(p=>p===t).length===1),
@@ -159,8 +159,8 @@ c=card('tv',{entity:'media_player.tv'},[mk('media_player.tv','off')]); ok('tv me
  const tx=c.sr.getElementById('stats').textContent; ok('projector lamp / picture / temp chips',/2[\s ]?340 h/.test(tx)&&/Cinéma/.test(tx)&&/41/.test(tx),tx);
  c=PJ('on',{lamp_hours:'sensor.l',show_lamp:false},{},[mk('sensor.l',2340,{unit_of_measurement:'h'})]); ok('projector show_lamp false',!/2[\s ]?340/.test(c.sr.getElementById('stats').textContent));
  c=PJ('standby'); ok('projector standby',has(c,'st-standby'),c.wrap.className);
- const calls=[]; c=PJ('on'); c.h.callService=(d,s,data)=>calls.push([d,s,data]); c.el.hass={...c.h}; c.sr.querySelector('[data-sp="source"]').click();
- ok('projector next source',calls.some(([d,s,x])=>d==='media_player'&&s==='select_source'&&x.source==='HDMI 2'),JSON.stringify(calls));
+ const calls=[]; c=PJ('on'); c.h.callService=(d,s,data)=>calls.push([d,s,data]); c.el.hass={...c.h}; c.sr.querySelector('[data-sp="source_menu"]').click(); c.el._srcEl.shadowRoot.querySelector('.tile[data-n="HDMI 2"]').click();
+ ok('projector source picker -> select_source',calls.some(([d,s,x])=>d==='media_player'&&s==='select_source'&&x.source==='HDMI 2'),JSON.stringify(calls));
  c=card('tv',{entity:'media_player.pj',model:'projector_compact'},[mk('media_player.pj','off')]); ok('compact projector off',has(c,'st-off')&&!!c.sr.querySelector('.pj-photo'));
  c=card('tv',{entity:'media_player.tv'},[mk('media_player.tv','on',{source:'HDMI 1',supported_features:128|256|2048,source_list:['a','b']})]); ok('plain tv: no buttons by default',!c.sr.querySelector('#modes .sp-btn')&&!/HDMI/.test(c.sr.getElementById('stats').textContent));
 }
@@ -279,7 +279,7 @@ c=card('av-receiver',{power:'sensor.p'},[mk('sensor.p',0,W)]); ok('avr off',has(
  btn(c,'vol_up').click(); ok('speaker volume + : volume_set 0.5',JSON.stringify(c.h.calls.at(-1))===JSON.stringify(['media_player','volume_set',{entity_id:'media_player.sp',volume_level:0.5}]),JSON.stringify(c.h.calls.at(-1)));
  btn(c,'vol_down').click(); ok('speaker volume − : volume_set 0.4',c.h.calls.at(-1)[2].volume_level===0.4,JSON.stringify(c.h.calls.at(-1)));
  btn(c,'mute').click(); ok('speaker mute',c.h.calls.at(-1)[1]==='volume_mute'&&c.h.calls.at(-1)[2].is_volume_muted===true,JSON.stringify(c.h.calls.at(-1)));
- btn(c,'play_pause').click(); ok('speaker play/pause',c.h.calls.at(-1)[1]==='media_play_pause');
+ btn(c,'play_pause').click(); ok('speaker play/pause (playing -> media_pause)',c.h.calls.at(-1)[1]==='media_pause');
  btn(c,'power').click(); ok('speaker power off',c.h.calls.at(-1)[1]==='turn_off');
  c=SP('playing',{},{volume_step:0.1}); btn(c,'vol_up').click(); ok('speaker volume_step option',Math.abs(c.h.calls.at(-1)[2].volume_level-0.55)<1e-9,JSON.stringify(c.h.calls.at(-1)));
  c=SP('playing',{supported_features:1|1024|16384,volume_level:undefined}); btn(c,'vol_up').click();
@@ -368,7 +368,7 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
 {const opts=(lang)=>{const ed=document.createElement('appliance-card-editor');ed.hass={language:lang,locale:{language:lang},states:{}};ed.setConfig({type:'custom:appliance-card'});document.body.append(ed);
   const o=ed.querySelector('ha-form').schema[0].selector.select.options;ed.remove();return o;};
  const fr=opts('fr'), en=opts('en'), lab=(o,t)=>(o.find((x)=>x.value===t)||{}).label;
- ok('single card list in French',lab(fr,'appliance-water-meter-card')==="Compteur d'eau"&&lab(fr,'appliance-washer-card')==='Lave-linge'&&!fr.some((o)=>/ \/ /.test(o.label)),lab(fr,'appliance-water-meter-card'));
+ ok('single card list in French',lab(fr,'appliance-water-meter-card')==="Compteur d'eau"&&lab(fr,'appliance-washer-card')==='Lave-linge'&&!fr.some((o)=>/ \/ /.test(o.label)&&!['appliance-printer-card','appliance-dosing-pump-card'].includes(o.value)),lab(fr,'appliance-water-meter-card'));
  ok('single card list in English',lab(en,'appliance-water-meter-card')==='Water meter',lab(en,'appliance-water-meter-card'));
  const L=fr.map((o)=>o.label), sorted=[...L].sort((a,b)=>a.localeCompare(b,'fr',{sensitivity:'base'}));
  ok('single card list sorted in the HA language, no duplicate',JSON.stringify(L)===JSON.stringify(sorted)&&new Set(L).size===L.length&&fr.length===en.length);
@@ -680,8 +680,8 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c=card('printer',BR,S('idle','Ready',72,8)); ok('brother ink < 15 % -> low bar + alert',rows(c)[1].classList.contains('low')&&!rows(c)[0].classList.contains('low')&&/Encre faible/.test(al(c)),rows(c)[1].className+al(c));
  c=card('printer',{...BR,ink_low:5},S('idle','Ready',72,8)); ok('brother ink_low option',!rows(c)[1].classList.contains('low'),rows(c)[1].className);
  c=card('printer',{...BR,ink_magenta:'sensor.absent'},S('idle')); ok('brother missing ink entity -> dash',/—/.test(rows(c)[2].textContent),rows(c)[2].textContent);
- c=card('printer',{entity:'sensor.st',ink_black:'sensor.k'},S('idle')); ok('other models: no ink bars',rows(c).length===0);
- c=card('printer',{model:'samsung_c480',entity:'sensor.st',ink_black:'sensor.k'},S('idle')); ok('samsung: no ink bars',rows(c).length===0);
+ c=card('printer',{entity:'sensor.st',ink_black:'sensor.k'},S('idle')); ok('other models: ink bars too',rows(c).length===1);
+ c=card('printer',{model:'samsung_c480',entity:'sensor.st',ink_black:'sensor.k'},S('idle')); ok('samsung: ink bars too',rows(c).length===1);
  c=card('printer',{model:'brother',entity:'sensor.st',ink_black:'sensor.k'},S('idle')); ok('brother alias model',rows(c).length===1&&!!c.sr.querySelector('image'),rows(c).length);
  document.querySelectorAll('appliance-printer-card').forEach((e)=>e.remove());
 }
@@ -790,7 +790,7 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
 {const TH=(id,v,a={})=>mk(id,v,{unit_of_measurement:'°C',device_class:'temperature',...a}), HU=(id,v)=>mk(id,v,{unit_of_measurement:'%',device_class:'humidity'});
  const rc=(c)=>c.sr.querySelector('ha-card'), chip=(c)=>c.sr.getElementById('chip').textContent, notes=(c)=>c.sr.getElementById('notes').textContent, base={entity_temperature:'sensor.t',entity_humidity:'sensor.h'};
  let c=card('room-climate',base,[TH('sensor.t',21.4),HU('sensor.h',48)]);
- ok('room climate comfort',/ok/.test(rc(c).className)&&chip(c)==='Confort'&&c.sr.getElementById('t').textContent==='21,4'&&c.sr.getElementById('h').textContent==='48 %'&&/Rosée 9,9°/.test(c.sr.getElementById('meta').textContent),rc(c).className+' '+chip(c)+' '+c.sr.getElementById('meta').textContent);
+ ok('room climate comfort',/ok/.test(rc(c).className)&&chip(c)==='Confort'&&c.sr.getElementById('t').textContent==='21,4'&&c.sr.getElementById('h').textContent==='48 %'&&/Rosée de la pièce 9,9°/.test(c.sr.getElementById('meta2').textContent),rc(c).className+' '+chip(c)+' '+c.sr.getElementById('meta2').textContent);
  c=card('room-climate',base,[TH('sensor.t',26),HU('sensor.h',50)]); ok('room climate warm',/warm/.test(rc(c).className)&&chip(c)==='Chaud',chip(c));
  c=card('room-climate',{...base,comfort_temp_max:27},[TH('sensor.t',26),HU('sensor.h',50)]); ok('room climate comfort threshold from editor',chip(c)==='Confort',chip(c));
  c=card('room-climate',base,[TH('sensor.t',20),HU('sensor.h',30)]); ok('room climate dry',chip(c)==='Sec',chip(c));
@@ -798,7 +798,7 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c=card('room-climate',base,[TH('sensor.t',22),HU('sensor.h',75)]); ok('room climate mould risk',/Risque de moisissure/.test(notes(c)),notes(c));
  c=card('room-climate',{...base,entity_outdoor_temperature:'sensor.o'},[TH('sensor.t',21),HU('sensor.h',62),TH('sensor.o',-5)]); ok('room climate condensation risk (cold outside)',/Risque de condensation/.test(notes(c)),notes(c));
  c=card('room-climate',{...base,entity_outdoor_temperature:'sensor.o',entity_outdoor_humidity:'sensor.oh'},[TH('sensor.t',22),HU('sensor.h',70),TH('sensor.o',8),HU('sensor.oh',80)]);
- ok('room climate advice: air the room (drier outside)',/Aérer : l'air extérieur est plus sec/.test(notes(c))&&/Ext\. 8,0° · 80 %/.test(c.sr.getElementById('meta').textContent),notes(c));
+ ok('room climate advice: air the room (drier outside)',/Aérer : l'air extérieur contient moins d'eau/.test(notes(c))&&/Ext\. 8,0° · 80 %/.test(c.sr.getElementById('meta').textContent),notes(c));
  c=card('room-climate',{...base,entity_outdoor_temperature:'sensor.o',entity_outdoor_humidity:'sensor.oh'},[TH('sensor.t',22),HU('sensor.h',70),TH('sensor.o',30),HU('sensor.oh',80)]); ok('room climate no advice when outside is wetter',!/Aérer/.test(notes(c)),notes(c));
  c=card('room-climate',{...base,entity_window:'binary_sensor.w'},[TH('sensor.t',21),HU('sensor.h',50),mk('binary_sensor.w','on')]); ok('room climate window sensor icon',!c.sr.getElementById('win').hidden,'hidden');
  c=card('room-climate',base,[TH('sensor.t',21),HU('sensor.h',50)]); c.el._live.t=[{t:Date.now()-5*60000,v:21}]; c.el.hass=hassOf([TH('sensor.t',19),HU('sensor.h',50)]);
@@ -1529,17 +1529,17 @@ ok('card size / grid',typeof c.el.getCardSize()==='number'&&c.el.getGridOptions(
  {const w=(cfg)=>{const c=card('ceiling-spot',{entity:'light.l',compact:true,...cfg},[mk('light.l','on')]); Object.assign(c.el.style,{display:'block',width:'240px',height:'200px'}); return c.sr.querySelector('.stage svg').getBoundingClientRect().width;};
   const full=w({}), half=w({illustration_size:55});
   ok('compact: illustration_size shrinks the illustration',full>150&&Math.abs(half/full-0.55)<0.05,full+' / '+half);}
- {const BR={supported_color_modes:['brightness']}, tile=(c)=>c.sr.querySelector('.tile[data-k="brightness"]'), bs=(c)=>c.sr.getElementById('ltbs');
+ {const BR={supported_color_modes:['brightness']}, tile=(c)=>c.sr.querySelector('.tile[data-k="brightness"]'), bs=(c)=>c.sr.getElementById('ltbs'), stg=(c)=>c.sr.querySelector('.stage');
   c=card('ceiling-spot',{entity:'light.l'},[mk('light.l','on',{...BR,brightness:191})]);
-  ok('ceiling spot: brightness slider by default',tile(c).classList.contains('slide')&&!tile(c).classList.contains('hide')&&bs(c).value==='75',bs(c).value);
+  ok('ceiling spot: brightness slider by default',stg(c).classList.contains('hasbs')&&tile(c).classList.contains('hide')&&bs(c).value==='75',bs(c).value);
   bs(c).value='40'; bs(c).dispatchEvent(new Event('input')); bs(c).dispatchEvent(new Event('change'));
   ok('slider sets brightness_pct',JSON.stringify(c.h.calls[0])==='["light","turn_on",{"entity_id":"light.l","brightness_pct":40}]',JSON.stringify(c.h.calls));
   c=card('ceiling-spot',{entity:'light.l'},[mk('light.l','off',BR)]);
-  ok('slider tile kept (greyed) when off',!tile(c).classList.contains('hide')&&tile(c).classList.contains('dim')&&bs(c).value==='0');
+  ok('slider kept (greyed) when off',stg(c).classList.contains('hasbs')&&c.sr.getElementById('ltsb').classList.contains('dim')&&bs(c).value==='0');
   bs(c).value='0'; bs(c).dispatchEvent(new Event('change')); ok('slider at 0 turns off',JSON.stringify(c.h.calls[0])==='["light","turn_off",{"entity_id":"light.l"}]',JSON.stringify(c.h.calls));
   c=card('ceiling-spot',{entity:'light.l',brightness_slider:false},[mk('light.l','off',BR)]); ok('brightness_slider: false -> plain tile, hidden when off',tile(c).classList.contains('hide')&&!tile(c).classList.contains('slide'));
   c=card('light-bulb',{entity:'light.l'},[mk('light.l','off',BR)]); ok('other lights unchanged: no slider by default',tile(c).classList.contains('hide')&&!tile(c).classList.contains('slide'));
-  c=card('light-bulb',{entity:'light.l',brightness_slider:true},[mk('light.l','on',{...BR,brightness:255})]); ok('slider can be turned on for other lights',tile(c).classList.contains('slide')&&bs(c).value==='100');
+  c=card('light-bulb',{entity:'light.l',brightness_slider:true},[mk('light.l','on',{...BR,brightness:255})]); ok('slider can be turned on for other lights',stg(c).classList.contains('hasbs')&&bs(c).value==='100');
   c=card('ceiling-spot',{entity:'switch.s'},[mk('switch.s','on')]); ok('no slider on a switch',!tile(c).classList.contains('slide'));
  }
  c=card('garden-spotlight',{entity_power:'sensor.p'},[mk('sensor.p',12,W)]);
