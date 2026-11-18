@@ -12,6 +12,8 @@
 
 ## Zendure SolarFlow 2400 AC+ (photo)
 
+<p align="center"><img src="../battery-zendure.gif" width="340" alt="Zendure SolarFlow 2400 AC+: charging from 8 to 100 %, then discharging"></p>
+
 `model: zendure_ac2400`: cut-out photo of the **Zendure SolarFlow 2400 AC+**. The battery icon of its screen is redrawn with 4 segments that follow the state of charge (green / orange / red, the last lit segment blinks while charging), the charge in % and the flow arrow are drawn on the front. `count` places several units side by side.
 
 ```yaml
