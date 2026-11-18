@@ -156,7 +156,7 @@ energy_period: day
 
 **Temps restant et progression estimés** (sans capteur) : `estimate: true` estime pendant le cycle le temps restant et la progression à partir de l'historique de `power` (10 derniers jours) : la durée de référence est la **médiane des 7 derniers cycles**. La carte affiche « ≈ 1 h 30 », « Fin estimée à 12:19 » et la barre de progression ; au-delà de la durée de référence, « Bientôt fini » (barre à 99 %). Idéal si tu utilises surtout le même programme. Un capteur `remaining` ou `progress` reste prioritaire. Il faut au moins un cycle complet dans l'historique.
 
-**kWh ou €** : `display: energy` n'affiche que les kWh (pas de coût du cycle) ; `display: cost` n'affiche que les coûts : la conso du cycle disparaît et, avec `energy_period`, la tuile de la période devient son coût (« Coût du jour », « Coût sur 7 jours »…) (conso × `price_per_kwh`). Sans prix valide, les kWh restent affichés. Par défaut, les deux.
+**kWh ou €** : `display: energy` n'affiche que les kWh (pas de coût du cycle) ; `display: cost` n'affiche que les coûts : la conso du cycle disparaît et, avec `energy_period`, la tuile de la période devient son coût (« Coût du jour », « Coût sur 7 jours »…) (conso × `price_per_kwh`). Sans prix valide, les kWh restent affichés. `display: both` affiche, avec `energy_period`, la conso de la période **et** une seconde tuile avec son coût (« Coût du jour »…). Par défaut : les kWh et le coût du cycle.
 
 ```yaml
 type: custom:appliance-dishwasher-card

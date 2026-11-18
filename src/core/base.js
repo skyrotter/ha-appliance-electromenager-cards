@@ -1986,7 +1986,7 @@ class ApplianceCardBase extends HTMLElement {
       });
     }
     if (m.pwS && !zero(m.pwS)) tile("mdi:solar-power", fmtPower(hass, m.pwS) ?? "—", lb("solar_surplus"), c.power_solar);
-    // display : "energy" (kWh seuls), "cost" (€ seuls, si price_per_kwh est valide), sinon les deux
+    // display : "energy" (kWh seuls), "cost" (€ seuls, si price_per_kwh est valide), "both" (kWh ET coût de la période), sinon le comportement historique
     const pr = typeof c.price_per_kwh === "string" ? num(hass.states[c.price_per_kwh]) : Number(c.price_per_kwh);
     const hasPr = c.price_per_kwh != null && c.price_per_kwh !== "" && Number.isFinite(pr);
     const prEnt = typeof c.price_per_kwh === "string" ? c.price_per_kwh : null;
@@ -2003,7 +2003,7 @@ class ApplianceCardBase extends HTMLElement {
     if (noEnergy) { /* tuile masquée */ } else if (m.energy && per && !dual && !solar) {
       if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.energy);
       // coût de la période (mode € ou les deux) : conso de la période × prix du kWh actuel
-      if (showCost && c.display === "cost" && showOpt("show_cost")) tile("mdi:cash", money(this._perKwh * pr), tr(hass, `cost_${per}`), prEnt || c.energy);
+      if (showCost && (c.display === "cost" || c.display === "both") && showOpt("show_cost")) tile("mdi:cash", money(this._perKwh * pr), tr(hass, `cost_${per}`), prEnt || c.energy);
     } else if (!c.energy && !m.energy && per && c.power && !dual && !solar) {
       // période calculée depuis la puissance de la prise (pas de compteur kWh) : kWh puis coût (avec price_per_kwh)
       if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.power);

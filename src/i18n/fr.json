@@ -134,6 +134,7 @@
     "deep_fryer": "Friteuse",
     "fryer_heating": "Chauffe",
     "fryer_ready": "Huile prête !",
+    "display_both": "kWh + € (conso et coût de la période)",
     "f_preheat_minutes": "Durée de préchauffage (min)",
     "f_grill_ready_minutes": "Prêt pendant (min après la coupure)",
     "air_compressor": "Compresseur d'air",

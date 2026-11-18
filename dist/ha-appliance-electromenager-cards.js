@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.176.0";
+const VERSION = "1.176.1";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -155,6 +155,7 @@ const STRINGS = {
     "deep_fryer": "Deep fryer",
     "fryer_heating": "Heating",
     "fryer_ready": "Oil ready!",
+    "display_both": "kWh + € (consumption and cost of the period)",
     "f_preheat_minutes": "Preheat time (min)",
     "f_grill_ready_minutes": "Ready for (min after switch-off)",
     "air_compressor": "Air compressor",
@@ -2361,6 +2362,7 @@ const STRINGS = {
     "deep_fryer": "Friteuse",
     "fryer_heating": "Chauffe",
     "fryer_ready": "Huile prête !",
+    "display_both": "kWh + € (conso et coût de la période)",
     "f_preheat_minutes": "Durée de préchauffage (min)",
     "f_grill_ready_minutes": "Prêt pendant (min après la coupure)",
     "air_compressor": "Compresseur d'air",
@@ -13371,7 +13373,7 @@ class ApplianceCardBase extends HTMLElement {
       });
     }
     if (m.pwS && !zero(m.pwS)) tile("mdi:solar-power", fmtPower(hass, m.pwS) ?? "—", lb("solar_surplus"), c.power_solar);
-    // display : "energy" (kWh seuls), "cost" (€ seuls, si price_per_kwh est valide), sinon les deux
+    // display : "energy" (kWh seuls), "cost" (€ seuls, si price_per_kwh est valide), "both" (kWh ET coût de la période), sinon le comportement historique
     const pr = typeof c.price_per_kwh === "string" ? num(hass.states[c.price_per_kwh]) : Number(c.price_per_kwh);
     const hasPr = c.price_per_kwh != null && c.price_per_kwh !== "" && Number.isFinite(pr);
     const prEnt = typeof c.price_per_kwh === "string" ? c.price_per_kwh : null;
@@ -13388,7 +13390,7 @@ class ApplianceCardBase extends HTMLElement {
     if (noEnergy) { /* tuile masquée */ } else if (m.energy && per && !dual && !solar) {
       if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.energy);
       // coût de la période (mode € ou les deux) : conso de la période × prix du kWh actuel
-      if (showCost && c.display === "cost" && showOpt("show_cost")) tile("mdi:cash", money(this._perKwh * pr), tr(hass, `cost_${per}`), prEnt || c.energy);
+      if (showCost && (c.display === "cost" || c.display === "both") && showOpt("show_cost")) tile("mdi:cash", money(this._perKwh * pr), tr(hass, `cost_${per}`), prEnt || c.energy);
     } else if (!c.energy && !m.energy && per && c.power && !dual && !solar) {
       // période calculée depuis la puissance de la prise (pas de compteur kWh) : kWh puis coût (avec price_per_kwh)
       if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.power);
@@ -13584,7 +13586,7 @@ function buildForm(kind) {
           ...(d.fields.includes("energy") || ["washer", "dryer", "dishwasher"].includes(kind) ? [
             { name: "price_per_kwh", selector: { number: { min: 0, max: 2, step: 0.0001, mode: "box" } } },
             { name: "display", selector: { select: { mode: "dropdown", options: [
-              { value: "", label: "kWh + €" }, { value: "energy", label: "kWh" }, { value: "cost", label: "€" }] } } },
+              { value: "", label: "kWh + €" }, { value: "both", label: tr(null, "display_both") }, { value: "energy", label: "kWh" }, { value: "cost", label: "€" }] } } },
           ] : []),
           { name: "illustration_size", selector: { number: { min: 30, max: 300, step: 5, mode: "slider", unit_of_measurement: "%" } } },
           { name: "transparent", selector: { boolean: {} } },
@@ -15746,7 +15748,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
 (async () => {
   const base = import.meta.url;
   // ?v=<version> : après une mise à jour, le navigateur ne ressert pas d'anciens morceaux depuis son cache
-  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.176.0`, base).href);
+  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.176.1`, base).href);
   await chunk("card-helpers");
   await chunk("editor-labels");
   // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre
