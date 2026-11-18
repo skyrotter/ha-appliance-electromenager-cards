@@ -1285,6 +1285,7 @@
     "model_qnap_ts251": "QNAP TS-251+ (2 rekesz)",
     "model_qnap_ts253": "QNAP TS-253 (2 rekesz)",
     "model_synology_ds224": "Synology DS224+ (2 rekesz)",
+    "model_synology_ds1812": "Synology DS1812+ (8 rekesz)",
     "model_ugreen_dxp4800_plus": "UGREEN DXP4800 Plus (4 rekesz)",
     "model_ugreen_idx6011_pro": "UGREEN iDX6011 Pro (6 rekesz)",
     "parity_alert": "Paritás érvénytelen",
