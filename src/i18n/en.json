@@ -79,6 +79,7 @@
     "mode_off": "Off",
     "wine_cooler": "Wine cooler",
     "f_max_temperature_wine": "Alert above (°C)",
+    "f_radiator_style": "Radiator model",
     "f_fridge_style": "Refrigerator layout",
     "f_fridge_finish": "Refrigerator finish",
     "zone_top": "Upper zone",
