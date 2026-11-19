@@ -53,7 +53,11 @@ const loc = (hass) => hass?.locale?.language || hass?.language || undefined;
 // (window.applianceLocale, src/cards/card-helpers.js, chargé après le cœur mais avant tout rendu)
 const numLoc = (hass) => (window.applianceLocale ? window.applianceLocale(null, hass) : loc(hass));
 
-function fmtNum(hass, n, digits, minDigits = 0) {
+// eid : entité source du nombre ; si l'utilisateur a réglé « Précision d'affichage » dans HA (hass.entities[eid].display_precision),
+// elle prime sur les décimales prévues par la carte (sans réglage, comportement inchangé)
+const dispPrec = (hass, eid) => { const p = eid && hass?.entities?.[eid]?.display_precision; return Number.isInteger(p) && p >= 0 && p <= 20 ? p : null; };
+function fmtNum(hass, n, digits, minDigits = 0, eid) {
+  const dp = dispPrec(hass, eid); if (dp !== null) { digits = dp; minDigits = dp; }
   try {
     return new Intl.NumberFormat(numLoc(hass), { maximumFractionDigits: digits, minimumFractionDigits: minDigits }).format(n);
   } catch (e) { return n.toFixed(digits); }
@@ -61,12 +65,12 @@ function fmtNum(hass, n, digits, minDigits = 0) {
 const powerW = (st) => { const v = num(st); if (v === null) return null; return st.attributes.unit_of_measurement === "kW" ? v * 1000 : v; };
 function fmtPower(hass, st) {
   const w = powerW(st); if (w === null) return null;
-  return w >= 1000 ? `${fmtNum(hass, w / 1000, 2)} kW` : `${fmtNum(hass, w, w < 10 ? 1 : 0)} W`;
+  return w >= 1000 ? `${fmtNum(hass, w / 1000, 2, 0, st.entity_id)} kW` : `${fmtNum(hass, w, w < 10 ? 1 : 0, 0, st.entity_id)} W`;
 }
 function fmtUnit(hass, st, digits, minDigits = 0) {
   const v = num(st); if (v === null) return null;
   const u = st.attributes.unit_of_measurement;
-  return u ? `${fmtNum(hass, v, digits, minDigits)} ${u}` : fmtNum(hass, v, digits, minDigits);
+  return u ? `${fmtNum(hass, v, digits, minDigits, st.entity_id)} ${u}` : fmtNum(hass, v, digits, minDigits, st.entity_id);
 }
 // Énergie en kWh (Wh et MWh convertis), sans décimale au-delà de 1000 kWh ; autres unités inchangées
 function fmtEnergy(hass, st) {
@@ -75,7 +79,7 @@ function fmtEnergy(hass, st) {
   const f = { Wh: 1e-3, kWh: 1, MWh: 1e3, GWh: 1e6 }[u];
   if (f === undefined) return fmtUnit(hass, st, 2);
   const k = v * f;
-  return `${fmtNum(hass, k, Math.abs(k) >= 1000 ? 0 : 2)} kWh`;
+  return `${fmtNum(hass, k, Math.abs(k) >= 1000 ? 0 : 2, 0, st.entity_id)} kWh`;
 }
 function parseRemaining(st) {
   if (!st) return null;
