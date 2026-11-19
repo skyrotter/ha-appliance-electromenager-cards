@@ -999,6 +999,8 @@
     "invert": "Inverser l'état",
     "invert_position": "Inverser la position (ouvert ↔ fermé)",
     "invert_buttons": "Inverser les boutons (commandes Ouvrir ↔ Fermer)",
+    "panels": "Nombre de pans (1 ou 2)",
+    "side": "Côté où s'empile le pan unique",
     "invert_power": "Inverser le signe de la puissance",
     "jets_threshold": "Seuil des jets (W)",
     "language": "Langue",

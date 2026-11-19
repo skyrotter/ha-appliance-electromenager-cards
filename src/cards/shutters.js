@@ -173,16 +173,26 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
 
   const X0 = 34, X1 = 166, Y0 = 36, Y1 = 146, W = X1 - X0, H = Y1 - Y0;
   const SVGS = {
-    // Two fabric panels gather sideways from the centre, never roll vertically.
-    sliding_curtain: () => {
+    // Deux pans de tissu qui se replient vers les bords (panels: 2, défaut), ou un seul pan qui s'empile
+    // à gauche ou à droite (panels: 1 + side), sans jamais s'enrouler verticalement.
+    sliding_curtain: (c = {}) => {
+      const waves = (d) => `t${d} 0`.repeat(12);
       const panel = '<path d="M22 31q6 3 12 0t12 0t12 0t12 0t12 0t12 0h6v117q-6 3-12 0t-12 0t-12 0t-12 0t-12 0t-12 0h-6Z" fill="url(#shcurtainfabric)"/>';
+      // pan unique : 13 ondulations de 12 couvrent toute la largeur du rail (x 22 → 178)
+      const single = `<path d="M22 31q6 3 12 0${waves(12)}v117q-6 3-12 0${waves(-12)}Z" fill="url(#shcurtainfabric)"/>`;
+      const one = Number(c.panels) === 1;
+      const curtains = one
+        ? (c.side === 'right'
+          ? `<g transform="translate(200 0) scale(-1 1)"><g class="curtain-right curtain-panel mv">${single}</g></g>`
+          : `<g class="curtain-left curtain-panel mv">${single}</g>`)
+        : `<g class="curtain-left curtain-panel mv">${panel}</g>
+        <g transform="translate(200 0) scale(-1 1)"><g class="curtain-right curtain-panel mv">${panel}</g></g>`;
       return `<rect x="28" y="36" width="144" height="110" rx="2" fill="#8a96a2"/>
         <g class="day"><rect x="32" y="40" width="136" height="102" fill="url(#shskyd)"/><circle cx="142" cy="59" r="7" fill="#ffe27a"/></g>
         <g class="night"><rect x="32" y="40" width="136" height="102" fill="url(#shskyn)"/><path d="M140 53a7 7 0 1 0 8 9 8 8 0 0 1-8-9" fill="#d9e4e8"/></g>
-        <path d="M100 40v102M32 142h136" stroke="#7c8c9d" stroke-width="3"/>
+        <path d="${one ? '' : 'M100 40v102'}M32 142h136" stroke="#7c8c9d" stroke-width="3"/>
         <rect x="24" y="145" width="152" height="4" rx="1" fill="#a7b1b9"/>
-        <g class="curtain-left curtain-panel mv">${panel}</g>
-        <g transform="translate(200 0) scale(-1 1)"><g class="curtain-right curtain-panel mv">${panel}</g></g>
+        ${curtains}
         <rect x="18" y="25" width="164" height="4" rx="1.5" fill="url(#shalu)"/>
         <path d="M20 29v3m160-3v3" stroke="#7c8791" stroke-width="2"/>`;
     },
@@ -608,7 +618,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       const swing = this.kind === 'swing_shutter', pergola = this.kind === 'pergola', roof = this.kind === 'roof_window', awning = this.kind === 'awning' || this.kind === 'double_awning', dbl = this.kind === 'double_awning', curtain = this.kind === 'sliding_curtain';
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="shtitle"></div><div class="badge" id="shbadge"></div></div>
-        <div class="scene${swing ? ' sw' : pergola || awning ? ' pg' : ''}"><svg viewBox="${dbl ? '50 70 1338 930' : pergola || awning ? '0 0 240 180' : '0 0 200 172'}" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${pergola ? PERGOLA() : dbl ? DAWNING() : awning ? AWNING() : roof ? ROOF() : SVGS[this.kind]()}</svg>
+        <div class="scene${swing ? ' sw' : pergola || awning ? ' pg' : ''}"><svg viewBox="${dbl ? '50 70 1338 930' : pergola || awning ? '0 0 240 180' : '0 0 200 172'}" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${pergola ? PERGOLA() : dbl ? DAWNING() : awning ? AWNING() : roof ? ROOF() : SVGS[this.kind](this._c)}</svg>
           ${swing ? `<div class="leaf l mv">${LEAF(false)}</div><div class="leaf r mv">${LEAF(true)}</div>` : ''}</div>
         <div class="rng ps" id="shpos"><span></span><input type="range" min="0" max="100" step="1"></div>
         <div class="rng tl" id="shtilt"><span></span><input type="range" min="0" max="100" step="1"></div>
@@ -963,6 +973,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         ] },
         bool('invert', false),
         bool('invert_buttons', false),
+        ...(this.kind === 'sliding_curtain' ? [{ name: 'panels', selector: { number: { min: 1, max: 2, step: 1, mode: 'box' } } }, { name: 'side', selector: { select: { mode: 'dropdown', options: ['left', 'right'] } } }] : []),
         ...(this.kind === 'venetian_blind' ? [bool('tilt_only', false), bool('tilt_from_position', false), { name: 'tilt_presets', selector: { object: {} } }] : []),
         ...window.applianceActionFields,
         window.applianceLanguageField(T),
@@ -993,7 +1004,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
     });
     customElements.define(tag + '-editor', class extends ApplianceShutterCardEditor { get kind() { return kind; } });
     window.customCards.push({ type: tag, name: `Appliance – ${T.en[kind]} / ${T.fr[kind]}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l][kind]])), preview: true,
-      description: kind === 'sliding_curtain' ? `Animated sliding curtains: two fabric panels, open / stop / close controls, position, and day / night view.` : kind === 'double_awning' ? `${T.fr[kind]} animé : toile des deux côtés, bras articulés, ombre, vent fort, pluie, éclairage LED et vue jour / nuit.` : kind === 'awning' ? `${T.fr[kind]} animé : toile qui se déploie, bras articulés, ombre sur la terrasse, vent fort, pluie, éclairage LED et vue jour / nuit.` : kind === 'roof_window' ? `${T.fr[kind]} animée : ouvrant à rotation, volet roulant extérieur, pluie et vue jour / nuit.` : kind === 'pergola' ? `${T.fr[kind]} animée : lames orientables, pluie, éclairage LED et vue jour / nuit.` : `${T.fr[kind]} animé : position, inclinaison, mouvement et vue jour / nuit.`,
+      description: kind === 'sliding_curtain' ? `Animated sliding curtains: one or two fabric panels, open / stop / close controls, position, and day / night view.` : kind === 'double_awning' ? `${T.fr[kind]} animé : toile des deux côtés, bras articulés, ombre, vent fort, pluie, éclairage LED et vue jour / nuit.` : kind === 'awning' ? `${T.fr[kind]} animé : toile qui se déploie, bras articulés, ombre sur la terrasse, vent fort, pluie, éclairage LED et vue jour / nuit.` : kind === 'roof_window' ? `${T.fr[kind]} animée : ouvrant à rotation, volet roulant extérieur, pluie et vue jour / nuit.` : kind === 'pergola' ? `${T.fr[kind]} animée : lames orientables, pluie, éclairage LED et vue jour / nuit.` : `${T.fr[kind]} animé : position, inclinaison, mouvement et vue jour / nuit.`,
       documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards' });
   }
 })();

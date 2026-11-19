@@ -1015,6 +1015,8 @@
     "invert": "Invert state",
     "invert_position": "Invert position (open ↔ closed)",
     "invert_buttons": "Invert the buttons (Open ↔ Close commands)",
+    "panels": "Number of panels (1 or 2)",
+    "side": "Side where the single panel stacks",
     "invert_power": "Invert power sign",
     "jets_threshold": "Jets threshold (W)",
     "language": "Language",
