@@ -1111,7 +1111,12 @@ class ApplianceCardBase extends HTMLElement {
     const a = st.attributes || {}, list = Array.isArray(a.source_list) ? a.source_list : [];
     if (!list.length) return;
     this._closeSourcePopup();
-    const items = list.map((name) => ({ name, ...this._srcInfo(name) }));
+    // source active : correspondance tolérante (casse, espaces, tirets) sur « source », puis « app_name » ; sinon correspondance partielle
+    const norm = (s) => String(s ?? "").toLowerCase().replace(/[\s_\-.:+]+/g, ""), ln = list.map(norm);
+    let curIdx = -1;
+    for (const v of [a.source, a.app_name]) { const n = norm(v); if (n && curIdx < 0) curIdx = ln.indexOf(n); }
+    if (curIdx < 0) for (const v of [a.source, a.app_name]) { const n = norm(v); if (n.length >= 3 && curIdx < 0) curIdx = ln.findIndex((x) => x.length >= 3 && (x.includes(n) || n.includes(x))); }
+    const items = list.map((name, i) => ({ name, cur: i === curIdx, ...this._srcInfo(name) }));
     const groups = [["sources_inputs", items.filter((i) => i.kind === "input")], ["sources_apps", items.filter((i) => i.kind !== "input")]].filter((g) => g[1].length);
     const title = c.name || a.friendly_name || id, host = document.createElement("div"), root = host.attachShadow({ mode: "open" });
     root.innerHTML = `<style>
@@ -1126,7 +1131,11 @@ class ApplianceCardBase extends HTMLElement {
       .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
       .tile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; min-height: 84px; padding: 10px 6px; border: none; border-radius: 14px; background: rgba(127,127,127,.14); color: inherit; font: inherit; cursor: pointer; transition: transform .12s ease, background .2s; -webkit-tap-highlight-color: transparent; }
       .tile:hover { background: rgba(127,127,127,.24); } .tile:active { transform: scale(.93); }
-      .tile.cur { background: #1e88e5; color: #fff; }
+      .tile { position: relative; }
+      .tile.cur { background: #1e88e5; color: #fff; box-shadow: 0 0 0 2px #fff inset, 0 2px 10px rgba(30,136,229,.55); }
+      .tile.cur .ic i { background: #fff; color: #1e88e5; border-color: #fff; }
+      .ck { position: absolute; top: 5px; right: 5px; width: 18px; height: 18px; border-radius: 50%; background: #fff; color: #1e88e5; display: flex; align-items: center; justify-content: center; --mdc-icon-size: 14px; }
+      .on { font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; opacity: .95; }
       .ic { position: relative; display: flex; --mdc-icon-size: 30px; }
       .ic i { position: absolute; right: -9px; bottom: -5px; font-style: normal; font-weight: 600; font-size: 12px; line-height: 16px; padding: 0 4px; border-radius: 8px; background: var(--card-background-color, #fff); color: var(--primary-text-color, #212121); border: 1px solid rgba(127,127,127,.45); }
       .lb { font-size: 13px; line-height: 1.2; text-align: center; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; word-break: break-word; }
@@ -1137,7 +1146,7 @@ class ApplianceCardBase extends HTMLElement {
     <div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(tr(hass, "source_select"))}">
       <div class="hd"><div class="tt"><b>${esc(tr(hass, "source_select"))}</b><span>${esc(title)}</span></div>
         <button class="x" aria-label="${esc(tr(hass, "close_dialog"))}"><ha-icon icon="mdi:close"></ha-icon></button></div>
-      ${groups.map(([k, arr]) => `${groups.length > 1 ? `<div class="sec">${esc(tr(hass, k))}</div>` : ""}<div class="grid">${arr.map((i) => `<button class="tile${i.name === a.source ? " cur" : ""}" data-n="${esc(i.name)}"><span class="ic"><ha-icon icon="${i.icon}"></ha-icon>${i.badge ? `<i>${esc(i.badge)}</i>` : ""}</span><span class="lb">${esc(i.name)}</span></button>`).join("")}</div>`).join("")}
+      ${groups.map(([k, arr]) => `${groups.length > 1 ? `<div class="sec">${esc(tr(hass, k))}</div>` : ""}<div class="grid">${arr.map((i) => `<button class="tile${i.cur ? " cur" : ""}"${i.cur ? ' aria-current="true"' : ""} data-n="${esc(i.name)}">${i.cur ? '<span class="ck"><ha-icon icon="mdi:check"></ha-icon></span>' : ""}<span class="ic"><ha-icon icon="${i.icon}"></ha-icon>${i.badge ? `<i>${esc(i.badge)}</i>` : ""}</span><span class="lb">${esc(i.name)}</span>${i.cur ? `<span class="on">${esc(tr(hass, "source_active"))}</span>` : ""}</button>`).join("")}</div>`).join("")}
     </div>`;
     const close = () => this._closeSourcePopup();
     root.querySelector(".bd").onclick = close;
