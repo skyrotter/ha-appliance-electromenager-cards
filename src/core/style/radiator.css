@@ -2,6 +2,7 @@
 .k-radiator { --heat: 0; }
 .rglow { opacity: 0; transition: opacity 1.2s; }
 .k-radiator.st-heating .rglow { opacity: calc(var(--heat) * .55); animation: ac-hob 3s ease-in-out infinite; --lvl: calc(var(--heat) * .55); }
+.k-radiator.st-heating .rglow.ph { opacity: calc(var(--heat) * .3); animation: none; } /* photos : simple voile chaud, sans le dégradé orange vif des dessins */
 .rwaves path { fill: none; stroke: var(--ac-heat); stroke-width: 1.8; stroke-linecap: round; opacity: 0; }
 .k-radiator.st-heating .rwaves path { animation: ac-steam calc(2.6s - var(--heat) * 1.2s) ease-out infinite; }
 .rwaves path:nth-child(2) { animation-delay: .5s !important; } .rwaves path:nth-child(3) { animation-delay: 1s !important; } .rwaves path:nth-child(4) { animation-delay: 1.5s !important; }

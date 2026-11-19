@@ -6,21 +6,21 @@ const RAD_DRAW = SVG.radiator;
 SVG.radiator = (c) => {
   const st = c && c.style;
   if (st === "convector_photo") {
-    return `${RAD_DEFS}<clipPath id="ID-fins"><rect x="25" y="20" width="62" height="25" rx="1.5"/></clipPath></defs>
+    return `${RAD_DEFS}<linearGradient id="ID-warmsoft" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffe3c4"/><stop offset="1" stop-color="#ffc08a"/></linearGradient><clipPath id="ID-fins"><rect x="25" y="20" width="62" height="25" rx="1.5"/></clipPath></defs>
 ${RAD_WAVES(14, [32, 46, 60, 74])}
 <ellipse cx="58" cy="127" rx="34" ry="3" fill="url(#ID-shadow)"/>
 <image href="${RAD_CONV_IMG}" x="22" y="16" width="75" height="108" preserveAspectRatio="none"/>
-<g clip-path="url(#ID-fins)"><rect class="rglow" x="22" y="18" width="68" height="28" fill="url(#ID-heatglow)" style="mix-blend-mode:multiply"/></g>
+<g clip-path="url(#ID-fins)"><rect class="rglow ph" x="22" y="18" width="68" height="28" fill="url(#ID-warmsoft)" style="mix-blend-mode:multiply"/></g>
 ${lcd(36, 98, 26, 10)}
 ${RAD_ICONS(41.5, 114, 6)}
 <circle class="led l1" cx="30" cy="111" r="1"/>`;
   }
   if (st === "baseboard_photo") {
-    return `${RAD_DEFS}<clipPath id="ID-fins"><polygon points="16.5,84.7 111,79.2 111,83.6 16.5,90.4"/></clipPath></defs>
+    return `${RAD_DEFS}<linearGradient id="ID-warmsoft" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffe3c4"/><stop offset="1" stop-color="#ffc08a"/></linearGradient><clipPath id="ID-fins"><polygon points="16.5,84.7 111,79.2 111,83.6 16.5,90.4"/></clipPath></defs>
 ${RAD_WAVES(78, [28, 44, 60, 76, 92])}
 <ellipse cx="60" cy="99" rx="52" ry="2.4" fill="url(#ID-shadow)"/>
 <image href="${RAD_BASE_IMG}" x="3" y="76" width="114" height="20" preserveAspectRatio="none"/>
-<g clip-path="url(#ID-fins)"><rect class="rglow" x="14" y="76" width="98" height="16" fill="url(#ID-heatglow)" style="mix-blend-mode:multiply"/></g>
+<g clip-path="url(#ID-fins)"><rect class="rglow ph" x="14" y="76" width="98" height="16" fill="url(#ID-warmsoft)" style="mix-blend-mode:multiply"/></g>
 ${lcd(82, 101, 24, 9)}
 ${RAD_ICONS(87, 116, 6)}
 <circle class="led l1" cx="111" cy="105" r="1"/>`;
