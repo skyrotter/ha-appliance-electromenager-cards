@@ -2160,6 +2160,7 @@
     "model_luminea": "Flat sensor (Luminea type)",
     "model_wall": "Round wall sensor",
     "model_radar": "PIR + radar sensor (Tuya type)",
+    "background_image": "Background photo (URL or /local/… path, detector photo models only)",
     "clear": "No motion",
     "motion": "Motion detected",
     "recent": "Recent motion",

@@ -27,8 +27,11 @@ entity_illuminance: sensor.hallway_motion_illuminance  # optional
 entity_temperature: sensor.hallway_motion_temperature  # optional
 recent_motion_minutes: 10
 battery_low: 20
+background_image: /local/rooms/dining.jpg            # optional, photo models only
 ```
 
-Options: `model`, `name`, `labels`, `illustration_size`, `transparent`, `tap_action` / `hold_action`, `language`, `show_status`, `show_battery`, `show_since`, `show_lux`, `show_temp`, `animations`.
+`background_image` shows a photo of the room behind a detector photo model (`aqara`, `luminea`, `wall`, `radar`) so you can tell at a glance where the sensor is. It takes an `https://` URL, a `/local/...` path (file in `config/www`) or a `data:image` URI, and is cropped to fill the card. It is ignored with `model: room`.
+
+Options: `model`, `background_image`, `name`, `labels`, `illustration_size`, `transparent`, `tap_action` / `hold_action`, `language`, `show_status`, `show_battery`, `show_since`, `show_lux`, `show_temp`, `animations`.
 
 [← All cards](../../README.md#the-cards)

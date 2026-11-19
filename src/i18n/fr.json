@@ -2145,6 +2145,7 @@
     "model_luminea": "Détecteur plat (type Luminea)",
     "model_wall": "Détecteur mural rond",
     "model_radar": "Détecteur PIR + radar (type Tuya)",
+    "background_image": "Photo de fond (URL ou chemin /local/…, modèles photo du détecteur uniquement)",
     "clear": "Aucun mouvement",
     "motion": "Mouvement détecté",
     "recent": "Mouvement récent",
