@@ -2,6 +2,8 @@
 
 `custom:appliance-alarm-keypad-card`
 
+<p align="center"><img src="../alarm-keypad.gif" width="300" alt="Alarm keypad card"></p>
+
 A white touch keypad (screen, padlocks, number pad, navigation and function keys) drawn in vector. Its screen shows the alarm status and the number of open zones; optional zone chips below it turn orange when a zone is open and red when it is in fault. Tap the keypad body to open the status entity; with an alarm panel the keys are live (see below).
 
 ```yaml
