@@ -1849,52 +1849,52 @@ class ApplianceCardBase extends HTMLElement {
     };
     const tEntity = c.temperature || (["water_heater", "climate"].includes(domainOf(c.entity)) ? c.entity : null);
     if (kind === "chest_freezer" || kind === "drawer_freezer") {
-      if (m.tempVal != null) tile("mdi:snowflake-thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("temperature"), tEntity,
+      if (m.tempVal != null) tile("mdi:snowflake-thermometer", `${fmtNum(hass, m.tempVal, 1, 0, tEntity)} ${m.tempUnit}`, lb("temperature"), tEntity,
         m.alerts.includes("too_warm") ? "warn" : "");
     } else if (kind === "beer_tap") {
-      if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("temperature"), tEntity);
-      if (m.keg != null) tile("mdi:keg", `${fmtNum(hass, m.keg, 0)} %`, lb("keg"), c.keg_level, m.alerts.includes("keg_low") ? "warn" : "");
+      if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1, 0, tEntity)} ${m.tempUnit}`, lb("temperature"), tEntity);
+      if (m.keg != null) tile("mdi:keg", `${fmtNum(hass, m.keg, 0, 0, c.keg_level)} %`, lb("keg"), c.keg_level, m.alerts.includes("keg_low") ? "warn" : "");
     } else if (kind === "power_strip") {
       // prises commandées : boutons dans la rangée .modes (plus de tuile « 1 / 3 »)
     } else if (kind === "phone_charger") {
-      if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0)} %`, lb("battery"), c.battery_level);
+      if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0, 0, c.battery_level)} %`, lb("battery"), c.battery_level);
     } else if (kind === "garland") {
       if (m.glEffect && m.status === "lit") tile("mdi:auto-fix", m.glEffect, lb("effect"), c.entity);
     } else if (kind === "kettle") {
-      if (m.tempVal != null) tile("mdi:thermometer-water", `${fmtNum(hass, m.tempVal, 0)} ${m.tempUnit}`, lb("water"), tEntity);
+      if (m.tempVal != null) tile("mdi:thermometer-water", `${fmtNum(hass, m.tempVal, 0, 0, tEntity)} ${m.tempUnit}`, lb("water"), tEntity);
     } else if (kind === "tool_charger") {
-      if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0)} %`, lb("battery"), c.battery_level);
+      if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0, 0, c.battery_level)} %`, lb("battery"), c.battery_level);
     } else if (kind === "wine_cooler") {
       const dual = !!c.zone2_temperature, max1 = c.max_temperature ?? (m.T ? m.T.c(18) : 18), max2 = c.max_temperature_2 ?? max1;
-      if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb(dual ? "zone_top" : "temperature"), tEntity, m.tempVal > max1 ? "warn" : "");
-      if (dual && m.zone2 != null) tile("mdi:thermometer-low", `${fmtNum(hass, m.zone2, 1)} ${m.T ? m.T.unit : m.zone2Ent?.attributes.unit_of_measurement || m.tempUnit}`, lb("zone_bottom"), c.zone2_temperature, m.zone2 > max2 ? "warn" : "");
-      if (m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0)} %`, lb("humidity"), c.humidity, m.alerts.includes("humid") ? "warn" : "");
+      if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1, 0, tEntity)} ${m.tempUnit}`, lb(dual ? "zone_top" : "temperature"), tEntity, m.tempVal > max1 ? "warn" : "");
+      if (dual && m.zone2 != null) tile("mdi:thermometer-low", `${fmtNum(hass, m.zone2, 1, 0, c.zone2_temperature)} ${m.T ? m.T.unit : m.zone2Ent?.attributes.unit_of_measurement || m.tempUnit}`, lb("zone_bottom"), c.zone2_temperature, m.zone2 > max2 ? "warn" : "");
+      if (m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0, 0, c.humidity)} %`, lb("humidity"), c.humidity, m.alerts.includes("humid") ? "warn" : "");
     } else if (kind === "fridge") {
-      if ((!c.energy || c.layout !== "split") && m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("fridge_temp"), tEntity,
+      if ((!c.energy || c.layout !== "split") && m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1, 0, tEntity)} ${m.tempUnit}`, lb("fridge_temp"), tEntity,
         m.tempVal > m.maxF ? "warn" : "");
-      if (m.ftemp) tile("mdi:snowflake", m.T ? (m.ftempVal != null ? `${fmtNum(hass, m.ftempVal, 1)} ${m.T.unit}` : null) : fmtUnit(hass, m.ftemp, 1), lb("freezer_temp"), c.freezer_temperature,
+      if (m.ftemp) tile("mdi:snowflake", m.T ? (m.ftempVal != null ? `${fmtNum(hass, m.ftempVal, 1, 0, c.freezer_temperature)} ${m.T.unit}` : null) : fmtUnit(hass, m.ftemp, 1), lb("freezer_temp"), c.freezer_temperature,
         m.ftempVal > m.maxZ ? "warn" : "");
-      if (m.flexVal != null) tile("mdi:thermometer-lines", `${fmtNum(hass, m.flexVal, 1)} ${m.T ? m.T.unit : m.flex.attributes.unit_of_measurement || m.tempUnit}`, lb("flex_temp"), c.flex_temperature,
+      if (m.flexVal != null) tile("mdi:thermometer-lines", `${fmtNum(hass, m.flexVal, 1, 0, c.flex_temperature)} ${m.T ? m.T.unit : m.flex.attributes.unit_of_measurement || m.tempUnit}`, lb("flex_temp"), c.flex_temperature,
         c.flex_max_temperature != null && m.flexVal > c.flex_max_temperature ? "warn" : "");
     } else if (kind === "radiator") {
       const te = c.temperature || (domainOf(c.entity) === "climate" ? c.entity : null);
-      if (m.tempVal != null) tile("mdi:home-thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("temperature"), te);
-      if (m.targetVal != null) tile("mdi:target", `${fmtNum(hass, m.targetVal, 1)} ${m.tempUnit}`, lb("target"), c.target_temperature || te);
-      if (m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0)} %`, lb("humidity"), c.humidity || c.entity);
+      if (m.tempVal != null) tile("mdi:home-thermometer", `${fmtNum(hass, m.tempVal, 1, 0, te)} ${m.tempUnit}`, lb("temperature"), te);
+      if (m.targetVal != null) tile("mdi:target", `${fmtNum(hass, m.targetVal, 1, 0, c.target_temperature || te)} ${m.tempUnit}`, lb("target"), c.target_temperature || te);
+      if (m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0, 0, c.humidity || c.entity)} %`, lb("humidity"), c.humidity || c.entity);
     } else if (kind === "dehumidifier") {
       const hEnt = c.humidity || (domainOf(c.entity) === "humidifier" ? c.entity : null);
-      if (m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0)} %`, lb("humidity"), hEnt, m.alerts.includes("humid") ? "warn" : "");
-      if (m.targetHumVal != null) tile("mdi:target", `${fmtNum(hass, m.targetHumVal, 0)} %`, lb("target"), c.target_humidity || hEnt);
-      if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("temperature"), tEntity);
+      if (m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0, 0, hEnt)} %`, lb("humidity"), hEnt, m.alerts.includes("humid") ? "warn" : "");
+      if (m.targetHumVal != null) tile("mdi:target", `${fmtNum(hass, m.targetHumVal, 0, 0, c.target_humidity || hEnt)} %`, lb("target"), c.target_humidity || hEnt);
+      if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1, 0, tEntity)} ${m.tempUnit}`, lb("temperature"), tEntity);
       if (m.tank) tile(m.tankFull ? "mdi:cup-water" : "mdi:cup-outline", tr(hass, m.tankFull ? "tank_full_short" : "tank_ok"), lb("tank"), c.tank_full, m.tankFull ? "warn" : "");
-      if (m.fanSpeed && !BAD.includes(String(m.fanSpeed.state).toLowerCase())) tile("mdi:fan", domainOf(c.fan_speed) === "fan" ? `${fmtNum(hass, Number(m.fanSpeed.attributes.percentage) || 0, 0)} %` : stateText(hass, m.fanSpeed), lb("fan_speed"), c.fan_speed);
+      if (m.fanSpeed && !BAD.includes(String(m.fanSpeed.state).toLowerCase())) tile("mdi:fan", domainOf(c.fan_speed) === "fan" ? `${fmtNum(hass, Number(m.fanSpeed.attributes.percentage) || 0, 0, 0, c.fan_speed)} %` : stateText(hass, m.fanSpeed), lb("fan_speed"), c.fan_speed);
       if (m.dhMode) tile("mdi:tune-variant", m.dhMode, lb("mode"), c.mode || c.entity);
     } else if (kind === "air_purifier") {
-      if (m.pm != null) tile("mdi:blur", `${fmtNum(hass, m.pm, 0)} µg/m³`, lb("pm25"), c.pm25, m.alerts.includes("air_poor") ? "warn" : "");
-      if (m.fanSpeed && !BAD.includes(String(m.fanSpeed.state).toLowerCase())) tile("mdi:fan", domainOf(c.fan_speed) === "fan" ? `${fmtNum(hass, Number(m.fanSpeed.attributes.percentage) || 0, 0)} %` : stateText(hass, m.fanSpeed), lb("fan_speed"), c.fan_speed);
-      if (m.filterE && !BAD.includes(String(m.filterE.state).toLowerCase())) tile("mdi:air-filter", m.filterPct != null ? `${fmtNum(hass, m.filterPct, 0)} %` : tr(hass, m.filterBad ? "replace_short" : "tank_ok"), lb("filter"), c.filter, m.filterBad ? "warn" : "");
+      if (m.pm != null) tile("mdi:blur", `${fmtNum(hass, m.pm, 0, 0, c.pm25)} µg/m³`, lb("pm25"), c.pm25, m.alerts.includes("air_poor") ? "warn" : "");
+      if (m.fanSpeed && !BAD.includes(String(m.fanSpeed.state).toLowerCase())) tile("mdi:fan", domainOf(c.fan_speed) === "fan" ? `${fmtNum(hass, Number(m.fanSpeed.attributes.percentage) || 0, 0, 0, c.fan_speed)} %` : stateText(hass, m.fanSpeed), lb("fan_speed"), c.fan_speed);
+      if (m.filterE && !BAD.includes(String(m.filterE.state).toLowerCase())) tile("mdi:air-filter", m.filterPct != null ? `${fmtNum(hass, m.filterPct, 0, 0, c.filter)} %` : tr(hass, m.filterBad ? "replace_short" : "tank_ok"), lb("filter"), c.filter, m.filterBad ? "warn" : "");
     } else if (kind === "wet_vacuum") {
-      if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0)} %`, lb("battery"), c.battery_level, m.battLow ? "warn" : "");
+      if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0, 0, c.battery_level)} %`, lb("battery"), c.battery_level, m.battLow ? "warn" : "");
       const tank = (pct, alert, okKey, badKey) => (pct != null ? `${fmtNum(hass, pct, 0)} %` : tr(hass, alert ? badKey : okKey));
       if (m.cleanW) tile("mdi:water", tank(m.cleanPct, m.cleanEmpty, "tank_ok", "tank_empty_short"), lb("clean_water"), c.clean_water, m.cleanEmpty ? "warn" : "");
       if (m.dirtyW) tile("mdi:water-opacity", tank(m.dirtyPct, m.dirtyFull, "tank_ok", "tank_full_short"), lb("dirty_water"), c.dirty_water, m.dirtyFull ? "warn" : "");
@@ -1903,17 +1903,17 @@ class ApplianceCardBase extends HTMLElement {
       /* no extra tile */
     } else if (kind === "vmc") {
       if (m.vxDir || m.vxState) tile(m.vxDir === "supply" ? "mdi:arrow-up-bold-box-outline" : "mdi:arrow-down-bold-box-outline", m.vxSpeed ? `${m.vxState} · ${m.vxSpeed}` : m.vxState, lb("direction"), c.direction);
-      if (m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0)} %`, lb("humidity"), c.humidity, m.alerts.includes("humid") ? "warn" : "");
+      if (m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0, 0, c.humidity)} %`, lb("humidity"), c.humidity, m.alerts.includes("humid") ? "warn" : "");
     } else if (kind === "printer_3d") {
-      if (m.progress != null) tile("mdi:progress-check", `${fmtNum(hass, m.progress, 0)} %`, lb("progress"), c.progress);
+      if (m.progress != null) tile("mdi:progress-check", `${fmtNum(hass, m.progress, 0, 0, c.progress)} %`, lb("progress"), c.progress);
       if (m.nozzles && m.nozzles.length) {
         // une puce par buse : T0, T1, T2…
         m.nozzles.forEach((id, i) => {
           const v = num(hass.states[id]);
-          tile("mdi:printer-3d-nozzle-heat", v != null ? `${fmtNum(hass, v, 0)} ${m.tempUnit}` : "—", `T${i}`, id);
+          tile("mdi:printer-3d-nozzle-heat", v != null ? `${fmtNum(hass, v, 0, 0, id)} ${m.tempUnit}` : "—", `T${i}`, id);
         });
-      } else if (m.tempVal != null) tile("mdi:printer-3d-nozzle-heat", `${fmtNum(hass, m.tempVal, 0)} ${m.tempUnit}`, lb("nozzle"), tEntity);
-      if (m.bedTemp != null) tile("mdi:heat-wave", `${fmtNum(hass, m.bedTemp, 0)} ${m.tempUnit}`, lb("bed"), c.bed_temperature);
+      } else if (m.tempVal != null) tile("mdi:printer-3d-nozzle-heat", `${fmtNum(hass, m.tempVal, 0, 0, tEntity)} ${m.tempUnit}`, lb("nozzle"), tEntity);
+      if (m.bedTemp != null) tile("mdi:heat-wave", `${fmtNum(hass, m.bedTemp, 0, 0, c.bed_temperature)} ${m.tempUnit}`, lb("bed"), c.bed_temperature);
     } else if (kind === "tv") {
       // télé / vidéoprojecteur : source, volume (media_player), heures de lampe, mode d'image, température
       const pj = tvProjector(c), on = m.status === "screen_on";
@@ -1922,10 +1922,10 @@ class ApplianceCardBase extends HTMLElement {
       if (on && a.volume_level != null && Number.isFinite(Number(a.volume_level)) && (c.show_volume ?? pj))
         tile(a.is_volume_muted ? "mdi:volume-off" : "mdi:volume-high", `${Math.round(Number(a.volume_level) * 100)} %`, lb("volume"), c.entity, a.is_volume_muted ? "warn" : "");
       if (m.lampE && c.show_lamp !== false && !BAD.includes(String(m.lampE.state).toLowerCase()))
-        tile("mdi:lightbulb-on-outline", num(m.lampE) != null ? `${fmtNum(hass, num(m.lampE), 0)} ${m.lampE.attributes.unit_of_measurement || "h"}` : stateText(hass, m.lampE), lb("lamp"), c.lamp_hours);
+        tile("mdi:lightbulb-on-outline", num(m.lampE) != null ? `${fmtNum(hass, num(m.lampE), 0, 0, c.lamp_hours)} ${m.lampE.attributes.unit_of_measurement || "h"}` : stateText(hass, m.lampE), lb("lamp"), c.lamp_hours);
       if (m.picMode && c.show_picture_mode !== false && !BAD.includes(String(m.picMode.state).toLowerCase()))
         tile("mdi:palette", stateText(hass, m.picMode), lb("picture_mode"), c.picture_mode);
-      if (m.tempVal != null && c.show_temperature !== false) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 0)} ${m.tempUnit}`, lb("temperature"), tEntity);
+      if (m.tempVal != null && c.show_temperature !== false) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 0, 0, tEntity)} ${m.tempUnit}`, lb("temperature"), tEntity);
     } else if (kind === "av_receiver") {
       // ampli : source active et mode audio actuel (attributs `source` et `sound_mode` du media_player)
       const a = m.main && domainOf(c.entity) === "media_player" ? m.main.attributes || {} : {}, up = !["off", "standby", "unavailable"].includes(m.status);
@@ -1946,7 +1946,7 @@ class ApplianceCardBase extends HTMLElement {
       // aquarium (doseuse Jebao…) : intervalle en jours, volume par dose, heure de distribution
       const dst = (k) => { const s = c[k] && hass.states[c[k]]; return s && !BAD.includes(String(s.state).toLowerCase()) ? s : null; };
       const dInt = dst("dose_interval"), dVol = dst("dose_volume"), dTime = dst("dose_time");
-      if (dInt && num(dInt) != null) tile("mdi:calendar-refresh-outline", `${fmtNum(hass, num(dInt), 0)} ${tr(hass, "day_short")}`, lb("dose_interval"), c.dose_interval);
+      if (dInt && num(dInt) != null) tile("mdi:calendar-refresh-outline", `${fmtNum(hass, num(dInt), 0, 0, c.dose_interval)} ${tr(hass, "day_short")}`, lb("dose_interval"), c.dose_interval);
       if (dVol) tile("mdi:cup-water", fmtUnit(hass, dVol, 1), lb("dose_volume"), c.dose_volume);
       if (dTime) {
         const sched = Array.isArray(dTime.attributes.schedule) && dTime.attributes.schedule[0] && dTime.attributes.schedule[0].time;
@@ -1954,7 +1954,7 @@ class ApplianceCardBase extends HTMLElement {
         tile("mdi:clock-outline", t, lb("dose_time"), c.dose_time);
       }
     } else if (kind === "pool_pump") {
-      if (m.tempVal != null && c.show_temperature !== false) tile("mdi:thermometer-water", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("water"), tEntity);
+      if (m.tempVal != null && c.show_temperature !== false) tile("mdi:thermometer-water", `${fmtNum(hass, m.tempVal, 1, 0, tEntity)} ${m.tempUnit}`, lb("water"), tEntity);
       // analyses de l'eau : [clé, icône, décimales] ; chaque mesure se masque avec show_<clé>: false
       for (const [k, ic, dg] of [["ph", "mdi:ph", 2], ["orp", "mdi:flash-triangle-outline", 0], ["pressure", "mdi:gauge", 2], ["tds", "mdi:water-opacity", 0], ["salt", "mdi:shaker-outline", 1], ["chlorine", "mdi:flask-outline", 2]])
         if (c[`show_${k}`] !== false && m.pool && m.pool[k]) tile(ic, fmtUnit(hass, m.pool[k], dg), lb(k), c[k]);
@@ -1962,20 +1962,20 @@ class ApplianceCardBase extends HTMLElement {
       if (m.runtime != null) tile("mdi:timer-outline", fmtDuration(m.runtime), lb("today"), c.runtime);
       if (num(m.speed) != null) tile("mdi:speedometer", fmtUnit(hass, m.speed, 0), lb("speed"), c.speed);
     } else if (kind === "pellet_stove") {
-      if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}`, lb("temperature"), tEntity);
-      if (m.targetVal != null) tile("mdi:target", `${fmtNum(hass, m.targetVal, 1)} ${m.tempUnit}`, lb("target"), c.target_temperature || tEntity);
-      if (m.level != null) tile("mdi:fire", `P${fmtNum(hass, m.level, 0)}`, lb("level"), c.power_level);
-      if (m.pellets != null) tile("mdi:grain", `${fmtNum(hass, m.pellets, 0)} %`, lb("pellets"), c.pellet_level, m.alerts.includes("pellets_low") ? "warn" : "");
+      if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1, 0, tEntity)} ${m.tempUnit}`, lb("temperature"), tEntity);
+      if (m.targetVal != null) tile("mdi:target", `${fmtNum(hass, m.targetVal, 1, 0, c.target_temperature || tEntity)} ${m.tempUnit}`, lb("target"), c.target_temperature || tEntity);
+      if (m.level != null) tile("mdi:fire", `P${fmtNum(hass, m.level, 0, 0, c.power_level)}`, lb("level"), c.power_level);
+      if (m.pellets != null) tile("mdi:grain", `${fmtNum(hass, m.pellets, 0, 0, c.pellet_level)} %`, lb("pellets"), c.pellet_level, m.alerts.includes("pellets_low") ? "warn" : "");
     } else if (["water_heater", "oven", "air_fryer", "ac_split", "heat_pump", "towel_dryer", "server_rack", "cookeo"].includes(kind)) {
       // température et consigne au dixième (18,2 / 16,5 ; un entier reste sans décimale), sauf four et friteuse (200 °C)
       const td = ["oven", "air_fryer", "cookeo"].includes(kind) ? 0 : 1;
-      if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, td)} ${m.tempUnit}`, lb("temperature"), tEntity);
-      if (m.targetVal != null) tile("mdi:target", `${fmtNum(hass, m.targetVal, td)} ${m.tempUnit}`, lb("target"), c.target_temperature || tEntity);
+      if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, td, 0, tEntity)} ${m.tempUnit}`, lb("temperature"), tEntity);
+      if (m.targetVal != null) tile("mdi:target", `${fmtNum(hass, m.targetVal, td, 0, c.target_temperature || tEntity)} ${m.tempUnit}`, lb("target"), c.target_temperature || tEntity);
       // eau chaude restante : % (tuile « Eau chaude ») et litres (tuile « Volume ») — deux tuiles, sinon le texte est tronqué
-      if (kind === "water_heater" && m.hotPct != null) tile("mdi:water-thermometer", `${fmtNum(hass, m.hotPct, 0)} %`, lb("hot_water"), c.hot_water_level || c.hot_water_volume);
-      if (kind === "water_heater" && m.hotL != null) tile("mdi:water", `${fmtNum(hass, m.hotL, 0)} L`, lb("volume"), c.hot_water_volume || c.hot_water_level);
-      if (kind === "ac_split" && m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0)} %`, lb("humidity"), c.humidity || c.entity);
-      if (kind === "towel_dryer" && m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0)} %`, lb("humidity"), c.humidity || c.entity);
+      if (kind === "water_heater" && m.hotPct != null) tile("mdi:water-thermometer", `${fmtNum(hass, m.hotPct, 0, 0, c.hot_water_level || c.hot_water_volume)} %`, lb("hot_water"), c.hot_water_level || c.hot_water_volume);
+      if (kind === "water_heater" && m.hotL != null) tile("mdi:water", `${fmtNum(hass, m.hotL, 0, 0, c.hot_water_volume || c.hot_water_level)} L`, lb("volume"), c.hot_water_volume || c.hot_water_level);
+      if (kind === "ac_split" && m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0, 0, c.humidity || c.entity)} %`, lb("humidity"), c.humidity || c.entity);
+      if (kind === "towel_dryer" && m.humidity != null) tile("mdi:water-percent", `${fmtNum(hass, m.humidity, 0, 0, c.humidity || c.entity)} %`, lb("humidity"), c.humidity || c.entity);
     }
     if (m.remaining != null && m.remaining > 0 && active && kind !== "water_heater") tile("mdi:timer-sand", `${m.estimated ? "≈ " : ""}${fmtDuration(m.remaining)}`, lb("remaining"), c.remaining);
     else if (m.soon && active) tile("mdi:timer-sand-complete", tr(hass, "almost_done"), lb("remaining"), c.power);
@@ -1991,7 +1991,7 @@ class ApplianceCardBase extends HTMLElement {
         const st = id && hass.states[id], v = st ? num(st) : null;
         if (v == null || !Number.isFinite(v)) return;
         const u = (st.attributes && st.attributes.unit_of_measurement) || (k === "current" ? "A" : "V"), a = Math.abs(v);
-        tile(ic, `${fmtNum(hass, v, k === "current" ? (a < 10 ? 2 : 1) : (a >= 100 ? 0 : 1))} ${u}`, lb(k), id);
+        tile(ic, `${fmtNum(hass, v, k === "current" ? (a < 10 ? 2 : 1) : (a >= 100 ? 0 : 1), 0, id)} ${u}`, lb(k), id);
       });
     }
     if (m.pwS && !zero(m.pwS)) tile("mdi:solar-power", fmtPower(hass, m.pwS) ?? "—", lb("solar_surplus"), c.power_solar);
@@ -2010,12 +2010,12 @@ class ApplianceCardBase extends HTMLElement {
     // show_energy / show_cost (cases de l'éditeur, cochées par défaut) : masquent les tuiles énergie / coût
     const noEnergy = c.energy_period === "none" || !showOpt("show_energy");
     if (noEnergy) { /* tuile masquée */ } else if (m.energy && per && !dual && !solar) {
-      if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.energy);
+      if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2, 0, c.energy)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.energy);
       // coût de la période (mode € ou les deux) : conso de la période × prix du kWh actuel
       if (showCost && (c.display === "cost" || c.display === "both") && showOpt("show_cost")) tile("mdi:cash", money(this._perKwh * pr), tr(hass, `cost_${per}`), prEnt || c.energy);
     } else if (!c.energy && !m.energy && per && c.power && !dual && !solar) {
       // période calculée depuis la puissance de la prise (pas de compteur kWh) : kWh puis coût (avec price_per_kwh)
-      if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.power);
+      if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2, 0, c.power)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.power);
       if (showCost && showOpt("show_cost")) tile("mdi:cash", money(this._perKwh * pr), tr(hass, `cost_${per}`), prEnt || c.power);
     } else if (m.energy) {
       const eVal = fmtEnergy(hass, m.energy) ?? "—";
@@ -2057,7 +2057,7 @@ class ApplianceCardBase extends HTMLElement {
       else if (ago > 1) { try { day = ` · ${s0.toLocaleDateString(loc(hass), { day: "numeric", month: "short" })}`; } catch (e) { day = ` · ${s0.getDate()}/${s0.getMonth() + 1}`; } }
       tile("mdi:history", `${fmtClock(hass, s0)} → ${fmtClock(hass, s1)}`, `${lb("last_cycle")}${day}`, c.power);
       tile("mdi:timer-outline", fmtDuration((cy.end - cy.start) / 60000), lb("cycle_duration"), c.power);
-      if (showKwh) tile("mdi:lightning-bolt", `${fmtNum(hass, cy.kwh, 2)} kWh`, lb("cycle_energy"), c.energy || c.power);
+      if (showKwh) tile("mdi:lightning-bolt", `${fmtNum(hass, cy.kwh, 2, 0, c.energy || c.power)} kWh`, lb("cycle_energy"), c.energy || c.power);
       // prix du kWh : nombre, ou entité (tarif) ; devise de Home Assistant
       if (showCost) tile("mdi:cash", money(cy.kwh * pr), lb("cycle_cost"), prEnt || c.energy || c.power);
     }
