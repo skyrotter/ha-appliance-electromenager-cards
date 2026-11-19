@@ -143,6 +143,14 @@ ha-card{--p:4.8s}ha-card.motion{--p:1.15s}ha-card.recent{--p:6s}
     return g;
   };
 
+  // background_image : photo de la pièce derrière un détecteur « photo » (URL http(s), /local/…, /api/… ou data:image) ;
+  // recadrée pour remplir la carte, avec les mêmes coins arrondis que l'illustration
+  const bgImage = (u) => {
+    u = typeof u === 'string' ? u.trim() : '';
+    if (!/^(https?:\/\/|\/|data:image\/)/i.test(u) || /^\/\//.test(u)) return '';
+    return `<g clip-path="url(#msclip)"><image href="${u.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')}" width="240" height="200" preserveAspectRatio="xMidYMid slice"/></g>`;
+  };
+
   const TILES = [['battery', 'mdi:battery', 'show_battery'], ['since', 'mdi:clock-outline', 'show_since'], ['lux', 'mdi:brightness-5', 'show_lux'], ['temp', 'mdi:thermometer', 'show_temp']];
 
   class ApplianceMotionSensorCard extends HTMLElement {
@@ -188,7 +196,7 @@ ha-card{--p:4.8s}ha-card.motion{--p:1.15s}ha-card.recent{--p:6s}
       this._photo = !!M;
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="mstitle"></div><div class="badge" id="msbadge"></div></div>
-        <svg viewBox="0 0 240 200" role="img" aria-label="${(this._c.name || this._t('name')).replace(/"/g, '')}">${SCENE}${M ? photoScene(M) : room()}</svg>
+        <svg viewBox="0 0 240 200" role="img" aria-label="${(this._c.name || this._t('name')).replace(/"/g, '')}">${SCENE}${M ? bgImage(this._c.background_image) + photoScene(M) : room()}</svg>
         <div class="line" id="msline"></div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
@@ -269,6 +277,7 @@ ha-card{--p:4.8s}ha-card.motion{--p:1.15s}ha-card.recent{--p:6s}
         { name: 'battery_low', default: 20, selector: { number: { min: 1, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
         { name: 'entity_illuminance', selector: { entity: { domain: 'sensor' } } },
         { name: 'entity_temperature', selector: { entity: { domain: 'sensor' } } },
+        { name: 'background_image', selector: { text: {} } },
         { name: 'recent_motion_minutes', default: 10, selector: { number: { min: 0, max: 1440, step: 1, mode: 'box', unit_of_measurement: 'min' } } },
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
