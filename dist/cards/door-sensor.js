@@ -143,8 +143,8 @@ ha-card.open{--ds-c:var(--ds-warn)}ha-card.left_open{--ds-c:var(--ds-alert)}ha-c
 .title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;white-space:nowrap;background:color-mix(in srgb,var(--ds-c) 22%,transparent);color:var(--ds-c)}
 svg{display:block;width:100%;max-width:calc(240px * var(--illus-scale,1));height:auto;margin:10px auto 0;cursor:pointer;overflow:visible;color:var(--ds-c)}
-.alert{display:none;align-items:center;justify-content:center;gap:5px;margin-top:2px;font-size:12px;font-weight:600;color:var(--ds-alert)}
-.alert.on{display:flex}.alert ha-icon{--mdc-icon-size:16px}
+.alert{display:flex;visibility:hidden;min-height:16px;align-items:center;justify-content:center;gap:5px;margin-top:2px;font-size:12px;font-weight:600;color:var(--ds-alert)}
+.alert.on{visibility:visible}.alert.off{display:none}.alert ha-icon{--mdc-icon-size:16px}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(86px,1fr));gap:6px;margin-top:8px}
 .tile{box-sizing:border-box;display:flex;flex-direction:column;background:var(--ac-tile-bg,rgba(127,127,127,.09));border-radius:10px;padding:5px 7px;min-width:0;text-align:center;cursor:pointer}
 :host([tile-order="value"]) .tile{flex-direction:column-reverse}
@@ -335,7 +335,8 @@ svg{display:block;width:100%;max-width:calc(240px * var(--illus-scale,1));height
       card.className = `${st}${low ? ' lowbat' : ''}${c.animations === false ? ' noanim' : ''}`;
       r.getElementById('dstitle').textContent = c.name || this._t((MODELS[c.model] || MODELS.front_door).nameKey);
       const badge = r.getElementById('dsbadge'); badge.textContent = this._t(st); badge.style.display = c.show_status === false ? 'none' : '';
-      const al = r.getElementById('dsalert'); al.classList.toggle('on', left); al.querySelector('span').textContent = left ? this._t('open_for').replace('{time}', this._dur(s)) : '';
+      const al = r.getElementById('dsalert'); al.classList.toggle('on', left); al.classList.toggle('off', !(Number(c.open_alert_minutes) > 0)); // hauteur réservée : la tuile ne change plus de taille à l'alerte
+      al.querySelector('span').textContent = left ? this._t('open_for').replace('{time}', this._dur(s)) : '';
       this._swing(isOpen ? 1 : 0);
 
       const V = {
