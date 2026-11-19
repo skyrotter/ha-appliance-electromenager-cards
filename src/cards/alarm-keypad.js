@@ -38,6 +38,8 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
 .armed_partial .lk-off,.exit_delay .lk-off{opacity:.25}
 .glow{fill:var(--ak-c);opacity:0}.intrusion .glow{animation:akp 1s ease-in-out infinite}.entry_delay .glow,.exit_delay .glow{animation:akp 1.6s ease-in-out infinite}
 .armed .glow,.armed_partial .glow{opacity:.1}
+.key{pointer-events:none}.live .key{cursor:pointer;pointer-events:all}.key rect.hit{fill:transparent}.live .key:active rect.hit{fill:rgba(127,127,127,.2)}
+.scr-t.err{fill:var(--ak-alert)}
 .unavailable svg{filter:grayscale(.8) opacity(.6)}
 .noanim *{animation:none!important}
 @keyframes akp{0%,100%{opacity:.04}50%{opacity:.32}}
@@ -49,22 +51,23 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
     let k = '';
     KEYS.forEach(([n, l], i) => {
       const x = 50 + (i % 3) * 50, y = 138 + Math.floor(i / 3) * 28;
-      k += `<text x="${x}" y="${y}" text-anchor="middle" font-family="system-ui,sans-serif" font-size="17" fill="#3a4450">${n}</text>`;
-      if (l) k += `<text x="${x}" y="${y + 8}" text-anchor="middle" font-family="system-ui,sans-serif" font-size="5.5" fill="#8a929a">${l}</text>`;
+      k += `<g class="key" data-k="${n === '×' ? 'clear' : n === '↵' ? 'enter' : n}"><rect class="hit" x="${x - 22}" y="${y - 20}" width="44" height="27" rx="6"/>`
+        + `<text x="${x}" y="${y}" text-anchor="middle" font-family="system-ui,sans-serif" font-size="17" fill="#3a4450">${n}</text>`
+        + (l ? `<text x="${x}" y="${y + 8}" text-anchor="middle" font-family="system-ui,sans-serif" font-size="5.5" fill="#8a929a">${l}</text>` : '') + '</g>';
     });
     const nav = [['M-4 0h8M-1.5-3L-4 0l2.5 3', 56], ['M0 4v-8M-3-1.5L0-4l3 2.5', 90], ['M0-4v8M-3 1.5L0 4l3-2.5', 124], ['M-4 0h8M1.5-3L4 0l-2.5 3', 158]]
       .map(([d, x]) => `<circle cx="${x - 6}" cy="244" r="10" fill="#1f2a36"/><path d="${d}" transform="translate(${x - 6} 244)" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`).join('');
     const fn = ['Stay', 'Force', 'Memory', 'Bypass'].map((t, i) => `<text x="${34 + i * 44}" y="276" text-anchor="middle" font-family="system-ui,sans-serif" font-size="6" fill="#4a5560">${t}</text>`).join('');
     return `<defs><linearGradient id="akbody" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e6e9ec"/></linearGradient></defs>
-      <rect x="4" y="2" width="192" height="276" rx="16" fill="url(#akbody)" stroke="#cfd4d9" stroke-width="2"/>
+      <g id="akbg"><rect x="4" y="2" width="192" height="276" rx="16" fill="url(#akbody)" stroke="#cfd4d9" stroke-width="2"/>
       <rect x="14" y="12" width="172" height="76" rx="3" fill="#fff" stroke="#e2e5e8"/>
       <rect class="glow" x="14" y="12" width="172" height="76" rx="3"/>
-      <text class="scr-t" id="aktitle" x="100" y="44" text-anchor="middle"></text><text class="scr-s" id="aksub" x="100" y="64" text-anchor="middle"></text>
-      <g class="lk-on"><rect x="43" y="100" width="14" height="11" rx="2" fill="#b3194d"/><path d="M46 100v-4a4 4 0 0 1 8 0v4" stroke="#b3194d" stroke-width="2.6" fill="none"/></g>
-      <g class="lk-off"><rect x="93" y="100" width="14" height="11" rx="2" fill="#1fa64a"/><path d="M96 100v-4a4 4 0 0 1 8 0" stroke="#1fa64a" stroke-width="2.6" fill="none"/></g>
+      <text class="scr-t" id="aktitle" x="100" y="44" text-anchor="middle"></text><text class="scr-s" id="aksub" x="100" y="64" text-anchor="middle"></text></g>
+      <g class="key" data-k="arm"><rect class="hit" x="30" y="90" width="42" height="26" rx="6"/><g class="lk-on"><rect x="43" y="100" width="14" height="11" rx="2" fill="#b3194d"/><path d="M46 100v-4a4 4 0 0 1 8 0v4" stroke="#b3194d" stroke-width="2.6" fill="none"/></g></g>
+      <g class="key" data-k="disarm"><rect class="hit" x="79" y="90" width="42" height="26" rx="6"/><g class="lk-off"><rect x="93" y="100" width="14" height="11" rx="2" fill="#1fa64a"/><path d="M96 100v-4a4 4 0 0 1 8 0" stroke="#1fa64a" stroke-width="2.6" fill="none"/></g></g>
       <rect x="143" y="93" width="11" height="15" rx="2" fill="none" stroke="#7d8791" stroke-width="1.5"/><rect x="147" y="97" width="11" height="15" rx="2" fill="#fff" stroke="#7d8791" stroke-width="1.5"/>
       ${k}${nav}
-      <rect x="10" y="252" width="180" height="24" rx="0" fill="#c9cdd2" opacity=".55"/>${fn}`;
+      <rect x="10" y="252" width="180" height="24" rx="0" fill="#c9cdd2" opacity=".55"/>${fn}<g class="key" data-k="stay"><rect class="hit" x="12" y="252" width="44" height="26" rx="4"/></g>`;
   };
 
   // état de l'alarme → clé unique, d'après le texte du capteur ou l'état d'un alarm_control_panel
@@ -108,6 +111,25 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
     _ok(s) { return !!s && !/^(unavailable|unknown)$/i.test(String(s.state)); }
     _on(s) { return this._ok(s) && /^(on|open|detected|true)$/i.test(String(s.state)); }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
+    // centrale pilotée : entity_control, sinon entity si c'est déjà une alarm_control_panel
+    _ctl() { const c = this._c; return c.entity_control || (/^alarm_control_panel\./.test(c.entity) ? c.entity : ''); }
+    // saisie du code sur le pavé : chiffres affichés masqués sur l'écran, effacés après 10 s d'inactivité ou après l'envoi
+    _press(k) {
+      const ctl = this._ctl(); if (!ctl || !this._hass) return;
+      clearTimeout(this._tb); this._msg = '';
+      if (/^\d$/.test(k)) { this._buf = ((this._buf || '') + k).slice(0, 8); }
+      else if (k === 'clear') this._buf = '';
+      else {
+        const st = norm((this._st(this._c.entity) || {}).state), code = this._buf || undefined;
+        const svc = k === 'arm' ? 'alarm_arm_away' : k === 'stay' ? 'alarm_arm_home' : k === 'disarm' ? 'alarm_disarm' : st === 'disarmed' || st === 'ready' ? 'alarm_arm_away' : 'alarm_disarm';
+        this._buf = '';
+        Promise.resolve(this._hass.callService('alarm_control_panel', svc, { entity_id: ctl, ...(code ? { code } : {}) }))
+          .catch(() => { this._msg = this._t('code_error'); this._render(); this._tb = setTimeout(() => { this._msg = ''; this._render(); }, 3000); });
+      }
+      if (this._buf) this._tb = setTimeout(() => { this._buf = ''; this._render(); }, 10000);
+      this._render();
+    }
+    disconnectedCallback() { clearTimeout(this._tb); }
     _zones() { return (Array.isArray(this._c.zones) ? this._c.zones : []).filter((z) => z && (z.entity || z.entity_fault)).slice(0, 8); }
 
     _build() {
@@ -118,7 +140,9 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         <div class="zones" id="akzones"></div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
-      window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity));
+      // le fond du clavier ouvre la fiche de l'entité ; les touches (data-k) pilotent l'alarme quand une centrale est configurée
+      window.applianceBindIllus(this, root.getElementById('akbg'), () => this._more(this._c.entity));
+      root.querySelectorAll('.key').forEach((el) => el.addEventListener('click', () => this._press(el.dataset.k)));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => this._more({ open: this._c.entity_zones_open, fault: this._c.entity_zones_fault }[el.dataset.k] || this._c.entity)));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
@@ -139,8 +163,11 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       r.getElementById('aktt').textContent = c.name || this._t('name');
       const badge = r.getElementById('akbadge'); badge.textContent = this._l(st); badge.style.display = c.show_status === false ? 'none' : '';
       // écran du clavier : statut + nombre de zones ouvertes
-      r.getElementById('aktitle').textContent = this._l(st);
-      r.getElementById('aksub').textContent = nOpen == null ? '' : `${nOpen} ${this._t(nOpen === 1 ? 'zone_open_one' : 'zone_open_many')}`;
+      const ti = r.getElementById('aktitle'), sub = r.getElementById('aksub');
+      card.classList.toggle('live', !!this._ctl());
+      ti.classList.toggle('err', !!this._msg);
+      ti.textContent = this._msg || (this._buf ? '•'.repeat(this._buf.length) : this._l(st));
+      sub.textContent = this._msg || this._buf ? (this._buf ? this._t('enter_code') : '') : nOpen == null ? '' : `${nOpen} ${this._t(nOpen === 1 ? 'zone_open_one' : 'zone_open_many')}`;
       // pastilles de zones
       const zEl = r.getElementById('akzones'); zEl.replaceChildren();
       if (c.show_zones !== false) zones.forEach((z) => {
@@ -180,6 +207,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
         { name: 'entity', required: true, selector: { entity: { domain: ['sensor', 'alarm_control_panel', 'input_select', 'select'] } } },
+        { name: 'entity_control', selector: { entity: { domain: 'alarm_control_panel' } } },
         { name: 'entity_zones_open', selector: { entity: { domain: 'sensor' } } },
         { name: 'entity_zones_fault', selector: { entity: { domain: 'sensor' } } },
         { name: 'zones', selector: { object: {} } },
