@@ -1432,7 +1432,7 @@ class ApplianceCardBase extends HTMLElement {
       if (sv && !bg) { bg = document.createElementNS("http://www.w3.org/2000/svg", "g"); bg.setAttribute("class", "bigval"); sv.appendChild(bg); }
       if (bg) {
         const raw = this._lcdText(m), num = /^-?\d+°$/.test(raw), txt = num ? `${raw.slice(0, -1)}${m.tempUnit || "°C"}` : raw;
-        const [cx, cy] = { radiator: [50, 64], towel_dryer: [60, 66], ac_split: [46, 60] }[kind];
+        const [cx, cy] = { radiator: c.style === "convector" ? [60, 72] : c.style === "baseboard" ? [50, 96] : [50, 64], towel_dryer: [60, 66], ac_split: [46, 60] }[kind];
         const ico = c.lcd_value === "current"
           ? `<g fill="none" stroke="#fff" stroke-width="1.3" stroke-linecap="round"><path d="M-0.1 -4V1.2"/><circle cx="-0.1" cy="2.7" r="2" fill="#fff"/><path d="M-1.4 -3a1.3 1.3 0 0 1 2.6 0V1.4" /></g>`
           : `<g fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round"><circle r="3.4"/><circle r=".8" fill="#fff"/><path d="M0 -5.4V-3.6M0 3.6V5.4M-5.4 0H-3.6M3.6 0H5.4"/></g>`;
