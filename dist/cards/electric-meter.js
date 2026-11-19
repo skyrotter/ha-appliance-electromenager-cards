@@ -102,7 +102,17 @@
       "tariff": "Tarifa",
       "l1": "L1",
       "l2": "L2",
-      "l3": "L3"
+      "l3": "L3",
+      "import_t1": "Consumo T1",
+      "import_t2": "Consumo T2",
+      "export_t1": "Vertido T1",
+      "export_t2": "Vertido T2",
+      "export": "Vertido",
+      "peak": "Pico (mes)",
+      "avg": "Demanda media",
+      "voltage": "Tensión",
+      "current": "Corriente",
+      "battery": "Baterías"
     },
     "fr": {
       "name": "Compteur électrique",

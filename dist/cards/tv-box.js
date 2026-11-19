@@ -125,6 +125,7 @@
       "play": "Reproducir",
       "pause": "Pausa",
       "previous": "Anterior",
+      "source": "Fuente siguiente",
       "next": "Siguiente",
       "vol_down": "Bajar volumen",
       "vol_up": "Subir volumen",

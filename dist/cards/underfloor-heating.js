@@ -106,6 +106,9 @@
       "turn_on": "Encender",
       "turn_off": "Apagar",
       "floor_hot": "Suelo demasiado caliente",
+      "name_wall": "Pared radiante",
+      "wall": "Pared",
+      "wall_hot": "Pared demasiado caliente",
       "water_hot": "Agua demasiado caliente"
     },
     "fr": {

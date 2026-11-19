@@ -33,6 +33,26 @@
       "low": "Low",
       "ok": "OK"
     },
+    "es": {
+      "name": "Sensor de puerta",
+      "name_service_door": "Sensor de puerta de servicio",
+      "name_window": "Sensor de ventana",
+      "model_front_door": "Puerta principal",
+      "model_service_door": "Puerta de servicio",
+      "model_window": "Ventana",
+      "closed": "Cerrada",
+      "open": "Abierta",
+      "left_open": "Se ha quedado abierta",
+      "unavailable": "No disponible",
+      "unknown": "No disponible",
+      "battery": "Batería",
+      "since": "Desde",
+      "open_since": "Abierta desde hace",
+      "closed_since": "Cerrada desde hace",
+      "open_for": "Abierta desde hace {time}",
+      "low": "Baja",
+      "ok": "OK"
+    },
     "fr": {
       "name": "Détecteur d'ouverture",
       "name_service_door": "Détecteur de porte de service",

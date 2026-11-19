@@ -168,6 +168,12 @@
       "alarm": "Nivel alto",
       "high_level": "Nivel de agua alto",
       "pit": "Pozo",
+      "rainwater_tank": "Depósito de agua de lluvia",
+      "volume": "Volumen",
+      "mains": "Aporte de red",
+      "mains_on": "Activo",
+      "mains_off": "Inactivo",
+      "dry_run": "Bomba funcionando en seco",
       "starts": "Arranques"
     },
     "fr": {

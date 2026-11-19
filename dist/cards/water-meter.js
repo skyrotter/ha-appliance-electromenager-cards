@@ -120,7 +120,9 @@
       "pressure": "Presión",
       "freeze": "Riesgo de helada",
       "freeze_risk": "Riesgo de helada: {t}",
-      "leak_detected_by": "Fuga detectada por: {n}"
+      "leak_detected_by": "Fuga detectada por: {n}",
+      "unit_m3": "m³",
+      "unit_l": "L"
     },
     "fr": {
       "name": "Compteur d'eau",

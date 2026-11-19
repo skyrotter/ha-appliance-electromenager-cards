@@ -76,7 +76,11 @@
       "temp": "Temperatura",
       "target": "Objetivo",
       "bottom": "Parte inferior",
-      "reserve": "Agua caliente"
+      "reserve": "Agua caliente",
+      "volume": "Volumen",
+      "cycle": "Último ciclo",
+      "duration": "Duración del ciclo",
+      "cycle_kwh": "Energía del ciclo"
     },
     "fr": {
       "name": "Chauffe-eau thermodynamique",

@@ -53,6 +53,20 @@
       "volume": "Volumen",
       "room": "Raum"
     },
+    "es": {
+      "name": "Contador de calor",
+      "idle": "Sin calefacción",
+      "heating": "Calentando",
+      "unavailable": "No disponible",
+      "supply": "Ida (Tv)",
+      "return": "Retorno (Tr)",
+      "delta": "ΔT",
+      "power": "Potencia",
+      "flow": "Caudal",
+      "energy": "Energía",
+      "volume": "Volumen",
+      "room": "Habitación"
+    },
     "fr": {
       "name": "Compteur de chaleur",
       "idle": "Pas de chauffe",

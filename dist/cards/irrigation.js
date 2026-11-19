@@ -50,6 +50,27 @@
       "pump": "Brunnenpumpe",
       "power": "Leistung"
     },
+    "es": {
+      "name": "Riego",
+      "idle": "Inactivo",
+      "watering": "Regando",
+      "rain": "Lluvia",
+      "dry": "Seco",
+      "unavailable": "No disponible",
+      "zones": "zonas",
+      "stop": "Parar todo",
+      "auto": "Auto",
+      "blocked": "Bloqueado: lluvia",
+      "on": "Encendida",
+      "off": "Apagada",
+      "flow": "Caudal",
+      "soil": "Humedad del suelo",
+      "today": "Hoy",
+      "next": "Próximo riego",
+      "pressure": "Presión",
+      "pump": "Bomba del pozo",
+      "power": "Potencia"
+    },
     "fr": {
       "name": "Arrosage",
       "idle": "Arrêt",

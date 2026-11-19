@@ -33,6 +33,27 @@
       "humidity": "Humidity",
       "temperature": "Temperature"
     },
+    "es": {
+      "name": "Calidad del aire",
+      "good": "Buena",
+      "moderate": "Moderada",
+      "poor": "Mala",
+      "bad": "Muy mala",
+      "unavailable": "No disponible",
+      "all_good": "Todos los indicadores están bien",
+      "main": "Contaminante principal",
+      "last24": "últimas 24 h",
+      "now": "ahora",
+      "loading": "Cargando el historial…",
+      "no_history": "No hay historial disponible",
+      "co2": "CO₂",
+      "pm25": "PM2.5",
+      "pm10": "PM10",
+      "voc": "COV",
+      "hcho": "Formaldehído",
+      "humidity": "Humedad",
+      "temperature": "Temperatura"
+    },
     "fr": {
       "name": "Qualité de l'air",
       "good": "Bon",
