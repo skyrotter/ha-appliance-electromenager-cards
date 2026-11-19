@@ -175,6 +175,12 @@
       "nvme_alert": "SSD {n}: Problem"
     },
     "es": {
+      "model_generic_1": "NAS genérico (1 bahía)",
+      "model_generic_2": "NAS genérico (2 bahías)",
+      "model_generic_4": "NAS genérico (4 bahías)",
+      "model_generic_5": "NAS genérico (5 bahías)",
+      "model_generic_6": "NAS genérico (6 bahías)",
+      "model_generic_8": "NAS genérico (8 bahías)",
       "name": "NAS",
       "off": "Apagado",
       "idle": "Inactivo",

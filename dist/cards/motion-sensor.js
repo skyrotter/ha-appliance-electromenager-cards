@@ -37,6 +37,28 @@
       "low": "Low",
       "ok": "OK"
     },
+    "es": {
+      "name": "Sensor de movimiento",
+      "model_room": "Escena de habitación (por defecto)",
+      "model_aqara": "Sensor con soporte (tipo Aqara)",
+      "model_luminea": "Sensor plano (tipo Luminea)",
+      "model_wall": "Sensor de pared redondo",
+      "model_radar": "Sensor PIR + radar (tipo Tuya)",
+      "clear": "Sin movimiento",
+      "motion": "Movimiento detectado",
+      "recent": "Movimiento reciente",
+      "unavailable": "No disponible",
+      "unknown": "No disponible",
+      "battery": "Batería",
+      "since_motion": "Activo desde hace",
+      "since_clear": "En calma desde hace",
+      "motion_for": "Movimiento detectado desde hace {time}",
+      "last_motion": "Último movimiento hace {time}",
+      "illuminance": "Luz",
+      "temperature": "Temperatura",
+      "low": "Baja",
+      "ok": "OK"
+    },
     "fr": {
       "name": "Détecteur de mouvement",
       "model_room": "Scène de pièce (défaut)",

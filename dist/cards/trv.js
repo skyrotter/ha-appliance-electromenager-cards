@@ -159,6 +159,7 @@
       "model_tado": "Termostato de pared Tado X",
       "model_t6": "Termostato Honeywell Home T6",
       "model_bht6000": "Termostato Tuya BHT6000 (redondo, pantalla negra)",
+      "model_vitotrol": "Termostato Viessmann Vitotrol 200",
       "model_atlantic_io": "Termostato Atlantic io (cuadrado, Zone Control)",
       "model_atlantic_io2": "Termostato Atlantic io (vertical, dial)",
       "model_classic": "Válvula de radiador (clásica)",

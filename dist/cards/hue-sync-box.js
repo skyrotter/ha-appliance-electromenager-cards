@@ -29,6 +29,25 @@
       "plugged": "Plugged",
       "unplugged": "Unplugged"
     },
+    "es": {
+      "name": "Hue Sync Box",
+      "model_top": "Vista superior",
+      "model_ports": "Vista de los puertos (alimentación, USB, HDMI)",
+      "off": "Apagado",
+      "on": "Encendido",
+      "syncing": "Sincronizando",
+      "unavailable": "No disponible",
+      "btn_power": "Encendido",
+      "btn_sync": "Sincronización de luces",
+      "btn_dolby": "Dolby Vision",
+      "area": "Área de entretenimiento",
+      "intensity": "Intensidad",
+      "mode": "Modo de sincronización",
+      "input": "Entrada HDMI",
+      "led": "Indicador LED",
+      "plugged": "Conectado",
+      "unplugged": "Desconectado"
+    },
     "fr": {
       "name": "Hue Sync Box",
       "model_top": "Vue de dessus",

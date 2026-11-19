@@ -42,6 +42,24 @@
       "power": "Leistung",
       "energy": "Energie"
     },
+    "es": {
+      "color": "Color",
+      "white_warm": "Blanco cálido",
+      "white_neutral": "Blanco neutro",
+      "white_cold": "Blanco frío",
+      "name": "Tira LED",
+      "on": "Encendida",
+      "off": "Apagada",
+      "unavailable": "No disponible",
+      "turn_on": "Encender",
+      "turn_off": "Apagar",
+      "brightness": "Brillo",
+      "effect": "Efecto",
+      "none": "Ninguno",
+      "next_effect": "Efecto siguiente",
+      "power": "Potencia",
+      "energy": "Energía"
+    },
     "fr": {
       "color": "Couleur",
       "white_warm": "Blanc chaud",

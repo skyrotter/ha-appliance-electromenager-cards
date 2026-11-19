@@ -91,7 +91,16 @@ const I18N_EV = {
     "charging": "Cargando",
     "plugged": "Conectado",
     "done": "Completa",
-    "disconnected": "Desconectado"
+    "disconnected": "Desconectado",
+    "climate_pill": "A/C",
+    "climate_heat_pill": "Calor",
+    "climate": "Climatización",
+    "climate_heat": "Calentando",
+    "climate_cool": "Enfriando",
+    "climate_off": "Apagada",
+    "doors": "Puertas",
+    "doors_open": "Abiertas",
+    "doors_closed": "Cerradas"
   },
   "fr": {
     "name": "Borne de recharge",

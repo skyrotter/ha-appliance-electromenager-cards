@@ -69,6 +69,7 @@ const I18N_BAT = {
   },
   "es": {
     "name": "Batería solar",
+    "calibration": "Próxima calibración",
     "soc": "Carga",
     "power": "Potencia",
     "energy": "Energía",
@@ -78,7 +79,11 @@ const I18N_BAT = {
     "idle": "Inactiva",
     "full": "Llena en",
     "empty": "Vacía en",
-    "low": "Batería baja"
+    "low": "Batería baja",
+    "backup": "Respaldo",
+    "soc_min": "Carga mín.",
+    "soc_max": "Carga máx.",
+    "mode": "Modo"
   },
   "fr": {
     "name": "Batterie solaire",

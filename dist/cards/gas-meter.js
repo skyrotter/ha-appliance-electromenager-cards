@@ -97,7 +97,8 @@
       "index": "Índice",
       "cost": "Coste",
       "variant_classic": "Clásico (contador de fuelle amarillo)",
-      "variant_modern": "Moderno (contador gris, tubo amarillo)"
+      "variant_modern": "Moderno (contador gris, tubo amarillo)",
+      "variant_belgian": "Belga (contador comunicante G4, foto)"
     },
     "fr": {
       "name": "Compteur de gaz",

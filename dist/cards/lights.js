@@ -108,6 +108,9 @@
       "slider_right": "Rechts"
     },
     "es": {
+      "white_warm": "Blanco cálido",
+      "white_neutral": "Blanco neutro",
+      "white_cold": "Blanco frío",
       "light_bulb": "Bombilla",
       "color_bulb": "Bombilla de color",
       "filament_bulb": "Bombilla de filamento",
@@ -127,7 +130,10 @@
       "brightness": "Brillo",
       "power": "Potencia",
       "energy": "Energía",
-      "ceiling_spot": "Focos empotrados"
+      "ceiling_spot": "Focos empotrados",
+      "slider_bottom": "Debajo de la bombilla",
+      "slider_left": "Izquierda",
+      "slider_right": "Derecha"
     },
     "fr": {
       "white_warm": "Blanc chaud",
