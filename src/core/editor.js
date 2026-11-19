@@ -308,7 +308,8 @@ function buildForm(kind) {
           ] : []),
           ...(kind === "radiator" ? [
             { name: "style", selector: { select: { mode: "dropdown", options: [
-              { value: "inertia", label: "Inertie / Inertia radiator" }, { value: "convector", label: "Convecteur mural / Wall convector" }, { value: "baseboard", label: "Plinthe / Baseboard heater" }] } } },
+              { value: "inertia", label: "Inertie / Inertia radiator" }, { value: "convector", label: "Convecteur mural / Wall convector" }, { value: "baseboard", label: "Plinthe / Baseboard heater" },
+              { value: "convector_photo", label: "Convecteur (photo) / Wall convector (photo)" }, { value: "baseboard_photo", label: "Plinthe (photo) / Baseboard heater (photo)" }] } } },
             { name: "max_power", selector: { number: { min: 100, max: 5000, step: 50, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
           ...(kind === "hob" ? [
