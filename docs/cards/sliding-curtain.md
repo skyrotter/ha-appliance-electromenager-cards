@@ -2,8 +2,8 @@
 
 `custom:appliance-sliding-curtain-card`
 
-Two fabric panels slide sideways from the centre of a window and gather at the
-edges as `current_position` changes. Fold shading follows the fabric colour;
+One or two fabric panels slide sideways across a window and gather at the
+edge(s) as `current_position` changes. Fold shading follows the fabric colour;
 the window switches between daylight and moonlight using `sun.sun`.
 
 Uses the same cover controls, visual editor, status badges, sizing and theme
@@ -28,6 +28,8 @@ show_since: false
 | `entity` | A `cover` entity; `current_position` is 0 when closed, 100 when open. |
 | `name` | Title; defaults to the translated card name. |
 | `color` | Fabric colour, default `#b6a997`. |
+| `panels` | `2` (default): two panels opening from the centre. `1`: a single panel sliding to one side. |
+| `side` | With `panels: 1`, where the open curtain stacks: `left` (default) or `right`. |
 | `sun_entity` | Day/night entity, default `sun.sun`. |
 | `travel_time` | Full-travel animation duration in seconds. Partial moves scale with distance. |
 | `show_controls` | Show Open / Stop / Close buttons, default true. Stop is hidden when unsupported. |
