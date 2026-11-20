@@ -13,7 +13,7 @@ const DEF = {
     fields: ["entity", "power", "power_solar", "energy", "energy_solar", "cost", "temperature", "target_temperature", "hot_water_level", "hot_water_volume", "switch"],
     keys: ["ballon_eau_chaude", "ballon", "chauffe_eau", "water_heater", "boiler", "cumulus"] },
   oven: { accent: "heat", threshold: 50,
-    fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "remaining", "program", "door", "switch"],
+    fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "remaining", "program", "door", "switch", "status_2", "temperature_2", "target_temperature_2", "remaining_2"],
     keys: ["four", "oven"] },
   microwave: { accent: "active", threshold: 50,
     fields: ["entity", "power", "energy", "cost", "remaining", "program", "door", "switch"],

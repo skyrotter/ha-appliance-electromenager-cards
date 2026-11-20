@@ -10,3 +10,9 @@
 .k-microwave.active .bowl { animation: ac-turn 5s linear infinite; }
 .start { fill: #c9ced4; stroke: #8f979f; stroke-width: .4; transition: fill .3s; }
 .k-microwave.active .start { fill: #3ddc84; }
+.ovl2 { font: 700 7px ui-monospace, "Courier New", monospace; letter-spacing: .1px; fill: #6fd8ff !important; dominant-baseline: central; }
+.k-oven.dual .lcd { font-size: 7px !important; }
+.k-oven.active2 .ilight2 { opacity: .95; }
+.k-oven.active2 .element2 { stroke: #ff5a1f; filter: drop-shadow(0 0 2px #ff7a2e); animation: ac-pulse 1.8s ease-in-out infinite; }
+.k-oven.active2 .haze2 path { animation: ac-steam 2.4s ease-out infinite; }
+.k-oven.dual:not(.active) .element { animation: none; }
