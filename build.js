@@ -122,6 +122,20 @@ const chunks = Object.fromEntries(CARD_FILES.map((f) => [path.basename(f, ".js")
 
 for (const ns of Object.keys(i18n.en).filter((ns) => !usedI18n.has(ns))) warn(`en.json: namespace "${ns}" is not used by the source`);
 
+// Chaque carte doit avoir une catégorie dans le sélecteur de la carte unique (CATS de src/cards/picker.js) : sans elle, elle
+// tomberait dans « Robots, animaux et divers » sans qu'on s'en aperçoive. Les cartes sont lues dans le README (tableau « The cards »)
+// et dans les noms `appliance-…-card` écrits dans les sources.
+{
+  const picker = read(path.join(SRC, "cards/picker.js")), blk = (picker.match(/const CATS = \{([\s\S]*?)\n  \};/) || [])[1] || "";
+  const categorised = new Set([...blk.matchAll(/(\w+): '([^']+)'/g)].flatMap((m) => m[2].split(/\s+/).map((n) => `appliance-${n}-card`)));
+  const found = new Set();
+  const readme = read(path.join(ROOT, "README.md"));
+  for (const m of readme.matchAll(/`custom:(appliance-[a-z0-9-]+-card)`/g)) found.add(m[1]);
+  for (const f of walk("cards/").filter((f) => f.endsWith(".js"))) for (const m of read(path.join(SRC, f)).matchAll(/['"`](appliance-[a-z0-9-]+-card)['"`]/g)) found.add(m[1]);
+  const ignore = new Set(["appliance-card", "appliance-electromenager-card"]); // la carte unique elle-même et le nom du dépôt
+  for (const t of [...found].filter((t) => !ignore.has(t) && !categorised.has(t)).sort()) warn(`${t} has no category: add it to CATS in src/cards/picker.js`);
+}
+
 /* ---- main file: header + core + the loader for the card chunks ---- */
 const [first, second, ...rest] = chunkNames; // card-helpers, editor-labels, then the 56 lazy cards
 const VERSION_STR = /const VERSION = "([^"]+)"/.exec(load("core/version.js"))[1];

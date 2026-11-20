@@ -12,3 +12,10 @@ Si ce projet te plaît et que tu veux y contribuer, tu peux faire un don ou lais
 ```
 
 Sur un support sans Markdown (forum en texte brut), mettre les liens en clair.
+
+## Nouvelles cartes
+
+Toute nouvelle carte (ou nouveau type d'appareil) doit être ajoutée :
+- à une catégorie dans `CATS` de `src/cards/picker.js` (sélecteur de la carte unique) : le build avertit quand une carte n'en a pas ;
+- au tableau « The cards » du `README.md` (et à ses traductions) ;
+- avec sa fiche dans `docs/cards/`.
