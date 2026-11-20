@@ -20,11 +20,12 @@ ${sideBody(`
       <rect x="80" y="15" width="8" height="5" rx="1.5" fill="#e7eaee" stroke="#aeb5bd" stroke-width=".6"/>
       <rect x="91" y="15" width="8" height="5" rx="1.5" fill="#e7eaee" stroke="#aeb5bd" stroke-width=".6"/>
       <rect x="80" y="23" width="19" height="5" rx="1.5" fill="#dfe3e8" stroke="#aeb5bd" stroke-width=".6"/>`)}
+    ${sidePlace(60, 123, `
+      <rect x="22" y="119" width="76" height="8" rx="2" fill="#e3e7eb" stroke="#c3c9d0" stroke-width=".6"/>
+      <path d="M28 121.2h64M28 123.2h64M28 125.2h64" stroke="#b7bec6" stroke-width=".6"/>`)}
     ${sidePlace(60, 80, sidePorthole(60, 80, 29, `
       <rect x="20" y="40" width="80" height="80" fill="#3a4148" opacity=".25"/>
       ${drumInside(60, 80, 29)}
       <circle class="heat" cx="60" cy="80" r="29" fill="url(#ID-heat)"/>`))}
-    ${sidePlace(60, 118.5, `
-      <rect x="22" y="114" width="76" height="9" rx="2" fill="#e3e7eb" stroke="#c3c9d0" stroke-width=".6"/>
-      <path d="M28 116.5h64M28 118.5h64M28 120.5h64" stroke="#b7bec6" stroke-width=".6"/>`)}`, { shake: "shake-soft" })}`;
+`, { shake: "shake-soft" })}`;
 SVG.dryer = (c) => (c && c.style === "side" ? DRYER_SIDE() : DRYER_FRONT(c));
