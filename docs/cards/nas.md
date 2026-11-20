@@ -117,6 +117,12 @@ entity_drive_2: sensor.ds3018_drive_2_status
 # … up to entity_drive_8
 ```
 
+## Synology DS1525+
+
+<p align="center"><img src="../nas-ds1525.gif" width="400" alt="Synology DS1525+, 5 bays"></p>
+
+`model: synology_ds1525`: photo of the 5-bay DS1525+ with its STATUS and DISK 1 to 5 LEDs. Same options as the other Synology models.
+
 ## Asustor
 
 <p align="center"><img src="../nas-asustor.gif" width="760" alt="Asustor NAS, 6, 4 and 2 bays"></p>
