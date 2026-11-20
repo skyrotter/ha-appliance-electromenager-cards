@@ -76,4 +76,7 @@ entity: sensor.czajnik_stan_czajnika
 counter: sensor.czajnik_licznik_wlaczen   # extra tile (number of cycles)
 button_on: button.czajnik_wlacz           # two buttons replace the mode selector
 button_off: button.czajnik_wylacz
+show_selector: true   # mode selector (default true)
+show_buttons: true    # on/off buttons (default true)
+show_slider: true     # temperature slider, always visible (default true)
 ```

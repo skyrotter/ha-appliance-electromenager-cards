@@ -1714,15 +1714,48 @@ class ApplianceCardBase extends HTMLElement {
       modesEl.innerHTML = MODE_ORDER.filter((k) => pickMode(opts, k)).map((k) =>
         `<button class="mode-btn ${cur === k ? "on" : ""}" data-mode="${k}" aria-pressed="${cur === k}"><ha-icon icon="${MODE_ICON[k]}"></ha-icon>${esc(tr(hass, k === "off" ? "mode_off" : k === "none" ? "mode_none" : k === "drying" ? "mode_drying" : k))}</button>`).join("");
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._setMode(b.dataset.mode); }; });
-    } else if (kind === "kettle" && c.show_modes !== false && (c.button_on || c.button_off)) {
-      // bouilloire : deux boutons (entités `button`) à la place du sélecteur de mode
+    } else if (kind === "kettle" && c.show_modes !== false) {
+      // bouilloire : sélecteur de mode (une touche par option), boutons on/off (entités button) et curseur de température,
+      // chacun activable séparément (show_selector / show_buttons / show_slider) ; le curseur est toujours visible
       const dis = m.status === "unavailable" ? " disabled" : "";
-      modesEl.innerHTML = [["on", c.button_on, "mdi:power", "on"], ["off", c.button_off, "mdi:power-off", "off"]].filter((b) => b[1]).map(([k, id, ic]) => {
-        const st = hass.states[id], nm = c[`button_${k}_label`] || (st && st.attributes.friendly_name) || (k === "on" ? "On" : tr(hass, "mode_off"));
-        return `<button class="mode-btn" data-ext="${k}"${dis}><ha-icon icon="${ic}"></ha-icon>${esc(nm)}</button>`;
-      }).join("");
-      modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); const id = c[`button_${b.dataset.ext}`]; hass.callService(domainOf(id) === "script" ? "script" : domainOf(id), domainOf(id) === "script" ? "turn_on" : "press", { entity_id: id }); }; });
-    } else if ((kind === "pellet_stove" || kind === "kettle") && c.show_modes !== false && this._presetEntity() && hass.states[this._presetEntity()]) {
+      const pst = this._presetEntity() && hass.states[this._presetEntity()];
+      const cap = (x) => { const t = String(x).replace(/_/g, " "); return t.charAt(0).toUpperCase() + t.slice(1); };
+      let html = "";
+      if (c.show_selector !== false && pst) {
+        const cur = String(pst.state).toLowerCase();
+        html += this._presetOptions(pst).map((o) => {
+          const raw = String(o).toLowerCase(), on = raw === cur, key = MODE_ORDER.find((k) => MODE_RX[k].test(raw) && modeKey(raw) === k) || "";
+          return `<button class="mode-btn ${on ? "on" : ""}" data-preset="${esc(o)}" data-mode="${key}" aria-pressed="${on}"${dis}><ha-icon icon="${MODE_ICON[key] || "mdi:tune-variant"}"></ha-icon>${esc(cap(o))}</button>`;
+        }).join("");
+      }
+      if (c.show_buttons !== false) {
+        html += [["on", c.button_on, "mdi:power"], ["off", c.button_off, "mdi:power-off"]].filter((x) => x[1]).map(([k, id, ic]) => {
+          const st = hass.states[id], nm = c[`button_${k}_label`] || (st && st.attributes.friendly_name) || (k === "on" ? "On" : tr(hass, "mode_off"));
+          return `<button class="mode-btn" data-ext="${k}"${dis}><ha-icon icon="${ic}"></ha-icon>${esc(nm)}</button>`;
+        }).join("");
+      }
+      // pendant qu'on déplace le curseur, on ne remplace pas la zone (sinon le geste est interrompu)
+      const dragging = modesEl.querySelector(".kt-slider input:active");
+      const tn = c.show_slider !== false && c.target_temperature && hass.states[c.target_temperature], tdom = domainOf(c.target_temperature);
+      if (tn && ["number", "input_number"].includes(tdom) && !BAD.includes(String(tn.state).toLowerCase())) {
+        const mn = Number(tn.attributes.min ?? 35), mx = Number(tn.attributes.max ?? 100), stp = Number(tn.attributes.step ?? 1), val = Number(tn.state);
+        html += `<div class="kt-slider"><span>${esc(tr(hass, "target"))}</span><input type="range" min="${mn}" max="${mx}" step="${stp}" value="${Number.isFinite(val) ? val : mn}" aria-label="${esc(tr(hass, "target"))}"${dis}><b>${Number.isFinite(val) ? Math.round(val) : "--"}°</b></div>`;
+      }
+      if (!dragging) modesEl.innerHTML = html;
+      modesEl.querySelectorAll("button").forEach((b) => {
+        b.onclick = (ev) => {
+          ev.stopPropagation();
+          if (b.dataset.ext) { const id = c[`button_${b.dataset.ext}`], d = domainOf(id); hass.callService(d, d === "script" ? "turn_on" : "press", { entity_id: id }); } else this._setPreset(b.dataset.preset);
+        };
+      });
+      const rg = modesEl.querySelector(".kt-slider input");
+      if (rg) {
+        // le geste sur le curseur ne doit pas déclencher l'action de la carte (fenêtre de détails)
+        ["click", "pointerdown", "pointerup", "touchstart", "touchend", "mousedown", "mouseup"].forEach((e) => rg.addEventListener(e, (ev) => ev.stopPropagation()));
+        rg.oninput = () => { rg.nextElementSibling.textContent = `${rg.value}°`; };
+        rg.onchange = () => hass.callService(tdom, "set_value", { entity_id: c.target_temperature, value: Number(rg.value) });
+      }
+    } else if (kind === "pellet_stove" && c.show_modes !== false && this._presetEntity() && hass.states[this._presetEntity()]) {
       // poêle à granulés : un bouton par pré-réglage réel de l'entité (preset_modes du climate, options du select)
       const pst = hass.states[this._presetEntity()], opts = this._presetOptions(pst);
       const cur = String(domainOf(pst.entity_id) === "climate" ? pst.attributes.preset_mode ?? "" : pst.state).toLowerCase();
