@@ -95,7 +95,7 @@ class ApplianceCardBase extends HTMLElement {
 
   _ids() {
     const c = this._config;
-    return ["entity", "power", "current", "voltage", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
+    return ["entity", "status_2", "temperature_2", "target_temperature_2", "remaining_2", "power", "current", "voltage", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
       "switch_low", "switch_high", "direction", "pressure", "runtime_total", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water", "power_level", "pellet_level", "ph", "orp", "dose_interval", "dose_timer", "dose_volume", "dose_time", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
@@ -367,6 +367,14 @@ class ApplianceCardBase extends HTMLElement {
     if (m.tempVal == null) m.tempVal = tOf(m.temp, "current_temperature");
     if (m.targetVal == null) m.targetVal = tOf(m.target, "temperature");
     m.tempUnit = m.temp?.attributes.unit_of_measurement || hass.config?.unit_system?.temperature || "°C";
+    // four à deux cavités (cavities: 2) : température, consigne, temps restant et état de la cavité 2 ; en cuisson d'après l'état (en cours,
+    // chauffe…) ou, sans entité d'état, d'après la température ≥ 50 °C
+    if (kind === "oven" && Number(c.cavities) === 2) {
+      m.dual = true; m.st2 = S(c.status_2);
+      m.temp2 = num(S(c.temperature_2)); m.target2 = num(S(c.target_temperature_2)); m.remaining2 = parseRemaining(S(c.remaining_2));
+      const raw2 = m.st2 ? String(m.st2.state).toLowerCase() : "";
+      m.active2 = m.st2 ? /running|cooking|heating|preheat|en cours|chauff|cuisson|^on$|^true$/.test(raw2) : m.temp2 != null && m.temp2 >= 50;
+    }
     // frigo : option temperature_unit (C / F). Les valeurs sont converties depuis l'unité de chaque capteur ; les seuils saisis
     // sont dans l'unité choisie, les seuils par défaut (écrits en °C) sont convertis. Sans l'option, rien ne change.
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind) && c.temperature_unit && window.applianceTemp) {
@@ -1340,7 +1348,7 @@ class ApplianceCardBase extends HTMLElement {
     const hideWouldApply = this._applyHide(active, m.alerts.length > 0);
     $("wrap").className = [
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
-      active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
+      active ? "active" : "", m.dual ? "dual" : "", m.active2 ? "active2" : "", m.phase ? `ph-${m.phase}` : "",
       m.alerts.length ? "alert" : "", isOn(m.door) ? "door-open" : "", isOn(m.fdoor) ? "fz-open" : "",
       m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", kind === "smart_plug" ? this._indClasses() : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", kind === "ceiling_fan" && c.show_light === false ? "no-light" : "", m.solarHeat ? "solar-heat" : "", hideWouldApply ? "would-hide" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "", m.vxDir ? `vx-${m.vxDir}` : kind === "vmc" ? "vx-extract" : "", m.vxSpeed ? `vx-s${m.vxSpeed}` : "",
     ].filter(Boolean).join(" ");
@@ -1412,6 +1420,8 @@ class ApplianceCardBase extends HTMLElement {
     const sr = this.shadowRoot;
     const lcdEl = sr.querySelector(".lcd");
     if (lcdEl) lcdEl.textContent = this._lcdText(m);
+    const lcd2o = sr.querySelector(".ovl2");
+    if (lcd2o) lcd2o.textContent = m.status === "unavailable" ? "--" : m.active2 ? (m.temp2 != null ? `${Math.round(m.temp2)}°` : m.remaining2 ? lcdDuration(m.remaining2) : "ON") : "--";
     // split : l'humidité s'affiche sous la température sur l'écran (lcd_humidity: false pour la masquer)
     if (kind === "ac_split" && lcdEl) {
       const showH = c.lcd_humidity !== false && m.humidity != null && !["off", "unavailable"].includes(m.status);
@@ -1971,6 +1981,12 @@ class ApplianceCardBase extends HTMLElement {
       const td = ["oven", "air_fryer", "cookeo"].includes(kind) ? 0 : 1;
       if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, td, 0, tEntity)} ${m.tempUnit}`, lb("temperature"), tEntity);
       if (m.targetVal != null) tile("mdi:target", `${fmtNum(hass, m.targetVal, td, 0, c.target_temperature || tEntity)} ${m.tempUnit}`, lb("target"), c.target_temperature || tEntity);
+      if (m.dual) {
+        if (m.temp2 != null) tile("mdi:thermometer", `${fmtNum(hass, m.temp2, 0, 0, c.temperature_2)} ${m.tempUnit}`, lb("temperature_2"), c.temperature_2);
+        if (m.target2 != null && m.target2 > 0) tile("mdi:target", `${fmtNum(hass, m.target2, 0, 0, c.target_temperature_2)} ${m.tempUnit}`, lb("target_2"), c.target_temperature_2);
+        if (m.remaining2 != null && m.remaining2 > 0) tile("mdi:timer-sand", fmtDuration(m.remaining2), lb("remaining_2"), c.remaining_2);
+        if (m.st2) tile("mdi:stove", stateText(hass, m.st2), lb("cavity_2"), c.status_2);
+      }
       // eau chaude restante : % (tuile « Eau chaude ») et litres (tuile « Volume ») — deux tuiles, sinon le texte est tronqué
       if (kind === "water_heater" && m.hotPct != null) tile("mdi:water-thermometer", `${fmtNum(hass, m.hotPct, 0, 0, c.hot_water_level || c.hot_water_volume)} %`, lb("hot_water"), c.hot_water_level || c.hot_water_volume);
       if (kind === "water_heater" && m.hotL != null) tile("mdi:water", `${fmtNum(hass, m.hotL, 0, 0, c.hot_water_volume || c.hot_water_level)} L`, lb("volume"), c.hot_water_volume || c.hot_water_level);

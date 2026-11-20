@@ -276,6 +276,15 @@ const STRINGS = {
     "voltage": "Voltage",
     "energy": "Energy",
     "cost": "Cost",
+    "cavity_2": "Cavity 2",
+    "temperature_2": "Temp. cavity 2",
+    "target_2": "Target cavity 2",
+    "remaining_2": "Remaining cavity 2",
+    "f_cavities": "Number of cavities (1 or 2)",
+    "f_status_2": "Second cavity: state",
+    "f_temperature_2": "Second cavity: temperature",
+    "f_target_temperature_2": "Second cavity: target temperature",
+    "f_remaining_2": "Second cavity: remaining time",
     "remaining": "Remaining",
     "temperature": "Temperature",
     "target": "Target",
@@ -2546,6 +2555,15 @@ const STRINGS = {
     "voltage": "Tension",
     "energy": "Énergie",
     "cost": "Coût",
+    "cavity_2": "Cavité 2",
+    "temperature_2": "Temp. cavité 2",
+    "target_2": "Consigne cavité 2",
+    "remaining_2": "Reste cavité 2",
+    "f_cavities": "Nombre de cavités (1 ou 2)",
+    "f_status_2": "Deuxième cavité : état",
+    "f_temperature_2": "Deuxième cavité : température",
+    "f_target_temperature_2": "Deuxième cavité : consigne",
+    "f_remaining_2": "Deuxième cavité : temps restant",
     "remaining": "Restant",
     "temperature": "Température",
     "target": "Consigne",
@@ -9515,6 +9533,49 @@ ${lcd(43, 15, 34, 12)}
 <rect x="22" y="56" width="76" height="56" rx="4" fill="none" stroke="#5d656d" stroke-width="1.2"/>
 <rect x="14" y="118" width="92" height="8" rx="1.5" fill="#000" opacity=".12"/>`;
 
+/* Four à deux cavités (option cavities: 2, ex. Samsung Dual Cook) : la porte est séparée en deux par une tablette, cavité du haut = cavité 1
+   (celle du four principal), cavité du bas = cavité 2 (entités *_2). Chaque cavité a sa lumière, sa résistance et sa vapeur (.active / .active2). */
+const OVEN_SINGLE = SVG.oven;
+const OVEN_DUAL = () => `
+<defs>${DEFS}<clipPath id="ID-win"><rect x="22" y="56" width="76" height="31" rx="3"/></clipPath><clipPath id="ID-win2"><rect x="22" y="91" width="76" height="21" rx="3"/></clipPath>
+<linearGradient id="ID-cavity" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3330"/><stop offset="1" stop-color="#181412"/></linearGradient></defs>
+<ellipse cx="60" cy="133" rx="52" ry="5" fill="url(#ID-shadow)"/>
+<rect x="10" y="10" width="100" height="120" rx="5" fill="url(#ID-inox)" stroke="#949ca5" stroke-width=".8"/>
+<rect x="10" y="10" width="100" height="22" rx="5" fill="url(#ID-dark)"/>
+<rect x="10" y="26" width="100" height="6" fill="url(#ID-dark)"/>
+<circle cx="22" cy="21" r="6.5" fill="url(#ID-chrome)" stroke="#5c646d" stroke-width=".5"/>
+<circle cx="22" cy="21" r="4.2" fill="#2a3036"/><g class="knob"><line x1="22" y1="21" x2="22" y2="17.6" stroke="#e7eaed" stroke-width="1.3" stroke-linecap="round"/></g>
+<circle cx="98" cy="21" r="6.5" fill="url(#ID-chrome)" stroke="#5c646d" stroke-width=".5"/>
+<circle cx="98" cy="21" r="4.2" fill="#2a3036"/><line x1="98" y1="21" x2="100.6" y2="18.8" stroke="#e7eaed" stroke-width="1.3" stroke-linecap="round"/>
+<rect x="33" y="15" width="54" height="12" rx="1.5" fill="#0c1720" stroke="#8f98a2" stroke-width=".6"/>
+<text class="lcd" x="47.5" y="21.3" text-anchor="middle" fill="#7ec8e3">OFF</text><path d="M60 17.5v7" stroke="#3a4a58" stroke-width=".6"/><text class="ovl2" x="73" y="21.3" text-anchor="middle">--</text>
+<circle class="led l1" cx="30" cy="21" r="1.2"/>
+<rect x="14" y="36" width="92" height="90" rx="3" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".6"/>
+<rect x="20" y="40.5" width="80" height="4.5" rx="2.25" fill="url(#ID-chrome)" stroke="#7d858e" stroke-width=".5"/>
+<rect x="24" y="44.5" width="3" height="4" fill="#8f979f"/><rect x="93" y="44.5" width="3" height="4" fill="#8f979f"/>
+<rect x="22" y="56" width="76" height="56" rx="4" fill="#0f0d0c"/>
+<rect x="22" y="56" width="76" height="31" rx="3" fill="url(#ID-cavity)"/>
+<g clip-path="url(#ID-win)">
+  <rect class="ilight" x="22" y="56" width="76" height="31" fill="url(#ID-warm)"/>
+  <path class="element" d="M26 60h8l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3h8"/>
+  <path d="M24 77h72" stroke="#8d8680" stroke-width=".9"/>
+  <path d="M38 77l3-8h38l3 8z" fill="#b5442f"/><path d="M41 69q19-6 38 0z" fill="#d06a3c"/>
+  <g class="haze"><path d="M46 66q-3-4 0-8t0-8M60 65q-3-4 0-8t0-8M74 66q-3-4 0-8t0-8"/></g>
+</g>
+<rect x="22" y="87" width="76" height="4" fill="url(#ID-chrome)" stroke="#7d858e" stroke-width=".4"/>
+<rect x="22" y="91" width="76" height="21" rx="3" fill="url(#ID-cavity)"/>
+<g clip-path="url(#ID-win2)">
+  <rect class="ilight ilight2" x="22" y="91" width="76" height="21" fill="url(#ID-warm)"/>
+  <path class="element element2" d="M26 95h8l3 2.5l3-2.5l3 2.5l3-2.5l3 2.5l3-2.5l3 2.5l3-2.5l3 2.5l3-2.5l3 2.5l3-2.5h8"/>
+  <path d="M24 106h72" stroke="#8d8680" stroke-width=".8"/>
+  <ellipse cx="60" cy="104.5" rx="11" ry="2.6" fill="#c9a064"/><ellipse cx="60" cy="103.8" rx="8" ry="1.6" fill="#dcbc82"/>
+  <g class="haze haze2"><path d="M50 101q-2-3 0-6t0-6M60 101q-2-3 0-6t0-6M70 101q-2-3 0-6t0-6"/></g>
+</g>
+<path d="M22 70L44 56h16L22 82z" fill="#fff" opacity=".08"/>
+<rect x="22" y="56" width="76" height="56" rx="4" fill="none" stroke="#5d656d" stroke-width="1.2"/>
+<rect x="14" y="118" width="92" height="8" rx="1.5" fill="#000" opacity=".12"/>`;
+SVG.oven = (c) => (c && Number(c.cavities) === 2 ? OVEN_DUAL() : OVEN_SINGLE(c));
+
 SVG.pellet_stove = () => `
 <defs>${DEFS}
 <clipPath id="ID-win"><rect x="34" y="46" width="52" height="50" rx="5"/></clipPath>
@@ -11176,7 +11237,7 @@ const DEF = {
     fields: ["entity", "power", "power_solar", "energy", "energy_solar", "cost", "temperature", "target_temperature", "hot_water_level", "hot_water_volume", "switch"],
     keys: ["ballon_eau_chaude", "ballon", "chauffe_eau", "water_heater", "boiler", "cumulus"] },
   oven: { accent: "heat", threshold: 50,
-    fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "remaining", "program", "door", "switch"],
+    fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "remaining", "program", "door", "switch", "status_2", "temperature_2", "target_temperature_2", "remaining_2"],
     keys: ["four", "oven"] },
   microwave: { accent: "active", threshold: 50,
     fields: ["entity", "power", "energy", "cost", "remaining", "program", "door", "switch"],
@@ -11630,7 +11691,7 @@ class ApplianceCardBase extends HTMLElement {
 
   _ids() {
     const c = this._config;
-    return ["entity", "power", "current", "voltage", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
+    return ["entity", "status_2", "temperature_2", "target_temperature_2", "remaining_2", "power", "current", "voltage", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
       "switch_low", "switch_high", "direction", "pressure", "runtime_total", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water", "power_level", "pellet_level", "ph", "orp", "dose_interval", "dose_timer", "dose_volume", "dose_time", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
@@ -11902,6 +11963,14 @@ class ApplianceCardBase extends HTMLElement {
     if (m.tempVal == null) m.tempVal = tOf(m.temp, "current_temperature");
     if (m.targetVal == null) m.targetVal = tOf(m.target, "temperature");
     m.tempUnit = m.temp?.attributes.unit_of_measurement || hass.config?.unit_system?.temperature || "°C";
+    // four à deux cavités (cavities: 2) : température, consigne, temps restant et état de la cavité 2 ; en cuisson d'après l'état (en cours,
+    // chauffe…) ou, sans entité d'état, d'après la température ≥ 50 °C
+    if (kind === "oven" && Number(c.cavities) === 2) {
+      m.dual = true; m.st2 = S(c.status_2);
+      m.temp2 = num(S(c.temperature_2)); m.target2 = num(S(c.target_temperature_2)); m.remaining2 = parseRemaining(S(c.remaining_2));
+      const raw2 = m.st2 ? String(m.st2.state).toLowerCase() : "";
+      m.active2 = m.st2 ? /running|cooking|heating|preheat|en cours|chauff|cuisson|^on$|^true$/.test(raw2) : m.temp2 != null && m.temp2 >= 50;
+    }
     // frigo : option temperature_unit (C / F). Les valeurs sont converties depuis l'unité de chaque capteur ; les seuils saisis
     // sont dans l'unité choisie, les seuils par défaut (écrits en °C) sont convertis. Sans l'option, rien ne change.
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind) && c.temperature_unit && window.applianceTemp) {
@@ -12875,7 +12944,7 @@ class ApplianceCardBase extends HTMLElement {
     const hideWouldApply = this._applyHide(active, m.alerts.length > 0);
     $("wrap").className = [
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
-      active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
+      active ? "active" : "", m.dual ? "dual" : "", m.active2 ? "active2" : "", m.phase ? `ph-${m.phase}` : "",
       m.alerts.length ? "alert" : "", isOn(m.door) ? "door-open" : "", isOn(m.fdoor) ? "fz-open" : "",
       m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", kind === "smart_plug" ? this._indClasses() : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", kind === "ceiling_fan" && c.show_light === false ? "no-light" : "", m.solarHeat ? "solar-heat" : "", hideWouldApply ? "would-hide" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "", m.vxDir ? `vx-${m.vxDir}` : kind === "vmc" ? "vx-extract" : "", m.vxSpeed ? `vx-s${m.vxSpeed}` : "",
     ].filter(Boolean).join(" ");
@@ -12947,6 +13016,8 @@ class ApplianceCardBase extends HTMLElement {
     const sr = this.shadowRoot;
     const lcdEl = sr.querySelector(".lcd");
     if (lcdEl) lcdEl.textContent = this._lcdText(m);
+    const lcd2o = sr.querySelector(".ovl2");
+    if (lcd2o) lcd2o.textContent = m.status === "unavailable" ? "--" : m.active2 ? (m.temp2 != null ? `${Math.round(m.temp2)}°` : m.remaining2 ? lcdDuration(m.remaining2) : "ON") : "--";
     // split : l'humidité s'affiche sous la température sur l'écran (lcd_humidity: false pour la masquer)
     if (kind === "ac_split" && lcdEl) {
       const showH = c.lcd_humidity !== false && m.humidity != null && !["off", "unavailable"].includes(m.status);
@@ -13506,6 +13577,12 @@ class ApplianceCardBase extends HTMLElement {
       const td = ["oven", "air_fryer", "cookeo"].includes(kind) ? 0 : 1;
       if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, td, 0, tEntity)} ${m.tempUnit}`, lb("temperature"), tEntity);
       if (m.targetVal != null) tile("mdi:target", `${fmtNum(hass, m.targetVal, td, 0, c.target_temperature || tEntity)} ${m.tempUnit}`, lb("target"), c.target_temperature || tEntity);
+      if (m.dual) {
+        if (m.temp2 != null) tile("mdi:thermometer", `${fmtNum(hass, m.temp2, 0, 0, c.temperature_2)} ${m.tempUnit}`, lb("temperature_2"), c.temperature_2);
+        if (m.target2 != null && m.target2 > 0) tile("mdi:target", `${fmtNum(hass, m.target2, 0, 0, c.target_temperature_2)} ${m.tempUnit}`, lb("target_2"), c.target_temperature_2);
+        if (m.remaining2 != null && m.remaining2 > 0) tile("mdi:timer-sand", fmtDuration(m.remaining2), lb("remaining_2"), c.remaining_2);
+        if (m.st2) tile("mdi:stove", stateText(hass, m.st2), lb("cavity_2"), c.status_2);
+      }
       // eau chaude restante : % (tuile « Eau chaude ») et litres (tuile « Volume ») — deux tuiles, sinon le texte est tronqué
       if (kind === "water_heater" && m.hotPct != null) tile("mdi:water-thermometer", `${fmtNum(hass, m.hotPct, 0, 0, c.hot_water_level || c.hot_water_volume)} %`, lb("hot_water"), c.hot_water_level || c.hot_water_volume);
       if (kind === "water_heater" && m.hotL != null) tile("mdi:water", `${fmtNum(hass, m.hotL, 0, 0, c.hot_water_volume || c.hot_water_level)} L`, lb("volume"), c.hot_water_volume || c.hot_water_level);
@@ -13615,6 +13692,11 @@ const SEL = {
   energy_solar: { entity: { domain: "sensor", device_class: "energy" } },
   cost: { entity: { domain: ["sensor", "input_number"] } },
   remaining: { entity: { domain: "sensor" } },
+  // four à deux cavités (Samsung Dual Cook…) : état, température, consigne et temps restant de la deuxième cavité
+  status_2: { entity: { domain: ["sensor", "select", "binary_sensor", "switch", "input_boolean"] } },
+  temperature_2: { entity: { domain: ["sensor", "input_number"] } },
+  target_temperature_2: { entity: { domain: ["sensor", "number", "input_number"] } },
+  remaining_2: { entity: { domain: "sensor" } },
   progress: { entity: { domain: "sensor" } },
   program: { entity: { domain: ["sensor", "select", "input_select"] } },
   door: { entity: { domain: "binary_sensor" } },
@@ -13726,7 +13808,7 @@ function buildForm(kind) {
             { name: "last_cycle", selector: { boolean: {} } },
             { name: "estimate", selector: { boolean: {} } },
           ] : []),
-          ...(kind === "oven" ? [{ name: "last_cycle", selector: { boolean: {} } }] : []),
+          ...(kind === "oven" ? [{ name: "last_cycle", selector: { boolean: {} } }, { name: "cavities", selector: { number: { min: 1, max: 2, step: 1, mode: "box" } } }] : []),
           ...(kind === "water_heater" ? [{ name: "last_cycle", selector: { boolean: {} } },
             { name: "tank_volume", selector: { number: { min: 0, max: 1000, step: 1, mode: "box", unit_of_measurement: "L" } } }] : []),
           ...(["washer", "dryer", "dishwasher", "water_heater", "oven"].includes(kind) ? [
@@ -14452,6 +14534,12 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-microwave.active .bowl { animation: ac-turn 5s linear infinite; }
 .start { fill: #c9ced4; stroke: #8f979f; stroke-width: .4; transition: fill .3s; }
 .k-microwave.active .start { fill: #3ddc84; }
+.ovl2 { font: 700 7px ui-monospace, "Courier New", monospace; letter-spacing: .1px; fill: #6fd8ff !important; dominant-baseline: central; }
+.k-oven.dual .lcd { font-size: 7px !important; }
+.k-oven.active2 .ilight2 { opacity: .95; }
+.k-oven.active2 .element2 { stroke: #ff5a1f; filter: drop-shadow(0 0 2px #ff7a2e); animation: ac-pulse 1.8s ease-in-out infinite; }
+.k-oven.active2 .haze2 path { animation: ac-steam 2.4s ease-out infinite; }
+.k-oven.dual:not(.active) .element { animation: none; }
 
 /* ---------- radiator ---------- */
 .k-radiator { --heat: 0; }

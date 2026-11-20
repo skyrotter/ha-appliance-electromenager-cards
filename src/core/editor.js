@@ -11,6 +11,11 @@ const SEL = {
   energy_solar: { entity: { domain: "sensor", device_class: "energy" } },
   cost: { entity: { domain: ["sensor", "input_number"] } },
   remaining: { entity: { domain: "sensor" } },
+  // four à deux cavités (Samsung Dual Cook…) : état, température, consigne et temps restant de la deuxième cavité
+  status_2: { entity: { domain: ["sensor", "select", "binary_sensor", "switch", "input_boolean"] } },
+  temperature_2: { entity: { domain: ["sensor", "input_number"] } },
+  target_temperature_2: { entity: { domain: ["sensor", "number", "input_number"] } },
+  remaining_2: { entity: { domain: "sensor" } },
   progress: { entity: { domain: "sensor" } },
   program: { entity: { domain: ["sensor", "select", "input_select"] } },
   door: { entity: { domain: "binary_sensor" } },
@@ -122,7 +127,7 @@ function buildForm(kind) {
             { name: "last_cycle", selector: { boolean: {} } },
             { name: "estimate", selector: { boolean: {} } },
           ] : []),
-          ...(kind === "oven" ? [{ name: "last_cycle", selector: { boolean: {} } }] : []),
+          ...(kind === "oven" ? [{ name: "last_cycle", selector: { boolean: {} } }, { name: "cavities", selector: { number: { min: 1, max: 2, step: 1, mode: "box" } } }] : []),
           ...(kind === "water_heater" ? [{ name: "last_cycle", selector: { boolean: {} } },
             { name: "tank_volume", selector: { number: { min: 0, max: 1000, step: 1, mode: "box", unit_of_measurement: "L" } } }] : []),
           ...(["washer", "dryer", "dishwasher", "water_heater", "oven"].includes(kind) ? [
