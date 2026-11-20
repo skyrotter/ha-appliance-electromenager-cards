@@ -95,7 +95,7 @@ class ApplianceCardBase extends HTMLElement {
 
   _ids() {
     const c = this._config;
-    return ["entity", "status_2", "temperature_2", "target_temperature_2", "remaining_2", "power", "current", "voltage", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
+    return ["entity", "error", "status_2", "temperature_2", "target_temperature_2", "remaining_2", "power", "current", "voltage", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
       "switch_low", "switch_high", "direction", "pressure", "runtime_total", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water", "power_level", "pellet_level", "ph", "orp", "dose_interval", "dose_timer", "dose_volume", "dose_time", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
@@ -903,6 +903,9 @@ class ApplianceCardBase extends HTMLElement {
       else if (on) m.status = kind === "kettle" ? "boiling" : "toasting";
       else if (kind === "kettle" && m.tempVal != null) m.status = m.tempVal >= (c.hot_temperature ?? 60) ? "hot_water" : "off";
       else m.status = this._onAt && now - this._onAt < keep ? (kind === "kettle" ? "hot_water" : "toast_ready") : "off";
+      // bouilloire ESPHome / Tuya : entité « défaut » (binary_sensor allumé, ou capteur texte autre que « ok / aucun / none… »)
+      const er = kind === "kettle" ? S(c.error) : null;
+      if (er && !BAD.includes(String(er.state).toLowerCase()) && (domainOf(c.error) === "sensor" ? !/^(ok|none|no.?error|aucun[e]?|normal|false|0|off|-?)$/i.test(String(er.state).trim()) : isOn(er))) m.alerts.push("kettle_error");
     } else if (kind === "contact_grill" || kind === "deep_fryer") {
       // prise : voyant rouge tant qu'il chauffe (premières preheat_minutes), voyant vert ensuite et pendant ready_minutes après la coupure
       // (le thermostat coupe et rallume la résistance) ; une coupure avant 2 min de chauffe = simple arrêt
@@ -1872,6 +1875,7 @@ class ApplianceCardBase extends HTMLElement {
       if (m.glEffect && m.status === "lit") tile("mdi:auto-fix", m.glEffect, lb("effect"), c.entity);
     } else if (kind === "kettle") {
       if (m.tempVal != null) tile("mdi:thermometer-water", `${fmtNum(hass, m.tempVal, 0, 0, tEntity)} ${m.tempUnit}`, lb("water"), tEntity);
+      if (m.targetVal != null) tile("mdi:target", `${fmtNum(hass, m.targetVal, 0, 0, c.target_temperature)} ${m.tempUnit}`, lb("target"), c.target_temperature);
     } else if (kind === "tool_charger") {
       if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0, 0, c.battery_level)} %`, lb("battery"), c.battery_level);
     } else if (kind === "wine_cooler") {

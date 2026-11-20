@@ -18,5 +18,15 @@ power: sensor.toaster_plug_power
 cost: sensor.toaster_cost_today
 ```
 
+**Kettle without a smart plug** (ESPHome / Tuya kettle that exposes its own entities): use `entity` for the on/off `switch`, `temperature` for the water temperature, `target_temperature` (a `number`, `sensor` or `climate`) for the set temperature (extra "Target" tile) and `error` (a `binary_sensor`, or a text sensor that is not `ok` / `none`) to show a fault alert:
+
+```yaml
+type: custom:appliance-kettle-card
+entity: switch.kettle
+temperature: sensor.kettle_temperature
+target_temperature: number.kettle_set_temperature
+error: binary_sensor.kettle_error
+```
+
 
 [← All cards](../../README.md#the-cards)
