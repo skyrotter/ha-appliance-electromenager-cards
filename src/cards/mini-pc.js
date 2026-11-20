@@ -389,7 +389,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         this.appendChild(this._form);
       }
       const ent = (name, domain) => ({ name, selector: { entity: domain ? { domain } : {} } });
-      const tr = T[window.applianceLang(T, null, this._hass)] || T.en;
+      const tr = { ...T.en, ...T[window.applianceLang(T, null, this._hass)] }; // repli par clé sur l'anglais
       const num = (name, min, max, step, def, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
       const bool = (name, def = true) => ({ name, selector: { boolean: {} }, default: def });
       this._form.hass = this._hass;

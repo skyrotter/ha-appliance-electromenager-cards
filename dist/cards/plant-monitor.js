@@ -470,7 +470,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const ent = (name, domain) => ({ name, selector: { entity: domain ? { domain } : {} } });
       const bool = (name, def = true) => ({ name, selector: { boolean: {} }, default: def });
       const num = (name, def, min, max, step, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', unit_of_measurement: unit } } });
-      const tr = T[window.applianceLang(T, this._c, this._hass)] || T.en;
+      const tr = { ...T.en, ...T[window.applianceLang(T, this._c, this._hass)] }; // repli par clé sur l'anglais
       this._form.hass = this._hass; this._form.data = { ...this._c };
       this._form.schema = [
         { name: 'name', selector: { text: {} } },

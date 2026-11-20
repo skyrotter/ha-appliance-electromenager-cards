@@ -6713,7 +6713,16 @@
       "entity_current": "Corrente",
       "show_tariffs": "Mostrar os blocos de importação / exportação",
       "show_peak": "Mostrar a demanda máxima e média",
-      "show_electrics": "Mostrar a tensão e a corrente"
+      "show_electrics": "Mostrar a tensão e a corrente",
+      "battery_entity_mode": "Modo de operação (entidade select)",
+      "battery_model_zendure_ac2400": "Zendure SolarFlow 2400 AC+ (foto)",
+      "battery_show_mode": "Mostrar modo de operação",
+      "entity_soc_max": "Limite máximo de carga (number ou sensor, %)",
+      "entity_soc_min": "Limite mínimo de carga (number ou sensor, %)",
+      "panels": "Número de painéis (1 ou 2)",
+      "show_soc_max": "Mostrar carga máxima",
+      "show_soc_min": "Mostrar carga mínima",
+      "side": "Lado em que o painel único se empilha"
     },
     "pt-PT": {
       "entity_drive_5": "Disco 5",
@@ -7443,7 +7452,16 @@
       "entity_current": "Corrente",
       "show_tariffs": "Mostrar os mosaicos de importação / exportação",
       "show_peak": "Mostrar a potência máxima e média",
-      "show_electrics": "Mostrar a tensão e a corrente"
+      "show_electrics": "Mostrar a tensão e a corrente",
+      "battery_entity_mode": "Modo de operação (entidade select)",
+      "battery_model_zendure_ac2400": "Zendure SolarFlow 2400 AC+ (foto)",
+      "battery_show_mode": "Mostrar modo de operação",
+      "entity_soc_max": "Limite máximo de carga (number ou sensor, %)",
+      "entity_soc_min": "Limite mínimo de carga (number ou sensor, %)",
+      "panels": "Número de painéis (1 ou 2)",
+      "show_soc_max": "Mostrar carga máxima",
+      "show_soc_min": "Mostrar carga mínima",
+      "side": "Lado em que o painel único se empilha"
     },
     "ro": {
       "animations": "Animații",

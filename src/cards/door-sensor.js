@@ -247,7 +247,7 @@ svg{display:block;width:100%;max-width:calc(240px * var(--illus-scale,1));height
         this.appendChild(this._form);
       }
       const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
-      const tr = T[window.applianceLang(T, null, this._hass)] || T.en;
+      const tr = { ...T.en, ...T[window.applianceLang(T, null, this._hass)] }; // repli par clé sur l'anglais
       this._form.hass = this._hass;
       this._form.data = this._c;
       this._form.schema = [
