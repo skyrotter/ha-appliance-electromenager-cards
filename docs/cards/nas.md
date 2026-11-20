@@ -8,7 +8,7 @@
 
 <p align="center"><img src="../terramaster-f6-424.gif" width="376" alt="NAS card: TerraMaster F6-424, idle, very active, disk 4 failing"></p>
 
-**NAS** (cut-out photos, 2, 4, 6 or 8 bays, or a **generic** drawing of 1, 2, 4, 5, 6 or 8 bays), made for the **Synology DSM**, **TerraMaster TNAS (TOS)** and **Unraid** (UGREEN NASync) integrations. Eleven models with `model`: `synology_ds423` (default, DS423+), `synology_ds925` (DS925+), `terramaster_f4_423`, `terramaster_f4_425`, `terramaster_f6_424` (TerraMaster F6-424, 6 bays, `entity_drive_5` and `entity_drive_6` available), `ugreen_dxp4800_plus` (UGREEN DXP4800 Plus, 4 bays) and `ugreen_idx6011_pro` (UGREEN iDX6011 Pro, 6 bays, `entity_drive_5` and `entity_drive_6` available), `qnap_ts251` (QNAP TS-251+, 2 bays) and `qnap_ts253` (QNAP TS-253, 2 bays; only `entity_drive_1` and `entity_drive_2`), `synology_ds224` (Synology DS224+, 2 bays; only `entity_drive_1` and `entity_drive_2`). `synology_ds1812` (Synology DS1812+, 8 bays, `entity_drive_1` to `entity_drive_8` available). On the UGREEN models the power button LED is the STATUS LED, and the white LED strip follows the disks. The STATUS and DISK LEDs of the photo come alive: the disk LEDs blink faster with the activity, a read beam sweeps across the bays, data packets fly to the volume ring (upload) or leave it (download), a failing disk blinks orange and its bay pulses red, the STATUS LED blinks orange on any alert, the power button breathes in blue and heat rises above the case when too hot. On the side: a volume ring (red above `volume_max`), download / upload bars and a temperature bar.
+**NAS** (cut-out photos, 2, 4, 6 or 8 bays, or a **generic** drawing of 1, 2, 4, 5, 6 or 8 bays), made for the **Synology DSM**, **TerraMaster TNAS (TOS)** and **Unraid** (UGREEN NASync) integrations. Eleven models with `model`: `synology_ds423` (default, DS423+), `synology_ds925` (DS925+), `terramaster_f4_423`, `terramaster_f4_425`, `terramaster_f6_424` (TerraMaster F6-424, 6 bays, `entity_drive_5` and `entity_drive_6` available), `ugreen_dxp4800_plus` (UGREEN DXP4800 Plus, 4 bays) and `ugreen_idx6011_pro` (UGREEN iDX6011 Pro, 6 bays, `entity_drive_5` and `entity_drive_6` available), `qnap_ts251` (QNAP TS-251+, 2 bays) and `qnap_ts253` (QNAP TS-253, 2 bays; only `entity_drive_1` and `entity_drive_2`), `synology_ds224` (Synology DS224+, 2 bays; only `entity_drive_1` and `entity_drive_2`). `synology_ds1812` (Synology DS1812+, 8 bays, `entity_drive_1` to `entity_drive_8` available), `asustor_2bay`, `asustor_4bay` and `asustor_6bay` (Asustor NAS, cut-out photos with the green disk LEDs and the blue front LEDs; `entity_drive_1` is the first disk, the one the Asustor integration calls `disk0`). On the UGREEN models the power button LED is the STATUS LED, and the white LED strip follows the disks. The STATUS and DISK LEDs of the photo come alive: the disk LEDs blink faster with the activity, a read beam sweeps across the bays, data packets fly to the volume ring (upload) or leave it (download), a failing disk blinks orange and its bay pulses red, the STATUS LED blinks orange on any alert, the power button breathes in blue and heat rises above the case when too hot. On the side: a volume ring (red above `volume_max`), download / upload bars and a temperature bar.
 
 States: off, idle, running, very active (CPU above `cpu_busy` or high throughput), warning and unavailable. Alerts: volume degraded or crashed, disk N problem (DSM status or temperature above `disk_temp_max`), overheating, volume almost full, security warning. A "DSM update available" line shows when `entity_update` is on. Click a bay to open its disk.
 
@@ -104,7 +104,6 @@ entity_update: update.ds423_dsm_update
 ```
 
 
-[← All cards](../../README.md#the-cards)
 
 ## Generic NAS (any number of bays)
 
@@ -117,3 +116,27 @@ entity_drive_1: sensor.ds3018_drive_1_status
 entity_drive_2: sensor.ds3018_drive_2_status
 # … up to entity_drive_8
 ```
+
+## Asustor
+
+Works with the [ha-asustor](https://github.com/aubierr/ha-asustor) integration. Example (4 bays), with the entity names it creates:
+
+```yaml
+type: custom:appliance-nas-card
+model: asustor_4bay
+entity_cpu: sensor.nasasustor_utilisation_cpu
+entity_ram: sensor.nasasustor_utilisation_memoire
+entity_temp: sensor.nasasustor_temperature_systeme
+entity_volume: sensor.nasasustor_volume_1_etat
+entity_volume_used: sensor.nasasustor_volume_1_utilisation
+entity_net_down: sensor.nasasustor_eth0_debit_en_reception
+entity_net_up: sensor.nasasustor_eth0_debit_en_emission
+entity_drive_1: binary_sensor.nasasustor_disk0_probleme
+entity_drive_1_temp: sensor.nasasustor_disk0_temperature
+entity_drive_2: binary_sensor.nasasustor_disk1_probleme
+entity_drive_2_temp: sensor.nasasustor_disk1_temperature
+```
+
+The visual editor fills these in automatically when the entities exist.
+
+[← All cards](../../README.md#the-cards)
