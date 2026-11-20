@@ -34,6 +34,8 @@ error: binary_sensor.kettle_error
 
 **ProfiCook PC-WKS 1167G with ESPHome** (the [Tuya MCU → ESP32 firmware by Bohdan Sverdliuk, dou.ua](https://dou.ua/forums/topic/51822/)): the device exposes a state text sensor (`Lifted`, `Standby`, `Heating`, `Cooling`, `Maintaining Temp`), an error text sensor (`OK`, `Empty`, `Overheated`, `other error`), a mode `select` (`45°`, `60°`, `85°`, `100°`, `100° and off`, `Custom`, `Off`), a custom temperature `number` (35 to 100) and the temperature and remaining time sensors:
 
+<p align="center"><img src="../kettle-proficook-esp.png" width="720" alt="ProfiCook PC-WKS 1167G with ESPHome: keep warm 60°, Custom mode with slider and error, kettle lifted"></p>
+
 ```yaml
 type: custom:appliance-kettle-card
 model: proficook
