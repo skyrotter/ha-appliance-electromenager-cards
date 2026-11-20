@@ -305,6 +305,10 @@ const STRINGS = {
     "f_power": "Power sensor (W)",
     "f_energy": "Energy sensor (kWh)",
     "f_cost": "Cost sensor",
+    "f_counter": "Counter sensor (number of cycles)",
+    "f_button_on": "Button: turn on (replaces the mode selector)",
+    "f_button_off": "Button: turn off",
+    "counter": "Counter",
     "f_remaining": "Remaining time sensor",
     "f_progress": "Progress sensor (%)",
     "f_program": "Program / phase sensor",
@@ -2587,6 +2591,10 @@ const STRINGS = {
     "f_power": "Capteur de puissance (W)",
     "f_energy": "Capteur d'énergie (kWh)",
     "f_cost": "Capteur de coût",
+    "f_counter": "Capteur compteur (nombre de cycles)",
+    "f_button_on": "Bouton : allumer (remplace le sélecteur de mode)",
+    "f_button_off": "Bouton : éteindre",
+    "counter": "Compteur",
     "f_remaining": "Capteur de temps restant",
     "f_progress": "Capteur de progression (%)",
     "f_program": "Capteur de programme / phase",
@@ -4664,6 +4672,11 @@ const STRINGS = {
     "f_power": "Czujnik mocy (W)",
     "f_energy": "Czujnik energii (kWh)",
     "f_cost": "Czujnik kosztu",
+    "f_counter": "Czujnik licznika (liczba włączeń)",
+    "f_button_on": "Przycisk: włącz (zastępuje wybór trybu)",
+    "f_button_off": "Przycisk: wyłącz",
+    "counter": "Licznik",
+    "kettle_error": "Błąd czajnika",
     "f_remaining": "Czujnik pozostałego czasu",
     "f_progress": "Czujnik postępu (%)",
     "f_program": "Czujnik programu / fazy",
@@ -11675,7 +11688,7 @@ const DEF = {
     fields: ["entity", "power", "energy", "cost", "usage_time", "switch"],
     keys: ["pc_fixe", "pcfixe", "desktop", "ordinateur", "gaming", "workstation", "pc_bureau", "unite_centrale", "tour_pc"] },
   kettle: { accent: "heat", threshold: 500,
-    fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "error", "remaining", "mode", "switch"],
+    fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "error", "remaining", "mode", "counter", "button_on", "button_off", "switch"],
     keys: ["bouilloire", "kettle", "wasserkocher", "waterkoker", "theiere"] },
   toaster: { accent: "heat", threshold: 200,
     fields: ["entity", "power", "energy", "cost", "switch"],
@@ -12852,7 +12865,12 @@ class ApplianceCardBase extends HTMLElement {
       // en marche au-dessus du seuil ; après la coupure : « eau chaude » / « toasts prêts » pendant quelques minutes
       // bouilloire dont l'état est un capteur texte (ESPHome : ready / heating / cooling) : « heating » = en chauffe, « cooling » = eau chaude
       // ProfiCook ESPHome : Lifted (soulevée de son socle) / Standby / Heating / Cooling / Maintaining Temp (maintien au chaud)
-      const rawK = kind === "kettle" && main ? String(main.state).toLowerCase() : "", textOn = /^(heating|boiling)$/.test(rawK), textCool = /^(cooling|maintaining)/.test(rawK);
+      // textes d'état d'autres langues (ESPHome en polonais…) ramenés aux valeurs de référence
+      const KT = [[/^podniesiony|^angehoben|^soulev/, "lifted"], [/^gotowy|^bereit|^pr[eê]t/, "standby"], [/^grzanie/, "heating"], [/^ch[lł]odzenie|^abk[uü]hl|^refroid/, "cooling"], [/^utrzymanie|^warmhalt|^maintien/, "maintaining"]];
+      let rawK = kind === "kettle" && main && ["sensor", "select", "input_select"].includes(domainOf(c.entity)) ? String(main.state).toLowerCase().trim() : "";
+      const kf = KT.find(([rx]) => rx.test(rawK));
+      if (kf) { rawK = kf[1]; m.kettleForeign = true; }
+      const textOn = /^(heating|boiling)$/.test(rawK), textCool = /^(cooling|maintaining)/.test(rawK);
       m.kettleLifted = rawK === "lifted";
       const knownK = /^(lifted|standby|heating|cooling|maintaining)/.test(rawK), on = knownK ? textOn : !textCool && (powered || textOn || (watts === null && base === "running")), now = Date.now();
       const keep = (kind === "kettle" ? c.hot_minutes ?? 5 : c.ready_minutes ?? 2) * 60000;
@@ -13543,7 +13561,7 @@ class ApplianceCardBase extends HTMLElement {
       const raw = String(m.main.state).toLowerCase();
       if (![...OFF_STATES, ...DONE_STATES, "on", "running", "run"].includes(raw)) statusTxt = stateText(hass, m.main);
     }
-    if (kind === "kettle" && m.kettleLifted) statusTxt = stateText(hass, m.main);
+    if (kind === "kettle" && (m.kettleLifted || m.kettleForeign)) statusTxt = stateText(hass, m.main);
     if ((kind === "radiator" || kind === "towel_dryer") && m.radMode && m.radMode !== "off" && m.status !== "off" && m.status !== "unavailable") statusTxt += ` · ${tr(hass, m.radMode === "none" ? "mode_none" : m.radMode)}`;
     if ((kind === "fan" || kind === "ceiling_fan" || kind === "air_purifier") && m.pct != null && /^fan_/.test(m.status)) statusTxt += ` · ${Math.round(m.pct)} %`;
     if (kind === "av_receiver" && m.vol != null && ["playing", "paused"].includes(m.status)) statusTxt += ` · Vol ${Math.round(m.vol * 100)} %`;
@@ -13663,6 +13681,14 @@ class ApplianceCardBase extends HTMLElement {
       modesEl.innerHTML = MODE_ORDER.filter((k) => pickMode(opts, k)).map((k) =>
         `<button class="mode-btn ${cur === k ? "on" : ""}" data-mode="${k}" aria-pressed="${cur === k}"><ha-icon icon="${MODE_ICON[k]}"></ha-icon>${esc(tr(hass, k === "off" ? "mode_off" : k === "none" ? "mode_none" : k === "drying" ? "mode_drying" : k))}</button>`).join("");
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._setMode(b.dataset.mode); }; });
+    } else if (kind === "kettle" && c.show_modes !== false && (c.button_on || c.button_off)) {
+      // bouilloire : deux boutons (entités `button`) à la place du sélecteur de mode
+      const dis = m.status === "unavailable" ? " disabled" : "";
+      modesEl.innerHTML = [["on", c.button_on, "mdi:power", "on"], ["off", c.button_off, "mdi:power-off", "off"]].filter((b) => b[1]).map(([k, id, ic]) => {
+        const st = hass.states[id], nm = c[`button_${k}_label`] || (st && st.attributes.friendly_name) || (k === "on" ? "On" : tr(hass, "mode_off"));
+        return `<button class="mode-btn" data-ext="${k}"${dis}><ha-icon icon="${ic}"></ha-icon>${esc(nm)}</button>`;
+      }).join("");
+      modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); const id = c[`button_${b.dataset.ext}`]; hass.callService(domainOf(id) === "script" ? "script" : domainOf(id), domainOf(id) === "script" ? "turn_on" : "press", { entity_id: id }); }; });
     } else if ((kind === "pellet_stove" || kind === "kettle") && c.show_modes !== false && this._presetEntity() && hass.states[this._presetEntity()]) {
       // poêle à granulés : un bouton par pré-réglage réel de l'entité (preset_modes du climate, options du select)
       const pst = hass.states[this._presetEntity()], opts = this._presetOptions(pst);
@@ -13858,6 +13884,7 @@ class ApplianceCardBase extends HTMLElement {
     } else if (kind === "kettle") {
       if (m.tempVal != null) tile("mdi:thermometer-water", `${fmtNum(hass, m.tempVal, 0, 0, tEntity)} ${m.tempUnit}`, lb("water"), tEntity);
       if (m.targetVal != null) tile("mdi:target", `${fmtNum(hass, m.targetVal, 0, 0, c.target_temperature)} ${m.tempUnit}`, lb("target"), c.target_temperature);
+      if (c.counter && hass.states[c.counter] && !BAD.includes(String(hass.states[c.counter].state).toLowerCase())) tile("mdi:counter", fmtUnit(hass, hass.states[c.counter], 0), lb("counter"), c.counter);
     } else if (kind === "tool_charger") {
       if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0, 0, c.battery_level)} %`, lb("battery"), c.battery_level);
     } else if (kind === "wine_cooler") {
@@ -14082,6 +14109,9 @@ const SEL = {
   energy_solar: { entity: { domain: "sensor", device_class: "energy" } },
   cost: { entity: { domain: ["sensor", "input_number"] } },
   remaining: { entity: { domain: "sensor" } },
+  counter: { entity: { domain: ["sensor", "counter", "input_number"] } },
+  button_on: { entity: { domain: ["button", "script"] } },
+  button_off: { entity: { domain: ["button", "script"] } },
   // four à deux cavités (Samsung Dual Cook…) : état, température, consigne et temps restant de la deuxième cavité
   status_2: { entity: { domain: ["sensor", "select", "binary_sensor", "switch", "input_boolean"] } },
   temperature_2: { entity: { domain: ["sensor", "input_number"] } },
