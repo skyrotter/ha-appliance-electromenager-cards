@@ -28,5 +28,19 @@ target_temperature: number.kettle_set_temperature
 error: binary_sensor.kettle_error
 ```
 
+**Kettle driven by a `select`** (heating mode: `100° and off`, `45°`, `60°`, `85°`, `100°`, `Custom`, `Off`…): put the `select` in `mode`, and the kettle state in `entity`. One button per option of the `select` is shown (the active one is highlighted, a click selects it), and the other entities fill the tiles:
+
+```yaml
+type: custom:appliance-kettle-card
+entity: sensor.kettle_state              # ready / heating / cooling
+mode: select.kettle_heating_mode         # one button per option
+temperature: sensor.kettle_water_temperature
+target_temperature: number.kettle_set_temperature
+remaining: sensor.kettle_remaining_time
+error: sensor.kettle_error               # "OK" / "none" = no fault
+```
+
+With a text `entity`, `heating` shows **Boiling**, `cooling` shows **Hot water** and `ready` is idle. `show_modes: false` hides the buttons. A tap action `toggle` on an entity that cannot be toggled (`select`, `number`, sensors…) opens its details instead of failing.
+
 
 [← All cards](../../README.md#the-cards)

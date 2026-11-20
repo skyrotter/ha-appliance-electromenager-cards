@@ -896,11 +896,14 @@ class ApplianceCardBase extends HTMLElement {
       else m.status = base === "running" ? "cooking" : base === "finished" ? "finished" : base === "off" ? "off" : "standby";
     } else if (kind === "kettle" || kind === "toaster") {
       // en marche au-dessus du seuil ; après la coupure : « eau chaude » / « toasts prêts » pendant quelques minutes
-      const on = powered || (watts === null && base === "running"), now = Date.now();
+      // bouilloire dont l'état est un capteur texte (ESPHome : ready / heating / cooling) : « heating » = en chauffe, « cooling » = eau chaude
+      const rawK = kind === "kettle" && main ? String(main.state).toLowerCase() : "", textOn = /^(heating|boiling)$/.test(rawK), textCool = rawK === "cooling";
+      const on = !textCool && (powered || textOn || (watts === null && base === "running")), now = Date.now();
       const keep = (kind === "kettle" ? c.hot_minutes ?? 5 : c.ready_minutes ?? 2) * 60000;
       if (on && base !== "unavailable") this._onAt = now;
       if (base === "unavailable") m.status = "unavailable";
       else if (on) m.status = kind === "kettle" ? "boiling" : "toasting";
+      else if (textCool) m.status = "hot_water";
       else if (kind === "kettle" && m.tempVal != null) m.status = m.tempVal >= (c.hot_temperature ?? 60) ? "hot_water" : "off";
       else m.status = this._onAt && now - this._onAt < keep ? (kind === "kettle" ? "hot_water" : "toast_ready") : "off";
       // bouilloire ESPHome / Tuya : entité « défaut » (binary_sensor allumé, ou capteur texte autre que « ok / aucun / none… »)
@@ -1572,7 +1575,7 @@ class ApplianceCardBase extends HTMLElement {
     let statusTxt = m.phase ? tr(hass, `ph_${m.phase}`) : tr(hass, m.status);
     if (kind === "monitor" && m.status === "screen_on") statusTxt = tr(hass, mnCount(c) > 1 ? "monitors_on" : "monitor_on");
     if (m.main && ["sensor", "input_select", "select"].includes(domainOf(c.entity)) &&
-        active && !["fridge", "water_heater", "printer_3d", "pool_pump", "wet_vacuum"].includes(kind) && !(kind === "printer" && /^brother|mfc.?j5955/i.test(String(c.model || "")))) {
+        active && !["fridge", "water_heater", "printer_3d", "pool_pump", "wet_vacuum", "kettle"].includes(kind) && !(kind === "printer" && /^brother|mfc.?j5955/i.test(String(c.model || "")))) {
       const raw = String(m.main.state).toLowerCase();
       if (![...OFF_STATES, ...DONE_STATES, "on", "running", "run"].includes(raw)) statusTxt = stateText(hass, m.main);
     }
@@ -1695,7 +1698,7 @@ class ApplianceCardBase extends HTMLElement {
       modesEl.innerHTML = MODE_ORDER.filter((k) => pickMode(opts, k)).map((k) =>
         `<button class="mode-btn ${cur === k ? "on" : ""}" data-mode="${k}" aria-pressed="${cur === k}"><ha-icon icon="${MODE_ICON[k]}"></ha-icon>${esc(tr(hass, k === "off" ? "mode_off" : k === "none" ? "mode_none" : k === "drying" ? "mode_drying" : k))}</button>`).join("");
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._setMode(b.dataset.mode); }; });
-    } else if (kind === "pellet_stove" && c.show_modes !== false && this._presetEntity() && hass.states[this._presetEntity()]) {
+    } else if ((kind === "pellet_stove" || kind === "kettle") && c.show_modes !== false && this._presetEntity() && hass.states[this._presetEntity()]) {
       // poêle à granulés : un bouton par pré-réglage réel de l'entité (preset_modes du climate, options du select)
       const pst = hass.states[this._presetEntity()], opts = this._presetOptions(pst);
       const cur = String(domainOf(pst.entity_id) === "climate" ? pst.attributes.preset_mode ?? "" : pst.state).toLowerCase();
