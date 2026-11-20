@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.184.0";
+const VERSION = "1.185.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -14207,7 +14207,7 @@ ha-card { display: flex; flex-direction: column; justify-content: flex-start; he
 .illus { grid-area: illus; } .head { grid-area: head; } .stats { grid-area: stats; }
 .illus {
   width: calc(var(--appliance-illustration-size, 116px) * var(--illus-scale, 1)); flex: none; aspect-ratio: 120 / 140; border-radius: 16px; padding: 4px; box-sizing: content-box;
-  background: radial-gradient(circle at 50% 40%, rgba(127,127,127,.10), rgba(127,127,127,.03) 70%);
+  background: var(--ac-illus-bg, radial-gradient(circle at 50% 40%, rgba(127,127,127,.10), rgba(127,127,127,.03) 70%));
 }
 .st-unavailable .illus { opacity: .5; filter: grayscale(1); }
 svg { width: 100%; height: 100%; display: block; overflow: visible; }
@@ -14344,7 +14344,7 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
   justify-content: center !important;
   border-radius: 14px !important;
   overflow: hidden !important;
-  background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.06), rgba(0, 0, 0, 0.32) 75%) !important;
+  background: var(--ac-illus-bg, radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.06), rgba(0, 0, 0, 0.32) 75%)) !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
   box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.4) !important;
 }
@@ -16037,7 +16037,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
 (async () => {
   const base = import.meta.url;
   // ?v=<version> : après une mise à jour, le navigateur ne ressert pas d'anciens morceaux depuis son cache
-  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.184.0`, base).href);
+  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.185.0`, base).href);
   await chunk("card-helpers");
   await chunk("editor-labels");
   // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre
