@@ -28,6 +28,8 @@ target_temperature: number.kettle_set_temperature
 error: binary_sensor.kettle_error
 ```
 
+<p align="center"><img src="../kettle-select.gif" width="360" alt="Kettle driven by a select: one button per option"></p>
+
 **Kettle driven by a `select`** (heating mode: `100° and off`, `45°`, `60°`, `85°`, `100°`, `Custom`, `Off`…): put the `select` in `mode`, and the kettle state in `entity`. One button per option of the `select` is shown (the active one is highlighted, a click selects it), and the other entities fill the tiles:
 
 ```yaml
