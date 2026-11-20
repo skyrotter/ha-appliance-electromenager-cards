@@ -119,6 +119,8 @@ entity_drive_2: sensor.ds3018_drive_2_status
 
 ## Asustor
 
+<p align="center"><img src="../nas-asustor.gif" width="760" alt="Asustor NAS, 6, 4 and 2 bays"></p>
+
 Works with the [ha-asustor](https://github.com/aubierr/ha-asustor) integration. Example (4 bays), with the entity names it creates:
 
 ```yaml
