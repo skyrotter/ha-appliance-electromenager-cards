@@ -8786,38 +8786,39 @@ const DISHWASHER_SIDE = () => `
 <linearGradient id="ID-wside" x1="0" x2="1"><stop offset="0" stop-color="#a9b0b8"/><stop offset="1" stop-color="#cdd2d7"/></linearGradient></defs>
 <ellipse class="floorlight" cx="62" cy="136" rx="9" ry="2.2"/>
 ${sideBody(`
-  <rect x="14" y="8" width="92" height="15" fill="url(#ID-dark)"/>
-  <rect x="14" y="17" width="92" height="6" fill="url(#ID-dark)"/>
-  ${lcd(45, 10, 30, 11)}
-  <circle class="led l1" cx="22" cy="15.5" r="1.4"/><circle class="led l2" cx="28" cy="15.5" r="1.4"/>
-  <circle class="led l4" cx="34" cy="15.5" r="1.4"/>
-  <rect x="82" y="12.5" width="7" height="6" rx="1.5" fill="#3b424a" stroke="#58616b" stroke-width=".5"/>
-  <rect x="92" y="12.5" width="7" height="6" rx="1.5" fill="#3b424a" stroke="#58616b" stroke-width=".5"/>
-  <rect x="40" y="26" width="40" height="5" rx="2.5" fill="#7c848d"/>
-  <rect x="41" y="26" width="38" height="2.4" rx="1.2" fill="#2f353b" opacity=".6"/>
-  <rect x="22" y="38" width="76" height="76" rx="4" fill="url(#ID-tub)"/>
-  <g clip-path="url(#ID-win)">
-    <g class="wash-light"><rect x="22" y="38" width="76" height="76" fill="#8fd3ff" opacity=".18"/></g>
-    <path d="M26 62h68M26 66h68" stroke="#aab2ba" stroke-width="1.1"/>
-    <path d="M30 62v-8M42 62v-8M54 62v-8M66 62v-8M78 62v-8M90 62v-8" stroke="#aab2ba" stroke-width=".7"/>
-    <path d="M32 61l2-12h7l2 12z M47 61l2-12h7l2 12z M65 61l2-12h7l2 12z M80 61l2-12h7l2 12z" fill="#dff3ff" opacity=".7" stroke="#fff" stroke-width=".5"/>
-    <path d="M26 100h68M26 104h68" stroke="#aab2ba" stroke-width="1.1"/>
-    <ellipse cx="33" cy="88" rx="3.2" ry="13" fill="#f6f7f9" stroke="#c8ced5" stroke-width=".6"/>
-    <ellipse cx="43" cy="88" rx="3.2" ry="13" fill="#f6f7f9" stroke="#c8ced5" stroke-width=".6"/>
-    <ellipse cx="53" cy="88" rx="3.2" ry="13" fill="#f6f7f9" stroke="#c8ced5" stroke-width=".6"/>
-    <ellipse cx="63" cy="91" rx="2.6" ry="10" fill="#e7f1fb" stroke="#c8ced5" stroke-width=".6"/>
-    <ellipse cx="72" cy="91" rx="2.6" ry="10" fill="#e7f1fb" stroke="#c8ced5" stroke-width=".6"/>
-    <path d="M80 99l3-14h9l3 14z" fill="#c4473a"/>
-    <g class="arm arm-top"><rect x="36" y="68" width="48" height="2.6" rx="1.3" fill="#9aa3ad"/></g>
-    <g class="arm arm-bot"><rect x="30" y="107" width="60" height="3" rx="1.5" fill="#9aa3ad"/></g>
-    <circle cx="60" cy="69.3" r="2" fill="#7d868f"/><circle cx="60" cy="108.5" r="2.4" fill="#7d868f"/>
-    <g class="jets"><path d="M40 106l-6-38M50 106l-2-40M70 106l2-40M80 106l6-38M45 67l-4-22M75 67l4-22"/></g>
-    <g class="drops"><circle cx="35" cy="44" r="1"/><circle cx="52" cy="46" r="1.2"/><circle cx="68" cy="43" r="1"/><circle cx="86" cy="47" r="1.1"/></g>
-    <g class="steam-in"><path d="M40 112q-4-10 2-18t0-16M60 112q-4-10 2-18t0-16M80 112q-4-10 2-18t0-16"/></g>
-  </g>
-  <rect x="22" y="38" width="76" height="76" rx="4" fill="url(#ID-gloss)"/>
-  <rect x="22" y="38" width="76" height="76" rx="4" fill="none" stroke="#7e8790" stroke-width="1.2"/>
-`, { face: "#ID-inox", edge: "#9aa2ab", sideExtra: '<polygon points="6,114 36,121 36,128 6,121" fill="#2b3036"/>', faceExtra: '<polygon points="36,121 104,114 104,121 36,128" fill="#2b3036"/>' })}`;
+  ${sidePoly(14, 8, 106, 23, 'fill="url(#ID-dark)"')}
+  ${sidePlace(60, 15.5, `
+    ${lcd(45, 10, 30, 11)}
+    <circle class="led l1" cx="22" cy="15.5" r="1.4"/><circle class="led l2" cx="28" cy="15.5" r="1.4"/>
+    <circle class="led l4" cx="34" cy="15.5" r="1.4"/>
+    <rect x="82" y="12.5" width="7" height="6" rx="1.5" fill="#3b424a" stroke="#58616b" stroke-width=".5"/>
+    <rect x="92" y="12.5" width="7" height="6" rx="1.5" fill="#3b424a" stroke="#58616b" stroke-width=".5"/>`)}
+  ${sidePlace(60, 28.5, `
+    <rect x="40" y="26" width="40" height="5" rx="2.5" fill="#7c848d"/>
+    <rect x="41" y="26" width="38" height="2.4" rx="1.2" fill="#2f353b" opacity=".6"/>`)}
+  ${sidePlace(60, 76, `
+    <rect x="22" y="38" width="76" height="76" rx="4" fill="url(#ID-tub)"/>
+    <g clip-path="url(#ID-win)">
+      <g class="wash-light"><rect x="22" y="38" width="76" height="76" fill="#8fd3ff" opacity=".18"/></g>
+      <path d="M26 62h68M26 66h68" stroke="#aab2ba" stroke-width="1.1"/>
+      <path d="M30 62v-8M42 62v-8M54 62v-8M66 62v-8M78 62v-8M90 62v-8" stroke="#aab2ba" stroke-width=".7"/>
+      <path d="M32 61l2-12h7l2 12z M47 61l2-12h7l2 12z M65 61l2-12h7l2 12z M80 61l2-12h7l2 12z" fill="#dff3ff" opacity=".7" stroke="#fff" stroke-width=".5"/>
+      <path d="M26 100h68M26 104h68" stroke="#aab2ba" stroke-width="1.1"/>
+      <ellipse cx="33" cy="88" rx="3.2" ry="13" fill="#f6f7f9" stroke="#c8ced5" stroke-width=".6"/>
+      <ellipse cx="43" cy="88" rx="3.2" ry="13" fill="#f6f7f9" stroke="#c8ced5" stroke-width=".6"/>
+      <ellipse cx="53" cy="88" rx="3.2" ry="13" fill="#f6f7f9" stroke="#c8ced5" stroke-width=".6"/>
+      <ellipse cx="63" cy="91" rx="2.6" ry="10" fill="#e7f1fb" stroke="#c8ced5" stroke-width=".6"/>
+      <ellipse cx="72" cy="91" rx="2.6" ry="10" fill="#e7f1fb" stroke="#c8ced5" stroke-width=".6"/>
+      <path d="M80 99l3-14h9l3 14z" fill="#c4473a"/>
+      <g class="arm arm-top"><rect x="36" y="68" width="48" height="2.6" rx="1.3" fill="#9aa3ad"/></g>
+      <g class="arm arm-bot"><rect x="30" y="107" width="60" height="3" rx="1.5" fill="#9aa3ad"/></g>
+      <circle cx="60" cy="69.3" r="2" fill="#7d868f"/><circle cx="60" cy="108.5" r="2.4" fill="#7d868f"/>
+      <g class="jets"><path d="M40 106l-6-38M50 106l-2-40M70 106l2-40M80 106l6-38M45 67l-4-22M75 67l4-22"/></g>
+      <g class="drops"><circle cx="35" cy="44" r="1"/><circle cx="52" cy="46" r="1.2"/><circle cx="68" cy="43" r="1"/><circle cx="86" cy="47" r="1.1"/></g>
+      <g class="steam-in"><path d="M40 112q-4-10 2-18t0-16M60 112q-4-10 2-18t0-16M80 112q-4-10 2-18t0-16"/></g>
+    </g>
+    <rect x="22" y="38" width="76" height="76" rx="4" fill="url(#ID-gloss)"/>
+    <rect x="22" y="38" width="76" height="76" rx="4" fill="none" stroke="#7e8790" stroke-width="1.2"/>`)}`, { face: "#ID-inox", edge: "#9aa2ab", sideExtra: '<polygon points="6,114 36,121 36,128 6,121" fill="#2b3036"/>', faceExtra: '<polygon points="36,121 104,114 104,121 36,128" fill="#2b3036"/>' })}`;
 SVG.dishwasher = (c) => (c && c.style === "side" ? DISHWASHER_SIDE() : DISHWASHER_FRONT(c));
 
 /* Pompe doseuse péristaltique (pH+ / pH-) : boîtier bleu, tête transparente, rotor à galets qui tourne, tuyau beige, raccords noirs */
@@ -8915,24 +8916,28 @@ const DRYER_SIDE = () => `
 <radialGradient id="ID-heat" cx=".5" cy=".6" r=".6"><stop offset="0" stop-color="#ffb347" stop-opacity=".55"/><stop offset="1" stop-color="#ff7b2e" stop-opacity="0"/></radialGradient>
 <linearGradient id="ID-wside" x1="0" x2="1"><stop offset="0" stop-color="#c3cad1"/><stop offset="1" stop-color="#e3e7eb"/></linearGradient></defs>
 ${sideBody(`
-    <path d="M14 8h92v25H14z" fill="url(#ID-panel)"/>
-    <line x1="14" y1="33" x2="106" y2="33" stroke="#bfc6ce" stroke-width=".8"/>
-    <g stroke="#8d96a0" stroke-width=".9" stroke-linecap="round">${knobTicks(27, 21)}</g>
-    <circle cx="27" cy="21" r="8.2" fill="url(#ID-chrome)" stroke="#88919a" stroke-width=".6"/>
-    <circle cx="27" cy="21" r="5.8" fill="#eff2f5" stroke="#b2b9c1" stroke-width=".6"/>
-    <g class="knob"><line x1="27" y1="21" x2="27" y2="16.2" stroke="#4f5964" stroke-width="1.5" stroke-linecap="round"/></g>
-    ${lcd(43, 13, 30, 11)}
-    <circle class="led l1" cx="49" cy="29" r="1.4"/><circle class="led l2" cx="55" cy="29" r="1.4"/>
-    <circle class="led l3" cx="61" cy="29" r="1.4"/><circle class="led l4" cx="67" cy="29" r="1.4"/>
-    <rect x="80" y="15" width="8" height="5" rx="1.5" fill="#e7eaee" stroke="#aeb5bd" stroke-width=".6"/>
-    <rect x="91" y="15" width="8" height="5" rx="1.5" fill="#e7eaee" stroke="#aeb5bd" stroke-width=".6"/>
-    <rect x="80" y="23" width="19" height="5" rx="1.5" fill="#dfe3e8" stroke="#aeb5bd" stroke-width=".6"/>
-    ${sidePorthole(60, 80, 29, `
+    ${sidePoly(14, 8, 106, 33, 'fill="url(#ID-panel)"')}
+    ${sideLine(33, 'stroke="#bfc6ce" stroke-width=".8"')}
+    ${sidePlace(27, 21, `
+      <g stroke="#8d96a0" stroke-width=".9" stroke-linecap="round">${knobTicks(27, 21)}</g>
+      <circle cx="27" cy="21" r="8.2" fill="url(#ID-chrome)" stroke="#88919a" stroke-width=".6"/>
+      <circle cx="27" cy="21" r="5.8" fill="#eff2f5" stroke="#b2b9c1" stroke-width=".6"/>
+      <g class="knob"><line x1="27" y1="21" x2="27" y2="16.2" stroke="#4f5964" stroke-width="1.5" stroke-linecap="round"/></g>`)}
+    ${sidePlace(58, 21, `
+      ${lcd(43, 13, 30, 11)}
+      <circle class="led l1" cx="49" cy="29" r="1.4"/><circle class="led l2" cx="55" cy="29" r="1.4"/>
+      <circle class="led l3" cx="61" cy="29" r="1.4"/><circle class="led l4" cx="67" cy="29" r="1.4"/>`)}
+    ${sidePlace(89.5, 21.5, `
+      <rect x="80" y="15" width="8" height="5" rx="1.5" fill="#e7eaee" stroke="#aeb5bd" stroke-width=".6"/>
+      <rect x="91" y="15" width="8" height="5" rx="1.5" fill="#e7eaee" stroke="#aeb5bd" stroke-width=".6"/>
+      <rect x="80" y="23" width="19" height="5" rx="1.5" fill="#dfe3e8" stroke="#aeb5bd" stroke-width=".6"/>`)}
+    ${sidePlace(60, 80, sidePorthole(60, 80, 29, `
       <rect x="20" y="40" width="80" height="80" fill="#3a4148" opacity=".25"/>
       ${drumInside(60, 80, 29)}
-      <circle class="heat" cx="60" cy="80" r="29" fill="url(#ID-heat)"/>`)}
-    <rect x="22" y="114" width="76" height="9" rx="2" fill="#e3e7eb" stroke="#c3c9d0" stroke-width=".6"/>
-    <path d="M28 116.5h64M28 118.5h64M28 120.5h64" stroke="#b7bec6" stroke-width=".6"/>`, { shake: "shake-soft" })}`;
+      <circle class="heat" cx="60" cy="80" r="29" fill="url(#ID-heat)"/>`))}
+    ${sidePlace(60, 118.5, `
+      <rect x="22" y="114" width="76" height="9" rx="2" fill="#e3e7eb" stroke="#c3c9d0" stroke-width=".6"/>
+      <path d="M28 116.5h64M28 118.5h64M28 120.5h64" stroke="#b7bec6" stroke-width=".6"/>`)}`, { shake: "shake-soft" })}`;
 SVG.dryer = (c) => (c && c.style === "side" ? DRYER_SIDE() : DRYER_FRONT(c));
 
 /* Vélo elliptique (vue de côté) : volant d'inertie à l'avant, deux pédales qui décrivent une ellipse, deux bras mobiles en opposition */
@@ -11177,7 +11182,26 @@ SVG.washer = () => `
 /* Vue « de côté » du gros électroménager (option style: side) : lave-linge, sèche-linge et lave-vaisselle.
    Face avant en perspective, côté gauche visible, trois pieds. Les mêmes calques et classes que la vue de face (tambour, voyants, afficheur…)
    sont dessinés dans le repère de la vue de face, puis déformés par une matrice (l'animation du tambour tourne dans son repère d'origine). */
-const SIDE_MATRIX = "matrix(.739 .0761 0 .925 25.65 1.535)";
+// Face avant = quadrilatère en perspective (TL, TR, BR, BL). Une homographie envoie le repère de la vue de face (x 14-106, y 8-128) sur ce
+// quadrilatère : les lignes horizontales convergent (haut qui descend, bas qui remonte), au lieu d'être déformées par une simple inclinaison.
+const SIDE_QUAD = [[36, 10], [104, 17], [104, 121], [36, 128]];
+const sideMap = (() => {
+  const [[x0, y0], [x1, y1], [x2, y2], [x3, y3]] = SIDE_QUAD;
+  const dx1 = x1 - x2, dx2 = x3 - x2, dx3 = x0 - x1 + x2 - x3, dy1 = y1 - y2, dy2 = y3 - y2, dy3 = y0 - y1 + y2 - y3;
+  const den = dx1 * dy2 - dx2 * dy1, g = (dx3 * dy2 - dx2 * dy3) / den, h = (dx1 * dy3 - dx3 * dy1) / den;
+  const a = x1 - x0 + g * x1, bb = x3 - x0 + h * x3, d = y1 - y0 + g * y1, e = y3 - y0 + h * y3;
+  return (x, y) => { const u = (x - 14) / 92, v = (y - 8) / 120, w = g * u + h * v + 1; return [(a * u + bb * v + x0) / w, (d * u + e * v + y0) / w]; };
+})();
+// pose un groupe dessiné autour de (cx, cy) dans le repère de face : matrice locale de la perspective en ce point (le centre est exact)
+const sidePlace = (cx, cy, content) => {
+  const [sx, sy] = sideMap(cx, cy), [px1, py1] = sideMap(cx + 1, cy), [px0, py0] = sideMap(cx - 1, cy), [qx1, qy1] = sideMap(cx, cy + 1), [qx0, qy0] = sideMap(cx, cy - 1);
+  const m = [(px1 - px0) / 2, (py1 - py0) / 2, (qx1 - qx0) / 2, (qy1 - qy0) / 2];
+  const f = (n) => +n.toFixed(4);
+  return `<g transform="matrix(${m.map(f).join(" ")} ${f(sx - m[0] * cx - m[2] * cy)} ${f(sy - m[1] * cx - m[3] * cy)})">${content}</g>`;
+};
+// rectangle du repère de face (x0, y0, x1, y1) → polygone en perspective
+const sidePoly = (x0, y0, x1, y1, attrs) => `<polygon points="${[[x0, y0], [x1, y0], [x1, y1], [x0, y1]].map(([x, y]) => sideMap(x, y).map((n) => n.toFixed(1)).join(",")).join(" ")}" ${attrs}/>`;
+const sideLine = (y, attrs) => `<line x1="${sideMap(14, y)[0].toFixed(1)}" y1="${sideMap(14, y)[1].toFixed(1)}" x2="${sideMap(106, y)[0].toFixed(1)}" y2="${sideMap(106, y)[1].toFixed(1)}" ${attrs}/>`;
 // côté gauche + face avant + pieds ; `inner` = contenu de la face avant dans le repère de la vue de face (x 14-106, y 8-128)
 const sideBody = (inner, o = {}) => `
 <ellipse cx="60" cy="134" rx="54" ry="5" fill="url(#ID-shadow)"/>
@@ -11190,7 +11214,7 @@ const sideBody = (inner, o = {}) => `
   <path d="M36.6 11v116" stroke="#fff" stroke-width="1" opacity=".8"/>
   ${o.sideExtra || ""}
   <clipPath id="ID-sface"><polygon points="36,10 104,17 104,121 36,128"/></clipPath>
-  <g clip-path="url(#ID-sface)"><g transform="${SIDE_MATRIX}">${inner}</g></g>
+  <g clip-path="url(#ID-sface)">${inner}</g>
   ${o.faceExtra || ""}
 </g>`;
 // hublot en volume : le cadre de porte dépasse de la face avant (épaisseur visible à gauche), le tambour est en retrait
@@ -11206,26 +11230,29 @@ const WASHER_FRONT = SVG.washer;
 const WASHER_SIDE = () => `
 <defs>${DEFS}<clipPath id="ID-win"><circle cx="60" cy="80" r="28"/></clipPath>
 <linearGradient id="ID-wside" x1="0" x2="1"><stop offset="0" stop-color="#c3cad1"/><stop offset="1" stop-color="#e3e7eb"/></linearGradient></defs>${sideBody(`
-    <path d="M14 8h92v25H14z" fill="url(#ID-panel)"/>
-    <line x1="14" y1="33" x2="106" y2="33" stroke="#bfc6ce" stroke-width=".8"/>
-    <rect x="19" y="12" width="26" height="17" rx="2" fill="#f8f9fb" stroke="#b9c0c8" stroke-width=".7"/>
-    <rect x="21" y="14" width="7" height="9" rx="1" fill="#e4e8ec" stroke="#c5ccd3" stroke-width=".4"/><rect x="29.5" y="14" width="6" height="9" rx="1" fill="#e4e8ec" stroke="#c5ccd3" stroke-width=".4"/><rect x="37" y="14" width="6" height="9" rx="1" fill="#e4e8ec" stroke="#c5ccd3" stroke-width=".4"/>
-    <rect x="23" y="24.6" width="18" height="2.6" rx="1.3" fill="#a6aeb7"/>
-    ${lcd(49, 13, 30, 11)}
-    <circle class="led l1" cx="55" cy="29" r="1.4"/><circle class="led l2" cx="61" cy="29" r="1.4"/>
-    <circle class="led l3" cx="67" cy="29" r="1.4"/><circle class="led l4" cx="73" cy="29" r="1.4"/>
-    <g stroke="#8d96a0" stroke-width=".9" stroke-linecap="round">${knobTicks(93, 21)}</g>
-    <circle cx="93" cy="21" r="8.2" fill="url(#ID-chrome)" stroke="#88919a" stroke-width=".6"/>
-    <circle cx="93" cy="21" r="5.8" fill="#eff2f5" stroke="#b2b9c1" stroke-width=".6"/>
-    <g class="knob"><line x1="93" y1="21" x2="93" y2="16.2" stroke="#4f5964" stroke-width="1.5" stroke-linecap="round"/></g>
-    ${sidePorthole(60, 80, 28, `
+    ${sidePoly(14, 8, 106, 33, 'fill="url(#ID-panel)"')}
+    ${sideLine(33, 'stroke="#bfc6ce" stroke-width=".8"')}
+    ${sidePlace(32, 21, `
+      <rect x="19" y="12" width="26" height="17" rx="2" fill="#f8f9fb" stroke="#b9c0c8" stroke-width=".7"/>
+      <rect x="21" y="14" width="7" height="9" rx="1" fill="#e4e8ec" stroke="#c5ccd3" stroke-width=".4"/><rect x="29.5" y="14" width="6" height="9" rx="1" fill="#e4e8ec" stroke="#c5ccd3" stroke-width=".4"/><rect x="37" y="14" width="6" height="9" rx="1" fill="#e4e8ec" stroke="#c5ccd3" stroke-width=".4"/>
+      <rect x="23" y="24.6" width="18" height="2.6" rx="1.3" fill="#a6aeb7"/>`)}
+    ${sidePlace(64, 21, `
+      ${lcd(49, 13, 30, 11)}
+      <circle class="led l1" cx="55" cy="29" r="1.4"/><circle class="led l2" cx="61" cy="29" r="1.4"/>
+      <circle class="led l3" cx="67" cy="29" r="1.4"/><circle class="led l4" cx="73" cy="29" r="1.4"/>`)}
+    ${sidePlace(93, 21, `
+      <g stroke="#8d96a0" stroke-width=".9" stroke-linecap="round">${knobTicks(93, 21)}</g>
+      <circle cx="93" cy="21" r="8.2" fill="url(#ID-chrome)" stroke="#88919a" stroke-width=".6"/>
+      <circle cx="93" cy="21" r="5.8" fill="#eff2f5" stroke="#b2b9c1" stroke-width=".6"/>
+      <g class="knob"><line x1="93" y1="21" x2="93" y2="16.2" stroke="#4f5964" stroke-width="1.5" stroke-linecap="round"/></g>`)}
+    ${sidePlace(60, 80, sidePorthole(60, 80, 28, `
       ${drumInside(60, 80, 28)}
       <g class="water"><path class="wave" d="M10 88q10-4 20 0t20 0t20 0t20 0t20 0t20 0v30H10z"/></g>
       <g class="foam">
         <circle cx="44" cy="90" r="2.2"/><circle cx="52" cy="92" r="1.6"/><circle cx="61" cy="89" r="2.6"/>
         <circle cx="70" cy="91" r="1.8"/><circle cx="77" cy="88" r="1.4"/><circle cx="56" cy="95" r="1.2"/>
-      </g>`)}
-    <rect x="46" y="116" width="28" height="2.2" rx="1.1" fill="#c9d0d7"/>`)}`;
+      </g>`))}
+    ${sidePlace(60, 117, '<rect x="46" y="116" width="28" height="2.2" rx="1.1" fill="#c9d0d7"/>')}`)}`;
 SVG.washer = (c) => (c && c.style === "side" ? WASHER_SIDE() : WASHER_FRONT(c));
 
 SVG.water_heater = (c = {}) => `
