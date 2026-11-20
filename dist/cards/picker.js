@@ -77,8 +77,10 @@
     shutters: 'roller-shutter sliding-curtain venetian-blind swing-shutter pergola roof-window awning double-awning',
     media: 'tv av-receiver soundbar smart-speaker ps5 tv-box piano elliptical exercise-bike rowing-machine',
     it: 'server-rack mini-pc nas internet-box desktop-pc monitor laptop printer printer-3d raspberry-pi poe-switch zigbee-coordinator wall-tablet',
+    // catégorie par défaut des cartes non listées ; chaque carte doit pourtant être listée (build.js avertit sinon)
+    home: 'robot-vacuum-solo robot-vacuum robot-mower canister-vacuum wet-vacuum pet-feeder pet-fountain cat-flap scale air-compressor water-softener-generic generic',
   };
-  const CAT_ORDER = [...Object.keys(CATS), 'home'];
+  const CAT_ORDER = Object.keys(CATS);
   const CAT_OF = {};
   for (const [k, list] of Object.entries(CATS)) list.split(' ').forEach((n) => { CAT_OF[`appliance-${n}-card`] = k; });
   const catOf = (type) => CAT_OF[type] || 'home';
