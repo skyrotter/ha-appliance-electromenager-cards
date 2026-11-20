@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.185.0";
+const VERSION = "1.186.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -95,6 +95,7 @@ const STRINGS = {
     "wine_cooler": "Wine cooler",
     "f_max_temperature_wine": "Alert above (°C)",
     "f_radiator_style": "Radiator model",
+    "f_view": "View (front or side)",
     "f_fridge_style": "Refrigerator layout",
     "f_fridge_finish": "Refrigerator finish",
     "zone_top": "Upper zone",
@@ -2376,6 +2377,7 @@ const STRINGS = {
     "wine_cooler": "Cave à vin",
     "f_max_temperature_wine": "Alerte au-dessus de (°C)",
     "f_radiator_style": "Modèle de radiateur",
+    "f_view": "Vue (de face ou de côté)",
     "f_fridge_style": "Type de réfrigérateur",
     "f_fridge_finish": "Finition du réfrigérateur",
     "zone_top": "Zone haute",
@@ -8776,6 +8778,54 @@ SVG.dishwasher = () => `
   <rect x="14" y="118" width="92" height="10" rx="2" fill="#2b3036"/>
 </g>`;
 
+/* Lave-vaisselle vu de côté (option view: side) : voir washer_side.js. La fenêtre sur la cuve et tous ses calques animés sont conservés. */
+const DISHWASHER_FRONT = SVG.dishwasher;
+const DISHWASHER_SIDE = () => {
+  // fenêtre de la cuve : polygone en perspective ; chaque zone du contenu est posée avec sa propre perspective locale
+  const win = sidePoly(22, 38, 98, 114, "");
+  const pts = win.match(/points="([^"]+)"/)[1];
+  return `
+<defs>${DEFS}<clipPath id="ID-winp"><polygon points="${pts}"/></clipPath>
+<linearGradient id="ID-tub" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5b646d"/><stop offset="1" stop-color="#2c3238"/></linearGradient>
+<linearGradient id="ID-wside" x1="0" x2="1"><stop offset="0" stop-color="#a9b0b8"/><stop offset="1" stop-color="#cdd2d7"/></linearGradient></defs>
+${sideBody(`
+  ${sidePoly(14, 8, 106, 23, 'fill="url(#ID-dark)"')}
+  ${sidePlace(60, 15.5, `
+    ${lcd(45, 10, 30, 11)}
+    <circle class="led l1" cx="22" cy="15.5" r="1.4"/><circle class="led l2" cx="28" cy="15.5" r="1.4"/>
+    <circle class="led l4" cx="34" cy="15.5" r="1.4"/>
+    <rect x="82" y="12.5" width="7" height="6" rx="1.5" fill="#3b424a" stroke="#58616b" stroke-width=".5"/>
+    <rect x="92" y="12.5" width="7" height="6" rx="1.5" fill="#3b424a" stroke="#58616b" stroke-width=".5"/>`)}
+  ${sidePlace(60, 28.5, `
+    <rect x="40" y="26" width="40" height="5" rx="2.5" fill="#7c848d"/>
+    <rect x="41" y="26" width="38" height="2.4" rx="1.2" fill="#2f353b" opacity=".6"/>`)}
+  ${sidePoly(22, 38, 98, 114, 'fill="url(#ID-tub)" stroke-linejoin="round"')}
+  <g clip-path="url(#ID-winp)">
+    <g class="wash-light">${sidePoly(22, 38, 98, 114, 'fill="#8fd3ff" opacity=".18"')}</g>
+    ${sidePlace(60, 52, `
+      <path d="M26 62h68M26 66h68" stroke="#aab2ba" stroke-width="1.1"/>
+      <path d="M30 62v-8M42 62v-8M54 62v-8M66 62v-8M78 62v-8M90 62v-8" stroke="#aab2ba" stroke-width=".7"/>
+      <path d="M32 61l2-12h7l2 12z M47 61l2-12h7l2 12z M65 61l2-12h7l2 12z M80 61l2-12h7l2 12z" fill="#dff3ff" opacity=".7" stroke="#fff" stroke-width=".5"/>
+      <g class="drops"><circle cx="35" cy="44" r="1"/><circle cx="52" cy="46" r="1.2"/><circle cx="68" cy="43" r="1"/><circle cx="86" cy="47" r="1.1"/></g>`)}
+    ${sidePlace(60, 69, '<g class="arm arm-top"><rect x="36" y="68" width="48" height="2.6" rx="1.3" fill="#9aa3ad"/></g><circle cx="60" cy="69.3" r="2" fill="#7d868f"/>')}
+    ${sidePlace(60, 90, `
+      <ellipse cx="33" cy="88" rx="3.2" ry="13" fill="#f6f7f9" stroke="#c8ced5" stroke-width=".6"/>
+      <ellipse cx="43" cy="88" rx="3.2" ry="13" fill="#f6f7f9" stroke="#c8ced5" stroke-width=".6"/>
+      <ellipse cx="53" cy="88" rx="3.2" ry="13" fill="#f6f7f9" stroke="#c8ced5" stroke-width=".6"/>
+      <ellipse cx="63" cy="91" rx="2.6" ry="10" fill="#e7f1fb" stroke="#c8ced5" stroke-width=".6"/>
+      <ellipse cx="72" cy="91" rx="2.6" ry="10" fill="#e7f1fb" stroke="#c8ced5" stroke-width=".6"/>
+      <path d="M80 99l3-14h9l3 14z" fill="#c4473a"/>
+      <g class="jets"><path d="M40 106l-6-38M50 106l-2-40M70 106l2-40M80 106l6-38M45 67l-4-22M75 67l4-22"/></g>
+      <g class="steam-in"><path d="M40 112q-4-10 2-18t0-16M60 112q-4-10 2-18t0-16M80 112q-4-10 2-18t0-16"/></g>`)}
+    ${sidePlace(60, 105, `
+      <path d="M26 100h68M26 104h68" stroke="#aab2ba" stroke-width="1.1"/>
+      <g class="arm arm-bot"><rect x="30" y="107" width="60" height="3" rx="1.5" fill="#9aa3ad"/></g><circle cx="60" cy="108.5" r="2.4" fill="#7d868f"/>`)}
+  </g>
+  ${sidePoly(22, 38, 98, 114, 'fill="url(#ID-gloss)"')}
+  ${sidePoly(22, 38, 98, 114, 'fill="none" stroke="#7e8790" stroke-width="1.2" stroke-linejoin="round"')}`, { face: "#ID-inox", edge: "#9aa2ab", sideExtra: '<polygon points="6,114 36,121 36,128 6,121" fill="#2b3036"/>', faceExtra: '<polygon points="36,121 104,114 104,121 36,128" fill="#2b3036"/>' })}`;
+};
+SVG.dishwasher = (c) => (c && c.view === "side" ? DISHWASHER_SIDE() : DISHWASHER_FRONT(c));
+
 /* Pompe doseuse péristaltique (pH+ / pH-) : boîtier bleu, tête transparente, rotor à galets qui tourne, tuyau beige, raccords noirs */
 SVG.dosing_pump = () => `
 <defs>${DEFS}
@@ -8863,6 +8913,38 @@ SVG.dryer = () => `
   <rect x="22" y="114" width="76" height="9" rx="2" fill="#e3e7eb" stroke="#c3c9d0" stroke-width=".6"/>
   <path d="M28 116.5h64M28 118.5h64M28 120.5h64" stroke="#b7bec6" stroke-width=".6"/>
 </g>`;
+
+/* Sèche-linge vu de côté (option view: side) : voir washer_side.js. */
+const DRYER_FRONT = SVG.dryer;
+const DRYER_SIDE = () => `
+<defs>${DEFS}<clipPath id="ID-win"><circle cx="60" cy="80" r="29"/></clipPath>
+<radialGradient id="ID-heat" cx=".5" cy=".6" r=".6"><stop offset="0" stop-color="#ffb347" stop-opacity=".55"/><stop offset="1" stop-color="#ff7b2e" stop-opacity="0"/></radialGradient>
+<linearGradient id="ID-wside" x1="0" x2="1"><stop offset="0" stop-color="#c3cad1"/><stop offset="1" stop-color="#e3e7eb"/></linearGradient></defs>
+${sideBody(`
+    ${sidePoly(14, 8, 106, 33, 'fill="url(#ID-panel)"')}
+    ${sideLine(33, 'stroke="#bfc6ce" stroke-width=".8"')}
+    ${sidePlace(27, 21, `
+      <g stroke="#8d96a0" stroke-width=".9" stroke-linecap="round">${knobTicks(27, 21)}</g>
+      <circle cx="27" cy="21" r="8.2" fill="url(#ID-chrome)" stroke="#88919a" stroke-width=".6"/>
+      <circle cx="27" cy="21" r="5.8" fill="#eff2f5" stroke="#b2b9c1" stroke-width=".6"/>
+      <g class="knob"><line x1="27" y1="21" x2="27" y2="16.2" stroke="#4f5964" stroke-width="1.5" stroke-linecap="round"/></g>`)}
+    ${sidePlace(58, 21, `
+      ${lcd(43, 13, 30, 11)}
+      <circle class="led l1" cx="49" cy="29" r="1.4"/><circle class="led l2" cx="55" cy="29" r="1.4"/>
+      <circle class="led l3" cx="61" cy="29" r="1.4"/><circle class="led l4" cx="67" cy="29" r="1.4"/>`)}
+    ${sidePlace(89.5, 21.5, `
+      <rect x="80" y="15" width="8" height="5" rx="1.5" fill="#e7eaee" stroke="#aeb5bd" stroke-width=".6"/>
+      <rect x="91" y="15" width="8" height="5" rx="1.5" fill="#e7eaee" stroke="#aeb5bd" stroke-width=".6"/>
+      <rect x="80" y="23" width="19" height="5" rx="1.5" fill="#dfe3e8" stroke="#aeb5bd" stroke-width=".6"/>`)}
+    ${sidePlace(60, 123, `
+      <rect x="22" y="119" width="76" height="8" rx="2" fill="#e3e7eb" stroke="#c3c9d0" stroke-width=".6"/>
+      <path d="M28 121.2h64M28 123.2h64M28 125.2h64" stroke="#b7bec6" stroke-width=".6"/>`)}
+    ${sidePlace(60, 80, sidePorthole(60, 80, 29, `
+      <rect x="20" y="40" width="80" height="80" fill="#3a4148" opacity=".25"/>
+      ${drumInside(60, 80, 29)}
+      <circle class="heat" cx="60" cy="80" r="29" fill="url(#ID-heat)"/>`))}
+`, { shake: "shake-soft" })}`;
+SVG.dryer = (c) => (c && c.view === "side" ? DRYER_SIDE() : DRYER_FRONT(c));
 
 /* Vélo elliptique (vue de côté) : volant d'inertie à l'avant, deux pédales qui décrivent une ellipse, deux bras mobiles en opposition */
 SVG.elliptical = () => `
@@ -9203,6 +9285,19 @@ SVG.fridge = (c) => {
   const f = fridgeFinish(c), body = FRIDGE[fridgeStyle(c)](!!(c && c.flex_temperature));
   return `${FRIDGE_DEFS}${f ? body.replace(/url\(#ID-inox\)/g, `url(#ID-${f})`) : body}${fridgeMist}`;
 };
+
+/* Réfrigérateur et congélateur à tiroirs vus de côté (option view: side), tous les styles : voir side_kit.js (sideFromFront). */
+const FRIDGE_SVG_PREV = SVG.fridge;
+const fridgeRect = (st) => ({ four_door: [16, 4, 104, 130], french: [16, 4, 104, 130], american: [12, 4, 108, 130] }[st] || [26, 4, 94, 130]);
+SVG.fridge = (c) => {
+  if (!(c && c.view === "side")) return FRIDGE_SVG_PREV(c);
+  const st = fridgeStyle(c), f = fridgeFinish(c);
+  let body = sideFromFront(FRIDGE[st](!!c.flex_temperature), fridgeRect(st), { sw: .45 });
+  if (f) body = body.replace(/url\(#ID-inox\)/g, `url(#ID-${f})`);
+  return `${FRIDGE_DEFS}${body}${fridgeMist}`;
+};
+const DRAWER_FREEZER_PREV = SVG.drawer_freezer;
+SVG.drawer_freezer = (c) => (c && c.view === "side" ? (() => { const s = DRAWER_FREEZER_PREV(c), d = s.match(/<defs>[\s\S]*?<\/defs>/)[0]; return d + sideFromFront(s.replace(d, ""), [26, 4, 94, 130], { sw: .45, sideFill: "#cfd5db", sideEdge: "#bfc6ce", body: /<rect[^>]*fill="#9aa2ab"[^>]*\/>/ }); })() : DRAWER_FREEZER_PREV(c));
 
 SVG.garland = () => {
   // deux rangées de festons sous une poutre de terrasse, trois globes par feston
@@ -9609,6 +9704,56 @@ const OVEN_DUAL = () => `
 <rect x="22" y="56" width="76" height="56" rx="4" fill="none" stroke="#5d656d" stroke-width="1.2"/>
 <rect x="14" y="118" width="92" height="8" rx="1.5" fill="#000" opacity=".12"/>`;
 SVG.oven = (c) => (c && Number(c.cavities) === 2 ? OVEN_DUAL() : OVEN_SINGLE(c));
+
+/* Four vu de côté (option view: side), une ou deux cavités (cavities: 2) : voir side_kit.js. Même calques animés que la vue de face. */
+const OVEN_FRONT = SVG.oven;
+const OVEN_SIDE = (dual) => {
+  const K = sideKit([10, 10, 110, 130], { sw: .33 });
+  const wy1 = dual ? 112 : 112, pts = K.poly(22, 56, 98, wy1, "").match(/points="([^"]+)"/)[1];
+  const pts2 = K.poly(22, 91, 98, 112, "").match(/points="([^"]+)"/)[1];
+  const lcdBox = dual
+    ? `<rect x="33" y="15" width="54" height="12" rx="1.5" fill="#0c1720" stroke="#8f98a2" stroke-width=".6"/><text class="lcd" x="47.5" y="21.3" text-anchor="middle" fill="#7ec8e3">OFF</text><path d="M60 17.5v7" stroke="#3a4a58" stroke-width=".6"/><text class="ovl2" x="73" y="21.3" text-anchor="middle">--</text>`
+    : lcd(43, 15, 34, 12);
+  const cav1 = dual ? [56, 87] : [56, 112];
+  const food = dual
+    ? `<path d="M24 77h72" stroke="#8d8680" stroke-width=".9"/><path d="M38 77l3-8h38l3 8z" fill="#b5442f"/><path d="M41 69q19-6 38 0z" fill="#d06a3c"/><g class="haze"><path d="M46 66q-3-4 0-8t0-8M60 65q-3-4 0-8t0-8M74 66q-3-4 0-8t0-8"/></g>`
+    : `<path d="M24 97h72M24 99.5h72" stroke="#8d8680" stroke-width=".9"/><path d="M36 97l3-10h42l3 10z" fill="#b5442f"/><path d="M39 87q21-8 42 0z" fill="#d06a3c"/><ellipse cx="60" cy="86.5" rx="5" ry="1.4" fill="#5b2a1a"/><path d="M42 90h36" stroke="#e48a5c" stroke-width=".8"/><g class="haze"><path d="M44 82q-3-5 0-10t0-10M60 80q-3-5 0-10t0-10M76 82q-3-5 0-10t0-10"/></g>`;
+  const elem = dual
+    ? `<path class="element" d="M26 60h8l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3h8"/>`
+    : `<path class="element" d="M26 61h8l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3h8"/>`;
+  const second = dual ? `
+  ${K.poly(22, 87, 98, 91, 'fill="url(#ID-chrome)" stroke="#7d858e" stroke-width=".4"')}
+  ${K.poly(22, 91, 98, 112, 'fill="url(#ID-cavity)"')}
+  <g clip-path="url(#ID-winp2)">${K.place(60, 101, `
+    <rect class="ilight ilight2" x="22" y="91" width="76" height="21" fill="url(#ID-warm)"/>
+    <path class="element element2" d="M26 95h8l3 2.5l3-2.5l3 2.5l3-2.5l3 2.5l3-2.5l3 2.5l3-2.5l3 2.5l3-2.5l3 2.5l3-2.5h8"/>
+    <path d="M24 106h72" stroke="#8d8680" stroke-width=".8"/>
+    <ellipse cx="60" cy="104.5" rx="11" ry="2.6" fill="#c9a064"/><ellipse cx="60" cy="103.8" rx="8" ry="1.6" fill="#dcbc82"/>
+    <g class="haze haze2"><path d="M50 101q-2-3 0-6t0-6M60 101q-2-3 0-6t0-6M70 101q-2-3 0-6t0-6"/></g>`)}</g>` : "";
+  return `
+<defs>${DEFS}<clipPath id="ID-winp"><polygon points="${dual ? K.poly(22, 56, 98, 87, "").match(/points="([^"]+)"/)[1] : pts}"/></clipPath>
+<clipPath id="ID-winp2"><polygon points="${pts2}"/></clipPath>
+<linearGradient id="ID-cavity" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3330"/><stop offset="1" stop-color="#181412"/></linearGradient>
+<linearGradient id="ID-oside" x1="0" x2="1"><stop offset="0" stop-color="#9aa2ab"/><stop offset="1" stop-color="#c3c8ce"/></linearGradient></defs>
+<ellipse cx="${K.cx.toFixed(1)}" cy="133" rx="50" ry="4.5" fill="url(#ID-shadow)"/>
+${K.side('fill="url(#ID-oside)" stroke="#949ca5" stroke-width=".8"')}
+${K.quad('fill="url(#ID-inox)" stroke="#949ca5" stroke-width=".8"')}
+${K.poly(10, 10, 110, 32, 'fill="url(#ID-dark)"')}
+${K.place(22, 21, `<circle cx="${dual ? 22 : 24}" cy="21" r="${dual ? 6.5 : 7}" fill="url(#ID-chrome)" stroke="#5c646d" stroke-width=".5"/><circle cx="${dual ? 22 : 24}" cy="21" r="4.4" fill="#2a3036"/><g class="knob"><line x1="${dual ? 22 : 24}" y1="21" x2="${dual ? 22 : 24}" y2="17.4" stroke="#e7eaed" stroke-width="1.3" stroke-linecap="round"/></g>`)}
+${K.place(60, 21, `${lcdBox}<circle class="led l1" cx="${dual ? 30 : 38}" cy="21" r="1.3"/>`)}
+${K.place(98, 21, `<circle cx="${dual ? 98 : 96}" cy="21" r="${dual ? 6.5 : 7}" fill="url(#ID-chrome)" stroke="#5c646d" stroke-width=".5"/><circle cx="${dual ? 98 : 96}" cy="21" r="4.4" fill="#2a3036"/><line x1="${dual ? 98 : 96}" y1="21" x2="${(dual ? 98 : 96) + 3}" y2="18.6" stroke="#e7eaed" stroke-width="1.3" stroke-linecap="round"/>`)}
+${K.poly(14, 36, 106, 126, 'fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".6"')}
+${K.place(60, 43, `<rect x="20" y="40.5" width="80" height="4.5" rx="2.25" fill="url(#ID-chrome)" stroke="#7d858e" stroke-width=".5"/><rect x="24" y="44.5" width="3" height="4" fill="#8f979f"/><rect x="93" y="44.5" width="3" height="4" fill="#8f979f"/>`)}
+${K.poly(22, 56, 98, 112, 'fill="#0f0d0c"')}
+${K.poly(22, 56, 98, cav1[1], 'fill="url(#ID-cavity)"')}
+<g clip-path="url(#ID-winp)">${K.place(60, 84, `
+  <rect class="ilight" x="22" y="56" width="76" height="${cav1[1] - 56}" fill="url(#ID-warm)"/>
+  ${elem}${food}`)}</g>
+${second}
+${K.poly(22, 56, 98, 112, 'fill="none" stroke="#5d656d" stroke-width="1.2" stroke-linejoin="round"')}
+${K.poly(14, 118, 106, 126, 'fill="#000" opacity=".12"')}`;
+};
+SVG.oven = (c) => (c && c.view === "side" ? OVEN_SIDE(Number(c.cavities) === 2) : OVEN_FRONT(c));
 
 SVG.pellet_stove = () => `
 <defs>${DEFS}
@@ -10380,6 +10525,82 @@ SVG.server_rack = () => `
 <path d="M18 130v4M102 130v4" stroke="#14171b" stroke-width="4" stroke-linecap="round"/>
 <path d="M20 6h80" stroke="#fff" stroke-opacity=".25" stroke-width="1"/>`;
 
+/* Vue « de côté » pour un appareil quelconque : `sideKit(rect)` construit la perspective d'une face avant (rect = x0, y0, x1, y1 dans le
+   repère de la vue de face). Même principe que washer_side.js (homographie + matrice locale par groupe), mais pour n'importe quelle taille. */
+const sideKit = (rect, o = {}) => {
+  const [rx0, ry0, rx1, ry1] = rect, w = rx1 - rx0, h = ry1 - ry0, cx = (rx0 + rx1) / 2;
+  const fw = (o.fw || .74) * w, sw = (o.sw || .33) * w, slope = (o.slope || .075) * h / 2;
+  const left = cx - (fw + sw) / 2 + sw, right = left + fw;
+  const Q = [[left, ry0], [right, ry0 + slope], [right, ry1 - slope], [left, ry1]];
+  const [[x0, y0], [x1, y1], [x2, y2], [x3, y3]] = Q;
+  const dx1 = x1 - x2, dx2 = x3 - x2, dx3 = x0 - x1 + x2 - x3, dy1 = y1 - y2, dy2 = y3 - y2, dy3 = y0 - y1 + y2 - y3;
+  const den = dx1 * dy2 - dx2 * dy1, g = (dx3 * dy2 - dx2 * dy3) / den, hh = (dx1 * dy3 - dx3 * dy1) / den;
+  const a = x1 - x0 + g * x1, bb = x3 - x0 + hh * x3, d = y1 - y0 + g * y1, e = y3 - y0 + hh * y3;
+  const map = (x, y) => { const u = (x - rx0) / w, v = (y - ry0) / h, ww = g * u + hh * v + 1; return [(a * u + bb * v + x0) / ww, (d * u + e * v + y0) / ww]; };
+  const f = (n) => +n.toFixed(3), P = (pts) => pts.map((p) => p.map((n) => n.toFixed(1)).join(",")).join(" ");
+  const place = (px, py, content) => {
+    const [sx, sy] = map(px, py), [p1x, p1y] = map(px + 1, py), [p0x, p0y] = map(px - 1, py), [q1x, q1y] = map(px, py + 1), [q0x, q0y] = map(px, py - 1);
+    const m = [(p1x - p0x) / 2, (p1y - p0y) / 2, (q1x - q0x) / 2, (q1y - q0y) / 2];
+    return `<g transform="matrix(${m.map(f).join(" ")} ${f(sx - m[0] * px - m[2] * py)} ${f(sy - m[1] * px - m[3] * py)})">${content}</g>`;
+  };
+  const poly = (ax, ay, bx, by, attrs) => `<polygon points="${P([map(ax, ay), map(bx, ay), map(bx, by), map(ax, by)])}" ${attrs}/>`;
+  const quad = (attrs) => `<polygon points="${P(Q)}" ${attrs}/>`;
+  // côté gauche : arête avant = arête gauche de la face, arête arrière plus courte (perspective)
+  const side = (attrs) => `<polygon points="${P([[left - sw, ry0 + slope * 1.7], [left, ry0], [left, ry1], [left - sw, ry1 - slope * 1.7]])}" ${attrs}/>`;
+  // tranches horizontales d'un grand groupe (porte, vitre…) : le même contenu est posé plusieurs fois, chaque copie avec la matrice locale de
+  // sa tranche et rognée à cette tranche (coordonnées écran), pour que les bords suivent exactement la perspective. build(i) = contenu de la copie i.
+  const bands = (id, x0r, x1r, ys, build) => ys.slice(0, -1).map((ya, i) => {
+    const yb = ys[i + 1], pad = i === ys.length - 2 ? 0 : .5, pad0 = i === 0 ? 0 : .5;
+    return `<clipPath id="${id}${i}"><polygon points="${P([map(x0r, ya - pad0), map(x1r, ya - pad0), map(x1r, yb + pad), map(x0r, yb + pad)])}"/></clipPath><g clip-path="url(#${id}${i})">${place((x0r + x1r) / 2, (ya + yb) / 2, build(i))}</g>`;
+  }).join("");
+  return { map, place, poly, quad, side, bands, left, right, sw, bottom: ry1, top: ry0, cx: (left + right) / 2 - sw / 2 };
+};
+
+// découpe un gabarit en nœuds de premier niveau (une ligne = un nœud, sauf les <g> sur plusieurs lignes)
+const sideNodes = (src) => {
+  const nodes = []; let depth = 0, cur = "";
+  for (const line of src.split("\n")) {
+    if (!line.trim()) continue;
+    cur += (cur ? "\n" : "") + line;
+    depth += (line.match(/<g[\s>]/g) || []).length - (line.match(/<\/g>/g) || []).length;
+    if (depth <= 0) { nodes.push(cur); cur = ""; depth = 0; }
+  }
+  if (cur) nodes.push(cur);
+  return nodes;
+};
+/* Convertit le dessin de FACE d'un appareil (gabarit déjà évalué) en vue de côté : la caisse devient le trapèze en perspective, et chaque calque
+   (intérieur, portes, tiroirs…) est dupliqué par tranches horizontales, chacune avec la perspective locale de sa tranche (voir sideKit.bands).
+   Les afficheurs (texte .lcd) ne sont gardés que dans la tranche où ils se trouvent : le code qui les met à jour n'en trouve qu'un.
+   rect = caisse dans le repère de face ; o.body = expression du nœud « caisse » ; o.sideFill = couleur du côté. */
+const sideFromFront = (src, rect, o = {}) => {
+  const K = sideKit(rect, { sw: o.sw }), [rx0, ry0, rx1, ry1] = rect, nodes = sideNodes(src), h = ry1 - ry0;
+  const n = Math.max(3, Math.round(h / 24)), ys = Array.from({ length: n + 1 }, (_, i) => ry0 + h * i / n);
+  const lcdY = [...src.matchAll(/<text\b[^>]*class="[^"]*\blcd[^"]*"[^>]*>/g)].map((m) => +((m[0].match(/\sy="([\d.]+)"/) || [])[1])).filter((v) => v);
+  for (let i = 1; i < n; i++) for (const ty of lcdY) if (ys[i] > ty - 11 && ys[i] < ty + 4) ys[i] = ty + 6;   // pas de coupure à travers un afficheur
+  const bodyRe = o.body || /<rect[^>]*fill="#9aa2ab"[^>]*\/>/;
+  let body = "", layers = [], run = [];
+  const flush = () => { if (run.length) { layers.push(run.join("\n")); run = []; } };
+  for (const nd of nodes) {
+    if (/ID-shadow/.test(nd) && /^<ellipse/.test(nd.trim())) continue;
+    if (!body && bodyRe.test(nd)) { body = nd; continue; }
+    if (/^<g[\s>]/.test(nd.trim())) { flush(); layers.push(nd); } else run.push(nd);
+  }
+  flush();
+  const fill = (body.match(/fill="([^"]+)"/) || [])[1] || "#9aa2ab", stroke = (body.match(/stroke="([^"]+)"/) || [])[1];
+  let out = `<ellipse cx="${K.cx.toFixed(1)}" cy="${ry1 + 4}" rx="${(rx1 - rx0) * .68}" ry="4.5" fill="url(#ID-shadow)"/>`;
+  out += K.side(`fill="${o.sideFill || "#b3bac2"}" stroke="${o.sideEdge || "#8f979f"}" stroke-width=".7"`);
+  out += K.quad(`fill="${fill}"${stroke ? ` stroke="${stroke}" stroke-width=".8"` : ""}`);
+  layers.forEach((layer, li) => {
+    out += ys.slice(0, -1).map((ya, i) => {
+      const yb = ys[i + 1], pad = i === n - 1 ? 0 : .5, pad0 = i === 0 ? 0 : .5, id = `ID-sb${li}_${i}`;
+      const mine = layer.replace(/<text\b[^>]*class="[^"]*\blcd[^"]*"[^>]*>[^<]*<\/text>/g, (t) => { const ty = +((t.match(/\sy="([\d.]+)"/) || [])[1]); return ty >= ya && ty < yb ? t : ""; });
+      const clip = [K.map(rx0 - 2, ya - pad0), K.map(rx1 + 2, ya - pad0), K.map(rx1 + 2, yb + pad), K.map(rx0 - 2, yb + pad)].map((p) => p.map((v) => v.toFixed(1)).join(",")).join(" ");
+      return `<clipPath id="${id}"><polygon points="${clip}"/></clipPath><g clip-path="url(#${id})">${K.place((rx0 + rx1) / 2, (ya + yb) / 2, mine)}</g>`;
+    }).join("");
+  });
+  return out;
+};
+
 /* Prise connectée : variante de la multiprise, une seule prise murale (française par défaut ; `plug_type: us` = prise nord-américaine NEMA 5-15 :
  * deux fentes verticales et un trou de terre rond).
  * Option `image` (URL) et/ou `icon` (mdi:...) : l'appareil branché derrière la prise, affiché dans une pastille
@@ -11103,6 +11324,82 @@ SVG.washer = () => `
   <rect x="22" y="117" width="76" height="6" rx="2" fill="#000" opacity=".05"/>
 </g>`;
 
+/* Vue « de côté » du gros électroménager (option view: side) : lave-linge, sèche-linge et lave-vaisselle.
+   Face avant en perspective, côté gauche visible, trois pieds. Les mêmes calques et classes que la vue de face (tambour, voyants, afficheur…)
+   sont dessinés dans le repère de la vue de face, puis déformés par une matrice (l'animation du tambour tourne dans son repère d'origine). */
+// Face avant = quadrilatère en perspective (TL, TR, BR, BL). Une homographie envoie le repère de la vue de face (x 14-106, y 8-128) sur ce
+// quadrilatère : les lignes horizontales convergent (haut qui descend, bas qui remonte), au lieu d'être déformées par une simple inclinaison.
+const SIDE_QUAD = [[36, 10], [104, 17], [104, 121], [36, 128]];
+const sideMap = (() => {
+  const [[x0, y0], [x1, y1], [x2, y2], [x3, y3]] = SIDE_QUAD;
+  const dx1 = x1 - x2, dx2 = x3 - x2, dx3 = x0 - x1 + x2 - x3, dy1 = y1 - y2, dy2 = y3 - y2, dy3 = y0 - y1 + y2 - y3;
+  const den = dx1 * dy2 - dx2 * dy1, g = (dx3 * dy2 - dx2 * dy3) / den, h = (dx1 * dy3 - dx3 * dy1) / den;
+  const a = x1 - x0 + g * x1, bb = x3 - x0 + h * x3, d = y1 - y0 + g * y1, e = y3 - y0 + h * y3;
+  return (x, y) => { const u = (x - 14) / 92, v = (y - 8) / 120, w = g * u + h * v + 1; return [(a * u + bb * v + x0) / w, (d * u + e * v + y0) / w]; };
+})();
+// pose un groupe dessiné autour de (cx, cy) dans le repère de face : matrice locale de la perspective en ce point (le centre est exact)
+const sidePlace = (cx, cy, content) => {
+  const [sx, sy] = sideMap(cx, cy), [px1, py1] = sideMap(cx + 1, cy), [px0, py0] = sideMap(cx - 1, cy), [qx1, qy1] = sideMap(cx, cy + 1), [qx0, qy0] = sideMap(cx, cy - 1);
+  const m = [(px1 - px0) / 2, (py1 - py0) / 2, (qx1 - qx0) / 2, (qy1 - qy0) / 2];
+  const f = (n) => +n.toFixed(4);
+  return `<g transform="matrix(${m.map(f).join(" ")} ${f(sx - m[0] * cx - m[2] * cy)} ${f(sy - m[1] * cx - m[3] * cy)})">${content}</g>`;
+};
+// rectangle du repère de face (x0, y0, x1, y1) → polygone en perspective
+const sidePoly = (x0, y0, x1, y1, attrs) => `<polygon points="${[[x0, y0], [x1, y0], [x1, y1], [x0, y1]].map(([x, y]) => sideMap(x, y).map((n) => n.toFixed(1)).join(",")).join(" ")}" ${attrs}/>`;
+const sideLine = (y, attrs) => `<line x1="${sideMap(14, y)[0].toFixed(1)}" y1="${sideMap(14, y)[1].toFixed(1)}" x2="${sideMap(106, y)[0].toFixed(1)}" y2="${sideMap(106, y)[1].toFixed(1)}" ${attrs}/>`;
+// côté gauche + face avant + pieds ; `inner` = contenu de la face avant dans le repère de la vue de face (x 14-106, y 8-128)
+const sideBody = (inner, o = {}) => `
+<ellipse cx="60" cy="134" rx="54" ry="5" fill="url(#ID-shadow)"/>
+<g class="${o.shake || "shake"}">
+  <rect x="9" y="118" width="8" height="8" rx="1.5" fill="#3a3f45"/><rect x="38" y="124" width="9" height="8" rx="1.5" fill="#3a3f45"/><rect x="94" y="118" width="9" height="8" rx="1.5" fill="#3a3f45"/>
+  <polygon points="6,18 36,10 36,128 6,121" fill="url(#ID-wside)" stroke="${o.edge || "#bfc6ce"}" stroke-width=".8"/>
+  <path d="M13 40v76M20 38v80" stroke="#aeb6be" stroke-width=".5" opacity=".5"/>
+  <path d="M7 110L35 117" stroke="#fff" stroke-width=".6" opacity=".5"/>
+  <polygon points="36,10 104,17 104,121 36,128" fill="url(${o.face || "#ID-body"})" stroke="${o.edge || "#bfc6ce"}" stroke-width=".8"/>
+  <path d="M36.6 11v116" stroke="#fff" stroke-width="1" opacity=".8"/>
+  ${o.sideExtra || ""}
+  <clipPath id="ID-sface"><polygon points="36,10 104,17 104,121 36,128"/></clipPath>
+  <g clip-path="url(#ID-sface)">${inner}</g>
+  ${o.faceExtra || ""}
+</g>`;
+// hublot en volume : le cadre de porte dépasse de la face avant (épaisseur visible à gauche), le tambour est en retrait
+const sidePorthole = (cx, cy, r, tag) => `
+<circle cx="${cx - 4.2}" cy="${cy + 0.6}" r="${r + 9}" fill="#aab2bb"/>
+<circle cx="${cx - 2.4}" cy="${cy + 0.3}" r="${r + 9}" fill="#c3cad1"/>
+${porthole(cx, cy, r, `<g transform="translate(-2.4 0)">${tag}</g>`)}
+<ellipse cx="${cx + r * 0.35}" cy="${cy}" rx="${r * 0.5}" ry="${r * 0.95}" fill="none" stroke="#000" stroke-opacity=".1" stroke-width="2"/>`;
+// repères de programmes autour d'un bouton
+const knobTicks = (cx, cy) => Array.from({ length: 9 }, (_, i) => { const a = (-120 + i * 30) * Math.PI / 180, x1 = cx + Math.sin(a) * 9.8, y1 = cy - Math.cos(a) * 9.8, x2 = cx + Math.sin(a) * 11.6, y2 = cy - Math.cos(a) * 11.6; return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`; }).join("");
+
+const WASHER_FRONT = SVG.washer;
+const WASHER_SIDE = () => `
+<defs>${DEFS}<clipPath id="ID-win"><circle cx="60" cy="80" r="28"/></clipPath>
+<linearGradient id="ID-wside" x1="0" x2="1"><stop offset="0" stop-color="#c3cad1"/><stop offset="1" stop-color="#e3e7eb"/></linearGradient></defs>${sideBody(`
+    ${sidePoly(14, 8, 106, 33, 'fill="url(#ID-panel)"')}
+    ${sideLine(33, 'stroke="#bfc6ce" stroke-width=".8"')}
+    ${sidePlace(32, 21, `
+      <rect x="19" y="12" width="26" height="17" rx="2" fill="#f8f9fb" stroke="#b9c0c8" stroke-width=".7"/>
+      <rect x="21" y="14" width="7" height="9" rx="1" fill="#e4e8ec" stroke="#c5ccd3" stroke-width=".4"/><rect x="29.5" y="14" width="6" height="9" rx="1" fill="#e4e8ec" stroke="#c5ccd3" stroke-width=".4"/><rect x="37" y="14" width="6" height="9" rx="1" fill="#e4e8ec" stroke="#c5ccd3" stroke-width=".4"/>
+      <rect x="23" y="24.6" width="18" height="2.6" rx="1.3" fill="#a6aeb7"/>`)}
+    ${sidePlace(64, 21, `
+      ${lcd(49, 13, 30, 11)}
+      <circle class="led l1" cx="55" cy="29" r="1.4"/><circle class="led l2" cx="61" cy="29" r="1.4"/>
+      <circle class="led l3" cx="67" cy="29" r="1.4"/><circle class="led l4" cx="73" cy="29" r="1.4"/>`)}
+    ${sidePlace(93, 21, `
+      <g stroke="#8d96a0" stroke-width=".9" stroke-linecap="round">${knobTicks(93, 21)}</g>
+      <circle cx="93" cy="21" r="8.2" fill="url(#ID-chrome)" stroke="#88919a" stroke-width=".6"/>
+      <circle cx="93" cy="21" r="5.8" fill="#eff2f5" stroke="#b2b9c1" stroke-width=".6"/>
+      <g class="knob"><line x1="93" y1="21" x2="93" y2="16.2" stroke="#4f5964" stroke-width="1.5" stroke-linecap="round"/></g>`)}
+    ${sidePlace(60, 80, sidePorthole(60, 80, 28, `
+      ${drumInside(60, 80, 28)}
+      <g class="water"><path class="wave" d="M10 88q10-4 20 0t20 0t20 0t20 0t20 0t20 0v30H10z"/></g>
+      <g class="foam">
+        <circle cx="44" cy="90" r="2.2"/><circle cx="52" cy="92" r="1.6"/><circle cx="61" cy="89" r="2.6"/>
+        <circle cx="70" cy="91" r="1.8"/><circle cx="77" cy="88" r="1.4"/><circle cx="56" cy="95" r="1.2"/>
+      </g>`))}
+    ${sidePlace(60, 117, '<rect x="46" y="116" width="28" height="2.2" rx="1.1" fill="#c9d0d7"/>')}`)}`;
+SVG.washer = (c) => (c && c.view === "side" ? WASHER_SIDE() : WASHER_FRONT(c));
+
 SVG.water_heater = (c = {}) => `
 <defs>${DEFS}
 <linearGradient id="ID-cyl" x1="0" x2="1"><stop offset="0" stop-color="#c3c9cf"/><stop offset=".3" stop-color="#ffffff"/><stop offset=".6" stop-color="#eef0f2"/><stop offset="1" stop-color="#aeb5bc"/></linearGradient>
@@ -11254,6 +11551,14 @@ ${dual ? `
 </g>
 <path d="M28 124h64" stroke="#3b424a" stroke-width="1"/>
 <rect x="30" y="127" width="10" height="5" rx="1.5" fill="#3a3f45"/><rect x="80" y="127" width="10" height="5" rx="1.5" fill="#3a3f45"/>`;
+};
+
+/* Cave à vin vue de côté (option view: side) : voir side_kit.js (sideFromFront). */
+const WINE_COOLER_PREV = SVG.wine_cooler;
+SVG.wine_cooler = (c) => {
+  if (!(c && c.view === "side")) return WINE_COOLER_PREV(c);
+  const s = WINE_COOLER_PREV(c), d = s.match(/<defs>[\s\S]*?<\/defs>/)[0];
+  return d + sideFromFront(s.replace(d, ""), [22, 6, 98, 128], { sw: .45, sideFill: "#20252b", sideEdge: "#05070a", body: /<rect[^>]*fill="url\(#ID-wncab\)"[^>]*\/>/ });
 };
 
 /* ------------------------------------------------------------------ */
@@ -13848,6 +14153,7 @@ function buildForm(kind) {
             { name: "last_cycle", selector: { boolean: {} } },
             { name: "estimate", selector: { boolean: {} } },
           ] : []),
+          ...(["washer", "dryer", "dishwasher", "oven", "fridge", "drawer_freezer", "wine_cooler"].includes(kind) ? [{ name: "view", selector: { select: { mode: "dropdown", options: [{ value: "front", label: "Vue de face / Front view" }, { value: "side", label: "Vue de côté / Side view" }] } } }] : []),
           ...(kind === "oven" ? [{ name: "last_cycle", selector: { boolean: {} } }, { name: "cavities", selector: { number: { min: 1, max: 2, step: 1, mode: "box" } } }] : []),
           ...(kind === "water_heater" ? [{ name: "last_cycle", selector: { boolean: {} } },
             { name: "tank_volume", selector: { number: { min: 0, max: 1000, step: 1, mode: "box", unit_of_measurement: "L" } } }] : []),
@@ -14109,7 +14415,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "air_compressor" && s.name === "pressure" ? "f_pressure_tank" : kind === "contact_grill" && s.name === "ready_minutes" ? "f_grill_ready_minutes" : kind === "cookeo" && s.name === "style" ? "f_cookeo_style" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "fridge" && s.name === "finish" ? "f_fridge_finish" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "ceiling_fan" && s.name === "show_controls" ? "f_show_fan_controls" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : ["thermomix", "microwave", "vmc"].includes(kind) && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : ["printer_3d", "printer"].includes(kind) && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix", "printer"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : kind === "radiator" && s.name === "style" ? "f_radiator_style" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "air_compressor" && s.name === "pressure" ? "f_pressure_tank" : kind === "contact_grill" && s.name === "ready_minutes" ? "f_grill_ready_minutes" : kind === "cookeo" && s.name === "style" ? "f_cookeo_style" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "fridge" && s.name === "finish" ? "f_fridge_finish" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "ceiling_fan" && s.name === "show_controls" ? "f_show_fan_controls" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : ["thermomix", "microwave", "vmc"].includes(kind) && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : ["printer_3d", "printer"].includes(kind) && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix", "printer"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : kind === "radiator" && s.name === "style" ? "f_radiator_style" : s.name === "view" ? "f_view" : `f_${s.name}`) : undefined),
   };
 }
 
@@ -16037,7 +16343,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
 (async () => {
   const base = import.meta.url;
   // ?v=<version> : après une mise à jour, le navigateur ne ressert pas d'anciens morceaux depuis son cache
-  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.185.0`, base).href);
+  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.186.0`, base).href);
   await chunk("card-helpers");
   await chunk("editor-labels");
   // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre
