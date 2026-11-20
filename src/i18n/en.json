@@ -2306,6 +2306,7 @@
     "model_asustor_2bay": "Asustor NAS (2 bays)",
     "model_asustor_4bay": "Asustor NAS (4 bays)",
     "model_asustor_6bay": "Asustor NAS (6 bays)",
+    "model_synology_ds1525": "Synology DS1525+ (5 bays)",
     "model_synology_ds224": "Synology DS224+ (2 bays)",
     "model_synology_ds1812": "Synology DS1812+ (8 bays)",
     "model_ugreen_dxp4800_plus": "UGREEN DXP4800 Plus (4 bays)",
