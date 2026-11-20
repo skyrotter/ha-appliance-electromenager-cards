@@ -8,7 +8,6 @@ const DISHWASHER_SIDE = () => {
 <defs>${DEFS}<clipPath id="ID-winp"><polygon points="${pts}"/></clipPath>
 <linearGradient id="ID-tub" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5b646d"/><stop offset="1" stop-color="#2c3238"/></linearGradient>
 <linearGradient id="ID-wside" x1="0" x2="1"><stop offset="0" stop-color="#a9b0b8"/><stop offset="1" stop-color="#cdd2d7"/></linearGradient></defs>
-<ellipse class="floorlight" cx="72" cy="133.5" rx="4.5" ry="1.2"/>
 ${sideBody(`
   ${sidePoly(14, 8, 106, 23, 'fill="url(#ID-dark)"')}
   ${sidePlace(60, 15.5, `
