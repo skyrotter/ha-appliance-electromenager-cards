@@ -12851,18 +12851,28 @@ class ApplianceCardBase extends HTMLElement {
     } else if (kind === "kettle" || kind === "toaster") {
       // en marche au-dessus du seuil ; après la coupure : « eau chaude » / « toasts prêts » pendant quelques minutes
       // bouilloire dont l'état est un capteur texte (ESPHome : ready / heating / cooling) : « heating » = en chauffe, « cooling » = eau chaude
-      const rawK = kind === "kettle" && main ? String(main.state).toLowerCase() : "", textOn = /^(heating|boiling)$/.test(rawK), textCool = rawK === "cooling";
-      const on = !textCool && (powered || textOn || (watts === null && base === "running")), now = Date.now();
+      // ProfiCook ESPHome : Lifted (soulevée de son socle) / Standby / Heating / Cooling / Maintaining Temp (maintien au chaud)
+      const rawK = kind === "kettle" && main ? String(main.state).toLowerCase() : "", textOn = /^(heating|boiling)$/.test(rawK), textCool = /^(cooling|maintaining)/.test(rawK);
+      m.kettleLifted = rawK === "lifted";
+      const knownK = /^(lifted|standby|heating|cooling|maintaining)/.test(rawK), on = knownK ? textOn : !textCool && (powered || textOn || (watts === null && base === "running")), now = Date.now();
       const keep = (kind === "kettle" ? c.hot_minutes ?? 5 : c.ready_minutes ?? 2) * 60000;
       if (on && base !== "unavailable") this._onAt = now;
       if (base === "unavailable") m.status = "unavailable";
       else if (on) m.status = kind === "kettle" ? "boiling" : "toasting";
       else if (textCool) m.status = "hot_water";
+      else if (m.kettleLifted) m.status = "off";
       else if (kind === "kettle" && m.tempVal != null) m.status = m.tempVal >= (c.hot_temperature ?? 60) ? "hot_water" : "off";
       else m.status = this._onAt && now - this._onAt < keep ? (kind === "kettle" ? "hot_water" : "toast_ready") : "off";
       // bouilloire ESPHome / Tuya : entité « défaut » (binary_sensor allumé, ou capteur texte autre que « ok / aucun / none… »)
       const er = kind === "kettle" ? S(c.error) : null;
       if (er && !BAD.includes(String(er.state).toLowerCase()) && (domainOf(c.error) === "sensor" ? !/^(ok|none|no.?error|aucun[e]?|normal|false|0|off|-?)$/i.test(String(er.state).trim()) : isOn(er))) m.alerts.push("kettle_error");
+      if (m.alerts.includes("kettle_error") && domainOf(c.error) === "sensor") m.kettleErr = String(er.state).trim();
+      // consigne affichée = celle du mode choisi (45°, 60°, 85°, 100°, « 100° and off ») ; « Custom » garde la valeur du curseur, « Off » n'en a pas
+      const mo = kind === "kettle" ? S(c.mode) : null;
+      if (mo && ["select", "input_select"].includes(domainOf(c.mode))) {
+        const mm = String(mo.state).match(/^(\d{2,3})\s*°/);
+        if (mm) m.targetVal = Number(mm[1]); else if (/^(off|arr[eê]t|aus)$/i.test(String(mo.state).trim())) m.targetVal = null;
+      }
     } else if (kind === "contact_grill" || kind === "deep_fryer") {
       // prise : voyant rouge tant qu'il chauffe (premières preheat_minutes), voyant vert ensuite et pendant ready_minutes après la coupure
       // (le thermostat coupe et rallume la résistance) ; une coupure avant 2 min de chauffe = simple arrêt
@@ -13533,6 +13543,7 @@ class ApplianceCardBase extends HTMLElement {
       const raw = String(m.main.state).toLowerCase();
       if (![...OFF_STATES, ...DONE_STATES, "on", "running", "run"].includes(raw)) statusTxt = stateText(hass, m.main);
     }
+    if (kind === "kettle" && m.kettleLifted) statusTxt = stateText(hass, m.main);
     if ((kind === "radiator" || kind === "towel_dryer") && m.radMode && m.radMode !== "off" && m.status !== "off" && m.status !== "unavailable") statusTxt += ` · ${tr(hass, m.radMode === "none" ? "mode_none" : m.radMode)}`;
     if ((kind === "fan" || kind === "ceiling_fan" || kind === "air_purifier") && m.pct != null && /^fan_/.test(m.status)) statusTxt += ` · ${Math.round(m.pct)} %`;
     if (kind === "av_receiver" && m.vol != null && ["playing", "paused"].includes(m.status)) statusTxt += ` · Vol ${Math.round(m.vol * 100)} %`;
@@ -13557,7 +13568,7 @@ class ApplianceCardBase extends HTMLElement {
       const a = m.main.attributes || {}, v = Number(a.volume_level);
       if (a.volume_level != null && Number.isFinite(v)) { subMute = !!a.is_volume_muted; sub = subMute ? tr(hass, "mute") : `${tr(hass, "volume")} ${Math.round(v * 100)} %`; }
     }
-    const alertTxt = m.alerts.map((a) => tr(hass, a)).join(" · ");
+    const alertTxt = m.alerts.map((a) => (a === "kettle_error" && m.kettleErr ? `${tr(hass, a)} : ${m.kettleErr}` : tr(hass, a))).join(" · ");
     let frPill = "";
     if (kind === "fridge" && m.tempVal != null) {
       const tv = m.T ? m.T.toC(m.tempVal) : m.tempVal; // seuils de couleur en °C
@@ -13657,13 +13668,27 @@ class ApplianceCardBase extends HTMLElement {
       const pst = hass.states[this._presetEntity()], opts = this._presetOptions(pst);
       const cur = String(domainOf(pst.entity_id) === "climate" ? pst.attributes.preset_mode ?? "" : pst.state).toLowerCase();
       const cap = (s) => { const t = String(s).replace(/_/g, " "); return t.charAt(0).toUpperCase() + t.slice(1); };
-      modesEl.innerHTML = opts.map((o) => {
+      const presetHtml = opts.map((o) => {
         const raw = String(o).toLowerCase(), on = raw === cur;
         // icône / couleur seulement pour un nom reconnu (confort, éco, hors-gel…), sinon icône neutre
         const key = MODE_ORDER.find((k) => MODE_RX[k].test(raw) && modeKey(raw) === k) || "";
         return `<button class="mode-btn ${on ? "on" : ""}" data-preset="${esc(o)}" data-mode="${key}" aria-pressed="${on}"${m.status === "unavailable" ? " disabled" : ""}><ha-icon icon="${MODE_ICON[key] || "mdi:tune-variant"}"></ha-icon>${esc(cap(o))}</button>`;
       }).join("");
+      // pendant qu'on déplace le curseur de la bouilloire, on ne remplace pas la zone des boutons (sinon le geste est interrompu)
+      const dragging = kind === "kettle" && modesEl.querySelector(".kt-slider input:active");
+      if (!dragging) modesEl.innerHTML = presetHtml;
+      // bouilloire : curseur de la température personnalisée (entité number / input_number) quand le mode « Custom » est actif
+      const tn = kind === "kettle" && c.target_temperature && hass.states[c.target_temperature], tdom = domainOf(c.target_temperature);
+      if (!dragging && tn && ["number", "input_number"].includes(tdom) && /custom|personnalis/i.test(String(pst.state)) && !BAD.includes(String(tn.state).toLowerCase())) {
+        const mn = Number(tn.attributes.min ?? 35), mx = Number(tn.attributes.max ?? 100), stp = Number(tn.attributes.step ?? 1), val = Number(tn.state);
+        modesEl.innerHTML += `<div class="kt-slider"><span>${esc(tr(hass, "target"))}</span><input type="range" min="${mn}" max="${mx}" step="${stp}" value="${Number.isFinite(val) ? val : mn}" aria-label="${esc(tr(hass, "target"))}"><b>${Number.isFinite(val) ? Math.round(val) : "--"}°</b></div>`;
+      }
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._setPreset(b.dataset.preset); }; });
+      const rg = modesEl.querySelector(".kt-slider input");
+      if (rg) {
+        rg.oninput = () => { rg.nextElementSibling.textContent = `${rg.value}°`; };
+        rg.onchange = () => hass.callService(tdom, "set_value", { entity_id: c.target_temperature, value: Number(rg.value) });
+      }
     } else if (kind === "printer" && m.ink) {
       // niveaux d'encre : une barre par couleur (noir, cyan, magenta, jaune), clic = historique de l'entité
       modesEl.innerHTML = `<div class="ink">${m.ink.map((i) => `<div class="ink-row ${i.k}${i.low ? " low" : ""}" data-entity="${esc(i.id)}"><span>${esc(c.labels && c.labels[i.key] ? String(c.labels[i.key]) : tr(hass, i.key))}</span><div class="ink-bar"><div class="ink-fill" style="width:${i.v ?? 0}%"></div></div><span class="ink-v">${i.v == null ? "—" : `${fmtNum(hass, i.v, 0)} %`}</span></div>`).join("")}</div>`;
@@ -15931,6 +15956,9 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 /* ProfiCook (photo) : les voyants se posent sur les touches de la photo, éteints tant que la bouilloire n'est pas en chauffe */
 .kt-ledp { opacity: 0; transition: opacity .3s; }
 .k-kettle.st-boiling .kt-ledp, .k-kettle.st-hot_water .kt-ledp { opacity: 1; }
+.kt-slider { grid-column: 1 / -1; width: 100%; box-sizing: border-box; flex: 0 0 100%; display: flex; align-items: center; gap: 10px; margin-top: 6px; font-size: 12px; color: var(--secondary-text-color); }
+.kt-slider input { flex: 1; accent-color: var(--ac-heat, #ff8a3d); }
+.kt-slider b { min-width: 38px; text-align: right; color: var(--primary-text-color); font-weight: 600; }
 
 /* ---------- multiprise ---------- */
 .k-power_strip .illus { overflow: hidden; }
