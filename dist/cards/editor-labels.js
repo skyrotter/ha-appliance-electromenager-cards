@@ -347,6 +347,10 @@
       "tile_background": "Tile background",
       "tile_bg_transparent": "Transparent (default)",
       "tile_bg_theme": "Theme colour",
+      "tile_bg_none": "None (fully transparent)",
+      "illustration_background": "Drawing background",
+      "illus_bg_default": "Soft frame (default)",
+      "illus_bg_none": "None (fully transparent)",
       "tile_order": "Tile order",
       "tile_order_name": "Name above, value below",
       "tile_order_value": "Value above, name below",
@@ -3354,6 +3358,10 @@
       "tile_background": "Fond des tuiles",
       "tile_bg_transparent": "Transparent (défaut)",
       "tile_bg_theme": "Couleur du thème",
+      "tile_bg_none": "Aucun (totalement transparent)",
+      "illustration_background": "Fond du dessin",
+      "illus_bg_default": "Cadre discret (défaut)",
+      "illus_bg_none": "Aucun (totalement transparent)",
       "tile_order": "Ordre des tuiles",
       "tile_order_name": "Nom au-dessus, valeur en dessous",
       "tile_order_value": "Valeur au-dessus, nom en dessous",
@@ -10135,8 +10143,13 @@
     const T = { '--ha-card-background': 'transparent', '--ha-card-box-shadow': 'none', '--ha-card-border-width': '0' };
     for (const [k, v] of Object.entries(T)) { if (cfg && cfg.transparent) el.style.setProperty(k, v); else el.style.removeProperty(k); }
     // tile_background : « transparent » (défaut, léger voile gris) ou « theme » (fond secondaire du thème HA) → --ac-tile-bg, lue par les tuiles
+    // « none » : tuiles sans aucun fond (la variable CSS --ac-tile-bg peut aussi être posée dans le thème pour toutes les cartes)
     if (cfg && cfg.tile_background === 'theme') el.style.setProperty('--ac-tile-bg', 'var(--secondary-background-color, rgba(127,127,127,.12))');
+    else if (cfg && cfg.tile_background === 'none') el.style.setProperty('--ac-tile-bg', 'transparent');
     else el.style.removeProperty('--ac-tile-bg');
+    // illustration_background : « none » retire le cadre sombre derrière le dessin (--ac-illus-bg, aussi posable dans le thème)
+    if (cfg && cfg.illustration_background === 'none') el.style.setProperty('--ac-illus-bg', 'transparent');
+    else el.style.removeProperty('--ac-illus-bg');
     // tile_order : « name » (nom au-dessus) ou « value » (valeur au-dessus) → attribut tile-order sur la carte ; absent = ordre historique de la carte
     if (cfg && (cfg.tile_order === 'name' || cfg.tile_order === 'value')) el.setAttribute('tile-order', cfg.tile_order);
     else el.removeAttribute('tile-order');
@@ -10184,7 +10197,9 @@
   // Champs d'éditeur communs : fond et ordre des tuiles (vide = comportement historique de la carte)
   window.applianceTileFields = (hass) => [
     { name: 'tile_background', selector: { select: { mode: 'dropdown', options: [
-      { value: 'transparent', label: window.applianceEditorLabel('tile_bg_transparent', hass) }, { value: 'theme', label: window.applianceEditorLabel('tile_bg_theme', hass) }] } } },
+      { value: 'transparent', label: window.applianceEditorLabel('tile_bg_transparent', hass) }, { value: 'theme', label: window.applianceEditorLabel('tile_bg_theme', hass) }, { value: 'none', label: window.applianceEditorLabel('tile_bg_none', hass) }] } } },
+    { name: 'illustration_background', selector: { select: { mode: 'dropdown', options: [
+      { value: 'default', label: window.applianceEditorLabel('illus_bg_default', hass) }, { value: 'none', label: window.applianceEditorLabel('illus_bg_none', hass) }] } } },
     { name: 'tile_order', selector: { select: { mode: 'dropdown', options: [
       { value: 'name', label: window.applianceEditorLabel('tile_order_name', hass) }, { value: 'value', label: window.applianceEditorLabel('tile_order_value', hass) }] } } },
   ];
