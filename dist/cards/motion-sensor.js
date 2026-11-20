@@ -103,7 +103,8 @@
       "illuminance": "Luminosidade",
       "temperature": "Temperatura",
       "low": "Fraca",
-      "ok": "OK"
+      "ok": "OK",
+      "background_image": "Foto de fundo (URL ou caminho /local/…, apenas modelos com foto do detector)"
     },
     "pt-PT": {
       "name": "Sensor de movimento",
@@ -125,7 +126,8 @@
       "illuminance": "Luminosidade",
       "temperature": "Temperatura",
       "low": "Fraca",
-      "ok": "OK"
+      "ok": "OK",
+      "background_image": "Foto de fundo (URL ou caminho /local/…, apenas modelos com foto do detector)"
     },
     "uk": {
       "name": "Датчик руху",
@@ -401,7 +403,7 @@ ha-card{--p:4.8s}ha-card.motion{--p:1.15s}ha-card.recent{--p:6s}
         this.appendChild(this._form);
       }
       const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
-      const tr = T[window.applianceLang(T, null, this._hass)] || T.en;
+      const tr = { ...T.en, ...T[window.applianceLang(T, null, this._hass)] }; // repli par clé sur l'anglais
       this._form.hass = this._hass;
       this._form.data = this._c;
       this._form.schema = [

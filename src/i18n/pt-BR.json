@@ -493,7 +493,22 @@
     "direction": "Fluxo de ar",
     "f_direction": "Direção do fluxo de ar",
     "vx_supply": "Insuflação",
-    "vx_extract": "Extração"
+    "vx_extract": "Extração",
+    "cavity_2": "Cavidade 2",
+    "deep_fryer": "Fritadeira",
+    "display_both": "kWh + valor (consumo e custo do período)",
+    "f_auto_close": "Fechar automaticamente após (s, 0 = desligado)",
+    "f_cavities": "Número de cavidades (1 ou 2)",
+    "f_radiator_style": "Modelo do radiador",
+    "f_remaining_2": "Sensor do tempo restante da segunda cavidade",
+    "f_status_2": "Segunda cavidade: estado",
+    "f_target_temperature_2": "Sensor da temperatura desejada da segunda cavidade",
+    "f_temperature_2": "Sensor de temperatura da segunda cavidade",
+    "fryer_heating": "Aquecendo",
+    "fryer_ready": "Óleo pronto!",
+    "remaining_2": "Restante cav. 2",
+    "target_2": "Desejada cav. 2",
+    "temperature_2": "Temp. cav. 2"
   },
   "aquarium": {
     "power": "Potência",
@@ -536,7 +551,10 @@
     "full": "Cheia em",
     "empty": "Vazia em",
     "low": "Bateria fraca",
-    "backup": "Backup"
+    "backup": "Backup",
+    "soc_min": "Carga mín.",
+    "soc_max": "Carga máx.",
+    "mode": "Modo"
   },
   "ev_charger": {
     "name": "Carregador de veículo elétrico",
@@ -1593,7 +1611,16 @@
     "entity_current": "Corrente",
     "show_tariffs": "Mostrar os blocos de importação / exportação",
     "show_peak": "Mostrar a demanda máxima e média",
-    "show_electrics": "Mostrar a tensão e a corrente"
+    "show_electrics": "Mostrar a tensão e a corrente",
+    "battery_entity_mode": "Modo de operação (entidade select)",
+    "battery_model_zendure_ac2400": "Zendure SolarFlow 2400 AC+ (foto)",
+    "battery_show_mode": "Mostrar modo de operação",
+    "entity_soc_max": "Limite máximo de carga (number ou sensor, %)",
+    "entity_soc_min": "Limite mínimo de carga (number ou sensor, %)",
+    "panels": "Número de painéis (1 ou 2)",
+    "show_soc_max": "Mostrar carga máxima",
+    "show_soc_min": "Mostrar carga mínima",
+    "side": "Lado em que o painel único se empilha"
   },
   "light": {
     "white_warm": "Branco quente",
@@ -2152,7 +2179,8 @@
     "illuminance": "Luminosidade",
     "temperature": "Temperatura",
     "low": "Fraca",
-    "ok": "OK"
+    "ok": "OK",
+    "background_image": "Foto de fundo (URL ou caminho /local/…, apenas modelos com foto do detector)"
   },
   "air_quality": {
     "name": "Qualidade do ar",
@@ -2201,7 +2229,8 @@
     "overheating": "Superaquecimento",
     "disk_full": "Disco quase cheio",
     "ram_full": "Memória saturada",
-    "d": "d"
+    "d": "d",
+    "model_hp_prodesk_600_g3": "HP ProDesk 600 G3 Desktop Mini"
   },
   "nas": {
     "model_generic_1": "NAS genérico (1 baia)",
@@ -2250,7 +2279,10 @@
     "model_ugreen_idx6011_pro": "UGREEN iDX6011 Pro (6 baias)",
     "parity_alert": "Paridade inválida",
     "flash_alert": "Pendrive: problema",
-    "nvme_alert": "SSD {n}: problema"
+    "nvme_alert": "SSD {n}: problema",
+    "model_asustor_2bay": "NAS Asustor (2 baias)",
+    "model_asustor_4bay": "NAS Asustor (4 baias)",
+    "model_asustor_6bay": "NAS Asustor (6 baias)"
   },
   "tv_box": {
     "name": "Box de TV",
@@ -2966,5 +2998,31 @@
     "height": "Alto-falantes de altura",
     "rear": "Alto-falantes traseiros",
     "sound_mode": "Modo de áudio"
+  },
+  "alarm_keypad": {
+    "name": "Teclado do alarme",
+    "disarmed": "Desarmado",
+    "ready": "Pronto",
+    "armed": "Armado",
+    "armed_partial": "Armado parcialmente",
+    "entry_delay": "Retardo de entrada",
+    "exit_delay": "Retardo de saída",
+    "intrusion": "Intrusão",
+    "unavailable": "Indisponível",
+    "unknown": "Indisponível",
+    "zone_open_one": "zona aberta",
+    "zone_open_many": "zonas abertas",
+    "zones_open": "Zonas abertas",
+    "zones_fault": "Zonas em falha",
+    "code_error": "Comando recusado",
+    "enter_code": "Digite o código",
+    "f_entity_control": "Central de alarme a controlar (teclas ativas)",
+    "f_entity": "Estado do alarme (sensor ou central)",
+    "f_entity_zones_open": "Contador de zonas abertas (sensor)",
+    "f_entity_zones_fault": "Contador de zonas em falha (sensor)",
+    "f_zones": "Zonas (até 8: nome, entidade, entity_fault)",
+    "f_show_open": "Mostrar o bloco de zonas abertas",
+    "f_show_fault": "Mostrar o bloco de zonas em falha",
+    "f_show_zones": "Mostrar os chips das zonas"
   }
 }

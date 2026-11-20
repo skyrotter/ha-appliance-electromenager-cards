@@ -490,7 +490,10 @@
       "model_ugreen_idx6011_pro": "UGREEN iDX6011 Pro (6 baias)",
       "parity_alert": "Paridade inválida",
       "flash_alert": "Pendrive: problema",
-      "nvme_alert": "SSD {n}: problema"
+      "nvme_alert": "SSD {n}: problema",
+      "model_asustor_2bay": "NAS Asustor (2 baias)",
+      "model_asustor_4bay": "NAS Asustor (4 baias)",
+      "model_asustor_6bay": "NAS Asustor (6 baias)"
     },
     "pt-PT": {
       "model_generic_1": "NAS genérico (1 baia)",
@@ -539,7 +542,10 @@
       "model_ugreen_idx6011_pro": "UGREEN iDX6011 Pro (6 baias)",
       "parity_alert": "Paridade inválida",
       "flash_alert": "Pen USB: problema",
-      "nvme_alert": "SSD {n}: problema"
+      "nvme_alert": "SSD {n}: problema",
+      "model_asustor_2bay": "NAS Asustor (2 baias)",
+      "model_asustor_4bay": "NAS Asustor (4 baias)",
+      "model_asustor_6bay": "NAS Asustor (6 baias)"
     },
     "ro": {
       "name": "NAS",
@@ -1191,7 +1197,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         this.appendChild(this._form);
       }
       const ent = (name, domain, multiple) => ({ name, selector: { entity: { ...(domain ? { domain } : {}), ...(multiple ? { multiple: true } : {}) } } });
-      const tr = T[window.applianceLang(T, null, this._hass)] || T.en;
+      const tr = { ...T.en, ...T[window.applianceLang(T, null, this._hass)] }; // repli par clé sur l'anglais
       const num = (name, min, max, step, def, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
       const bool = (name, def = true) => ({ name, selector: { boolean: {} }, default: def });
       this._form.hass = this._hass;

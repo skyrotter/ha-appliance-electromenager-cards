@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.183.0";
+const VERSION = "1.184.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -5301,7 +5301,22 @@ const STRINGS = {
     "direction": "Fluxo de ar",
     "f_direction": "Direção do fluxo de ar",
     "vx_supply": "Insuflação",
-    "vx_extract": "Extração"
+    "vx_extract": "Extração",
+    "cavity_2": "Cavidade 2",
+    "deep_fryer": "Fritadeira",
+    "display_both": "kWh + valor (consumo e custo do período)",
+    "f_auto_close": "Fechar automaticamente após (s, 0 = desligado)",
+    "f_cavities": "Número de cavidades (1 ou 2)",
+    "f_radiator_style": "Modelo do radiador",
+    "f_remaining_2": "Sensor do tempo restante da segunda cavidade",
+    "f_status_2": "Segunda cavidade: estado",
+    "f_target_temperature_2": "Sensor da temperatura desejada da segunda cavidade",
+    "f_temperature_2": "Sensor de temperatura da segunda cavidade",
+    "fryer_heating": "Aquecendo",
+    "fryer_ready": "Óleo pronto!",
+    "remaining_2": "Restante cav. 2",
+    "target_2": "Desejada cav. 2",
+    "temperature_2": "Temp. cav. 2"
   },
   "pt-PT": {
     "valign_top": "No topo (predefinido)",
@@ -5797,7 +5812,22 @@ const STRINGS = {
     "direction": "Fluxo de ar",
     "f_direction": "Direção do fluxo de ar",
     "vx_supply": "Insuflação",
-    "vx_extract": "Extração"
+    "vx_extract": "Extração",
+    "cavity_2": "Cavidade 2",
+    "deep_fryer": "Fritadeira",
+    "display_both": "kWh + valor (consumo e custo do período)",
+    "f_auto_close": "Fechar automaticamente após (s, 0 = desligado)",
+    "f_cavities": "Número de cavidades (1 ou 2)",
+    "f_radiator_style": "Modelo do radiador",
+    "f_remaining_2": "Sensor do tempo restante da segunda cavidade",
+    "f_status_2": "Segunda cavidade: estado",
+    "f_target_temperature_2": "Sensor da temperatura pretendida da segunda cavidade",
+    "f_temperature_2": "Sensor de temperatura da segunda cavidade",
+    "fryer_heating": "A aquecer",
+    "fryer_ready": "Óleo pronto!",
+    "remaining_2": "Restante cav. 2",
+    "target_2": "Pretendida cav. 2",
+    "temperature_2": "Temp. cav. 2"
   },
   "ro": {
     "washer": "Mașină de spălat rufe",
@@ -15997,7 +16027,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
 (async () => {
   const base = import.meta.url;
   // ?v=<version> : après une mise à jour, le navigateur ne ressert pas d'anciens morceaux depuis son cache
-  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.183.0`, base).href);
+  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.184.0`, base).href);
   await chunk("card-helpers");
   await chunk("editor-labels");
   // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre

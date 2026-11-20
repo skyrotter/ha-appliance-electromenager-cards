@@ -181,7 +181,10 @@ const I18N_BAT = {
     "full": "Cheia em",
     "empty": "Vazia em",
     "low": "Bateria fraca",
-    "backup": "Backup"
+    "backup": "Backup",
+    "soc_min": "Carga mín.",
+    "soc_max": "Carga máx.",
+    "mode": "Modo"
   },
   "pt-PT": {
     "name": "Bateria solar",
@@ -196,7 +199,10 @@ const I18N_BAT = {
     "full": "Cheia em",
     "empty": "Vazia em",
     "low": "Bateria fraca",
-    "backup": "Backup"
+    "backup": "Backup",
+    "soc_min": "Carga mín.",
+    "soc_max": "Carga máx.",
+    "mode": "Modo"
   },
   "ro": {
     "name": "Baterie solară",

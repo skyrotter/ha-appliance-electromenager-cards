@@ -609,7 +609,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       this._form.data = this._c;
       this._form.schema = [
         ent('entity', 'climate'),
-        { name: 'model', selector: { select: { mode: 'dropdown', options: Object.keys(MODELS).map((value) => ({ value, label: (T[lang] || T.en)['model_' + value] || T.en['model_' + value] || value })) } } },
+        { name: 'model', selector: { select: { mode: 'dropdown', options: Object.keys(MODELS).map((value) => ({ value, label: ({ ...T.en, ...T[lang] })['model_' + value] || T.en['model_' + value] || value })) } } },
         { name: 'name', selector: { text: {} } },
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
@@ -624,7 +624,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_hvac_modes'), bool('show_temperature'), bool('show_valve'), bool('show_battery'), bool('show_window'), bool('show_humidity'), { name: 'minimal', selector: { boolean: {} } }, bool('animations')] },
       ];
       // « model » : libellé propre à la carte (le libellé partagé de l'éditeur parle d'un modèle de détecteur)
-      this._form.computeLabel = (s) => (s.name === 'model' ? (T[lang] || T.en).model || T.en.model : window.applianceEditorLabel(s.name, this._hass));
+      this._form.computeLabel = (s) => (s.name === 'model' ? ({ ...T.en, ...T[lang] }).model || T.en.model : window.applianceEditorLabel(s.name, this._hass));
     }
   }
   customElements.define(TAG + '-editor', ApplianceTrvCardEditor);

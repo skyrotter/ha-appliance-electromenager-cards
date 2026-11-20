@@ -984,7 +984,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       }
       const ent = (name, domain, extra) => ({ name, selector: { entity: { ...(domain ? { domain } : {}), ...(extra || {}) } } });
       const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
-      const tr = T[window.applianceLang(T, null, this._hass)] || T.en;
+      const tr = { ...T.en, ...T[window.applianceLang(T, null, this._hass)] }; // repli par clé sur l'anglais
       this._form.hass = this._hass;
       // entity_last_open : une entité ou une liste ; le sélecteur multiple attend un array
       const lo = this._c && this._c.entity_last_open;
