@@ -1,4 +1,4 @@
-/* Lave-vaisselle vu de côté (option style: side) : voir washer_side.js. La fenêtre sur la cuve et tous ses calques animés sont conservés. */
+/* Lave-vaisselle vu de côté (option view: side) : voir washer_side.js. La fenêtre sur la cuve et tous ses calques animés sont conservés. */
 const DISHWASHER_FRONT = SVG.dishwasher;
 const DISHWASHER_SIDE = () => {
   // fenêtre de la cuve : polygone en perspective ; chaque zone du contenu est posée avec sa propre perspective locale
@@ -44,4 +44,4 @@ ${sideBody(`
   ${sidePoly(22, 38, 98, 114, 'fill="url(#ID-gloss)"')}
   ${sidePoly(22, 38, 98, 114, 'fill="none" stroke="#7e8790" stroke-width="1.2" stroke-linejoin="round"')}`, { face: "#ID-inox", edge: "#9aa2ab", sideExtra: '<polygon points="6,114 36,121 36,128 6,121" fill="#2b3036"/>', faceExtra: '<polygon points="36,121 104,114 104,121 36,128" fill="#2b3036"/>' })}`;
 };
-SVG.dishwasher = (c) => (c && c.style === "side" ? DISHWASHER_SIDE() : DISHWASHER_FRONT(c));
+SVG.dishwasher = (c) => (c && c.view === "side" ? DISHWASHER_SIDE() : DISHWASHER_FRONT(c));

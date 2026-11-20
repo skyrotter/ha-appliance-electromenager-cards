@@ -74,7 +74,7 @@
     "wine_cooler": "Cave à vin",
     "f_max_temperature_wine": "Alerte au-dessus de (°C)",
     "f_radiator_style": "Modèle de radiateur",
-    "f_view_style": "Vue (de face ou de côté)",
+    "f_view": "Vue (de face ou de côté)",
     "f_fridge_style": "Type de réfrigérateur",
     "f_fridge_finish": "Finition du réfrigérateur",
     "zone_top": "Zone haute",

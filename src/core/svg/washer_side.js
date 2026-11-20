@@ -1,4 +1,4 @@
-/* Vue « de côté » du gros électroménager (option style: side) : lave-linge, sèche-linge et lave-vaisselle.
+/* Vue « de côté » du gros électroménager (option view: side) : lave-linge, sèche-linge et lave-vaisselle.
    Face avant en perspective, côté gauche visible, trois pieds. Les mêmes calques et classes que la vue de face (tambour, voyants, afficheur…)
    sont dessinés dans le repère de la vue de face, puis déformés par une matrice (l'animation du tambour tourne dans son repère d'origine). */
 // Face avant = quadrilatère en perspective (TL, TR, BR, BL). Une homographie envoie le repère de la vue de face (x 14-106, y 8-128) sur ce
@@ -72,4 +72,4 @@ const WASHER_SIDE = () => `
         <circle cx="70" cy="91" r="1.8"/><circle cx="77" cy="88" r="1.4"/><circle cx="56" cy="95" r="1.2"/>
       </g>`))}
     ${sidePlace(60, 117, '<rect x="46" y="116" width="28" height="2.2" rx="1.1" fill="#c9d0d7"/>')}`)}`;
-SVG.washer = (c) => (c && c.style === "side" ? WASHER_SIDE() : WASHER_FRONT(c));
+SVG.washer = (c) => (c && c.view === "side" ? WASHER_SIDE() : WASHER_FRONT(c));

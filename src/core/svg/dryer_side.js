@@ -1,4 +1,4 @@
-/* Sèche-linge vu de côté (option style: side) : voir washer_side.js. */
+/* Sèche-linge vu de côté (option view: side) : voir washer_side.js. */
 const DRYER_FRONT = SVG.dryer;
 const DRYER_SIDE = () => `
 <defs>${DEFS}<clipPath id="ID-win"><circle cx="60" cy="80" r="29"/></clipPath>
@@ -28,4 +28,4 @@ ${sideBody(`
       ${drumInside(60, 80, 29)}
       <circle class="heat" cx="60" cy="80" r="29" fill="url(#ID-heat)"/>`))}
 `, { shake: "shake-soft" })}`;
-SVG.dryer = (c) => (c && c.style === "side" ? DRYER_SIDE() : DRYER_FRONT(c));
+SVG.dryer = (c) => (c && c.view === "side" ? DRYER_SIDE() : DRYER_FRONT(c));

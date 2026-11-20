@@ -95,7 +95,7 @@ const STRINGS = {
     "wine_cooler": "Wine cooler",
     "f_max_temperature_wine": "Alert above (°C)",
     "f_radiator_style": "Radiator model",
-    "f_view_style": "View (front or side)",
+    "f_view": "View (front or side)",
     "f_fridge_style": "Refrigerator layout",
     "f_fridge_finish": "Refrigerator finish",
     "zone_top": "Upper zone",
@@ -2377,7 +2377,7 @@ const STRINGS = {
     "wine_cooler": "Cave à vin",
     "f_max_temperature_wine": "Alerte au-dessus de (°C)",
     "f_radiator_style": "Modèle de radiateur",
-    "f_view_style": "Vue (de face ou de côté)",
+    "f_view": "Vue (de face ou de côté)",
     "f_fridge_style": "Type de réfrigérateur",
     "f_fridge_finish": "Finition du réfrigérateur",
     "zone_top": "Zone haute",
@@ -8778,7 +8778,7 @@ SVG.dishwasher = () => `
   <rect x="14" y="118" width="92" height="10" rx="2" fill="#2b3036"/>
 </g>`;
 
-/* Lave-vaisselle vu de côté (option style: side) : voir washer_side.js. La fenêtre sur la cuve et tous ses calques animés sont conservés. */
+/* Lave-vaisselle vu de côté (option view: side) : voir washer_side.js. La fenêtre sur la cuve et tous ses calques animés sont conservés. */
 const DISHWASHER_FRONT = SVG.dishwasher;
 const DISHWASHER_SIDE = () => {
   // fenêtre de la cuve : polygone en perspective ; chaque zone du contenu est posée avec sa propre perspective locale
@@ -8824,7 +8824,7 @@ ${sideBody(`
   ${sidePoly(22, 38, 98, 114, 'fill="url(#ID-gloss)"')}
   ${sidePoly(22, 38, 98, 114, 'fill="none" stroke="#7e8790" stroke-width="1.2" stroke-linejoin="round"')}`, { face: "#ID-inox", edge: "#9aa2ab", sideExtra: '<polygon points="6,114 36,121 36,128 6,121" fill="#2b3036"/>', faceExtra: '<polygon points="36,121 104,114 104,121 36,128" fill="#2b3036"/>' })}`;
 };
-SVG.dishwasher = (c) => (c && c.style === "side" ? DISHWASHER_SIDE() : DISHWASHER_FRONT(c));
+SVG.dishwasher = (c) => (c && c.view === "side" ? DISHWASHER_SIDE() : DISHWASHER_FRONT(c));
 
 /* Pompe doseuse péristaltique (pH+ / pH-) : boîtier bleu, tête transparente, rotor à galets qui tourne, tuyau beige, raccords noirs */
 SVG.dosing_pump = () => `
@@ -8914,7 +8914,7 @@ SVG.dryer = () => `
   <path d="M28 116.5h64M28 118.5h64M28 120.5h64" stroke="#b7bec6" stroke-width=".6"/>
 </g>`;
 
-/* Sèche-linge vu de côté (option style: side) : voir washer_side.js. */
+/* Sèche-linge vu de côté (option view: side) : voir washer_side.js. */
 const DRYER_FRONT = SVG.dryer;
 const DRYER_SIDE = () => `
 <defs>${DEFS}<clipPath id="ID-win"><circle cx="60" cy="80" r="29"/></clipPath>
@@ -8944,7 +8944,7 @@ ${sideBody(`
       ${drumInside(60, 80, 29)}
       <circle class="heat" cx="60" cy="80" r="29" fill="url(#ID-heat)"/>`))}
 `, { shake: "shake-soft" })}`;
-SVG.dryer = (c) => (c && c.style === "side" ? DRYER_SIDE() : DRYER_FRONT(c));
+SVG.dryer = (c) => (c && c.view === "side" ? DRYER_SIDE() : DRYER_FRONT(c));
 
 /* Vélo elliptique (vue de côté) : volant d'inertie à l'avant, deux pédales qui décrivent une ellipse, deux bras mobiles en opposition */
 SVG.elliptical = () => `
@@ -9283,6 +9283,45 @@ ${fridgeFood(62, 7, 43, 120)}
 const fridgeFinish = (c) => ({ white: "fwhite", blanc: "fwhite", black: "fblack", noir: "fblack" }[String(c?.finish || "").toLowerCase()] || "");
 SVG.fridge = (c) => {
   const f = fridgeFinish(c), body = FRIDGE[fridgeStyle(c)](!!(c && c.flex_temperature));
+  return `${FRIDGE_DEFS}${f ? body.replace(/url\(#ID-inox\)/g, `url(#ID-${f})`) : body}${fridgeMist}`;
+};
+
+/* Réfrigérateur vu de côté (option view: side) : style « congélateur en haut » (top). Les portes gardent leur animation d'ouverture (repère de la vue de face). */
+const FRIDGE_TOP_FRONT = FRIDGE.top;
+FRIDGE.top = (flex, c) => {
+  if (!(c && c.view === "side")) return FRIDGE_TOP_FRONT(flex);
+  const K = sideKit([26, 4, 94, 130], { sw: .5 });
+  return `
+<defs><linearGradient id="ID-fside" x1="0" x2="1"><stop offset="0" stop-color="#9ea6af"/><stop offset="1" stop-color="#c9ced4"/></linearGradient></defs>
+<ellipse cx="${K.cx.toFixed(1)}" cy="134" rx="46" ry="4.5" fill="url(#ID-shadow)"/>
+${K.side('fill="url(#ID-fside)" stroke="#8f979f" stroke-width=".7"')}
+<path d="${[0, 1, 2].map((i) => `M${(K.left - K.sw * (.2 + .22 * i)).toFixed(1)} ${(K.top + 30 + i * 2).toFixed(1)}V${(K.bottom - 14 - i * 2).toFixed(1)}`).join("")}" stroke="#fff" stroke-opacity=".25" stroke-width=".7"/>
+${K.quad('fill="#9aa2ab"')}
+${K.poly(29, 7, 91, 43, 'fill="url(#ID-frost)"')}
+${K.place(60, 25, `<path d="M31 25h58" stroke="#a9cbe2" stroke-width="1"/><rect x="34" y="28" width="22" height="11" rx="2" fill="#d9eefb" stroke="#a9cbe2" stroke-width=".6"/><rect x="60" y="28" width="26" height="11" rx="2" fill="#d9eefb" stroke="#a9cbe2" stroke-width=".6"/>`)}
+${K.poly(29, 47, 91, 125, 'fill="url(#ID-in)"')}
+${K.place(60, 86, `<path d="M31 72h58M31 96h58" stroke="#b9c8d6" stroke-width="1.1"/>
+<rect x="36" y="58" width="6" height="14" rx="1.5" fill="#3fbf7f"/><rect x="44" y="62" width="8" height="10" rx="2" fill="#f2c94c"/>
+<rect x="56" y="64" width="12" height="8" rx="2" fill="#e5484d"/><rect x="72" y="60" width="5" height="12" rx="1.5" fill="#3e8ed0"/>
+<rect x="38" y="86" width="14" height="10" rx="2" fill="#ffffff" stroke="#c9d3dc" stroke-width=".6"/><circle cx="64" cy="91" r="5" fill="#ff8f3d"/><circle cx="74" cy="92" r="4" fill="#9fd356"/>
+<rect x="32" y="104" width="56" height="18" rx="2" fill="#e3eef7" stroke="#b9c8d6" stroke-width=".6"/>`)}
+${K.poly(29, 47, 91, 125, 'class="flight" fill="#fffbe6" opacity="0"')}
+${K.bands("ID-bz", 26, 94, [4, 24, 44], () => `<g class="fz-door">
+  <rect x="26" y="4" width="68" height="40" rx="6" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
+  <rect x="84" y="12" width="3.4" height="24" rx="1.7" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
+</g>`)}
+${K.bands("ID-bf", 26, 94, [46, 76, 103, 130], (i) => `<g class="fr-door">
+  <rect x="26" y="46" width="68" height="84" rx="6" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
+  <rect x="84" y="52" width="3.4" height="40" rx="1.7" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
+  ${i === 0 ? fridgeLcd(35, 54) : ""}
+  <path d="M30 50v76" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
+</g>`)}`;
+};
+// SVG.fridge appelle FRIDGE[style](flex) : on lui transmet aussi la config pour la vue de côté
+const FRIDGE_SVG_PREV = SVG.fridge;
+SVG.fridge = (c) => {
+  if (!(c && c.view === "side") || fridgeStyle(c) !== "top") return FRIDGE_SVG_PREV(c);
+  const f = fridgeFinish(c), body = FRIDGE.top(!!c.flex_temperature, c);
   return `${FRIDGE_DEFS}${f ? body.replace(/url\(#ID-inox\)/g, `url(#ID-${f})`) : body}${fridgeMist}`;
 };
 
@@ -9691,6 +9730,56 @@ const OVEN_DUAL = () => `
 <rect x="22" y="56" width="76" height="56" rx="4" fill="none" stroke="#5d656d" stroke-width="1.2"/>
 <rect x="14" y="118" width="92" height="8" rx="1.5" fill="#000" opacity=".12"/>`;
 SVG.oven = (c) => (c && Number(c.cavities) === 2 ? OVEN_DUAL() : OVEN_SINGLE(c));
+
+/* Four vu de côté (option view: side), une ou deux cavités (cavities: 2) : voir side_kit.js. Même calques animés que la vue de face. */
+const OVEN_FRONT = SVG.oven;
+const OVEN_SIDE = (dual) => {
+  const K = sideKit([10, 10, 110, 130], { sw: .33 });
+  const wy1 = dual ? 112 : 112, pts = K.poly(22, 56, 98, wy1, "").match(/points="([^"]+)"/)[1];
+  const pts2 = K.poly(22, 91, 98, 112, "").match(/points="([^"]+)"/)[1];
+  const lcdBox = dual
+    ? `<rect x="33" y="15" width="54" height="12" rx="1.5" fill="#0c1720" stroke="#8f98a2" stroke-width=".6"/><text class="lcd" x="47.5" y="21.3" text-anchor="middle" fill="#7ec8e3">OFF</text><path d="M60 17.5v7" stroke="#3a4a58" stroke-width=".6"/><text class="ovl2" x="73" y="21.3" text-anchor="middle">--</text>`
+    : lcd(43, 15, 34, 12);
+  const cav1 = dual ? [56, 87] : [56, 112];
+  const food = dual
+    ? `<path d="M24 77h72" stroke="#8d8680" stroke-width=".9"/><path d="M38 77l3-8h38l3 8z" fill="#b5442f"/><path d="M41 69q19-6 38 0z" fill="#d06a3c"/><g class="haze"><path d="M46 66q-3-4 0-8t0-8M60 65q-3-4 0-8t0-8M74 66q-3-4 0-8t0-8"/></g>`
+    : `<path d="M24 97h72M24 99.5h72" stroke="#8d8680" stroke-width=".9"/><path d="M36 97l3-10h42l3 10z" fill="#b5442f"/><path d="M39 87q21-8 42 0z" fill="#d06a3c"/><ellipse cx="60" cy="86.5" rx="5" ry="1.4" fill="#5b2a1a"/><path d="M42 90h36" stroke="#e48a5c" stroke-width=".8"/><g class="haze"><path d="M44 82q-3-5 0-10t0-10M60 80q-3-5 0-10t0-10M76 82q-3-5 0-10t0-10"/></g>`;
+  const elem = dual
+    ? `<path class="element" d="M26 60h8l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3h8"/>`
+    : `<path class="element" d="M26 61h8l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3l3 3l3-3h8"/>`;
+  const second = dual ? `
+  ${K.poly(22, 87, 98, 91, 'fill="url(#ID-chrome)" stroke="#7d858e" stroke-width=".4"')}
+  ${K.poly(22, 91, 98, 112, 'fill="url(#ID-cavity)"')}
+  <g clip-path="url(#ID-winp2)">${K.place(60, 101, `
+    <rect class="ilight ilight2" x="22" y="91" width="76" height="21" fill="url(#ID-warm)"/>
+    <path class="element element2" d="M26 95h8l3 2.5l3-2.5l3 2.5l3-2.5l3 2.5l3-2.5l3 2.5l3-2.5l3 2.5l3-2.5l3 2.5l3-2.5h8"/>
+    <path d="M24 106h72" stroke="#8d8680" stroke-width=".8"/>
+    <ellipse cx="60" cy="104.5" rx="11" ry="2.6" fill="#c9a064"/><ellipse cx="60" cy="103.8" rx="8" ry="1.6" fill="#dcbc82"/>
+    <g class="haze haze2"><path d="M50 101q-2-3 0-6t0-6M60 101q-2-3 0-6t0-6M70 101q-2-3 0-6t0-6"/></g>`)}</g>` : "";
+  return `
+<defs>${DEFS}<clipPath id="ID-winp"><polygon points="${dual ? K.poly(22, 56, 98, 87, "").match(/points="([^"]+)"/)[1] : pts}"/></clipPath>
+<clipPath id="ID-winp2"><polygon points="${pts2}"/></clipPath>
+<linearGradient id="ID-cavity" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3330"/><stop offset="1" stop-color="#181412"/></linearGradient>
+<linearGradient id="ID-oside" x1="0" x2="1"><stop offset="0" stop-color="#9aa2ab"/><stop offset="1" stop-color="#c3c8ce"/></linearGradient></defs>
+<ellipse cx="${K.cx.toFixed(1)}" cy="133" rx="50" ry="4.5" fill="url(#ID-shadow)"/>
+${K.side('fill="url(#ID-oside)" stroke="#949ca5" stroke-width=".8"')}
+${K.quad('fill="url(#ID-inox)" stroke="#949ca5" stroke-width=".8"')}
+${K.poly(10, 10, 110, 32, 'fill="url(#ID-dark)"')}
+${K.place(22, 21, `<circle cx="${dual ? 22 : 24}" cy="21" r="${dual ? 6.5 : 7}" fill="url(#ID-chrome)" stroke="#5c646d" stroke-width=".5"/><circle cx="${dual ? 22 : 24}" cy="21" r="4.4" fill="#2a3036"/><g class="knob"><line x1="${dual ? 22 : 24}" y1="21" x2="${dual ? 22 : 24}" y2="17.4" stroke="#e7eaed" stroke-width="1.3" stroke-linecap="round"/></g>`)}
+${K.place(60, 21, `${lcdBox}<circle class="led l1" cx="${dual ? 30 : 38}" cy="21" r="1.3"/>`)}
+${K.place(98, 21, `<circle cx="${dual ? 98 : 96}" cy="21" r="${dual ? 6.5 : 7}" fill="url(#ID-chrome)" stroke="#5c646d" stroke-width=".5"/><circle cx="${dual ? 98 : 96}" cy="21" r="4.4" fill="#2a3036"/><line x1="${dual ? 98 : 96}" y1="21" x2="${(dual ? 98 : 96) + 3}" y2="18.6" stroke="#e7eaed" stroke-width="1.3" stroke-linecap="round"/>`)}
+${K.poly(14, 36, 106, 126, 'fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".6"')}
+${K.place(60, 43, `<rect x="20" y="40.5" width="80" height="4.5" rx="2.25" fill="url(#ID-chrome)" stroke="#7d858e" stroke-width=".5"/><rect x="24" y="44.5" width="3" height="4" fill="#8f979f"/><rect x="93" y="44.5" width="3" height="4" fill="#8f979f"/>`)}
+${K.poly(22, 56, 98, 112, 'fill="#0f0d0c"')}
+${K.poly(22, 56, 98, cav1[1], 'fill="url(#ID-cavity)"')}
+<g clip-path="url(#ID-winp)">${K.place(60, 84, `
+  <rect class="ilight" x="22" y="56" width="76" height="${cav1[1] - 56}" fill="url(#ID-warm)"/>
+  ${elem}${food}`)}</g>
+${second}
+${K.poly(22, 56, 98, 112, 'fill="none" stroke="#5d656d" stroke-width="1.2" stroke-linejoin="round"')}
+${K.poly(14, 118, 106, 126, 'fill="#000" opacity=".12"')}`;
+};
+SVG.oven = (c) => (c && c.view === "side" ? OVEN_SIDE(Number(c.cavities) === 2) : OVEN_FRONT(c));
 
 SVG.pellet_stove = () => `
 <defs>${DEFS}
@@ -10462,6 +10551,37 @@ SVG.server_rack = () => `
 <path d="M18 130v4M102 130v4" stroke="#14171b" stroke-width="4" stroke-linecap="round"/>
 <path d="M20 6h80" stroke="#fff" stroke-opacity=".25" stroke-width="1"/>`;
 
+/* Vue « de côté » pour un appareil quelconque : `sideKit(rect)` construit la perspective d'une face avant (rect = x0, y0, x1, y1 dans le
+   repère de la vue de face). Même principe que washer_side.js (homographie + matrice locale par groupe), mais pour n'importe quelle taille. */
+const sideKit = (rect, o = {}) => {
+  const [rx0, ry0, rx1, ry1] = rect, w = rx1 - rx0, h = ry1 - ry0, cx = (rx0 + rx1) / 2;
+  const fw = (o.fw || .74) * w, sw = (o.sw || .33) * w, slope = (o.slope || .075) * h / 2;
+  const left = cx - (fw + sw) / 2 + sw, right = left + fw;
+  const Q = [[left, ry0], [right, ry0 + slope], [right, ry1 - slope], [left, ry1]];
+  const [[x0, y0], [x1, y1], [x2, y2], [x3, y3]] = Q;
+  const dx1 = x1 - x2, dx2 = x3 - x2, dx3 = x0 - x1 + x2 - x3, dy1 = y1 - y2, dy2 = y3 - y2, dy3 = y0 - y1 + y2 - y3;
+  const den = dx1 * dy2 - dx2 * dy1, g = (dx3 * dy2 - dx2 * dy3) / den, hh = (dx1 * dy3 - dx3 * dy1) / den;
+  const a = x1 - x0 + g * x1, bb = x3 - x0 + hh * x3, d = y1 - y0 + g * y1, e = y3 - y0 + hh * y3;
+  const map = (x, y) => { const u = (x - rx0) / w, v = (y - ry0) / h, ww = g * u + hh * v + 1; return [(a * u + bb * v + x0) / ww, (d * u + e * v + y0) / ww]; };
+  const f = (n) => +n.toFixed(3), P = (pts) => pts.map((p) => p.map((n) => n.toFixed(1)).join(",")).join(" ");
+  const place = (px, py, content) => {
+    const [sx, sy] = map(px, py), [p1x, p1y] = map(px + 1, py), [p0x, p0y] = map(px - 1, py), [q1x, q1y] = map(px, py + 1), [q0x, q0y] = map(px, py - 1);
+    const m = [(p1x - p0x) / 2, (p1y - p0y) / 2, (q1x - q0x) / 2, (q1y - q0y) / 2];
+    return `<g transform="matrix(${m.map(f).join(" ")} ${f(sx - m[0] * px - m[2] * py)} ${f(sy - m[1] * px - m[3] * py)})">${content}</g>`;
+  };
+  const poly = (ax, ay, bx, by, attrs) => `<polygon points="${P([map(ax, ay), map(bx, ay), map(bx, by), map(ax, by)])}" ${attrs}/>`;
+  const quad = (attrs) => `<polygon points="${P(Q)}" ${attrs}/>`;
+  // côté gauche : arête avant = arête gauche de la face, arête arrière plus courte (perspective)
+  const side = (attrs) => `<polygon points="${P([[left - sw, ry0 + slope * 1.7], [left, ry0], [left, ry1], [left - sw, ry1 - slope * 1.7]])}" ${attrs}/>`;
+  // tranches horizontales d'un grand groupe (porte, vitre…) : le même contenu est posé plusieurs fois, chaque copie avec la matrice locale de
+  // sa tranche et rognée à cette tranche (coordonnées écran), pour que les bords suivent exactement la perspective. build(i) = contenu de la copie i.
+  const bands = (id, x0r, x1r, ys, build) => ys.slice(0, -1).map((ya, i) => {
+    const yb = ys[i + 1], pad = i === ys.length - 2 ? 0 : .5, pad0 = i === 0 ? 0 : .5;
+    return `<clipPath id="${id}${i}"><polygon points="${P([map(x0r, ya - pad0), map(x1r, ya - pad0), map(x1r, yb + pad), map(x0r, yb + pad)])}"/></clipPath><g clip-path="url(#${id}${i})">${place((x0r + x1r) / 2, (ya + yb) / 2, build(i))}</g>`;
+  }).join("");
+  return { map, place, poly, quad, side, bands, left, right, sw, bottom: ry1, top: ry0, cx: (left + right) / 2 - sw / 2 };
+};
+
 /* Prise connectée : variante de la multiprise, une seule prise murale (française par défaut ; `plug_type: us` = prise nord-américaine NEMA 5-15 :
  * deux fentes verticales et un trou de terre rond).
  * Option `image` (URL) et/ou `icon` (mdi:...) : l'appareil branché derrière la prise, affiché dans une pastille
@@ -11185,7 +11305,7 @@ SVG.washer = () => `
   <rect x="22" y="117" width="76" height="6" rx="2" fill="#000" opacity=".05"/>
 </g>`;
 
-/* Vue « de côté » du gros électroménager (option style: side) : lave-linge, sèche-linge et lave-vaisselle.
+/* Vue « de côté » du gros électroménager (option view: side) : lave-linge, sèche-linge et lave-vaisselle.
    Face avant en perspective, côté gauche visible, trois pieds. Les mêmes calques et classes que la vue de face (tambour, voyants, afficheur…)
    sont dessinés dans le repère de la vue de face, puis déformés par une matrice (l'animation du tambour tourne dans son repère d'origine). */
 // Face avant = quadrilatère en perspective (TL, TR, BR, BL). Une homographie envoie le repère de la vue de face (x 14-106, y 8-128) sur ce
@@ -11259,7 +11379,7 @@ const WASHER_SIDE = () => `
         <circle cx="70" cy="91" r="1.8"/><circle cx="77" cy="88" r="1.4"/><circle cx="56" cy="95" r="1.2"/>
       </g>`))}
     ${sidePlace(60, 117, '<rect x="46" y="116" width="28" height="2.2" rx="1.1" fill="#c9d0d7"/>')}`)}`;
-SVG.washer = (c) => (c && c.style === "side" ? WASHER_SIDE() : WASHER_FRONT(c));
+SVG.washer = (c) => (c && c.view === "side" ? WASHER_SIDE() : WASHER_FRONT(c));
 
 SVG.water_heater = (c = {}) => `
 <defs>${DEFS}
@@ -14006,7 +14126,7 @@ function buildForm(kind) {
             { name: "last_cycle", selector: { boolean: {} } },
             { name: "estimate", selector: { boolean: {} } },
           ] : []),
-          ...(["washer", "dryer", "dishwasher"].includes(kind) ? [{ name: "style", selector: { select: { mode: "dropdown", options: [{ value: "front", label: "Vue de face / Front view" }, { value: "side", label: "Vue de côté / Side view" }] } } }] : []),
+          ...(["washer", "dryer", "dishwasher", "oven", "fridge"].includes(kind) ? [{ name: "view", selector: { select: { mode: "dropdown", options: [{ value: "front", label: "Vue de face / Front view" }, { value: "side", label: "Vue de côté / Side view" }] } } }] : []),
           ...(kind === "oven" ? [{ name: "last_cycle", selector: { boolean: {} } }, { name: "cavities", selector: { number: { min: 1, max: 2, step: 1, mode: "box" } } }] : []),
           ...(kind === "water_heater" ? [{ name: "last_cycle", selector: { boolean: {} } },
             { name: "tank_volume", selector: { number: { min: 0, max: 1000, step: 1, mode: "box", unit_of_measurement: "L" } } }] : []),
@@ -14268,7 +14388,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "air_compressor" && s.name === "pressure" ? "f_pressure_tank" : kind === "contact_grill" && s.name === "ready_minutes" ? "f_grill_ready_minutes" : kind === "cookeo" && s.name === "style" ? "f_cookeo_style" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "fridge" && s.name === "finish" ? "f_fridge_finish" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "ceiling_fan" && s.name === "show_controls" ? "f_show_fan_controls" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : ["thermomix", "microwave", "vmc"].includes(kind) && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : ["printer_3d", "printer"].includes(kind) && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix", "printer"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : kind === "radiator" && s.name === "style" ? "f_radiator_style" : ["washer", "dryer", "dishwasher"].includes(kind) && s.name === "style" ? "f_view_style" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "air_compressor" && s.name === "pressure" ? "f_pressure_tank" : kind === "contact_grill" && s.name === "ready_minutes" ? "f_grill_ready_minutes" : kind === "cookeo" && s.name === "style" ? "f_cookeo_style" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "fridge" && s.name === "finish" ? "f_fridge_finish" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "ceiling_fan" && s.name === "show_controls" ? "f_show_fan_controls" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : ["thermomix", "microwave", "vmc"].includes(kind) && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : ["printer_3d", "printer"].includes(kind) && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix", "printer"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : kind === "radiator" && s.name === "style" ? "f_radiator_style" : s.name === "view" ? "f_view" : `f_${s.name}`) : undefined),
   };
 }
 
