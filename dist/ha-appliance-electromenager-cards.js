@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.187.0";
+const VERSION = "1.188.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -11656,7 +11656,7 @@ const DEF = {
     fields: ["entity", "power", "energy", "cost", "usage_time", "switch"],
     keys: ["pc_fixe", "pcfixe", "desktop", "ordinateur", "gaming", "workstation", "pc_bureau", "unite_centrale", "tour_pc"] },
   kettle: { accent: "heat", threshold: 500,
-    fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "error", "switch"],
+    fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "error", "remaining", "mode", "switch"],
     keys: ["bouilloire", "kettle", "wasserkocher", "waterkoker", "theiere"] },
   toaster: { accent: "heat", threshold: 200,
     fields: ["entity", "power", "energy", "cost", "switch"],
@@ -12831,11 +12831,14 @@ class ApplianceCardBase extends HTMLElement {
       else m.status = base === "running" ? "cooking" : base === "finished" ? "finished" : base === "off" ? "off" : "standby";
     } else if (kind === "kettle" || kind === "toaster") {
       // en marche au-dessus du seuil ; après la coupure : « eau chaude » / « toasts prêts » pendant quelques minutes
-      const on = powered || (watts === null && base === "running"), now = Date.now();
+      // bouilloire dont l'état est un capteur texte (ESPHome : ready / heating / cooling) : « heating » = en chauffe, « cooling » = eau chaude
+      const rawK = kind === "kettle" && main ? String(main.state).toLowerCase() : "", textOn = /^(heating|boiling)$/.test(rawK), textCool = rawK === "cooling";
+      const on = !textCool && (powered || textOn || (watts === null && base === "running")), now = Date.now();
       const keep = (kind === "kettle" ? c.hot_minutes ?? 5 : c.ready_minutes ?? 2) * 60000;
       if (on && base !== "unavailable") this._onAt = now;
       if (base === "unavailable") m.status = "unavailable";
       else if (on) m.status = kind === "kettle" ? "boiling" : "toasting";
+      else if (textCool) m.status = "hot_water";
       else if (kind === "kettle" && m.tempVal != null) m.status = m.tempVal >= (c.hot_temperature ?? 60) ? "hot_water" : "off";
       else m.status = this._onAt && now - this._onAt < keep ? (kind === "kettle" ? "hot_water" : "toast_ready") : "off";
       // bouilloire ESPHome / Tuya : entité « défaut » (binary_sensor allumé, ou capteur texte autre que « ok / aucun / none… »)
@@ -13507,7 +13510,7 @@ class ApplianceCardBase extends HTMLElement {
     let statusTxt = m.phase ? tr(hass, `ph_${m.phase}`) : tr(hass, m.status);
     if (kind === "monitor" && m.status === "screen_on") statusTxt = tr(hass, mnCount(c) > 1 ? "monitors_on" : "monitor_on");
     if (m.main && ["sensor", "input_select", "select"].includes(domainOf(c.entity)) &&
-        active && !["fridge", "water_heater", "printer_3d", "pool_pump", "wet_vacuum"].includes(kind) && !(kind === "printer" && /^brother|mfc.?j5955/i.test(String(c.model || "")))) {
+        active && !["fridge", "water_heater", "printer_3d", "pool_pump", "wet_vacuum", "kettle"].includes(kind) && !(kind === "printer" && /^brother|mfc.?j5955/i.test(String(c.model || "")))) {
       const raw = String(m.main.state).toLowerCase();
       if (![...OFF_STATES, ...DONE_STATES, "on", "running", "run"].includes(raw)) statusTxt = stateText(hass, m.main);
     }
@@ -13630,7 +13633,7 @@ class ApplianceCardBase extends HTMLElement {
       modesEl.innerHTML = MODE_ORDER.filter((k) => pickMode(opts, k)).map((k) =>
         `<button class="mode-btn ${cur === k ? "on" : ""}" data-mode="${k}" aria-pressed="${cur === k}"><ha-icon icon="${MODE_ICON[k]}"></ha-icon>${esc(tr(hass, k === "off" ? "mode_off" : k === "none" ? "mode_none" : k === "drying" ? "mode_drying" : k))}</button>`).join("");
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._setMode(b.dataset.mode); }; });
-    } else if (kind === "pellet_stove" && c.show_modes !== false && this._presetEntity() && hass.states[this._presetEntity()]) {
+    } else if ((kind === "pellet_stove" || kind === "kettle") && c.show_modes !== false && this._presetEntity() && hass.states[this._presetEntity()]) {
       // poêle à granulés : un bouton par pré-réglage réel de l'entité (preset_modes du climate, options du select)
       const pst = hass.states[this._presetEntity()], opts = this._presetOptions(pst);
       const cur = String(domainOf(pst.entity_id) === "climate" ? pst.attributes.preset_mode ?? "" : pst.state).toLowerCase();
@@ -14330,7 +14333,7 @@ function buildForm(kind) {
           ...(d.fields.includes("cost") || d.fields.includes("energy") ? [{ name: "show_cost", selector: { boolean: {} }, default: true }] : []),
           ...(d.fields.includes("switch") ? [{ name: "show_toggle", selector: { boolean: {} }, default: true }] : []),
           { name: "hide_zero_power", selector: { boolean: {} }, default: true },
-          ...(["radiator", "towel_dryer", "pellet_stove"].includes(kind) ? [{ name: "show_modes", selector: { boolean: {} }, default: true }] : []),
+          ...(["radiator", "towel_dryer", "pellet_stove", "kettle"].includes(kind) ? [{ name: "show_modes", selector: { boolean: {} }, default: true }] : []),
           ...(USAGE_KINDS.includes(kind) ? [{ name: "show_usage_time", selector: { boolean: {} }, default: true }] : []),
           ...(FIT_KINDS.includes(kind) ? [
             { name: "max_power", selector: { number: { min: 20, max: 1000, step: 5, mode: "box", unit_of_measurement: "W" } } },
@@ -15903,6 +15906,9 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-toaster.st-toast_ready .tb-led { fill: #43c07a; }
 @keyframes tb-pop { 0% { transform: translateY(22px); } 55% { transform: translateY(-14px); } 100% { transform: translateY(0); } }
 
+/* bouilloire : un bouton par option du select de mode (texte long autorisé sur deux lignes) */
+.k-kettle .mode-btn { flex: 1 1 30%; white-space: normal; line-height: 1.15; min-height: 34px; text-align: center; justify-content: center; }
+
 /* ---------- multiprise ---------- */
 .k-power_strip .illus { overflow: hidden; }
 .ms-sw { fill: #8a2d2d; transition: fill .3s; }
@@ -16343,7 +16349,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
 (async () => {
   const base = import.meta.url;
   // ?v=<version> : après une mise à jour, le navigateur ne ressert pas d'anciens morceaux depuis son cache
-  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.187.0`, base).href);
+  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.188.0`, base).href);
   await chunk("card-helpers");
   await chunk("editor-labels");
   // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre

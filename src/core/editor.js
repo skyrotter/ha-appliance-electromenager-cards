@@ -306,7 +306,7 @@ function buildForm(kind) {
           ...(d.fields.includes("cost") || d.fields.includes("energy") ? [{ name: "show_cost", selector: { boolean: {} }, default: true }] : []),
           ...(d.fields.includes("switch") ? [{ name: "show_toggle", selector: { boolean: {} }, default: true }] : []),
           { name: "hide_zero_power", selector: { boolean: {} }, default: true },
-          ...(["radiator", "towel_dryer", "pellet_stove"].includes(kind) ? [{ name: "show_modes", selector: { boolean: {} }, default: true }] : []),
+          ...(["radiator", "towel_dryer", "pellet_stove", "kettle"].includes(kind) ? [{ name: "show_modes", selector: { boolean: {} }, default: true }] : []),
           ...(USAGE_KINDS.includes(kind) ? [{ name: "show_usage_time", selector: { boolean: {} }, default: true }] : []),
           ...(FIT_KINDS.includes(kind) ? [
             { name: "max_power", selector: { number: { min: 20, max: 1000, step: 5, mode: "box", unit_of_measurement: "W" } } },

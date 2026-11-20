@@ -34,3 +34,6 @@
 .k-toaster.st-toasting .tb-led { fill: #ff8a3d; filter: drop-shadow(0 0 2px #ff8a3d); }
 .k-toaster.st-toast_ready .tb-led { fill: #43c07a; }
 @keyframes tb-pop { 0% { transform: translateY(22px); } 55% { transform: translateY(-14px); } 100% { transform: translateY(0); } }
+
+/* bouilloire : un bouton par option du select de mode (texte long autorisé sur deux lignes) */
+.k-kettle .mode-btn { flex: 1 1 30%; white-space: normal; line-height: 1.15; min-height: 34px; text-align: center; justify-content: center; }

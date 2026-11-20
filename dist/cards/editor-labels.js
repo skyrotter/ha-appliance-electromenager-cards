@@ -10236,6 +10236,7 @@
     if (!type || type === 'none' || !hass) return;
     const id = (a && a.entity) || dfltEntity(c);
     if (type === 'more-info') { window.applianceMore(el, id); return; }
+    if (type === 'toggle' && id && /^(select|input_select|number|input_number|sensor|counter|binary_sensor)\./.test(id)) { window.applianceMore(el, id); return; } // pas basculable : fiche de l'entité
     if (type === 'toggle' && id) {
       const d = id.split('.')[0];
       hass.callService(['light', 'switch', 'input_boolean', 'fan'].includes(d) ? d : 'homeassistant', 'toggle', { entity_id: id });
