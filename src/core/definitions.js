@@ -93,7 +93,7 @@ const DEF = {
     fields: ["entity", "power", "energy", "cost", "usage_time", "switch"],
     keys: ["pc_fixe", "pcfixe", "desktop", "ordinateur", "gaming", "workstation", "pc_bureau", "unite_centrale", "tour_pc"] },
   kettle: { accent: "heat", threshold: 500,
-    fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "error", "remaining", "mode", "switch"],
+    fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "error", "remaining", "mode", "counter", "button_on", "button_off", "switch"],
     keys: ["bouilloire", "kettle", "wasserkocher", "waterkoker", "theiere"] },
   toaster: { accent: "heat", threshold: 200,
     fields: ["entity", "power", "energy", "cost", "switch"],

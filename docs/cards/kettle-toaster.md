@@ -65,3 +65,15 @@ With a text `entity`, `heating` shows **Boiling**, `cooling` shows **Hot water**
 
 
 [← All cards](../../README.md#the-cards)
+
+### Polish ESPHome kettle, on/off buttons, counter
+
+State texts in Polish (`Podniesiony`, `Gotowy`, `Grzanie wody`, `Chłodzenie`, `Utrzymanie Temp`; also German and French equivalents) are recognised, and the status shows the text exactly as the kettle sends it. Optional extras:
+
+```yaml
+type: custom:appliance-kettle-card
+entity: sensor.czajnik_stan_czajnika
+counter: sensor.czajnik_licznik_wlaczen   # extra tile (number of cycles)
+button_on: button.czajnik_wlacz           # two buttons replace the mode selector
+button_off: button.czajnik_wylacz
+```

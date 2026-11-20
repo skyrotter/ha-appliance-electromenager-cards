@@ -11,6 +11,9 @@ const SEL = {
   energy_solar: { entity: { domain: "sensor", device_class: "energy" } },
   cost: { entity: { domain: ["sensor", "input_number"] } },
   remaining: { entity: { domain: "sensor" } },
+  counter: { entity: { domain: ["sensor", "counter", "input_number"] } },
+  button_on: { entity: { domain: ["button", "script"] } },
+  button_off: { entity: { domain: ["button", "script"] } },
   // four à deux cavités (Samsung Dual Cook…) : état, température, consigne et temps restant de la deuxième cavité
   status_2: { entity: { domain: ["sensor", "select", "binary_sensor", "switch", "input_boolean"] } },
   temperature_2: { entity: { domain: ["sensor", "input_number"] } },
