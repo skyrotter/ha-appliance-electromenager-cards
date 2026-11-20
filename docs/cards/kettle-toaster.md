@@ -30,6 +30,25 @@ error: binary_sensor.kettle_error
 
 <p align="center"><img src="../kettle-select.gif" width="360" alt="Kettle driven by a select: one button per option"></p>
 
+**ProfiCook PC-WKS 1167G (photo)**: `model: proficook` shows the cut-out photo of this glass tea kettle (bubbles in the tea, glow on the base, lit keys and steam); without it, the drawing is used. It combines with any of the configurations below.
+
+**ProfiCook PC-WKS 1167G with ESPHome** (the [Tuya MCU → ESP32 firmware by Bohdan Sverdliuk, dou.ua](https://dou.ua/forums/topic/51822/)): the device exposes a state text sensor (`Lifted`, `Standby`, `Heating`, `Cooling`, `Maintaining Temp`), an error text sensor (`OK`, `Empty`, `Overheated`, `other error`), a mode `select` (`45°`, `60°`, `85°`, `100°`, `100° and off`, `Custom`, `Off`), a custom temperature `number` (35 to 100) and the temperature and remaining time sensors:
+
+<p align="center"><img src="../kettle-proficook-esp.png" width="720" alt="ProfiCook PC-WKS 1167G with ESPHome: keep warm 60°, Custom mode with slider and error, kettle lifted"></p>
+
+```yaml
+type: custom:appliance-kettle-card
+model: proficook
+entity: sensor.proficook_pc_wks_1167g_kettle_state
+mode: select.proficook_pc_wks_1167g_kettle_mode
+temperature: sensor.proficook_pc_wks_1167g_kettle_temperature
+target_temperature: number.proficook_pc_wks_1167g_kettle_custom_temperature
+remaining: sensor.proficook_pc_wks_1167g_kettle_remaining_time
+error: sensor.proficook_pc_wks_1167g_kettle_error
+```
+
+`Heating` shows **Boiling**, `Cooling` and `Maintaining Temp` show **Hot water**, `Lifted` shows its own text. The "Target" tile follows the selected mode (45°, 60°, 85°, 100°); with `Custom`, a slider appears under the buttons and sets the `number`. An error other than `OK` shows an alert with its text (`Empty`, `Overheated`…). The entity names above follow the ESPHome naming (device name + entity name): adapt them to yours.
+
 **Kettle driven by a `select`** (heating mode: `100° and off`, `45°`, `60°`, `85°`, `100°`, `Custom`, `Off`…): put the `select` in `mode`, and the kettle state in `entity`. One button per option of the `select` is shown (the active one is highlighted, a click selects it), and the other entities fill the tiles:
 
 ```yaml
