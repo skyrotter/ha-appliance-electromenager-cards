@@ -37,3 +37,6 @@
 
 /* bouilloire : un bouton par option du select de mode (texte long autorisé sur deux lignes) */
 .k-kettle .mode-btn { flex: 1 1 30%; white-space: normal; line-height: 1.15; min-height: 34px; text-align: center; justify-content: center; }
+/* ProfiCook (photo) : les voyants se posent sur les touches de la photo, éteints tant que la bouilloire n'est pas en chauffe */
+.kt-ledp { opacity: 0; transition: opacity .3s; }
+.k-kettle.st-boiling .kt-ledp, .k-kettle.st-hot_water .kt-ledp { opacity: 1; }
