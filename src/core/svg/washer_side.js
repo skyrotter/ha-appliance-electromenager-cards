@@ -4,11 +4,11 @@ const WASHER_FRONT = SVG.washer;
 const WASHER_SIDE = () => `
 <defs>${DEFS}<clipPath id="ID-win"><circle cx="60" cy="80" r="28"/></clipPath>
 <linearGradient id="ID-wside" x1="0" x2="1"><stop offset="0" stop-color="#c3cad1"/><stop offset="1" stop-color="#e3e7eb"/></linearGradient></defs>
-<ellipse cx="64" cy="134" rx="50" ry="5" fill="url(#ID-shadow)"/>
+<ellipse cx="60" cy="134" rx="54" ry="5" fill="url(#ID-shadow)"/>
 <g class="shake">
-  <rect x="21" y="123" width="9" height="6" rx="1.5" fill="#3a3f45"/><rect x="94" y="119" width="9" height="6" rx="1.5" fill="#3a3f45"/>
-  <polygon points="14,16 36,10 36,128 14,122" fill="url(#ID-wside)" stroke="#bfc6ce" stroke-width=".8"/>
-  <path d="M19 40v78M25 38v82" stroke="#aeb6be" stroke-width=".5" opacity=".5"/>
+  <rect x="9" y="118" width="8" height="8" rx="1.5" fill="#3a3f45"/><rect x="38" y="124" width="9" height="8" rx="1.5" fill="#3a3f45"/><rect x="94" y="118" width="9" height="8" rx="1.5" fill="#3a3f45"/>
+  <polygon points="6,18 36,10 36,128 6,121" fill="url(#ID-wside)" stroke="#bfc6ce" stroke-width=".8"/>
+  <path d="M13 40v76M20 38v80" stroke="#aeb6be" stroke-width=".5" opacity=".5"/>
   <polygon points="36,10 104,17 104,121 36,128" fill="url(#ID-body)" stroke="#bfc6ce" stroke-width=".8"/>
   <path d="M36.6 11v116" stroke="#fff" stroke-width="1" opacity=".8"/>
   <g transform="matrix(.739 .0761 0 .925 25.65 1.535)">
