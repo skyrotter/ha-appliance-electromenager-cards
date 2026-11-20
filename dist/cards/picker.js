@@ -65,13 +65,45 @@
     list.push = function (...items) { items.forEach((c) => { if (c) c.preview = false; }); return push.apply(this, items); };
   }
 
+  // Catégories du sélecteur de type : chaque carte appartient à une catégorie (les cartes non listées vont dans « home »).
+  // Les « sous-catégories » sont les variantes de l'appareil (style, modèle, finition…), remontées en tête de l'éditeur.
+  const CATS = {
+    kitchen: 'washer dryer dishwasher oven microwave fridge chest-freezer drawer-freezer hob air-fryer coffee-maker thermomix cookeo kettle toaster range-hood wine-cooler beer-tap contact-grill deep-fryer',
+    climate: 'water-heater thermo-heater fan-heater underfloor-heating radiator towel-dryer pellet-stove pellet-boiler gas-boiler diesel-heater water-heat-pump air-water-heat-pump ac-split portable-ac heat-pump vmc room-climate trv dehumidifier humidifier air-purifier air-quality fan ceiling-fan',
+    energy: 'solar battery ev-charger linky water-meter heat-meter gas-meter electric-meter ups smart-plug power-strip phone-charger tool-charger',
+    water: 'pool-pump dosing-pump pool-robot jacuzzi inflatable-spa sauna aquarium reef-aquarium irrigation rain-gauge plant-monitor water-pump industrial-pump sump-pump rainwater-tank water-valve smart-tap water-softener water-filter robot-mower-solo',
+    security: 'barrier sliding-gate swing-gate garage-door mailbox smart-lock door-sensor motion-sensor alarm-keypad smoke-detector leak-detector camera nvr',
+    lighting: 'light-bulb color-bulb filament-bulb pendant-light pendant-cluster desk-lamp floor-lamp chandelier garden-spotlight ceiling-spot christmas-tree garland led-strip hue-sync-box',
+    shutters: 'roller-shutter sliding-curtain venetian-blind swing-shutter pergola roof-window awning double-awning',
+    media: 'tv av-receiver soundbar smart-speaker ps5 tv-box piano elliptical exercise-bike rowing-machine',
+    it: 'server-rack mini-pc nas internet-box desktop-pc monitor laptop printer printer-3d raspberry-pi poe-switch zigbee-coordinator wall-tablet',
+  };
+  const CAT_ORDER = [...Object.keys(CATS), 'home'];
+  const CAT_OF = {};
+  for (const [k, list] of Object.entries(CATS)) list.split(' ').forEach((n) => { CAT_OF[`appliance-${n}-card`] = k; });
+  const catOf = (type) => CAT_OF[type] || 'home';
+  // champs « variante » d'un appareil (style de frigo, modèle d'enceinte, finition…) : affichés juste sous le type d'appareil
+  const VARIANTS = ['model', 'style', 'finish', 'variant', 'illustration'];
+  const hoist = (schema) => {
+    const picked = [];
+    const walk = (list) => list.filter((it) => { if (it && it.name && VARIANTS.includes(it.name) && it.selector) { picked.push(it); return false; } return true; })
+      .map((it) => (it && Array.isArray(it.schema) ? { ...it, schema: walk(it.schema) } : it))
+      .filter((it) => !(it && Array.isArray(it.schema) && it.schema.length === 0));
+    const rest = walk(schema);
+    return [...picked, ...rest];
+  };
+
   const TXT = {
     fr: { appliance: 'Type d\'appareil', name: 'Appliance – Carte unique (choix du type)', desc: 'Une seule entrée dans le sélecteur : choisis ensuite l\'appareil dans l\'éditeur.', empty: 'Choisis un type d\'appareil dans l\'éditeur.',
       opts: 'Sélecteur de cartes (sur cet appareil)', single: 'N\'afficher que la carte unique Appliance', previews: 'Afficher l\'aperçu des cartes Appliance dans le sélecteur (plus lent)', nopreview: 'Désactiver les aperçus de toutes les cartes personnalisées',
-      hint: 'Réglage enregistré dans ce navigateur (à refaire sur le smartphone). Recharge la page pour l\'appliquer.' },
+      hint: 'Réglage enregistré dans ce navigateur (à refaire sur le smartphone). Recharge la page pour l\'appliquer.',
+      category: 'Catégorie', all: 'Toutes les catégories',
+      cats: { kitchen: 'Cuisine et lessive', climate: 'Chauffage, climatisation et air', energy: 'Énergie et alimentation', water: 'Piscine, jardin et eau', security: 'Accès, sécurité et capteurs', lighting: 'Éclairage', shutters: 'Volets et stores', media: 'Loisirs et multimédia', it: 'Informatique et réseau', home: 'Robots, animaux et divers' } },
     en: { appliance: 'Appliance type', name: 'Appliance – Single card (pick the type)', desc: 'One single entry in the card picker: choose the appliance in the editor.', empty: 'Pick an appliance type in the editor.',
       opts: 'Card picker (on this device)', single: 'Only show the single Appliance card', previews: 'Show Appliance card previews in the picker (slower)', nopreview: 'Turn off previews of all custom cards',
-      hint: 'Saved in this browser (set it again on your phone). Reload the page to apply it.' },
+      hint: 'Saved in this browser (set it again on your phone). Reload the page to apply it.',
+      category: 'Category', all: 'All categories',
+      cats: { kitchen: 'Kitchen and laundry', climate: 'Heating, cooling and air', energy: 'Energy and power', water: 'Pool, garden and water', security: 'Access, security and sensors', lighting: 'Lighting', shutters: 'Shutters and blinds', media: 'Entertainment and leisure', it: 'Computing and network', home: 'Robots, pets and more' } },
     'pt-PT': { appliance: 'Tipo de aparelho', name: 'Appliance – Cartão único (escolha do tipo)', desc: 'Uma única entrada no seletor de cartões: escolha o aparelho no editor.', empty: 'Escolha um tipo de aparelho no editor.',
       opts: 'Seletor de cartões (neste dispositivo)', single: 'Mostrar apenas o cartão único Appliance', previews: 'Mostrar pré-visualizações dos cartões Appliance no seletor (mais lento)', nopreview: 'Desativar as pré-visualizações de todos os cartões personalizados',
       hint: 'Definição guardada neste navegador (configure novamente no telemóvel). Recarregue a página para aplicar.' },
@@ -79,7 +111,8 @@
       opts: 'Seletor de cartões (neste dispositivo)', single: 'Mostrar apenas o cartão único Appliance', previews: 'Mostrar prévias dos cartões Appliance no seletor (mais lento)', nopreview: 'Desativar as prévias de todos os cartões personalizados',
       hint: 'Configuração salva neste navegador (configure novamente no celular). Recarregue a página para aplicar.' },
   };
-  const tx = (hass) => TXT[window.applianceLang(TXT, null, hass)] || TXT.en;
+  // langues sans traduction des catégories : repli sur l'anglais
+  const tx = (hass) => Object.assign({}, TXT.en, TXT[window.applianceLang(TXT, null, hass)] || {});
 
   // Config enveloppe -> config de la vraie carte
   const inner = (cfg) => { const { appliance, ...rest } = cfg; return { ...rest, type: 'custom:' + appliance }; };
@@ -130,8 +163,10 @@
         this._form = document.createElement('ha-form');
         this._form.addEventListener('value-changed', (e) => {
           e.stopPropagation();
-          const appliance = e.detail.value.appliance;
-          if (appliance === this._config.appliance) return;
+          const { appliance, category } = e.detail.value;
+          // changement de catégorie : on filtre seulement la liste des types, la carte actuelle n'est pas modifiée
+          if (category !== undefined && category !== this._cat) { this._cat = category; this._render(); return; }
+          if (!appliance || appliance === this._config.appliance) return;
           // nouveau type : on repart de la config par défaut de la carte choisie
           const C = customElements.get(appliance);
           const stub = C && C.getStubConfig ? C.getStubConfig(this._hass) : {};
@@ -140,9 +175,16 @@
         this.appendChild(this._form);
       }
       this._form.hass = this._hass;
-      this._form.data = { appliance: this._config.appliance || '' };
-      this._form.schema = [{ name: 'appliance', selector: { select: { mode: 'dropdown', options: optionsFor(this._hass) } } }];
-      this._form.computeLabel = () => tx(this._hass).appliance;
+      const T = tx(this._hass);
+      if (this._cat === undefined) this._cat = this._config.appliance ? catOf(this._config.appliance) : '';
+      const opts = optionsFor(this._hass).filter((o) => !this._cat || catOf(o.value) === this._cat);
+      const catOpts = [{ value: '', label: T.all }].concat(CAT_ORDER.filter((k) => optionsFor(this._hass).some((o) => catOf(o.value) === k)).map((k) => ({ value: k, label: T.cats[k] })));
+      this._form.data = { category: this._cat, appliance: opts.some((o) => o.value === this._config.appliance) ? this._config.appliance : '' };
+      this._form.schema = [
+        { name: 'category', selector: { select: { mode: 'dropdown', options: catOpts } } },
+        { name: 'appliance', selector: { select: { mode: 'dropdown', options: opts } } },
+      ];
+      this._form.computeLabel = (sc) => (sc.name === 'category' ? T.category : T.appliance);
 
       // Options du sélecteur : propres au navigateur, hors config de la carte
       if (!this._opt) {
@@ -186,7 +228,7 @@
           const f = C.getConfigForm();
           this._sub = document.createElement('ha-form');
           this._subForm = f;
-          this._sub.schema = f.schema;
+          this._sub.schema = hoist(f.schema);
           this._sub.computeLabel = f.computeLabel;
           this._sub.addEventListener('value-changed', (e) => {
             e.stopPropagation();
@@ -198,7 +240,14 @@
       if (this._sub) {
         this._sub.hass = this._hass;
         if (this._subForm) this._sub.data = inner(this._config);
-        else this._sub.setConfig(inner(this._config));
+        else {
+          this._sub.setConfig(inner(this._config));
+          // éditeur dédié : variantes (style, modèle, finition…) remontées en tête de son formulaire
+          const sf = this._sub._form;
+          if (sf && Array.isArray(sf.schema)) sf.schema = hoist(sf.schema);
+        }
+        // réglages du sélecteur (propres au navigateur) : en bas de l'éditeur
+        if (this._opt && this._opt.parentNode) this.appendChild(this._opt.parentNode);
       }
     }
     _fire(config) {
