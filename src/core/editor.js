@@ -34,6 +34,8 @@ const SEL = {
   switch_shower: { entity: { domain: ["switch", "input_boolean", "light", "fan"] } },
   presence: { entity: { domain: ["binary_sensor", "input_boolean"] } },
   low_water: { entity: { domain: ["binary_sensor", "input_boolean", "switch"] } },
+  // bouilloire : défaut signalé par l'appareil (ESPHome…) : binary_sensor ou capteur texte
+  error: { entity: { domain: ["binary_sensor", "sensor", "input_boolean"] } },
   // climate / water_heater acceptés : la carte lit alors current_temperature / temperature (pas l'état, qui est un mode)
   temperature: { entity: { filter: [{ domain: ["sensor", "input_number"], device_class: "temperature" }, { domain: ["climate", "water_heater"] }] } },
   target_temperature: { entity: { domain: ["sensor", "input_number", "number", "climate", "water_heater"] } },

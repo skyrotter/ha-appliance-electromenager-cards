@@ -270,6 +270,8 @@
     "f_temperature_2": "Second cavity: temperature",
     "f_target_temperature_2": "Second cavity: target temperature",
     "f_remaining_2": "Second cavity: remaining time",
+    "kettle_error": "Kettle error",
+    "f_error": "Error sensor (fault)",
     "remaining": "Remaining",
     "temperature": "Temperature",
     "target": "Target",
