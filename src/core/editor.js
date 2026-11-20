@@ -129,7 +129,7 @@ function buildForm(kind) {
             { name: "last_cycle", selector: { boolean: {} } },
             { name: "estimate", selector: { boolean: {} } },
           ] : []),
-          ...(["washer", "dryer", "dishwasher", "oven", "fridge"].includes(kind) ? [{ name: "view", selector: { select: { mode: "dropdown", options: [{ value: "front", label: "Vue de face / Front view" }, { value: "side", label: "Vue de côté / Side view" }] } } }] : []),
+          ...(["washer", "dryer", "dishwasher", "oven", "fridge", "drawer_freezer", "wine_cooler"].includes(kind) ? [{ name: "view", selector: { select: { mode: "dropdown", options: [{ value: "front", label: "Vue de face / Front view" }, { value: "side", label: "Vue de côté / Side view" }] } } }] : []),
           ...(kind === "oven" ? [{ name: "last_cycle", selector: { boolean: {} } }, { name: "cavities", selector: { number: { min: 1, max: 2, step: 1, mode: "box" } } }] : []),
           ...(kind === "water_heater" ? [{ name: "last_cycle", selector: { boolean: {} } },
             { name: "tank_volume", selector: { number: { min: 0, max: 1000, step: 1, mode: "box", unit_of_measurement: "L" } } }] : []),

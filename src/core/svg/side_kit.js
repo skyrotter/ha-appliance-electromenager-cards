@@ -28,3 +28,48 @@ const sideKit = (rect, o = {}) => {
   }).join("");
   return { map, place, poly, quad, side, bands, left, right, sw, bottom: ry1, top: ry0, cx: (left + right) / 2 - sw / 2 };
 };
+
+// découpe un gabarit en nœuds de premier niveau (une ligne = un nœud, sauf les <g> sur plusieurs lignes)
+const sideNodes = (src) => {
+  const nodes = []; let depth = 0, cur = "";
+  for (const line of src.split("\n")) {
+    if (!line.trim()) continue;
+    cur += (cur ? "\n" : "") + line;
+    depth += (line.match(/<g[\s>]/g) || []).length - (line.match(/<\/g>/g) || []).length;
+    if (depth <= 0) { nodes.push(cur); cur = ""; depth = 0; }
+  }
+  if (cur) nodes.push(cur);
+  return nodes;
+};
+/* Convertit le dessin de FACE d'un appareil (gabarit déjà évalué) en vue de côté : la caisse devient le trapèze en perspective, et chaque calque
+   (intérieur, portes, tiroirs…) est dupliqué par tranches horizontales, chacune avec la perspective locale de sa tranche (voir sideKit.bands).
+   Les afficheurs (texte .lcd) ne sont gardés que dans la tranche où ils se trouvent : le code qui les met à jour n'en trouve qu'un.
+   rect = caisse dans le repère de face ; o.body = expression du nœud « caisse » ; o.sideFill = couleur du côté. */
+const sideFromFront = (src, rect, o = {}) => {
+  const K = sideKit(rect, { sw: o.sw }), [rx0, ry0, rx1, ry1] = rect, nodes = sideNodes(src), h = ry1 - ry0;
+  const n = Math.max(3, Math.round(h / 24)), ys = Array.from({ length: n + 1 }, (_, i) => ry0 + h * i / n);
+  const lcdY = [...src.matchAll(/<text\b[^>]*class="[^"]*\blcd[^"]*"[^>]*>/g)].map((m) => +((m[0].match(/\sy="([\d.]+)"/) || [])[1])).filter((v) => v);
+  for (let i = 1; i < n; i++) for (const ty of lcdY) if (ys[i] > ty - 11 && ys[i] < ty + 4) ys[i] = ty + 6;   // pas de coupure à travers un afficheur
+  const bodyRe = o.body || /<rect[^>]*fill="#9aa2ab"[^>]*\/>/;
+  let body = "", layers = [], run = [];
+  const flush = () => { if (run.length) { layers.push(run.join("\n")); run = []; } };
+  for (const nd of nodes) {
+    if (/ID-shadow/.test(nd) && /^<ellipse/.test(nd.trim())) continue;
+    if (!body && bodyRe.test(nd)) { body = nd; continue; }
+    if (/^<g[\s>]/.test(nd.trim())) { flush(); layers.push(nd); } else run.push(nd);
+  }
+  flush();
+  const fill = (body.match(/fill="([^"]+)"/) || [])[1] || "#9aa2ab", stroke = (body.match(/stroke="([^"]+)"/) || [])[1];
+  let out = `<ellipse cx="${K.cx.toFixed(1)}" cy="${ry1 + 4}" rx="${(rx1 - rx0) * .68}" ry="4.5" fill="url(#ID-shadow)"/>`;
+  out += K.side(`fill="${o.sideFill || "#b3bac2"}" stroke="${o.sideEdge || "#8f979f"}" stroke-width=".7"`);
+  out += K.quad(`fill="${fill}"${stroke ? ` stroke="${stroke}" stroke-width=".8"` : ""}`);
+  layers.forEach((layer, li) => {
+    out += ys.slice(0, -1).map((ya, i) => {
+      const yb = ys[i + 1], pad = i === n - 1 ? 0 : .5, pad0 = i === 0 ? 0 : .5, id = `ID-sb${li}_${i}`;
+      const mine = layer.replace(/<text\b[^>]*class="[^"]*\blcd[^"]*"[^>]*>[^<]*<\/text>/g, (t) => { const ty = +((t.match(/\sy="([\d.]+)"/) || [])[1]); return ty >= ya && ty < yb ? t : ""; });
+      const clip = [K.map(rx0 - 2, ya - pad0), K.map(rx1 + 2, ya - pad0), K.map(rx1 + 2, yb + pad), K.map(rx0 - 2, yb + pad)].map((p) => p.map((v) => v.toFixed(1)).join(",")).join(" ");
+      return `<clipPath id="${id}"><polygon points="${clip}"/></clipPath><g clip-path="url(#${id})">${K.place((rx0 + rx1) / 2, (ya + yb) / 2, mine)}</g>`;
+    }).join("");
+  });
+  return out;
+};

@@ -9286,44 +9286,18 @@ SVG.fridge = (c) => {
   return `${FRIDGE_DEFS}${f ? body.replace(/url\(#ID-inox\)/g, `url(#ID-${f})`) : body}${fridgeMist}`;
 };
 
-/* Réfrigérateur vu de côté (option view: side) : style « congélateur en haut » (top). Les portes gardent leur animation d'ouverture (repère de la vue de face). */
-const FRIDGE_TOP_FRONT = FRIDGE.top;
-FRIDGE.top = (flex, c) => {
-  if (!(c && c.view === "side")) return FRIDGE_TOP_FRONT(flex);
-  const K = sideKit([26, 4, 94, 130], { sw: .5 });
-  return `
-<defs><linearGradient id="ID-fside" x1="0" x2="1"><stop offset="0" stop-color="#9ea6af"/><stop offset="1" stop-color="#c9ced4"/></linearGradient></defs>
-<ellipse cx="${K.cx.toFixed(1)}" cy="134" rx="46" ry="4.5" fill="url(#ID-shadow)"/>
-${K.side('fill="url(#ID-fside)" stroke="#8f979f" stroke-width=".7"')}
-<path d="${[0, 1, 2].map((i) => `M${(K.left - K.sw * (.2 + .22 * i)).toFixed(1)} ${(K.top + 30 + i * 2).toFixed(1)}V${(K.bottom - 14 - i * 2).toFixed(1)}`).join("")}" stroke="#fff" stroke-opacity=".25" stroke-width=".7"/>
-${K.quad('fill="#9aa2ab"')}
-${K.poly(29, 7, 91, 43, 'fill="url(#ID-frost)"')}
-${K.place(60, 25, `<path d="M31 25h58" stroke="#a9cbe2" stroke-width="1"/><rect x="34" y="28" width="22" height="11" rx="2" fill="#d9eefb" stroke="#a9cbe2" stroke-width=".6"/><rect x="60" y="28" width="26" height="11" rx="2" fill="#d9eefb" stroke="#a9cbe2" stroke-width=".6"/>`)}
-${K.poly(29, 47, 91, 125, 'fill="url(#ID-in)"')}
-${K.place(60, 86, `<path d="M31 72h58M31 96h58" stroke="#b9c8d6" stroke-width="1.1"/>
-<rect x="36" y="58" width="6" height="14" rx="1.5" fill="#3fbf7f"/><rect x="44" y="62" width="8" height="10" rx="2" fill="#f2c94c"/>
-<rect x="56" y="64" width="12" height="8" rx="2" fill="#e5484d"/><rect x="72" y="60" width="5" height="12" rx="1.5" fill="#3e8ed0"/>
-<rect x="38" y="86" width="14" height="10" rx="2" fill="#ffffff" stroke="#c9d3dc" stroke-width=".6"/><circle cx="64" cy="91" r="5" fill="#ff8f3d"/><circle cx="74" cy="92" r="4" fill="#9fd356"/>
-<rect x="32" y="104" width="56" height="18" rx="2" fill="#e3eef7" stroke="#b9c8d6" stroke-width=".6"/>`)}
-${K.poly(29, 47, 91, 125, 'class="flight" fill="#fffbe6" opacity="0"')}
-${K.bands("ID-bz", 26, 94, [4, 24, 44], () => `<g class="fz-door">
-  <rect x="26" y="4" width="68" height="40" rx="6" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
-  <rect x="84" y="12" width="3.4" height="24" rx="1.7" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
-</g>`)}
-${K.bands("ID-bf", 26, 94, [46, 76, 103, 130], (i) => `<g class="fr-door">
-  <rect x="26" y="46" width="68" height="84" rx="6" fill="url(#ID-inox)" stroke="#8f979f" stroke-width=".7"/>
-  <rect x="84" y="52" width="3.4" height="40" rx="1.7" fill="url(#ID-chrome)" stroke="#6f7781" stroke-width=".4"/>
-  ${i === 0 ? fridgeLcd(35, 54) : ""}
-  <path d="M30 50v76" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
-</g>`)}`;
-};
-// SVG.fridge appelle FRIDGE[style](flex) : on lui transmet aussi la config pour la vue de côté
+/* Réfrigérateur et congélateur à tiroirs vus de côté (option view: side), tous les styles : voir side_kit.js (sideFromFront). */
 const FRIDGE_SVG_PREV = SVG.fridge;
+const fridgeRect = (st) => ({ four_door: [16, 4, 104, 130], french: [16, 4, 104, 130], american: [12, 4, 108, 130] }[st] || [26, 4, 94, 130]);
 SVG.fridge = (c) => {
-  if (!(c && c.view === "side") || fridgeStyle(c) !== "top") return FRIDGE_SVG_PREV(c);
-  const f = fridgeFinish(c), body = FRIDGE.top(!!c.flex_temperature, c);
-  return `${FRIDGE_DEFS}${f ? body.replace(/url\(#ID-inox\)/g, `url(#ID-${f})`) : body}${fridgeMist}`;
+  if (!(c && c.view === "side")) return FRIDGE_SVG_PREV(c);
+  const st = fridgeStyle(c), f = fridgeFinish(c);
+  let body = sideFromFront(FRIDGE[st](!!c.flex_temperature), fridgeRect(st), { sw: .45 });
+  if (f) body = body.replace(/url\(#ID-inox\)/g, `url(#ID-${f})`);
+  return `${FRIDGE_DEFS}${body}${fridgeMist}`;
 };
+const DRAWER_FREEZER_PREV = SVG.drawer_freezer;
+SVG.drawer_freezer = (c) => (c && c.view === "side" ? (() => { const s = DRAWER_FREEZER_PREV(c), d = s.match(/<defs>[\s\S]*?<\/defs>/)[0]; return d + sideFromFront(s.replace(d, ""), [26, 4, 94, 130], { sw: .45, sideFill: "#cfd5db", sideEdge: "#bfc6ce", body: /<rect[^>]*fill="#9aa2ab"[^>]*\/>/ }); })() : DRAWER_FREEZER_PREV(c));
 
 SVG.garland = () => {
   // deux rangées de festons sous une poutre de terrasse, trois globes par feston
@@ -10582,6 +10556,51 @@ const sideKit = (rect, o = {}) => {
   return { map, place, poly, quad, side, bands, left, right, sw, bottom: ry1, top: ry0, cx: (left + right) / 2 - sw / 2 };
 };
 
+// découpe un gabarit en nœuds de premier niveau (une ligne = un nœud, sauf les <g> sur plusieurs lignes)
+const sideNodes = (src) => {
+  const nodes = []; let depth = 0, cur = "";
+  for (const line of src.split("\n")) {
+    if (!line.trim()) continue;
+    cur += (cur ? "\n" : "") + line;
+    depth += (line.match(/<g[\s>]/g) || []).length - (line.match(/<\/g>/g) || []).length;
+    if (depth <= 0) { nodes.push(cur); cur = ""; depth = 0; }
+  }
+  if (cur) nodes.push(cur);
+  return nodes;
+};
+/* Convertit le dessin de FACE d'un appareil (gabarit déjà évalué) en vue de côté : la caisse devient le trapèze en perspective, et chaque calque
+   (intérieur, portes, tiroirs…) est dupliqué par tranches horizontales, chacune avec la perspective locale de sa tranche (voir sideKit.bands).
+   Les afficheurs (texte .lcd) ne sont gardés que dans la tranche où ils se trouvent : le code qui les met à jour n'en trouve qu'un.
+   rect = caisse dans le repère de face ; o.body = expression du nœud « caisse » ; o.sideFill = couleur du côté. */
+const sideFromFront = (src, rect, o = {}) => {
+  const K = sideKit(rect, { sw: o.sw }), [rx0, ry0, rx1, ry1] = rect, nodes = sideNodes(src), h = ry1 - ry0;
+  const n = Math.max(3, Math.round(h / 24)), ys = Array.from({ length: n + 1 }, (_, i) => ry0 + h * i / n);
+  const lcdY = [...src.matchAll(/<text\b[^>]*class="[^"]*\blcd[^"]*"[^>]*>/g)].map((m) => +((m[0].match(/\sy="([\d.]+)"/) || [])[1])).filter((v) => v);
+  for (let i = 1; i < n; i++) for (const ty of lcdY) if (ys[i] > ty - 11 && ys[i] < ty + 4) ys[i] = ty + 6;   // pas de coupure à travers un afficheur
+  const bodyRe = o.body || /<rect[^>]*fill="#9aa2ab"[^>]*\/>/;
+  let body = "", layers = [], run = [];
+  const flush = () => { if (run.length) { layers.push(run.join("\n")); run = []; } };
+  for (const nd of nodes) {
+    if (/ID-shadow/.test(nd) && /^<ellipse/.test(nd.trim())) continue;
+    if (!body && bodyRe.test(nd)) { body = nd; continue; }
+    if (/^<g[\s>]/.test(nd.trim())) { flush(); layers.push(nd); } else run.push(nd);
+  }
+  flush();
+  const fill = (body.match(/fill="([^"]+)"/) || [])[1] || "#9aa2ab", stroke = (body.match(/stroke="([^"]+)"/) || [])[1];
+  let out = `<ellipse cx="${K.cx.toFixed(1)}" cy="${ry1 + 4}" rx="${(rx1 - rx0) * .68}" ry="4.5" fill="url(#ID-shadow)"/>`;
+  out += K.side(`fill="${o.sideFill || "#b3bac2"}" stroke="${o.sideEdge || "#8f979f"}" stroke-width=".7"`);
+  out += K.quad(`fill="${fill}"${stroke ? ` stroke="${stroke}" stroke-width=".8"` : ""}`);
+  layers.forEach((layer, li) => {
+    out += ys.slice(0, -1).map((ya, i) => {
+      const yb = ys[i + 1], pad = i === n - 1 ? 0 : .5, pad0 = i === 0 ? 0 : .5, id = `ID-sb${li}_${i}`;
+      const mine = layer.replace(/<text\b[^>]*class="[^"]*\blcd[^"]*"[^>]*>[^<]*<\/text>/g, (t) => { const ty = +((t.match(/\sy="([\d.]+)"/) || [])[1]); return ty >= ya && ty < yb ? t : ""; });
+      const clip = [K.map(rx0 - 2, ya - pad0), K.map(rx1 + 2, ya - pad0), K.map(rx1 + 2, yb + pad), K.map(rx0 - 2, yb + pad)].map((p) => p.map((v) => v.toFixed(1)).join(",")).join(" ");
+      return `<clipPath id="${id}"><polygon points="${clip}"/></clipPath><g clip-path="url(#${id})">${K.place((rx0 + rx1) / 2, (ya + yb) / 2, mine)}</g>`;
+    }).join("");
+  });
+  return out;
+};
+
 /* Prise connectée : variante de la multiprise, une seule prise murale (française par défaut ; `plug_type: us` = prise nord-américaine NEMA 5-15 :
  * deux fentes verticales et un trou de terre rond).
  * Option `image` (URL) et/ou `icon` (mdi:...) : l'appareil branché derrière la prise, affiché dans une pastille
@@ -11532,6 +11551,14 @@ ${dual ? `
 </g>
 <path d="M28 124h64" stroke="#3b424a" stroke-width="1"/>
 <rect x="30" y="127" width="10" height="5" rx="1.5" fill="#3a3f45"/><rect x="80" y="127" width="10" height="5" rx="1.5" fill="#3a3f45"/>`;
+};
+
+/* Cave à vin vue de côté (option view: side) : voir side_kit.js (sideFromFront). */
+const WINE_COOLER_PREV = SVG.wine_cooler;
+SVG.wine_cooler = (c) => {
+  if (!(c && c.view === "side")) return WINE_COOLER_PREV(c);
+  const s = WINE_COOLER_PREV(c), d = s.match(/<defs>[\s\S]*?<\/defs>/)[0];
+  return d + sideFromFront(s.replace(d, ""), [22, 6, 98, 128], { sw: .45, sideFill: "#20252b", sideEdge: "#05070a", body: /<rect[^>]*fill="url\(#ID-wncab\)"[^>]*\/>/ });
 };
 
 /* ------------------------------------------------------------------ */
@@ -14126,7 +14153,7 @@ function buildForm(kind) {
             { name: "last_cycle", selector: { boolean: {} } },
             { name: "estimate", selector: { boolean: {} } },
           ] : []),
-          ...(["washer", "dryer", "dishwasher", "oven", "fridge"].includes(kind) ? [{ name: "view", selector: { select: { mode: "dropdown", options: [{ value: "front", label: "Vue de face / Front view" }, { value: "side", label: "Vue de côté / Side view" }] } } }] : []),
+          ...(["washer", "dryer", "dishwasher", "oven", "fridge", "drawer_freezer", "wine_cooler"].includes(kind) ? [{ name: "view", selector: { select: { mode: "dropdown", options: [{ value: "front", label: "Vue de face / Front view" }, { value: "side", label: "Vue de côté / Side view" }] } } }] : []),
           ...(kind === "oven" ? [{ name: "last_cycle", selector: { boolean: {} } }, { name: "cavities", selector: { number: { min: 1, max: 2, step: 1, mode: "box" } } }] : []),
           ...(kind === "water_heater" ? [{ name: "last_cycle", selector: { boolean: {} } },
             { name: "tank_volume", selector: { number: { min: 0, max: 1000, step: 1, mode: "box", unit_of_measurement: "L" } } }] : []),
