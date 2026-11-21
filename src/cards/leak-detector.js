@@ -154,7 +154,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
     _name(id) { const s = this._st(id); return (s && s.attributes && s.attributes.friendly_name) || id; }
     _time(iso) {
       const t = Date.parse(iso); if (!t) return '--';
-      const d = new Date(t), loc = this._lang(), time = d.toLocaleTimeString(loc, { hour: '2-digit', minute: '2-digit' });
+      const d = new Date(t), loc = this._lang(), time = window.applianceClock(this._hass, d, loc);
       return d.toDateString() === new Date().toDateString() ? time : `${d.toLocaleDateString(loc, { day: 'numeric', month: 'short' })} ${time}`;
     }
 

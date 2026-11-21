@@ -179,7 +179,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     _clock() {
       const r = this._root; if (!r) return;
       const el = r.getElementById('wtclock'), sub = r.getElementById('wtsub'), now = new Date(), loc = window.applianceLocale(this._c, this._hass);
-      if (el) el.textContent = this._c.show_clock === false ? '' : now.toLocaleTimeString(loc, { hour: '2-digit', minute: '2-digit' });
+      if (el) el.textContent = this._c.show_clock === false ? '' : window.applianceClock(this._hass, now, loc);
       if (sub) sub.textContent = this._c.show_clock === false ? '' : now.toLocaleDateString(loc, { weekday: 'long', day: 'numeric', month: 'long' });
     }
 

@@ -870,7 +870,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
     _when(t) {
       if (!t) return '--';
       const d = new Date(t), now = new Date(), loc = this._lang();
-      const time = d.toLocaleTimeString(loc, { hour: '2-digit', minute: '2-digit' });
+      const time = window.applianceClock(this._hass, d, loc);
       if (d.toDateString() === now.toDateString()) return time;
       return `${d.toLocaleDateString(loc, { day: 'numeric', month: 'short' })} ${time}`;
     }

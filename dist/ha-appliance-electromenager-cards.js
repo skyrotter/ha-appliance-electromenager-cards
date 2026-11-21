@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.199.0";
+const VERSION = "1.200.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -11975,8 +11975,18 @@ const lcdDuration = (min, short = false) => {
   if (short) { const s = Math.round(min * 60); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; }
   const m = Math.ceil(min - 1e-9); return `${Math.floor(m / 60)}:${String(m % 60).padStart(2, "0")}`;
 };
+// heure au format choisi dans le profil Home Assistant (hass.locale.time_format : language / system / 12 / 24)
+function timeOpts(hass) {
+  const tf = hass && hass.locale && hass.locale.time_format, o = { hour: "2-digit", minute: "2-digit" };
+  if (tf === "24") o.hourCycle = "h23"; else if (tf === "12") o.hourCycle = "h12";
+  return o;
+}
 function fmtClock(hass, date) {
-  try { return date.toLocaleTimeString(loc(hass), { hour: "2-digit", minute: "2-digit" }); }
+  try {
+    const tf = hass && hass.locale && hass.locale.time_format;
+    const l = tf === "system" && typeof navigator !== "undefined" && navigator.language ? navigator.language : loc(hass);
+    return date.toLocaleTimeString(l, timeOpts(hass));
+  }
   catch (e) { return `${date.getHours()}:${String(date.getMinutes()).padStart(2, "0")}`; }
 }
 function stateText(hass, st) {
@@ -16544,7 +16554,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
 (async () => {
   const base = import.meta.url;
   // ?v=<version> : après une mise à jour, le navigateur ne ressert pas d'anciens morceaux depuis son cache
-  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.199.0`, base).href);
+  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.200.0`, base).href);
   await chunk("card-helpers");
   await chunk("editor-labels");
   // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre
