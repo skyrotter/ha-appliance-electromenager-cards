@@ -1925,5 +1925,129 @@
     "regen": "Volgende regen.",
     "power": "Vermogen",
     "days": "d"
+  },
+  "poubelle": {
+    "language_name": "Nederlands",
+    "card": {
+      "bin": {
+        "grey": "Grijze container",
+        "black": "Zwarte container",
+        "yellow": "Gele container",
+        "green": "Groene container",
+        "blue": "Blauwe container",
+        "brown": "Bruine container",
+        "red": "Rode container",
+        "purple": "Paarse container",
+        "burgundy": "Bordeauxrode container",
+        "lime": "Limoengroene container"
+      },
+      "bag": {
+        "grey": "Grijze zak",
+        "black": "Zwarte zak",
+        "yellow": "Gele zak",
+        "green": "Groene zak",
+        "blue": "Blauwe zak",
+        "brown": "Bruine zak",
+        "red": "Rode zak",
+        "purple": "Paarse zak",
+        "burgundy": "Bordeauxrode zak",
+        "lime": "Limoengroene zak"
+      },
+      "bulky": "Grofvuil",
+      "emptied": "Geleegd",
+      "emptied_txt": "Vandaag geleegd ✅",
+      "today": "Ophaling",
+      "today_txt": "Vandaag ophaling 🚛",
+      "eve": "Vanavond",
+      "eve_txt": "Zet hem vanavond buiten! 🌙",
+      "in_days": "Over {n} d",
+      "next_weekday": "Ophaling op {day}",
+      "next_date": "Ophaling op {date}",
+      "fill": "Vulniveau",
+      "unknown": "Onbekende datum",
+      "moved": "verplaatst (feestdag)",
+      "warn_no_holiday_calendar": "Geen feestdagenkalender gevonden: voeg de integratie Holiday toe",
+      "warn_no_workday_calendar": "Geen werkdagenkalender gevonden: voeg de integratie Workday toe"
+    },
+    "editor": {
+      "labels": {
+        "bin": "Kleur",
+        "name": "Naam",
+        "container": "Houder",
+        "image": "Eigen afbeelding (vervangt de tekening)",
+        "entity": "Entiteit (optioneel)",
+        "calendar_filter": "Kalenderfilter (titel bevat)",
+        "calendar_offset": "Kalenderverschuiving (dagen)",
+        "days": "Ophaaldagen",
+        "start_date": "Startdatum (een bekende ophaling)",
+        "every": "Elke N weken",
+        "weeks": "Weken",
+        "month_week": "Eén keer per maand",
+        "month_day": "Dag van de maand (1–31)",
+        "months": "Ophaalmaanden (leeg = hele jaar)",
+        "holidays": "Feestdagen",
+        "holiday_calendar": "Feestdagenkalender",
+        "workday_calendar": "Werkdagenkalender",
+        "hour": "Ophaaltijd",
+        "interval": "Dagen tussen ophalingen",
+        "scale": "Grootte",
+        "headroom": "Ruimte boven",
+        "compact": "Compact",
+        "show_meter": "Vulmeter",
+        "show_status": "Statustekst",
+        "theme_background": "HA-themaachtergrond",
+        "full_color": "Volledig gekleurde container",
+        "language": "Taal"
+      },
+      "helpers": {
+        "entity": "Sensor, kalender of input_datetime met de volgende ophaling. Laat leeg om de planning hieronder te gebruiken.",
+        "start_date": "Een willekeurige datum waarop de container is of wordt geleegd. Vanaf daar herhaalt de ophaling zich elke N weken.",
+        "every": "1 = wekelijks, 2 = tweewekelijks, 4 = elke vier weken. Vereist een startdatum.",
+        "weeks": "ISO-weekpariteit. Genegeerd als een startdatum is ingesteld.",
+        "holidays": "Wat er gebeurt als een ophaling op een feestdag valt.",
+        "holiday_calendar": "Kalender van de integratie Holiday. Wordt automatisch gevonden als leeg.",
+        "workday_calendar": "Kalender van de integratie Workday, gebruikt door \"volgende werkdag\". Wordt automatisch gevonden als leeg.",
+        "hour": "Tijd waarop de vuilniswagen komt; daarna wordt de container als geleegd getoond.",
+        "interval": "Alleen met een sensor-entiteit, om het vulniveau te schatten."
+      },
+      "options": {
+        "container": {
+          "wheelie_bin": "Kliko",
+          "bag": "Vuilniszak",
+          "bulky": "Grofvuil"
+        },
+        "weeks": {
+          "all": "Elke week",
+          "even": "Even weken",
+          "odd": "Oneven weken"
+        },
+        "month_week": {
+          "": "Elke week",
+          "1": "1e van de maand",
+          "2": "2e van de maand",
+          "3": "3e van de maand",
+          "4": "4e van de maand",
+          "last": "Laatste van de maand"
+        },
+        "holidays": {
+          "none": "Feestdagen negeren",
+          "next_day": "Naar de volgende dag verplaatsen",
+          "next_work_day": "Naar de volgende werkdag verplaatsen",
+          "shift_week": "Naar de volgende week overslaan",
+          "shift_rest_of_week": "Rest van de week +1 dag",
+          "cancel": "Geannuleerd"
+        },
+        "language": {
+          "auto": "Automatisch (taal van Home Assistant)"
+        }
+      }
+    },
+    "errors": {
+      "bin_required": "Stel \"bin\" in ({bins})",
+      "bin_unknown": "Onbekende container \"{bin}\" (gebruik {bins})",
+      "schedule_required": "Stel \"days\" in (bijv. [1, 4]), \"start_date\", \"month_day\" of \"entity\"",
+      "start_date_invalid": "\"start_date\" moet een datum zijn zoals 2026-11-04",
+      "holidays_unknown": "Onbekende waarde \"{value}\" voor \"holidays\" (gebruik {values})"
+    }
   }
 }

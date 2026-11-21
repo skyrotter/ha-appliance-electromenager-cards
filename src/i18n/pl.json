@@ -1719,5 +1719,129 @@
     "target": "Cel",
     "bottom": "Dół",
     "reserve": "Ciepła woda"
+  },
+  "poubelle": {
+    "language_name": "Polski",
+    "card": {
+      "bin": {
+        "grey": "Szary pojemnik",
+        "black": "Czarny pojemnik",
+        "yellow": "Żółty pojemnik",
+        "green": "Zielony pojemnik",
+        "blue": "Niebieski pojemnik",
+        "brown": "Brązowy pojemnik",
+        "red": "Czerwony pojemnik",
+        "purple": "Fioletowy pojemnik",
+        "burgundy": "Bordowy pojemnik",
+        "lime": "Limonkowy pojemnik"
+      },
+      "bag": {
+        "grey": "Szary worek",
+        "black": "Czarny worek",
+        "yellow": "Żółty worek",
+        "green": "Zielony worek",
+        "blue": "Niebieski worek",
+        "brown": "Brązowy worek",
+        "red": "Czerwony worek",
+        "purple": "Fioletowy worek",
+        "burgundy": "Bordowy worek",
+        "lime": "Limonkowy worek"
+      },
+      "bulky": "Odpady wielkogabarytowe",
+      "emptied": "Opróżniony",
+      "emptied_txt": "Opróżniony dziś ✅",
+      "today": "Odbiór",
+      "today_txt": "Odbiór dziś 🚛",
+      "eve": "Wieczorem",
+      "eve_txt": "Wystaw dziś wieczorem! 🌙",
+      "in_days": "Za {n} d",
+      "next_weekday": "Odbiór: {day}",
+      "next_date": "Odbiór: {date}",
+      "fill": "Poziom napełnienia",
+      "unknown": "Nieznana data",
+      "moved": "przesunięty (święto)",
+      "warn_no_holiday_calendar": "Nie znaleziono kalendarza świąt: dodaj integrację Holiday",
+      "warn_no_workday_calendar": "Nie znaleziono kalendarza dni roboczych: dodaj integrację Workday"
+    },
+    "editor": {
+      "labels": {
+        "bin": "Kolor",
+        "name": "Nazwa",
+        "container": "Pojemnik",
+        "image": "Własny obraz (zastępuje rysunek)",
+        "entity": "Encja (opcjonalnie)",
+        "calendar_filter": "Filtr kalendarza (tytuł zawiera)",
+        "calendar_offset": "Przesunięcie kalendarza (dni)",
+        "days": "Dni odbioru",
+        "start_date": "Data początkowa (znany odbiór)",
+        "every": "Co N tygodni",
+        "weeks": "Tygodnie",
+        "month_week": "Raz w miesiącu",
+        "month_day": "Dzień miesiąca (1–31)",
+        "months": "Miesiące odbioru (puste = cały rok)",
+        "holidays": "Święta",
+        "holiday_calendar": "Kalendarz świąt",
+        "workday_calendar": "Kalendarz dni roboczych",
+        "hour": "Godzina odbioru",
+        "interval": "Dni między odbiorami",
+        "scale": "Rozmiar",
+        "headroom": "Zapas nad rysunkiem",
+        "compact": "Kompaktowy",
+        "show_meter": "Wskaźnik napełnienia",
+        "show_status": "Tekst statusu",
+        "theme_background": "Tło motywu HA",
+        "full_color": "Cały pojemnik w kolorze",
+        "language": "Język"
+      },
+      "helpers": {
+        "entity": "Czujnik, kalendarz lub input_datetime z następnym odbiorem. Zostaw puste, aby użyć harmonogramu poniżej.",
+        "start_date": "Dowolna data, w której pojemnik był lub będzie opróżniany. Odbiory powtarzają się od niej co N tygodni.",
+        "every": "1 = co tydzień, 2 = co dwa tygodnie, 4 = co cztery tygodnie. Wymaga daty początkowej.",
+        "weeks": "Parzystość tygodnia ISO. Ignorowane, gdy ustawiono datę początkową.",
+        "holidays": "Co się dzieje, gdy odbiór wypada w święto.",
+        "holiday_calendar": "Kalendarz z integracji Holiday. Znajdowany automatycznie, jeśli puste.",
+        "workday_calendar": "Kalendarz z integracji Workday, używany przez „następny dzień roboczy”. Znajdowany automatycznie, jeśli puste.",
+        "hour": "Godzina przyjazdu śmieciarki; po niej pojemnik jest pokazany jako opróżniony.",
+        "interval": "Używane tylko z encją czujnika, do oszacowania poziomu napełnienia."
+      },
+      "options": {
+        "container": {
+          "wheelie_bin": "Pojemnik na kółkach",
+          "bag": "Worek na śmieci",
+          "bulky": "Odpady wielkogabarytowe"
+        },
+        "weeks": {
+          "all": "Co tydzień",
+          "even": "Tygodnie parzyste",
+          "odd": "Tygodnie nieparzyste"
+        },
+        "month_week": {
+          "": "Co tydzień",
+          "1": "1. w miesiącu",
+          "2": "2. w miesiącu",
+          "3": "3. w miesiącu",
+          "4": "4. w miesiącu",
+          "last": "Ostatni w miesiącu"
+        },
+        "holidays": {
+          "none": "Ignoruj święta",
+          "next_day": "Przesuń na następny dzień",
+          "next_work_day": "Przesuń na następny dzień roboczy",
+          "shift_week": "Przeskocz na następny tydzień",
+          "shift_rest_of_week": "Reszta tygodnia +1 dzień",
+          "cancel": "Odwołany"
+        },
+        "language": {
+          "auto": "Automatycznie (język Home Assistant)"
+        }
+      }
+    },
+    "errors": {
+      "bin_required": "Ustaw „bin” ({bins})",
+      "bin_unknown": "Nieznany pojemnik „{bin}” (użyj {bins})",
+      "schedule_required": "Ustaw „days” (np. [1, 4]), „start_date”, „month_day” lub „entity”",
+      "start_date_invalid": "„start_date” musi być datą, np. 2026-11-04",
+      "holidays_unknown": "Nieznana wartość „holidays”: „{value}” (użyj {values})"
+    }
   }
 }

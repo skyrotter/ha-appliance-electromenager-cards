@@ -3024,5 +3024,129 @@
     "f_show_open": "Mostrar o bloco de zonas abertas",
     "f_show_fault": "Mostrar o bloco de zonas em falha",
     "f_show_zones": "Mostrar os ícones das zonas"
+  },
+  "poubelle": {
+    "language_name": "Português (Portugal)",
+    "card": {
+      "bin": {
+        "grey": "Contentor cinzento",
+        "black": "Contentor preto",
+        "yellow": "Contentor amarelo",
+        "green": "Contentor verde",
+        "blue": "Contentor azul",
+        "brown": "Contentor castanho",
+        "red": "Contentor vermelho",
+        "purple": "Contentor roxo",
+        "burgundy": "Contentor bordeaux",
+        "lime": "Contentor verde-lima"
+      },
+      "bag": {
+        "grey": "Saco cinzento",
+        "black": "Saco preto",
+        "yellow": "Saco amarelo",
+        "green": "Saco verde",
+        "blue": "Saco azul",
+        "brown": "Saco castanho",
+        "red": "Saco vermelho",
+        "purple": "Saco roxo",
+        "burgundy": "Saco bordeaux",
+        "lime": "Saco verde-lima"
+      },
+      "bulky": "Resíduos volumosos",
+      "emptied": "Esvaziado",
+      "emptied_txt": "Esvaziado hoje ✅",
+      "today": "Recolha",
+      "today_txt": "Recolha hoje 🚛",
+      "eve": "Esta noite",
+      "eve_txt": "Coloque-o na rua esta noite! 🌙",
+      "in_days": "Em {n} d",
+      "next_weekday": "Recolha em {day}",
+      "next_date": "Recolha em {date}",
+      "fill": "Nível de enchimento",
+      "unknown": "Data desconhecida",
+      "moved": "adiada (feriado)",
+      "warn_no_holiday_calendar": "Nenhum calendário de feriados encontrado: adicione a integração Holiday",
+      "warn_no_workday_calendar": "Nenhum calendário de dias úteis encontrado: adicione a integração Workday"
+    },
+    "editor": {
+      "labels": {
+        "bin": "Cor",
+        "name": "Nome",
+        "container": "Recipiente",
+        "image": "Imagem personalizada (substitui o desenho)",
+        "entity": "Entidade (opcional)",
+        "calendar_filter": "Filtro do calendário (o título contém)",
+        "calendar_offset": "Desfasamento do calendário (dias)",
+        "days": "Dias de recolha",
+        "start_date": "Data de início (uma recolha conhecida)",
+        "every": "A cada N semanas",
+        "weeks": "Semanas",
+        "month_week": "Uma vez por mês",
+        "month_day": "Dia do mês (1–31)",
+        "months": "Meses de recolha (vazio = o ano todo)",
+        "holidays": "Feriados",
+        "holiday_calendar": "Calendário de feriados",
+        "workday_calendar": "Calendário de dias úteis",
+        "hour": "Hora da recolha",
+        "interval": "Dias entre recolhas",
+        "scale": "Tamanho",
+        "headroom": "Espaço superior",
+        "compact": "Compacto",
+        "show_meter": "Indicador de enchimento",
+        "show_status": "Texto de estado",
+        "theme_background": "Fundo do tema do HA",
+        "full_color": "Contentor totalmente colorido",
+        "language": "Idioma"
+      },
+      "helpers": {
+        "entity": "Sensor, calendário ou input_datetime com a próxima recolha. Deixe vazio para usar o horário abaixo.",
+        "start_date": "Qualquer data em que o contentor foi ou será esvaziado. As recolhas repetem-se a cada N semanas a partir dela.",
+        "every": "1 = semanal, 2 = quinzenal, 4 = de quatro em quatro semanas. Requer uma data de início.",
+        "weeks": "Paridade da semana ISO. Ignorado quando há data de início.",
+        "holidays": "O que acontece quando uma recolha calha num feriado.",
+        "holiday_calendar": "Calendário da integração Holiday. Encontrado automaticamente se vazio.",
+        "workday_calendar": "Calendário da integração Workday, usado por «próximo dia útil». Encontrado automaticamente se vazio.",
+        "hour": "Hora a que o camião passa; depois dela, o contentor aparece como esvaziado.",
+        "interval": "Usado apenas com uma entidade sensor, para estimar o nível de enchimento."
+      },
+      "options": {
+        "container": {
+          "wheelie_bin": "Contentor com rodas",
+          "bag": "Saco do lixo",
+          "bulky": "Resíduos volumosos"
+        },
+        "weeks": {
+          "all": "Todas as semanas",
+          "even": "Semanas pares",
+          "odd": "Semanas ímpares"
+        },
+        "month_week": {
+          "": "Todas as semanas",
+          "1": "1.º do mês",
+          "2": "2.º do mês",
+          "3": "3.º do mês",
+          "4": "4.º do mês",
+          "last": "Último do mês"
+        },
+        "holidays": {
+          "none": "Ignorar feriados",
+          "next_day": "Mover para o dia seguinte",
+          "next_work_day": "Mover para o próximo dia útil",
+          "shift_week": "Saltar para a semana seguinte",
+          "shift_rest_of_week": "O resto da semana avança +1 dia",
+          "cancel": "Cancelada"
+        },
+        "language": {
+          "auto": "Automático (idioma do Home Assistant)"
+        }
+      }
+    },
+    "errors": {
+      "bin_required": "Defina «bin» ({bins})",
+      "bin_unknown": "Contentor desconhecido «{bin}» (use {bins})",
+      "schedule_required": "Defina «days» (ex.: [1, 4]), «start_date», «month_day» ou «entity»",
+      "start_date_invalid": "«start_date» tem de ser uma data como 2026-11-04",
+      "holidays_unknown": "Valor de «holidays» desconhecido «{value}» (use {values})"
+    }
   }
 }

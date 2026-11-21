@@ -1550,5 +1550,129 @@
     "normal": "Norma",
     "over": "Nadváha",
     "obese": "Obezita"
+  },
+  "poubelle": {
+    "language_name": "Čeština",
+    "card": {
+      "bin": {
+        "grey": "Šedá popelnice",
+        "black": "Černá popelnice",
+        "yellow": "Žlutá popelnice",
+        "green": "Zelená popelnice",
+        "blue": "Modrá popelnice",
+        "brown": "Hnědá popelnice",
+        "red": "Červená popelnice",
+        "purple": "Fialová popelnice",
+        "burgundy": "Vínová popelnice",
+        "lime": "Limetková popelnice"
+      },
+      "bag": {
+        "grey": "Šedý pytel",
+        "black": "Černý pytel",
+        "yellow": "Žlutý pytel",
+        "green": "Zelený pytel",
+        "blue": "Modrý pytel",
+        "brown": "Hnědý pytel",
+        "red": "Červený pytel",
+        "purple": "Fialový pytel",
+        "burgundy": "Vínový pytel",
+        "lime": "Limetkový pytel"
+      },
+      "bulky": "Objemný odpad",
+      "emptied": "Vyvezeno",
+      "emptied_txt": "Dnes vyvezeno ✅",
+      "today": "Svoz",
+      "today_txt": "Dnes svoz 🚛",
+      "eve": "Dnes večer",
+      "eve_txt": "Vystav ji dnes večer! 🌙",
+      "in_days": "Za {n} d",
+      "next_weekday": "Svoz: {day}",
+      "next_date": "Svoz: {date}",
+      "fill": "Naplněnost",
+      "unknown": "Neznámé datum",
+      "moved": "posunuto (státní svátek)",
+      "warn_no_holiday_calendar": "Nenalezen kalendář svátků: přidej integraci Holiday",
+      "warn_no_workday_calendar": "Nenalezen kalendář pracovních dnů: přidej integraci Workday"
+    },
+    "editor": {
+      "labels": {
+        "bin": "Barva",
+        "name": "Název",
+        "container": "Nádoba",
+        "image": "Vlastní obrázek (nahradí kresbu)",
+        "entity": "Entita (volitelné)",
+        "calendar_filter": "Filtr kalendáře (název obsahuje)",
+        "calendar_offset": "Posun kalendáře (dny)",
+        "days": "Dny svozu",
+        "start_date": "Počáteční datum (známý svoz)",
+        "every": "Každých N týdnů",
+        "weeks": "Týdny",
+        "month_week": "Jednou za měsíc",
+        "month_day": "Den v měsíci (1–31)",
+        "months": "Měsíce svozu (prázdné = celý rok)",
+        "holidays": "Státní svátky",
+        "holiday_calendar": "Kalendář svátků",
+        "workday_calendar": "Kalendář pracovních dnů",
+        "hour": "Hodina svozu",
+        "interval": "Dny mezi svozy",
+        "scale": "Velikost",
+        "headroom": "Volný prostor nahoře",
+        "compact": "Kompaktní",
+        "show_meter": "Ukazatel naplnění",
+        "show_status": "Text stavu",
+        "theme_background": "Pozadí motivu HA",
+        "full_color": "Celá popelnice barevná",
+        "language": "Jazyk"
+      },
+      "helpers": {
+        "entity": "Senzor, kalendář nebo input_datetime s dalším svozem. Nech prázdné pro použití plánu níže.",
+        "start_date": "Libovolné datum, kdy byla nebo bude nádoba vyvezena. Svozy se od něj opakují každých N týdnů.",
+        "every": "1 = týdně, 2 = každé dva týdny, 4 = každé čtyři týdny. Vyžaduje počáteční datum.",
+        "weeks": "Parita ISO týdne. Ignoruje se, pokud je nastaveno počáteční datum.",
+        "holidays": "Co se stane, když svoz připadne na státní svátek.",
+        "holiday_calendar": "Kalendář z integrace Holiday. Pokud je prázdné, najde se automaticky.",
+        "workday_calendar": "Kalendář z integrace Workday, používaný volbou „další pracovní den“. Pokud je prázdné, najde se automaticky.",
+        "hour": "Čas, kdy přijede popelářské auto; poté se nádoba zobrazí jako vyvezená.",
+        "interval": "Používá se jen se senzorem, k odhadu naplnění."
+      },
+      "options": {
+        "container": {
+          "wheelie_bin": "Popelnice na kolečkách",
+          "bag": "Pytel na odpadky",
+          "bulky": "Objemný odpad"
+        },
+        "weeks": {
+          "all": "Každý týden",
+          "even": "Sudé týdny",
+          "odd": "Liché týdny"
+        },
+        "month_week": {
+          "": "Každý týden",
+          "1": "1. v měsíci",
+          "2": "2. v měsíci",
+          "3": "3. v měsíci",
+          "4": "4. v měsíci",
+          "last": "Poslední v měsíci"
+        },
+        "holidays": {
+          "none": "Ignorovat svátky",
+          "next_day": "Posunout na další den",
+          "next_work_day": "Posunout na další pracovní den",
+          "shift_week": "Přeskočit na další týden",
+          "shift_rest_of_week": "Zbytek týdne +1 den",
+          "cancel": "Zrušeno"
+        },
+        "language": {
+          "auto": "Automaticky (jazyk Home Assistantu)"
+        }
+      }
+    },
+    "errors": {
+      "bin_required": "Nastav „bin“ ({bins})",
+      "bin_unknown": "Neznámá popelnice „{bin}“ (použij {bins})",
+      "schedule_required": "Nastav „days“ (např. [1, 4]), „start_date“, „month_day“ nebo „entity“",
+      "start_date_invalid": "„start_date“ musí být datum, např. 2026-11-04",
+      "holidays_unknown": "Neznámá hodnota „holidays“ „{value}“ (použij {values})"
+    }
   }
 }
