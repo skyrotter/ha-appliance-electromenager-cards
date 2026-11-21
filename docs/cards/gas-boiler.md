@@ -33,6 +33,8 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 
 ## Vaillant ecoTEC plus (photo)
 
+<p align="center"><img src="../vaillant-ecotec-plus.gif" width="360" alt="Vaillant ecoTEC plus: standby, heating, hot water, low pressure, fault"></p>
+
 `model: vaillant_ecotec_plus` shows a photo of the boiler with its pipes, expansion vessel and wall unit, animated:
 
 - **Screen**: flow temperature in large digits, outdoor temperature (`entity_outdoor_temp`) and the time in the top bar, green leaf lit while the burner runs.

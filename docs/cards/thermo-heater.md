@@ -40,6 +40,8 @@ entity_reserve: sensor.boiler_hot_water_reserve   # optional, %
 
 ## Atlantic Explorer V5 200 L (photo)
 
+<p align="center"><img src="../atlantic-explorer-v5.gif" width="360" alt="Atlantic Explorer V5: pause, heat pump, hot water draw, boost"></p>
+
 `model: atlantic_explorer_v5` shows a photo of the heat pump water heater with its pipes and expansion vessel, animated:
 
 - **Screen**: day and time, a drop filled according to the remaining hot water, and the temperature (`lcd_value: target` shows the set temperature).
