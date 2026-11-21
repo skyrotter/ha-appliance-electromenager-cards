@@ -3051,5 +3051,129 @@
     "height": "Height speakers",
     "rear": "Rear speakers",
     "sound_mode": "Audio mode"
+  },
+  "poubelle": {
+    "language_name": "English",
+    "card": {
+      "bin": {
+        "grey": "Grey bin",
+        "black": "Black bin",
+        "yellow": "Yellow bin",
+        "green": "Green bin",
+        "blue": "Blue bin",
+        "brown": "Brown bin",
+        "red": "Red bin",
+        "purple": "Purple bin",
+        "burgundy": "Burgundy bin",
+        "lime": "Lime green bin"
+      },
+      "bag": {
+        "grey": "Grey bag",
+        "black": "Black bag",
+        "yellow": "Yellow bag",
+        "green": "Green bag",
+        "blue": "Blue bag",
+        "brown": "Brown bag",
+        "red": "Red bag",
+        "purple": "Purple bag",
+        "burgundy": "Burgundy bag",
+        "lime": "Lime green bag"
+      },
+      "bulky": "Bulky waste",
+      "emptied": "Emptied",
+      "emptied_txt": "Emptied today ✅",
+      "today": "Pickup",
+      "today_txt": "Pickup today 🚛",
+      "eve": "Tonight",
+      "eve_txt": "Put it out tonight! 🌙",
+      "in_days": "In {n} d",
+      "next_weekday": "Pickup on {day}",
+      "next_date": "Pickup on {date}",
+      "fill": "Fill level",
+      "unknown": "Unknown date",
+      "moved": "moved (public holiday)",
+      "warn_no_holiday_calendar": "No holiday calendar found: add the Holiday integration",
+      "warn_no_workday_calendar": "No workday calendar found: add the Workday integration"
+    },
+    "editor": {
+      "labels": {
+        "bin": "Colour",
+        "name": "Name",
+        "container": "Container",
+        "image": "Custom image (replaces the drawing)",
+        "entity": "Entity (optional)",
+        "calendar_filter": "Calendar filter (title contains)",
+        "calendar_offset": "Calendar offset (days)",
+        "days": "Pickup days",
+        "start_date": "Start date (a known pickup)",
+        "every": "Every N weeks",
+        "weeks": "Weeks",
+        "month_week": "Once a month",
+        "month_day": "Day of month (1–31)",
+        "months": "Pickup months (empty = all year)",
+        "holidays": "Public holidays",
+        "holiday_calendar": "Holiday calendar",
+        "workday_calendar": "Workday calendar",
+        "hour": "Pickup hour",
+        "interval": "Days between pickups",
+        "scale": "Size",
+        "headroom": "Headroom",
+        "compact": "Compact",
+        "show_meter": "Fill meter",
+        "show_status": "Status text",
+        "theme_background": "HA theme background",
+        "full_color": "Fully coloured bin",
+        "language": "Language"
+      },
+      "helpers": {
+        "entity": "Sensor, calendar or input_datetime giving the next pickup. Leave empty to use the schedule below.",
+        "start_date": "Any date the bin was or will be collected. Pickups repeat every N weeks from it.",
+        "every": "1 = weekly, 2 = fortnightly, 4 = every four weeks. Needs a start date.",
+        "weeks": "ISO week parity. Ignored when a start date is set.",
+        "holidays": "What happens when a pickup falls on a public holiday.",
+        "holiday_calendar": "Calendar from the Holiday integration. Found automatically if left empty.",
+        "workday_calendar": "Calendar from the Workday integration, used by “next work day”. Found automatically if left empty.",
+        "hour": "Time the truck comes; after it the bin shows as emptied.",
+        "interval": "Only used with a sensor entity, to estimate the fill level."
+      },
+      "options": {
+        "container": {
+          "wheelie_bin": "Wheelie bin",
+          "bag": "Rubbish bag",
+          "bulky": "Bulky waste"
+        },
+        "weeks": {
+          "all": "Every week",
+          "even": "Even weeks",
+          "odd": "Odd weeks"
+        },
+        "month_week": {
+          "": "Every week",
+          "1": "1st of the month",
+          "2": "2nd of the month",
+          "3": "3rd of the month",
+          "4": "4th of the month",
+          "last": "Last of the month"
+        },
+        "holidays": {
+          "none": "Ignore holidays",
+          "next_day": "Move to the next day",
+          "next_work_day": "Move to the next work day",
+          "shift_week": "Skip to the following week",
+          "shift_rest_of_week": "Rest of the week moves +1 day",
+          "cancel": "Cancelled"
+        },
+        "language": {
+          "auto": "Automatic (Home Assistant language)"
+        }
+      }
+    },
+    "errors": {
+      "bin_required": "Set “bin” ({bins})",
+      "bin_unknown": "Unknown bin “{bin}” (use {bins})",
+      "schedule_required": "Set “days” (e.g. [1, 4]), “start_date”, “month_day” or “entity”",
+      "start_date_invalid": "“start_date” must be a date such as 2026-11-04",
+      "holidays_unknown": "Unknown “holidays” value “{value}” (use {values})"
+    }
   }
 }

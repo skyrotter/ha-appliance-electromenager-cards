@@ -2303,5 +2303,129 @@
     "fan_medium": "Srednje",
     "fan_high": "Visoko",
     "fan_auto": "Automatski"
+  },
+  "poubelle": {
+    "language_name": "Srpski (latinica)",
+    "card": {
+      "bin": {
+        "grey": "Siva kanta",
+        "black": "Crna kanta",
+        "yellow": "Žuta kanta",
+        "green": "Zelena kanta",
+        "blue": "Plava kanta",
+        "brown": "Braon kanta",
+        "red": "Crvena kanta",
+        "purple": "Ljubičasta kanta",
+        "burgundy": "Bordo kanta",
+        "lime": "Svetlozelena kanta"
+      },
+      "bag": {
+        "grey": "Siva vreća",
+        "black": "Crna vreća",
+        "yellow": "Žuta vreća",
+        "green": "Zelena vreća",
+        "blue": "Plava vreća",
+        "brown": "Braon vreća",
+        "red": "Crvena vreća",
+        "purple": "Ljubičasta vreća",
+        "burgundy": "Bordo vreća",
+        "lime": "Svetlozelena vreća"
+      },
+      "bulky": "Kabasti otpad",
+      "emptied": "Ispražnjeno",
+      "emptied_txt": "Ispražnjeno danas ✅",
+      "today": "Odnošenje smeća",
+      "today_txt": "Odnošenje danas 🚛",
+      "eve": "Večeras",
+      "eve_txt": "Izneti večeras! 🌙",
+      "in_days": "Za {n} d",
+      "next_weekday": "Odnošenje u {day}",
+      "next_date": "Odnošenje dana {date}",
+      "fill": "Popunjenost",
+      "unknown": "Nepoznat datum",
+      "moved": "pomereno (državni praznik)",
+      "warn_no_holiday_calendar": "Nije pronađen kalendar praznika: dodajte integraciju Holiday",
+      "warn_no_workday_calendar": "Nije pronađen kalendar radnih dana: dodajte integraciju Workday"
+    },
+    "editor": {
+      "labels": {
+        "bin": "Boja",
+        "name": "Naziv",
+        "container": "Vrsta",
+        "image": "Sopstvena slika (zamenjuje crtež)",
+        "entity": "Entitet (opciono)",
+        "calendar_filter": "Filter kalendara (naslov sadrži)",
+        "calendar_offset": "Pomak kalendara (dani)",
+        "days": "Dani odnošenja",
+        "start_date": "Početni datum (poznato odnošenje)",
+        "every": "Svakih N nedelja",
+        "weeks": "Nedelje",
+        "month_week": "Jednom mesečno",
+        "month_day": "Dan u mesecu (1–31)",
+        "months": "Meseci odnošenja (prazno = cela godina)",
+        "holidays": "Državni praznici",
+        "holiday_calendar": "Kalendar praznika",
+        "workday_calendar": "Kalendar radnih dana",
+        "hour": "Sat odnošenja",
+        "interval": "Dani između odnošenja",
+        "scale": "Veličina",
+        "headroom": "Gornja margina",
+        "compact": "Kompaktno",
+        "show_meter": "Merač popunjenosti",
+        "show_status": "Tekst statusa",
+        "theme_background": "Pozadina HA teme",
+        "full_color": "Potpuno obojena kanta",
+        "language": "Jezik"
+      },
+      "helpers": {
+        "entity": "Senzor, kalendar ili input_datetime sa sledećim odnošenjem. Ostavite prazno da biste koristili raspored ispod.",
+        "start_date": "Bilo koji datum odnošenja, prošli ili budući. Odnošenja se ponavljaju svakih N nedelja od tog datuma.",
+        "every": "1 = svake nedelje, 2 = svake druge nedelje, 4 = svake četvrte nedelje. Potreban je početni datum.",
+        "weeks": "Parnost ISO nedelje. Zanemaruje se kada je zadat početni datum.",
+        "holidays": "Šta se dešava kada odnošenje padne na državni praznik.",
+        "holiday_calendar": "Kalendar iz integracije Holiday. Pronalazi se automatski ako je prazno.",
+        "workday_calendar": "Kalendar iz integracije Workday, za „sledeći radni dan”. Pronalazi se automatski ako je prazno.",
+        "hour": "Vreme dolaska kamiona; posle toga kanta se prikazuje kao ispražnjena.",
+        "interval": "Koristi se samo sa senzorom, za procenu popunjenosti."
+      },
+      "options": {
+        "container": {
+          "wheelie_bin": "Kanta na točkovima",
+          "bag": "Vreća za smeće",
+          "bulky": "Kabasti otpad"
+        },
+        "weeks": {
+          "all": "Svake nedelje",
+          "even": "Parne nedelje",
+          "odd": "Neparne nedelje"
+        },
+        "month_week": {
+          "1": "1. u mesecu",
+          "2": "2. u mesecu",
+          "3": "3. u mesecu",
+          "4": "4. u mesecu",
+          "": "Svake nedelje",
+          "last": "Poslednji u mesecu"
+        },
+        "holidays": {
+          "none": "Zanemari praznike",
+          "next_day": "Pomeri na sledeći dan",
+          "next_work_day": "Pomeri na sledeći radni dan",
+          "shift_week": "Pomeri na sledeću nedelju",
+          "shift_rest_of_week": "Ostatak nedelje se pomera za 1 dan",
+          "cancel": "Otkazano"
+        },
+        "language": {
+          "auto": "Automatski (jezik Home Assistant-a)"
+        }
+      }
+    },
+    "errors": {
+      "bin_required": "Zadajte „bin” ({bins})",
+      "bin_unknown": "Nepoznata kanta „{bin}” (koristite {bins})",
+      "schedule_required": "Zadajte „days” (npr. [1, 4]), „start_date”, „month_day” ili „entity”",
+      "start_date_invalid": "„start_date” mora biti datum kao 2026-11-04",
+      "holidays_unknown": "Nepoznata vrednost „{value}” za „holidays” (koristite {values})"
+    }
   }
 }
