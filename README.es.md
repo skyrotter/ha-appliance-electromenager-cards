@@ -24,6 +24,8 @@ Basta con un simple enchufe inteligente con sensor de potencia. Los electrodomé
 
 Renderizados en vivo de las tarjetas, agrupadas por temática (datos simulados).
 
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-poubelle.png" width="860" alt="Nueva tarjeta: cubo de basura (días de recogida), cubos, bolsa y voluminosos en sus distintos estados"></p>
+
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-latest.png" width="860" alt="Últimas tarjetas: spa hinchable, calefactor de aire, impresora Bambu Lab A1, pluviómetro"></p>
 
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-1-127-a.png" width="860" alt="Novedades 1.127: aljibe de agua de lluvia con grupo de presión, impresoras Prusa MK4 y MK3, Google Chromecast"></p>

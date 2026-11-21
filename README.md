@@ -24,6 +24,8 @@ A simple smart plug with a power sensor is enough. Connected appliances can add 
 
 Live renders of the cards, grouped by theme (simulated data).
 
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-poubelle.png" width="860" alt="New card: bin collection (Poubelle): wheelie bins, bag and bulky waste, in their different states"></p>
+
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-latest.png" width="860" alt="Latest cards: inflatable spa, fan heater, Bambu Lab A1 printer, rain gauge"></p>
 
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-1-127-a.png" width="860" alt="New in 1.127: rainwater tank with booster pump, Prusa MK4 and MK3 printers, Google Chromecast"></p>

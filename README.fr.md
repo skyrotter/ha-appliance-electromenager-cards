@@ -24,6 +24,8 @@ Une simple prise connectée avec un capteur de puissance suffit. Les appareils c
 
 Rendus réels des cartes, regroupés par thème (données simulées).
 
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-poubelle.png" width="860" alt="Nouvelle carte : Poubelle (jours de collecte), bacs, sac et encombrants dans leurs différents états"></p>
+
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-latest.png" width="860" alt="Dernières cartes : spa gonflable, chauffage soufflant, imprimante Bambu Lab A1, pluviomètre"></p>
 
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-1-127-a.png" width="860" alt="Nouveautés 1.127 : citerne d'eau de pluie avec hydrophore, imprimantes Prusa MK4 et MK3, Google Chromecast"></p>
