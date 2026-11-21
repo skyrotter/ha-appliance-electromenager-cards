@@ -977,7 +977,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
   font-family:var(--paper-font-body1_-_font-family,var(--ha-font-family-body,Roboto,system-ui,sans-serif));-webkit-font-smoothing:antialiased}
 .bd{position:absolute;inset:0;background:rgba(0,0,0,.45);opacity:0;transition:opacity .25s}
 :host(.open) .bd{opacity:1}
-.dlg{position:relative;background:var(--ha-card-background,var(--card-background-color,#fff));color:var(--primary-text-color,#212121);border-radius:18px;
+.dlg{position:relative;background:var(--rc-dlg-bg,var(--ha-card-background,var(--card-background-color,#fff)));color:var(--primary-text-color,#212121);border-radius:18px;
   width:min(640px,100%);max-height:92vh;overflow:auto;padding:16px 18px 18px;box-sizing:border-box;box-shadow:0 20px 60px rgba(0,0,0,.35);
   transform:translateY(20px) scale(.97);opacity:0;transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .2s}
 :host(.open) .dlg{transform:none;opacity:1}
@@ -1030,6 +1030,16 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       if (c.transparent || clear(cs.getPropertyValue('--ha-card-background').trim())) {
         const bg = cs.getPropertyValue('--card-background-color').trim();
         this.style.setProperty('--ha-card-background', clear(bg) ? '#fff' : bg);
+      }
+      // fond du pop-up réglable : history_popup_background (#hex, rgb(), rgba(), nom CSS) et history_popup_opacity (0 à 100, 95 par défaut
+      // dès qu'une couleur est choisie) ; l'opacité seule s'applique à la couleur de fond pleine du thème
+      const pbg = String(c.history_popup_background ?? '').trim(), popRaw = c.history_popup_opacity;
+      if (pbg || (popRaw != null && popRaw !== '')) {
+        let base = pbg && window.CSS && window.CSS.supports('color', pbg) ? pbg : '';
+        // sans couleur : la couleur de fond pleine du thème (--card-background-color), le fond de carte d'un thème verre étant déjà translucide
+        if (!base) base = this.style.getPropertyValue('--card-background-color').trim() || '#fff';
+        const n = Number(popRaw), op = Number.isFinite(n) && popRaw !== '' && popRaw != null ? Math.max(0, Math.min(100, n)) : 95;
+        this.style.setProperty('--rc-dlg-bg', op >= 100 ? base : `color-mix(in srgb, ${base} ${op}%, transparent)`);
       }
       this.style.setProperty('--rc-heat', cs.getPropertyValue('--appliance-heat-color').trim() || cs.getPropertyValue('--state-climate-heat-color').trim() || '#ff8a3d');
       this.style.setProperty('--rc-hum', cs.getPropertyValue('--appliance-humidity-color').trim() || '#26b5c9');
@@ -1318,6 +1328,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
           num('humidity_min', 0, 100, 1, '%', 35), num('humidity_max', 0, 100, 1, '%', 65)] },
         { type: 'grid', name: '', schema: [tr('alert_temp_min', -20, 30), tr('alert_temp_max', 10, 50), num('alert_humidity_min', 0, 100, 1, '%'), num('alert_humidity_max', 0, 100, 1, '%')] },
         { type: 'grid', name: '', schema: [num('mold_humidity', 40, 100, 1, '%', 70), num('window_drop', 0, 10, 0.1, u), num('battery_low', 0, 100, 1, '%', 20)] },
+        { type: 'grid', name: '', schema: [{ name: 'history_popup_background', selector: { text: {} } }, num('history_popup_opacity', 0, 100, 1, '%', 95)] },
         { type: 'grid', name: '', schema: [sel('history_days', [['1', 'h24'], ['7', 'd7'], ['30', 'd30']]), sel('history_mode', [['both', 'both'], ['temperature', 'temperature'], ['humidity', 'humidity']])] },
         { type: 'grid', name: '', schema: [sel('tap_action', [['history', 'tap_history'], ['more-info', 'tap_more_info'], ['navigate', 'tap_navigate'], ['none', 'tap_none']]),
           ...(this._c && this._c.tap_action === 'navigate' ? [{ name: 'navigation_path', selector: { text: {} } }] : [])] },

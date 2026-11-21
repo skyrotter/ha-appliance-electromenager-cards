@@ -750,7 +750,9 @@
       "show_backup": "Show backup heaters and boiler",
       "entity_room_target": "Room setpoint",
       "entity_boost": "Boost / electric backup (on / off)",
-      "entity_draw": "Hot water draw (on / off or flow)"
+      "entity_draw": "Hot water draw (on / off or flow)",
+      "history_popup_background": "Pop-up background (#hex, rgb(), rgba() or CSS name)",
+      "history_popup_opacity": "Pop-up background opacity"
     },
     "cs": {
       "animations": "Animace",
@@ -3765,7 +3767,9 @@
       "show_backup": "Afficher les appoints et la chaudière",
       "entity_room_target": "Consigne de la pièce",
       "entity_boost": "Boost / appoint électrique (on / off)",
-      "entity_draw": "Puisage d'eau chaude (on / off ou débit)"
+      "entity_draw": "Puisage d'eau chaude (on / off ou débit)",
+      "history_popup_background": "Fond du pop-up (#hex, rgb(), rgba() ou nom CSS)",
+      "history_popup_opacity": "Opacité du fond du pop-up"
     },
     "hu": {
       "animations": "Animációk",
@@ -6002,7 +6006,9 @@
       "entity_room_target": "Temperatura zadana pokoju",
       "entity_pump": "Pompa ciepła pracuje (on / off)",
       "entity_boost": "Boost / grzałka elektryczna (on / off)",
-      "entity_draw": "Pobór ciepłej wody (on / off lub przepływ)"
+      "entity_draw": "Pobór ciepłej wody (on / off lub przepływ)",
+      "history_popup_background": "Tło okna (#hex, rgb(), rgba() lub nazwa CSS)",
+      "history_popup_opacity": "Przezroczystość tła okna"
     },
     "pt-BR": {
       "entity_drive_5": "Disco 5",

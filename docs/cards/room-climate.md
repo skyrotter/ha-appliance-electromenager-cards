@@ -48,6 +48,8 @@
 | `mold_humidity` | mould risk from this humidity (70 %) |
 | `window_drop` | open-window detection: temperature drop in 15 min (1.5 °C, `0` = off) |
 | `battery_low` | low battery below this % (20) |
+| `history_popup_background` | background colour of the history pop-up (`#1c1c1e`, `rgb()`, `rgba()` or a CSS name). By default the pop-up uses the card / theme background, which can be hard to read with a glass or translucent theme |
+| `history_popup_opacity` | opacity of the pop-up background, 0 to 100 (95 as soon as a colour is set; alone, it applies to the solid background colour of the theme) |
 | `history_days` | pop-up period when it opens: `1`, `7` (default) or `30` |
 | `history_mode` | pop-up graph when it opens: `both` (default), `temperature`, `humidity` |
 | `variant` | one of the 12 styles above (`standard`). `style` is accepted too, but use `variant` inside `picture-elements` |

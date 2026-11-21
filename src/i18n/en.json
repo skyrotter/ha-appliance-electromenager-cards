@@ -1646,7 +1646,9 @@
     "show_backup": "Show backup heaters and boiler",
     "entity_room_target": "Room setpoint",
     "entity_boost": "Boost / electric backup (on / off)",
-    "entity_draw": "Hot water draw (on / off or flow)"
+    "entity_draw": "Hot water draw (on / off or flow)",
+    "history_popup_background": "Pop-up background (#hex, rgb(), rgba() or CSS name)",
+    "history_popup_opacity": "Pop-up background opacity"
   },
   "light": {
     "white_warm": "Warm white",
