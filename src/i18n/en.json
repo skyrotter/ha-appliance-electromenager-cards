@@ -1644,7 +1644,9 @@
     "show_cop": "Show COP",
     "show_compressor": "Show compressor (frequency, demand)",
     "show_backup": "Show backup heaters and boiler",
-    "entity_room_target": "Room setpoint"
+    "entity_room_target": "Room setpoint",
+    "entity_boost": "Boost / electric backup (on / off)",
+    "entity_draw": "Hot water draw (on / off or flow)"
   },
   "light": {
     "white_warm": "Warm white",

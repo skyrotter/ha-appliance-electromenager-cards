@@ -38,4 +38,32 @@ entity_energy: sensor.boiler_energy_today
 entity_reserve: sensor.boiler_hot_water_reserve   # optional, %
 ```
 
+## Atlantic Explorer V5 200 L (photo)
+
+`model: atlantic_explorer_v5` shows a photo of the heat pump water heater with its pipes and expansion vessel, animated:
+
+- **Screen**: day and time, a drop filled according to the remaining hot water, and the temperature (`lcd_value: target` shows the set temperature).
+- **Tank**: the casing is tinted red (hot) at the top and blue (cold) at the bottom, the boundary following the hot water level.
+- **Heat pump**: air flows through the two ducts at the top and the unit vibrates slightly while it runs.
+- **Boost**: an orange glow at the bottom of the tank while the electric backup heats.
+- **Pipes**: the red hot water outlet and the blue cold water inlet are animated while hot water is drawn.
+
+| Option | Description |
+|---|---|
+| `entity_pump` | `on` / `off` sensor: heat pump running. Without it, the mode and the power decide. |
+| `entity_boost` | `on` / `off` sensor: boost / electric backup. |
+| `entity_draw` | Optional `on` / `off` sensor (or flow): hot water drawn. Without it, a drop of the hot water level or of the bottom temperature is detected. |
+
+```yaml
+type: custom:appliance-thermo-heater-card
+model: atlantic_explorer_v5
+entity_temp: sensor.tank_middle_temperature
+entity_temp_bottom: sensor.tank_bottom_temperature
+hot_water_level: sensor.hot_water_available
+tank_volume: 200
+entity_power: sensor.tank_plug_power
+entity_pump: sensor.tank_heat_pump_running
+entity_boost: sensor.tank_boost_mode
+```
+
 [← All cards](../../README.md#the-cards)

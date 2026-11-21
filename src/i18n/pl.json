@@ -1172,7 +1172,10 @@
     "show_compressor": "Show compressor (frequency, demand)",
     "show_backup": "Show backup heaters and boiler",
     "entity_room_temp": "Temperatura pokoju",
-    "entity_room_target": "Temperatura zadana pokoju"
+    "entity_room_target": "Temperatura zadana pokoju",
+    "entity_pump": "Pompa ciepła pracuje (on / off)",
+    "entity_boost": "Boost / grzałka elektryczna (on / off)",
+    "entity_draw": "Pobór ciepłej wody (on / off lub przepływ)"
   },
   "light": {
     "light_bulb": "Żarówka",
