@@ -128,6 +128,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
   const ATLANTIC = (label) => `<svg viewBox="0 -150 1086 1598" role="img" aria-label="${label}" class="at">
  <defs><clipPath id="at-clip"><rect x="0" y="0" width="1086" height="1448" rx="40"/></clipPath>
   <clipPath id="at-body"><rect x="318" y="126" width="454" height="1204" rx="60"/></clipPath>
+  <mask id="at-nopanel"><rect x="318" y="126" width="454" height="1204" fill="#fff"/><path d="M575 78L741 112L745 1160L578 1181Z" fill="#000"/></mask>
   <clipPath id="at-drop"><path d="${DROP}"/></clipPath>
   <linearGradient id="at-g" gradientUnits="userSpaceOnUse" x1="0" y1="126" x2="0" y2="1330"><stop id="at-s0" offset="0" stop-color="#ff3b2e"/><stop id="at-s1" offset=".4" stop-color="#ff3b2e"/><stop id="at-s2" offset=".5" stop-color="#2d7bff"/><stop offset="1" stop-color="#2d7bff"/></linearGradient>
   <radialGradient id="at-ge" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff8a1f" stop-opacity=".9"/><stop offset="1" stop-color="#ff5a00" stop-opacity="0"/></radialGradient></defs>
@@ -137,7 +138,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
  </g>
  <g class="at-body">
   <image href="${ATLANTIC_IMG}" width="1086" height="1448" clip-path="url(#at-clip)"/>
-  <g clip-path="url(#at-body)"><rect x="318" y="126" width="454" height="1204" fill="url(#at-g)" class="at-tint"/><ellipse class="at-glow" cx="545" cy="1270" rx="300" ry="170" fill="url(#at-ge)"/></g>
+  <g clip-path="url(#at-body)"><rect x="318" y="126" width="454" height="1204" fill="url(#at-g)" class="at-tint" mask="url(#at-nopanel)"/><ellipse class="at-glow" cx="545" cy="1270" rx="300" ry="170" fill="url(#at-ge)"/></g>
   <g id="at-screen">
    <rect x="650" y="355" width="51" height="13" fill="#1d3a36"/><text id="at-time" x="651" y="366" fill="#d7efe8" font-family="Roboto,system-ui,sans-serif" font-size="12" font-weight="600">--</text>
    <rect x="634" y="369" width="67" height="82" fill="#000"/>
