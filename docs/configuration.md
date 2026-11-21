@@ -236,3 +236,7 @@ type: custom:appliance-card
 appliance: appliance-washer-card
 entity: sensor.lave_linge
 ```
+
+### Illustration area that fits the drawing
+
+On wide, flat appliances (air conditioner, AV receiver), the illustration area follows the real size of the drawing instead of a fixed 120 × 140 frame, so there is no empty space above and below. While an effect is running (air flow, sound waves), the area grows to contain it. `autofit: false` goes back to the fixed frame.
