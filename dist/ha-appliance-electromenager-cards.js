@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.191.0";
+const VERSION = "1.192.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -313,6 +313,7 @@ const STRINGS = {
     "f_show_selector": "Show the mode selector",
     "f_show_buttons": "Show the on/off buttons",
     "f_show_slider": "Show the temperature slider",
+    "f_buttons": "Buttons (order = display order)",
     "f_remaining": "Remaining time sensor",
     "f_progress": "Progress sensor (%)",
     "f_program": "Program / phase sensor",
@@ -2603,6 +2604,7 @@ const STRINGS = {
     "f_show_selector": "Afficher le sélecteur de mode",
     "f_show_buttons": "Afficher les boutons marche / arrêt",
     "f_show_slider": "Afficher le curseur de température",
+    "f_buttons": "Boutons (l'ordre choisi = l'ordre d'affichage)",
     "f_remaining": "Capteur de temps restant",
     "f_progress": "Capteur de progression (%)",
     "f_program": "Capteur de programme / phase",
@@ -4689,6 +4691,7 @@ const STRINGS = {
     "f_show_selector": "Pokaż wybór trybu",
     "f_show_buttons": "Pokaż przyciski włącz / wyłącz",
     "f_show_slider": "Pokaż suwak temperatury",
+    "f_buttons": "Przyciski (kolejność = kolejność wyświetlania)",
     "f_remaining": "Czujnik pozostałego czasu",
     "f_progress": "Czujnik postępu (%)",
     "f_program": "Czujnik programu / fazy",
@@ -13783,18 +13786,39 @@ class ApplianceCardBase extends HTMLElement {
       // MediaPlayerEntityFeature : PAUSE 1, VOLUME_SET 4, VOLUME_MUTE 8, TURN_ON 128, TURN_OFF 256, VOLUME_STEP 1024, PLAY 16384
       const has = (bit) => !Number.isFinite(sf) || (sf & bit) !== 0;
       const off = ["off", "standby", "unavailable"].includes(m.status), play = ["playing", "muted"].includes(m.status), vol = has(4) || has(1024);
-      const btns = [
-        has(128) || has(256) ? ["power", "mdi:power", "toggle", !off] : null,
-        vol ? ["vol_down", "mdi:volume-minus", "volume_down", null] : null,
-        has(1) || has(16384) ? ["play_pause", play ? "mdi:pause" : "mdi:play", play ? "pause" : "play", play] : null,
-        vol ? ["vol_up", "mdi:volume-plus", "volume_up", null] : null,
-        has(8) ? ["mute", m.muted ? "mdi:volume-off" : "mdi:volume-high", "mute", m.muted] : null,
-      ].filter(Boolean);
-      modesEl.innerHTML = btns.map(([k, icon, lbl, on]) => {
-        const dis = m.status === "unavailable" || (off && k !== "power");
-        return `<button class="mode-btn sp-btn ${on ? "on" : ""}" data-sp="${k}" title="${esc(tr(hass, lbl))}" aria-label="${esc(tr(hass, lbl))}"${on != null ? ` aria-pressed="${on}"` : ""}${dis ? " disabled" : ""}><ha-icon icon="${icon}"></ha-icon></button>`;
-      }).join("");
-      modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._press(b); this._spkCmd(b.dataset.sp); }; });
+      const all = {
+        power: has(128) || has(256) ? ["power", "mdi:power", "toggle", !off] : null,
+        vol_down: vol ? ["vol_down", "mdi:volume-minus", "volume_down", null] : null,
+        play_pause: has(1) || has(16384) ? ["play_pause", play ? "mdi:pause" : "mdi:play", play ? "pause" : "play", play] : null,
+        vol_up: vol ? ["vol_up", "mdi:volume-plus", "volume_up", null] : null,
+        mute: has(8) ? ["mute", m.muted ? "mdi:volume-off" : "mdi:volume-high", "mute", m.muted] : null,
+        prev_track: has(16) ? ["prev_track", "mdi:skip-previous", "previous_track", null] : null,
+        next_track: has(32) ? ["next_track", "mdi:skip-next", "next_track", null] : null,
+      };
+      // buttons : liste ordonnée des boutons à afficher (ex. [power, play_pause, mute]) ; par défaut : marche / arrêt, volume −, lecture / pause, volume +, sourdine
+      const order = Array.isArray(c.buttons) && c.buttons.length ? c.buttons : ["power", "vol_down", "play_pause", "vol_up", "mute"];
+      const btns = order.map((k) => all[k]).filter(Boolean);
+      // curseur de volume (volume_set) : dès que l'enceinte annonce VOLUME_SET et un volume ; pas = volume_step, sinon 1 %
+      const sa = hass.states[c.entity].attributes || {};
+      const stepPct = Math.max(1, Math.round((Number(c.volume_step) || 0.01) * 100)), vp = m.vol != null ? Math.round(m.vol * 100) : 0;
+      const slider = has(4) && c.show_volume_slider !== false && sa.volume_level != null
+        ? `<label class="av-vol-row"><ha-icon icon="mdi:volume-medium"></ha-icon><input class="av-vol" type="range" min="0" max="100" step="${stepPct}" value="${vp}" aria-label="${esc(tr(hass, "volume"))}"${off ? " disabled" : ""}><span class="av-vol-v">${vp} %</span></label>` : "";
+      // pas de reconstruction pendant que le curseur est tenu (sinon il saute sous le doigt)
+      if (!this._avDrag) {
+        modesEl.innerHTML = slider + btns.map(([k, icon, lbl, on]) => {
+          const dis = m.status === "unavailable" || (off && k !== "power");
+          return `<button class="mode-btn sp-btn ${on ? "on" : ""}" data-sp="${k}" title="${esc(tr(hass, lbl))}" aria-label="${esc(tr(hass, lbl))}"${on != null ? ` aria-pressed="${on}"` : ""}${dis ? " disabled" : ""}><ha-icon icon="${icon}"></ha-icon></button>`;
+        }).join("");
+        modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); this._press(b); this._spkCmd(b.dataset.sp); }; });
+        const rg = modesEl.querySelector(".av-vol");
+        if (rg) {
+          const lab = modesEl.querySelector(".av-vol-v");
+          ["click", "pointerdown", "pointerup", "touchstart", "touchend", "mousedown", "mouseup"].forEach((e) => rg.addEventListener(e, (ev) => ev.stopPropagation()));
+          rg.oninput = () => { this._avDrag = true; lab.textContent = `${rg.value} %`; };
+          rg.onchange = () => { this._avDrag = false; hass.callService("media_player", "volume_set", { entity_id: c.entity, volume_level: Number(rg.value) / 100 }); };
+          rg.onblur = () => { this._avDrag = false; };
+        }
+      }
     } else if (kind === "ceiling_fan" && c.show_controls !== false && domainOf(c.entity) === "fan" && hass.states[c.entity]) {
       // ventilateur de plafond : marche / arrêt, 3 vitesses, sens de rotation (selon les fonctions annoncées par l'entité)
       // FanEntityFeature : SET_SPEED 1, DIRECTION 4, TURN_OFF 16, TURN_ON 32
@@ -14392,6 +14416,11 @@ function buildForm(kind) {
               { value: "pink", label: "Rose / Pink" }, { value: "green", label: "Vert / Green" }, { value: "blue", label: "Bleu / Blue" },
               { value: "chalk", label: "Nest Mini : Craie / Chalk" }, { value: "charcoal", label: "Nest Mini : Charbon / Charcoal" }, { value: "coral", label: "Nest Mini : Corail / Coral" }, { value: "sky", label: "Nest Mini : Ciel / Sky" }] } } },
             { name: "show_controls", selector: { boolean: {} }, default: true },
+            { name: "show_volume_slider", selector: { boolean: {} }, default: true },
+            // buttons : boutons affichés, dans l'ordre choisi (glisser pour réordonner)
+            { name: "buttons", selector: { select: { multiple: true, reorder: true, mode: "list", options: [
+              { value: "power", label: "Marche / arrêt / Power" }, { value: "vol_down", label: "Volume − / Volume down" }, { value: "play_pause", label: "Lecture / pause / Play / pause" },
+              { value: "vol_up", label: "Volume + / Volume up" }, { value: "mute", label: "Sourdine / Mute" }, { value: "prev_track", label: "Piste précédente / Previous track" }, { value: "next_track", label: "Piste suivante / Next track" }] } } },
             { name: "show_media", selector: { boolean: {} }, default: true },
             { name: "volume_step", selector: { number: { min: 0.01, max: 0.2, step: 0.01, mode: "box" } } },
           ] : []),
@@ -16485,7 +16514,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
 (async () => {
   const base = import.meta.url;
   // ?v=<version> : après une mise à jour, le navigateur ne ressert pas d'anciens morceaux depuis son cache
-  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.191.0`, base).href);
+  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.192.0`, base).href);
   await chunk("card-helpers");
   await chunk("editor-labels");
   // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre

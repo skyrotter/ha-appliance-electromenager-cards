@@ -242,6 +242,11 @@ function buildForm(kind) {
               { value: "pink", label: "Rose / Pink" }, { value: "green", label: "Vert / Green" }, { value: "blue", label: "Bleu / Blue" },
               { value: "chalk", label: "Nest Mini : Craie / Chalk" }, { value: "charcoal", label: "Nest Mini : Charbon / Charcoal" }, { value: "coral", label: "Nest Mini : Corail / Coral" }, { value: "sky", label: "Nest Mini : Ciel / Sky" }] } } },
             { name: "show_controls", selector: { boolean: {} }, default: true },
+            { name: "show_volume_slider", selector: { boolean: {} }, default: true },
+            // buttons : boutons affichés, dans l'ordre choisi (glisser pour réordonner)
+            { name: "buttons", selector: { select: { multiple: true, reorder: true, mode: "list", options: [
+              { value: "power", label: "Marche / arrêt / Power" }, { value: "vol_down", label: "Volume − / Volume down" }, { value: "play_pause", label: "Lecture / pause / Play / pause" },
+              { value: "vol_up", label: "Volume + / Volume up" }, { value: "mute", label: "Sourdine / Mute" }, { value: "prev_track", label: "Piste précédente / Previous track" }, { value: "next_track", label: "Piste suivante / Next track" }] } } },
             { name: "show_media", selector: { boolean: {} }, default: true },
             { name: "volume_step", selector: { number: { min: 0.01, max: 0.2, step: 0.01, mode: "box" } } },
           ] : []),

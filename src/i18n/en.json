@@ -298,6 +298,7 @@
     "f_show_selector": "Show the mode selector",
     "f_show_buttons": "Show the on/off buttons",
     "f_show_slider": "Show the temperature slider",
+    "f_buttons": "Buttons (order = display order)",
     "f_remaining": "Remaining time sensor",
     "f_progress": "Progress sensor (%)",
     "f_program": "Program / phase sensor",

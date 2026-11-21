@@ -41,8 +41,10 @@ energy: sensor.speaker_plug_energy   # optional
 | `model` | The speaker photo (see the table above). |
 | `finish` | Colour of the Google Nest Mini, Devialet and HomePod models (see the table above). |
 | `show_controls` | Buttons: power, volume −, play/pause, volume +, mute. On by default; only the features the entity supports are shown. |
+| `show_volume_slider` | Volume slider above the buttons (sends `volume_set` when released), shown when the entity supports setting the volume. On by default. |
+| `buttons` | Which buttons to show, in this order: `power`, `vol_down`, `play_pause`, `vol_up`, `mute`, `prev_track`, `next_track`. Default: `power`, `vol_down`, `play_pause`, `vol_up`, `mute`. In the visual editor, drag to reorder. |
 | `show_media` | The "artist · title" line under the state. On by default. |
-| `volume_step` | Volume − / + step, from 0 to 1. Default 0.05 (5 %). |
+| `volume_step` | Volume − / + step, from 0 to 1. Default 0.05 (5 %); also the slider step (minimum 1 %). |
 | `threshold` / `standby_threshold` | Plug only: playing / idle above these powers (W). |
 | `show_power` / `show_energy` / `show_cost` / `show_toggle` | Checkboxes in the visual editor (on by default; unchecked on newly created smart speaker cards). |
 
