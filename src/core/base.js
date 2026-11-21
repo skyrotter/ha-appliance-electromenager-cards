@@ -17,6 +17,8 @@ const USAGE_ON = ["on", "playing", "paused", "idle", "buffering", "home"];
 // piscine : équipements commandables [option, icône, clé de libellé]
 const POOL_CTL = [["switch_ph_plus", "mdi:plus-circle-outline", "pool_ph_plus"], ["switch_ph_minus", "mdi:minus-circle-outline", "pool_ph_minus"],
   ["switch_electrolysis", "mdi:flash", "electrolysis"], ["switch_heat_pump", "mdi:heat-pump", "pool_heat_pump"], ["switch_shower", "mdi:shower-head", "shower"]];
+// appareils larges et plats dont la zone d'illustration s'ajuste au dessin : sélecteur des calques d'effets animés
+const AUTOFIT = { ac_split: ".ac-warm,.ac-waves,.ac-air,.ac-drops", av_receiver: ".av-waves,.av-notes,.av-ring" };
 class ApplianceCardBase extends HTMLElement {
   static get kind() { return "washer"; }
   static getConfigForm() { return buildForm(this.kind); }
@@ -41,6 +43,7 @@ class ApplianceCardBase extends HTMLElement {
     this._kind = this.constructor.kind;
     this._def = DEF[this._kind];
     this._lastKey = null;
+    this._fitBox = null;
     this._build();
     if (this._hass) this._update(true);
   }
@@ -109,6 +112,32 @@ class ApplianceCardBase extends HTMLElement {
 
   // guirlande : une couleur choisie autre que blanc chaud → unicolore ; sinon arc-en-ciel
   _glSingle(m) { return !/^rgb\(255,\s*2[0-9]{2},\s*1[0-9]{2}\)$|^rgb\(255,255,255\)$/.test(String(m.glColor).replace(/ /g, "")); }
+
+  // zone d'illustration dynamique : le cadre et le viewBox suivent le contour réel du dessin (getBBox) plus une marge, au lieu d'un format
+  // fixe 120 × 140 (clim, récepteur AV : appareils larges et plats). Sans animation, on ne mesure que l'appareil ; effets en cours
+  // (air de la clim, ondes sonores…), la zone s'agrandit pour les contenir. Option autofit: false pour revenir au format fixe.
+  _fit(fxOn) {
+    const sel = AUTOFIT[this._kind];
+    if (!sel || this._config.autofit === false || this._config.layout === "split") return;
+    const il = this.shadowRoot && this.shadowRoot.querySelector(".illus"), sv = il && il.querySelector("svg");
+    if (!sv) return;
+    if (!this._fitBox) {
+      // mesure unique (la carte doit être affichée, sinon on réessaie à la mise à jour suivante)
+      const union = (list) => list.reduce((u, el) => {
+        let r; try { r = el.getBBox(); } catch (e) { return u; }
+        if (!(r.width || r.height)) return u;
+        return u ? { x1: Math.min(u.x1, r.x), y1: Math.min(u.y1, r.y), x2: Math.max(u.x2, r.x + r.width), y2: Math.max(u.y2, r.y + r.height) } : { x1: r.x, y1: r.y, x2: r.x + r.width, y2: r.y + r.height };
+      }, null);
+      const kids = [...sv.children].filter((el) => el.tagName.toLowerCase() !== "defs");
+      const body = union(kids.filter((el) => !el.matches(sel))), all = union(kids);
+      if (!body || !all || all.x2 - all.x1 < 4 || all.y2 - all.y1 < 4) return;
+      this._fitBox = { body, all };
+    }
+    const u = fxOn ? this._fitBox.all : this._fitBox.body, bw = u.x2 - u.x1, bh = u.y2 - u.y1, pad = Math.max(bw, bh) * 0.06;
+    const w = bw + 2 * pad, h = bh + 2 * pad;
+    sv.setAttribute("viewBox", `${(u.x1 - pad).toFixed(1)} ${(u.y1 - pad).toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}`);
+    il.style.aspectRatio = `${w.toFixed(1)} / ${h.toFixed(1)}`;
+  }
 
   _build() {
     if (!this.shadowRoot) this.attachShadow({ mode: "open" });
@@ -1367,6 +1396,7 @@ class ApplianceCardBase extends HTMLElement {
     const active = ["grilling", "grill_ready", "fryer_heating", "fryer_ready", "running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "in_use", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
     this._fetchCycle(active);
     const hideWouldApply = this._applyHide(active, m.alerts.length > 0);
+    this._fit(active);
     $("wrap").className = [
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
       active ? "active" : "", m.dual ? "dual" : "", m.active2 ? "active2" : "", m.phase ? `ph-${m.phase}` : "",
