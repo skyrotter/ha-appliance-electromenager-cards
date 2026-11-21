@@ -224,6 +224,7 @@ Pulsa una tarjeta para ver sus opciones y ejemplos (documentación en inglés).
 | [Router de operador (Freebox Pop, SFR Box)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/internet-box.md) | `custom:appliance-internet-box-card` |
 | [Aire acondicionado portátil](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/portable-ac.md) | `custom:appliance-portable-ac-card` |
 | [Dispensador de comida (Aqara C1)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/pet-feeder.md) | `custom:appliance-pet-feeder-card` |
+| [Cubo de basura (días de recogida)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/poubelle.md) | `custom:appliance-poubelle-card` |
 | [PC de sobremesa](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/towel-rack-pc-laptop.md) | `custom:appliance-desktop-pc-card` |
 | [Monitores (1 a 3)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/towel-rack-pc-laptop.md) | `custom:appliance-monitor-card` |
 | [Portátil](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/towel-rack-pc-laptop.md) | `custom:appliance-laptop-card` |

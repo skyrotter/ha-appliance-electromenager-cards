@@ -240,6 +240,7 @@ Clique em um cartão para consultar as opções e os exemplos.
 | [Roteador de Internet (Freebox Pop, SFR Box)](docs/cards/internet-box.md) | `custom:appliance-internet-box-card` |
 | [Ar-condicionado portátil](docs/cards/portable-ac.md) | `custom:appliance-portable-ac-card` |
 | [Alimentador de animais (Aqara C1)](docs/cards/pet-feeder.md) | `custom:appliance-pet-feeder-card` |
+| [Lixeira (dias de coleta)](docs/cards/poubelle.md) | `custom:appliance-poubelle-card` |
 | [Computador de mesa](docs/cards/towel-rack-pc-laptop.md) | `custom:appliance-desktop-pc-card` |
 | [Monitores (1 a 3)](docs/cards/towel-rack-pc-laptop.md) | `custom:appliance-monitor-card` |
 | [Notebook](docs/cards/towel-rack-pc-laptop.md) | `custom:appliance-laptop-card` |
