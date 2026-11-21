@@ -65,7 +65,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
 /* ---- illustration ---- */
 
 .at{max-width:calc(100% * var(--illus-scale,.75))}
-.at-tint{opacity:.27;mix-blend-mode:multiply}
+.at-tint{opacity:.9}
 .at-air path{stroke:#dfe9f3;stroke-width:5;stroke-linecap:round;stroke-dasharray:26 70;opacity:0}
 .green .at-air path,.boost .at-air path{opacity:.75}
 .at-in{animation:atin 1.6s linear infinite}.at-out{animation:atout 1.6s linear infinite}
@@ -77,7 +77,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
 .at-d{stroke-dasharray:2 44;opacity:0}.draw .at-d{opacity:.95}
 .draw .at-hot{animation:atup 1.2s linear infinite}.draw .at-cold{animation:atup 1.2s linear infinite}
 @keyframes atup{to{stroke-dashoffset:-46}}
-.off .at-tint,.unavailable .at-tint{opacity:.12}
+.off .at-tint,.unavailable .at-tint{opacity:.35}
 .noanim .at-in,.noanim .at-out,.noanim .at-body,.noanim .at-glow,.noanim .at-d{animation:none!important}
 .th-fan{transform-box:fill-box;transform-origin:50% 50%}
 .th-big{filter:drop-shadow(0 0 6px rgba(0,0,0,.85));pointer-events:none}
@@ -125,7 +125,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
  <defs><clipPath id="at-clip"><rect x="0" y="0" width="1086" height="1448" rx="40"/></clipPath>
   <clipPath id="at-body"><rect x="318" y="126" width="454" height="1204" rx="60"/></clipPath>
   <clipPath id="at-drop"><path d="${DROP}"/></clipPath>
-  <linearGradient id="at-g" gradientUnits="userSpaceOnUse" x1="0" y1="126" x2="0" y2="1330"><stop id="at-s0" offset="0" stop-color="#ff3b2e"/><stop id="at-s1" offset=".4" stop-color="#ff3b2e"/><stop id="at-s2" offset=".5" stop-color="#2d7bff"/><stop offset="1" stop-color="#2d7bff"/></linearGradient>
+  <linearGradient id="at-g" gradientUnits="userSpaceOnUse" x1="0" y1="252" x2="0" y2="1240"><stop id="at-s0" offset="0" stop-color="#ff3b2e"/><stop id="at-s1" offset=".4" stop-color="#ff3b2e"/><stop id="at-s2" offset=".5" stop-color="#2d7bff"/><stop offset="1" stop-color="#2d7bff"/></linearGradient>
   <radialGradient id="at-ge" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff8a1f" stop-opacity=".9"/><stop offset="1" stop-color="#ff5a00" stop-opacity="0"/></radialGradient></defs>
  <g class="at-air" fill="none">
   <path class="at-in" d="M395 -135Q420 -105 395 -75T395 -10" /><path class="at-in" d="M445 -140Q470 -110 445 -80T445 -10" style="animation-delay:-.5s"/><path class="at-in" d="M495 -135Q520 -105 495 -75T495 -10" style="animation-delay:-1s"/>
@@ -133,7 +133,12 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
  </g>
  <g class="at-body">
   <image href="${ATLANTIC_IMG}" width="1086" height="1448" clip-path="url(#at-clip)"/>
-  <g clip-path="url(#at-body)"><rect x="318" y="126" width="454" height="1204" fill="url(#at-g)" class="at-tint"/><ellipse class="at-glow" cx="545" cy="1270" rx="300" ry="170" fill="url(#at-ge)"/></g>
+  <g clip-path="url(#at-body)"><ellipse class="at-glow" cx="545" cy="1270" rx="300" ry="170" fill="url(#at-ge)"/></g>
+  <!-- bande verticale : fenêtre sur l'eau du ballon (rouge = chaude en haut, bleu = froide en bas) -->
+  <rect x="408" y="246" width="74" height="1000" rx="37" fill="#15181d" opacity=".55"/>
+  <rect x="414" y="252" width="62" height="988" rx="31" fill="url(#at-g)" class="at-tint"/>
+  <rect x="422" y="270" width="12" height="950" rx="6" fill="#fff" opacity=".28"/>
+  <rect x="408" y="246" width="74" height="1000" rx="37" fill="none" stroke="#c9ced6" stroke-width="5"/>
   <g id="at-screen">
    <rect x="650" y="355" width="51" height="13" fill="#1d3a36"/><text id="at-time" x="651" y="366" fill="#d7efe8" font-family="Roboto,system-ui,sans-serif" font-size="12" font-weight="600">--</text>
    <rect x="634" y="369" width="67" height="82" fill="#000"/>
