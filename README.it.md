@@ -18,6 +18,8 @@ Progetto gratuito e open source. Se ti piace, una piccola donazione aiuta a crea
 
 Rendering reali delle card, raggruppati per tema (dati simulati).
 
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-poubelle.png" width="860" alt="Nuova card: bidone (giorni di raccolta), bidoni, sacco e rifiuti ingombranti nei diversi stati"></p>
+
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-latest.png" width="860" alt="Ultime card: spa gonfiabile, termoventilatore, stampante Bambu Lab A1, pluviometro"></p>
 
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/smart-speaker.png" width="860" alt="Smart speaker e assistenti vocali: Amazon Echo, Google Nest, Sonos, Devialet, Apple HomePod"></p>

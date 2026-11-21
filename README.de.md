@@ -24,6 +24,8 @@ Eine einfache smarte Steckdose mit Leistungsmessung genügt. Vernetzte Geräte k
 
 Echte Darstellungen der Karten, nach Themen gruppiert (simulierte Daten).
 
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-poubelle.png" width="860" alt="Neue Karte: Mülltonne (Abfuhrtage), Tonnen, Sack und Sperrmüll in ihren verschiedenen Zuständen"></p>
+
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-latest.png" width="860" alt="Neueste Karten: aufblasbarer Whirlpool, Heizlüfter, Bambu Lab A1, Regenmesser"></p>
 
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-1-127-a.png" width="860" alt="Neu in 1.127: Regenwasserzisterne mit Hauswasserwerk, Prusa-Drucker MK4 und MK3, Google Chromecast"></p>

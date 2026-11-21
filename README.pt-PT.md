@@ -24,6 +24,8 @@ Basta uma tomada inteligente com um sensor de potência. Os aparelhos conectados
 
 Imagens dos cartões em funcionamento, agrupadas por tema (dados simulados).
 
+<p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-poubelle.png" width="860" alt="Novo cartão: caixote do lixo (dias de recolha), contentores, saco e resíduos volumosos nos seus diferentes estados"></p>
+
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-latest.png" width="860" alt="Cartões recentes: spa insuflável, termoventilador, impressora Bambu Lab A1, pluviómetro"></p>
 
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/gallery-1-127-a.png" width="860" alt="Novidades da versão 1.127: depósito de água da chuva com grupo de pressurização, impressoras Prusa MK4 e MK3, Google Chromecast"></p>
