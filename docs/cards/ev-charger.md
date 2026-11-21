@@ -14,10 +14,10 @@ Cut-out photos of real cars on a Legrand Green'up pedestal, with the same animat
 
 <p align="center"><img src="../ev-charger-photos.png" width="720" alt="The photo scenes in their different states"></p>
 
-<p align="center"><img src="../ev-scenic-schneider.gif" width="480" alt="Renault Scénic E-Tech on a Schneider Charge wall box: unplugged, plugged, charging (blue ring), complete"></p>
+<p align="center"><img src="../ev-scenic-schneider.gif" width="480" alt="Renault Scénic E-Tech on a Schneider Charge wall box: unplugged, plugged, charging (blue half ring), complete"></p>
 
 - `car_model`: `generic` (default, drawn side-view car), `zoe` (white Renault Zoé), `id3` (grey Volkswagen ID.3) or `scenic` (slate-grey Renault Scénic E-Tech).
-- `charger_model`: `green_up` (Legrand Green'up pedestal, default with a photo car), `schneider` (wall-mounted Schneider Charge) or `wallbox` (drawn wall box). With `schneider`, a ring around the socket stays green while the charger is available and turns blue and "breathes" while charging.
+- `charger_model`: `green_up` (Legrand Green'up pedestal, default with a photo car), `schneider` (wall-mounted Schneider Charge) or `wallbox` (drawn wall box). With `schneider`, a half ring around the socket stays green while the charger is available and turns blue and "breathes" while charging.
 - The pedestal light follows the state (grey unplugged, blue plugged, pulsing green charging, steady green complete); the cable hangs on the pedestal when unplugged, and energy flows through it when charging. On the ID.3 the socket is at the rear: the cable goes behind the car.
 - `entity_plugged`: a binary_sensor / switch for « plugged in » (takes priority over the status entity).
 - `entity_climate`: a `climate`, binary_sensor, switch or sensor. When it is on, waves and an **A/C** badge appear above the roof (blue for cooling, orange for heating).

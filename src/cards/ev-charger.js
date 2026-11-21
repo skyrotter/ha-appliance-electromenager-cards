@@ -121,7 +121,7 @@ class ApplianceEvChargerCard extends HTMLElement {
       @keyframes breathe { 50% { opacity:.45; } }
       @keyframes spark { 0%,100% { opacity:0; transform:scale(.6); } 50% { opacity:1; transform:scale(1.1); } }
       .carimg { transition:filter .4s; }
-      .ring { fill:none; stroke:#3ddc5a; stroke-width:2.4; opacity:.95; filter:drop-shadow(0 0 1.6px #3ddc5a); transition:stroke .6s; } .charging .ring { stroke:#2f9bff; filter:drop-shadow(0 0 2.2px #2f9bff); animation:breathe var(--sp,2s) ease-in-out infinite; }
+      .ring { fill:none; stroke-linecap:round; stroke:#3ddc5a; stroke-width:2.4; opacity:.95; filter:drop-shadow(0 0 1.6px #3ddc5a); transition:stroke .6s; } .charging .ring { stroke:#2f9bff; filter:drop-shadow(0 0 2.2px #2f9bff); animation:breathe var(--sp,2s) ease-in-out infinite; }
       .lamp { fill:var(--st,#9e9e9e); opacity:.62; filter:blur(.6px); transition:fill .6s; } .charging .lamp { animation:breathe var(--sp,2s) ease-in-out infinite; }
       .clim-g, .doors-g { opacity:0; transition:opacity .5s; pointer-events:none; } .clim .clim-g, .doors .doors-g { opacity:1; }
       .cw { fill:none; stroke:var(--cc,#4fc3f7); stroke-width:2.2; stroke-linecap:round; opacity:0; } .clim .cw { animation:cwave 2.4s ease-out infinite; } .cw.w2 { animation-delay:.6s !important; } .cw.w3 { animation-delay:1.2s !important; }
@@ -214,7 +214,7 @@ class ApplianceEvChargerCard extends HTMLElement {
     const hang = `M${f(hook[0])} ${f(hook[1])} C ${f(hook[0])} ${f(hook[1] + 36)}, ${f(hook[0] + 20)} ${f(hook[1] + 36)}, ${f(hook[0] + 16)} ${f(hook[1] + 8)}`;
     // borne Schneider : anneau autour de la prise (vert = disponible, bleu qui respire = en charge) ; Green'up : rectangle du voyant
     const lamp = !ch ? '' : ch.wall
-      ? `<circle class="ring" cx="${f(px + ch.ring[0] * pw)}" cy="${f(py + ch.ring[1] * ph)}" r="${f(ch.ring[2] * pw)}"/>`
+      ? (() => { const rx = px + ch.ring[0] * pw, ry = py + ch.ring[1] * ph, rr = ch.ring[2] * pw; return `<path class="ring" d="M${f(rx - rr)} ${f(ry)}A${f(rr)} ${f(rr)} 0 0 0 ${f(rx + rr)} ${f(ry)}"/>`; })()
       : `<rect class="lamp" x="${f(px + ch.lamp[0] * pw)}" y="${f(py + ch.lamp[1] * ph)}" width="${f(ch.lamp[2] * pw)}" height="${f(ch.lamp[3] * ph)}" rx="3"/>`;
     const post = ch
       ? `<image href="${ch.img}" x="${px}" y="${py}" width="${pw}" height="${ph}"/>${lamp}`
