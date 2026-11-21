@@ -509,6 +509,8 @@ class ApplianceEvChargerCard extends HTMLElement {
       ? `<image href="${ch.img}" x="${px}" y="${py}" width="${pw}" height="${ph}"/>${lamp}`
       : `<rect x="12" y="40" width="64" height="106" rx="14" fill="url(#wb)"/><rect x="18" y="46" width="52" height="94" rx="10" fill="#2c3036" stroke="rgba(255,255,255,.08)"/><rect class="ledbar" x="41" y="56" width="6" height="44" rx="3"/><rect class="scr" x="25" y="110" width="38" height="16" rx="3"/><text class="scrtxt" x="44" y="121" id="scr"></text>`;
     const wx = cx + cw * .5, wy = cy + 2;
+    // jauge de batterie : sur la voiture, ou juste au-dessus de la borne murale (Schneider)
+    const gx = ch && ch.wall ? px + pw / 2 - 43 : cx + cw * (car.gauge ? car.gauge[0] : .30), gy = ch && ch.wall ? py - 26 : cy + chh * (car.gauge ? car.gauge[1] : .66);
     this.shadowRoot.innerHTML = `
     <style>${this._css()}</style>
     <ha-card>
@@ -535,7 +537,7 @@ class ApplianceEvChargerCard extends HTMLElement {
           <path d="M${cx + cw - 72} ${cy + 3.5}v-6h6l2 6z" fill="none" stroke="#ff9800" stroke-width="1.3" stroke-linejoin="round"/>
           <text class="pilltxt" x="${cx + cw - 60}" y="${cy + 5.2}" id="doortxt">Portes</text></g>
         <!-- Jauge batterie sur la voiture -->
-        <g id="gauge" transform="translate(${f(cx + cw * (car.gauge ? car.gauge[0] : .30))} ${f(cy + chh * (car.gauge ? car.gauge[1] : .66))})">
+        <g id="gauge" transform="translate(${f(gx)} ${f(gy)})">
           <rect x="0" y="0" width="82" height="19" rx="5" fill="rgba(0,0,0,.55)" stroke="rgba(255,255,255,.85)" stroke-width="1.4"/>
           <rect x="82" y="5.5" width="4" height="8" rx="1.5" fill="rgba(255,255,255,.85)"/>
           <rect class="gfill" id="gfill" x="3" y="3" width="0" height="13" rx="3"/>
