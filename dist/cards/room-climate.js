@@ -2400,13 +2400,25 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
         const bg = cs.getPropertyValue('--card-background-color').trim();
         this.style.setProperty('--ha-card-background', clear(bg) ? '#fff' : bg);
       }
-      // fond du pop-up réglable : history_popup_background (#hex, rgb(), rgba(), nom CSS) et history_popup_opacity (0 à 100, 95 par défaut
-      // dès qu'une couleur est choisie) ; l'opacité seule s'applique à la couleur de fond pleine du thème
-      const pbg = String(c.history_popup_background ?? '').trim(), popRaw = c.history_popup_opacity;
+      // fond du pop-up réglable : history_popup_background (#hex, rgb(), rgba(), nom CSS, ou liste [r, g, b] du sélecteur de couleur) et
+      // history_popup_opacity (0 à 100, 95 par défaut dès qu'une couleur est choisie). L'opacité seule s'applique à la couleur de fond pleine
+      // du thème ; si elle est elle-même translucide (thème verre), un fond sombre / clair neutre prend le relais (sinon le tableau de bord reste visible).
+      const rawBg = c.history_popup_background, popRaw = c.history_popup_opacity;
+      let pbg = Array.isArray(rawBg) ? (rawBg.length >= 3 ? `rgb(${rawBg.slice(0, 3).map((x) => Math.round(Number(x) || 0)).join(',')})` : '') : (rawBg != null && typeof rawBg === 'object' && 'r' in rawBg ? `rgb(${rawBg.r},${rawBg.g},${rawBg.b})` : String(rawBg ?? '').trim());
+      if (pbg && /^[0-9a-f]{3,8}$/i.test(pbg)) pbg = `#${pbg}`;        // « 1c1c1e » sans # accepté
       if (pbg || (popRaw != null && popRaw !== '')) {
         let base = pbg && window.CSS && window.CSS.supports('color', pbg) ? pbg : '';
-        // sans couleur : la couleur de fond pleine du thème (--card-background-color), le fond de carte d'un thème verre étant déjà translucide
-        if (!base) base = this.style.getPropertyValue('--card-background-color').trim() || '#fff';
+        if (!base) {
+          base = this.style.getPropertyValue('--card-background-color').trim();
+          // couleur du thème translucide (rgba / hsla avec alpha < 1, #rrggbbaa) ou absente : fond neutre selon la couleur du texte
+          const al = (base.match(/(?:,|\/)\s*([0-9.]+%?)\s*\)$/) || [])[1], hex8 = /^#[0-9a-f]{8}$/i.test(base) || /^#[0-9a-f]{4}$/i.test(base);
+          const translucent = !base || hex8 || (al != null && (al.endsWith('%') ? parseFloat(al) < 100 : parseFloat(al) < 1));
+          if (translucent) {
+            const tx = (this.style.getPropertyValue('--primary-text-color').trim().match(/\d+/g) || []).slice(0, 3).map(Number);
+            const light = tx.length === 3 ? (0.299 * tx[0] + 0.587 * tx[1] + 0.114 * tx[2]) > 140 : false;
+            base = light ? '#1c1c1e' : '#ffffff';
+          }
+        }
         const n = Number(popRaw), op = Number.isFinite(n) && popRaw !== '' && popRaw != null ? Math.max(0, Math.min(100, n)) : 95;
         this.style.setProperty('--rc-dlg-bg', op >= 100 ? base : `color-mix(in srgb, ${base} ${op}%, transparent)`);
       }
@@ -2697,7 +2709,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
           num('humidity_min', 0, 100, 1, '%', 35), num('humidity_max', 0, 100, 1, '%', 65)] },
         { type: 'grid', name: '', schema: [tr('alert_temp_min', -20, 30), tr('alert_temp_max', 10, 50), num('alert_humidity_min', 0, 100, 1, '%'), num('alert_humidity_max', 0, 100, 1, '%')] },
         { type: 'grid', name: '', schema: [num('mold_humidity', 40, 100, 1, '%', 70), num('window_drop', 0, 10, 0.1, u), num('battery_low', 0, 100, 1, '%', 20)] },
-        { type: 'grid', name: '', schema: [{ name: 'history_popup_background', selector: { text: {} } }, num('history_popup_opacity', 0, 100, 1, '%', 95)] },
+        { type: 'grid', name: '', schema: [{ name: 'history_popup_background', selector: { color_rgb: {} } }, num('history_popup_opacity', 0, 100, 1, '%', 95)] },
         { type: 'grid', name: '', schema: [sel('history_days', [['1', 'h24'], ['7', 'd7'], ['30', 'd30']]), sel('history_mode', [['both', 'both'], ['temperature', 'temperature'], ['humidity', 'humidity']])] },
         { type: 'grid', name: '', schema: [sel('tap_action', [['history', 'tap_history'], ['more-info', 'tap_more_info'], ['navigate', 'tap_navigate'], ['none', 'tap_none']]),
           ...(this._c && this._c.tap_action === 'navigate' ? [{ name: 'navigation_path', selector: { text: {} } }] : [])] },
