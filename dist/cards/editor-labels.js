@@ -747,7 +747,8 @@
       "show_heat": "Show heat output",
       "show_cop": "Show COP",
       "show_compressor": "Show compressor (frequency, demand)",
-      "show_backup": "Show backup heaters and boiler"
+      "show_backup": "Show backup heaters and boiler",
+      "entity_room_target": "Room setpoint"
     },
     "cs": {
       "animations": "Animace",
@@ -3759,7 +3760,8 @@
       "show_heat": "Afficher la puissance thermique",
       "show_cop": "Afficher le COP",
       "show_compressor": "Afficher le compresseur (fréquence, demande)",
-      "show_backup": "Afficher les appoints et la chaudière"
+      "show_backup": "Afficher les appoints et la chaudière",
+      "entity_room_target": "Consigne de la pièce"
     },
     "hu": {
       "animations": "Animációk",
@@ -5991,7 +5993,9 @@
       "show_heat": "Show heat output",
       "show_cop": "Show COP",
       "show_compressor": "Show compressor (frequency, demand)",
-      "show_backup": "Show backup heaters and boiler"
+      "show_backup": "Show backup heaters and boiler",
+      "entity_room_temp": "Temperatura pokoju",
+      "entity_room_target": "Temperatura zadana pokoju"
     },
     "pt-BR": {
       "entity_drive_5": "Disco 5",

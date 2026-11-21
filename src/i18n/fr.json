@@ -659,7 +659,10 @@
     "delta": "ΔT",
     "lowp": "Pression basse",
     "highp": "Pression haute",
-    "hotf": "Départ trop chaud"
+    "hotf": "Départ trop chaud",
+    "outdoor": "Extérieur",
+    "room": "Pièce",
+    "setpoint": "Consigne"
   },
   "water_heat_pump": {
     "name": "PAC eau/eau",
@@ -1625,7 +1628,8 @@
     "show_heat": "Afficher la puissance thermique",
     "show_cop": "Afficher le COP",
     "show_compressor": "Afficher le compresseur (fréquence, demande)",
-    "show_backup": "Afficher les appoints et la chaudière"
+    "show_backup": "Afficher les appoints et la chaudière",
+    "entity_room_target": "Consigne de la pièce"
   },
   "light": {
     "white_warm": "Blanc chaud",

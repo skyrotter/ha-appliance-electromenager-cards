@@ -665,7 +665,10 @@
     "delta": "ΔT",
     "lowp": "Low pressure",
     "highp": "High pressure",
-    "hotf": "Flow too hot"
+    "hotf": "Flow too hot",
+    "outdoor": "Outdoor",
+    "room": "Room",
+    "setpoint": "Setpoint"
   },
   "water_heat_pump": {
     "name": "Water heat pump",
@@ -1640,7 +1643,8 @@
     "show_heat": "Show heat output",
     "show_cop": "Show COP",
     "show_compressor": "Show compressor (frequency, demand)",
-    "show_backup": "Show backup heaters and boiler"
+    "show_backup": "Show backup heaters and boiler",
+    "entity_room_target": "Room setpoint"
   },
   "light": {
     "white_warm": "Warm white",
