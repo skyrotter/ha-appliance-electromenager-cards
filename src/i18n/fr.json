@@ -1631,7 +1631,9 @@
     "show_backup": "Afficher les appoints et la chaudière",
     "entity_room_target": "Consigne de la pièce",
     "entity_boost": "Boost / appoint électrique (on / off)",
-    "entity_draw": "Puisage d'eau chaude (on / off ou débit)"
+    "entity_draw": "Puisage d'eau chaude (on / off ou débit)",
+    "history_popup_background": "Fond du pop-up (#hex, rgb(), rgba() ou nom CSS)",
+    "history_popup_opacity": "Opacité du fond du pop-up"
   },
   "light": {
     "white_warm": "Blanc chaud",
