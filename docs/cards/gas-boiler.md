@@ -31,4 +31,27 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `show_modulation`
 - `show_status`
 
+## Vaillant ecoTEC plus (photo)
+
+<p align="center"><img src="../vaillant-ecotec-plus.gif" width="360" alt="Vaillant ecoTEC plus: standby, heating, hot water, low pressure, fault"></p>
+
+`model: vaillant_ecotec_plus` shows a photo of the boiler with its pipes, expansion vessel and wall unit, animated:
+
+- **Screen**: flow temperature in large digits, outdoor temperature (`entity_outdoor_temp`) and the time in the top bar, green leaf lit while the burner runs.
+- **Pipes**: the red heating pipe is animated while the circuit runs; the hot water pipe (red valve) and the cold water pipe (blue valve) are animated in hot water mode, and the return pipe while heating.
+- **Flue**: a condensation plume rises while the burner runs.
+- **Wall unit**: the LED bar follows the modulation, turns dim in standby and blinks red on a fault.
+- **Expansion vessel**: the water pressure is shown above it, in red when out of range.
+
+```yaml
+type: custom:appliance-gas-boiler-card
+model: vaillant_ecotec_plus
+entity_status: sensor.house_circuit_0_state
+entity_flow_temp: sensor.house_circuit_0_current_flow_temperature
+entity_pressure: sensor.house_system_water_pressure
+entity_outdoor_temp: sensor.house_outdoor_temperature
+entity_room_temp: sensor.house_room_current_temperature   # optional tile
+entity_room_target: sensor.house_room_desired_temperature  # optional tile
+```
+
 [← All cards](../../README.md#the-cards)

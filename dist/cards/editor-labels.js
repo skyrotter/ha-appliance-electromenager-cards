@@ -747,7 +747,10 @@
       "show_heat": "Show heat output",
       "show_cop": "Show COP",
       "show_compressor": "Show compressor (frequency, demand)",
-      "show_backup": "Show backup heaters and boiler"
+      "show_backup": "Show backup heaters and boiler",
+      "entity_room_target": "Room setpoint",
+      "entity_boost": "Boost / electric backup (on / off)",
+      "entity_draw": "Hot water draw (on / off or flow)"
     },
     "cs": {
       "animations": "Animace",
@@ -3759,7 +3762,10 @@
       "show_heat": "Afficher la puissance thermique",
       "show_cop": "Afficher le COP",
       "show_compressor": "Afficher le compresseur (fréquence, demande)",
-      "show_backup": "Afficher les appoints et la chaudière"
+      "show_backup": "Afficher les appoints et la chaudière",
+      "entity_room_target": "Consigne de la pièce",
+      "entity_boost": "Boost / appoint électrique (on / off)",
+      "entity_draw": "Puisage d'eau chaude (on / off ou débit)"
     },
     "hu": {
       "animations": "Animációk",
@@ -5991,7 +5997,12 @@
       "show_heat": "Show heat output",
       "show_cop": "Show COP",
       "show_compressor": "Show compressor (frequency, demand)",
-      "show_backup": "Show backup heaters and boiler"
+      "show_backup": "Show backup heaters and boiler",
+      "entity_room_temp": "Temperatura pokoju",
+      "entity_room_target": "Temperatura zadana pokoju",
+      "entity_pump": "Pompa ciepła pracuje (on / off)",
+      "entity_boost": "Boost / grzałka elektryczna (on / off)",
+      "entity_draw": "Pobór ciepłej wody (on / off lub przepływ)"
     },
     "pt-BR": {
       "entity_drive_5": "Disco 5",

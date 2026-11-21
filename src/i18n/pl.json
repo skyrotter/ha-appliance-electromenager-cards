@@ -519,7 +519,10 @@
     "delta": "ΔT",
     "lowp": "Niskie ciśnienie",
     "highp": "Wysokie ciśnienie",
-    "hotf": "Zasilanie za gorące"
+    "hotf": "Zasilanie za gorące",
+    "outdoor": "Na zewnątrz",
+    "room": "Pokój",
+    "setpoint": "Temperatura zadana"
   },
   "water_heat_pump": {
     "name": "Pompa ciepła woda-woda",
@@ -1167,7 +1170,12 @@
     "show_heat": "Show heat output",
     "show_cop": "Show COP",
     "show_compressor": "Show compressor (frequency, demand)",
-    "show_backup": "Show backup heaters and boiler"
+    "show_backup": "Show backup heaters and boiler",
+    "entity_room_temp": "Temperatura pokoju",
+    "entity_room_target": "Temperatura zadana pokoju",
+    "entity_pump": "Pompa ciepła pracuje (on / off)",
+    "entity_boost": "Boost / grzałka elektryczna (on / off)",
+    "entity_draw": "Pobór ciepłej wody (on / off lub przepływ)"
   },
   "light": {
     "light_bulb": "Żarówka",
