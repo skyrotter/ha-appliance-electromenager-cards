@@ -3024,5 +3024,129 @@
     "f_show_open": "Mostrar o bloco de zonas abertas",
     "f_show_fault": "Mostrar o bloco de zonas em falha",
     "f_show_zones": "Mostrar os chips das zonas"
+  },
+  "poubelle": {
+    "language_name": "Português (Brasil)",
+    "card": {
+      "bin": {
+        "grey": "Lixeira cinza",
+        "black": "Lixeira preta",
+        "yellow": "Lixeira amarela",
+        "green": "Lixeira verde",
+        "blue": "Lixeira azul",
+        "brown": "Lixeira marrom",
+        "red": "Lixeira vermelha",
+        "purple": "Lixeira roxa",
+        "burgundy": "Lixeira bordô",
+        "lime": "Lixeira verde-limão"
+      },
+      "bag": {
+        "grey": "Saco cinza",
+        "black": "Saco preto",
+        "yellow": "Saco amarelo",
+        "green": "Saco verde",
+        "blue": "Saco azul",
+        "brown": "Saco marrom",
+        "red": "Saco vermelho",
+        "purple": "Saco roxo",
+        "burgundy": "Saco bordô",
+        "lime": "Saco verde-limão"
+      },
+      "bulky": "Resíduos volumosos",
+      "emptied": "Esvaziado",
+      "emptied_txt": "Esvaziado hoje ✅",
+      "today": "Coleta",
+      "today_txt": "Coleta hoje 🚛",
+      "eve": "Hoje à noite",
+      "eve_txt": "Coloque para fora hoje à noite! 🌙",
+      "in_days": "Em {n} d",
+      "next_weekday": "Coleta em {day}",
+      "next_date": "Coleta em {date}",
+      "fill": "Nível de enchimento",
+      "unknown": "Data desconhecida",
+      "moved": "adiada (feriado)",
+      "warn_no_holiday_calendar": "Nenhum calendário de feriados encontrado: adicione a integração Holiday",
+      "warn_no_workday_calendar": "Nenhum calendário de dias úteis encontrado: adicione a integração Workday"
+    },
+    "editor": {
+      "labels": {
+        "bin": "Cor",
+        "name": "Nome",
+        "container": "Recipiente",
+        "image": "Imagem personalizada (substitui o desenho)",
+        "entity": "Entidade (opcional)",
+        "calendar_filter": "Filtro do calendário (o título contém)",
+        "calendar_offset": "Deslocamento do calendário (dias)",
+        "days": "Dias de coleta",
+        "start_date": "Data de início (uma coleta conhecida)",
+        "every": "A cada N semanas",
+        "weeks": "Semanas",
+        "month_week": "Uma vez por mês",
+        "month_day": "Dia do mês (1–31)",
+        "months": "Meses de coleta (vazio = o ano todo)",
+        "holidays": "Feriados",
+        "holiday_calendar": "Calendário de feriados",
+        "workday_calendar": "Calendário de dias úteis",
+        "hour": "Hora da coleta",
+        "interval": "Dias entre coletas",
+        "scale": "Tamanho",
+        "headroom": "Espaço superior",
+        "compact": "Compacto",
+        "show_meter": "Medidor de enchimento",
+        "show_status": "Texto de status",
+        "theme_background": "Fundo do tema do HA",
+        "full_color": "Lixeira totalmente colorida",
+        "language": "Idioma"
+      },
+      "helpers": {
+        "entity": "Sensor, calendário ou input_datetime com a próxima coleta. Deixe vazio para usar a programação abaixo.",
+        "start_date": "Qualquer data em que a lixeira foi ou será esvaziada. As coletas se repetem a cada N semanas a partir dela.",
+        "every": "1 = semanal, 2 = quinzenal, 4 = a cada quatro semanas. Requer uma data de início.",
+        "weeks": "Paridade da semana ISO. Ignorado quando há data de início.",
+        "holidays": "O que acontece quando uma coleta cai em um feriado.",
+        "holiday_calendar": "Calendário da integração Holiday. Encontrado automaticamente se vazio.",
+        "workday_calendar": "Calendário da integração Workday, usado por «próximo dia útil». Encontrado automaticamente se vazio.",
+        "hour": "Hora em que o caminhão passa; depois dela, a lixeira aparece como esvaziada.",
+        "interval": "Usado apenas com uma entidade sensor, para estimar o nível de enchimento."
+      },
+      "options": {
+        "container": {
+          "wheelie_bin": "Lixeira com rodas",
+          "bag": "Saco de lixo",
+          "bulky": "Resíduos volumosos"
+        },
+        "weeks": {
+          "all": "Toda semana",
+          "even": "Semanas pares",
+          "odd": "Semanas ímpares"
+        },
+        "month_week": {
+          "": "Toda semana",
+          "1": "1ª do mês",
+          "2": "2ª do mês",
+          "3": "3ª do mês",
+          "4": "4ª do mês",
+          "last": "Última do mês"
+        },
+        "holidays": {
+          "none": "Ignorar feriados",
+          "next_day": "Mover para o dia seguinte",
+          "next_work_day": "Mover para o próximo dia útil",
+          "shift_week": "Pular para a semana seguinte",
+          "shift_rest_of_week": "O resto da semana avança +1 dia",
+          "cancel": "Cancelada"
+        },
+        "language": {
+          "auto": "Automático (idioma do Home Assistant)"
+        }
+      }
+    },
+    "errors": {
+      "bin_required": "Defina «bin» ({bins})",
+      "bin_unknown": "Lixeira desconhecida «{bin}» (use {bins})",
+      "schedule_required": "Defina «days» (ex.: [1, 4]), «start_date», «month_day» ou «entity»",
+      "start_date_invalid": "«start_date» deve ser uma data como 2026-11-04",
+      "holidays_unknown": "Valor de «holidays» desconhecido «{value}» (use {values})"
+    }
   }
 }

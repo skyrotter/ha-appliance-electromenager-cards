@@ -2154,5 +2154,129 @@
     "energy": "Energi",
     "volume": "Volumen",
     "room": "Rum"
+  },
+  "poubelle": {
+    "language_name": "Dansk",
+    "card": {
+      "bin": {
+        "grey": "Grå beholder",
+        "black": "Sort beholder",
+        "yellow": "Gul beholder",
+        "green": "Grøn beholder",
+        "blue": "Blå beholder",
+        "brown": "Brun beholder",
+        "red": "Rød beholder",
+        "purple": "Lilla beholder",
+        "burgundy": "Bordeaux beholder",
+        "lime": "Limegrøn beholder"
+      },
+      "bag": {
+        "grey": "Grå sæk",
+        "black": "Sort sæk",
+        "yellow": "Gul sæk",
+        "green": "Grøn sæk",
+        "blue": "Blå sæk",
+        "brown": "Brun sæk",
+        "red": "Rød sæk",
+        "purple": "Lilla sæk",
+        "burgundy": "Bordeaux sæk",
+        "lime": "Limegrøn sæk"
+      },
+      "bulky": "Storskrald",
+      "emptied": "Tømt",
+      "emptied_txt": "Tømt i dag ✅",
+      "today": "Afhentning",
+      "today_txt": "Afhentning i dag 🚛",
+      "eve": "I aften",
+      "eve_txt": "Sæt den ud i aften! 🌙",
+      "in_days": "Om {n} d",
+      "next_weekday": "Afhentning {day}",
+      "next_date": "Afhentning {date}",
+      "fill": "Fyldningsgrad",
+      "unknown": "Ukendt dato",
+      "moved": "flyttet (helligdag)",
+      "warn_no_holiday_calendar": "Ingen helligdagskalender fundet: tilføj integrationen Holiday",
+      "warn_no_workday_calendar": "Ingen arbejdsdagskalender fundet: tilføj integrationen Workday"
+    },
+    "editor": {
+      "labels": {
+        "bin": "Farve",
+        "name": "Navn",
+        "container": "Beholder",
+        "image": "Eget billede (erstatter tegningen)",
+        "entity": "Entitet (valgfri)",
+        "calendar_filter": "Kalenderfilter (titel indeholder)",
+        "calendar_offset": "Kalenderforskydning (dage)",
+        "days": "Afhentningsdage",
+        "start_date": "Startdato (en kendt afhentning)",
+        "every": "Hver N. uge",
+        "weeks": "Uger",
+        "month_week": "Én gang om måneden",
+        "month_day": "Dag i måneden (1–31)",
+        "months": "Afhentningsmåneder (tom = hele året)",
+        "holidays": "Helligdage",
+        "holiday_calendar": "Helligdagskalender",
+        "workday_calendar": "Arbejdsdagskalender",
+        "hour": "Afhentningstidspunkt",
+        "interval": "Dage mellem afhentninger",
+        "scale": "Størrelse",
+        "headroom": "Frihøjde",
+        "compact": "Kompakt",
+        "show_meter": "Fyldningsmåler",
+        "show_status": "Statustekst",
+        "theme_background": "HA-temabaggrund",
+        "full_color": "Helt farvet beholder",
+        "language": "Sprog"
+      },
+      "helpers": {
+        "entity": "Sensor, kalender eller input_datetime med næste afhentning. Lad stå tomt for at bruge planen nedenfor.",
+        "start_date": "En vilkårlig dato, hvor beholderen blev eller bliver tømt. Afhentningerne gentages hver N. uge herfra.",
+        "every": "1 = ugentlig, 2 = hver anden uge, 4 = hver fjerde uge. Kræver en startdato.",
+        "weeks": "ISO-ugeparitet. Ignoreres, når en startdato er angivet.",
+        "holidays": "Hvad der sker, når en afhentning falder på en helligdag.",
+        "holiday_calendar": "Kalender fra integrationen Holiday. Findes automatisk, hvis tom.",
+        "workday_calendar": "Kalender fra integrationen Workday, bruges af \"næste arbejdsdag\". Findes automatisk, hvis tom.",
+        "hour": "Tidspunktet, hvor renovationsbilen kommer; derefter vises beholderen som tømt.",
+        "interval": "Bruges kun med en sensor-entitet til at estimere fyldningsgraden."
+      },
+      "options": {
+        "container": {
+          "wheelie_bin": "Skraldespand med hjul",
+          "bag": "Affaldssæk",
+          "bulky": "Storskrald"
+        },
+        "weeks": {
+          "all": "Hver uge",
+          "even": "Lige uger",
+          "odd": "Ulige uger"
+        },
+        "month_week": {
+          "": "Hver uge",
+          "1": "1. i måneden",
+          "2": "2. i måneden",
+          "3": "3. i måneden",
+          "4": "4. i måneden",
+          "last": "Sidste i måneden"
+        },
+        "holidays": {
+          "none": "Ignorer helligdage",
+          "next_day": "Flyt til næste dag",
+          "next_work_day": "Flyt til næste arbejdsdag",
+          "shift_week": "Spring til næste uge",
+          "shift_rest_of_week": "Resten af ugen rykker +1 dag",
+          "cancel": "Aflyst"
+        },
+        "language": {
+          "auto": "Automatisk (Home Assistants sprog)"
+        }
+      }
+    },
+    "errors": {
+      "bin_required": "Angiv \"bin\" ({bins})",
+      "bin_unknown": "Ukendt beholder \"{bin}\" (brug {bins})",
+      "schedule_required": "Angiv \"days\" (f.eks. [1, 4]), \"start_date\", \"month_day\" eller \"entity\"",
+      "start_date_invalid": "\"start_date\" skal være en dato som 2026-11-04",
+      "holidays_unknown": "Ukendt \"holidays\"-værdi \"{value}\" (brug {values})"
+    }
   }
 }

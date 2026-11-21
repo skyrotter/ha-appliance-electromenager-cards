@@ -1562,5 +1562,129 @@
     "normal": "Normal",
     "over": "Supra",
     "obese": "Obezitate"
+  },
+  "poubelle": {
+    "language_name": "Română",
+    "card": {
+      "bin": {
+        "grey": "Container gri",
+        "black": "Container negru",
+        "yellow": "Container galben",
+        "green": "Container verde",
+        "blue": "Container albastru",
+        "brown": "Container maro",
+        "red": "Container roșu",
+        "purple": "Container violet",
+        "burgundy": "Container vișiniu",
+        "lime": "Container verde lime"
+      },
+      "bag": {
+        "grey": "Sac gri",
+        "black": "Sac negru",
+        "yellow": "Sac galben",
+        "green": "Sac verde",
+        "blue": "Sac albastru",
+        "brown": "Sac maro",
+        "red": "Sac roșu",
+        "purple": "Sac violet",
+        "burgundy": "Sac vișiniu",
+        "lime": "Sac verde lime"
+      },
+      "bulky": "Deșeuri voluminoase",
+      "emptied": "Golit",
+      "emptied_txt": "Golit astăzi ✅",
+      "today": "Ridicare",
+      "today_txt": "Ridicare astăzi 🚛",
+      "eve": "Diseară",
+      "eve_txt": "Scoate-l diseară! 🌙",
+      "in_days": "În {n} z",
+      "next_weekday": "Ridicare {day}",
+      "next_date": "Ridicare {date}",
+      "fill": "Nivel de umplere",
+      "unknown": "Dată necunoscută",
+      "moved": "mutat (sărbătoare legală)",
+      "warn_no_holiday_calendar": "Niciun calendar de sărbători găsit: adaugă integrarea Holiday",
+      "warn_no_workday_calendar": "Niciun calendar de zile lucrătoare găsit: adaugă integrarea Workday"
+    },
+    "editor": {
+      "labels": {
+        "bin": "Culoare",
+        "name": "Nume",
+        "container": "Recipient",
+        "image": "Imagine proprie (înlocuiește desenul)",
+        "entity": "Entitate (opțional)",
+        "calendar_filter": "Filtru calendar (titlul conține)",
+        "calendar_offset": "Decalaj calendar (zile)",
+        "days": "Zilele de ridicare",
+        "start_date": "Data de început (o ridicare cunoscută)",
+        "every": "La fiecare N săptămâni",
+        "weeks": "Săptămâni",
+        "month_week": "O dată pe lună",
+        "month_day": "Ziua lunii (1–31)",
+        "months": "Lunile de ridicare (gol = tot anul)",
+        "holidays": "Sărbători legale",
+        "holiday_calendar": "Calendar de sărbători",
+        "workday_calendar": "Calendar de zile lucrătoare",
+        "hour": "Ora ridicării",
+        "interval": "Zile între ridicări",
+        "scale": "Dimensiune",
+        "headroom": "Spațiu deasupra",
+        "compact": "Compact",
+        "show_meter": "Indicator de umplere",
+        "show_status": "Text de stare",
+        "theme_background": "Fundalul temei HA",
+        "full_color": "Container colorat integral",
+        "language": "Limbă"
+      },
+      "helpers": {
+        "entity": "Senzor, calendar sau input_datetime cu următoarea ridicare. Lasă gol pentru a folosi programul de mai jos.",
+        "start_date": "Orice dată la care containerul a fost sau va fi golit. Ridicările se repetă de la ea la fiecare N săptămâni.",
+        "every": "1 = săptămânal, 2 = la două săptămâni, 4 = la patru săptămâni. Necesită o dată de început.",
+        "weeks": "Paritatea săptămânii ISO. Ignorată dacă este setată o dată de început.",
+        "holidays": "Ce se întâmplă când o ridicare cade într-o sărbătoare legală.",
+        "holiday_calendar": "Calendar din integrarea Holiday. Găsit automat dacă rămâne gol.",
+        "workday_calendar": "Calendar din integrarea Workday, folosit de „următoarea zi lucrătoare”. Găsit automat dacă rămâne gol.",
+        "hour": "Ora la care vine camionul; după aceasta, containerul apare ca golit.",
+        "interval": "Folosit doar cu o entitate senzor, pentru a estima nivelul de umplere."
+      },
+      "options": {
+        "container": {
+          "wheelie_bin": "Container cu roți",
+          "bag": "Sac de gunoi",
+          "bulky": "Deșeuri voluminoase"
+        },
+        "weeks": {
+          "all": "În fiecare săptămână",
+          "even": "Săptămâni pare",
+          "odd": "Săptămâni impare"
+        },
+        "month_week": {
+          "": "În fiecare săptămână",
+          "1": "Prima din lună",
+          "2": "A doua din lună",
+          "3": "A treia din lună",
+          "4": "A patra din lună",
+          "last": "Ultima din lună"
+        },
+        "holidays": {
+          "none": "Ignoră sărbătorile",
+          "next_day": "Mută în ziua următoare",
+          "next_work_day": "Mută în următoarea zi lucrătoare",
+          "shift_week": "Sari la săptămâna următoare",
+          "shift_rest_of_week": "Restul săptămânii se mută cu +1 zi",
+          "cancel": "Anulat"
+        },
+        "language": {
+          "auto": "Automat (limba Home Assistant)"
+        }
+      }
+    },
+    "errors": {
+      "bin_required": "Setează „bin” ({bins})",
+      "bin_unknown": "Container necunoscut „{bin}” (folosește {bins})",
+      "schedule_required": "Setează „days” (de ex. [1, 4]), „start_date”, „month_day” sau „entity”",
+      "start_date_invalid": "„start_date” trebuie să fie o dată precum 2026-11-04",
+      "holidays_unknown": "Valoare „holidays” necunoscută „{value}” (folosește {values})"
+    }
   }
 }

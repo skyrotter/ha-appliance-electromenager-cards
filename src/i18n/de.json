@@ -2326,5 +2326,129 @@
     "fan_medium": "Mittel",
     "fan_high": "Hoch",
     "fan_auto": "Auto"
+  },
+  "poubelle": {
+    "language_name": "Deutsch",
+    "card": {
+      "bin": {
+        "grey": "Graue Tonne",
+        "black": "Schwarze Tonne",
+        "yellow": "Gelbe Tonne",
+        "green": "Grüne Tonne",
+        "blue": "Blaue Tonne",
+        "brown": "Braune Tonne",
+        "red": "Rote Tonne",
+        "purple": "Violette Tonne",
+        "burgundy": "Bordeauxrote Tonne",
+        "lime": "Hellgrüne Tonne"
+      },
+      "bag": {
+        "grey": "Grauer Sack",
+        "black": "Schwarzer Sack",
+        "yellow": "Gelber Sack",
+        "green": "Grüner Sack",
+        "blue": "Blauer Sack",
+        "brown": "Brauner Sack",
+        "red": "Roter Sack",
+        "purple": "Violetter Sack",
+        "burgundy": "Bordeauxroter Sack",
+        "lime": "Hellgrüner Sack"
+      },
+      "bulky": "Sperrmüll",
+      "emptied": "Geleert",
+      "emptied_txt": "Heute geleert ✅",
+      "today": "Abholung",
+      "today_txt": "Heute Abholung 🚛",
+      "eve": "Heute Abend",
+      "eve_txt": "Heute Abend rausstellen! 🌙",
+      "in_days": "In {n} T.",
+      "next_weekday": "Abholung am {day}",
+      "next_date": "Abholung am {date}",
+      "fill": "Füllstand",
+      "unknown": "Unbekanntes Datum",
+      "moved": "verschoben (Feiertag)",
+      "warn_no_holiday_calendar": "Kein Feiertagskalender gefunden: Integration „Holiday“ hinzufügen",
+      "warn_no_workday_calendar": "Kein Arbeitstagkalender gefunden: Integration „Workday“ hinzufügen"
+    },
+    "editor": {
+      "labels": {
+        "bin": "Farbe",
+        "name": "Name",
+        "container": "Behälter",
+        "image": "Eigenes Bild (ersetzt die Zeichnung)",
+        "entity": "Entität (optional)",
+        "calendar_filter": "Kalenderfilter (Titel enthält)",
+        "calendar_offset": "Kalenderversatz (Tage)",
+        "days": "Abholtage",
+        "start_date": "Startdatum (bekannte Abholung)",
+        "every": "Alle N Wochen",
+        "weeks": "Wochen",
+        "month_week": "Einmal im Monat",
+        "month_day": "Tag des Monats (1–31)",
+        "months": "Abholmonate (leer = ganzjährig)",
+        "holidays": "Feiertage",
+        "holiday_calendar": "Feiertagskalender",
+        "workday_calendar": "Arbeitstagkalender",
+        "hour": "Abholzeit",
+        "interval": "Tage zwischen Abholungen",
+        "scale": "Größe",
+        "headroom": "Kopffreiheit",
+        "compact": "Kompakt",
+        "show_meter": "Füllstandsanzeige",
+        "show_status": "Statustext",
+        "theme_background": "HA-Theme-Hintergrund",
+        "full_color": "Komplett eingefärbte Tonne",
+        "language": "Sprache"
+      },
+      "helpers": {
+        "entity": "Sensor, Kalender oder input_datetime mit der nächsten Abholung. Leer lassen, um den Plan unten zu verwenden.",
+        "start_date": "Ein beliebiges Datum, an dem die Tonne geleert wurde oder wird. Ab hier wiederholt sich die Abholung alle N Wochen.",
+        "every": "1 = wöchentlich, 2 = alle zwei Wochen, 4 = alle vier Wochen. Benötigt ein Startdatum.",
+        "weeks": "ISO-Wochenparität. Wird ignoriert, wenn ein Startdatum gesetzt ist.",
+        "holidays": "Was passiert, wenn eine Abholung auf einen Feiertag fällt.",
+        "holiday_calendar": "Kalender der Integration „Holiday“. Wird automatisch gefunden, wenn leer.",
+        "workday_calendar": "Kalender der Integration „Workday“, verwendet von „nächster Arbeitstag“. Wird automatisch gefunden, wenn leer.",
+        "hour": "Uhrzeit, zu der das Müllauto kommt; danach gilt die Tonne als geleert.",
+        "interval": "Nur mit einer Sensor-Entität, zur Schätzung des Füllstands."
+      },
+      "options": {
+        "container": {
+          "wheelie_bin": "Mülltonne",
+          "bag": "Müllsack",
+          "bulky": "Sperrmüll"
+        },
+        "weeks": {
+          "all": "Jede Woche",
+          "even": "Gerade Wochen",
+          "odd": "Ungerade Wochen"
+        },
+        "month_week": {
+          "": "Jede Woche",
+          "1": "1. im Monat",
+          "2": "2. im Monat",
+          "3": "3. im Monat",
+          "4": "4. im Monat",
+          "last": "Letzte im Monat"
+        },
+        "holidays": {
+          "none": "Feiertage ignorieren",
+          "next_day": "Auf den nächsten Tag verschieben",
+          "next_work_day": "Auf den nächsten Arbeitstag verschieben",
+          "shift_week": "In die folgende Woche überspringen",
+          "shift_rest_of_week": "Rest der Woche +1 Tag",
+          "cancel": "Entfällt"
+        },
+        "language": {
+          "auto": "Automatisch (Sprache von Home Assistant)"
+        }
+      }
+    },
+    "errors": {
+      "bin_required": "„bin“ festlegen ({bins})",
+      "bin_unknown": "Unbekannte Tonne „{bin}“ ({bins} verwenden)",
+      "schedule_required": "„days“ festlegen (z. B. [1, 4]), „start_date“, „month_day“ oder „entity“",
+      "start_date_invalid": "„start_date“ muss ein Datum wie 2026-11-04 sein",
+      "holidays_unknown": "Unbekannter „holidays“-Wert „{value}“ ({values} verwenden)"
+    }
   }
 }

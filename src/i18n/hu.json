@@ -2005,5 +2005,129 @@
     "show_cop": "Show COP",
     "show_compressor": "Show compressor (frequency, demand)",
     "show_backup": "Show backup heaters and boiler"
+  },
+  "poubelle": {
+    "language_name": "Magyar",
+    "card": {
+      "bin": {
+        "grey": "Szürke kuka",
+        "black": "Fekete kuka",
+        "yellow": "Sárga kuka",
+        "green": "Zöld kuka",
+        "blue": "Kék kuka",
+        "brown": "Barna kuka",
+        "red": "Piros kuka",
+        "purple": "Lila kuka",
+        "burgundy": "Bordó kuka",
+        "lime": "Lime zöld kuka"
+      },
+      "bag": {
+        "grey": "Szürke zsák",
+        "black": "Fekete zsák",
+        "yellow": "Sárga zsák",
+        "green": "Zöld zsák",
+        "blue": "Kék zsák",
+        "brown": "Barna zsák",
+        "red": "Piros zsák",
+        "purple": "Lila zsák",
+        "burgundy": "Bordó zsák",
+        "lime": "Lime zöld zsák"
+      },
+      "bulky": "Lomhulladék",
+      "emptied": "Kiürítve",
+      "emptied_txt": "Ma kiürítve ✅",
+      "today": "Szállítás",
+      "today_txt": "Ma szállítás 🚛",
+      "eve": "Ma este",
+      "eve_txt": "Tedd ki ma este! 🌙",
+      "in_days": "{n} nap múlva",
+      "next_weekday": "Szállítás: {day}",
+      "next_date": "Szállítás: {date}",
+      "fill": "Telítettség",
+      "unknown": "Ismeretlen dátum",
+      "moved": "áthelyezve (munkaszüneti nap)",
+      "warn_no_holiday_calendar": "Nem található ünnepnapi naptár: add hozzá a Holiday integrációt",
+      "warn_no_workday_calendar": "Nem található munkanapi naptár: add hozzá a Workday integrációt"
+    },
+    "editor": {
+      "labels": {
+        "bin": "Szín",
+        "name": "Név",
+        "container": "Tároló",
+        "image": "Egyéni kép (lecseréli a rajzot)",
+        "entity": "Entitás (opcionális)",
+        "calendar_filter": "Naptárszűrő (a cím tartalmazza)",
+        "calendar_offset": "Naptár eltolása (nap)",
+        "days": "Szállítási napok",
+        "start_date": "Kezdő dátum (egy ismert szállítás)",
+        "every": "N hetente",
+        "weeks": "Hetek",
+        "month_week": "Havonta egyszer",
+        "month_day": "A hónap napja (1–31)",
+        "months": "Szállítási hónapok (üres = egész év)",
+        "holidays": "Ünnepnapok",
+        "holiday_calendar": "Ünnepnapi naptár",
+        "workday_calendar": "Munkanapi naptár",
+        "hour": "Szállítás ideje",
+        "interval": "Napok a szállítások között",
+        "scale": "Méret",
+        "headroom": "Fejtér",
+        "compact": "Kompakt",
+        "show_meter": "Telítettségjelző",
+        "show_status": "Állapotszöveg",
+        "theme_background": "HA-téma háttere",
+        "full_color": "Teljesen színes kuka",
+        "language": "Nyelv"
+      },
+      "helpers": {
+        "entity": "Érzékelő, naptár vagy input_datetime a következő szállítással. Hagyd üresen az alábbi ütemezés használatához.",
+        "start_date": "Bármely dátum, amikor a kukát kiürítették vagy ki fogják üríteni. A szállítások innentől N hetente ismétlődnek.",
+        "every": "1 = hetente, 2 = kéthetente, 4 = négyhetente. Kezdő dátum szükséges hozzá.",
+        "weeks": "ISO-hét paritása. Figyelmen kívül marad, ha van kezdő dátum.",
+        "holidays": "Mi történjen, ha a szállítás munkaszüneti napra esik.",
+        "holiday_calendar": "A Holiday integráció naptára. Üresen hagyva automatikusan megkeresi.",
+        "workday_calendar": "A Workday integráció naptára, a „következő munkanap” használja. Üresen hagyva automatikusan megkeresi.",
+        "hour": "Az idő, amikor a szemetesautó jön; utána a kuka kiürítettként jelenik meg.",
+        "interval": "Csak érzékelő entitással használatos, a telítettség becsléséhez."
+      },
+      "options": {
+        "container": {
+          "wheelie_bin": "Görgős kuka",
+          "bag": "Szemeteszsák",
+          "bulky": "Lomhulladék"
+        },
+        "weeks": {
+          "all": "Minden hét",
+          "even": "Páros hetek",
+          "odd": "Páratlan hetek"
+        },
+        "month_week": {
+          "": "Minden hét",
+          "1": "A hónap 1.",
+          "2": "A hónap 2.",
+          "3": "A hónap 3.",
+          "4": "A hónap 4.",
+          "last": "A hónap utolsó"
+        },
+        "holidays": {
+          "none": "Ünnepnapok figyelmen kívül hagyása",
+          "next_day": "Áthelyezés a következő napra",
+          "next_work_day": "Áthelyezés a következő munkanapra",
+          "shift_week": "Ugrás a következő hétre",
+          "shift_rest_of_week": "A hét többi része +1 nap",
+          "cancel": "Törölve"
+        },
+        "language": {
+          "auto": "Automatikus (a Home Assistant nyelve)"
+        }
+      }
+    },
+    "errors": {
+      "bin_required": "Add meg a „bin” értékét ({bins})",
+      "bin_unknown": "Ismeretlen kuka: „{bin}” (használd: {bins})",
+      "schedule_required": "Add meg a „days” (pl. [1, 4]), „start_date”, „month_day” vagy „entity” értékét",
+      "start_date_invalid": "A „start_date” dátum kell legyen, például 2026-11-04",
+      "holidays_unknown": "Ismeretlen „holidays” érték: „{value}” (használd: {values})"
+    }
   }
 }
