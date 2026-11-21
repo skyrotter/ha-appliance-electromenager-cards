@@ -65,6 +65,10 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
 /* ---- illustration ---- */
 
 .at{max-width:calc(100% * var(--illus-scale,.75))}
+/* layout: vertical : grande photo pleine largeur, tuiles dessous (défaut du modèle photo) */
+.vert .body{flex-direction:column;align-items:stretch;flex-wrap:nowrap}
+.vert svg{flex:none;width:calc(100% * var(--illus-scale,.75));max-width:100%}
+.vert .tiles{flex:none;width:100%;grid-template-columns:repeat(auto-fit,minmax(76px,1fr))}
 .at-tint{opacity:.27;mix-blend-mode:multiply}
 .at-air path{stroke:#dfe9f3;stroke-width:5;stroke-linecap:round;stroke-dasharray:26 70;opacity:0}
 .green .at-air path,.boost .at-air path{opacity:.75}
@@ -303,7 +307,8 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       this._fetchCycle(active);
       const cy = c.last_cycle && !active ? this._cycle : null;
       const keepDraw = this._card.classList.contains('draw');
-      card.className = `${mode}${c.animations === false ? ' noanim' : ''}${keepDraw ? ' draw' : ''}`;
+      const vert = c.layout === 'vertical' || (c.layout !== 'side' && this._photo());
+      card.className = `${mode}${c.animations === false ? ' noanim' : ''}${keepDraw ? ' draw' : ''}${vert ? ' vert' : ''}`;
       // vitesse du ventilateur : plus la puissance est élevée, plus il tourne vite (bornée)
       const spd = isNaN(power) ? 2 : Math.max(.7, Math.min(3, 3 - power / 500));
       card.style.setProperty('--spd', `${spd.toFixed(2)}s`);
@@ -384,6 +389,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
         { name: 'model', selector: { select: { mode: 'dropdown', options: [{ value: '', label: 'Ariston Nuos (dessin / drawing)' }, { value: 'atlantic_explorer_v5', label: 'Atlantic Explorer V5 200 L (photo)' }] } } },
+        { name: 'layout', selector: { select: { mode: 'dropdown', options: [{ value: '', label: 'Auto (photo : vertical) / Auto' }, { value: 'vertical', label: 'Photo pleine largeur, tuiles dessous / Vertical' }, { value: 'side', label: 'Photo à gauche, tuiles à droite / Side by side' }] } } },
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },

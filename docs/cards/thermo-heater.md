@@ -52,6 +52,7 @@ entity_reserve: sensor.boiler_hot_water_reserve   # optional, %
 
 | Option | Description |
 |---|---|
+| `layout` | `vertical`: large photo at full width with the tiles below (default with the photo model); `side`: photo on the left, tiles on the right (default with the drawn tank). |
 | `entity_pump` | `on` / `off` sensor: heat pump running. Without it, the mode and the power decide. |
 | `entity_boost` | `on` / `off` sensor: boost / electric backup. |
 | `entity_draw` | Optional `on` / `off` sensor (or flow): hot water drawn. Without it, a drop of the hot water level or of the bottom temperature is detected. |
