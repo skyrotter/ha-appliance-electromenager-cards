@@ -240,6 +240,7 @@
     "f_show_selector": "Pokaż wybór trybu",
     "f_show_buttons": "Pokaż przyciski włącz / wyłącz",
     "f_show_slider": "Pokaż suwak temperatury",
+    "f_buttons": "Przyciski (kolejność = kolejność wyświetlania)",
     "f_remaining": "Czujnik pozostałego czasu",
     "f_progress": "Czujnik postępu (%)",
     "f_program": "Czujnik programu / fazy",

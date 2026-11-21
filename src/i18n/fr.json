@@ -292,6 +292,7 @@
     "f_show_selector": "Afficher le sélecteur de mode",
     "f_show_buttons": "Afficher les boutons marche / arrêt",
     "f_show_slider": "Afficher le curseur de température",
+    "f_buttons": "Boutons (l'ordre choisi = l'ordre d'affichage)",
     "f_remaining": "Capteur de temps restant",
     "f_progress": "Capteur de progression (%)",
     "f_program": "Capteur de programme / phase",
