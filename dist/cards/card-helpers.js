@@ -40,6 +40,14 @@
     }
     try { return Intl.NumberFormat.supportedLocalesOf(l).length ? l : 'en'; } catch (e) { return 'en'; }
   };
+  // Heure d'une date au format du profil HA (hass.locale.time_format : language / system / 12 / 24) ; extra = options Intl en plus (ex. weekday)
+  window.applianceClock = (hass, date, locale, extra) => {
+    const h = hass || document.querySelector('home-assistant')?.hass, tf = h && h.locale && h.locale.time_format;
+    const o = { hour: '2-digit', minute: '2-digit', ...(extra || {}) };
+    if (tf === '24') o.hourCycle = 'h23'; else if (tf === '12') o.hourCycle = 'h12';
+    const l = tf === 'system' && typeof navigator !== 'undefined' && navigator.language ? navigator.language : locale;
+    try { return (extra ? date.toLocaleString(l, o) : date.toLocaleTimeString(l, o)); } catch (e) { return date.toTimeString().slice(0, 5); }
+  };
   window.applianceNum = (s) => {
     if (!s) return NaN;
     // climate / water_heater : l'état est un mode, la température actuelle est dans current_temperature

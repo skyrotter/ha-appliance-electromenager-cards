@@ -237,7 +237,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       if (ns && !/^(unavailable|unknown|none)$/i.test(ns.state)) {
         const d = new Date(ns.state);
         next = ns.attributes && ns.attributes.device_class === 'timestamp' || (!isNaN(d) && /\d{4}-\d{2}-\d{2}|T\d/.test(ns.state))
-          ? d.toLocaleString(window.applianceLocale(c, this._hass, true), { weekday: 'short', hour: '2-digit', minute: '2-digit' }) : String(ns.state);
+          ? window.applianceClock(this._hass, d, window.applianceLocale(c, this._hass, true), { weekday: 'short' }) : String(ns.state);
       }
       const ps = this._st(c.entity_pump);
       const V = {

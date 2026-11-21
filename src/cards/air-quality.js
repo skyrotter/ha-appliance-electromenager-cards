@@ -278,7 +278,7 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
         const rc = svg.getBoundingClientRect(), px = (ev.clientX - rc.left) / rc.width * W, t = t0 + Math.min(1, Math.max(0, (px - L) / iw)) * (now - t0);
         let best = pts[0]; for (const p of pts) if (Math.abs(p.t - t) < Math.abs(best.t - t)) best = p;
         cur.style.display = ''; cur.setAttribute('transform', `translate(${X(best.t).toFixed(1)} 0)`); cur.querySelector('circle').setAttribute('cy', Y(best.v).toFixed(1));
-        const hhmm = new Date(best.t).toLocaleTimeString(this._lang(), { hour: '2-digit', minute: '2-digit' });
+        const hhmm = window.applianceClock(this._hass, new Date(best.t), this._lang());
         vEl.textContent = `${this._fmt(best.v, x.k === 'voc' || x.k === 'co2' ? 0 : 1)} ${x.unit} · ${hhmm}`;
       };
       const leave = () => { cur.style.display = 'none'; vEl.textContent = base; };

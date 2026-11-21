@@ -440,7 +440,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       const dte = r.getElementById('tvdate');
       if (dte) dte.textContent = new Date().toLocaleDateString(this._lang(), { day: '2-digit', month: '2-digit', year: 'numeric' });
       const clk = r.getElementById('tvclock');
-      if (clk) clk.textContent = new Date().toLocaleTimeString(this._lang(), { hour: '2-digit', minute: '2-digit' });
+      if (clk) clk.textContent = window.applianceClock(this._hass, new Date(), this._lang());
       r.getElementById('tvsmall').textContent = k.dead ? '' : model === 't6' ? `${this._l('target')} : ${k.off ? 'OFF' : tgt}`
         : model === 'bht6000' ? (bigTarget ? now : `SET ${k.off ? 'OFF' : tgt}`)
         : bigTarget ? now : k.off ? 'OFF' : tgt;

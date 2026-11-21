@@ -1188,7 +1188,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     _dur(sec) { if (isNaN(sec)) return ['--', '']; const m = Math.floor(sec / 60); return sec >= 3600 ? [`${Math.floor(sec / 3600)}:${String(m % 60).padStart(2, '0')}`, 'h'] : sec >= 60 ? [String(Math.ceil(sec / 60)), 'min'] : [String(Math.round(sec)), 's']; }
     _time(iso) {
       const t = Date.parse(iso); if (!t) return String(iso);
-      const d = new Date(t), loc = this._lang(), time = d.toLocaleTimeString(loc, { hour: '2-digit', minute: '2-digit' });
+      const d = new Date(t), loc = this._lang(), time = window.applianceClock(this._hass, d, loc);
       return d.toDateString() === new Date().toDateString() ? time : `${d.toLocaleDateString(loc, { weekday: 'short' })} ${time}`;
     }
     _signal(id) {

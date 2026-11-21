@@ -190,7 +190,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
     _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
     _unit(id, d) { const s = this._st(id); return String((s && s.attributes && s.attributes.unit_of_measurement) || d).trim(); }
     _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
-    _clock(t) { try { return new Date(t).toLocaleTimeString(window.applianceLocale(this._c, this._hass), { hour: '2-digit', minute: '2-digit' }); } catch (e) { return new Date(t).toTimeString().slice(0, 5); } }
+    _clock(t) { try { return window.applianceClock(this._hass, new Date(t), window.applianceLocale(this._c, this._hass)); } catch (e) { return new Date(t).toTimeString().slice(0, 5); } }
     _photo() { return this._c && this._c.model === 'atlantic_explorer_v5'; }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
 
