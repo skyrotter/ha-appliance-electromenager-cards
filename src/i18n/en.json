@@ -118,6 +118,7 @@
     "f_show_volume": "Show the volume (projector: on by default)",
     "f_show_lamp": "Show lamp hours",
     "f_show_picture_mode": "Show picture mode",
+    "f_show_target": "Show target temperature",
     "f_show_temperature": "Show temperature",
     "lamp": "Lamp",
     "picture_mode": "Picture",

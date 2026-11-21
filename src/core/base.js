@@ -2058,8 +2058,9 @@ class ApplianceCardBase extends HTMLElement {
     } else if (["water_heater", "oven", "air_fryer", "ac_split", "heat_pump", "towel_dryer", "server_rack", "cookeo"].includes(kind)) {
       // température et consigne au dixième (18,2 / 16,5 ; un entier reste sans décimale), sauf four et friteuse (200 °C)
       const td = ["oven", "air_fryer", "cookeo"].includes(kind) ? 0 : 1;
-      if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, td, 0, tEntity)} ${m.tempUnit}`, lb("temperature"), tEntity);
-      if (m.targetVal != null) tile("mdi:target", `${fmtNum(hass, m.targetVal, td, 0, c.target_temperature || tEntity)} ${m.tempUnit}`, lb("target"), c.target_temperature || tEntity);
+      // show_temperature / show_target : masquer la température de la pièce et la consigne (clim : icône seule)
+      if (m.tempVal != null && c.show_temperature !== false) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, td, 0, tEntity)} ${m.tempUnit}`, lb("temperature"), tEntity);
+      if (m.targetVal != null && c.show_target !== false) tile("mdi:target", `${fmtNum(hass, m.targetVal, td, 0, c.target_temperature || tEntity)} ${m.tempUnit}`, lb("target"), c.target_temperature || tEntity);
       if (m.dual) {
         if (m.temp2 != null) tile("mdi:thermometer", `${fmtNum(hass, m.temp2, 0, 0, c.temperature_2)} ${m.tempUnit}`, lb("temperature_2"), c.temperature_2);
         if (m.target2 != null && m.target2 > 0) tile("mdi:target", `${fmtNum(hass, m.target2, 0, 0, c.target_temperature_2)} ${m.tempUnit}`, lb("target_2"), c.target_temperature_2);
