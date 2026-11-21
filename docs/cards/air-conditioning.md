@@ -14,6 +14,8 @@ Two cards meant to sit side by side, both driven by the same `climate` entity (a
 
 **Humidity** (indoor split): shown under the temperature on the display and in a **Humidity** tile. It comes from the `climate` entity (`current_humidity` attribute, when your integration provides it) or from a humidity sensor set with `humidity`, which takes priority. `lcd_humidity: false` hides it from the display (the tile stays).
 
+**Icon only**: `show_temperature: false` hides the room temperature tile and `show_target: false` hides the set temperature tile (also available in the visual editor).
+
 ```yaml
 type: custom:appliance-ac-split-card
 entity: climate.living_room

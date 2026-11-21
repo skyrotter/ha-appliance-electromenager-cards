@@ -112,6 +112,7 @@
     "f_show_volume": "Afficher le volume (projecteur : activé par défaut)",
     "f_show_lamp": "Afficher les heures de lampe",
     "f_show_picture_mode": "Afficher le mode d'image",
+    "f_show_target": "Afficher la température cible",
     "f_show_temperature": "Afficher la température",
     "lamp": "Lampe",
     "picture_mode": "Image",

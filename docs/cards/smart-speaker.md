@@ -12,6 +12,7 @@
 | Sonos | `sonos_play_1`, `sonos_play_3`, `sonos_play_5`, `sonos_one`, `sonos_one_sl`, `sonos_era_100`, `sonos_era_300`, `sonos_five`, `sonos_roam`, `sonos_beam` (Beam / Arc), `sonos_sub_mini`, `sonos_sub` |
 | Devialet | `devialet_phantom` (1st gen), `devialet_phantom_reactor`, `devialet_phantom_i`, `devialet_phantom_ii`, `devialet_phantom_ultimate`: `finish` `white` (default) or `black` |
 | Samsung | `samsung_hw_q800c` (HW-Q800C soundbar with its wireless subwoofer, photo), `samsung_hw_q800c_svg` (same, drawing): the subwoofer pumps with the bass, the front speakers pulse, the small display shows an equaliser and waves rise towards the ceiling (Atmos) |
+| Google | `nest_mini`: `finish` `chalk` (default), `charcoal`, `coral` or `sky` |
 | Apple | `homepod` (2nd gen): `finish` `midnight` (default) or `white`; `homepod_mini` (mini 2): `white` (default), `pink`, `green`, `blue` or `midnight` |
 
 ![Samsung HW-Q800C soundbar, photo and SVG versions](https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/soundbar-samsung-hw-q800c.gif)
@@ -38,7 +39,7 @@ energy: sensor.speaker_plug_energy   # optional
 |---|---|
 | `entity` | The `media_player`: state, volume, mute, source app, artist and title. |
 | `model` | The speaker photo (see the table above). |
-| `finish` | Colour of the Devialet and HomePod models (see the table above). |
+| `finish` | Colour of the Google Nest Mini, Devialet and HomePod models (see the table above). |
 | `show_controls` | Buttons: power, volume −, play/pause, volume +, mute. On by default; only the features the entity supports are shown. |
 | `show_media` | The "artist · title" line under the state. On by default. |
 | `volume_step` | Volume − / + step, from 0 to 1. Default 0.05 (5 %). |

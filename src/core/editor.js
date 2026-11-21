@@ -181,6 +181,7 @@ function buildForm(kind) {
             { name: "lcd_big", selector: { boolean: {} }, default: false },
           ] : []),
           ...(kind === "ac_split" ? [{ name: "lcd_humidity", selector: { boolean: {} }, default: true }] : []),
+          ...(["ac_split", "heat_pump"].includes(kind) ? [{ name: "show_temperature", selector: { boolean: {} }, default: true }, { name: "show_target", selector: { boolean: {} }, default: true }] : []),
           ...(["ac_split", "heat_pump"].includes(kind) ? [
             { name: "hvac", selector: { select: { mode: "dropdown", options: [
               { value: "auto", label: "Auto (saison) / Auto (season)" }, { value: "cool", label: "Climatisation / Cooling" }, { value: "heat", label: "Chauffage / Heating" }] } } },
@@ -235,10 +236,11 @@ function buildForm(kind) {
               { value: "devialet_phantom_ultimate", label: "Devialet Phantom Ultimate" },
               { value: "samsung_hw_q800c", label: "Samsung HW-Q800C (photo)" }, { value: "samsung_hw_q800c_svg", label: "Samsung HW-Q800C (SVG)" },
               { value: "homepod", label: "Apple HomePod (2e gén. / 2nd gen)" }, { value: "homepod_mini", label: "Apple HomePod mini 2" }] } } },
-            // finish : couleur de l'enceinte (Devialet : blanc / noir ; HomePod : minuit / blanc ; HomePod mini : 5 couleurs)
+            // finish : couleur de l'enceinte (Devialet : blanc / noir ; HomePod : minuit / blanc ; HomePod mini : 5 couleurs ; Nest Mini : craie / charbon / corail / ciel)
             { name: "finish", selector: { select: { mode: "dropdown", options: [
               { value: "white", label: "Blanc / White" }, { value: "black", label: "Noir / Black" }, { value: "midnight", label: "Minuit / Midnight" },
-              { value: "pink", label: "Rose / Pink" }, { value: "green", label: "Vert / Green" }, { value: "blue", label: "Bleu / Blue" }] } } },
+              { value: "pink", label: "Rose / Pink" }, { value: "green", label: "Vert / Green" }, { value: "blue", label: "Bleu / Blue" },
+              { value: "chalk", label: "Nest Mini : Craie / Chalk" }, { value: "charcoal", label: "Nest Mini : Charbon / Charcoal" }, { value: "coral", label: "Nest Mini : Corail / Coral" }, { value: "sky", label: "Nest Mini : Ciel / Sky" }] } } },
             { name: "show_controls", selector: { boolean: {} }, default: true },
             { name: "show_media", selector: { boolean: {} }, default: true },
             { name: "volume_step", selector: { number: { min: 0.01, max: 0.2, step: 0.01, mode: "box" } } },

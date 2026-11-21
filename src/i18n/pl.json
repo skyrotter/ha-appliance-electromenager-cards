@@ -96,6 +96,7 @@
     "f_show_volume": "Pokaż głośność (projektor: domyślnie włączone)",
     "f_show_lamp": "Pokaż godziny pracy lampy",
     "f_show_picture_mode": "Pokaż tryb obrazu",
+    "f_show_target": "Pokaż temperaturę docelową",
     "f_show_temperature": "Pokaż temperaturę",
     "lamp": "Lampa",
     "picture_mode": "Obraz",
