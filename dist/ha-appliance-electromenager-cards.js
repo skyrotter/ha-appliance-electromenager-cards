@@ -15050,6 +15050,9 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .ph-spin .clothes { opacity: .85; }
 .ph-spin .shake { animation: ac-shake .14s linear infinite; }
 .k-dryer.ph-dry .drum, .k-dryer.ph-cool .drum { animation: ac-rot 2.8s linear infinite; }
+/* lave-linge séchant : en séchage (ou refroidissement) le tambour tourne et la machine vibre légèrement, comme un sèche-linge */
+.k-washer.ph-dry .drum, .k-washer.ph-cool .drum { animation: ac-rot 2.8s linear infinite; }
+.k-washer.ph-dry .shake { animation: ac-shake-soft .5s linear infinite; }
 .k-dryer.ph-dry .shake-soft { animation: ac-shake-soft .5s linear infinite; }
 .heat { opacity: 0; transition: opacity .8s; }
 .k-dryer.ph-dry .heat { opacity: 1; animation: ac-glow 2.2s ease-in-out infinite; }
