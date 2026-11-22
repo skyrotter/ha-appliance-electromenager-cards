@@ -73,12 +73,12 @@
     energy: 'solar battery ev-charger linky water-meter heat-meter gas-meter electric-meter ups smart-plug power-strip phone-charger tool-charger',
     water: 'pool-pump dosing-pump pool-robot jacuzzi inflatable-spa sauna aquarium reef-aquarium irrigation rain-gauge plant-monitor water-pump industrial-pump sump-pump rainwater-tank water-valve smart-tap water-softener water-filter robot-mower-solo',
     security: 'barrier sliding-gate swing-gate garage-door mailbox smart-lock door-sensor motion-sensor alarm-keypad smoke-detector leak-detector camera nvr',
-    lighting: 'light-bulb color-bulb filament-bulb pendant-light pendant-cluster desk-lamp floor-lamp chandelier garden-spotlight ceiling-spot christmas-tree garland led-strip hue-sync-box',
+    lighting: 'light-bulb color-bulb filament-bulb pendant-light pendant-cluster desk-lamp floor-lamp chandelier garden-spotlight ceiling-spot ceiling-globe christmas-tree garland led-strip hue-sync-box',
     shutters: 'roller-shutter sliding-curtain venetian-blind swing-shutter pergola roof-window awning double-awning',
     media: 'tv av-receiver soundbar smart-speaker ps5 tv-box piano elliptical exercise-bike rowing-machine',
     it: 'server-rack mini-pc nas internet-box desktop-pc monitor laptop printer printer-3d raspberry-pi poe-switch zigbee-coordinator wall-tablet',
     // catégorie par défaut des cartes non listées ; chaque carte doit pourtant être listée (build.js avertit sinon)
-    home: 'poubelle robot-vacuum-solo robot-vacuum robot-mower canister-vacuum wet-vacuum pet-feeder pet-fountain cat-flap scale air-compressor water-softener-generic generic',
+    home: 'iron steam-station poubelle robot-vacuum-solo robot-vacuum robot-mower canister-vacuum wet-vacuum pet-feeder pet-fountain cat-flap scale air-compressor water-softener-generic generic',
   };
   const CAT_ORDER = Object.keys(CATS);
   const CAT_OF = {};

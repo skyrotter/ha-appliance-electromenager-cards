@@ -1,5 +1,14 @@
 {
   "common": {
+    "iron": "Plancha",
+    "steam_station": "Centro de planchado",
+    "iron_heating": "Calentando",
+    "iron_ready": "¡Lista para planchar!",
+    "steaming": "Vapor activo",
+    "steam": "Vapor",
+    "f_water_level": "Nivel del depósito de agua (% o sensor binario)",
+    "f_steam": "Vapor (botón, sensor binario…)",
+    "f_water_low": "Agua baja por debajo de (%)",
     "valign_top": "Arriba (por defecto)",
     "valign_center": "Centrado",
     "header_inline": "Título a la izquierda, estado a la derecha (por defecto)",
@@ -1611,6 +1620,7 @@
     "show_backup": "Mostrar apoyos y caldera"
   },
   "light": {
+    "ceiling_globe": "Plafón globo",
     "white_warm": "Blanco cálido",
     "white_neutral": "Blanco neutro",
     "white_cold": "Blanco frío",

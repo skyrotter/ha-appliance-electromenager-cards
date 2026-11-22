@@ -104,6 +104,8 @@ Pulsa una tarjeta para ver sus opciones y ejemplos (documentación en inglés).
 | [Cafetera (goteo, cápsulas, espresso)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/coffee-maker.md) | `custom:appliance-coffee-maker-card` |
 | [Hervidor de agua](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/kettle-toaster.md) | `custom:appliance-kettle-card` |
 | [Tostadora](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/kettle-toaster.md) | `custom:appliance-toaster-card` |
+| [Plancha](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/iron-steam.md) | `custom:appliance-iron-card` |
+| [Centro de planchado](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/iron-steam.md) | `custom:appliance-steam-station-card` |
 | [Campana extractora](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/tv-range-hood.md) | `custom:appliance-range-hood-card` |
 | [Vinoteca (una o dos zonas)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/wine-cooler-fridge.md) | `custom:appliance-wine-cooler-card` |
 | [Barril de cerveza](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/beer-tap-av-receiver.md) | `custom:appliance-beer-tap-card` |
@@ -189,6 +191,7 @@ Pulsa una tarjeta para ver sus opciones y ejemplos (documentación en inglés).
 | [Araña de luces](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/lights.md) | `custom:appliance-chandelier-card` |
 | [Foco de jardín](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/lights.md) | `custom:appliance-garden-spotlight-card` |
 | [Focos empotrados](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/lights.md) | `custom:appliance-ceiling-spot-card` |
+| [Plafón globo](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/lights.md) | `custom:appliance-ceiling-globe-card` |
 | [Árbol de Navidad](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/lights.md) | `custom:appliance-christmas-tree-card` |
 | [Guirnalda de luces LED](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/plugs-piano-garland.md) | `custom:appliance-garland-card` |
 

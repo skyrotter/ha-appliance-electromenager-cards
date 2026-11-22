@@ -1,5 +1,14 @@
 {
   "common": {
+    "iron": "Ferro de engomar",
+    "steam_station": "Gerador de vapor",
+    "iron_heating": "A aquecer",
+    "iron_ready": "Pronto a engomar!",
+    "steaming": "A vaporizar",
+    "steam": "Vapor",
+    "f_water_level": "Nível do depósito de água (% ou sensor binário)",
+    "f_steam": "Vapor (botão, sensor binário…)",
+    "f_water_low": "Água baixa abaixo de (%)",
     "valign_top": "No topo (predefinido)",
     "valign_center": "Centrado",
     "header_inline": "Título à esquerda, estado à direita (predefinido)",
@@ -1624,6 +1633,7 @@
     "side": "Lado em que o painel único se empilha"
   },
   "light": {
+    "ceiling_globe": "Candeeiro de teto globo",
     "white_warm": "Branco quente",
     "white_neutral": "Branco neutro",
     "white_cold": "Branco frio",

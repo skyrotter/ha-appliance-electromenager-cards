@@ -1,5 +1,14 @@
 {
   "common": {
+    "iron": "Ferro da stiro",
+    "steam_station": "Generatore di vapore",
+    "iron_heating": "Riscaldamento",
+    "iron_ready": "Pronto a stirare!",
+    "steaming": "Vapore attivo",
+    "steam": "Vapore",
+    "f_water_level": "Livello serbatoio acqua (% o sensore binario)",
+    "f_steam": "Vapore (pulsante, sensore binario…)",
+    "f_water_low": "Acqua bassa sotto (%)",
     "washer": "Lavatrice",
     "dryer": "Asciugatrice",
     "washer_dryer": "Lavasciuga",
@@ -1202,6 +1211,7 @@
     "show_backup": "Mostra integrazioni e caldaia"
   },
   "light": {
+    "ceiling_globe": "Plafoniera globo",
     "light_bulb": "Lampadina",
     "color_bulb": "Lampadina a colori",
     "filament_bulb": "Lampadina a filamento",

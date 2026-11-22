@@ -1,5 +1,14 @@
 {
   "common": {
+    "iron": "Strygejern",
+    "steam_station": "Dampstation",
+    "iron_heating": "Opvarmer",
+    "iron_ready": "Klar til strygning!",
+    "steaming": "Damper",
+    "steam": "Damp",
+    "f_water_level": "Vandtankens niveau (% eller binær sensor)",
+    "f_steam": "Damp (knap, binær sensor …)",
+    "f_water_low": "Lavt vandniveau under (%)",
     "washer": "Vaskemaskine",
     "dryer": "Tørretumbler",
     "washer_dryer": "Vaske-tørremaskine",
@@ -1332,6 +1341,7 @@
     "show_backup": "Show backup heaters and boiler"
   },
   "light": {
+    "ceiling_globe": "Loftlampe kugle",
     "light_bulb": "Pære",
     "color_bulb": "Farvepære",
     "filament_bulb": "Filamentpære",

@@ -1,5 +1,14 @@
 {
   "common": {
+    "iron": "Żelazko",
+    "steam_station": "Stacja parowa",
+    "iron_heating": "Nagrzewanie",
+    "iron_ready": "Gotowe do prasowania!",
+    "steaming": "Para",
+    "steam": "Para",
+    "f_water_level": "Poziom wody w zbiorniku (% lub czujnik binarny)",
+    "f_steam": "Para (przycisk, czujnik binarny…)",
+    "f_water_low": "Mało wody poniżej (%)",
     "washer": "Pralka",
     "dryer": "Suszarka",
     "washer_dryer": "Pralko-suszarka",
@@ -1186,6 +1195,7 @@
     "press_animation": "Animuj naciśnięcia przycisku"
   },
   "light": {
+    "ceiling_globe": "Plafon kula",
     "light_bulb": "Żarówka",
     "color_bulb": "Żarówka kolorowa",
     "filament_bulb": "Żarówka żarnikowa",

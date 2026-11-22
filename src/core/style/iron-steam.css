@@ -1,0 +1,21 @@
+/* ---------- fer à repasser / centrale vapeur ---------- */
+.k-iron, .k-steam_station { --ir-c: #3a414b; }
+.k-iron.st-iron_heating, .k-steam_station.st-iron_heating { --ir-c: #ff8a3d; }
+.k-iron.st-iron_ready, .k-steam_station.st-iron_ready { --ir-c: #43c07a; }
+.k-iron.st-steaming, .k-steam_station.st-steaming { --ir-c: #38a8ff; }
+.ir-led { fill: var(--ir-c); transition: fill .3s; }
+.ir-halo { opacity: 0; transition: opacity .3s; }
+.k-iron.st-iron_heating .ir-halo, .k-iron.st-iron_ready .ir-halo, .k-iron.st-steaming .ir-halo { opacity: .85; }
+.k-iron.st-iron_heating .ir-led:not(.ir-halo) { filter: drop-shadow(0 0 2px #ff8a3d); animation: ac-pulse 1.2s ease-in-out infinite; }
+/* centrale : les voyants sont des anneaux autour des deux touches de la base (marche / vapeur) */
+.ir-ring { fill: none; stroke: var(--ir-c); stroke-width: 1.1; opacity: 0; transition: opacity .3s; filter: drop-shadow(0 0 2px var(--ir-c)); }
+.k-steam_station.st-iron_heating .ir-ring-p, .k-steam_station.st-iron_ready .ir-ring-p, .k-steam_station.st-steaming .ir-ring-p { opacity: .95; }
+.k-steam_station.st-steaming .ir-ring-s { opacity: .95; }
+.k-steam_station.st-iron_heating .ir-ring-p { animation: ac-pulse 1.2s ease-in-out infinite; }
+.ir-heat { opacity: 0; transition: opacity .5s; }
+.k-iron.st-iron_heating .ir-heat, .k-steam_station.st-iron_heating .ir-heat { opacity: .75; animation: ac-pulse 1.6s ease-in-out infinite; }
+.k-iron.st-iron_ready .ir-heat, .k-steam_station.st-iron_ready .ir-heat { opacity: .28; }
+.k-iron.st-steaming .ir-heat, .k-steam_station.st-steaming .ir-heat { opacity: .4; }
+.ir-steam path { fill: none; stroke: #dfe6ee; stroke-width: 2.4; stroke-linecap: round; opacity: 0; }
+.k-iron.st-steaming .ir-steam path, .k-steam_station.st-steaming .ir-steam path { animation: ac-steam 1.5s ease-out infinite; }
+.ir-steam path:nth-child(2) { animation-delay: .5s !important; } .ir-steam path:nth-child(3) { animation-delay: 1s !important; }
