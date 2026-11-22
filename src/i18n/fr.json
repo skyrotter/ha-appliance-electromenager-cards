@@ -585,7 +585,8 @@
     "climate_off": "Arrêt",
     "doors": "Portes",
     "doors_open": "Ouvertes",
-    "doors_closed": "Fermées"
+    "doors_closed": "Fermées",
+    "charger_image": "Image de la borne (URL ou fichier /local/, vue de face, fond transparent)"
   },
   "robot_vacuum": {
     "name": "Robot aspirateur",

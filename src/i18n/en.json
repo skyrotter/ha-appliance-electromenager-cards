@@ -591,7 +591,8 @@
     "climate_off": "Off",
     "doors": "Doors",
     "doors_open": "Open",
-    "doors_closed": "Closed"
+    "doors_closed": "Closed",
+    "charger_image": "Charger image (URL or /local/ file, front view, transparent background)"
   },
   "robot_vacuum": {
     "name": "Robot vacuum",

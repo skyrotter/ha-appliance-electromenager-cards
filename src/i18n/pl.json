@@ -445,7 +445,8 @@
     "charging": "Ładowanie",
     "plugged": "Podłączono",
     "done": "Zakończono",
-    "disconnected": "Odłączono"
+    "disconnected": "Odłączono",
+    "charger_image": "Obraz ładowarki (URL lub plik /local/, widok z przodu, przezroczyste tło)"
   },
   "robot_vacuum": {
     "name": "Robot sprzątający",
