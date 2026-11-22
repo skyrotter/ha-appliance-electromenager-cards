@@ -169,6 +169,8 @@ interval: 14                      # days between pickups (for the fill level)
 hour: 6
 ```
 
+The entity state can be a date (`2026-12-03`), a timestamp, a number of days, `today` / `tomorrow`, or text such as the Waste Collection Schedule default (`on Thu, 03.12.2026`, `in 3 days`) or `03/12/26` (day first, year on 2 or 4 digits). A date attribute (`nextDate`, `next_date`, `date`) or Waste Collection Schedule's `daysTo` attribute is also used when present. No helper is needed to convert the date.
+
 ### From a calendar
 One calendar for all bins? `calendar_filter` keeps only the events whose title contains this text (case-insensitive). The fill level then follows the real previous pickup, so `interval` isn't needed.
 ```yaml
