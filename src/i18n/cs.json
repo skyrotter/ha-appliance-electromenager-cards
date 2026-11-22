@@ -1,5 +1,14 @@
 {
   "common": {
+    "iron": "Žehlička",
+    "steam_station": "Parní generátor",
+    "iron_heating": "Zahřívání",
+    "iron_ready": "Připraveno k žehlení!",
+    "steaming": "Napařuje",
+    "steam": "Pára",
+    "f_water_level": "Hladina vody v nádrži (% nebo binární senzor)",
+    "f_steam": "Pára (tlačítko, binární senzor…)",
+    "f_water_low": "Nízká hladina pod (%)",
     "washer": "Pračka",
     "dryer": "Sušička",
     "washer_dryer": "Pračka se sušičkou",
@@ -1115,6 +1124,7 @@
     "show_backup": "Show backup heaters and boiler"
   },
   "light": {
+    "ceiling_globe": "Stropní svítidlo koule",
     "light_bulb": "Žárovka",
     "color_bulb": "Barevná žárovka",
     "filament_bulb": "Filamentová žárovka",

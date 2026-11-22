@@ -117,6 +117,8 @@ Clique num cartão para consultar as opções e os exemplos.
 | [Máquina de café (filtro, cápsulas, espresso)](docs/cards/coffee-maker.md) | `custom:appliance-coffee-maker-card` |
 | [Chaleira](docs/cards/kettle-toaster.md) | `custom:appliance-kettle-card` |
 | [Torradeira](docs/cards/kettle-toaster.md) | `custom:appliance-toaster-card` |
+| [Ferro de engomar](docs/cards/iron-steam.md) | `custom:appliance-iron-card` |
+| [Gerador de vapor](docs/cards/iron-steam.md) | `custom:appliance-steam-station-card` |
 | [Exaustor](docs/cards/tv-range-hood.md) | `custom:appliance-range-hood-card` |
 | [Frigorífico de vinhos (uma ou duas zonas)](docs/cards/wine-cooler-fridge.md) | `custom:appliance-wine-cooler-card` |
 | [Torneira de cerveja](docs/cards/beer-tap-av-receiver.md) | `custom:appliance-beer-tap-card` |
@@ -205,6 +207,7 @@ Clique num cartão para consultar as opções e os exemplos.
 | [Lustre](docs/cards/lights.md) | `custom:appliance-chandelier-card` |
 | [Foco de jardim](docs/cards/lights.md) | `custom:appliance-garden-spotlight-card` |
 | [Focos embutidos](docs/cards/lights.md) | `custom:appliance-ceiling-spot-card` |
+| [Candeeiro de teto globo](docs/cards/lights.md) | `custom:appliance-ceiling-globe-card` |
 | [Árvore de Natal](docs/cards/lights.md) | `custom:appliance-christmas-tree-card` |
 | [Grinalda de luzes LED](docs/cards/plugs-piano-garland.md) | `custom:appliance-garland-card` |
 

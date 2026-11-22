@@ -1,5 +1,14 @@
 {
 "common": {
+"iron": "Strykejern",
+"steam_station": "Dampstasjon",
+"iron_heating": "Varmer opp",
+"iron_ready": "Klar til stryking!",
+"steaming": "Damper",
+"steam": "Damp",
+"f_water_level": "Vanntankens nivå (% eller binær sensor)",
+"f_steam": "Damp (knapp, binær sensor …)",
+"f_water_low": "Lavt vannivå under (%)",
 "f_illustration_size": "Størrelse på illustrasjonen",
 "f_transparent": "Gjennomsiktig bakgrunn",
 "monitor": "Skjerm",
@@ -1126,6 +1135,7 @@
 "show_backup": "Show backup heaters and boiler"
 },
 "light": {
+"ceiling_globe": "Taklampe kule",
 "light_bulb": "Lyspære",
 "color_bulb": "Fargepære",
 "filament_bulb": "Glødetrådpære",

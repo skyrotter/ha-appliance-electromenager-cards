@@ -1,5 +1,14 @@
 {
   "common": {
+    "iron": "Bügeleisen",
+    "steam_station": "Dampfbügelstation",
+    "iron_heating": "Heizt auf",
+    "iron_ready": "Bereit zum Bügeln!",
+    "steaming": "Dampf läuft",
+    "steam": "Dampf",
+    "f_water_level": "Wassertank-Füllstand (% oder Binärsensor)",
+    "f_steam": "Dampf (Taste, Binärsensor …)",
+    "f_water_low": "Wenig Wasser unter (%)",
     "washer": "Waschmaschine",
     "dryer": "Wäschetrockner",
     "washer_dryer": "Waschtrockner",
@@ -1419,6 +1428,7 @@
     "show_backup": "Zusatzheizungen und Kessel anzeigen"
   },
   "light": {
+    "ceiling_globe": "Deckenleuchte Kugel",
     "light_bulb": "Glühbirne",
     "color_bulb": "Farbige Glühbirne",
     "filament_bulb": "Filament-Glühbirne",

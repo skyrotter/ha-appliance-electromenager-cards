@@ -1,5 +1,14 @@
 {
   "common": {
+    "iron": "Fier de călcat",
+    "steam_station": "Stație de călcat cu abur",
+    "iron_heating": "Se încălzește",
+    "iron_ready": "Gata de călcat!",
+    "steaming": "Abur activ",
+    "steam": "Abur",
+    "f_water_level": "Nivelul rezervorului de apă (% sau senzor binar)",
+    "f_steam": "Abur (buton, senzor binar…)",
+    "f_water_low": "Apă puțină sub (%)",
     "washer": "Mașină de spălat rufe",
     "dryer": "Uscător de rufe",
     "washer_dryer": "Mașină de spălat cu uscător",
@@ -1117,6 +1126,7 @@
     "show_backup": "Show backup heaters and boiler"
   },
   "light": {
+    "ceiling_globe": "Plafonieră glob",
     "light_bulb": "Bec",
     "color_bulb": "Bec color",
     "filament_bulb": "Bec cu filament",

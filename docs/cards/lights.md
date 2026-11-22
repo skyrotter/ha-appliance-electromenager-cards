@@ -1,6 +1,6 @@
 # Lights
 
-`custom:appliance-light-bulb-card · custom:appliance-color-bulb-card · custom:appliance-filament-bulb-card · custom:appliance-pendant-light-card · custom:appliance-pendant-cluster-card · custom:appliance-desk-lamp-card · custom:appliance-floor-lamp-card · custom:appliance-chandelier-card · custom:appliance-garden-spotlight-card · custom:appliance-christmas-tree-card · custom:appliance-ceiling-spot-card`
+`custom:appliance-light-bulb-card · custom:appliance-color-bulb-card · custom:appliance-filament-bulb-card · custom:appliance-pendant-light-card · custom:appliance-pendant-cluster-card · custom:appliance-desk-lamp-card · custom:appliance-floor-lamp-card · custom:appliance-chandelier-card · custom:appliance-garden-spotlight-card · custom:appliance-christmas-tree-card · custom:appliance-ceiling-spot-card · custom:appliance-ceiling-globe-card`
 
 <p align="center"><img src="../lights.gif" width="600" alt="Animated light cards"></p>
 
@@ -19,6 +19,7 @@ Eleven animated light fittings. Off, they show the bare fitting; on, they glow i
 | Garden spotlight (`garden-spotlight`) | ground spike spotlight, beam rising with floating dust |
 | Christmas tree (`christmas-tree`) | lights twinkling in sequence, glowing star; one colour with `multicolor: false` |
 | Recessed spotlights (`ceiling-spot`) | ceiling spots seen from below: white bezel, the diffuser lights up evenly with a halo on the ceiling. `spot_count: 1` to `4` draws several spots driven by the same entity (one dimmer, several spots); they switch on in cascade |
+| Ceiling globe light (`ceiling-globe`) | an opal globe under a brushed-steel canopy (cut-out photo, no drawing): it lights up in the colour and brightness of the bulb, with a glow around it. Same options as the custom `image` (`image_min`, `image_max`, `glow_max`) |
 
 **Colour**: by default the card follows the bulb in Home Assistant (`rgb_color`, otherwise the white temperature in kelvins). Turn off `follow_light_color` to use the colour picked in the editor (`color`); the On button then also sends this colour to the bulb. **Brightness** drives the glow.
 

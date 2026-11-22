@@ -1,5 +1,14 @@
 {
   "common": {
+    "iron": "Pegla",
+    "steam_station": "Parna stanica",
+    "iron_heating": "Zagreva se",
+    "iron_ready": "Spremno za peglanje!",
+    "steaming": "Pari",
+    "steam": "Para",
+    "f_water_level": "Nivo vode u rezervoaru (% ili binarni senzor)",
+    "f_steam": "Para (dugme, binarni senzor…)",
+    "f_water_low": "Malo vode ispod (%)",
     "washer": "Veš mašina",
     "dryer": "Mašina za sušenje veša",
     "washer_dryer": "Veš-mašina sa sušilicom",
@@ -1403,6 +1412,7 @@
     "show_backup": "Show backup heaters and boiler"
   },
   "light": {
+    "ceiling_globe": "Plafonjera lopta",
     "light_bulb": "Sijalica",
     "color_bulb": "RGB sijalica",
     "filament_bulb": "Edison (Filament) sijalica",

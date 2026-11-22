@@ -1,5 +1,14 @@
 {
   "common": {
+    "iron": "Strijkijzer",
+    "steam_station": "Stoomstrijkstation",
+    "iron_heating": "Opwarmen",
+    "iron_ready": "Klaar om te strijken!",
+    "steaming": "Stoomt",
+    "steam": "Stoom",
+    "f_water_level": "Waterniveau reservoir (% of binaire sensor)",
+    "f_steam": "Stoom (knop, binaire sensor…)",
+    "f_water_low": "Laag water onder (%)",
     "washer": "Wasmachine",
     "dryer": "Droogkast",
     "washer_dryer": "Wasdroger",
@@ -1202,6 +1211,7 @@
     "show_backup": "Bijverwarming en ketel tonen"
   },
   "light": {
+    "ceiling_globe": "Plafondlamp bol",
     "light_bulb": "Lamp",
     "color_bulb": "Kleurenlamp",
     "filament_bulb": "Filamentlamp",

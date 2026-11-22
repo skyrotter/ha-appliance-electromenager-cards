@@ -1,5 +1,14 @@
 {
   "common": {
+    "iron": "Утюг",
+    "steam_station": "Парогенератор",
+    "iron_heating": "Нагрев",
+    "iron_ready": "Готов к глажке!",
+    "steaming": "Подача пара",
+    "steam": "Пар",
+    "f_water_level": "Уровень воды в баке (% или бинарный датчик)",
+    "f_steam": "Пар (кнопка, бинарный датчик…)",
+    "f_water_low": "Мало воды ниже (%)",
     "washer": "Стиральная машина",
     "dryer": "Сушильная машина",
     "washer_dryer": "Стирально-сушильная машина",
@@ -1103,6 +1112,7 @@
     "show_backup": "Show backup heaters and boiler"
   },
   "light": {
+    "ceiling_globe": "Потолочный светильник-шар",
     "light_bulb": "Лампа",
     "color_bulb": "Цветная лампа",
     "filament_bulb": "Филаментная лампа",

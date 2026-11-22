@@ -1,5 +1,14 @@
 {
   "common": {
+    "iron": "Vasaló",
+    "steam_station": "Gőzállomás",
+    "iron_heating": "Fűt",
+    "iron_ready": "Vasalásra kész!",
+    "steaming": "Gőzöl",
+    "steam": "Gőz",
+    "f_water_level": "Víztartály szintje (% vagy bináris érzékelő)",
+    "f_steam": "Gőz (gomb, bináris érzékelő…)",
+    "f_water_low": "Alacsony vízszint ennyi alatt (%)",
     "washer": "Mosógép",
     "dryer": "Szárítógép",
     "washer_dryer": "Mosó-szárítógép",
@@ -789,6 +798,7 @@
     "water_hot": "Víz túl forró"
   },
   "light": {
+    "ceiling_globe": "Mennyezeti gömblámpa",
     "light_bulb": "Izzó",
     "color_bulb": "Színes izzó",
     "filament_bulb": "Filament izzó",
