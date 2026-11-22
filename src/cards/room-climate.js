@@ -184,6 +184,7 @@ ha-card.st-thermometer{text-align:center;padding:14px 12px 12px}
 @container (min-width:400px){.g8 .side{display:flex}.g8 .main{flex:none;width:200px}}
 
 /* ---- 9. double anneau ---- */
+:host(.nohum) .vh>ha-icon{display:none}
 ha-card.st-double_ring{padding:14px 14px 0;--t9:var(--appliance-temperature-color,#4a90e2);--h9:var(--appliance-humidity-ring-color,#f5b942)}
 .st-double_ring>.chip{position:absolute;top:10px;left:10px;z-index:1}
 .ring9{position:relative;width:calc(140px * var(--illus-scale,1));aspect-ratio:1;margin:0 auto}
@@ -718,7 +719,9 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       if (chip) { chip.textContent = this._l(s.chip); chip.classList.toggle('hide', c.show_status === false); }
       txt('t', fin(s.t) ? this._fmt(s.t) : fin(s.h) ? `${this._fmt(s.h, 0)}` : '--');
       txt('tu', fin(s.t) || !fin(s.h) ? tmp.unit : ' %');
-      txt('h', fin(s.t) && fin(s.h) ? `${this._fmt(s.h, 0)} %` : '');
+      // show_humidity: false : le texte de l'humidité sous la température est masqué (le dessin du capteur reste)
+      txt('h', c.show_humidity !== false && fin(s.t) && fin(s.h) ? `${this._fmt(s.h, 0)} %` : '');
+      this.classList.toggle('nohum', c.show_humidity === false);
       const tr = $('trend');
       if (tr) {
         const dt = Math.round(s.trend * 10) / 10;
@@ -1350,7 +1353,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
         window.applianceLanguageField(T),
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'labels', selector: { object: {} } },
-        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_outdoor'), bool('show_dew_point'), bool('show_advice'), bool('show_graph'), bool('show_trend'), bool('animations'), { name: 'transparent', selector: { boolean: {} } }] },
+        { type: 'grid', name: '', schema: [bool('show_status'), bool('show_humidity'), bool('show_outdoor'), bool('show_dew_point'), bool('show_advice'), bool('show_graph'), bool('show_trend'), bool('animations'), { name: 'transparent', selector: { boolean: {} } }] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
