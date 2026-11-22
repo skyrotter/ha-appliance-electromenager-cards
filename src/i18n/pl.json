@@ -1181,7 +1181,9 @@
     "entity_boost": "Boost / grzałka elektryczna (on / off)",
     "entity_draw": "Pobór ciepłej wody (on / off lub przepływ)",
     "history_popup_background": "Tło okna (#hex, rgb(), rgba() lub nazwa CSS)",
-    "history_popup_opacity": "Przezroczystość tła okna"
+    "history_popup_opacity": "Przezroczystość tła okna",
+    "show_subscribed": "Pokaż wiersz mocy umownej",
+    "press_animation": "Animuj naciśnięcia przycisku"
   },
   "light": {
     "light_bulb": "Żarówka",

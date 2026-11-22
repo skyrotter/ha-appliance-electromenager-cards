@@ -50,6 +50,8 @@ class ApplianceLinkyCard extends HTMLElement {
         { name: 'hc_ranges', selector: { text: {} } },
         { type: 'grid', name: '', schema: [
           { name: 'show_gauge', selector: { boolean: {} }, default: true },
+          { name: 'show_subscribed', selector: { boolean: {} }, default: true },
+          { name: 'press_animation', selector: { boolean: {} }, default: true },
           { name: 'show_phases', selector: { boolean: {} }, default: true },
           { name: 'show_index', selector: { boolean: {} }, default: true },
           { name: 'show_injection', selector: { boolean: {} }, default: true },
@@ -96,7 +98,7 @@ class ApplianceLinkyCard extends HTMLElement {
       this._cycle = (this._cycle || 0) + 1;
       if (this._tri && this._config.phase_gauge === 'cycle') this._update();
       const b = this.shadowRoot && this.shadowRoot.getElementById('b2');
-      if (b) { b.classList.add('press'); setTimeout(() => b.classList.remove('press'), 250); }
+      if (b && this._config.press_animation !== false) { b.classList.add('press'); setTimeout(() => b.classList.remove('press'), 250); }
     }, 3000);
   }
   disconnectedCallback() { clearInterval(this._timer); }
@@ -119,11 +121,11 @@ class ApplianceLinkyCard extends HTMLElement {
         box-shadow:0 3px 10px rgba(0,0,0,.35), inset 0 0 0 2px rgba(255,255,255,.35); position:relative; }
       .eye { width:8px; height:8px; background:#1d2a05; border-radius:2px; margin:-6px auto 8px; }
       .bezel { background:linear-gradient(#f7f7f7,#dcdcdc); border-radius:12px; padding:10px 9px 8px; box-shadow:inset 0 0 0 1px #c9c9c9; }
-      .lcd { background:#1f4d2a; border-radius:3px; padding:8px 6px; min-height:66px; text-align:center; position:relative; overflow:hidden;
+      .lcd { background:#1f4d2a; border-radius:3px; padding:8px 6px; height:82px; box-sizing:border-box; text-align:center; position:relative; overflow:hidden;
         box-shadow:inset 0 0 8px rgba(0,0,0,.7); font-family:'Courier New',monospace; color:#b9f08a; display:flex; flex-direction:column; justify-content:center; }
       .lcd::after { content:''; position:absolute; inset:0; background:repeating-linear-gradient(0deg,rgba(0,0,0,.12) 0 1px,transparent 1px 3px); pointer-events:none; }
       .lcd .lab { font-size:.58em; letter-spacing:.08em; opacity:.85; }
-      .lcd .val { font-size:1.25em; font-weight:700; text-shadow:0 0 6px rgba(185,240,138,.6); animation:fadein .5s; }
+      .lcd .val { font-size:1.25em; line-height:1.12; font-weight:700; text-shadow:0 0 6px rgba(185,240,138,.6); animation:fadein .5s; }
       .btns { display:flex; gap:6px; margin-top:8px; justify-content:center; }
       .btn { width:44px; height:12px; border-radius:3px; background:linear-gradient(#fff,#d2d2d2); border:1px solid #b0b0b0; cursor:pointer; padding:0; transition:transform .1s; }
       .btn:active, .btn.press { transform:translateY(1px); background:#c8c8c8; }
@@ -325,6 +327,7 @@ class ApplianceLinkyCard extends HTMLElement {
     root.getElementById('gtxt').textContent = gtxt;
     root.getElementById('gsub').textContent = `${this._t('subscribed')} : ${c.subscribed_power} kVA`
       + (tri ? ` · ${+(c.subscribed_power / 3).toFixed(1)} kVA ${this._t('per_phase')}` : '');
+    root.getElementById('gsub').style.display = c.show_subscribed === false ? 'none' : '';   // show_subscribed: false masque la ligne « Souscrite »
     const gact = root.getElementById('gact');
     gact.textContent = active ? `${this._t('active_short')} : ${Math.round(active.v)} ${active.unit}` : '';
     gact.style.display = active ? '' : 'none';

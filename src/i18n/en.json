@@ -1652,7 +1652,9 @@
     "entity_boost": "Boost / electric backup (on / off)",
     "entity_draw": "Hot water draw (on / off or flow)",
     "history_popup_background": "Pop-up background (#hex, rgb(), rgba() or CSS name)",
-    "history_popup_opacity": "Pop-up background opacity"
+    "history_popup_opacity": "Pop-up background opacity",
+    "show_subscribed": "Show the subscribed power line",
+    "press_animation": "Animate the button presses"
   },
   "light": {
     "white_warm": "Warm white",

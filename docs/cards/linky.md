@@ -26,6 +26,8 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `entity_power_l1`
 - `entity_power_l2`
 - `entity_power_l3` (VA per phase, three-phase meters only, at least two of them; single-phase: use `entity_power`)
+- `show_subscribed`: `false` hides the « Subscribed: 12 kVA » line under the gauge (the gauge still uses `subscribed_power`)
+- `press_animation`: `false` stops the simulated presses of the button (the LCD pages still scroll)
 - `phase_gauge` (`needles` default, `cycle` or `max`)
 - `entity_hp`
 - `entity_hc` (indexes, kWh, Wh or MWh)

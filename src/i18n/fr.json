@@ -1637,7 +1637,9 @@
     "entity_boost": "Boost / appoint électrique (on / off)",
     "entity_draw": "Puisage d'eau chaude (on / off ou débit)",
     "history_popup_background": "Fond du pop-up (#hex, rgb(), rgba() ou nom CSS)",
-    "history_popup_opacity": "Opacité du fond du pop-up"
+    "history_popup_opacity": "Opacité du fond du pop-up",
+    "show_subscribed": "Afficher la ligne « Souscrite »",
+    "press_animation": "Animer les appuis sur le bouton"
   },
   "light": {
     "white_warm": "Blanc chaud",
