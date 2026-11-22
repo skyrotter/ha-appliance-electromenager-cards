@@ -2,6 +2,7 @@
   "common": {
     "washer": "Wasmachine",
     "dryer": "Droogkast",
+    "washer_dryer": "Wasdroger",
     "dishwasher": "Vaatwasser",
     "water_heater": "Boiler",
     "oven": "Oven",

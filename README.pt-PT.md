@@ -105,6 +105,7 @@ Clique num cartão para consultar as opções e os exemplos.
 |---|---|
 | [Máquina de lavar roupa](docs/cards/washer-dryer-dishwasher.md) | `custom:appliance-washer-card` |
 | [Máquina de secar roupa](docs/cards/washer-dryer-dishwasher.md) | `custom:appliance-dryer-card` |
+| [Máquina de lavar e secar](docs/cards/washer-dryer-dishwasher.md) | `custom:appliance-washer-dryer-card` |
 | [Máquina de lavar loiça](docs/cards/washer-dryer-dishwasher.md) | `custom:appliance-dishwasher-card` |
 | [Forno](docs/configuration.md#type-specific-options) | `custom:appliance-oven-card` |
 | [Micro-ondas](docs/configuration.md#type-specific-options) | `custom:appliance-microwave-card` |

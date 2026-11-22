@@ -38,6 +38,7 @@ Alcuni esempi (elenco completo con anteprime nel [README in inglese](README.md#t
 |---|---|
 | Lavatrice | `custom:appliance-washer-card` |
 | Asciugatrice | `custom:appliance-dryer-card` |
+| Lavasciuga | `custom:appliance-washer-dryer-card` |
 | Lavastoviglie | `custom:appliance-dishwasher-card` |
 | Scaldacqua | `custom:appliance-water-heater-card` |
 | Forno | `custom:appliance-oven-card` |

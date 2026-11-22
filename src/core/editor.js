@@ -101,10 +101,10 @@ function buildForm(kind) {
       {
         type: "expandable", name: "", title: "Options", flatten: true, schema: [
           { name: "threshold", selector: { number: { min: 0, max: 3000, step: 1, mode: "box", unit_of_measurement: "W" } } },
-          ...(["washer", "dishwasher"].includes(kind) ? [
+          ...(["washer", "washer_dryer", "dishwasher"].includes(kind) ? [
             { name: "heating_power", selector: { number: { min: 100, max: 4000, step: 50, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
-          ...(kind === "washer" ? [
+          ...(kind === "washer" || kind === "washer_dryer" ? [
             { name: "spin_power", selector: { number: { min: 50, max: 2000, step: 25, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
           ...(["chest_freezer", "drawer_freezer"].includes(kind) ? [
@@ -129,7 +129,7 @@ function buildForm(kind) {
             { name: "freezer_max_temperature", selector: { number: { min: -30, max: 32, step: 0.5, mode: "box" } } },
             { name: "flex_max_temperature", selector: { number: { min: -30, max: 60, step: 0.5, mode: "box" } } },
           ] : []),
-          ...(["washer", "dryer", "dishwasher"].includes(kind) ? [
+          ...(["washer", "washer_dryer", "dryer", "dishwasher"].includes(kind) ? [
             { name: "last_cycle", selector: { boolean: {} } },
             { name: "estimate", selector: { boolean: {} } },
           ] : []),
@@ -138,7 +138,7 @@ function buildForm(kind) {
           ...(kind === "oven" ? [{ name: "last_cycle", selector: { boolean: {} } }, { name: "cavities", selector: { number: { min: 1, max: 2, step: 1, mode: "box" } } }] : []),
           ...(kind === "water_heater" ? [{ name: "last_cycle", selector: { boolean: {} } },
             { name: "tank_volume", selector: { number: { min: 0, max: 1000, step: 1, mode: "box", unit_of_measurement: "L" } } }] : []),
-          ...(["washer", "dryer", "dishwasher", "water_heater", "oven"].includes(kind) ? [
+          ...(["washer", "washer_dryer", "dryer", "dishwasher", "water_heater", "oven"].includes(kind) ? [
             { name: "cycle_gap", selector: { number: { min: 0, max: 240, step: 1, mode: "box", unit_of_measurement: "min" } } },
           ] : []),
           ...(d.fields.includes("energy") ? [{ name: "energy_period", selector: { select: { mode: "dropdown", options: [
@@ -149,7 +149,7 @@ function buildForm(kind) {
             { value: "", label: tr(null, "energy") }, ...TILE_PERIODS.map((value) => ({ value, label: tr(null, `energy_${value}`) }))] } } }] : []),
           ...(d.fields.includes("cost") ? [{ name: "cost_tile_period", selector: { select: { mode: "dropdown", options: [
             { value: "", label: tr(null, "cost") }, ...TILE_PERIODS.map((value) => ({ value, label: tr(null, `cost_${value}`) }))] } } }] : []),
-          ...(d.fields.includes("energy") || ["washer", "dryer", "dishwasher"].includes(kind) ? [
+          ...(d.fields.includes("energy") || ["washer", "washer_dryer", "dryer", "dishwasher"].includes(kind) ? [
             { name: "price_per_kwh", selector: { number: { min: 0, max: 2, step: 0.0001, mode: "box" } } },
             { name: "display", selector: { select: { mode: "dropdown", options: [
               { value: "", label: "kWh + €" }, { value: "both", label: tr(null, "display_both") }, { value: "energy", label: "kWh" }, { value: "cost", label: "€" }] } } },
@@ -395,7 +395,7 @@ function buildForm(kind) {
             { name: "ignition_threshold", selector: { number: { min: 50, max: 1000, step: 10, mode: "box", unit_of_measurement: "W" } } },
             { name: "pellet_alert", selector: { number: { min: 0, max: 50, step: 1, mode: "box", unit_of_measurement: "%" } } },
           ] : []),
-          ...(["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "chest_freezer", "drawer_freezer", "desktop_pc", "server_rack", "ps5", "thermomix", "cookeo"].includes(kind) ? [{ name: "confirm_off", selector: { boolean: {} }, default: true }] : []),
+          ...(["washer", "washer_dryer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "chest_freezer", "drawer_freezer", "desktop_pc", "server_rack", "ps5", "thermomix", "cookeo"].includes(kind) ? [{ name: "confirm_off", selector: { boolean: {} }, default: true }] : []),
           // case à cocher : 2e clic obligatoire dès que la prise est allumée, quel que soit l'appareil
           ...(d.fields.includes("switch") || kind === "power_strip" ? [{ name: "confirm_always", selector: { boolean: {} } }] : []),
           { name: "tap_action", selector: { ui_action: { actions: ["more-info", "toggle", "navigate", "url", "perform-action", "none"] } } },
@@ -426,7 +426,7 @@ function stubFor(kind, hass) {
   const sw = pick((i) => i.startsWith("switch.") && !/(child_lock|lock|led|indicator)/.test(i));
   const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : ["tv", "av_receiver", "ps5", "smart_speaker"].includes(kind) ? pick((i) => i.startsWith("media_player.")) : ["fan", "ceiling_fan", "air_purifier"].includes(kind) ? pick((i) => i.startsWith("fan.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : kind === "dehumidifier" ? pick((i) => i.startsWith("humidifier.")) : null;
   const temp = pick((i, st) => i.startsWith("sensor.") && dc(st) === "temperature");
-  const flag = ["washer", "dryer", "dishwasher", "microwave"].includes(kind)
+  const flag = ["washer", "washer_dryer", "dryer", "dishwasher", "microwave"].includes(kind)
     ? pick((i) => /^(input_boolean|binary_sensor)\./.test(i) && /(running|en_cours|marche|cycle)/.test(i)) : null;
   if (wh) cfg.entity = wh;
   if (flag) cfg.entity = flag;

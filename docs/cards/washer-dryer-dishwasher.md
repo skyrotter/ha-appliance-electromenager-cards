@@ -145,3 +145,16 @@ spin_power: 250
 ```
 
 [← All cards](../../README.md#the-cards)
+
+## Washer-dryer
+
+`custom:appliance-washer-dryer-card`: the washing machine with its porthole, water and foam, plus the dryer's warmth. During the **drying** phase the drum turns steadily, the machine vibrates softly and the drum glows warm; during **cooling** it keeps turning. Wash, rinse and spin behave like the washer card.
+
+```yaml
+type: custom:appliance-washer-dryer-card
+power: sensor.washer_dryer_plug_power
+program: sensor.washer_dryer_program     # optional: the phase is read from the program text (rinse, spin, dry, cool…)
+remaining: sensor.washer_dryer_remaining_time
+```
+
+All the options of the washer card apply (`threshold`, `heating_power`, `spin_power`, `remaining`, `program`, `last_cycle`, `estimate`…). With a smart plug only, the phase is guessed from the power: drying draws about as much as the heating of the wash, so give the card a `program` text sensor when your appliance exposes one.

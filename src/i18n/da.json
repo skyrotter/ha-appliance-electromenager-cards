@@ -2,6 +2,7 @@
   "common": {
     "washer": "Vaskemaskine",
     "dryer": "Tørretumbler",
+    "washer_dryer": "Vaske-tørremaskine",
     "dishwasher": "Opvaskemaskine",
     "water_heater": "Vandvarmer",
     "oven": "Ovn",

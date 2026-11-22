@@ -2,6 +2,7 @@
   "common": {
     "washer": "Mașină de spălat rufe",
     "dryer": "Uscător de rufe",
+    "washer_dryer": "Mașină de spălat cu uscător",
     "dishwasher": "Mașină de spălat vase",
     "water_heater": "Boiler",
     "oven": "Cuptor",

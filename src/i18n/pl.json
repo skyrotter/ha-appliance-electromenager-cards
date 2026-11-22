@@ -2,6 +2,7 @@
   "common": {
     "washer": "Pralka",
     "dryer": "Suszarka",
+    "washer_dryer": "Pralko-suszarka",
     "dishwasher": "Zmywarka",
     "water_heater": "Podgrzewacz wody",
     "oven": "Piekarnik",

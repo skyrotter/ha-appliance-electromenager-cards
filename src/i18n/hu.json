@@ -2,6 +2,7 @@
   "common": {
     "washer": "Mosógép",
     "dryer": "Szárítógép",
+    "washer_dryer": "Mosó-szárítógép",
     "dishwasher": "Mosogatógép",
     "water_heater": "Bojler",
     "oven": "Sütő",

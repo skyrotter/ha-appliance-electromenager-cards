@@ -24,6 +24,7 @@ const STRINGS = {
     "illus_pos_right": "Right, first 2 tiles on the left",
     "washer": "Washing machine",
     "dryer": "Dryer",
+    "washer_dryer": "Washer-dryer",
     "dishwasher": "Dishwasher",
     "water_heater": "Water heater",
     "oven": "Oven",
@@ -542,6 +543,7 @@ const STRINGS = {
   "cs": {
     "washer": "Pračka",
     "dryer": "Sušička",
+    "washer_dryer": "Pračka se sušičkou",
     "dishwasher": "Myčka",
     "water_heater": "Ohřívač vody",
     "oven": "Trouba",
@@ -922,6 +924,7 @@ const STRINGS = {
   "da": {
     "washer": "Vaskemaskine",
     "dryer": "Tørretumbler",
+    "washer_dryer": "Vaske-tørremaskine",
     "dishwasher": "Opvaskemaskine",
     "water_heater": "Vandvarmer",
     "oven": "Ovn",
@@ -1362,6 +1365,7 @@ const STRINGS = {
   "de": {
     "washer": "Waschmaschine",
     "dryer": "Wäschetrockner",
+    "washer_dryer": "Waschtrockner",
     "dishwasher": "Geschirrspüler",
     "water_heater": "Warmwasserspeicher",
     "oven": "Backofen",
@@ -1822,6 +1826,7 @@ const STRINGS = {
     "illus_pos_right": "Derecha, 2 primeros recuadros a la izquierda",
     "washer": "Lavadora",
     "dryer": "Secadora",
+    "washer_dryer": "Lavasecadora",
     "dishwasher": "Lavavajillas",
     "water_heater": "Termo eléctrico",
     "oven": "Horno",
@@ -2323,6 +2328,7 @@ const STRINGS = {
     "illus_pos_right": "À droite, 2 premières tuiles à gauche",
     "washer": "Lave-linge",
     "dryer": "Sèche-linge",
+    "washer_dryer": "Lave-linge séchant",
     "dishwasher": "Lave-vaisselle",
     "water_heater": "Ballon d'eau chaude",
     "oven": "Four",
@@ -2835,6 +2841,7 @@ const STRINGS = {
   "hu": {
     "washer": "Mosógép",
     "dryer": "Szárítógép",
+    "washer_dryer": "Mosó-szárítógép",
     "dishwasher": "Mosogatógép",
     "water_heater": "Bojler",
     "oven": "Sütő",
@@ -3278,6 +3285,7 @@ const STRINGS = {
   "it": {
     "washer": "Lavatrice",
     "dryer": "Asciugatrice",
+    "washer_dryer": "Lavasciuga",
     "dishwasher": "Lavastoviglie",
     "water_heater": "Scaldacqua",
     "oven": "Forno",
@@ -3764,6 +3772,7 @@ const STRINGS = {
     "f_energy_period": "Vist energi (teller eller periode)",
     "washer": "Vaskemaskin",
     "dryer": "Tørketrommel",
+    "washer_dryer": "Kombinert vaske- og tørkemaskin",
     "dishwasher": "Oppvaskmaskin",
     "water_heater": "Varmtvannsbereder",
     "oven": "Stekeovn",
@@ -4050,6 +4059,7 @@ const STRINGS = {
   "nl": {
     "washer": "Wasmachine",
     "dryer": "Droogkast",
+    "washer_dryer": "Wasdroger",
     "dishwasher": "Vaatwasser",
     "water_heater": "Boiler",
     "oven": "Oven",
@@ -4457,6 +4467,7 @@ const STRINGS = {
   "pl": {
     "washer": "Pralka",
     "dryer": "Suszarka",
+    "washer_dryer": "Pralko-suszarka",
     "dishwasher": "Zmywarka",
     "water_heater": "Podgrzewacz wody",
     "oven": "Piekarnik",
@@ -4857,6 +4868,7 @@ const STRINGS = {
     "illus_pos_right": "À direita, 2 primeiras peças à esquerda",
     "washer": "Lavadora de roupas",
     "dryer": "Secadora de roupas",
+    "washer_dryer": "Lava e seca",
     "dishwasher": "Lava-louças",
     "water_heater": "Aquecedor de água",
     "oven": "Forno",
@@ -5368,6 +5380,7 @@ const STRINGS = {
     "illus_pos_right": "À direita, 2 primeiros mosaicos à esquerda",
     "washer": "Máquina de lavar roupa",
     "dryer": "Máquina de secar roupa",
+    "washer_dryer": "Máquina de lavar e secar",
     "dishwasher": "Máquina de lavar loiça",
     "water_heater": "Termoacumulador",
     "oven": "Forno",
@@ -5872,6 +5885,7 @@ const STRINGS = {
   "ro": {
     "washer": "Mașină de spălat rufe",
     "dryer": "Uscător de rufe",
+    "washer_dryer": "Mașină de spălat cu uscător",
     "dishwasher": "Mașină de spălat vase",
     "water_heater": "Boiler",
     "oven": "Cuptor",
@@ -6251,6 +6265,7 @@ const STRINGS = {
   "ru": {
     "washer": "Стиральная машина",
     "dryer": "Сушильная машина",
+    "washer_dryer": "Стирально-сушильная машина",
     "dishwasher": "Посудомоечная машина",
     "water_heater": "Водонагреватель",
     "oven": "Духовой шкаф",
@@ -6616,6 +6631,7 @@ const STRINGS = {
   "sr": {
     "washer": "Веш машина",
     "dryer": "Машина за сушење веша",
+    "washer_dryer": "Веш-машина са сушилицом",
     "dishwasher": "Машина за прање судова",
     "water_heater": "Бојлер",
     "oven": "Рерна",
@@ -7069,6 +7085,7 @@ const STRINGS = {
   "sr-Latn": {
     "washer": "Veš mašina",
     "dryer": "Mašina za sušenje veša",
+    "washer_dryer": "Veš-mašina sa sušilicom",
     "dishwasher": "Mašina za pranje sudova",
     "water_heater": "Bojler",
     "oven": "Rerna",
@@ -7529,6 +7546,7 @@ const STRINGS = {
     "illus_pos_right": "Праворуч, перші 2 плитки ліворуч",
     "washer": "Пральна машина",
     "dryer": "Сушарка",
+    "washer_dryer": "Пральна машина із сушаркою",
     "dishwasher": "Посудомийна машина",
     "water_heater": "Бойлер",
     "oven": "Духовка",
@@ -11383,6 +11401,12 @@ SVG.washer = () => `
   <rect x="22" y="117" width="76" height="6" rx="2" fill="#000" opacity=".05"/>
 </g>`;
 
+/* Lave-linge séchant : le lave-linge (hublot, mousse, eau) avec la chaleur du sèche-linge en phase de séchage (calque « heat »).
+   Face avant seulement ; SVG.washer est lu à l'appel (washer_side.js le redéfinit après ce fichier). */
+SVG.washer_dryer = (c) => SVG.washer({ ...c, view: "front" })
+  .replace("</defs>", `<radialGradient id="ID-heat" cx=".5" cy=".6" r=".6"><stop offset="0" stop-color="#ffb347" stop-opacity=".55"/><stop offset="1" stop-color="#ff7b2e" stop-opacity="0"/></radialGradient></defs></defs>`)
+  .replace('<g class="water">', '<circle class="heat" cx="60" cy="80" r="29" fill="url(#ID-heat)"/><g class="water">');
+
 /* Vue « de côté » du gros électroménager (option view: side) : lave-linge, sèche-linge et lave-vaisselle.
    Face avant en perspective, côté gauche visible, trois pieds. Les mêmes calques et classes que la vue de face (tambour, voyants, afficheur…)
    sont dessinés dans le repère de la vue de face, puis déformés par une matrice (l'animation du tambour tourne dans son repère d'origine). */
@@ -11627,6 +11651,9 @@ const CYCLE_FIELDS = ["entity", "power", "energy", "cost", "remaining", "progres
 const DEF = {
   washer: { accent: "active", threshold: 10, heating_power: 1000, spin_power: 200, fields: CYCLE_FIELDS,
     keys: ["lave_linge", "lavelinge", "washing_machine", "washer", "machine_a_laver"] },
+  // lave-linge séchant : cycle de lavage puis de séchage (tambour qui tourne, chaleur)
+  washer_dryer: { accent: "active", threshold: 10, heating_power: 1000, spin_power: 200, fields: CYCLE_FIELDS,
+    keys: ["lave_linge_sechant", "lavante_sechante", "lave_seche", "washer_dryer", "waschtrockner", "lavasciuga", "lavasecadora"] },
   dryer: { accent: "active", threshold: 10, fields: CYCLE_FIELDS,
     keys: ["seche_linge", "sechelinge", "tumble_dryer", "dryer"] },
   dishwasher: { accent: "active", threshold: 10, heating_power: 1000, fields: CYCLE_FIELDS,
@@ -12279,7 +12306,7 @@ class ApplianceCardBase extends HTMLElement {
   // (médiane des 7 derniers cycles) et le début du cycle en cours.
   // Chauffe-eau : last_cycle seulement (pas d'estimate), puissance réseau + solaire (power + power_solar), énergie idem.
   _fetchCycle(active) {
-    const c = this._config, hass = this._hass, wash = ["washer", "dryer", "dishwasher"].includes(this._kind), wh = this._kind === "water_heater" || this._kind === "oven";
+    const c = this._config, hass = this._hass, wash = ["washer", "washer_dryer", "dryer", "dishwasher"].includes(this._kind), wh = this._kind === "water_heater" || this._kind === "oven";
     const est = !!c.estimate && wash;
     if (!(c.last_cycle || est) || !(wash || wh) || !c.power || !hass || typeof hass.callWS !== "function") return;
     const was = this._cycActive, gap = (c.cycle_gap ?? 15) * 60000;
@@ -12426,7 +12453,7 @@ class ApplianceCardBase extends HTMLElement {
     const mainIds = ["entity", "power", "power_solar", "switch", "switch_low", "switch_high", "temperature", "zone_1", "zone_2", "zone_3", "zone_4"].map((k) => c[k]).filter(Boolean)
       .concat(kind === "power_strip" && Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : []); // multiprise : les prises comptent
     // lave-linge / sèche-linge / lave-vaisselle : « none » (SmartThings job_state au repos) est un état valide = au repos, pas « indisponible »
-    const noneIdle = ["washer", "dryer", "dishwasher"].includes(kind);
+    const noneIdle = ["washer", "washer_dryer", "dryer", "dishwasher"].includes(kind);
     const usable = mainIds.some((i) => hass.states[i] && (!BAD.includes(String(hass.states[i].state).toLowerCase()) || (noneIdle && String(hass.states[i].state).toLowerCase() === "none")));
     if (!usable) { m.status = "unavailable"; return m; }
     let base = null;
@@ -13013,7 +13040,7 @@ class ApplianceCardBase extends HTMLElement {
     }
 
     // phase detection (washer / dryer / dishwasher) from status or program text, with smart-plug power inference fallback
-    if (m.status === "running" && ["washer", "dryer", "dishwasher"].includes(kind)) {
+    if (m.status === "running" && ["washer", "washer_dryer", "dryer", "dishwasher"].includes(kind)) {
       const txt = `${main ? main.state : ""} ${m.program ? m.program.state : ""}`.toLowerCase();
       if (/rin[cç]|rinse/.test(txt)) m.phase = "rinse";
       else if (/essor|spin|centrif|essorage/.test(txt)) m.phase = "spin";
@@ -13023,13 +13050,13 @@ class ApplianceCardBase extends HTMLElement {
       else if (/(^|[^a-zà-ÿ])(heat|chauff)/.test(txt)) m.phase = "heat";
       else if (kind === "dryer") {
         m.phase = "dry";
-      } else if (watts !== null && ["washer", "dishwasher"].includes(kind)) {
+      } else if (watts !== null && ["washer", "washer_dryer", "dishwasher"].includes(kind)) {
         // Fallback: infer phase from power draw on smart plugs when text entity gives no phase
         const heatThreshold = c.heating_power ?? this._def.heating_power ?? 1000;
         const spinThreshold = c.spin_power ?? this._def.spin_power ?? 200;
         if (heatThreshold > 0 && watts >= heatThreshold) {
           m.phase = "heat";
-        } else if (kind === "washer" && spinThreshold > 0 && watts >= spinThreshold) {
+        } else if ((kind === "washer" || kind === "washer_dryer") && spinThreshold > 0 && watts >= spinThreshold) {
           m.phase = "spin";
         } else if (!m.phase) {
           m.phase = "wash";
@@ -13039,7 +13066,7 @@ class ApplianceCardBase extends HTMLElement {
       }
     }
     // estimate : temps restant et progression d'après la durée habituelle des cycles (médiane), si aucun capteur ne les donne
-    if (c.estimate && m.status === "running" && ["washer", "dryer", "dishwasher"].includes(kind) && this._refDur && this._runStart) {
+    if (c.estimate && m.status === "running" && ["washer", "washer_dryer", "dryer", "dishwasher"].includes(kind) && this._refDur && this._runStart) {
       const el = Date.now() - this._runStart, left = (this._refDur - el) / 60000;
       if (!c.remaining) { if (left >= 1) { m.remaining = left; m.estimated = true; } else m.soon = true; }
       if (!c.progress && m.progress == null) m.progress = Math.max(0, Math.min(99, (el / this._refDur) * 100));
@@ -13711,7 +13738,7 @@ class ApplianceCardBase extends HTMLElement {
       // sinon confirm_off : true (défaut, protection selon l'appareil) / false (jamais)
       const always = c.confirm_always === true || c.confirm_off === "always";
       const cOff = always ? "always" : c.confirm_off === false || c.confirm_off === "off" ? "off" : "auto";
-      const autoGuard = freezer || computer || console_ || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "thermomix", "cookeo"].includes(kind));
+      const autoGuard = freezer || computer || console_ || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "washer_dryer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "thermomix", "cookeo"].includes(kind));
       const guarded = cOff !== "off" && on && (cOff === "always" || autoGuard);
       this._sw = { id: swId, guarded };
       const arming = guarded && this._confirmUntil && Date.now() < this._confirmUntil;
@@ -14329,10 +14356,10 @@ function buildForm(kind) {
       {
         type: "expandable", name: "", title: "Options", flatten: true, schema: [
           { name: "threshold", selector: { number: { min: 0, max: 3000, step: 1, mode: "box", unit_of_measurement: "W" } } },
-          ...(["washer", "dishwasher"].includes(kind) ? [
+          ...(["washer", "washer_dryer", "dishwasher"].includes(kind) ? [
             { name: "heating_power", selector: { number: { min: 100, max: 4000, step: 50, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
-          ...(kind === "washer" ? [
+          ...(kind === "washer" || kind === "washer_dryer" ? [
             { name: "spin_power", selector: { number: { min: 50, max: 2000, step: 25, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
           ...(["chest_freezer", "drawer_freezer"].includes(kind) ? [
@@ -14357,7 +14384,7 @@ function buildForm(kind) {
             { name: "freezer_max_temperature", selector: { number: { min: -30, max: 32, step: 0.5, mode: "box" } } },
             { name: "flex_max_temperature", selector: { number: { min: -30, max: 60, step: 0.5, mode: "box" } } },
           ] : []),
-          ...(["washer", "dryer", "dishwasher"].includes(kind) ? [
+          ...(["washer", "washer_dryer", "dryer", "dishwasher"].includes(kind) ? [
             { name: "last_cycle", selector: { boolean: {} } },
             { name: "estimate", selector: { boolean: {} } },
           ] : []),
@@ -14366,7 +14393,7 @@ function buildForm(kind) {
           ...(kind === "oven" ? [{ name: "last_cycle", selector: { boolean: {} } }, { name: "cavities", selector: { number: { min: 1, max: 2, step: 1, mode: "box" } } }] : []),
           ...(kind === "water_heater" ? [{ name: "last_cycle", selector: { boolean: {} } },
             { name: "tank_volume", selector: { number: { min: 0, max: 1000, step: 1, mode: "box", unit_of_measurement: "L" } } }] : []),
-          ...(["washer", "dryer", "dishwasher", "water_heater", "oven"].includes(kind) ? [
+          ...(["washer", "washer_dryer", "dryer", "dishwasher", "water_heater", "oven"].includes(kind) ? [
             { name: "cycle_gap", selector: { number: { min: 0, max: 240, step: 1, mode: "box", unit_of_measurement: "min" } } },
           ] : []),
           ...(d.fields.includes("energy") ? [{ name: "energy_period", selector: { select: { mode: "dropdown", options: [
@@ -14377,7 +14404,7 @@ function buildForm(kind) {
             { value: "", label: tr(null, "energy") }, ...TILE_PERIODS.map((value) => ({ value, label: tr(null, `energy_${value}`) }))] } } }] : []),
           ...(d.fields.includes("cost") ? [{ name: "cost_tile_period", selector: { select: { mode: "dropdown", options: [
             { value: "", label: tr(null, "cost") }, ...TILE_PERIODS.map((value) => ({ value, label: tr(null, `cost_${value}`) }))] } } }] : []),
-          ...(d.fields.includes("energy") || ["washer", "dryer", "dishwasher"].includes(kind) ? [
+          ...(d.fields.includes("energy") || ["washer", "washer_dryer", "dryer", "dishwasher"].includes(kind) ? [
             { name: "price_per_kwh", selector: { number: { min: 0, max: 2, step: 0.0001, mode: "box" } } },
             { name: "display", selector: { select: { mode: "dropdown", options: [
               { value: "", label: "kWh + €" }, { value: "both", label: tr(null, "display_both") }, { value: "energy", label: "kWh" }, { value: "cost", label: "€" }] } } },
@@ -14623,7 +14650,7 @@ function buildForm(kind) {
             { name: "ignition_threshold", selector: { number: { min: 50, max: 1000, step: 10, mode: "box", unit_of_measurement: "W" } } },
             { name: "pellet_alert", selector: { number: { min: 0, max: 50, step: 1, mode: "box", unit_of_measurement: "%" } } },
           ] : []),
-          ...(["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "chest_freezer", "drawer_freezer", "desktop_pc", "server_rack", "ps5", "thermomix", "cookeo"].includes(kind) ? [{ name: "confirm_off", selector: { boolean: {} }, default: true }] : []),
+          ...(["washer", "washer_dryer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "chest_freezer", "drawer_freezer", "desktop_pc", "server_rack", "ps5", "thermomix", "cookeo"].includes(kind) ? [{ name: "confirm_off", selector: { boolean: {} }, default: true }] : []),
           // case à cocher : 2e clic obligatoire dès que la prise est allumée, quel que soit l'appareil
           ...(d.fields.includes("switch") || kind === "power_strip" ? [{ name: "confirm_always", selector: { boolean: {} } }] : []),
           { name: "tap_action", selector: { ui_action: { actions: ["more-info", "toggle", "navigate", "url", "perform-action", "none"] } } },
@@ -14654,7 +14681,7 @@ function stubFor(kind, hass) {
   const sw = pick((i) => i.startsWith("switch.") && !/(child_lock|lock|led|indicator)/.test(i));
   const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : ["tv", "av_receiver", "ps5", "smart_speaker"].includes(kind) ? pick((i) => i.startsWith("media_player.")) : ["fan", "ceiling_fan", "air_purifier"].includes(kind) ? pick((i) => i.startsWith("fan.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : kind === "dehumidifier" ? pick((i) => i.startsWith("humidifier.")) : null;
   const temp = pick((i, st) => i.startsWith("sensor.") && dc(st) === "temperature");
-  const flag = ["washer", "dryer", "dishwasher", "microwave"].includes(kind)
+  const flag = ["washer", "washer_dryer", "dryer", "dishwasher", "microwave"].includes(kind)
     ? pick((i) => /^(input_boolean|binary_sensor)\./.test(i) && /(running|en_cours|marche|cycle)/.test(i)) : null;
   if (wh) cfg.entity = wh;
   if (flag) cfg.entity = flag;
@@ -14887,7 +14914,7 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
   transform: scale(1.22);
   transform-origin: center center;
 }
-.wrap.layout-split.k-washer .illus svg, .wrap.layout-split.k-dryer .illus svg {
+.wrap.layout-split.k-washer .illus svg, .wrap.layout-split.k-washer_dryer .illus svg, .wrap.layout-split.k-dryer .illus svg {
   transform: scale(1.18);
   transform-origin: center center;
 }
@@ -15022,7 +15049,7 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .st-finished .l4 { fill: #3ddc84; }
 .knob, .drum, .clothes, .bowl, .arm, .needle, .fz-door, .fr-door, .flake { transform-box: view-box; }
 .knob { transition: transform .6s; }
-.k-washer .knob, .k-dryer .knob { transform-origin: 93px 21px; }
+.k-washer .knob, .k-washer_dryer .knob, .k-dryer .knob { transform-origin: 93px 21px; }
 .k-dryer .knob { transform-origin: 27px 21px; }
 .k-oven .knob { transform-origin: 24px 21px; }
 .k-microwave .knob { transform-origin: 100.5px 88px; }
@@ -15054,6 +15081,10 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-washer.ph-dry .drum, .k-washer.ph-cool .drum { animation: ac-rot 2.8s linear infinite; }
 .k-washer.ph-dry .shake { animation: ac-shake-soft .5s linear infinite; }
 .k-dryer.ph-dry .shake-soft { animation: ac-shake-soft .5s linear infinite; }
+/* lave-linge séchant : séchage = tambour qui tourne, légère vibration et chaleur */
+.k-washer_dryer.ph-dry .drum, .k-washer_dryer.ph-cool .drum { animation: ac-rot 2.8s linear infinite; }
+.k-washer_dryer.ph-dry .shake { animation: ac-shake-soft .5s linear infinite; }
+.k-washer_dryer.ph-dry .heat { opacity: 1; animation: ac-glow 2.2s ease-in-out infinite; }
 .heat { opacity: 0; transition: opacity .8s; }
 .k-dryer.ph-dry .heat { opacity: 1; animation: ac-glow 2.2s ease-in-out infinite; }
 

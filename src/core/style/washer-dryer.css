@@ -22,5 +22,9 @@
 .k-washer.ph-dry .drum, .k-washer.ph-cool .drum { animation: ac-rot 2.8s linear infinite; }
 .k-washer.ph-dry .shake { animation: ac-shake-soft .5s linear infinite; }
 .k-dryer.ph-dry .shake-soft { animation: ac-shake-soft .5s linear infinite; }
+/* lave-linge séchant : séchage = tambour qui tourne, légère vibration et chaleur */
+.k-washer_dryer.ph-dry .drum, .k-washer_dryer.ph-cool .drum { animation: ac-rot 2.8s linear infinite; }
+.k-washer_dryer.ph-dry .shake { animation: ac-shake-soft .5s linear infinite; }
+.k-washer_dryer.ph-dry .heat { opacity: 1; animation: ac-glow 2.2s ease-in-out infinite; }
 .heat { opacity: 0; transition: opacity .8s; }
 .k-dryer.ph-dry .heat { opacity: 1; animation: ac-glow 2.2s ease-in-out infinite; }

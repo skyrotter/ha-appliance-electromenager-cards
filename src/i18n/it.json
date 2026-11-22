@@ -2,6 +2,7 @@
   "common": {
     "washer": "Lavatrice",
     "dryer": "Asciugatrice",
+    "washer_dryer": "Lavasciuga",
     "dishwasher": "Lavastoviglie",
     "water_heater": "Scaldacqua",
     "oven": "Forno",

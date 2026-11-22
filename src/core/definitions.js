@@ -5,6 +5,9 @@ const CYCLE_FIELDS = ["entity", "power", "energy", "cost", "remaining", "progres
 const DEF = {
   washer: { accent: "active", threshold: 10, heating_power: 1000, spin_power: 200, fields: CYCLE_FIELDS,
     keys: ["lave_linge", "lavelinge", "washing_machine", "washer", "machine_a_laver"] },
+  // lave-linge séchant : cycle de lavage puis de séchage (tambour qui tourne, chaleur)
+  washer_dryer: { accent: "active", threshold: 10, heating_power: 1000, spin_power: 200, fields: CYCLE_FIELDS,
+    keys: ["lave_linge_sechant", "lavante_sechante", "lave_seche", "washer_dryer", "waschtrockner", "lavasciuga", "lavasecadora"] },
   dryer: { accent: "active", threshold: 10, fields: CYCLE_FIELDS,
     keys: ["seche_linge", "sechelinge", "tumble_dryer", "dryer"] },
   dishwasher: { accent: "active", threshold: 10, heating_power: 1000, fields: CYCLE_FIELDS,
