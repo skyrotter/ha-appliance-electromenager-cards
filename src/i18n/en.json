@@ -520,7 +520,9 @@
     "f_cadence": "Cadence sensor (rpm, or strokes/min for the rower)",
     "f_distance": "Distance sensor",
     "f_heart_rate": "Heart rate sensor",
-    "f_calories": "Calories sensor"
+    "f_calories": "Calories sensor",
+    "power_factor": "Power factor",
+    "f_power_factor": "Power factor sensor (cos φ, optional)"
   },
   "aquarium": {
     "power": "Power",

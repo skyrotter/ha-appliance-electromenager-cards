@@ -15,7 +15,10 @@ A black glass cooktop with four zones, a saucepan on the front-left zone and a f
 type: custom:appliance-hob-card
 power: sensor.cooktop_power      # from a DIN-rail meter or CT clamp
 energy: sensor.cooktop_energy_today
+power_factor: sensor.cooktop_power_factor   # optional: power factor (cos φ) tile
 ```
+
+`power_factor` is a sensor holding the power factor, either as a decimal (0.93) or in % (93 %); the tile is hidden while the power is 0. Most DIN-rail meters and CT clamps (Shelly Pro / EM, Eastron…) expose it.
 
 
 [← All cards](../../README.md#the-cards)

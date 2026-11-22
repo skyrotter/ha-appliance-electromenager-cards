@@ -388,7 +388,9 @@
     "f_hide_when_inactive": "Ukryj, gdy nieaktywne (brak cyklu, brak alarmu)",
     "f_hide_delay": "Pozostaw widoczne po zakończeniu (min)",
     "f_cycle_gap": "Pauza zaliczana do tego samego cyklu (min)",
-    "f_hide_zero_power": "Ukryj moc, gdy wynosi 0"
+    "f_hide_zero_power": "Ukryj moc, gdy wynosi 0",
+    "power_factor": "Współczynnik mocy",
+    "f_power_factor": "Czujnik współczynnika mocy (cos φ, opcjonalnie)"
   },
   "aquarium": {
     "power": "Moc",

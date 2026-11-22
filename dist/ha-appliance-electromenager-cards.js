@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.200.0";
+const VERSION = "1.201.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -535,7 +535,9 @@ const STRINGS = {
     "f_cadence": "Cadence sensor (rpm, or strokes/min for the rower)",
     "f_distance": "Distance sensor",
     "f_heart_rate": "Heart rate sensor",
-    "f_calories": "Calories sensor"
+    "f_calories": "Calories sensor",
+    "power_factor": "Power factor",
+    "f_power_factor": "Power factor sensor (cos φ, optional)"
   },
   "cs": {
     "washer": "Pračka",
@@ -2826,7 +2828,9 @@ const STRINGS = {
     "f_cadence": "Capteur de cadence (tr/min, ou coups/min pour le rameur)",
     "f_distance": "Capteur de distance",
     "f_heart_rate": "Capteur de fréquence cardiaque",
-    "f_calories": "Capteur de calories"
+    "f_calories": "Capteur de calories",
+    "power_factor": "Facteur de puissance",
+    "f_power_factor": "Capteur de facteur de puissance (cos φ, facultatif)"
   },
   "hu": {
     "washer": "Mosógép",
@@ -4839,7 +4843,9 @@ const STRINGS = {
     "f_hide_when_inactive": "Ukryj, gdy nieaktywne (brak cyklu, brak alarmu)",
     "f_hide_delay": "Pozostaw widoczne po zakończeniu (min)",
     "f_cycle_gap": "Pauza zaliczana do tego samego cyklu (min)",
-    "f_hide_zero_power": "Ukryj moc, gdy wynosi 0"
+    "f_hide_zero_power": "Ukryj moc, gdy wynosi 0",
+    "power_factor": "Współczynnik mocy",
+    "f_power_factor": "Czujnik współczynnika mocy (cos φ, opcjonalnie)"
   },
   "pt-BR": {
     "valign_top": "No topo (predefinido)",
@@ -11641,7 +11647,7 @@ const DEF = {
     fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "humidity", "switch"],
     keys: ["clim", "climatisation", "climatiseur", "split", "air_conditioner", "aircon", "daikin", "mitsubishi", "atlantic", "toshiba"] },
   heat_pump: { accent: "heat", threshold: 60,
-    fields: ["entity", "power", "energy", "cost", "temperature", "switch"],
+    fields: ["entity", "power", "power_factor", "energy", "cost", "temperature", "switch"],
     keys: ["pac", "pompe_a_chaleur", "heat_pump", "heatpump", "unite_ext", "groupe_ext", "outdoor_unit"] },
   fan: { accent: "cold", threshold: 5,
     fields: ["entity", "power", "energy", "cost", "switch"],
@@ -11776,7 +11782,7 @@ const DEF = {
     fields: ["entity", "power", "energy", "cost", "speed", "direction", "humidity", "switch", "switch_low", "switch_high"],
     keys: ["vmc", "ventilation", "extracteur", "mvhr", "hrv"] },
   hob: { accent: "heat", threshold: 50,
-    fields: ["entity", "power", "energy", "cost", "zone_1", "zone_2", "zone_3", "zone_4"],
+    fields: ["entity", "power", "power_factor", "energy", "cost", "zone_1", "zone_2", "zone_3", "zone_4"],
     keys: ["plaque", "cuisson", "induction", "vitro", "hob", "cooktop", "table_de_cuisson"] },
   radiator: { accent: "heat", threshold: 50,
     fields: ["entity", "power", "energy", "cost", "temperature", "target_temperature", "humidity", "mode", "window", "switch"],
@@ -12096,7 +12102,7 @@ class ApplianceCardBase extends HTMLElement {
 
   _ids() {
     const c = this._config;
-    return ["entity", "error", "status_2", "temperature_2", "target_temperature_2", "remaining_2", "power", "current", "voltage", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
+    return ["entity", "error", "status_2", "temperature_2", "target_temperature_2", "remaining_2", "power", "power_factor", "current", "voltage", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
       "switch_low", "switch_high", "direction", "pressure", "runtime_total", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water", "power_level", "pellet_level", "ph", "orp", "dose_interval", "dose_timer", "dose_volume", "dose_time", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
@@ -14130,6 +14136,14 @@ class ApplianceCardBase extends HTMLElement {
     // hide_zero_power (activé par défaut) : tuiles de puissance masquées quand elles valent 0 (moins de 1 W), ex. chauffe-eau au repos
     const zero = (st) => c.hide_zero_power !== false && Math.abs(powerW(st) ?? 0) < 1;
     if (m.pw && showOpt("show_power") && !zero(m.pw)) tile(solar ? "mdi:solar-power" : "mdi:flash", fmtPower(hass, m.pw) ?? "—", lb(solar ? "production" : dual ? "grid" : "power"), c.power);
+    // PAC et plaque : facteur de puissance (cos φ), capteur en valeur décimale (0,92) ou en %
+    if ((kind === "heat_pump" || kind === "hob") && c.power_factor) {
+      const pfS = hass.states[c.power_factor], pf = pfS ? num(pfS) : null;
+      if (pf != null && Number.isFinite(pf) && !(m.pw && zero(m.pw))) {
+        const pct = String((pfS.attributes && pfS.attributes.unit_of_measurement) || "").trim() === "%" || Math.abs(pf) > 1.5;
+        tile("mdi:cosine-wave", pct ? `${fmtNum(hass, pf, 0, 0, c.power_factor)} %` : fmtNum(hass, pf, 2, 0, c.power_factor), lb("power_factor"), c.power_factor);
+      }
+    }
     // prise connectée : intensité (A) et tension (V), à la suite de la puissance
     if (kind === "smart_plug") {
       [["current", "mdi:current-ac", c.current], ["voltage", "mdi:sine-wave", c.voltage]].forEach(([k, ic, id]) => {
@@ -14221,6 +14235,7 @@ const SEL = {
   energy: { entity: { domain: "sensor", device_class: "energy" } },
   current: { entity: { domain: "sensor", device_class: "current" } },
   voltage: { entity: { domain: "sensor", device_class: "voltage" } },
+  power_factor: { entity: { domain: "sensor" } },
   power_solar: { entity: { domain: "sensor", device_class: "power" } },
   energy_solar: { entity: { domain: "sensor", device_class: "energy" } },
   cost: { entity: { domain: ["sensor", "input_number"] } },
@@ -16554,7 +16569,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
 (async () => {
   const base = import.meta.url;
   // ?v=<version> : après une mise à jour, le navigateur ne ressert pas d'anciens morceaux depuis son cache
-  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.200.0`, base).href);
+  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.201.0`, base).href);
   await chunk("card-helpers");
   await chunk("editor-labels");
   // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre
