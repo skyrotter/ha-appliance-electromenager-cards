@@ -752,7 +752,9 @@
       "entity_boost": "Boost / electric backup (on / off)",
       "entity_draw": "Hot water draw (on / off or flow)",
       "history_popup_background": "Pop-up background (#hex, rgb(), rgba() or CSS name)",
-      "history_popup_opacity": "Pop-up background opacity"
+      "history_popup_opacity": "Pop-up background opacity",
+      "show_subscribed": "Show the subscribed power line",
+      "press_animation": "Animate the button presses"
     },
     "cs": {
       "animations": "Animace",
@@ -3769,7 +3771,9 @@
       "entity_boost": "Boost / appoint électrique (on / off)",
       "entity_draw": "Puisage d'eau chaude (on / off ou débit)",
       "history_popup_background": "Fond du pop-up (#hex, rgb(), rgba() ou nom CSS)",
-      "history_popup_opacity": "Opacité du fond du pop-up"
+      "history_popup_opacity": "Opacité du fond du pop-up",
+      "show_subscribed": "Afficher la ligne « Souscrite »",
+      "press_animation": "Animer les appuis sur le bouton"
     },
     "hu": {
       "animations": "Animációk",
@@ -6008,7 +6012,9 @@
       "entity_boost": "Boost / grzałka elektryczna (on / off)",
       "entity_draw": "Pobór ciepłej wody (on / off lub przepływ)",
       "history_popup_background": "Tło okna (#hex, rgb(), rgba() lub nazwa CSS)",
-      "history_popup_opacity": "Przezroczystość tła okna"
+      "history_popup_opacity": "Przezroczystość tła okna",
+      "show_subscribed": "Pokaż wiersz mocy umownej",
+      "press_animation": "Animuj naciśnięcia przycisku"
     },
     "pt-BR": {
       "entity_drive_5": "Disco 5",
