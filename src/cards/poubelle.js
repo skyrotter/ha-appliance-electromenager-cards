@@ -780,6 +780,22 @@ class PoubelleCard extends HTMLElement {
     const lower = String(s).toLowerCase();
     if (['today', "aujourd'hui", 'aujourdhui'].includes(lower)) return today;
     if (['tomorrow', 'demain'].includes(lower)) return fromDays(1);
+    for (const k of ['nextDate', 'next_date', 'next_collection', 'date']) { const d = a[k] != null ? parseDate(a[k]) : null; if (d) return d; }   // date attributes
+    const txt = String(s).trim();
+    if (/^\d{4}-\d{2}-\d{2}/.test(txt)) return parseDate(txt);                           // ISO date / timestamp
+    // texte libre (Waste Collection Schedule : « on Thu, 03.12.2026 », « dans 3 jours »…) : jour.mois.année (ou /, -), année sur 2 chiffres acceptée
+    const dmy = txt.match(/(\d{1,2})[./-](\d{1,2})[./-](\d{4}|\d{2})(?!\d)/);
+    if (dmy) {
+      const y = Number(dmy[3]) < 100 ? 2000 + Number(dmy[3]) : Number(dmy[3]), m = Number(dmy[2]), dd = Number(dmy[1]);
+      const dt = new Date(y, m - 1, dd);
+      if (m >= 1 && m <= 12 && dt.getMonth() === m - 1) return dt;
+    }
+    const iso = txt.match(/(\d{4})-(\d{2})-(\d{2})/);
+    if (iso) return new Date(Number(iso[1]), Number(iso[2]) - 1, Number(iso[3]));
+    const inDays = lower.match(/(?:\bin\b|\bdans\b|\ben\b|\bover\b|\bza\b)\s+(\d+)\s*(?:day|jour|tag|dag|d[ií]a|giorn)/);
+    if (inDays) return fromDays(inDays[1]);
+    if (['heute', 'hoy', 'oggi', 'vandaag'].includes(lower)) return today;
+    if (['morgen', 'mañana', 'domani'].includes(lower)) return fromDays(1);
     return parseDate(s);                                                                 // date / timestamp
   }
 
