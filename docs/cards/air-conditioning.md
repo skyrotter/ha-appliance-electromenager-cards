@@ -25,7 +25,11 @@ humidity: sensor.living_room_humidity   # optional, else the climate's current_h
 type: custom:appliance-heat-pump-card
 entity: climate.living_room
 temperature: sensor.outdoor_temperature
+power: sensor.heat_pump_power
+power_factor: sensor.heat_pump_power_factor   # optional: power factor (cos φ) tile
 ```
+
+`power_factor` (heat pump outdoor unit and induction hob cards) takes a sensor holding the power factor, as a decimal (0.93) or in % (93 %); the tile is hidden while the power is 0.
 
 
 [← All cards](../../README.md#the-cards)

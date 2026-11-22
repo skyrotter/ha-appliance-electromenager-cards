@@ -7,6 +7,7 @@ const SEL = {
   energy: { entity: { domain: "sensor", device_class: "energy" } },
   current: { entity: { domain: "sensor", device_class: "current" } },
   voltage: { entity: { domain: "sensor", device_class: "voltage" } },
+  power_factor: { entity: { domain: "sensor" } },
   power_solar: { entity: { domain: "sensor", device_class: "power" } },
   energy_solar: { entity: { domain: "sensor", device_class: "energy" } },
   cost: { entity: { domain: ["sensor", "input_number"] } },

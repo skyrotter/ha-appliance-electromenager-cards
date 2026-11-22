@@ -514,7 +514,9 @@
     "f_cadence": "Capteur de cadence (tr/min, ou coups/min pour le rameur)",
     "f_distance": "Capteur de distance",
     "f_heart_rate": "Capteur de fréquence cardiaque",
-    "f_calories": "Capteur de calories"
+    "f_calories": "Capteur de calories",
+    "power_factor": "Facteur de puissance",
+    "f_power_factor": "Capteur de facteur de puissance (cos φ, facultatif)"
   },
   "aquarium": {
     "power": "Puissance",
