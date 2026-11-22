@@ -177,7 +177,7 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
   transform: scale(1.22);
   transform-origin: center center;
 }
-.wrap.layout-split.k-washer .illus svg, .wrap.layout-split.k-dryer .illus svg {
+.wrap.layout-split.k-washer .illus svg, .wrap.layout-split.k-washer_dryer .illus svg, .wrap.layout-split.k-dryer .illus svg {
   transform: scale(1.18);
   transform-origin: center center;
 }

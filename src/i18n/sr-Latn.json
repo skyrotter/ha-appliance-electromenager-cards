@@ -2,6 +2,7 @@
   "common": {
     "washer": "Veš mašina",
     "dryer": "Mašina za sušenje veša",
+    "washer_dryer": "Veš-mašina sa sušilicom",
     "dishwasher": "Mašina za pranje sudova",
     "water_heater": "Bojler",
     "oven": "Rerna",

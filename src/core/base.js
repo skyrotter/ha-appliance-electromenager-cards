@@ -275,7 +275,7 @@ class ApplianceCardBase extends HTMLElement {
   // (médiane des 7 derniers cycles) et le début du cycle en cours.
   // Chauffe-eau : last_cycle seulement (pas d'estimate), puissance réseau + solaire (power + power_solar), énergie idem.
   _fetchCycle(active) {
-    const c = this._config, hass = this._hass, wash = ["washer", "dryer", "dishwasher"].includes(this._kind), wh = this._kind === "water_heater" || this._kind === "oven";
+    const c = this._config, hass = this._hass, wash = ["washer", "washer_dryer", "dryer", "dishwasher"].includes(this._kind), wh = this._kind === "water_heater" || this._kind === "oven";
     const est = !!c.estimate && wash;
     if (!(c.last_cycle || est) || !(wash || wh) || !c.power || !hass || typeof hass.callWS !== "function") return;
     const was = this._cycActive, gap = (c.cycle_gap ?? 15) * 60000;
@@ -422,7 +422,7 @@ class ApplianceCardBase extends HTMLElement {
     const mainIds = ["entity", "power", "power_solar", "switch", "switch_low", "switch_high", "temperature", "zone_1", "zone_2", "zone_3", "zone_4"].map((k) => c[k]).filter(Boolean)
       .concat(kind === "power_strip" && Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : []); // multiprise : les prises comptent
     // lave-linge / sèche-linge / lave-vaisselle : « none » (SmartThings job_state au repos) est un état valide = au repos, pas « indisponible »
-    const noneIdle = ["washer", "dryer", "dishwasher"].includes(kind);
+    const noneIdle = ["washer", "washer_dryer", "dryer", "dishwasher"].includes(kind);
     const usable = mainIds.some((i) => hass.states[i] && (!BAD.includes(String(hass.states[i].state).toLowerCase()) || (noneIdle && String(hass.states[i].state).toLowerCase() === "none")));
     if (!usable) { m.status = "unavailable"; return m; }
     let base = null;
@@ -1009,7 +1009,7 @@ class ApplianceCardBase extends HTMLElement {
     }
 
     // phase detection (washer / dryer / dishwasher) from status or program text, with smart-plug power inference fallback
-    if (m.status === "running" && ["washer", "dryer", "dishwasher"].includes(kind)) {
+    if (m.status === "running" && ["washer", "washer_dryer", "dryer", "dishwasher"].includes(kind)) {
       const txt = `${main ? main.state : ""} ${m.program ? m.program.state : ""}`.toLowerCase();
       if (/rin[cç]|rinse/.test(txt)) m.phase = "rinse";
       else if (/essor|spin|centrif|essorage/.test(txt)) m.phase = "spin";
@@ -1019,13 +1019,13 @@ class ApplianceCardBase extends HTMLElement {
       else if (/(^|[^a-zà-ÿ])(heat|chauff)/.test(txt)) m.phase = "heat";
       else if (kind === "dryer") {
         m.phase = "dry";
-      } else if (watts !== null && ["washer", "dishwasher"].includes(kind)) {
+      } else if (watts !== null && ["washer", "washer_dryer", "dishwasher"].includes(kind)) {
         // Fallback: infer phase from power draw on smart plugs when text entity gives no phase
         const heatThreshold = c.heating_power ?? this._def.heating_power ?? 1000;
         const spinThreshold = c.spin_power ?? this._def.spin_power ?? 200;
         if (heatThreshold > 0 && watts >= heatThreshold) {
           m.phase = "heat";
-        } else if (kind === "washer" && spinThreshold > 0 && watts >= spinThreshold) {
+        } else if ((kind === "washer" || kind === "washer_dryer") && spinThreshold > 0 && watts >= spinThreshold) {
           m.phase = "spin";
         } else if (!m.phase) {
           m.phase = "wash";
@@ -1035,7 +1035,7 @@ class ApplianceCardBase extends HTMLElement {
       }
     }
     // estimate : temps restant et progression d'après la durée habituelle des cycles (médiane), si aucun capteur ne les donne
-    if (c.estimate && m.status === "running" && ["washer", "dryer", "dishwasher"].includes(kind) && this._refDur && this._runStart) {
+    if (c.estimate && m.status === "running" && ["washer", "washer_dryer", "dryer", "dishwasher"].includes(kind) && this._refDur && this._runStart) {
       const el = Date.now() - this._runStart, left = (this._refDur - el) / 60000;
       if (!c.remaining) { if (left >= 1) { m.remaining = left; m.estimated = true; } else m.soon = true; }
       if (!c.progress && m.progress == null) m.progress = Math.max(0, Math.min(99, (el / this._refDur) * 100));
@@ -1707,7 +1707,7 @@ class ApplianceCardBase extends HTMLElement {
       // sinon confirm_off : true (défaut, protection selon l'appareil) / false (jamais)
       const always = c.confirm_always === true || c.confirm_off === "always";
       const cOff = always ? "always" : c.confirm_off === false || c.confirm_off === "off" ? "off" : "auto";
-      const autoGuard = freezer || computer || console_ || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "thermomix", "cookeo"].includes(kind));
+      const autoGuard = freezer || computer || console_ || ((active || ["extinguishing", "paused"].includes(m.status)) && ["washer", "washer_dryer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "thermomix", "cookeo"].includes(kind));
       const guarded = cOff !== "off" && on && (cOff === "always" || autoGuard);
       this._sw = { id: swId, guarded };
       const arming = guarded && this._confirmUntil && Date.now() < this._confirmUntil;

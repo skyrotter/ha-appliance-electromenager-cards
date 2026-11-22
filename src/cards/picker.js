@@ -68,7 +68,7 @@
   // Catégories du sélecteur de type : chaque carte appartient à une catégorie (les cartes non listées vont dans « home »).
   // Les « sous-catégories » sont les variantes de l'appareil (style, modèle, finition…), remontées en tête de l'éditeur.
   const CATS = {
-    kitchen: 'washer dryer dishwasher oven microwave fridge chest-freezer drawer-freezer hob air-fryer coffee-maker thermomix cookeo kettle toaster range-hood wine-cooler beer-tap contact-grill deep-fryer',
+    kitchen: 'washer washer-dryer dryer dishwasher oven microwave fridge chest-freezer drawer-freezer hob air-fryer coffee-maker thermomix cookeo kettle toaster range-hood wine-cooler beer-tap contact-grill deep-fryer',
     climate: 'water-heater thermo-heater fan-heater underfloor-heating radiator towel-dryer pellet-stove pellet-boiler gas-boiler diesel-heater water-heat-pump air-water-heat-pump ac-split portable-ac heat-pump vmc room-climate trv dehumidifier humidifier air-purifier air-quality fan ceiling-fan',
     energy: 'solar battery ev-charger linky water-meter heat-meter gas-meter electric-meter ups smart-plug power-strip phone-charger tool-charger',
     water: 'pool-pump dosing-pump pool-robot jacuzzi inflatable-spa sauna aquarium reef-aquarium irrigation rain-gauge plant-monitor water-pump industrial-pump sump-pump rainwater-tank water-valve smart-tap water-softener water-filter robot-mower-solo',

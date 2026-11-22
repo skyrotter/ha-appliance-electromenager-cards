@@ -11,7 +11,7 @@
 .st-finished .l4 { fill: #3ddc84; }
 .knob, .drum, .clothes, .bowl, .arm, .needle, .fz-door, .fr-door, .flake { transform-box: view-box; }
 .knob { transition: transform .6s; }
-.k-washer .knob, .k-dryer .knob { transform-origin: 93px 21px; }
+.k-washer .knob, .k-washer_dryer .knob, .k-dryer .knob { transform-origin: 93px 21px; }
 .k-dryer .knob { transform-origin: 27px 21px; }
 .k-oven .knob { transform-origin: 24px 21px; }
 .k-microwave .knob { transform-origin: 100.5px 88px; }

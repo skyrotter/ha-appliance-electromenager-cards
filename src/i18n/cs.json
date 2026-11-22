@@ -2,6 +2,7 @@
   "common": {
     "washer": "Pračka",
     "dryer": "Sušička",
+    "washer_dryer": "Pračka se sušičkou",
     "dishwasher": "Myčka",
     "water_heater": "Ohřívač vody",
     "oven": "Trouba",

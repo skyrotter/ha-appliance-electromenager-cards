@@ -2,6 +2,7 @@
   "common": {
     "washer": "Waschmaschine",
     "dryer": "Wäschetrockner",
+    "washer_dryer": "Waschtrockner",
     "dishwasher": "Geschirrspüler",
     "water_heater": "Warmwasserspeicher",
     "oven": "Backofen",
