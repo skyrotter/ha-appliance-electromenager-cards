@@ -55,6 +55,7 @@ class ApplianceEvChargerCard extends HTMLElement {
           { name: 'currency', selector: { text: {} } },
           { name: 'car_color', selector: { text: {} } },
           { name: 'car_image', selector: { text: {} } },
+        { name: 'charger_image', selector: { text: {} } },
           { name: 'car_image_align', selector: { select: { mode: 'dropdown', options: [{ value: 'right', label: 'Droite (défaut) / Right (default)' }, { value: 'center', label: 'Centre / Center' }, { value: 'left', label: 'Gauche, près de la borne / Left, next to the charger' }] } } },
         ] },
         { type: 'grid', name: '', schema: [
@@ -121,6 +122,8 @@ class ApplianceEvChargerCard extends HTMLElement {
       @keyframes breathe { 50% { opacity:.45; } }
       @keyframes spark { 0%,100% { opacity:0; transform:scale(.6); } 50% { opacity:1; transform:scale(1.1); } }
       .carimg { transition:filter .4s; }
+      .cimg { filter:drop-shadow(0 0 4px var(--st,#9e9e9e)); transition:filter .6s; } .charging .cimg { animation:cglow var(--sp,2s) ease-in-out infinite; }
+      @keyframes cglow { 50% { filter:drop-shadow(0 0 1px var(--st,#9e9e9e)); } }
       .ring { fill:none; stroke-linecap:round; stroke:#3ddc5a; stroke-width:2.4; opacity:.95; filter:drop-shadow(0 0 1.6px #3ddc5a); transition:stroke .6s; } .charging .ring { stroke:#2f9bff; filter:drop-shadow(0 0 2.2px #2f9bff); animation:breathe var(--sp,2s) ease-in-out infinite; }
       .lamp { fill:var(--st,#9e9e9e); opacity:.62; filter:blur(.6px); transition:fill .6s; } .charging .lamp { animation:breathe var(--sp,2s) ease-in-out infinite; }
       .clim-g, .doors-g { opacity:0; transition:opacity .5s; pointer-events:none; } .clim .clim-g, .doors .doors-g { opacity:1; }
@@ -149,13 +152,15 @@ class ApplianceEvChargerCard extends HTMLElement {
           <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9fc3dc"/><stop offset="1" stop-color="#2d4456"/></linearGradient>
         </defs>
 
-        <!-- Wallbox -->
-        <rect x="12" y="6" width="64" height="106" rx="14" fill="url(#wb)"/>
+        <!-- Wallbox : image perso (charger_image) ou dessin -->
+        ${this._config.charger_image
+          ? `<image class="cimg" href="${esc(this._config.charger_image)}" x="12" y="6" width="64" height="106" preserveAspectRatio="xMidYMax meet"/><text id="scr" style="display:none"></text>`
+          : `        <rect x="12" y="6" width="64" height="106" rx="14" fill="url(#wb)"/>
         <rect x="18" y="12" width="52" height="94" rx="10" fill="#2c3036" stroke="rgba(255,255,255,.08)"/>
         <rect class="ledbar" x="41" y="22" width="6" height="44" rx="3"/>
         <rect class="scr" x="25" y="76" width="38" height="16" rx="3"/>
         <text class="scrtxt" x="44" y="87" id="scr"></text>
-        <rect x="36" y="104" width="16" height="10" rx="3" fill="#111"/>
+        <rect x="36" y="104" width="16" height="10" rx="3" fill="#111"/>`}
         <!-- Câble rangé (débranché) -->
         <path class="hang cable" d="M44 112 C 44 150, 92 150, 84 110"/>
         <rect class="hang" x="78" y="96" width="12" height="16" rx="3" fill="#2a2a2a"/>
@@ -202,7 +207,10 @@ class ApplianceEvChargerCard extends HTMLElement {
 
   // Scène « photo » : borne Legrand Green'up sur pied (ou wallbox dessinée) + Renault Zoé / Volkswagen ID.3 en photo détourée
   _buildPhoto() {
-    const c = this._config, car = PHOTO[c.car_model], ch = c.charger_model === 'wallbox' ? null : c.charger_model === 'schneider' ? PHOTO.schneider : PHOTO.green_up;
+    const c = this._config, car = PHOTO[c.car_model];
+    // charger_image : image perso de la borne (PNG / WebP détouré, vue de face) à la place des photos intégrées ; voyant d'état en haut de l'image
+    const ch = c.charger_image ? { img: esc(c.charger_image), box: [12, 40, 64, 106], custom: true, hook: [.5, .96] }
+      : c.charger_model === 'wallbox' ? null : c.charger_model === 'schneider' ? PHOTO.schneider : PHOTO.green_up;
     const [cx, cy, cw, chh] = car.box, port = [cx + car.port[0] * cw, cy + car.port[1] * chh];
     // départ du câble : prise de la borne (pied : au pied du voyant ; wallbox dessinée : sous le boîtier)
     const [px, py, pw, ph] = ch ? ch.box : [12, 40, 64, 106];
@@ -213,11 +221,11 @@ class ApplianceEvChargerCard extends HTMLElement {
       : `M${f(hook[0])} ${f(hook[1])} C ${f(hook[0])} ${f(hook[1] + 92)}, ${f(port[0] - 46)} ${f(port[1] + 74)}, ${f(port[0])} ${f(port[1])}`;
     const hang = `M${f(hook[0])} ${f(hook[1])} C ${f(hook[0])} ${f(hook[1] + 36)}, ${f(hook[0] + 20)} ${f(hook[1] + 36)}, ${f(hook[0] + 16)} ${f(hook[1] + 8)}`;
     // borne Schneider : anneau autour de la prise (vert = disponible, bleu qui respire = en charge) ; Green'up : rectangle du voyant
-    const lamp = !ch ? '' : ch.wall
+    const lamp = !ch || ch.custom ? '' : ch.wall
       ? (() => { const rx = px + ch.ring[0] * pw, ry = py + ch.ring[1] * ph, rr = ch.ring[2] * pw; return `<path class="ring" d="M${f(rx - rr)} ${f(ry)}A${f(rr)} ${f(rr)} 0 0 0 ${f(rx + rr)} ${f(ry)}"/>`; })()
       : `<rect class="lamp" x="${f(px + ch.lamp[0] * pw)}" y="${f(py + ch.lamp[1] * ph)}" width="${f(ch.lamp[2] * pw)}" height="${f(ch.lamp[3] * ph)}" rx="3"/>`;
     const post = ch
-      ? `<image href="${ch.img}" x="${px}" y="${py}" width="${pw}" height="${ph}"/>${lamp}`
+      ? `<image${ch.custom ? ' class="cimg" preserveAspectRatio="xMidYMax meet"' : ''} href="${ch.img}" x="${px}" y="${py}" width="${pw}" height="${ph}"/>${lamp}`
       : `<rect x="12" y="40" width="64" height="106" rx="14" fill="url(#wb)"/><rect x="18" y="46" width="52" height="94" rx="10" fill="#2c3036" stroke="rgba(255,255,255,.08)"/><rect class="ledbar" x="41" y="56" width="6" height="44" rx="3"/><rect class="scr" x="25" y="110" width="38" height="16" rx="3"/><text class="scrtxt" x="44" y="121" id="scr"></text>`;
     const wx = cx + cw * .5, wy = cy + 2;
     // jauge de batterie : sur la voiture, ou juste au-dessus de la borne murale (Schneider)

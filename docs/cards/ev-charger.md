@@ -36,6 +36,7 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `max_power` (default 7400 W)
 - `car_color` (drawn car only)
 - `car_image`: your own picture of the vehicle (`/local/tesla.png` or a URL) shown **instead of the drawn car**: side view, front on the right, transparent background (PNG / WebP). One card per vehicle (car, scooter…); the charge gauge stays on top
+- `charger_image`: your own picture of the charger (`/local/wallbox.png` or a URL), front view, PNG / WebP with a transparent background, shown **instead of the drawn wall box or the built-in photos**. A halo around the picture takes the state colour (grey unplugged, blue plugged, green charging with a pulse, steady green complete). Works with the drawn car, with `car_image` and with the photo cars (`car_model`)
 - `car_image_align`: `right` (default), `center` or `left`: where the vehicle picture sits in its area. `left` puts it next to the charger, useful for a narrow picture such as a scooter
 - `show_power`
 - `show_energy`
