@@ -43,3 +43,8 @@
 .tm-stripe { transform-box: fill-box; transform-origin: 50% 0; }
 .k-treadmill.active .tm-stripe { animation: tm-run var(--fp) linear infinite; }
 @keyframes tm-run { to { transform: translateY(var(--d)) scaleY(var(--k)); } }
+/* tapis : les baskets n apparaissent que quand on court et se levent a tour de role */
+.tm-shoe { opacity: 0; transition: opacity .4s; transform-box: view-box; }
+.k-treadmill.active .tm-shoe { opacity: 1; animation: tm-step calc(var(--fp) * 4) ease-in-out infinite; }
+.k-treadmill.active .tm-sb { animation-delay: calc(var(--fp) * -2); }
+@keyframes tm-step { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
