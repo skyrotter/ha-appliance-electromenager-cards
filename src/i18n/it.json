@@ -1,5 +1,6 @@
 {
   "common": {
+    "infrared_panel": "Pannello riscaldante a infrarossi",
     "treadmill": "Tapis roulant",
     "incline": "Inclinazione",
     "f_incline": "Sensore di inclinazione (%)",

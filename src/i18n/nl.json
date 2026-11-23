@@ -1,5 +1,6 @@
 {
   "common": {
+    "infrared_panel": "Infraroodpaneel",
     "treadmill": "Loopband",
     "incline": "Helling",
     "f_incline": "Hellingssensor (%)",

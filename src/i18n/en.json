@@ -1,5 +1,6 @@
 {
   "common": {
+    "infrared_panel": "Infrared heating panel",
     "treadmill": "Treadmill",
     "incline": "Incline",
     "f_incline": "Incline sensor (%)",

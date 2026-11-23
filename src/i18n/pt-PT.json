@@ -1,5 +1,6 @@
 {
   "common": {
+    "infrared_panel": "Painel de aquecimento por infravermelhos",
     "treadmill": "Passadeira de corrida",
     "incline": "Inclinação",
     "f_incline": "Sensor de inclinação (%)",

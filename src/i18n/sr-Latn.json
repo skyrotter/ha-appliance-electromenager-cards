@@ -1,5 +1,6 @@
 {
   "common": {
+    "infrared_panel": "Infracrveni grejni panel",
     "treadmill": "Traka za trčanje",
     "incline": "Nagib",
     "f_incline": "Senzor nagiba (%)",

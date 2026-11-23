@@ -1,5 +1,6 @@
 {
   "common": {
+    "infrared_panel": "Panel calefactor infrarrojo",
     "treadmill": "Cinta de correr",
     "incline": "Inclinación",
     "f_incline": "Sensor de inclinación (%)",

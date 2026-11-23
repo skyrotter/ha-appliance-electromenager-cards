@@ -1,5 +1,6 @@
 {
 "common": {
+"infrared_panel": "Infrarødt varmepanel",
 "treadmill": "Tredemølle",
 "incline": "Stigning",
 "f_incline": "Stigningssensor (%)",

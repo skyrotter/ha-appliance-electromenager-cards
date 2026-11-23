@@ -1,0 +1,11 @@
+/* ---------- panneau chauffant infrarouge ---------- */
+.ip-led { fill: #7d8389; transition: fill .3s; }
+.ip-halo { opacity: 0; }
+.k-infrared_panel.st-heating .ip-led { fill: #ff2a1a; }
+.k-infrared_panel.st-heating .ip-halo { opacity: .9; animation: ac-pulse 1.8s ease-in-out infinite; }
+.ip-glow { opacity: 0; transition: opacity .8s; }
+.k-infrared_panel.st-heating .ip-glow { opacity: .62; animation: ip-breathe 3.2s ease-in-out infinite; }
+.ip-waves path { fill: none; stroke: #ff6a3d; stroke-width: 13; stroke-linecap: round; opacity: 0; }
+.k-infrared_panel.st-heating .ip-waves path { animation: ip-rise 2.6s ease-out infinite; }
+@keyframes ip-breathe { 50% { opacity: .4; } }
+@keyframes ip-rise { 0% { opacity: 0; transform: translateY(40px); } 25% { opacity: .85; } 100% { opacity: 0; transform: translateY(-120px); } }

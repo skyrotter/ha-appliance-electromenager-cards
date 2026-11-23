@@ -117,6 +117,7 @@ Klicke auf eine Karte für ihre Optionen und Beispiele.
 | [Warmwasserspeicher (mit Solar-Router)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/water-heater.md) | `custom:appliance-water-heater-card` |
 | [Wärmepumpen-Warmwasserbereiter](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/thermo-heater.md) | `custom:appliance-thermo-heater-card` |
 | [Heizlüfter (kleiner Elektro-Heizer)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/fan-heater.md) | `custom:appliance-fan-heater-card` |
+| [Infrarot-Heizpaneel](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/infrared-panel.md) | `custom:appliance-infrared-panel-card` |
 | [Fußbodenheizung (Wasser oder elektrisch)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/underfloor-heating.md) | `custom:appliance-underfloor-heating-card` |
 | [Elektroheizkörper](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/radiator.md) | `custom:appliance-radiator-card` |
 | [Handtuchheizkörper](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/towel-rack-pc-laptop.md) | `custom:appliance-towel-dryer-card` |

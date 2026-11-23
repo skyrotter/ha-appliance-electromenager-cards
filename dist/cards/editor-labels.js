@@ -10273,10 +10273,10 @@
     // vertical_align: center → contenu des cartes de base centré verticalement dans une case plus haute (sinon calé en haut)
     el.toggleAttribute('valign-center', !!cfg && cfg.vertical_align === 'center');
     // illustration_position: left | right → dessin à côté des 2 premières tuiles (attribut illus-pos, voir card.css) ; absent = centré (défaut)
-    if (cfg && (cfg.illustration_position === 'left' || cfg.illustration_position === 'right')) el.setAttribute('illus-pos', cfg.illustration_position); else el.removeAttribute('illus-pos');
+    if (cfg && !(cfg.tiles_position === 'top' || cfg.tiles_position === 'left' || cfg.tiles_position === 'right' || cfg.tiles_position === 'bottom') && (cfg.illustration_position === 'left' || cfg.illustration_position === 'right')) el.setAttribute('illus-pos', cfg.illustration_position); else el.removeAttribute('illus-pos');
     // tiles_position : top | left | right → tuiles au-dessus / à gauche / à droite du dessin (attribut tiles-pos, voir applianceTilePos) ; absent = en dessous (défaut)
     const tp = cfg && cfg.tiles_position;
-    if (tp === 'top' || tp === 'left' || tp === 'right') el.setAttribute('tiles-pos', tp); else el.removeAttribute('tiles-pos');
+    if (tp === 'top' || tp === 'left' || tp === 'right' || tp === 'bottom') el.setAttribute('tiles-pos', tp); else el.removeAttribute('tiles-pos');
     queueMicrotask(() => window.applianceTilePos && window.applianceTilePos(el));
     // title_layout: stacked → ancienne disposition des cartes de base (titre puis état, empilés) ; par défaut titre à gauche et état à droite
     if (cfg && cfg.title_layout === 'stacked') el.setAttribute('title-layout', 'stacked'); else el.removeAttribute('title-layout');
@@ -10329,6 +10329,7 @@
   window.applianceTilePos = (el) => {
     const root = el.shadowRoot;
     if (!root || !el.hasAttribute('tiles-pos')) return;
+    if (root.querySelector('.top .illus')) return; // cartes de base : mise en page gérée par card.css
     const tiles = root.querySelector('.tiles, .stats'), box = tiles && tiles.parentElement;
     if (!box) return;
     if (!root.querySelector('style[data-actp]')) { const st = document.createElement('style'); st.dataset.actp = ''; st.textContent = TP_CSS; root.appendChild(st); }
