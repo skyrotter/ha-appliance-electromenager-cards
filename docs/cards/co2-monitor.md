@@ -1,5 +1,7 @@
 # CO₂ monitor
 
+<p align="center"><img src="../co2-monitor.gif" width="480" alt="Animated CO₂ monitor cards (rectangle and round)"></p>
+
 `custom:appliance-co2-monitor-card`: a desk / living-room CO₂ monitor as a cut-out photo, with its screen redrawn live: `model: rectangle` (arc gauge from green to red, big 7-segment digits, temperature, humidity, battery) or `model: round` (digits, smiley, light at the top that follows the air quality).
 
 - **Good air** below `co2_good` (800 ppm by default), **poor air** above `co2_bad` (1 200 ppm), **moderate** in between. The gauge fills up to `co2_max` (2 000 ppm).

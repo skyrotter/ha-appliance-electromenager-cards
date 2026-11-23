@@ -1290,6 +1290,8 @@
     "resume": "Revino la program"
   },
   "room_climate": {
+    "st_display_rect": "Afișaj digital (dreptunghiular)",
+    "st_display_round": "Afișaj digital (rotund)",
     "name": "Climat cameră",
     "comfort": "Confortabil",
     "cool": "Răcoare",

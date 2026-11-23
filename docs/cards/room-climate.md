@@ -19,6 +19,10 @@
 | `neon` | glowing neon numbers on black, colour of the comfort state |
 | `netatmo` | Netatmo thermostat illustration (same as `appliance-trv-card`), live e-ink screen, glow and flame while heating (needs `entity_climate`) |
 | `nest` | Google Nest dial (as on `appliance-trv-card`): measured temperature large, thermostat target small, target arc, humidity droplet at the bottom; the dial turns orange and "breathes" while heating (needs `entity_climate`) |
+| `display_rect` | digital display, rectangle (cut-out photo, screen redrawn live): measured temperature in large 7-segment digits, arc = thermostat target, target and humidity at the bottom; orange arc, flame and "heating" label while heating, snowflake when the window is open (needs `entity_climate` for the target) |
+| `display_round` | same digital display in a round case: the light at the top turns orange while heating, flame next to the temperature |
+
+<p align="center"><img src="../thermostat-display.gif" width="480" alt="Digital display thermostat variants"></p>
 | `bars` | two columns filling up (temperature and humidity) with the comfort zone marked |
 
 **Card**

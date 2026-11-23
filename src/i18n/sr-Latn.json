@@ -1581,6 +1581,8 @@
     "resume": "Nazad na raspored"
   },
   "room_climate": {
+    "st_display_rect": "Digitalni displej (pravougaoni)",
+    "st_display_round": "Digitalni displej (okrugli)",
     "name": "Klima u sobi",
     "comfort": "Komforno",
     "cool": "Sveže",

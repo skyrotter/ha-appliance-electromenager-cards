@@ -1810,6 +1810,8 @@
     "resume": "Volver al horario"
   },
   "room_climate": {
+    "st_display_rect": "Pantalla digital (rectangular)",
+    "st_display_round": "Pantalla digital (redonda)",
     "name": "Clima de la habitación",
     "comfort": "Confortable",
     "cool": "Fresco",

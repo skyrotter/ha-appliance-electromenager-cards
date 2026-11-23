@@ -1299,6 +1299,8 @@
 "resume": "Tilbake til timeplan"
 },
 "room_climate": {
+"st_display_rect": "Digitalt display (rektangulært)",
+"st_display_round": "Digitalt display (rundt)",
 "name": "Romklima",
 "comfort": "Komfortabelt",
 "cool": "Kjølig",

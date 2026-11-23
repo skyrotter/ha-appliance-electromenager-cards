@@ -1823,6 +1823,8 @@
     "resume": "Voltar ao horário"
   },
   "room_climate": {
+    "st_display_rect": "Display digital (retangular)",
+    "st_display_round": "Display digital (redondo)",
     "name": "Clima do cômodo",
     "comfort": "Confortável",
     "cool": "Fresco",

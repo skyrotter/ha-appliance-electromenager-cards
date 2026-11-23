@@ -1509,6 +1509,8 @@
     "resume": "Tilbage til tidsplan"
   },
   "room_climate": {
+    "st_display_rect": "Digitalt display (rektangulært)",
+    "st_display_round": "Digitalt display (rundt)",
     "name": "Indeklima",
     "comfort": "Behageligt",
     "cool": "Køligt",

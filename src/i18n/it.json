@@ -1377,6 +1377,8 @@
     "resume": "Torna al programma"
   },
   "room_climate": {
+    "st_display_rect": "Display digitale (rettangolare)",
+    "st_display_round": "Display digitale (rotondo)",
     "name": "Clima della stanza",
     "comfort": "Confortevole",
     "cool": "Fresco",
