@@ -11451,30 +11451,35 @@ ${lcd(74, 110, 22, 10)}
 <circle class="td-led" cx="101" cy="115" r="1.4"/>
 <ellipse cx="60" cy="132" rx="46" ry="3" fill="url(#ID-shadow)"/>`;
 
-/* Tapis de course (vue de côté) : plateau à bande défilante (rayures qui avancent à la vitesse du capteur speed), console à l'avant,
-   plateau qui se relève selon l'inclinaison (--inc, en degrés, posée par la carte) */
-SVG.treadmill = () => `
+/* Tapis de course vu de l'arrière, en perspective : la bande vient vers nous, la console est au bout entre ses deux montants.
+   Les rayures de la bande avancent vers l'avant à la vitesse du capteur speed (--fp = durée d'un pas de rayure, posée par la carte) :
+   chaque rayure glisse jusqu'à la position de la suivante, en s'épaississant, ce qui donne l'effet de perspective. */
+SVG.treadmill = () => {
+  const N = 8, Y0 = 67, Y1 = 118, W0 = 0.6, W1 = 3.4;
+  const pos = (i) => Y0 + (Y1 - Y0) * Math.pow(i / N, 1.7), thick = (i) => W0 + (W1 - W0) * Math.pow(i / N, 1.7);
+  // N + 1 rayures : la rayure i va vers la place de la rayure i + 1, la dernière sort par le bas
+  const stripes = Array.from({ length: N + 1 }, (_, i) => {
+    const a = pos(i), b = pos(i + 1), d = b - a, k = thick(i + 1) / thick(i);
+    return `<rect class="tm-stripe" x="0" y="${a.toFixed(2)}" width="120" height="${thick(i).toFixed(2)}" fill="${i % 2 ? "#3a424b" : "#4a525b"}" style="--d:${d.toFixed(2)}px;--k:${k.toFixed(3)}"/>`;
+  }).join("");
+  return `
 <defs>${DEFS}
 <linearGradient id="ID-tmbody" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a525b"/><stop offset="1" stop-color="#1d2228"/></linearGradient>
-<clipPath id="ID-tmtop"><rect x="16" y="98" width="76" height="5"/></clipPath>
-<clipPath id="ID-tmbot"><rect x="16" y="111" width="76" height="4"/></clipPath></defs>
-<ellipse cx="62" cy="128" rx="56" ry="4" fill="url(#ID-shadow)"/>
-<g class="tm-deck">
-  <rect x="8" y="97" width="92" height="19" rx="9.5" fill="url(#ID-tmbody)" stroke="#12161a" stroke-width=".8"/>
-  <rect x="14" y="98.5" width="80" height="16" rx="8" fill="#171b20"/>
-  <g clip-path="url(#ID-tmtop)"><g class="tm-belt tm-belt-a">${Array.from({ length: 12 }, (_, i) => `<rect x="${14 + i * 8}" y="98" width="2.4" height="5" fill="#59616b"/>`).join("")}</g></g>
-  <g clip-path="url(#ID-tmbot)"><g class="tm-belt tm-belt-b">${Array.from({ length: 12 }, (_, i) => `<rect x="${14 + i * 8}" y="111" width="2.4" height="4" fill="#3a424b"/>`).join("")}</g></g>
-  <path d="M16 103H92" stroke="#9aa3ad" stroke-width=".8" opacity=".5"/>
-  <circle cx="17" cy="106.5" r="7" fill="url(#ID-tmbody)" stroke="#12161a" stroke-width=".7"/><circle cx="17" cy="106.5" r="2.6" fill="url(#ID-chrome)"/>
-  <circle cx="91" cy="106.5" r="7" fill="url(#ID-tmbody)" stroke="#12161a" stroke-width=".7"/><circle cx="91" cy="106.5" r="2.6" fill="url(#ID-chrome)"/>
-  <rect x="24" y="115" width="10" height="4" rx="1.5" fill="#12161a"/><rect x="76" y="115" width="10" height="4" rx="1.5" fill="#12161a"/>
-</g>
-<path d="M94 100L104 48" stroke="#2b3138" stroke-width="5" stroke-linecap="round"/>
-<path d="M84 100L96 50" stroke="#3a424b" stroke-width="3" stroke-linecap="round" opacity=".7"/>
-<path d="M98 66Q74 60 56 70" fill="none" stroke="#59616b" stroke-width="3.2" stroke-linecap="round"/><path d="M98 66Q74 60 56 70" fill="none" stroke="#e5484d" stroke-width="1" stroke-linecap="round" opacity=".8"/>
-<rect x="82" y="20" width="36" height="28" rx="6" fill="url(#ID-tmbody)" stroke="#12161a" stroke-width=".8" transform="rotate(-10 100 34)"/>
-<g transform="rotate(-10 100 34)">${lcd(86, 24, 28, 13)}
-<circle class="tm-led" cx="91" cy="43" r="1.3"/><circle class="tm-led" cx="98" cy="43" r="1.3"/><circle class="tm-led" cx="105" cy="43" r="1.3"/></g>`;
+<linearGradient id="ID-tmbelt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1013"/><stop offset="1" stop-color="#1b2025"/></linearGradient>
+<clipPath id="ID-tmclip"><path d="M18 118L102 118L79 67L41 67Z"/></clipPath></defs>
+<ellipse cx="60" cy="128" rx="54" ry="4" fill="url(#ID-shadow)"/>
+<path d="M8 122L112 122L86 64L34 64Z" fill="url(#ID-tmbody)" stroke="#12161a" stroke-width=".8" stroke-linejoin="round"/>
+<path d="M18 118L102 118L79 67L41 67Z" fill="url(#ID-tmbelt)"/>
+<g clip-path="url(#ID-tmclip)"><g class="tm-belt">${stripes}</g></g>
+<path d="M18 118L41 67M102 118L79 67" stroke="#9aa3ad" stroke-width="1.1" opacity=".55"/>
+<path d="M60 118L60 67" stroke="#59616b" stroke-width=".6" stroke-dasharray="3 4" opacity=".35"/>
+<rect x="6" y="119" width="108" height="6" rx="3" fill="url(#ID-tmbody)" stroke="#12161a" stroke-width=".7"/><path d="M14 122H106" stroke="#e5484d" stroke-width="1" opacity=".8"/>
+<path d="M36 64L33 30M84 64L87 30" stroke="#2b3138" stroke-width="5" stroke-linecap="round"/>
+<path d="M35 38L16 98M85 38L104 98" stroke="#59616b" stroke-width="3.4" stroke-linecap="round"/><path d="M35 38L16 98M85 38L104 98" stroke="#e5484d" stroke-width="1" stroke-linecap="round" opacity=".7"/>
+<rect x="26" y="10" width="68" height="25" rx="6" fill="url(#ID-tmbody)" stroke="#12161a" stroke-width=".8"/>
+${lcd(34, 13, 52, 13)}
+<circle class="tm-led" cx="44" cy="31" r="1.3"/><circle class="tm-led" cx="54" cy="31" r="1.3"/><circle class="tm-led" cx="64" cy="31" r="1.3"/>`;
+};
 
 /* style de télé : murale (défaut, rien autour), sur pied central, sur deux pieds */
 const tvStyle = (c) => ({ wall: "wall", mural: "wall", stand: "stand", pied: "stand", base: "stand", feet: "feet", pieds: "feet", legs: "feet" }[String(c?.style || "wall").toLowerCase()] || "wall");
@@ -16704,12 +16709,10 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 @keyframes rw-handle { 0%, 100% { transform: translateX(0); } 38% { transform: translateX(28px); } }
 @keyframes rw-strap { 0%, 100% { transform: scaleX(.5); } 38% { transform: scaleX(.97); } }
 
-/* tapis de course : le plateau se relève de --inc degrés autour de l'arrière, les rayures de la bande défilent (dessus vers l'arrière, dessous vers l'avant) */
-.tm-deck { transform-box: view-box; transform-origin: 14px 112px; transform: rotate(calc(var(--inc, 0) * -1deg)); transition: transform .6s; }
-.k-treadmill.active .tm-belt-a { animation: tm-back var(--fp) linear infinite; }
-.k-treadmill.active .tm-belt-b { animation: tm-front var(--fp) linear infinite; }
-@keyframes tm-back { to { transform: translateX(-8px); } }
-@keyframes tm-front { to { transform: translateX(8px); } }
+/* tapis de course : les rayures de la bande avancent vers nous (chaque rayure glisse jusqu'à la place de la suivante) */
+.tm-stripe { transform-box: fill-box; transform-origin: 50% 0; }
+.k-treadmill.active .tm-stripe { animation: tm-run var(--fp) linear infinite; }
+@keyframes tm-run { to { transform: translateY(var(--d)) scaleY(var(--k)); } }
 
 /* ---------- PlayStation 5 ---------- */
 /* bandeaux : gris éteinte, orange qui respire en mode repos, blanc allumée, balayage bleu au démarrage */

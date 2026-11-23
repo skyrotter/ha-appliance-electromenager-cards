@@ -39,9 +39,7 @@
 @keyframes rw-handle { 0%, 100% { transform: translateX(0); } 38% { transform: translateX(28px); } }
 @keyframes rw-strap { 0%, 100% { transform: scaleX(.5); } 38% { transform: scaleX(.97); } }
 
-/* tapis de course : le plateau se relève de --inc degrés autour de l'arrière, les rayures de la bande défilent (dessus vers l'arrière, dessous vers l'avant) */
-.tm-deck { transform-box: view-box; transform-origin: 14px 112px; transform: rotate(calc(var(--inc, 0) * -1deg)); transition: transform .6s; }
-.k-treadmill.active .tm-belt-a { animation: tm-back var(--fp) linear infinite; }
-.k-treadmill.active .tm-belt-b { animation: tm-front var(--fp) linear infinite; }
-@keyframes tm-back { to { transform: translateX(-8px); } }
-@keyframes tm-front { to { transform: translateX(8px); } }
+/* tapis de course : les rayures de la bande avancent vers nous (chaque rayure glisse jusqu'à la place de la suivante) */
+.tm-stripe { transform-box: fill-box; transform-origin: 50% 0; }
+.k-treadmill.active .tm-stripe { animation: tm-run var(--fp) linear infinite; }
+@keyframes tm-run { to { transform: translateY(var(--d)) scaleY(var(--k)); } }
