@@ -1,5 +1,8 @@
 {
 "common": {
+"treadmill": "Tredemølle",
+"incline": "Stigning",
+"f_incline": "Stigningssensor (%)",
 "iron": "Strykejern",
 "steam_station": "Dampstasjon",
 "iron_heating": "Varmer opp",

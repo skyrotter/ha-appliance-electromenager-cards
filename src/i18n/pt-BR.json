@@ -1,5 +1,8 @@
 {
   "common": {
+    "treadmill": "Esteira",
+    "incline": "Inclinação",
+    "f_incline": "Sensor de inclinação (%)",
     "iron": "Ferro de passar",
     "steam_station": "Estação de passar a vapor",
     "iron_heating": "Aquecendo",

@@ -1,5 +1,8 @@
 {
   "common": {
+    "treadmill": "Tapis de course",
+    "incline": "Inclinaison",
+    "f_incline": "Capteur d'inclinaison (%)",
     "valign_top": "En haut (défaut)",
     "valign_center": "Centré",
     "header_inline": "Titre à gauche, état à droite (défaut)",

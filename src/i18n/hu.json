@@ -1,5 +1,8 @@
 {
   "common": {
+    "treadmill": "Futópad",
+    "incline": "Emelkedés",
+    "f_incline": "Emelkedés érzékelő (%)",
     "iron": "Vasaló",
     "steam_station": "Gőzállomás",
     "iron_heating": "Fűt",

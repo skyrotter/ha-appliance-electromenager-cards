@@ -1,5 +1,8 @@
 {
   "common": {
+    "treadmill": "Treadmill",
+    "incline": "Incline",
+    "f_incline": "Incline sensor (%)",
     "valign_top": "Top (default)",
     "valign_center": "Centered",
     "header_inline": "Title left, status right (default)",

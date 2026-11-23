@@ -1,5 +1,8 @@
 {
   "common": {
+    "treadmill": "Loopband",
+    "incline": "Helling",
+    "f_incline": "Hellingssensor (%)",
     "iron": "Strijkijzer",
     "steam_station": "Stoomstrijkstation",
     "iron_heating": "Opwarmen",

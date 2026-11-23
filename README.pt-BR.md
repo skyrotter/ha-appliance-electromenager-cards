@@ -236,6 +236,7 @@ Clique em um cartão para consultar as opções e os exemplos.
 | [Bicicleta elíptica](docs/cards/fitness.md) | `custom:appliance-elliptical-card` |
 | [Bicicleta ergométrica](docs/cards/fitness.md) | `custom:appliance-exercise-bike-card` |
 | [Máquina de remo](docs/cards/fitness.md) | `custom:appliance-rowing-machine-card` |
+| [Esteira](docs/cards/fitness.md) | `custom:appliance-treadmill-card` |
 | [Thermomix (TM6 / TM7)](docs/cards/thermomix.md) | `custom:appliance-thermomix-card` |
 | [Cookeo (multicooker)](docs/cards/cookeo.md) | `custom:appliance-cookeo-card` |
 | [Rack de servidores (homelab)](docs/cards/towel-rack-pc-laptop.md) | `custom:appliance-server-rack-card` |

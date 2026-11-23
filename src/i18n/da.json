@@ -1,5 +1,8 @@
 {
   "common": {
+    "treadmill": "Løbebånd",
+    "incline": "Hældning",
+    "f_incline": "Hældningssensor (%)",
     "iron": "Strygejern",
     "steam_station": "Dampstation",
     "iron_heating": "Opvarmer",

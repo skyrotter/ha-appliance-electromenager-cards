@@ -1,10 +1,10 @@
 /* ---------- fitness : vélo elliptique, vélo d'appartement, rameur ----------
    --fp (posé par la carte) : durée d'un tour de pédalier / d'un coup de rame, selon la cadence ou la puissance */
-.k-elliptical, .k-exercise_bike, .k-rowing_machine { --fp: 1.4s; }
-.k-elliptical svg, .k-exercise_bike svg, .k-rowing_machine svg { overflow: visible; }
-.fx-led, .bk-led, .rw-led { fill: #3a424b; transition: fill .3s; }
-.k-elliptical.active .fx-led, .k-exercise_bike.active .bk-led, .k-rowing_machine.active .rw-led { fill: #3ddc84; filter: drop-shadow(0 0 1.4px #3ddc84); }
-.k-elliptical.st-standby .fx-led:first-of-type, .k-exercise_bike.st-standby .bk-led:first-of-type, .k-rowing_machine.st-standby .rw-led:first-of-type { fill: #f5a300; }
+.k-elliptical, .k-exercise_bike, .k-rowing_machine, .k-treadmill { --fp: 1.4s; }
+.k-elliptical svg, .k-exercise_bike svg, .k-rowing_machine svg, .k-treadmill svg { overflow: visible; }
+.fx-led, .bk-led, .rw-led, .tm-led { fill: #3a424b; transition: fill .3s; }
+.k-elliptical.active .fx-led, .k-exercise_bike.active .bk-led, .k-rowing_machine.active .rw-led, .k-treadmill.active .tm-led { fill: #3ddc84; filter: drop-shadow(0 0 1.4px #3ddc84); }
+.k-elliptical.st-standby .fx-led:first-of-type, .k-exercise_bike.st-standby .bk-led:first-of-type, .k-rowing_machine.st-standby .rw-led:first-of-type, .k-treadmill.st-standby .tm-led:first-of-type { fill: #f5a300; }
 
 /* vélo elliptique : pédales en ellipse (x et y déphasés d'un quart de tour), bras en opposition, volant */
 .fx-fly { transform-box: view-box; transform-origin: 97px 108px; }
@@ -38,3 +38,13 @@
 @keyframes rw-seat { 0%, 100% { transform: translateX(0); } 38% { transform: translateX(30px); } }
 @keyframes rw-handle { 0%, 100% { transform: translateX(0); } 38% { transform: translateX(28px); } }
 @keyframes rw-strap { 0%, 100% { transform: scaleX(.5); } 38% { transform: scaleX(.97); } }
+
+/* tapis de course : les rayures de la bande avancent vers nous (chaque rayure glisse jusqu'à la place de la suivante) */
+.tm-stripe { transform-box: fill-box; transform-origin: 50% 0; }
+.k-treadmill.active .tm-stripe { animation: tm-run var(--fp) linear infinite; }
+@keyframes tm-run { to { transform: translateY(var(--d)) scaleY(var(--k)); } }
+/* tapis : les baskets n apparaissent que quand on court et se levent a tour de role */
+.tm-shoe { opacity: 0; transition: opacity .4s; transform-box: view-box; }
+.k-treadmill.active .tm-shoe { opacity: 1; animation: tm-step calc(var(--fp) * 4) ease-in-out infinite; }
+.k-treadmill.active .tm-sb { animation-delay: calc(var(--fp) * -2); }
+@keyframes tm-step { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
