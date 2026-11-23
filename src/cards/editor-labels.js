@@ -86,7 +86,7 @@
 :host([tiles-pos="left"]) .ac-tp>*,:host([tiles-pos="right"]) .ac-tp>*{grid-column:1/-1}
 :host([tiles-pos="left"]) .ac-tp>.head,:host([tiles-pos="right"]) .ac-tp>.head{grid-row:1}
 :host([tiles-pos="left"]) .ac-tp>.ac-ill,:host([tiles-pos="right"]) .ac-tp>.ac-ill,:host([tiles-pos="left"]) .ac-tp>.ac-tl,:host([tiles-pos="right"]) .ac-tp>.ac-tl{grid-row:2}
-:host([tiles-pos="left"]) .ac-tp>.ac-tl,:host([tiles-pos="right"]) .ac-tp>.ac-tl{margin:0;grid-template-columns:repeat(auto-fit,minmax(64px,1fr))}
+:host([tiles-pos="left"]) .ac-tp>.ac-tl,:host([tiles-pos="right"]) .ac-tp>.ac-tl{margin:0;grid-template-columns:minmax(0,1fr)}
 :host([tiles-pos="right"]) .ac-tp>.ac-ill,:host([tiles-pos="left"]) .ac-tp>.ac-tl{grid-column:1}
 :host([tiles-pos="right"]) .ac-tp>.ac-tl,:host([tiles-pos="left"]) .ac-tp>.ac-ill{grid-column:2}`;
   window.applianceTilePos = (el) => {
