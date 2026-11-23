@@ -914,6 +914,8 @@
     "water_hot": "Water too hot"
   },
   "editor": {
+    "confirm_action": "Ask for confirmation before the action",
+    "confirm_text": "Confirmation text (optional)",
     "tiles_position": "Tiles position",
     "tiles_pos_bottom": "Below the drawing (default)",
     "tiles_pos_top": "Above the drawing",

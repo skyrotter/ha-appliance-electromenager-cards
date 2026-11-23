@@ -848,7 +848,13 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 
     // action standard Home Assistant : more-info / toggle / none gérés ici,
     // le reste (navigate, url, perform-action…) confié à Home Assistant via l'événement hass-action
-    _run(a) {
+    _run(a0) {
+      // confirmation (option HA standard) : fenêtre Annuler / OK avant l'action, retirée ensuite pour ne pas être redemandée par Home Assistant
+      const a = a0 && typeof a0 === 'object' && a0.confirmation ? { ...a0, confirmation: undefined } : a0;
+      if (window.applianceConfirm) { window.applianceConfirm(this, a0, () => this._run1(a)); return; }
+      this._run1(a);
+    }
+    _run1(a) {
       const c = this._c;
       const type = typeof a === 'string' ? a : a && a.action;
       if (!type || type === 'none' || !this._hass) return;
@@ -1016,6 +1022,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ent('entity'), ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'),
         { name: 'tap_action', selector: { ui_action: { actions: ['more-info', 'toggle', 'navigate', 'url', 'perform-action', 'none'] } } },
         { name: 'hold_action', selector: { ui_action: { actions: ['more-info', 'toggle', 'navigate', 'url', 'perform-action', 'none'] } } },
+        { name: 'confirm_action', selector: { boolean: {} } }, { name: 'confirm_text', selector: { text: {} } },
         { name: 'slider_position', default: 'bottom', selector: { select: { mode: 'dropdown', options: ['bottom', 'left', 'right'].map((value) => ({ value, label: T[window.applianceLang(T, this._c, this._hass)][`slider_${value}`] ?? T.en[`slider_${value}`] })) } } },
         { name: 'color', selector: { color_rgb: {} } },
         { type: 'grid', name: '', schema: [

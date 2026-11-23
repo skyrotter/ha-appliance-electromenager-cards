@@ -802,6 +802,8 @@
     "water_hot": "Vandet er for varmt"
   },
   "editor": {
+    "confirm_action": "Bed om bekræftelse før handlingen",
+    "confirm_text": "Bekræftelsestekst (valgfri)",
     "tiles_position": "Placering af felter",
     "tiles_pos_bottom": "Under tegningen (standard)",
     "tiles_pos_top": "Over tegningen",

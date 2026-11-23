@@ -7,6 +7,8 @@
   if (window.applianceEditorLabel) return;
   const L = {
     "en": {
+      "confirm_action": "Ask for confirmation before the action",
+      "confirm_text": "Confirmation text (optional)",
       "tiles_position": "Tiles position",
       "tiles_pos_bottom": "Below the drawing (default)",
       "tiles_pos_top": "Above the drawing",
@@ -762,6 +764,8 @@
       "press_animation": "Animate the button presses"
     },
     "cs": {
+      "confirm_action": "Před akcí požádat o potvrzení",
+      "confirm_text": "Text potvrzení (volitelné)",
       "tiles_position": "Poloha dlaždic",
       "tiles_pos_bottom": "Pod kresbou (výchozí)",
       "tiles_pos_top": "Nad kresbou",
@@ -1156,6 +1160,8 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "da": {
+      "confirm_action": "Bed om bekræftelse før handlingen",
+      "confirm_text": "Bekræftelsestekst (valgfri)",
       "tiles_position": "Placering af felter",
       "tiles_pos_bottom": "Under tegningen (standard)",
       "tiles_pos_top": "Over tegningen",
@@ -1703,6 +1709,8 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "de": {
+      "confirm_action": "Vor der Aktion bestätigen lassen",
+      "confirm_text": "Bestätigungstext (optional)",
       "tiles_position": "Position der Kacheln",
       "tiles_pos_bottom": "Unter der Zeichnung (Standard)",
       "tiles_pos_top": "Über der Zeichnung",
@@ -2315,6 +2323,8 @@
       "show_backup": "Zusatzheizungen und Kessel anzeigen"
     },
     "es": {
+      "confirm_action": "Pedir confirmación antes de la acción",
+      "confirm_text": "Texto de confirmación (opcional)",
       "tiles_position": "Posición de los mosaicos",
       "tiles_pos_bottom": "Debajo del dibujo (por defecto)",
       "tiles_pos_top": "Encima del dibujo",
@@ -3057,6 +3067,8 @@
       "show_backup": "Mostrar apoyos y caldera"
     },
     "fr": {
+      "confirm_action": "Demander confirmation avant l'action",
+      "confirm_text": "Texte de confirmation (facultatif)",
       "tiles_position": "Position des tuiles",
       "tiles_pos_bottom": "Sous le dessin (défaut)",
       "tiles_pos_top": "Au-dessus du dessin",
@@ -3806,6 +3818,8 @@
       "press_animation": "Animer les appuis sur le bouton"
     },
     "hu": {
+      "confirm_action": "Megerősítés kérése a művelet előtt",
+      "confirm_text": "Megerősítő szöveg (nem kötelező)",
       "tiles_position": "Csempék helye",
       "tiles_pos_bottom": "A rajz alatt (alapértelmezett)",
       "tiles_pos_top": "A rajz felett",
@@ -4299,6 +4313,8 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "it": {
+      "confirm_action": "Chiedi conferma prima dell'azione",
+      "confirm_text": "Testo di conferma (facoltativo)",
       "tiles_position": "Posizione dei riquadri",
       "tiles_pos_bottom": "Sotto il disegno (predefinito)",
       "tiles_pos_top": "Sopra il disegno",
@@ -4752,6 +4768,8 @@
       "show_backup": "Mostra integrazioni e caldaia"
     },
     "nb": {
+      "confirm_action": "Be om bekreftelse før handlingen",
+      "confirm_text": "Bekreftelsestekst (valgfri)",
       "tiles_position": "Plassering av rutene",
       "tiles_pos_bottom": "Under tegningen (standard)",
       "tiles_pos_top": "Over tegningen",
@@ -5172,6 +5190,8 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "nl": {
+      "confirm_action": "Om bevestiging vragen vóór de actie",
+      "confirm_text": "Bevestigingstekst (optioneel)",
       "tiles_position": "Positie van de tegels",
       "tiles_pos_bottom": "Onder de tekening (standaard)",
       "tiles_pos_top": "Boven de tekening",
@@ -5625,6 +5645,8 @@
       "show_backup": "Bijverwarming en ketel tonen"
     },
     "pl": {
+      "confirm_action": "Pytaj o potwierdzenie przed akcją",
+      "confirm_text": "Tekst potwierdzenia (opcjonalnie)",
       "tiles_position": "Pozycja kafelków",
       "tiles_pos_bottom": "Pod rysunkiem (domyślnie)",
       "tiles_pos_top": "Nad rysunkiem",
@@ -6072,6 +6094,8 @@
       "press_animation": "Animuj naciśnięcia przycisku"
     },
     "pt-BR": {
+      "confirm_action": "Pedir confirmação antes da ação",
+      "confirm_text": "Texto de confirmação (opcional)",
       "tiles_position": "Posição dos blocos",
       "tiles_pos_bottom": "Abaixo do desenho (padrão)",
       "tiles_pos_top": "Acima do desenho",
@@ -6816,6 +6840,8 @@
       "side": "Lado em que o painel único se empilha"
     },
     "pt-PT": {
+      "confirm_action": "Pedir confirmação antes da ação",
+      "confirm_text": "Texto de confirmação (opcional)",
       "tiles_position": "Posição dos blocos",
       "tiles_pos_bottom": "Por baixo do desenho (predefinição)",
       "tiles_pos_top": "Por cima do desenho",
@@ -7560,6 +7586,8 @@
       "side": "Lado em que o painel único se empilha"
     },
     "ro": {
+      "confirm_action": "Cere confirmare înainte de acțiune",
+      "confirm_text": "Text de confirmare (opțional)",
       "tiles_position": "Poziția plăcilor",
       "tiles_pos_bottom": "Sub desen (implicit)",
       "tiles_pos_top": "Deasupra desenului",
@@ -7957,6 +7985,8 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "ru": {
+      "confirm_action": "Запрашивать подтверждение перед действием",
+      "confirm_text": "Текст подтверждения (необязательно)",
       "tiles_position": "Положение плиток",
       "tiles_pos_bottom": "Под рисунком (по умолчанию)",
       "tiles_pos_top": "Над рисунком",
@@ -8354,6 +8384,8 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "sr": {
+      "confirm_action": "Затражи потврду пре радње",
+      "confirm_text": "Текст потврде (опционо)",
       "tiles_position": "Положај плочица",
       "tiles_pos_bottom": "Испод цртежа (подразумевано)",
       "tiles_pos_top": "Изнад цртежа",
@@ -8952,6 +8984,8 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "sr-Latn": {
+      "confirm_action": "Zatraži potvrdu pre radnje",
+      "confirm_text": "Tekst potvrde (opciono)",
       "tiles_position": "Položaj pločica",
       "tiles_pos_bottom": "Ispod crteža (podrazumevano)",
       "tiles_pos_top": "Iznad crteža",
@@ -9550,6 +9584,8 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "uk": {
+      "confirm_action": "Запитувати підтвердження перед дією",
+      "confirm_text": "Текст підтвердження (необов'язково)",
       "tiles_position": "Розташування плиток",
       "tiles_pos_bottom": "Під малюнком (за замовчуванням)",
       "tiles_pos_top": "Над малюнком",
@@ -10367,7 +10403,7 @@
   // Actions Home Assistant sur l'illustration (tap_action / hold_action, appui long 0,5 s) — cartes autonomes.
   // Champs à ajouter au schéma de l'éditeur : ...window.applianceActionFields
   const ACT = ['more-info', 'toggle', 'navigate', 'url', 'perform-action', 'none'];
-  window.applianceActionFields = ['tap_action', 'hold_action'].map((name) => ({ name, selector: { ui_action: { actions: ACT } } }));
+  window.applianceActionFields = [...['tap_action', 'hold_action'].map((name) => ({ name, selector: { ui_action: { actions: ACT } } })), { name: 'confirm_action', selector: { boolean: {} } }, { name: 'confirm_text', selector: { text: {} } }];
   // entité par défaut d'une action : « entity », sinon la première option entity_* renseignée
   const dfltEntity = (c) => {
     if (!c) return '';
@@ -10376,7 +10412,50 @@
     return k ? c[k] : '';
   };
   // exécute une action : more-info / toggle / none gérés ici, le reste (navigate, url, perform-action…) confié à Home Assistant
-  window.applianceRunAction = (el, a) => {
+  // confirmation demandée pour une action : celle de l'action (confirmation: true | { text, exemptions }, comme Home Assistant) ou, si la case
+  // « Demander confirmation » de la carte est cochée (confirm_action, texte confirm_text), toute action sauf more-info / none. Sinon rien (facultatif).
+  window.applianceConf = (el, a) => {
+    const c = el._c || el._config || {}, t = typeof a === 'string' ? a : a && a.action;
+    if (a && typeof a === 'object' && a.confirmation) return a.confirmation;
+    if (c.confirm_action === true && t && t !== 'none' && t !== 'more-info') return c.confirm_text ? { text: String(c.confirm_text) } : true;
+    return undefined;
+  };
+  // confirmation (option HA standard d'une action) : confirmation: true, ou { text, exemptions: [{ user: id }] } ; fenêtre « Annuler / OK » posée sur la page,
+  // texte par défaut traduit par Home Assistant. Les utilisateurs de exemptions ne sont pas interrogés. run() est appelé seulement si on valide.
+  window.applianceConfirm = (el, a, run) => {
+    const conf = window.applianceConf(el, a), hass = el._hass;
+    if (!conf || !hass) { run(); return; }
+    const ex = typeof conf === 'object' && Array.isArray(conf.exemptions) ? conf.exemptions : [];
+    if (hass.user && ex.some((e) => e && e.user === hass.user.id)) { run(); return; }
+    const loc = (k, p) => { try { const v = hass.localize && hass.localize(k, p); return v || ''; } catch (e) { return ''; } };
+    const type = typeof a === 'string' ? a : a.action;
+    const fr = /^fr/i.test(String(hass.language || ''));
+    const text = (typeof conf === 'object' && conf.text ? String(conf.text) : '')
+      || loc('ui.panel.lovelace.cards.actions.action_confirmation', { action: loc(`ui.panel.lovelace.editor.action-editor.actions.${type}`) || type })
+      || (fr ? 'Voulez-vous vraiment effectuer cette action ?' : 'Are you sure?');
+    const okTxt = loc('ui.common.ok') || 'OK', noTxt = loc('ui.common.cancel') || (fr ? 'Annuler' : 'Cancel');
+    const ov = document.createElement('div');
+    ov.setAttribute('role', 'alertdialog'); ov.setAttribute('aria-modal', 'true');
+    ov.style.cssText = 'position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.5);font-family:var(--paper-font-body1_-_font-family,Roboto,sans-serif)';
+    const box = document.createElement('div');
+    box.style.cssText = 'box-sizing:border-box;width:min(92vw,360px);padding:20px 22px 12px;border-radius:var(--ha-card-border-radius,12px);background:var(--card-background-color,#fff);color:var(--primary-text-color,#212121);box-shadow:0 8px 32px rgba(0,0,0,.4)';
+    const msg = document.createElement('div'); msg.textContent = text; msg.style.cssText = 'font-size:16px;line-height:22px;margin-bottom:14px;white-space:pre-line';
+    const row = document.createElement('div'); row.style.cssText = 'display:flex;justify-content:flex-end;gap:8px';
+    const mk = (label, strong) => { const bt = document.createElement('button'); bt.type = 'button'; bt.textContent = label; bt.style.cssText = `border:0;background:none;cursor:pointer;padding:8px 12px;border-radius:8px;font:600 14px/20px inherit;color:var(--primary-color,#03a9f4)${strong ? ';background:color-mix(in srgb,var(--primary-color,#03a9f4) 14%,transparent)' : ''}`; return bt; };
+    const no = mk(noTxt, false), ok = mk(okTxt, true);
+    const close = (go) => { document.removeEventListener('keydown', key, true); ov.remove(); if (go) run(); };
+    const key = (ev) => { if (ev.key === 'Escape') { ev.stopPropagation(); close(false); } };
+    no.onclick = () => close(false); ok.onclick = () => close(true);
+    ov.addEventListener('click', (ev) => { if (ev.target === ov) close(false); });
+    document.addEventListener('keydown', key, true);
+    row.append(no, ok); box.append(msg, row); ov.append(box); document.body.appendChild(ov); ok.focus();
+  };
+  window.applianceRunAction = (el, a0) => {
+    // la confirmation est gérée ici : on retire l'option avant de confier l'action à Home Assistant (pas de 2e fenêtre)
+    const a = a0 && typeof a0 === 'object' && a0.confirmation ? { ...a0, confirmation: undefined } : a0;
+    window.applianceConfirm(el, a0, () => window.applianceRunAction1(el, a));
+  };
+  window.applianceRunAction1 = (el, a) => {
     const c = el._c || el._config, hass = el._hass;
     const type = typeof a === 'string' ? a : a && a.action;
     if (!type || type === 'none' || !hass) return;

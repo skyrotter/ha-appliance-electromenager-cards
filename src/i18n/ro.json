@@ -737,6 +737,8 @@
     "water_hot": "Apa prea caldă"
   },
   "editor": {
+    "confirm_action": "Cere confirmare înainte de acțiune",
+    "confirm_text": "Text de confirmare (opțional)",
     "tiles_position": "Poziția plăcilor",
     "tiles_pos_bottom": "Sub desen (implicit)",
     "tiles_pos_top": "Deasupra desenului",
