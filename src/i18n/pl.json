@@ -1,5 +1,6 @@
 {
   "common": {
+    "infrared_panel": "Panel grzewczy na podczerwień",
     "treadmill": "Bieżnia",
     "incline": "Nachylenie",
     "f_incline": "Czujnik nachylenia (%)",

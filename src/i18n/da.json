@@ -1,5 +1,6 @@
 {
   "common": {
+    "infrared_panel": "Infrarød varmepanel",
     "treadmill": "Løbebånd",
     "incline": "Hældning",
     "f_incline": "Hældningssensor (%)",

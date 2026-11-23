@@ -130,6 +130,7 @@ Clique em um cartão para consultar as opções e os exemplos.
 | [Aquecedor de água (com controle de excedentes solares)](docs/cards/water-heater.md) | `custom:appliance-water-heater-card` |
 | [Aquecedor de água termodinâmico](docs/cards/thermo-heater.md) | `custom:appliance-thermo-heater-card` |
 | [Termoventilador (elétrico compacto)](docs/cards/fan-heater.md) | `custom:appliance-fan-heater-card` |
+| [Painel aquecedor infravermelho](docs/cards/infrared-panel.md) | `custom:appliance-infrared-panel-card` |
 | [Piso radiante (água ou elétrico)](docs/cards/underfloor-heating.md) | `custom:appliance-underfloor-heating-card` |
 | [Radiador elétrico](docs/cards/radiator.md) | `custom:appliance-radiator-card` |
 | [Toalheiro aquecido](docs/cards/towel-rack-pc-laptop.md) | `custom:appliance-towel-dryer-card` |

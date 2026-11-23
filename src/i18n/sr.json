@@ -1,5 +1,6 @@
 {
   "common": {
+    "infrared_panel": "Инфрацрвени грејни панел",
     "treadmill": "Трака за трчање",
     "incline": "Нагиб",
     "f_incline": "Сензор нагиба (%)",

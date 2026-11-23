@@ -1,5 +1,6 @@
 {
   "common": {
+    "infrared_panel": "Panneau chauffant infrarouge",
     "treadmill": "Tapis de course",
     "incline": "Inclinaison",
     "f_incline": "Capteur d'inclinaison (%)",

@@ -70,6 +70,10 @@ const DEF = {
   steam_station: { accent: "heat", threshold: 100,
     fields: ["entity", "power", "energy", "cost", "temperature", "water_level", "steam", "switch"],
     keys: ["centrale_vapeur", "centrale_repassage", "generateur_vapeur", "steam_station", "steam_generator", "ironing_station", "dampfbuegelstation", "dampfstation", "stoomgenerator", "centro_planchado"] },
+  // panneau chauffant infrarouge sur prise connectée : en chauffe au-dessus de threshold ; capteur de température de la pièce en option
+  infrared_panel: { accent: "heat", threshold: 20,
+    fields: ["entity", "power", "energy", "cost", "temperature", "switch"],
+    keys: ["panneau_infrarouge", "panneau_chauffant", "infrarouge", "infrared", "infrarot", "radiant_panel", "panneau_rayonnant"] },
   wet_vacuum: { accent: "cold", threshold: 3,
     fields: ["entity", "power", "energy", "cost", "battery_level", "clean_water", "dirty_water", "mode", "switch"],
     keys: ["aspirateur_laveur", "aspirateur_lavant", "nettoyeur_sol", "wet_vacuum", "wet_dry", "floor_washer", "floor_one", "tineco", "laveur"] },

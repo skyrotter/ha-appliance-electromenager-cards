@@ -1,5 +1,6 @@
 {
   "common": {
+    "infrared_panel": "Painel aquecedor infravermelho",
     "treadmill": "Esteira",
     "incline": "Inclinação",
     "f_incline": "Sensor de inclinação (%)",

@@ -1,5 +1,6 @@
 {
   "common": {
+    "infrared_panel": "Panou de încălzire în infraroșu",
     "treadmill": "Bandă de alergare",
     "incline": "Înclinare",
     "f_incline": "Senzor de înclinare (%)",

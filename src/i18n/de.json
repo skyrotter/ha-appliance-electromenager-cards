@@ -1,5 +1,6 @@
 {
   "common": {
+    "infrared_panel": "Infrarot-Heizpaneel",
     "treadmill": "Laufband",
     "incline": "Steigung",
     "f_incline": "Steigungssensor (%)",

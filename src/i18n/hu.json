@@ -1,5 +1,6 @@
 {
   "common": {
+    "infrared_panel": "Infravörös fűtőpanel",
     "treadmill": "Futópad",
     "incline": "Emelkedés",
     "f_incline": "Emelkedés érzékelő (%)",

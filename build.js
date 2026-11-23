@@ -51,7 +51,7 @@ const CSS_FILES = [
   "card", "illustration-shared", "washer-dryer", "dishwasher", "water-heater", "oven-microwave",
   "radiator", "cooktop", "vmc", "solar", "freezers", "printer-3d", "pool-pump", "pellet-stove",
   "fridge", "air-fryer", "coffee-maker", "tv", "range-hood", "ac-split", "heat-pump",
-  "towel-dryer", "server-rack", "desktop-pc", "laptop", "wine-cooler", "beer-tap", "av-receiver", "smart-speaker", "fan", "generic", "tool-charger", "ceiling-fan", "dehumidifier", "air-purifier", "monitor", "kettle-toaster", "iron-steam", "plugs-piano-garland", "wet-vacuum", "dosing-pump", "fitness", "ps5", "thermomix", "cookeo", "printer", "vmc-ventoxx", "photo-appliances", "air-compressor", "contact-grill", "deep-fryer",
+  "towel-dryer", "server-rack", "desktop-pc", "laptop", "wine-cooler", "beer-tap", "av-receiver", "smart-speaker", "fan", "generic", "tool-charger", "ceiling-fan", "dehumidifier", "air-purifier", "monitor", "kettle-toaster", "iron-steam", "infrared-panel", "plugs-piano-garland", "wet-vacuum", "dosing-pump", "fitness", "ps5", "thermomix", "cookeo", "printer", "vmc-ventoxx", "photo-appliances", "air-compressor", "contact-grill", "deep-fryer",
 ].map((n) => `core/style/${n}.css`);
 /* Self-contained cards, each in its own IIFE: built as separate lazy chunks
  * (dist/cards/<name>.js). card-helpers and editor-labels define the

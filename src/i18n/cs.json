@@ -1,5 +1,6 @@
 {
   "common": {
+    "infrared_panel": "Infrapanel",
     "treadmill": "Běžecký pás",
     "incline": "Sklon",
     "f_incline": "Senzor sklonu (%)",
