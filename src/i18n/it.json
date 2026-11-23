@@ -766,6 +766,8 @@
     "water_hot": "Acqua troppo calda"
   },
   "editor": {
+    "confirm_action": "Chiedi conferma prima dell'azione",
+    "confirm_text": "Testo di conferma (facoltativo)",
     "tiles_position": "Posizione dei riquadri",
     "tiles_pos_bottom": "Sotto il disegno (predefinito)",
     "tiles_pos_top": "Sopra il disegno",

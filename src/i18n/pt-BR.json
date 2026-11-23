@@ -896,6 +896,8 @@
     "water_hot": "Água muito quente"
   },
   "editor": {
+    "confirm_action": "Pedir confirmação antes da ação",
+    "confirm_text": "Texto de confirmação (opcional)",
     "tiles_position": "Posição dos blocos",
     "tiles_pos_bottom": "Abaixo do desenho (padrão)",
     "tiles_pos_top": "Acima do desenho",

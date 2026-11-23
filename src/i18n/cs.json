@@ -738,6 +738,8 @@
     "water_hot": "Voda příliš horká"
   },
   "editor": {
+    "confirm_action": "Před akcí požádat o potvrzení",
+    "confirm_text": "Text potvrzení (volitelné)",
     "tiles_position": "Poloha dlaždic",
     "tiles_pos_bottom": "Pod kresbou (výchozí)",
     "tiles_pos_top": "Nad kresbou",

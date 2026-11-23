@@ -1533,6 +1533,8 @@
     "days": "n"
   },
   "editor": {
+    "confirm_action": "Megerősítés kérése a művelet előtt",
+    "confirm_text": "Megerősítő szöveg (nem kötelező)",
     "tiles_position": "Csempék helye",
     "tiles_pos_bottom": "A rajz alatt (alapértelmezett)",
     "tiles_pos_top": "A rajz felett",

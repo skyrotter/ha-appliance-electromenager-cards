@@ -886,6 +886,8 @@
     "water_hot": "Agua demasiado caliente"
   },
   "editor": {
+    "confirm_action": "Pedir confirmación antes de la acción",
+    "confirm_text": "Texto de confirmación (opcional)",
     "tiles_position": "Posición de los mosaicos",
     "tiles_pos_bottom": "Debajo del dibujo (por defecto)",
     "tiles_pos_top": "Encima del dibujo",

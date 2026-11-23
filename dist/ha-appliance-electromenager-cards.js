@@ -12573,7 +12573,13 @@ class ApplianceCardBase extends HTMLElement {
   // action standard Home Assistant (tap_action / hold_action) :
   // toggle → la prise (switch), avec la même confirmation que le bouton ; more-info / none gérés ici ;
   // le reste (navigate, url, perform-action…) est confié à Home Assistant via l'événement hass-action
-  _action(a) {
+  _action(a0) {
+    // confirmation facultative : option HA standard de l'action (true ou { text, exemptions }) ou case « Demander confirmation » de la carte (confirm_action) ; fenêtre Annuler / OK avant l'action, puis l'option est retirée (pas de 2e fenêtre côté HA)
+    const a1 = a0 && typeof a0 === "object" && a0.confirmation ? { ...a0, confirmation: undefined } : a0, go = () => this._action1(a1);
+    if (this._hass && window.applianceConfirm) window.applianceConfirm(this, a0, go); else go();
+  }
+
+  _action1(a) {
     const c = this._config, hass = this._hass;
     if (!a || !hass) return;
     const type = typeof a === "string" ? a : a.action;
@@ -15042,6 +15048,8 @@ function buildForm(kind) {
           ...(d.fields.includes("switch") || kind === "power_strip" ? [{ name: "confirm_always", selector: { boolean: {} } }] : []),
           { name: "tap_action", selector: { ui_action: { actions: ["more-info", "toggle", "navigate", "url", "perform-action", "none"] } } },
           { name: "hold_action", selector: { ui_action: { actions: ["more-info", "toggle", "navigate", "url", "perform-action", "none"] } } },
+          { name: "confirm_action", selector: { boolean: {} } },
+          { name: "confirm_text", selector: { text: {} } },
           { name: "color", selector: { text: {} } },
         ],
       },

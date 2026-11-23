@@ -905,6 +905,8 @@
     "water_hot": "Eau trop chaude"
   },
   "editor": {
+    "confirm_action": "Demander confirmation avant l'action",
+    "confirm_text": "Texte de confirmation (facultatif)",
     "tiles_position": "Position des tuiles",
     "tiles_pos_bottom": "Sous le dessin (défaut)",
     "tiles_pos_top": "Au-dessus du dessin",

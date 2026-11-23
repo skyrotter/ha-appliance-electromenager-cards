@@ -408,6 +408,8 @@ function buildForm(kind) {
           ...(d.fields.includes("switch") || kind === "power_strip" ? [{ name: "confirm_always", selector: { boolean: {} } }] : []),
           { name: "tap_action", selector: { ui_action: { actions: ["more-info", "toggle", "navigate", "url", "perform-action", "none"] } } },
           { name: "hold_action", selector: { ui_action: { actions: ["more-info", "toggle", "navigate", "url", "perform-action", "none"] } } },
+          { name: "confirm_action", selector: { boolean: {} } },
+          { name: "confirm_text", selector: { text: {} } },
           { name: "color", selector: { text: {} } },
         ],
       },

@@ -756,6 +756,8 @@
     "water_hot": "Woda za gorąca"
   },
   "editor": {
+    "confirm_action": "Pytaj o potwierdzenie przed akcją",
+    "confirm_text": "Tekst potwierdzenia (opcjonalnie)",
     "tiles_position": "Pozycja kafelków",
     "tiles_pos_bottom": "Pod rysunkiem (domyślnie)",
     "tiles_pos_top": "Nad rysunkiem",

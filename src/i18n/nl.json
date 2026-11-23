@@ -766,6 +766,8 @@
     "water_hot": "Water te heet"
   },
   "editor": {
+    "confirm_action": "Om bevestiging vragen vóór de actie",
+    "confirm_text": "Bevestigingstekst (optioneel)",
     "tiles_position": "Positie van de tegels",
     "tiles_pos_bottom": "Onder de tekening (standaard)",
     "tiles_pos_top": "Boven de tekening",
