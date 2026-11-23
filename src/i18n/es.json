@@ -882,6 +882,11 @@
     "water_hot": "Agua demasiado caliente"
   },
   "editor": {
+    "tiles_position": "Posición de los mosaicos",
+    "tiles_pos_bottom": "Debajo del dibujo (por defecto)",
+    "tiles_pos_top": "Encima del dibujo",
+    "tiles_pos_left": "A la izquierda del dibujo",
+    "tiles_pos_right": "A la derecha del dibujo",
     "entity_drive_5": "Disco 5",
     "entity_drive_5_temp": "Temperatura del disco 5",
     "entity_drive_6": "Disco 6",

@@ -1527,6 +1527,11 @@
     "days": "n"
   },
   "editor": {
+    "tiles_position": "Csempék helye",
+    "tiles_pos_bottom": "A rajz alatt (alapértelmezett)",
+    "tiles_pos_top": "A rajz felett",
+    "tiles_pos_left": "A rajztól balra",
+    "tiles_pos_right": "A rajztól jobbra",
     "animations": "Animációk",
     "battery_low": "Alacsony akkuszint (%)",
     "buffer_tank": "Puffertartály",

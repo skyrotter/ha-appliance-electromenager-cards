@@ -851,6 +851,11 @@
     "water_hot": "Вода надто гаряча"
   },
   "editor": {
+    "tiles_position": "Розташування плиток",
+    "tiles_pos_bottom": "Під малюнком (за замовчуванням)",
+    "tiles_pos_top": "Над малюнком",
+    "tiles_pos_left": "Ліворуч від малюнка",
+    "tiles_pos_right": "Праворуч від малюнка",
     "entity_drive_5": "Диск 5",
     "entity_drive_5_temp": "Температура диска 5",
     "entity_drive_6": "Диск 6",

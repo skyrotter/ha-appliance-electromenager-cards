@@ -814,6 +814,11 @@
     "water_hot": "Voda je previše topla"
   },
   "editor": {
+    "tiles_position": "Položaj pločica",
+    "tiles_pos_bottom": "Ispod crteža (podrazumevano)",
+    "tiles_pos_top": "Iznad crteža",
+    "tiles_pos_left": "Levo od crteža",
+    "tiles_pos_right": "Desno od crteža",
     "surface": "Montaža (pod ili zid)",
     "food_low": "Upozorenje na nizak nivo hrane (%)",
     "hopper_capacity": "Kapacitet rezervoara (g)",

@@ -762,6 +762,11 @@
     "water_hot": "Acqua troppo calda"
   },
   "editor": {
+    "tiles_position": "Posizione dei riquadri",
+    "tiles_pos_bottom": "Sotto il disegno (predefinito)",
+    "tiles_pos_top": "Sopra il disegno",
+    "tiles_pos_left": "A sinistra del disegno",
+    "tiles_pos_right": "A destra del disegno",
     "animations": "Animazioni",
     "battery_low": "Batteria scarica (%)",
     "buffer_tank": "Serbatoio inerziale",

@@ -892,6 +892,11 @@
     "water_hot": "Água demasiado quente"
   },
   "editor": {
+    "tiles_position": "Posição dos blocos",
+    "tiles_pos_bottom": "Por baixo do desenho (predefinição)",
+    "tiles_pos_top": "Por cima do desenho",
+    "tiles_pos_left": "À esquerda do desenho",
+    "tiles_pos_right": "À direita do desenho",
     "entity_drive_5": "Disco 5",
     "entity_drive_5_temp": "Temperatura do disco 5",
     "entity_drive_6": "Disco 6",

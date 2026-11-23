@@ -71,6 +71,7 @@
     h.config?.unit_system?.temperature, h.config?.currency].join('|');
   window.applianceChanged = (el, hass, cfg) => {
     const p = el._applianceSeen, now = Date.now();
+    if (el.hasAttribute('tiles-pos')) Promise.resolve().then(() => window.applianceTilePos && window.applianceTilePos(el)); // tiles_position : réapplique après un rendu
     if (!p || p.cfg !== cfg) el._applianceIds = [...idsOf(cfg)];
     const set = hass ? settings(hass) : '';
     const changed = !p || !hass || p.cfg !== cfg || now - p.at >= 30000 || p.set !== set || p.hass.entities !== hass.entities

@@ -719,6 +719,11 @@
     "water_hot": "Вода слишком горячая"
   },
   "editor": {
+    "tiles_position": "Положение плиток",
+    "tiles_pos_bottom": "Под рисунком (по умолчанию)",
+    "tiles_pos_top": "Над рисунком",
+    "tiles_pos_left": "Слева от рисунка",
+    "tiles_pos_right": "Справа от рисунка",
     "animations": "Анимации",
     "battery_low": "Низкий заряд (%)",
     "buffer_tank": "Буферный бак",

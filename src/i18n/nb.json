@@ -719,6 +719,11 @@
 "water_hot": "Vannet er for varmt"
 },
 "editor": {
+"tiles_position": "Plassering av rutene",
+"tiles_pos_bottom": "Under tegningen (standard)",
+"tiles_pos_top": "Over tegningen",
+"tiles_pos_left": "Til venstre for tegningen",
+"tiles_pos_right": "Til høyre for tegningen",
 "illustration_size": "Størrelse på illustrasjonen",
 "transparent": "Gjennomsiktig bakgrunn",
 "tile_background": "Bakgrunn på feltene",

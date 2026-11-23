@@ -752,6 +752,11 @@
     "water_hot": "Woda za gorąca"
   },
   "editor": {
+    "tiles_position": "Pozycja kafelków",
+    "tiles_pos_bottom": "Pod rysunkiem (domyślnie)",
+    "tiles_pos_top": "Nad rysunkiem",
+    "tiles_pos_left": "Po lewej od rysunku",
+    "tiles_pos_right": "Po prawej od rysunku",
     "animations": "Animacje",
     "battery_low": "Niski poziom baterii (%)",
     "buffer_tank": "Zbiornik buforowy",
