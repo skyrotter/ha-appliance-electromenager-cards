@@ -1,5 +1,14 @@
 {
   "common": {
+    "projector_screen": "Projektorlærred",
+    "screen_open": "Nede",
+    "screen_closed": "Oppe",
+    "screen_opening": "Ruller ned",
+    "screen_closing": "Ruller op",
+    "btn_stop": "Stop",
+    "btn_open": "Rul ned",
+    "btn_close": "Rul op",
+    "screen_position": "Position",
     "infrared_panel": "Infrarød varmepanel",
     "treadmill": "Løbebånd",
     "incline": "Hældning",

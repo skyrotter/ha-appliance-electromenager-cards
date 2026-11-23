@@ -1,5 +1,14 @@
 {
   "common": {
+    "projector_screen": "Vetítővászon",
+    "screen_open": "Kitekerve",
+    "screen_closed": "Felcsavarva",
+    "screen_opening": "Kitekeredik",
+    "screen_closing": "Felcsavarodik",
+    "btn_stop": "Stop",
+    "btn_open": "Leengedés",
+    "btn_close": "Felhúzás",
+    "screen_position": "Pozíció",
     "infrared_panel": "Infravörös fűtőpanel",
     "treadmill": "Futópad",
     "incline": "Emelkedés",

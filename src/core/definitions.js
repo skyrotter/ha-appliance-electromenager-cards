@@ -74,6 +74,10 @@ const DEF = {
   infrared_panel: { accent: "heat", threshold: 20,
     fields: ["entity", "power", "energy", "cost", "temperature", "switch"],
     keys: ["panneau_infrarouge", "panneau_chauffant", "infrarouge", "infrared", "infrarot", "radiant_panel", "panneau_rayonnant"] },
+  // écran de projection motorisé : entité cover (position 0-100 %, 100 = déroulé), ou switch / input_boolean ; puissance du moteur en option
+  projector_screen: { accent: "active", threshold: 5,
+    fields: ["entity", "power", "energy", "cost"],
+    keys: ["ecran_projection", "ecran_de_projection", "ecran_projecteur", "projector_screen", "projection_screen", "leinwand", "beamer_screen", "pantalla_proyector"] },
   wet_vacuum: { accent: "cold", threshold: 3,
     fields: ["entity", "power", "energy", "cost", "battery_level", "clean_water", "dirty_water", "mode", "switch"],
     keys: ["aspirateur_laveur", "aspirateur_lavant", "nettoyeur_sol", "wet_vacuum", "wet_dry", "floor_washer", "floor_one", "tineco", "laveur"] },

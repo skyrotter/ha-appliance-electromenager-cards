@@ -215,6 +215,7 @@ Clique sur une carte pour ses options et ses exemples (pages en anglais).
 | Carte | Type |
 |---|---|
 | [Téléviseur](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/tv-range-hood.md) | `custom:appliance-tv-card` |
+| [Écran de projection](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/projector-screen.md) | `custom:appliance-projector-screen-card` |
 | [Ampli home cinéma](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/beer-tap-av-receiver.md) | `custom:appliance-av-receiver-card` |
 | [Barre de son + caisson (Bose)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/soundbar.md) | `custom:appliance-soundbar-card` |
 | [Enceinte connectée (Echo, Nest, Sonos, IKEA SYMFONISK, Devialet, HomePod)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/smart-speaker.md) | `custom:appliance-smart-speaker-card` |

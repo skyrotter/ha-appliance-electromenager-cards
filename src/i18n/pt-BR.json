@@ -1,5 +1,14 @@
 {
   "common": {
+    "projector_screen": "Tela de projeção",
+    "screen_open": "Aberta",
+    "screen_closed": "Fechada",
+    "screen_opening": "Abrindo",
+    "screen_closing": "Fechando",
+    "btn_stop": "Parar",
+    "btn_open": "Baixar",
+    "btn_close": "Subir",
+    "screen_position": "Posição",
     "infrared_panel": "Painel aquecedor infravermelho",
     "treadmill": "Esteira",
     "incline": "Inclinação",

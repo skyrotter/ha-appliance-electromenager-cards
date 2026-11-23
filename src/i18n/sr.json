@@ -1,5 +1,14 @@
 {
   "common": {
+    "projector_screen": "Платно за пројектор",
+    "screen_open": "Спуштено",
+    "screen_closed": "Намотано",
+    "screen_opening": "Спушта се",
+    "screen_closing": "Намотава се",
+    "btn_stop": "Стоп",
+    "btn_open": "Спусти",
+    "btn_close": "Подигни",
+    "screen_position": "Положај",
     "infrared_panel": "Инфрацрвени грејни панел",
     "treadmill": "Трака за трчање",
     "incline": "Нагиб",

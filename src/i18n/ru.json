@@ -1,5 +1,14 @@
 {
   "common": {
+    "projector_screen": "Экран для проектора",
+    "screen_open": "Опущен",
+    "screen_closed": "Свёрнут",
+    "screen_opening": "Опускается",
+    "screen_closing": "Сворачивается",
+    "btn_stop": "Стоп",
+    "btn_open": "Опустить",
+    "btn_close": "Поднять",
+    "screen_position": "Положение",
     "infrared_panel": "Инфракрасная панель отопления",
     "treadmill": "Беговая дорожка",
     "incline": "Наклон",

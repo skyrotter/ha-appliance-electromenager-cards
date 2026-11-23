@@ -1,5 +1,14 @@
 {
   "common": {
+    "projector_screen": "Ekran projekcyjny",
+    "screen_open": "Rozwinięty",
+    "screen_closed": "Zwinięty",
+    "screen_opening": "Rozwija się",
+    "screen_closing": "Zwija się",
+    "btn_stop": "Stop",
+    "btn_open": "Opuść",
+    "btn_close": "Podnieś",
+    "screen_position": "Pozycja",
     "infrared_panel": "Panel grzewczy na podczerwień",
     "treadmill": "Bieżnia",
     "incline": "Nachylenie",

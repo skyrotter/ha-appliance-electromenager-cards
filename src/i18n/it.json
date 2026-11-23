@@ -1,5 +1,14 @@
 {
   "common": {
+    "projector_screen": "Schermo di proiezione",
+    "screen_open": "Aperto",
+    "screen_closed": "Chiuso",
+    "screen_opening": "In apertura",
+    "screen_closing": "In chiusura",
+    "btn_stop": "Stop",
+    "btn_open": "Abbassa",
+    "btn_close": "Alza",
+    "screen_position": "Posizione",
     "infrared_panel": "Pannello riscaldante a infrarossi",
     "treadmill": "Tapis roulant",
     "incline": "Inclinazione",

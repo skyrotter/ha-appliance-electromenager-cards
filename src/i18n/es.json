@@ -1,5 +1,14 @@
 {
   "common": {
+    "projector_screen": "Pantalla de proyección",
+    "screen_open": "Desplegada",
+    "screen_closed": "Recogida",
+    "screen_opening": "Desplegando",
+    "screen_closing": "Recogiendo",
+    "btn_stop": "Parar",
+    "btn_open": "Bajar",
+    "btn_close": "Subir",
+    "screen_position": "Posición",
     "infrared_panel": "Panel calefactor infrarrojo",
     "treadmill": "Cinta de correr",
     "incline": "Inclinación",
