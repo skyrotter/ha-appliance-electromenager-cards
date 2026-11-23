@@ -15,6 +15,15 @@ const VERSION = "1.203.0";
 /* ------------------------------------------------------------------ */
 const STRINGS = {
   "en": {
+    "projector_screen": "Projector screen",
+    "screen_open": "Open",
+    "screen_closed": "Closed",
+    "screen_opening": "Opening",
+    "screen_closing": "Closing",
+    "btn_stop": "Stop",
+    "btn_open": "Lower",
+    "btn_close": "Raise",
+    "screen_position": "Position",
     "infrared_panel": "Infrared heating panel",
     "treadmill": "Treadmill",
     "incline": "Incline",
@@ -554,6 +563,15 @@ const STRINGS = {
     "f_power_factor": "Power factor sensor (cos φ, optional)"
   },
   "cs": {
+    "projector_screen": "Projekční plátno",
+    "screen_open": "Rozvinuto",
+    "screen_closed": "Svinuto",
+    "screen_opening": "Rozvíjí se",
+    "screen_closing": "Svíjí se",
+    "btn_stop": "Stop",
+    "btn_open": "Spustit",
+    "btn_close": "Zvednout",
+    "screen_position": "Poloha",
     "infrared_panel": "Infrapanel",
     "treadmill": "Běžecký pás",
     "incline": "Sklon",
@@ -948,6 +966,15 @@ const STRINGS = {
     "f_hide_zero_power": "Skrýt výkon, když je 0"
   },
   "da": {
+    "projector_screen": "Projektorlærred",
+    "screen_open": "Nede",
+    "screen_closed": "Oppe",
+    "screen_opening": "Ruller ned",
+    "screen_closing": "Ruller op",
+    "btn_stop": "Stop",
+    "btn_open": "Rul ned",
+    "btn_close": "Rul op",
+    "screen_position": "Position",
     "infrared_panel": "Infrarød varmepanel",
     "treadmill": "Løbebånd",
     "incline": "Hældning",
@@ -1402,6 +1429,15 @@ const STRINGS = {
     "f_calories": "Kaloriesensor"
   },
   "de": {
+    "projector_screen": "Leinwand",
+    "screen_open": "Ausgefahren",
+    "screen_closed": "Eingefahren",
+    "screen_opening": "Fährt aus",
+    "screen_closing": "Fährt ein",
+    "btn_stop": "Stopp",
+    "btn_open": "Ausfahren",
+    "btn_close": "Einfahren",
+    "screen_position": "Position",
     "infrared_panel": "Infrarot-Heizpaneel",
     "treadmill": "Laufband",
     "incline": "Steigung",
@@ -1869,6 +1905,15 @@ const STRINGS = {
     "f_dose_time": "Dosierzeit (Sensor mit dem Zeitplan, z. B. 10:00)"
   },
   "es": {
+    "projector_screen": "Pantalla de proyección",
+    "screen_open": "Desplegada",
+    "screen_closed": "Recogida",
+    "screen_opening": "Desplegando",
+    "screen_closing": "Recogiendo",
+    "btn_stop": "Parar",
+    "btn_open": "Bajar",
+    "btn_close": "Subir",
+    "screen_position": "Posición",
     "infrared_panel": "Panel calefactor infrarrojo",
     "treadmill": "Cinta de correr",
     "incline": "Inclinación",
@@ -2384,6 +2429,15 @@ const STRINGS = {
     "f_calories": "Sensor de calorías"
   },
   "fr": {
+    "projector_screen": "Écran de projection",
+    "screen_open": "Déployé",
+    "screen_closed": "Enroulé",
+    "screen_opening": "Déploiement",
+    "screen_closing": "Enroulement",
+    "btn_stop": "Stop",
+    "btn_open": "Descendre",
+    "btn_close": "Remonter",
+    "screen_position": "Position",
     "infrared_panel": "Panneau chauffant infrarouge",
     "treadmill": "Tapis de course",
     "incline": "Inclinaison",
@@ -2917,6 +2971,15 @@ const STRINGS = {
     "f_power_factor": "Capteur de facteur de puissance (cos φ, facultatif)"
   },
   "hu": {
+    "projector_screen": "Vetítővászon",
+    "screen_open": "Kitekerve",
+    "screen_closed": "Felcsavarva",
+    "screen_opening": "Kitekeredik",
+    "screen_closing": "Felcsavarodik",
+    "btn_stop": "Stop",
+    "btn_open": "Leengedés",
+    "btn_close": "Felhúzás",
+    "screen_position": "Pozíció",
     "infrared_panel": "Infravörös fűtőpanel",
     "treadmill": "Futópad",
     "incline": "Emelkedés",
@@ -3374,6 +3437,15 @@ const STRINGS = {
     "f_calories": "Kalória szenzor"
   },
   "it": {
+    "projector_screen": "Schermo di proiezione",
+    "screen_open": "Aperto",
+    "screen_closed": "Chiuso",
+    "screen_opening": "In apertura",
+    "screen_closing": "In chiusura",
+    "btn_stop": "Stop",
+    "btn_open": "Abbassa",
+    "btn_close": "Alza",
+    "screen_position": "Posizione",
     "infrared_panel": "Pannello riscaldante a infrarossi",
     "treadmill": "Tapis roulant",
     "incline": "Inclinazione",
@@ -3795,6 +3867,15 @@ const STRINGS = {
     "f_calories": "Sensore di calorie"
   },
   "nb": {
+    "projector_screen": "Lerret",
+    "screen_open": "Nede",
+    "screen_closed": "Oppe",
+    "screen_opening": "Ruller ned",
+    "screen_closing": "Ruller opp",
+    "btn_stop": "Stopp",
+    "btn_open": "Rull ned",
+    "btn_close": "Rull opp",
+    "screen_position": "Posisjon",
     "infrared_panel": "Infrarødt varmepanel",
     "treadmill": "Tredemølle",
     "incline": "Stigning",
@@ -4174,6 +4255,15 @@ const STRINGS = {
     "f_hide_zero_power": "Skjul effekt når den er 0"
   },
   "nl": {
+    "projector_screen": "Projectiescherm",
+    "screen_open": "Uitgerold",
+    "screen_closed": "Opgerold",
+    "screen_opening": "Rolt uit",
+    "screen_closing": "Rolt op",
+    "btn_stop": "Stop",
+    "btn_open": "Uitrollen",
+    "btn_close": "Oprollen",
+    "screen_position": "Positie",
     "infrared_panel": "Infraroodpaneel",
     "treadmill": "Loopband",
     "incline": "Helling",
@@ -4595,6 +4685,15 @@ const STRINGS = {
     "f_calories": "Caloriesensor"
   },
   "pl": {
+    "projector_screen": "Ekran projekcyjny",
+    "screen_open": "Rozwinięty",
+    "screen_closed": "Zwinięty",
+    "screen_opening": "Rozwija się",
+    "screen_closing": "Zwija się",
+    "btn_stop": "Stop",
+    "btn_open": "Opuść",
+    "btn_close": "Podnieś",
+    "screen_position": "Pozycja",
     "infrared_panel": "Panel grzewczy na podczerwień",
     "treadmill": "Bieżnia",
     "incline": "Nachylenie",
@@ -5002,6 +5101,15 @@ const STRINGS = {
     "f_power_factor": "Czujnik współczynnika mocy (cos φ, opcjonalnie)"
   },
   "pt-BR": {
+    "projector_screen": "Tela de projeção",
+    "screen_open": "Aberta",
+    "screen_closed": "Fechada",
+    "screen_opening": "Abrindo",
+    "screen_closing": "Fechando",
+    "btn_stop": "Parar",
+    "btn_open": "Baixar",
+    "btn_close": "Subir",
+    "screen_position": "Posição",
     "infrared_panel": "Painel aquecedor infravermelho",
     "treadmill": "Esteira",
     "incline": "Inclinação",
@@ -5527,6 +5635,15 @@ const STRINGS = {
     "temperature_2": "Temp. cav. 2"
   },
   "pt-PT": {
+    "projector_screen": "Ecrã de projeção",
+    "screen_open": "Aberto",
+    "screen_closed": "Fechado",
+    "screen_opening": "A abrir",
+    "screen_closing": "A fechar",
+    "btn_stop": "Parar",
+    "btn_open": "Baixar",
+    "btn_close": "Subir",
+    "screen_position": "Posição",
     "infrared_panel": "Painel de aquecimento por infravermelhos",
     "treadmill": "Passadeira de corrida",
     "incline": "Inclinação",
@@ -6052,6 +6169,15 @@ const STRINGS = {
     "temperature_2": "Temp. cav. 2"
   },
   "ro": {
+    "projector_screen": "Ecran de proiecție",
+    "screen_open": "Derulat",
+    "screen_closed": "Strâns",
+    "screen_opening": "Se derulează",
+    "screen_closing": "Se strânge",
+    "btn_stop": "Stop",
+    "btn_open": "Coboară",
+    "btn_close": "Ridică",
+    "screen_position": "Poziție",
     "infrared_panel": "Panou de încălzire în infraroșu",
     "treadmill": "Bandă de alergare",
     "incline": "Înclinare",
@@ -6445,6 +6571,15 @@ const STRINGS = {
     "f_hide_zero_power": "Ascunde puterea când este 0"
   },
   "ru": {
+    "projector_screen": "Экран для проектора",
+    "screen_open": "Опущен",
+    "screen_closed": "Свёрнут",
+    "screen_opening": "Опускается",
+    "screen_closing": "Сворачивается",
+    "btn_stop": "Стоп",
+    "btn_open": "Опустить",
+    "btn_close": "Поднять",
+    "screen_position": "Положение",
     "infrared_panel": "Инфракрасная панель отопления",
     "treadmill": "Беговая дорожка",
     "incline": "Наклон",
@@ -6824,6 +6959,15 @@ const STRINGS = {
     "f_hide_zero_power": "Скрывать мощность, когда она равна 0"
   },
   "sr": {
+    "projector_screen": "Платно за пројектор",
+    "screen_open": "Спуштено",
+    "screen_closed": "Намотано",
+    "screen_opening": "Спушта се",
+    "screen_closing": "Намотава се",
+    "btn_stop": "Стоп",
+    "btn_open": "Спусти",
+    "btn_close": "Подигни",
+    "screen_position": "Положај",
     "infrared_panel": "Инфрацрвени грејни панел",
     "treadmill": "Трака за трчање",
     "incline": "Нагиб",
@@ -7291,6 +7435,15 @@ const STRINGS = {
     "f_calories": "Сензор калорија"
   },
   "sr-Latn": {
+    "projector_screen": "Platno za projektor",
+    "screen_open": "Spušteno",
+    "screen_closed": "Namotano",
+    "screen_opening": "Spušta se",
+    "screen_closing": "Namotava se",
+    "btn_stop": "Stop",
+    "btn_open": "Spusti",
+    "btn_close": "Podigni",
+    "screen_position": "Položaj",
     "infrared_panel": "Infracrveni grejni panel",
     "treadmill": "Traka za trčanje",
     "incline": "Nagib",
@@ -7758,6 +7911,15 @@ const STRINGS = {
     "f_calories": "Senzor kalorija"
   },
   "uk": {
+    "projector_screen": "Екран для проєктора",
+    "screen_open": "Опущено",
+    "screen_closed": "Згорнуто",
+    "screen_opening": "Опускається",
+    "screen_closing": "Згортається",
+    "btn_stop": "Стоп",
+    "btn_open": "Опустити",
+    "btn_close": "Підняти",
+    "screen_position": "Положення",
     "infrared_panel": "Інфрачервона панель опалення",
     "treadmill": "Бігова доріжка",
     "incline": "Нахил",
@@ -10593,6 +10755,32 @@ SVG.printer_3d = (c) => {
   return P3D_BEFORE_BAMBU(c);
 };
 
+/* Écran de projection motorisé (idée du forum) : boîtier chromé avec voyant, toile qui se déroule avec une barre de lestage.
+   --sp (posé par la carte) = part déroulée de la toile, 0 (enroulée) à 1 (déployée), animée en douceur ; le voyant est rouge fermé, vert ouvert,
+   orange clignotant pendant le mouvement. */
+SVG.projector_screen = () => `
+<defs>${DEFS}
+<linearGradient id="ID-fabric" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".75" stop-color="#f3f6f9"/><stop offset="1" stop-color="#dce3ea"/></linearGradient>
+<clipPath id="ID-screen-clip"><rect x="14" y="23" width="92" height="78"/></clipPath></defs>
+<ellipse cx="60" cy="112" rx="46" ry="4" fill="url(#ID-shadow)"/>
+<g clip-path="url(#ID-screen-clip)">
+  <g class="sc-roll">
+    <rect x="17" y="20" width="86" height="67" fill="#181b20"/>
+    <rect x="20" y="20" width="80" height="64" fill="url(#ID-fabric)"/>
+    <path d="M20 84 L75 20 L100 20 L100 84 Z" fill="#ffffff" opacity="0.35"/>
+    <rect x="15" y="87" width="90" height="5" rx="2.5" fill="url(#ID-dark)" stroke="#59616b" stroke-width="0.5"/>
+    <line x1="18" y1="88.5" x2="102" y2="88.5" stroke="#ffffff" stroke-opacity="0.2" stroke-width="0.8"/>
+  </g>
+</g>
+<g class="sc-casing">
+  <rect x="13" y="21" width="94" height="3" rx="1" fill="#14171a"/>
+  <rect x="10" y="10" width="100" height="12" rx="3" fill="url(#ID-chrome)" stroke="#68707a" stroke-width="0.6"/>
+  <line x1="14" y1="12.5" x2="106" y2="12.5" stroke="#ffffff" stroke-opacity="0.65" stroke-width="1.2" stroke-linecap="round"/>
+  <rect x="8" y="9.5" width="5" height="13" rx="1.5" fill="url(#ID-dark)"/>
+  <rect x="107" y="9.5" width="5" height="13" rx="1.5" fill="url(#ID-dark)"/>
+  <circle class="sc-led" cx="109.5" cy="16" r="1.2"/>
+</g>`;
+
 /* PlayStation 5 : console debout sur son socle, vue de trois quarts (grande face blanche galbée, cœur noir,
    bandeaux lumineux le long du cœur, ouïes en haut) et manette posée au pied, reliée par un câble en mode repos.
    Silhouette seulement : aucun logo ni symbole de boutons. */
@@ -12044,6 +12232,10 @@ const DEF = {
   infrared_panel: { accent: "heat", threshold: 20,
     fields: ["entity", "power", "energy", "cost", "temperature", "switch"],
     keys: ["panneau_infrarouge", "panneau_chauffant", "infrarouge", "infrared", "infrarot", "radiant_panel", "panneau_rayonnant"] },
+  // écran de projection motorisé : entité cover (position 0-100 %, 100 = déroulé), ou switch / input_boolean ; puissance du moteur en option
+  projector_screen: { accent: "active", threshold: 5,
+    fields: ["entity", "power", "energy", "cost"],
+    keys: ["ecran_projection", "ecran_de_projection", "ecran_projecteur", "projector_screen", "projection_screen", "leinwand", "beamer_screen", "pantalla_proyector"] },
   wet_vacuum: { accent: "cold", threshold: 3,
     fields: ["entity", "power", "energy", "cost", "battery_level", "clean_water", "dirty_water", "mode", "switch"],
     keys: ["aspirateur_laveur", "aspirateur_lavant", "nettoyeur_sol", "wet_vacuum", "wet_dry", "floor_washer", "floor_one", "tineco", "laveur"] },
@@ -12865,6 +13057,12 @@ class ApplianceCardBase extends HTMLElement {
       if (m.pellets != null && m.pellets < (c.pellet_alert ?? 15)) m.alerts.push("pellets_low");
     } else if (kind === "dosing_pump") {
       m.status = base === "running" ? "dosing" : base;
+    } else if (kind === "projector_screen") {
+      // écran de projection (cover : position 0-100 %, 100 = déroulé ; switch / input_boolean : on = déroulé) : ouvert / fermé / en mouvement
+      const sv = main ? String(main.state).toLowerCase() : "", cp = main && main.attributes ? Number(main.attributes.current_position) : NaN;
+      m.scrPos = Number.isFinite(cp) ? Math.max(0, Math.min(1, cp / 100)) : /^(open|opening|on)$/.test(sv) ? 1 : 0;
+      m.scrHasPos = Number.isFinite(cp);
+      m.status = !main || sv === "unavailable" ? "unavailable" : sv === "opening" ? "screen_opening" : sv === "closing" ? "screen_closing" : /^(open|on)$/.test(sv) ? "screen_open" : "screen_closed";
     } else if (kind === "infrared_panel") {
       m.status = base === "running" ? "heating" : base;
     } else if (FIT_KINDS.includes(kind)) {
@@ -13681,7 +13879,7 @@ class ApplianceCardBase extends HTMLElement {
     const hass = this._hass, kind = this._kind, c = this._config;
     // lcd_value : « current » affiche la température actuelle plutôt que la consigne (radiateur, sèche-serviettes, clim)
     const lcdT = () => (c.lcd_value === "current" ? m.tempVal ?? m.targetVal : m.targetVal ?? m.tempVal);
-    const active = ["iron_heating", "iron_ready", "steaming", "grilling", "grill_ready", "fryer_heating", "fryer_ready", "running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "in_use", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
+    const active = ["screen_open", "screen_opening", "screen_closing", "iron_heating", "iron_ready", "steaming", "grilling", "grill_ready", "fryer_heating", "fryer_ready", "running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "in_use", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
@@ -13795,7 +13993,7 @@ class ApplianceCardBase extends HTMLElement {
   _render(m) {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
-    const active = ["iron_heating", "iron_ready", "steaming", "grilling", "grill_ready", "fryer_heating", "fryer_ready", "running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "in_use", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
+    const active = ["screen_open", "screen_opening", "screen_closing", "iron_heating", "iron_ready", "steaming", "grilling", "grill_ready", "fryer_heating", "fryer_ready", "running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "in_use", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
     this._fetchCycle(active);
     const hideWouldApply = this._applyHide(active, m.alerts.length > 0);
     this._fit(active);
@@ -13817,6 +14015,7 @@ class ApplianceCardBase extends HTMLElement {
     }
     // dosing_pump : color = couleur du boîtier (n'importe quelle couleur CSS), pour repérer chaque produit (pH+, fer, potassium…)
     if (kind === "dosing_pump") { if (c.color) $("wrap").style.setProperty("--dp-color", String(c.color)); else $("wrap").style.removeProperty("--dp-color"); }
+    if (kind === "projector_screen") $("wrap").style.setProperty("--sp", (m.scrPos ?? 0).toFixed(3));
     if (kind === "beer_tap") $("wrap").style.setProperty("--keg", ((m.keg ?? 70) / 100).toFixed(2));
     if (kind === "power_strip") {
       // fiche branchée : prises commandées (outlets), sinon toutes sauf la dernière ; LED allumée si la prise est active
@@ -14383,6 +14582,17 @@ class ApplianceCardBase extends HTMLElement {
         const id = b.dataset.outlet, dom = domainOf(id);
         hass.callService(["switch", "input_boolean", "light"].includes(dom) ? dom : "homeassistant", "toggle", { entity_id: id });
       }; });
+    } else if (kind === "projector_screen" && m.main && c.show_buttons !== false) {
+      // boutons ouvrir (dérouler) / stop / fermer (enrouler) : services cover, ou allumer / éteindre pour un switch
+      const cov = domainOf(c.entity) === "cover";
+      const bt = [["open", "mdi:arrow-down", "btn_open", true], ["stop", "mdi:stop", "btn_stop", cov], ["close", "mdi:arrow-up", "btn_close", true]].filter((b) => b[3]);
+      modesEl.innerHTML = bt.map(([k, ic, lab]) => `<button class="mode-btn" data-act="${k}"><ha-icon icon="${ic}"></ha-icon>${esc(tr(hass, lab))}</button>`).join("");
+      modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => {
+        ev.stopPropagation();
+        const k = b.dataset.act, dom = domainOf(c.entity);
+        if (dom === "cover") hass.callService("cover", k === "open" ? "open_cover" : k === "close" ? "close_cover" : "stop_cover", { entity_id: c.entity });
+        else hass.callService(["switch", "input_boolean"].includes(dom) ? dom : "homeassistant", k === "open" ? "turn_on" : "turn_off", { entity_id: c.entity });
+      }; });
     } else modesEl.innerHTML = "";
 
     // stats
@@ -14411,6 +14621,8 @@ class ApplianceCardBase extends HTMLElement {
       if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 0, 0, tEntity)} ${m.tempUnit}`, lb("temperature"), tEntity);
       if (m.waterE) tile("mdi:water", m.waterPct != null ? `${fmtNum(hass, m.waterPct, 0, 0, c.water_level)} %` : tr(hass, m.waterLow ? "tank_empty_short" : "tank_ok"), lb("water"), c.water_level, m.waterLow ? "warn" : "");
       if (m.steamE) tile("mdi:weather-fog", stateText(hass, m.steamE), lb("steam"), c.steam);
+    } else if (kind === "projector_screen") {
+      if (m.scrHasPos) tile("mdi:arrow-expand-vertical", `${Math.round(m.scrPos * 100)} %`, lb("screen_position"), c.entity);
     } else if (kind === "infrared_panel") {
       if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1, 0, tEntity)} ${m.tempUnit}`, lb("temperature"), tEntity);
     } else if (kind === "kettle") {
@@ -14937,6 +15149,7 @@ function buildForm(kind) {
             { name: "preheat_minutes", selector: { number: { min: 1, max: 30, step: 1, mode: "box", unit_of_measurement: "min" } } },
             { name: "ready_minutes", selector: { number: { min: 0, max: 120, step: 1, mode: "box", unit_of_measurement: "min" } } },
           ] : []),
+          ...(kind === "projector_screen" ? [{ name: "show_buttons", selector: { boolean: {} }, default: true }] : []),
           ...(kind === "iron" || kind === "steam_station" ? [
             { name: "preheat_minutes", selector: { number: { min: 1, max: 30, step: 1, mode: "box", unit_of_measurement: "min" } } },
             { name: "ready_minutes", selector: { number: { min: 0, max: 120, step: 1, mode: "box", unit_of_measurement: "min" } } },
@@ -15074,7 +15287,7 @@ function stubFor(kind, hass) {
   const cost = pick((i) => i.startsWith("sensor.") && /(cout|cost|prix)/.test(i) && /(jour|daily|today|day)/.test(i))
     || pick((i, st) => i.startsWith("sensor.") && dc(st) === "monetary");
   const sw = pick((i) => i.startsWith("switch.") && !/(child_lock|lock|led|indicator)/.test(i));
-  const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : ["tv", "av_receiver", "ps5", "smart_speaker"].includes(kind) ? pick((i) => i.startsWith("media_player.")) : ["fan", "ceiling_fan", "air_purifier"].includes(kind) ? pick((i) => i.startsWith("fan.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : kind === "dehumidifier" ? pick((i) => i.startsWith("humidifier.")) : null;
+  const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : ["tv", "av_receiver", "ps5", "smart_speaker"].includes(kind) ? pick((i) => i.startsWith("media_player.")) : ["fan", "ceiling_fan", "air_purifier"].includes(kind) ? pick((i) => i.startsWith("fan.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : kind === "dehumidifier" ? pick((i) => i.startsWith("humidifier.")) : kind === "projector_screen" ? pick((i) => i.startsWith("cover.")) : null;
   const temp = pick((i, st) => i.startsWith("sensor.") && dc(st) === "temperature");
   const flag = ["washer", "washer_dryer", "dryer", "dishwasher", "microwave"].includes(kind)
     ? pick((i) => /^(input_boolean|binary_sensor)\./.test(i) && /(running|en_cours|marche|cycle)/.test(i)) : null;
@@ -16602,6 +16815,13 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-infrared_panel.st-heating .ip-waves path { animation: ip-rise 2.6s ease-out infinite; }
 @keyframes ip-breathe { 50% { opacity: .4; } }
 @keyframes ip-rise { 0% { opacity: 0; transform: translateY(40px); } 25% { opacity: .85; } 100% { opacity: 0; transform: translateY(-120px); } }
+
+/* ---------- écran de projection ---------- */
+.sc-roll { transform: translateY(calc((var(--sp, 0) - 1) * 62px)); transition: transform .9s cubic-bezier(.4, 0, .2, 1); }
+.sc-led { fill: #ff5252; transition: fill .3s; filter: drop-shadow(0 0 1.5px currentColor); }
+.k-projector_screen.st-screen_open .sc-led { fill: #4ade80; }
+.k-projector_screen.st-screen_opening .sc-led, .k-projector_screen.st-screen_closing .sc-led { fill: #ffb300; animation: ac-pulse 1s ease-in-out infinite; }
+.k-projector_screen.st-unavailable .sc-led { fill: #6b7076; }
 
 /* ---------- multiprise ---------- */
 .k-power_strip .illus { overflow: hidden; }

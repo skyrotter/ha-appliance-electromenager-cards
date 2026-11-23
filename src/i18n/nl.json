@@ -1,5 +1,14 @@
 {
   "common": {
+    "projector_screen": "Projectiescherm",
+    "screen_open": "Uitgerold",
+    "screen_closed": "Opgerold",
+    "screen_opening": "Rolt uit",
+    "screen_closing": "Rolt op",
+    "btn_stop": "Stop",
+    "btn_open": "Uitrollen",
+    "btn_close": "Oprollen",
+    "screen_position": "Positie",
     "infrared_panel": "Infraroodpaneel",
     "treadmill": "Loopband",
     "incline": "Helling",

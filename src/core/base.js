@@ -494,6 +494,12 @@ class ApplianceCardBase extends HTMLElement {
       if (m.pellets != null && m.pellets < (c.pellet_alert ?? 15)) m.alerts.push("pellets_low");
     } else if (kind === "dosing_pump") {
       m.status = base === "running" ? "dosing" : base;
+    } else if (kind === "projector_screen") {
+      // écran de projection (cover : position 0-100 %, 100 = déroulé ; switch / input_boolean : on = déroulé) : ouvert / fermé / en mouvement
+      const sv = main ? String(main.state).toLowerCase() : "", cp = main && main.attributes ? Number(main.attributes.current_position) : NaN;
+      m.scrPos = Number.isFinite(cp) ? Math.max(0, Math.min(1, cp / 100)) : /^(open|opening|on)$/.test(sv) ? 1 : 0;
+      m.scrHasPos = Number.isFinite(cp);
+      m.status = !main || sv === "unavailable" ? "unavailable" : sv === "opening" ? "screen_opening" : sv === "closing" ? "screen_closing" : /^(open|on)$/.test(sv) ? "screen_open" : "screen_closed";
     } else if (kind === "infrared_panel") {
       m.status = base === "running" ? "heating" : base;
     } else if (FIT_KINDS.includes(kind)) {
@@ -1310,7 +1316,7 @@ class ApplianceCardBase extends HTMLElement {
     const hass = this._hass, kind = this._kind, c = this._config;
     // lcd_value : « current » affiche la température actuelle plutôt que la consigne (radiateur, sèche-serviettes, clim)
     const lcdT = () => (c.lcd_value === "current" ? m.tempVal ?? m.targetVal : m.targetVal ?? m.tempVal);
-    const active = ["iron_heating", "iron_ready", "steaming", "grilling", "grill_ready", "fryer_heating", "fryer_ready", "running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "in_use", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
+    const active = ["screen_open", "screen_opening", "screen_closing", "iron_heating", "iron_ready", "steaming", "grilling", "grill_ready", "fryer_heating", "fryer_ready", "running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "in_use", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
@@ -1424,7 +1430,7 @@ class ApplianceCardBase extends HTMLElement {
   _render(m) {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
-    const active = ["iron_heating", "iron_ready", "steaming", "grilling", "grill_ready", "fryer_heating", "fryer_ready", "running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "in_use", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
+    const active = ["screen_open", "screen_opening", "screen_closing", "iron_heating", "iron_ready", "steaming", "grilling", "grill_ready", "fryer_heating", "fryer_ready", "running", "heating", "preheating", "cooling", "ignition", "filtering", "dosing", "in_use", "printing", "scanning", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
     this._fetchCycle(active);
     const hideWouldApply = this._applyHide(active, m.alerts.length > 0);
     this._fit(active);
@@ -1446,6 +1452,7 @@ class ApplianceCardBase extends HTMLElement {
     }
     // dosing_pump : color = couleur du boîtier (n'importe quelle couleur CSS), pour repérer chaque produit (pH+, fer, potassium…)
     if (kind === "dosing_pump") { if (c.color) $("wrap").style.setProperty("--dp-color", String(c.color)); else $("wrap").style.removeProperty("--dp-color"); }
+    if (kind === "projector_screen") $("wrap").style.setProperty("--sp", (m.scrPos ?? 0).toFixed(3));
     if (kind === "beer_tap") $("wrap").style.setProperty("--keg", ((m.keg ?? 70) / 100).toFixed(2));
     if (kind === "power_strip") {
       // fiche branchée : prises commandées (outlets), sinon toutes sauf la dernière ; LED allumée si la prise est active
@@ -2012,6 +2019,17 @@ class ApplianceCardBase extends HTMLElement {
         const id = b.dataset.outlet, dom = domainOf(id);
         hass.callService(["switch", "input_boolean", "light"].includes(dom) ? dom : "homeassistant", "toggle", { entity_id: id });
       }; });
+    } else if (kind === "projector_screen" && m.main && c.show_buttons !== false) {
+      // boutons ouvrir (dérouler) / stop / fermer (enrouler) : services cover, ou allumer / éteindre pour un switch
+      const cov = domainOf(c.entity) === "cover";
+      const bt = [["open", "mdi:arrow-down", "btn_open", true], ["stop", "mdi:stop", "btn_stop", cov], ["close", "mdi:arrow-up", "btn_close", true]].filter((b) => b[3]);
+      modesEl.innerHTML = bt.map(([k, ic, lab]) => `<button class="mode-btn" data-act="${k}"><ha-icon icon="${ic}"></ha-icon>${esc(tr(hass, lab))}</button>`).join("");
+      modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => {
+        ev.stopPropagation();
+        const k = b.dataset.act, dom = domainOf(c.entity);
+        if (dom === "cover") hass.callService("cover", k === "open" ? "open_cover" : k === "close" ? "close_cover" : "stop_cover", { entity_id: c.entity });
+        else hass.callService(["switch", "input_boolean"].includes(dom) ? dom : "homeassistant", k === "open" ? "turn_on" : "turn_off", { entity_id: c.entity });
+      }; });
     } else modesEl.innerHTML = "";
 
     // stats
@@ -2040,6 +2058,8 @@ class ApplianceCardBase extends HTMLElement {
       if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 0, 0, tEntity)} ${m.tempUnit}`, lb("temperature"), tEntity);
       if (m.waterE) tile("mdi:water", m.waterPct != null ? `${fmtNum(hass, m.waterPct, 0, 0, c.water_level)} %` : tr(hass, m.waterLow ? "tank_empty_short" : "tank_ok"), lb("water"), c.water_level, m.waterLow ? "warn" : "");
       if (m.steamE) tile("mdi:weather-fog", stateText(hass, m.steamE), lb("steam"), c.steam);
+    } else if (kind === "projector_screen") {
+      if (m.scrHasPos) tile("mdi:arrow-expand-vertical", `${Math.round(m.scrPos * 100)} %`, lb("screen_position"), c.entity);
     } else if (kind === "infrared_panel") {
       if (m.tempVal != null) tile("mdi:thermometer", `${fmtNum(hass, m.tempVal, 1, 0, tEntity)} ${m.tempUnit}`, lb("temperature"), tEntity);
     } else if (kind === "kettle") {

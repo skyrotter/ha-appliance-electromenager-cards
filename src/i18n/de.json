@@ -1,5 +1,14 @@
 {
   "common": {
+    "projector_screen": "Leinwand",
+    "screen_open": "Ausgefahren",
+    "screen_closed": "Eingefahren",
+    "screen_opening": "Fährt aus",
+    "screen_closing": "Fährt ein",
+    "btn_stop": "Stopp",
+    "btn_open": "Ausfahren",
+    "btn_close": "Einfahren",
+    "screen_position": "Position",
     "infrared_panel": "Infrarot-Heizpaneel",
     "treadmill": "Laufband",
     "incline": "Steigung",

@@ -1,5 +1,14 @@
 {
   "common": {
+    "projector_screen": "Projector screen",
+    "screen_open": "Open",
+    "screen_closed": "Closed",
+    "screen_opening": "Opening",
+    "screen_closing": "Closing",
+    "btn_stop": "Stop",
+    "btn_open": "Lower",
+    "btn_close": "Raise",
+    "screen_position": "Position",
     "infrared_panel": "Infrared heating panel",
     "treadmill": "Treadmill",
     "incline": "Incline",

@@ -231,6 +231,7 @@ Clique num cartão para consultar as opções e os exemplos.
 | Cartão | Tipo |
 |---|---|
 | [TV de ecrã plano](docs/cards/tv-range-hood.md) | `custom:appliance-tv-card` |
+| [Ecrã de projeção](docs/cards/projector-screen.md) | `custom:appliance-projector-screen-card` |
 | [Amplificador de cinema em casa (recetor AV)](docs/cards/beer-tap-av-receiver.md) | `custom:appliance-av-receiver-card` |
 | [Soundbar + subwoofer (Bose)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/soundbar.md) | `custom:appliance-soundbar-card` |
 | [Coluna inteligente (Echo, Nest, Sonos, Devialet, HomePod)](docs/cards/smart-speaker.md) | `custom:appliance-smart-speaker-card` |

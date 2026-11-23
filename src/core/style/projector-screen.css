@@ -1,0 +1,6 @@
+/* ---------- écran de projection ---------- */
+.sc-roll { transform: translateY(calc((var(--sp, 0) - 1) * 62px)); transition: transform .9s cubic-bezier(.4, 0, .2, 1); }
+.sc-led { fill: #ff5252; transition: fill .3s; filter: drop-shadow(0 0 1.5px currentColor); }
+.k-projector_screen.st-screen_open .sc-led { fill: #4ade80; }
+.k-projector_screen.st-screen_opening .sc-led, .k-projector_screen.st-screen_closing .sc-led { fill: #ffb300; animation: ac-pulse 1s ease-in-out infinite; }
+.k-projector_screen.st-unavailable .sc-led { fill: #6b7076; }

@@ -1,5 +1,14 @@
 {
   "common": {
+    "projector_screen": "Ecran de proiecție",
+    "screen_open": "Derulat",
+    "screen_closed": "Strâns",
+    "screen_opening": "Se derulează",
+    "screen_closing": "Se strânge",
+    "btn_stop": "Stop",
+    "btn_open": "Coboară",
+    "btn_close": "Ridică",
+    "screen_position": "Poziție",
     "infrared_panel": "Panou de încălzire în infraroșu",
     "treadmill": "Bandă de alergare",
     "incline": "Înclinare",
