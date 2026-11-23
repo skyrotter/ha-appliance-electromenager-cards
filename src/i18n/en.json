@@ -910,6 +910,11 @@
     "water_hot": "Water too hot"
   },
   "editor": {
+    "tiles_position": "Tiles position",
+    "tiles_pos_bottom": "Below the drawing (default)",
+    "tiles_pos_top": "Above the drawing",
+    "tiles_pos_left": "Left of the drawing",
+    "tiles_pos_right": "Right of the drawing",
     "entity_drive_5": "Disk 5",
     "entity_drive_5_temp": "Disk 5 temperature",
     "entity_drive_6": "Disk 6",

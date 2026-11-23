@@ -734,6 +734,11 @@
     "water_hot": "Voda příliš horká"
   },
   "editor": {
+    "tiles_position": "Poloha dlaždic",
+    "tiles_pos_bottom": "Pod kresbou (výchozí)",
+    "tiles_pos_top": "Nad kresbou",
+    "tiles_pos_left": "Vlevo od kresby",
+    "tiles_pos_right": "Vpravo od kresby",
     "animations": "Animace",
     "battery_low": "Slabá baterie (%)",
     "buffer_tank": "Akumulační nádrž",

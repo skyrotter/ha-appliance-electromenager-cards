@@ -820,6 +820,11 @@
     "wall_hot": "Wand zu heiß"
   },
   "editor": {
+    "tiles_position": "Position der Kacheln",
+    "tiles_pos_bottom": "Unter der Zeichnung (Standard)",
+    "tiles_pos_top": "Über der Zeichnung",
+    "tiles_pos_left": "Links neben der Zeichnung",
+    "tiles_pos_right": "Rechts neben der Zeichnung",
     "animations": "Animationen",
     "battery_low": "Akku schwach (%)",
     "buffer_tank": "Pufferspeicher",

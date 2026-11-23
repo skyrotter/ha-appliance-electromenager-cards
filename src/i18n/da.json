@@ -798,6 +798,11 @@
     "water_hot": "Vandet er for varmt"
   },
   "editor": {
+    "tiles_position": "Placering af felter",
+    "tiles_pos_bottom": "Under tegningen (standard)",
+    "tiles_pos_top": "Over tegningen",
+    "tiles_pos_left": "Til venstre for tegningen",
+    "tiles_pos_right": "Til højre for tegningen",
     "extra_tiles": "Ekstra fliser (liste: entitet, navn, ikon)",
     "animations": "Animationer",
     "battery_low": "Lavt batteri (%)",

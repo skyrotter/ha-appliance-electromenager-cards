@@ -7,6 +7,11 @@
   if (window.applianceEditorLabel) return;
   const L = {
     "en": {
+      "tiles_position": "Tiles position",
+      "tiles_pos_bottom": "Below the drawing (default)",
+      "tiles_pos_top": "Above the drawing",
+      "tiles_pos_left": "Left of the drawing",
+      "tiles_pos_right": "Right of the drawing",
       "entity_drive_5": "Disk 5",
       "entity_drive_5_temp": "Disk 5 temperature",
       "entity_drive_6": "Disk 6",
@@ -757,6 +762,11 @@
       "press_animation": "Animate the button presses"
     },
     "cs": {
+      "tiles_position": "Poloha dlaždic",
+      "tiles_pos_bottom": "Pod kresbou (výchozí)",
+      "tiles_pos_top": "Nad kresbou",
+      "tiles_pos_left": "Vlevo od kresby",
+      "tiles_pos_right": "Vpravo od kresby",
       "animations": "Animace",
       "battery_low": "Slabá baterie (%)",
       "buffer_tank": "Akumulační nádrž",
@@ -1146,6 +1156,11 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "da": {
+      "tiles_position": "Placering af felter",
+      "tiles_pos_bottom": "Under tegningen (standard)",
+      "tiles_pos_top": "Over tegningen",
+      "tiles_pos_left": "Til venstre for tegningen",
+      "tiles_pos_right": "Til højre for tegningen",
       "extra_tiles": "Ekstra fliser (liste: entitet, navn, ikon)",
       "animations": "Animationer",
       "battery_low": "Lavt batteri (%)",
@@ -1688,6 +1703,11 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "de": {
+      "tiles_position": "Position der Kacheln",
+      "tiles_pos_bottom": "Unter der Zeichnung (Standard)",
+      "tiles_pos_top": "Über der Zeichnung",
+      "tiles_pos_left": "Links neben der Zeichnung",
+      "tiles_pos_right": "Rechts neben der Zeichnung",
       "animations": "Animationen",
       "battery_low": "Akku schwach (%)",
       "buffer_tank": "Pufferspeicher",
@@ -2295,6 +2315,11 @@
       "show_backup": "Zusatzheizungen und Kessel anzeigen"
     },
     "es": {
+      "tiles_position": "Posición de los mosaicos",
+      "tiles_pos_bottom": "Debajo del dibujo (por defecto)",
+      "tiles_pos_top": "Encima del dibujo",
+      "tiles_pos_left": "A la izquierda del dibujo",
+      "tiles_pos_right": "A la derecha del dibujo",
       "entity_drive_5": "Disco 5",
       "entity_drive_5_temp": "Temperatura del disco 5",
       "entity_drive_6": "Disco 6",
@@ -3032,6 +3057,11 @@
       "show_backup": "Mostrar apoyos y caldera"
     },
     "fr": {
+      "tiles_position": "Position des tuiles",
+      "tiles_pos_bottom": "Sous le dessin (défaut)",
+      "tiles_pos_top": "Au-dessus du dessin",
+      "tiles_pos_left": "À gauche du dessin",
+      "tiles_pos_right": "À droite du dessin",
       "entity_drive_5": "Disque 5",
       "entity_drive_5_temp": "Température du disque 5",
       "entity_drive_6": "Disque 6",
@@ -3776,6 +3806,11 @@
       "press_animation": "Animer les appuis sur le bouton"
     },
     "hu": {
+      "tiles_position": "Csempék helye",
+      "tiles_pos_bottom": "A rajz alatt (alapértelmezett)",
+      "tiles_pos_top": "A rajz felett",
+      "tiles_pos_left": "A rajztól balra",
+      "tiles_pos_right": "A rajztól jobbra",
       "animations": "Animációk",
       "battery_low": "Alacsony akkuszint (%)",
       "buffer_tank": "Puffertartály",
@@ -4264,6 +4299,11 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "it": {
+      "tiles_position": "Posizione dei riquadri",
+      "tiles_pos_bottom": "Sotto il disegno (predefinito)",
+      "tiles_pos_top": "Sopra il disegno",
+      "tiles_pos_left": "A sinistra del disegno",
+      "tiles_pos_right": "A destra del disegno",
       "animations": "Animazioni",
       "battery_low": "Batteria scarica (%)",
       "buffer_tank": "Serbatoio inerziale",
@@ -4712,6 +4752,11 @@
       "show_backup": "Mostra integrazioni e caldaia"
     },
     "nb": {
+      "tiles_position": "Plassering av rutene",
+      "tiles_pos_bottom": "Under tegningen (standard)",
+      "tiles_pos_top": "Over tegningen",
+      "tiles_pos_left": "Til venstre for tegningen",
+      "tiles_pos_right": "Til høyre for tegningen",
       "illustration_size": "Størrelse på illustrasjonen",
       "transparent": "Gjennomsiktig bakgrunn",
       "tile_background": "Bakgrunn på feltene",
@@ -5127,6 +5172,11 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "nl": {
+      "tiles_position": "Positie van de tegels",
+      "tiles_pos_bottom": "Onder de tekening (standaard)",
+      "tiles_pos_top": "Boven de tekening",
+      "tiles_pos_left": "Links van de tekening",
+      "tiles_pos_right": "Rechts van de tekening",
       "animations": "Animaties",
       "battery_low": "Batterij bijna leeg (%)",
       "buffer_tank": "Buffervat",
@@ -5575,6 +5625,11 @@
       "show_backup": "Bijverwarming en ketel tonen"
     },
     "pl": {
+      "tiles_position": "Pozycja kafelków",
+      "tiles_pos_bottom": "Pod rysunkiem (domyślnie)",
+      "tiles_pos_top": "Nad rysunkiem",
+      "tiles_pos_left": "Po lewej od rysunku",
+      "tiles_pos_right": "Po prawej od rysunku",
       "animations": "Animacje",
       "battery_low": "Niski poziom baterii (%)",
       "buffer_tank": "Zbiornik buforowy",
@@ -6017,6 +6072,11 @@
       "press_animation": "Animuj naciśnięcia przycisku"
     },
     "pt-BR": {
+      "tiles_position": "Posição dos blocos",
+      "tiles_pos_bottom": "Abaixo do desenho (padrão)",
+      "tiles_pos_top": "Acima do desenho",
+      "tiles_pos_left": "À esquerda do desenho",
+      "tiles_pos_right": "À direita do desenho",
       "entity_drive_5": "Disco 5",
       "entity_drive_5_temp": "Temperatura do disco 5",
       "entity_drive_6": "Disco 6",
@@ -6756,6 +6816,11 @@
       "side": "Lado em que o painel único se empilha"
     },
     "pt-PT": {
+      "tiles_position": "Posição dos blocos",
+      "tiles_pos_bottom": "Por baixo do desenho (predefinição)",
+      "tiles_pos_top": "Por cima do desenho",
+      "tiles_pos_left": "À esquerda do desenho",
+      "tiles_pos_right": "À direita do desenho",
       "entity_drive_5": "Disco 5",
       "entity_drive_5_temp": "Temperatura do disco 5",
       "entity_drive_6": "Disco 6",
@@ -7495,6 +7560,11 @@
       "side": "Lado em que o painel único se empilha"
     },
     "ro": {
+      "tiles_position": "Poziția plăcilor",
+      "tiles_pos_bottom": "Sub desen (implicit)",
+      "tiles_pos_top": "Deasupra desenului",
+      "tiles_pos_left": "În stânga desenului",
+      "tiles_pos_right": "În dreapta desenului",
       "animations": "Animații",
       "battery_low": "Baterie descărcată (%)",
       "buffer_tank": "Rezervor tampon",
@@ -7887,6 +7957,11 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "ru": {
+      "tiles_position": "Положение плиток",
+      "tiles_pos_bottom": "Под рисунком (по умолчанию)",
+      "tiles_pos_top": "Над рисунком",
+      "tiles_pos_left": "Слева от рисунка",
+      "tiles_pos_right": "Справа от рисунка",
       "animations": "Анимации",
       "battery_low": "Низкий заряд (%)",
       "buffer_tank": "Буферный бак",
@@ -8279,6 +8354,11 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "sr": {
+      "tiles_position": "Положај плочица",
+      "tiles_pos_bottom": "Испод цртежа (подразумевано)",
+      "tiles_pos_top": "Изнад цртежа",
+      "tiles_pos_left": "Лево од цртежа",
+      "tiles_pos_right": "Десно од цртежа",
       "surface": "Монтажа (под или зид)",
       "food_low": "Упозорење на низак ниво хране (%)",
       "hopper_capacity": "Капацитет резервоара (g)",
@@ -8872,6 +8952,11 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "sr-Latn": {
+      "tiles_position": "Položaj pločica",
+      "tiles_pos_bottom": "Ispod crteža (podrazumevano)",
+      "tiles_pos_top": "Iznad crteža",
+      "tiles_pos_left": "Levo od crteža",
+      "tiles_pos_right": "Desno od crteža",
       "surface": "Montaža (pod ili zid)",
       "food_low": "Upozorenje na nizak nivo hrane (%)",
       "hopper_capacity": "Kapacitet rezervoara (g)",
@@ -9465,6 +9550,11 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "uk": {
+      "tiles_position": "Розташування плиток",
+      "tiles_pos_bottom": "Під малюнком (за замовчуванням)",
+      "tiles_pos_top": "Над малюнком",
+      "tiles_pos_left": "Ліворуч від малюнка",
+      "tiles_pos_right": "Праворуч від малюнка",
       "entity_drive_5": "Диск 5",
       "entity_drive_5_temp": "Температура диска 5",
       "entity_drive_6": "Диск 6",
@@ -10184,6 +10274,10 @@
     el.toggleAttribute('valign-center', !!cfg && cfg.vertical_align === 'center');
     // illustration_position: left | right → dessin à côté des 2 premières tuiles (attribut illus-pos, voir card.css) ; absent = centré (défaut)
     if (cfg && (cfg.illustration_position === 'left' || cfg.illustration_position === 'right')) el.setAttribute('illus-pos', cfg.illustration_position); else el.removeAttribute('illus-pos');
+    // tiles_position : top | left | right → tuiles au-dessus / à gauche / à droite du dessin (attribut tiles-pos, voir applianceTilePos) ; absent = en dessous (défaut)
+    const tp = cfg && cfg.tiles_position;
+    if (tp === 'top' || tp === 'left' || tp === 'right') el.setAttribute('tiles-pos', tp); else el.removeAttribute('tiles-pos');
+    queueMicrotask(() => window.applianceTilePos && window.applianceTilePos(el));
     // title_layout: stacked → ancienne disposition des cartes de base (titre puis état, empilés) ; par défaut titre à gauche et état à droite
     if (cfg && cfg.title_layout === 'stacked') el.setAttribute('title-layout', 'stacked'); else el.removeAttribute('title-layout');
   };
@@ -10217,12 +10311,40 @@
   };
   // champ « Unité de température » des éditeurs (vide : automatique)
   window.applianceTempField = { name: 'temperature_unit', selector: { select: { mode: 'dropdown', options: [{ value: 'C', label: '°C' }, { value: 'F', label: '°F' }] } } };
+  // Position des tuiles (option tiles_position) : les cartes autonomes ont toutes le même squelette (.head, le dessin, .tiles dans un même
+  // conteneur). On repère le conteneur des .tiles (.ac-tp) et le bloc du dessin (.ac-ill), et une feuille de style injectée dans le shadow DOM
+  // les réorganise : au-dessus (colonne, tuiles juste sous le titre) ou à côté (grille 2 colonnes, titre et autres blocs pleine largeur).
+  // Rappelée à chaque rendu : une reconstruction du DOM efface les marques et la feuille.
+  const TP_CSS = `
+:host([tiles-pos="top"]) .ac-tp{display:flex;flex-direction:column}
+:host([tiles-pos="top"]) .ac-tp>.head{order:-3}
+:host([tiles-pos="top"]) .ac-tp>.ac-tl{order:-2;margin:6px 0 4px}
+:host([tiles-pos="left"]) .ac-tp,:host([tiles-pos="right"]) .ac-tp{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);column-gap:10px;align-items:center}
+:host([tiles-pos="left"]) .ac-tp>*,:host([tiles-pos="right"]) .ac-tp>*{grid-column:1/-1}
+:host([tiles-pos="left"]) .ac-tp>.head,:host([tiles-pos="right"]) .ac-tp>.head{grid-row:1}
+:host([tiles-pos="left"]) .ac-tp>.ac-ill,:host([tiles-pos="right"]) .ac-tp>.ac-ill,:host([tiles-pos="left"]) .ac-tp>.ac-tl,:host([tiles-pos="right"]) .ac-tp>.ac-tl{grid-row:2}
+:host([tiles-pos="left"]) .ac-tp>.ac-tl,:host([tiles-pos="right"]) .ac-tp>.ac-tl{margin:0;grid-template-columns:repeat(auto-fit,minmax(64px,1fr))}
+:host([tiles-pos="right"]) .ac-tp>.ac-ill,:host([tiles-pos="left"]) .ac-tp>.ac-tl{grid-column:1}
+:host([tiles-pos="right"]) .ac-tp>.ac-tl,:host([tiles-pos="left"]) .ac-tp>.ac-ill{grid-column:2}`;
+  window.applianceTilePos = (el) => {
+    const root = el.shadowRoot;
+    if (!root || !el.hasAttribute('tiles-pos')) return;
+    const tiles = root.querySelector('.tiles, .stats'), box = tiles && tiles.parentElement;
+    if (!box) return;
+    if (!root.querySelector('style[data-actp]')) { const st = document.createElement('style'); st.dataset.actp = ''; st.textContent = TP_CSS; root.appendChild(st); }
+    box.classList.add('ac-tp'); tiles.classList.add('ac-tl');
+    const ill = [...box.children].find((n) => !n.matches('.head,.ac-tl') && (n.matches('svg,img') || n.querySelector('svg,img')));
+    if (ill) ill.classList.add('ac-ill');
+  };
   // Champs d'éditeur communs : fond et ordre des tuiles (vide = comportement historique de la carte)
   window.applianceTileFields = (hass) => [
     { name: 'tile_background', selector: { select: { mode: 'dropdown', options: [
       { value: 'transparent', label: window.applianceEditorLabel('tile_bg_transparent', hass) }, { value: 'theme', label: window.applianceEditorLabel('tile_bg_theme', hass) }, { value: 'none', label: window.applianceEditorLabel('tile_bg_none', hass) }] } } },
     { name: 'illustration_background', selector: { select: { mode: 'dropdown', options: [
       { value: 'default', label: window.applianceEditorLabel('illus_bg_default', hass) }, { value: 'none', label: window.applianceEditorLabel('illus_bg_none', hass) }] } } },
+    { name: 'tiles_position', selector: { select: { mode: 'dropdown', options: [
+      { value: 'bottom', label: window.applianceEditorLabel('tiles_pos_bottom', hass) }, { value: 'top', label: window.applianceEditorLabel('tiles_pos_top', hass) },
+      { value: 'left', label: window.applianceEditorLabel('tiles_pos_left', hass) }, { value: 'right', label: window.applianceEditorLabel('tiles_pos_right', hass) }] } } },
     { name: 'tile_order', selector: { select: { mode: 'dropdown', options: [
       { value: 'name', label: window.applianceEditorLabel('tile_order_name', hass) }, { value: 'value', label: window.applianceEditorLabel('tile_order_value', hass) }] } } },
   ];

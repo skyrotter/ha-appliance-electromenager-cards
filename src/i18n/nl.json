@@ -762,6 +762,11 @@
     "water_hot": "Water te heet"
   },
   "editor": {
+    "tiles_position": "Positie van de tegels",
+    "tiles_pos_bottom": "Onder de tekening (standaard)",
+    "tiles_pos_top": "Boven de tekening",
+    "tiles_pos_left": "Links van de tekening",
+    "tiles_pos_right": "Rechts van de tekening",
     "animations": "Animaties",
     "battery_low": "Batterij bijna leeg (%)",
     "buffer_tank": "Buffervat",

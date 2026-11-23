@@ -733,6 +733,11 @@
     "water_hot": "Apa prea caldă"
   },
   "editor": {
+    "tiles_position": "Poziția plăcilor",
+    "tiles_pos_bottom": "Sub desen (implicit)",
+    "tiles_pos_top": "Deasupra desenului",
+    "tiles_pos_left": "În stânga desenului",
+    "tiles_pos_right": "În dreapta desenului",
     "animations": "Animații",
     "battery_low": "Baterie descărcată (%)",
     "buffer_tank": "Rezervor tampon",
