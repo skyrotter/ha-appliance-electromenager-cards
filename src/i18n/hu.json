@@ -1026,6 +1026,8 @@
     "alarm_short": "Hiba: ellenőrizd a spa-t"
   },
   "room_climate": {
+    "st_display_rect": "Digitális kijelző (téglalap)",
+    "st_display_round": "Digitális kijelző (kerek)",
     "name": "Szobaklíma",
     "comfort": "Kellemes",
     "cool": "Hűvös",

@@ -1600,6 +1600,8 @@
     "model_atlantic_io2": "Atlantic io Thermostat (vertikal, Drehrad)"
   },
   "room_climate": {
+    "st_display_rect": "Digitalanzeige (rechteckig)",
+    "st_display_round": "Digitalanzeige (rund)",
     "name": "Raumklima",
     "comfort": "Behaglich",
     "cool": "Kühl",

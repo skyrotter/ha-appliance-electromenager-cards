@@ -1841,6 +1841,8 @@
     "resume": "Reprendre le planning"
   },
   "room_climate": {
+    "st_display_rect": "Afficheur numérique (rectangle)",
+    "st_display_round": "Afficheur numérique (rond)",
     "name": "Climat pièce",
     "comfort": "Confort",
     "cool": "Frais",

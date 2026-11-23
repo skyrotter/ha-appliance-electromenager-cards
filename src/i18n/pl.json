@@ -1361,6 +1361,8 @@
     "resume": "Powrót do harmonogramu"
   },
   "room_climate": {
+    "st_display_rect": "Wyświetlacz cyfrowy (prostokątny)",
+    "st_display_round": "Wyświetlacz cyfrowy (okrągły)",
     "name": "Klimat pomieszczenia",
     "comfort": "Komfortowo",
     "cool": "Chłodno",

@@ -1279,6 +1279,8 @@
     "model_bht6000": "Termostat Tuya BHT6000 (kulatý, černý displej)"
   },
   "room_climate": {
+    "st_display_rect": "Digitální displej (obdélníkový)",
+    "st_display_round": "Digitální displej (kulatý)",
     "name": "Klima v místnosti",
     "comfort": "Příjemně",
     "cool": "Chladno",

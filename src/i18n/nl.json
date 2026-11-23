@@ -1377,6 +1377,8 @@
     "resume": "Terug naar schema"
   },
   "room_climate": {
+    "st_display_rect": "Digitaal display (rechthoekig)",
+    "st_display_round": "Digitaal display (rond)",
     "name": "Binnenklimaat",
     "comfort": "Comfortabel",
     "cool": "Koel",
