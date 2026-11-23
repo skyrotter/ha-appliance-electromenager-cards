@@ -1,5 +1,7 @@
 # Cross trainer, exercise bike, rowing machine and treadmill
 
+<p align="center"><img src="../treadmill.gif" width="300" alt="Animated treadmill card"></p>
+
 Four cards for home fitness equipment on a smart plug: `appliance-elliptical-card`, `appliance-exercise-bike-card`, `appliance-rowing-machine-card` and `appliance-treadmill-card`.
 
 - Idle / **In use** from the power: above `threshold` (10 W by default) = in use.
