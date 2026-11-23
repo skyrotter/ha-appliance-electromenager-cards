@@ -175,6 +175,7 @@ Click a card for its options and examples.
 | [Motion sensor](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/motion-sensor.md) | `custom:appliance-motion-sensor-card` |
 | [Alarm keypad](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/alarm-keypad.md) | `custom:appliance-alarm-keypad-card` |
 | [Air quality](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/air-quality.md) | `custom:appliance-air-quality-card` |
+| [CO₂ monitor](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/co2-monitor.md) | `custom:appliance-co2-monitor-card` |
 | [Water leak detector](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/leak-detector.md) | `custom:appliance-leak-detector-card` |
 | [Irrigation (zones, pump, rain)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/irrigation.md) | `custom:appliance-irrigation-card` |
 | [LED strip (colour, brightness, effect)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/led-strip.md) | `custom:appliance-led-strip-card` |

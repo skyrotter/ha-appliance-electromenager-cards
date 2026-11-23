@@ -2323,6 +2323,30 @@
     "fan_high": "Високо",
     "fan_auto": "Аутоматски"
   },
+  "co2_monitor": {
+    "name": "CO₂ монитор",
+    "good": "Добар ваздух",
+    "moderate": "Умерен",
+    "poor": "Лош ваздух",
+    "off": "Искључен",
+    "unavailable": "Недоступно",
+    "co2": "CO₂",
+    "temperature": "Температура",
+    "humidity": "Влажност",
+    "battery": "Батерија",
+    "model_rectangle": "Правоугаони",
+    "model_round": "Округли",
+    "f_model": "Модел",
+    "f_entity_status": "Укљ. / искљ. (прекидач, бинарни сензор)",
+    "f_entity_battery": "Ниво батерије (%)",
+    "f_co2_good": "Добар ваздух испод (ppm)",
+    "f_co2_bad": "Лош ваздух изнад (ppm)",
+    "f_co2_max": "Пуна скала мерача (ppm)",
+    "f_show_co2": "Плочица CO₂",
+    "f_show_temperature": "Плочица температура",
+    "f_show_humidity": "Плочица влажност",
+    "f_show_battery": "Плочица батерија"
+  },
   "poubelle": {
     "language_name": "Српски",
     "card": {

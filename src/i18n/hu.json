@@ -2025,6 +2025,30 @@
     "show_compressor": "Show compressor (frequency, demand)",
     "show_backup": "Show backup heaters and boiler"
   },
+  "co2_monitor": {
+    "name": "CO₂-mérő",
+    "good": "Jó levegő",
+    "moderate": "Közepes",
+    "poor": "Rossz levegő",
+    "off": "Ki",
+    "unavailable": "Nem elérhető",
+    "co2": "CO₂",
+    "temperature": "Hőmérséklet",
+    "humidity": "Páratartalom",
+    "battery": "Akkumulátor",
+    "model_rectangle": "Téglalap",
+    "model_round": "Kerek",
+    "f_model": "Modell",
+    "f_entity_status": "Be / ki (kapcsoló, bináris érzékelő)",
+    "f_entity_battery": "Akkumulátor szintje (%)",
+    "f_co2_good": "Jó levegő ez alatt (ppm)",
+    "f_co2_bad": "Rossz levegő ez felett (ppm)",
+    "f_co2_max": "A skála teljes értéke (ppm)",
+    "f_show_co2": "CO₂ csempe",
+    "f_show_temperature": "hőmérséklet csempe",
+    "f_show_humidity": "páratartalom csempe",
+    "f_show_battery": "akkumulátor csempe"
+  },
   "poubelle": {
     "language_name": "Magyar",
     "card": {

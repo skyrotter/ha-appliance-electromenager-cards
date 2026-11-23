@@ -3044,6 +3044,30 @@
     "f_show_fault": "Mostrar o bloco de zonas em falha",
     "f_show_zones": "Mostrar os ícones das zonas"
   },
+  "co2_monitor": {
+    "name": "Monitor de CO₂",
+    "good": "Ar bom",
+    "moderate": "Moderado",
+    "poor": "Ar mau",
+    "off": "Desligado",
+    "unavailable": "Indisponível",
+    "co2": "CO₂",
+    "temperature": "Temperatura",
+    "humidity": "Humidade",
+    "battery": "Bateria",
+    "model_rectangle": "Retângulo",
+    "model_round": "Redondo",
+    "f_model": "Modelo",
+    "f_entity_status": "Ligado / desligado (interruptor, sensor binário)",
+    "f_entity_battery": "Nível da bateria (%)",
+    "f_co2_good": "Ar bom abaixo de (ppm)",
+    "f_co2_bad": "Ar mau acima de (ppm)",
+    "f_co2_max": "Fundo de escala do medidor (ppm)",
+    "f_show_co2": "Bloco CO₂",
+    "f_show_temperature": "Bloco temperatura",
+    "f_show_humidity": "Bloco humidade",
+    "f_show_battery": "Bloco bateria"
+  },
   "poubelle": {
     "language_name": "Português (Portugal)",
     "card": {

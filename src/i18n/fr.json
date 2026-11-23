@@ -3057,6 +3057,30 @@
     "rear": "Enceintes arrière",
     "sound_mode": "Mode audio"
   },
+  "co2_monitor": {
+    "name": "Moniteur de CO₂",
+    "good": "Air sain",
+    "moderate": "Moyen",
+    "poor": "Air vicié",
+    "off": "Éteint",
+    "unavailable": "Indisponible",
+    "co2": "CO₂",
+    "temperature": "Température",
+    "humidity": "Humidité",
+    "battery": "Batterie",
+    "model_rectangle": "Rectangle",
+    "model_round": "Rond",
+    "f_model": "Modèle",
+    "f_entity_status": "Marche / arrêt (interrupteur, capteur binaire)",
+    "f_entity_battery": "Niveau de batterie (%)",
+    "f_co2_good": "Air sain sous (ppm)",
+    "f_co2_bad": "Air vicié au-dessus (ppm)",
+    "f_co2_max": "Pleine échelle de la jauge (ppm)",
+    "f_show_co2": "Tuile CO₂",
+    "f_show_temperature": "Tuile température",
+    "f_show_humidity": "Tuile humidité",
+    "f_show_battery": "Tuile batterie"
+  },
   "poubelle": {
     "language_name": "Français",
     "card": {

@@ -2323,6 +2323,30 @@
     "fan_high": "Visoko",
     "fan_auto": "Automatski"
   },
+  "co2_monitor": {
+    "name": "CO₂ monitor",
+    "good": "Dobar vazduh",
+    "moderate": "Umeren",
+    "poor": "Loš vazduh",
+    "off": "Isključen",
+    "unavailable": "Nedostupno",
+    "co2": "CO₂",
+    "temperature": "Temperatura",
+    "humidity": "Vlažnost",
+    "battery": "Baterija",
+    "model_rectangle": "Pravougaoni",
+    "model_round": "Okrugli",
+    "f_model": "Model",
+    "f_entity_status": "Uklj. / isklj. (prekidač, binarni senzor)",
+    "f_entity_battery": "Nivo baterije (%)",
+    "f_co2_good": "Dobar vazduh ispod (ppm)",
+    "f_co2_bad": "Loš vazduh iznad (ppm)",
+    "f_co2_max": "Puna skala merača (ppm)",
+    "f_show_co2": "Pločica CO₂",
+    "f_show_temperature": "Pločica temperatura",
+    "f_show_humidity": "Pločica vlažnost",
+    "f_show_battery": "Pločica baterija"
+  },
   "poubelle": {
     "language_name": "Srpski (latinica)",
     "card": {

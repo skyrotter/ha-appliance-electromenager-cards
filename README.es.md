@@ -170,6 +170,7 @@ Pulsa una tarjeta para ver sus opciones y ejemplos (documentación en inglés).
 | [Sensor de puerta](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/door-sensor.md) | `custom:appliance-door-sensor-card` |
 | [Sensor de movimiento](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/motion-sensor.md) | `custom:appliance-motion-sensor-card` |
 | [Calidad del aire](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/air-quality.md) | `custom:appliance-air-quality-card` |
+| [Monitor de CO₂](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/co2-monitor.md) | `custom:appliance-co2-monitor-card` |
 | [Detector de fugas de agua](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/leak-detector.md) | `custom:appliance-leak-detector-card` |
 | [Pluviómetro (intensidad, totales)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/rain-gauge.md) | `custom:appliance-rain-gauge-card` |
 | [Monitor de plantas (Mi Flora: humedad, luz, fertilidad)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/plant-monitor.md) | `custom:appliance-plant-monitor-card` |

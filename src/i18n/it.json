@@ -1945,6 +1945,30 @@
     "power": "Potenza",
     "days": "g"
   },
+  "co2_monitor": {
+    "name": "Monitor CO₂",
+    "good": "Aria buona",
+    "moderate": "Moderata",
+    "poor": "Aria scadente",
+    "off": "Spento",
+    "unavailable": "Non disponibile",
+    "co2": "CO₂",
+    "temperature": "Temperatura",
+    "humidity": "Umidità",
+    "battery": "Batteria",
+    "model_rectangle": "Rettangolare",
+    "model_round": "Rotondo",
+    "f_model": "Modello",
+    "f_entity_status": "Acceso / spento (interruttore, sensore binario)",
+    "f_entity_battery": "Livello batteria (%)",
+    "f_co2_good": "Aria buona sotto (ppm)",
+    "f_co2_bad": "Aria scadente sopra (ppm)",
+    "f_co2_max": "Fondo scala dell'indicatore (ppm)",
+    "f_show_co2": "Riquadro CO₂",
+    "f_show_temperature": "Riquadro temperatura",
+    "f_show_humidity": "Riquadro umidità",
+    "f_show_battery": "Riquadro batteria"
+  },
   "poubelle": {
     "language_name": "Italiano",
     "card": {

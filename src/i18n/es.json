@@ -3000,6 +3000,30 @@
     "rear": "Altavoces traseros",
     "sound_mode": "Modo de sonido"
   },
+  "co2_monitor": {
+    "name": "Monitor de CO₂",
+    "good": "Aire bueno",
+    "moderate": "Moderado",
+    "poor": "Aire malo",
+    "off": "Apagado",
+    "unavailable": "No disponible",
+    "co2": "CO₂",
+    "temperature": "Temperatura",
+    "humidity": "Humedad",
+    "battery": "Batería",
+    "model_rectangle": "Rectángulo",
+    "model_round": "Redondo",
+    "f_model": "Modelo",
+    "f_entity_status": "Encendido / apagado (interruptor, sensor binario)",
+    "f_entity_battery": "Nivel de batería (%)",
+    "f_co2_good": "Aire bueno por debajo de (ppm)",
+    "f_co2_bad": "Aire malo por encima de (ppm)",
+    "f_co2_max": "Fondo de escala del indicador (ppm)",
+    "f_show_co2": "Mosaico CO₂",
+    "f_show_temperature": "Mosaico temperatura",
+    "f_show_humidity": "Mosaico humedad",
+    "f_show_battery": "Mosaico batería"
+  },
   "poubelle": {
     "language_name": "Español",
     "card": {

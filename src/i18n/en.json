@@ -3078,6 +3078,30 @@
     "rear": "Rear speakers",
     "sound_mode": "Audio mode"
   },
+  "co2_monitor": {
+    "name": "CO₂ monitor",
+    "good": "Good air",
+    "moderate": "Moderate",
+    "poor": "Poor air",
+    "off": "Off",
+    "unavailable": "Unavailable",
+    "co2": "CO₂",
+    "temperature": "Temperature",
+    "humidity": "Humidity",
+    "battery": "Battery",
+    "model_rectangle": "Rectangle",
+    "model_round": "Round",
+    "f_model": "Model",
+    "f_entity_status": "On / off (switch, binary sensor)",
+    "f_entity_battery": "Battery level (%)",
+    "f_co2_good": "Good air below (ppm)",
+    "f_co2_bad": "Poor air above (ppm)",
+    "f_co2_max": "Gauge full scale (ppm)",
+    "f_show_co2": "CO₂ tile",
+    "f_show_temperature": "temperature tile",
+    "f_show_humidity": "humidity tile",
+    "f_show_battery": "battery tile"
+  },
   "poubelle": {
     "language_name": "English",
     "card": {

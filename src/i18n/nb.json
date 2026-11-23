@@ -1750,6 +1750,30 @@
 "power": "Effekt",
 "days": "d"
 },
+  "co2_monitor": {
+    "name": "CO₂-måler",
+    "good": "God luft",
+    "moderate": "Moderat",
+    "poor": "Dårlig luft",
+    "off": "Av",
+    "unavailable": "Utilgjengelig",
+    "co2": "CO₂",
+    "temperature": "Temperatur",
+    "humidity": "Luftfuktighet",
+    "battery": "Batteri",
+    "model_rectangle": "Rektangel",
+    "model_round": "Rund",
+    "f_model": "Modell",
+    "f_entity_status": "På / av (bryter, binær sensor)",
+    "f_entity_battery": "Batterinivå (%)",
+    "f_co2_good": "God luft under (ppm)",
+    "f_co2_bad": "Dårlig luft over (ppm)",
+    "f_co2_max": "Full skala på måleren (ppm)",
+    "f_show_co2": "Rute CO₂",
+    "f_show_temperature": "Rute temperatur",
+    "f_show_humidity": "Rute luftfuktighet",
+    "f_show_battery": "Rute batteri"
+  },
   "poubelle": {
     "language_name": "Norsk bokmål",
     "card": {
