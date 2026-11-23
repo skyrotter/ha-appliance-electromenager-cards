@@ -1746,6 +1746,30 @@
     "bottom": "Dół",
     "reserve": "Ciepła woda"
   },
+  "co2_monitor": {
+    "name": "Monitor CO₂",
+    "good": "Dobre powietrze",
+    "moderate": "Umiarkowane",
+    "poor": "Złe powietrze",
+    "off": "Wyłączony",
+    "unavailable": "Niedostępny",
+    "co2": "CO₂",
+    "temperature": "Temperatura",
+    "humidity": "Wilgotność",
+    "battery": "Bateria",
+    "model_rectangle": "Prostokątny",
+    "model_round": "Okrągły",
+    "f_model": "Model",
+    "f_entity_status": "Wł. / wył. (przełącznik, czujnik binarny)",
+    "f_entity_battery": "Poziom baterii (%)",
+    "f_co2_good": "Dobre powietrze poniżej (ppm)",
+    "f_co2_bad": "Złe powietrze powyżej (ppm)",
+    "f_co2_max": "Pełna skala wskaźnika (ppm)",
+    "f_show_co2": "Kafelek CO₂",
+    "f_show_temperature": "Kafelek temperatura",
+    "f_show_humidity": "Kafelek wilgotność",
+    "f_show_battery": "Kafelek bateria"
+  },
   "poubelle": {
     "language_name": "Polski",
     "card": {

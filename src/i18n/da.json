@@ -2174,6 +2174,30 @@
     "volume": "Volumen",
     "room": "Rum"
   },
+  "co2_monitor": {
+    "name": "CO₂-måler",
+    "good": "God luft",
+    "moderate": "Moderat",
+    "poor": "Dårlig luft",
+    "off": "Slukket",
+    "unavailable": "Utilgængelig",
+    "co2": "CO₂",
+    "temperature": "Temperatur",
+    "humidity": "Fugtighed",
+    "battery": "Batteri",
+    "model_rectangle": "Rektangel",
+    "model_round": "Rund",
+    "f_model": "Model",
+    "f_entity_status": "Til / fra (kontakt, binær sensor)",
+    "f_entity_battery": "Batteriniveau (%)",
+    "f_co2_good": "God luft under (ppm)",
+    "f_co2_bad": "Dårlig luft over (ppm)",
+    "f_co2_max": "Fuld skala på måleren (ppm)",
+    "f_show_co2": "Felt CO₂",
+    "f_show_temperature": "Felt temperatur",
+    "f_show_humidity": "Felt fugtighed",
+    "f_show_battery": "Felt batteri"
+  },
   "poubelle": {
     "language_name": "Dansk",
     "card": {

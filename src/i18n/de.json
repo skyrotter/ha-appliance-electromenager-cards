@@ -2346,6 +2346,30 @@
     "fan_high": "Hoch",
     "fan_auto": "Auto"
   },
+  "co2_monitor": {
+    "name": "CO₂-Monitor",
+    "good": "Gute Luft",
+    "moderate": "Mäßig",
+    "poor": "Schlechte Luft",
+    "off": "Aus",
+    "unavailable": "Nicht verfügbar",
+    "co2": "CO₂",
+    "temperature": "Temperatur",
+    "humidity": "Luftfeuchtigkeit",
+    "battery": "Batterie",
+    "model_rectangle": "Rechteck",
+    "model_round": "Rund",
+    "f_model": "Modell",
+    "f_entity_status": "Ein / Aus (Schalter, Binärsensor)",
+    "f_entity_battery": "Batteriestand (%)",
+    "f_co2_good": "Gute Luft unter (ppm)",
+    "f_co2_bad": "Schlechte Luft über (ppm)",
+    "f_co2_max": "Skalenendwert der Anzeige (ppm)",
+    "f_show_co2": "Kachel CO₂",
+    "f_show_temperature": "Kachel Temperatur",
+    "f_show_humidity": "Kachel Luftfeuchtigkeit",
+    "f_show_battery": "Kachel Batterie"
+  },
   "poubelle": {
     "language_name": "Deutsch",
     "card": {

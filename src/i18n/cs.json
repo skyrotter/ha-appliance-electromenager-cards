@@ -1570,6 +1570,30 @@
     "over": "Nadváha",
     "obese": "Obezita"
   },
+  "co2_monitor": {
+    "name": "Monitor CO₂",
+    "good": "Dobrý vzduch",
+    "moderate": "Střední",
+    "poor": "Špatný vzduch",
+    "off": "Vypnuto",
+    "unavailable": "Nedostupné",
+    "co2": "CO₂",
+    "temperature": "Teplota",
+    "humidity": "Vlhkost",
+    "battery": "Baterie",
+    "model_rectangle": "Obdélník",
+    "model_round": "Kulatý",
+    "f_model": "Model",
+    "f_entity_status": "Zapnuto / vypnuto (spínač, binární senzor)",
+    "f_entity_battery": "Stav baterie (%)",
+    "f_co2_good": "Dobrý vzduch pod (ppm)",
+    "f_co2_bad": "Špatný vzduch nad (ppm)",
+    "f_co2_max": "Plný rozsah ukazatele (ppm)",
+    "f_show_co2": "Dlaždice CO₂",
+    "f_show_temperature": "Dlaždice teplota",
+    "f_show_humidity": "Dlaždice vlhkost",
+    "f_show_battery": "Dlaždice baterie"
+  },
   "poubelle": {
     "language_name": "Čeština",
     "card": {

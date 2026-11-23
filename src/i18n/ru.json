@@ -1568,6 +1568,30 @@
     "over": "Избыток",
     "obese": "Ожирение"
   },
+  "co2_monitor": {
+    "name": "Датчик CO₂",
+    "good": "Хороший воздух",
+    "moderate": "Умеренный",
+    "poor": "Плохой воздух",
+    "off": "Выкл.",
+    "unavailable": "Недоступно",
+    "co2": "CO₂",
+    "temperature": "Температура",
+    "humidity": "Влажность",
+    "battery": "Батарея",
+    "model_rectangle": "Прямоугольный",
+    "model_round": "Круглый",
+    "f_model": "Модель",
+    "f_entity_status": "Вкл. / выкл. (переключатель, бинарный датчик)",
+    "f_entity_battery": "Уровень заряда (%)",
+    "f_co2_good": "Хороший воздух ниже (ppm)",
+    "f_co2_bad": "Плохой воздух выше (ppm)",
+    "f_co2_max": "Полная шкала индикатора (ppm)",
+    "f_show_co2": "Плитка CO₂",
+    "f_show_temperature": "Плитка температура",
+    "f_show_humidity": "Плитка влажность",
+    "f_show_battery": "Плитка батарея"
+  },
   "poubelle": {
     "language_name": "Русский",
     "card": {

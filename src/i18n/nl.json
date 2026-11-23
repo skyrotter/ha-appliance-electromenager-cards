@@ -1945,6 +1945,30 @@
     "power": "Vermogen",
     "days": "d"
   },
+  "co2_monitor": {
+    "name": "CO₂-monitor",
+    "good": "Goede lucht",
+    "moderate": "Matig",
+    "poor": "Slechte lucht",
+    "off": "Uit",
+    "unavailable": "Niet beschikbaar",
+    "co2": "CO₂",
+    "temperature": "Temperatuur",
+    "humidity": "Luchtvochtigheid",
+    "battery": "Batterij",
+    "model_rectangle": "Rechthoek",
+    "model_round": "Rond",
+    "f_model": "Model",
+    "f_entity_status": "Aan / uit (schakelaar, binaire sensor)",
+    "f_entity_battery": "Batterijniveau (%)",
+    "f_co2_good": "Goede lucht onder (ppm)",
+    "f_co2_bad": "Slechte lucht boven (ppm)",
+    "f_co2_max": "Volle schaal van de meter (ppm)",
+    "f_show_co2": "Tegel CO₂",
+    "f_show_temperature": "Tegel temperatuur",
+    "f_show_humidity": "Tegel luchtvochtigheid",
+    "f_show_battery": "Tegel batterij"
+  },
   "poubelle": {
     "language_name": "Nederlands",
     "card": {

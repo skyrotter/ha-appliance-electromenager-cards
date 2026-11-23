@@ -2860,6 +2860,30 @@
     "f_show_power": "Плитка потужності",
     "f_show_energy": "Плитка енергії"
   },
+  "co2_monitor": {
+    "name": "Датчик CO₂",
+    "good": "Гарне повітря",
+    "moderate": "Помірне",
+    "poor": "Погане повітря",
+    "off": "Вимк.",
+    "unavailable": "Недоступно",
+    "co2": "CO₂",
+    "temperature": "Температура",
+    "humidity": "Вологість",
+    "battery": "Батарея",
+    "model_rectangle": "Прямокутний",
+    "model_round": "Круглий",
+    "f_model": "Модель",
+    "f_entity_status": "Увімк. / вимк. (перемикач, бінарний датчик)",
+    "f_entity_battery": "Рівень заряду (%)",
+    "f_co2_good": "Гарне повітря нижче (ppm)",
+    "f_co2_bad": "Погане повітря вище (ppm)",
+    "f_co2_max": "Повна шкала індикатора (ppm)",
+    "f_show_co2": "Плитка CO₂",
+    "f_show_temperature": "Плитка температура",
+    "f_show_humidity": "Плитка вологість",
+    "f_show_battery": "Плитка батарея"
+  },
   "poubelle": {
     "language_name": "Українська",
     "card": {

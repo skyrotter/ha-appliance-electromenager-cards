@@ -1582,6 +1582,30 @@
     "over": "Supra",
     "obese": "Obezitate"
   },
+  "co2_monitor": {
+    "name": "Monitor CO₂",
+    "good": "Aer bun",
+    "moderate": "Moderat",
+    "poor": "Aer slab",
+    "off": "Oprit",
+    "unavailable": "Indisponibil",
+    "co2": "CO₂",
+    "temperature": "Temperatură",
+    "humidity": "Umiditate",
+    "battery": "Baterie",
+    "model_rectangle": "Dreptunghi",
+    "model_round": "Rotund",
+    "f_model": "Model",
+    "f_entity_status": "Pornit / oprit (comutator, senzor binar)",
+    "f_entity_battery": "Nivel baterie (%)",
+    "f_co2_good": "Aer bun sub (ppm)",
+    "f_co2_bad": "Aer slab peste (ppm)",
+    "f_co2_max": "Scala maximă a indicatorului (ppm)",
+    "f_show_co2": "Placă CO₂",
+    "f_show_temperature": "Placă temperatură",
+    "f_show_humidity": "Placă umiditate",
+    "f_show_battery": "Placă baterie"
+  },
   "poubelle": {
     "language_name": "Română",
     "card": {
