@@ -1,5 +1,8 @@
 {
   "common": {
+    "treadmill": "Cinta de correr",
+    "incline": "Inclinación",
+    "f_incline": "Sensor de inclinación (%)",
     "iron": "Plancha",
     "steam_station": "Centro de planchado",
     "iron_heating": "Calentando",

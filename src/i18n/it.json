@@ -1,5 +1,8 @@
 {
   "common": {
+    "treadmill": "Tapis roulant",
+    "incline": "Inclinazione",
+    "f_incline": "Sensore di inclinazione (%)",
     "iron": "Ferro da stiro",
     "steam_station": "Generatore di vapore",
     "iron_heating": "Riscaldamento",

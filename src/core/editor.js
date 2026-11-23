@@ -80,6 +80,7 @@ const SEL = {
   direction: { entity: { domain: ["sensor", "select", "input_select", "fan"] } },
   // fitness : cadence (tr/min ou coups/min), distance, fréquence cardiaque, calories
   cadence: { entity: { domain: ["sensor", "number", "input_number"] } },
+  incline: { entity: { domain: ["sensor", "number", "input_number"] } },
   distance: { entity: { domain: ["sensor", "number", "input_number"] } },
   heart_rate: { entity: { domain: ["sensor", "number", "input_number"] } },
   calories: { entity: { domain: ["sensor", "number", "input_number"] } },
@@ -446,7 +447,7 @@ function stubFor(kind, hass) {
   }
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "dosing_pump", "elliptical", "exercise_bike", "rowing_machine", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "iron", "steam_station", "power_strip", "smart_plug", "printer", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "dosing_pump", "elliptical", "exercise_bike", "rowing_machine", "treadmill", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "iron", "steam_station", "power_strip", "smart_plug", "printer", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;

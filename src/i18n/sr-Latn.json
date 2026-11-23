@@ -1,5 +1,8 @@
 {
   "common": {
+    "treadmill": "Traka za trčanje",
+    "incline": "Nagib",
+    "f_incline": "Senzor nagiba (%)",
     "iron": "Pegla",
     "steam_station": "Parna stanica",
     "iron_heating": "Zagreva se",

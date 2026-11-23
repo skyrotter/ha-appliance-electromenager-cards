@@ -1,5 +1,8 @@
 {
   "common": {
+    "treadmill": "Бігова доріжка",
+    "incline": "Нахил",
+    "f_incline": "Датчик нахилу (%)",
     "iron": "Праска",
     "steam_station": "Парогенератор",
     "iron_heating": "Нагрівання",

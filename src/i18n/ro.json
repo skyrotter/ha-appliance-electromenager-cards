@@ -1,5 +1,8 @@
 {
   "common": {
+    "treadmill": "Bandă de alergare",
+    "incline": "Înclinare",
+    "f_incline": "Senzor de înclinare (%)",
     "iron": "Fier de călcat",
     "steam_station": "Stație de călcat cu abur",
     "iron_heating": "Se încălzește",

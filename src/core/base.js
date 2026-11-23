@@ -10,7 +10,7 @@ const PERIODS = ["day", "week", "month", ...Object.keys(ROLLING)];
 const TILE_PERIODS = [...PERIODS, "year", "total"];
 // cartes avec la tuile « durée d'utilisation du jour » (capteur usage_time, sinon calcul depuis l'historique)
 // fitness (vélo elliptique, vélo d'appartement, rameur) : allure de l'animation et tuiles de séance
-const FIT_KINDS = ["elliptical", "exercise_bike", "rowing_machine"];
+const FIT_KINDS = ["elliptical", "exercise_bike", "rowing_machine", "treadmill"];
 const USAGE_KINDS = ["tv", "monitor", "ps5", "desktop_pc", "laptop", "air_compressor", ...FIT_KINDS];
 const USAGE_ON = ["on", "playing", "paused", "idle", "buffering", "home"];
 
@@ -99,7 +99,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "error", "status_2", "temperature_2", "target_temperature_2", "remaining_2", "power", "power_factor", "current", "voltage", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "switch_low", "switch_high", "direction", "pressure", "runtime_total", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water", "water_level", "steam", "power_level", "pellet_level", "ph", "orp", "dose_interval", "dose_timer", "dose_volume", "dose_time", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "switch_low", "switch_high", "direction", "pressure", "runtime_total", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water", "water_level", "steam", "incline", "power_level", "pellet_level", "ph", "orp", "dose_interval", "dose_timer", "dose_volume", "dose_time", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -370,7 +370,7 @@ class ApplianceCardBase extends HTMLElement {
       ftemp: S(c.freezer_temperature), fdoor: S(c.freezer_door), flex: S(c.flex_temperature),
       level: num(S(c.power_level)), pellets: num(S(c.pellet_level)),
       pool: kind === "pool_pump" || kind === "dosing_pump" ? Object.fromEntries(["ph", "orp", "pressure", "tds", "salt", "chlorine"].map((k) => [k, S(c[k])])) : null,
-      fit: FIT_KINDS.includes(kind) ? { cadence: S(c.cadence), distance: S(c.distance), hr: S(c.heart_rate), kcal: S(c.calories) } : null,
+      fit: FIT_KINDS.includes(kind) ? { incline: S(c.incline), cadence: S(c.cadence), distance: S(c.distance), hr: S(c.heart_rate), kcal: S(c.calories) } : null,
       runtime: parseRemaining(S(c.runtime)), runtimeTotal: parseRemaining(S(c.runtime_total)), usage: parseRemaining(S(c.usage_time)), speed: S(c.speed), bedTemp: num(S(c.bed_temperature)), humidity: num(S(c.humidity)), mode: S(c.mode), window: S(c.window), light: S(c.light), keg: num(S(c.keg_level)), pouring: S(c.pouring), batt: num(S(c.battery_level)), zone2: num(S(c.zone2_temperature)), zone2Ent: S(c.zone2_temperature),
       lampE: S(c.lamp_hours), picMode: S(c.picture_mode), tank: S(c.tank_full), fanSpeed: S(c.fan_speed), targetHum: S(c.target_humidity), cleanW: S(c.clean_water), dirtyW: S(c.dirty_water), pm25: S(c.pm25), filterE: S(c.filter),
       status: "idle", phase: null, alerts: [],
@@ -1607,14 +1607,21 @@ class ApplianceCardBase extends HTMLElement {
     }
     if (FIT_KINDS.includes(kind)) {
       // durée d'un tour de pédalier (ou d'un coup de rame) : cadence si elle est fournie, sinon la puissance (max_power = effort maximal)
-      const cad = num(m.fit.cadence), rower = kind === "rowing_machine";
+      const cad = num(m.fit.cadence), rower = kind === "rowing_machine", belt = kind === "treadmill";
       let per;
-      if (cad != null && cad > 0) per = 60 / cad;
+      // tapis : la bande défile à la vitesse du capteur speed (km/h), sinon selon la puissance ; l'inclinaison (%) relève le plateau
+      const spd = belt ? num(m.speed) : null;
+      if (belt && spd != null && spd > 0) per = 9 / spd;
+      else if (!belt && cad != null && cad > 0) per = 60 / cad;
       else {
         const f = m.watts != null ? Math.max(0, Math.min(1, m.watts / (c.max_power || 250))) : 0.4;
         per = rower ? 3.4 - 1.6 * f : 2.2 - 1.5 * f;
       }
       $("wrap").style.setProperty("--fp", `${Math.max(0.35, Math.min(4, per)).toFixed(2)}s`);
+      if (belt) {
+        const inc = num(m.fit.incline);
+        $("wrap").style.setProperty("--inc", (inc != null ? Math.max(0, Math.min(15, Math.atan(inc / 100) * 180 / Math.PI)) : 0).toFixed(1));
+      }
     }
     if (kind === "pool_pump") {
       const sp = num(m.speed), u = String(m.speed?.attributes.unit_of_measurement || "").toLowerCase();
@@ -2102,9 +2109,10 @@ class ApplianceCardBase extends HTMLElement {
       if (m.vol != null && !["off", "standby", "unavailable"].includes(m.status)) tile(m.muted ? "mdi:volume-off" : "mdi:volume-high", `${Math.round(m.vol * 100)} %`, lb("volume"), c.entity, m.muted ? "warn" : "");
       if (spOn && m.app) tile("mdi:music-box-outline", m.app, lb("source"), c.entity);
     } else if (FIT_KINDS.includes(kind)) {
-      const f = m.fit, rower = kind === "rowing_machine";
+      const f = m.fit, rower = kind === "rowing_machine", belt = kind === "treadmill";
       if (m.speed) tile("mdi:speedometer", fmtUnit(hass, m.speed, 1), lb("speed"), c.speed);
-      if (f.cadence) tile(rower ? "mdi:rowing" : "mdi:rotate-right", fmtUnit(hass, f.cadence, 0), lb(rower ? "stroke_rate" : "cadence"), c.cadence);
+      if (f.incline && !BAD.includes(String(f.incline.state).toLowerCase())) tile("mdi:slope-uphill", fmtUnit(hass, f.incline, 1), lb("incline"), c.incline);
+      if (f.cadence) tile(rower ? "mdi:rowing" : belt ? "mdi:shoe-print" : "mdi:rotate-right", fmtUnit(hass, f.cadence, 0), lb(rower ? "stroke_rate" : "cadence"), c.cadence);
       if (f.distance) tile("mdi:map-marker-distance", fmtUnit(hass, f.distance, 2), lb("distance"), c.distance);
       if (f.hr) tile("mdi:heart-pulse", fmtUnit(hass, f.hr, 0), lb("heart_rate"), c.heart_rate);
       if (f.kcal) tile("mdi:fire", fmtUnit(hass, f.kcal, 0), lb("calories"), c.calories);

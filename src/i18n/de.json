@@ -1,5 +1,8 @@
 {
   "common": {
+    "treadmill": "Laufband",
+    "incline": "Steigung",
+    "f_incline": "Steigungssensor (%)",
     "iron": "Bügeleisen",
     "steam_station": "Dampfbügelstation",
     "iron_heating": "Heizt auf",

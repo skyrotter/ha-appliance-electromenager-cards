@@ -194,4 +194,8 @@ const DEF = {
   rowing_machine: { accent: "active", threshold: 10,
     fields: ["entity", "power", "energy", "cost", "speed", "cadence", "distance", "heart_rate", "calories", "usage_time", "switch"],
     keys: ["rameur", "rowing", "rower", "concept2", "waterrower", "ruderger"] },
+  // tapis de course : en marche au-dessus de threshold ; capteurs optionnels (vitesse, inclinaison, cadence, distance, cœur, calories)
+  treadmill: { accent: "active", threshold: 10,
+    fields: ["entity", "power", "energy", "cost", "speed", "incline", "cadence", "distance", "heart_rate", "calories", "usage_time", "switch"],
+    keys: ["tapis_de_course", "tapis_course", "tapis_roulant", "treadmill", "laufband", "loopband", "cinta_de_correr"] },
 };

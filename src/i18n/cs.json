@@ -1,5 +1,8 @@
 {
   "common": {
+    "treadmill": "Běžecký pás",
+    "incline": "Sklon",
+    "f_incline": "Senzor sklonu (%)",
     "iron": "Žehlička",
     "steam_station": "Parní generátor",
     "iron_heating": "Zahřívání",

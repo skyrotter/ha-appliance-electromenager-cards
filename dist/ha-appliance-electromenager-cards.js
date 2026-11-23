@@ -15,6 +15,9 @@ const VERSION = "1.203.0";
 /* ------------------------------------------------------------------ */
 const STRINGS = {
   "en": {
+    "treadmill": "Treadmill",
+    "incline": "Incline",
+    "f_incline": "Incline sensor (%)",
     "valign_top": "Top (default)",
     "valign_center": "Centered",
     "header_inline": "Title left, status right (default)",
@@ -550,6 +553,9 @@ const STRINGS = {
     "f_power_factor": "Power factor sensor (cos φ, optional)"
   },
   "cs": {
+    "treadmill": "Běžecký pás",
+    "incline": "Sklon",
+    "f_incline": "Senzor sklonu (%)",
     "iron": "Žehlička",
     "steam_station": "Parní generátor",
     "iron_heating": "Zahřívání",
@@ -940,6 +946,9 @@ const STRINGS = {
     "f_hide_zero_power": "Skrýt výkon, když je 0"
   },
   "da": {
+    "treadmill": "Løbebånd",
+    "incline": "Hældning",
+    "f_incline": "Hældningssensor (%)",
     "iron": "Strygejern",
     "steam_station": "Dampstation",
     "iron_heating": "Opvarmer",
@@ -1390,6 +1399,9 @@ const STRINGS = {
     "f_calories": "Kaloriesensor"
   },
   "de": {
+    "treadmill": "Laufband",
+    "incline": "Steigung",
+    "f_incline": "Steigungssensor (%)",
     "iron": "Bügeleisen",
     "steam_station": "Dampfbügelstation",
     "iron_heating": "Heizt auf",
@@ -1853,6 +1865,9 @@ const STRINGS = {
     "f_dose_time": "Dosierzeit (Sensor mit dem Zeitplan, z. B. 10:00)"
   },
   "es": {
+    "treadmill": "Cinta de correr",
+    "incline": "Inclinación",
+    "f_incline": "Sensor de inclinación (%)",
     "iron": "Plancha",
     "steam_station": "Centro de planchado",
     "iron_heating": "Calentando",
@@ -2364,6 +2379,9 @@ const STRINGS = {
     "f_calories": "Sensor de calorías"
   },
   "fr": {
+    "treadmill": "Tapis de course",
+    "incline": "Inclinaison",
+    "f_incline": "Capteur d'inclinaison (%)",
     "valign_top": "En haut (défaut)",
     "valign_center": "Centré",
     "header_inline": "Titre à gauche, état à droite (défaut)",
@@ -2893,6 +2911,9 @@ const STRINGS = {
     "f_power_factor": "Capteur de facteur de puissance (cos φ, facultatif)"
   },
   "hu": {
+    "treadmill": "Futópad",
+    "incline": "Emelkedés",
+    "f_incline": "Emelkedés érzékelő (%)",
     "iron": "Vasaló",
     "steam_station": "Gőzállomás",
     "iron_heating": "Fűt",
@@ -3346,6 +3367,9 @@ const STRINGS = {
     "f_calories": "Kalória szenzor"
   },
   "it": {
+    "treadmill": "Tapis roulant",
+    "incline": "Inclinazione",
+    "f_incline": "Sensore di inclinazione (%)",
     "iron": "Ferro da stiro",
     "steam_station": "Generatore di vapore",
     "iron_heating": "Riscaldamento",
@@ -3763,6 +3787,9 @@ const STRINGS = {
     "f_calories": "Sensore di calorie"
   },
   "nb": {
+    "treadmill": "Tredemølle",
+    "incline": "Stigning",
+    "f_incline": "Stigningssensor (%)",
     "iron": "Strykejern",
     "steam_station": "Dampstasjon",
     "iron_heating": "Varmer opp",
@@ -4138,6 +4165,9 @@ const STRINGS = {
     "f_hide_zero_power": "Skjul effekt når den er 0"
   },
   "nl": {
+    "treadmill": "Loopband",
+    "incline": "Helling",
+    "f_incline": "Hellingssensor (%)",
     "iron": "Strijkijzer",
     "steam_station": "Stoomstrijkstation",
     "iron_heating": "Opwarmen",
@@ -4555,6 +4585,9 @@ const STRINGS = {
     "f_calories": "Caloriesensor"
   },
   "pl": {
+    "treadmill": "Bieżnia",
+    "incline": "Nachylenie",
+    "f_incline": "Czujnik nachylenia (%)",
     "iron": "Żelazko",
     "steam_station": "Stacja parowa",
     "iron_heating": "Nagrzewanie",
@@ -4958,6 +4991,9 @@ const STRINGS = {
     "f_power_factor": "Czujnik współczynnika mocy (cos φ, opcjonalnie)"
   },
   "pt-BR": {
+    "treadmill": "Esteira",
+    "incline": "Inclinação",
+    "f_incline": "Sensor de inclinação (%)",
     "iron": "Ferro de passar",
     "steam_station": "Estação de passar a vapor",
     "iron_heating": "Aquecendo",
@@ -5479,6 +5515,9 @@ const STRINGS = {
     "temperature_2": "Temp. cav. 2"
   },
   "pt-PT": {
+    "treadmill": "Passadeira de corrida",
+    "incline": "Inclinação",
+    "f_incline": "Sensor de inclinação (%)",
     "iron": "Ferro de engomar",
     "steam_station": "Gerador de vapor",
     "iron_heating": "A aquecer",
@@ -6000,6 +6039,9 @@ const STRINGS = {
     "temperature_2": "Temp. cav. 2"
   },
   "ro": {
+    "treadmill": "Bandă de alergare",
+    "incline": "Înclinare",
+    "f_incline": "Senzor de înclinare (%)",
     "iron": "Fier de călcat",
     "steam_station": "Stație de călcat cu abur",
     "iron_heating": "Se încălzește",
@@ -6389,6 +6431,9 @@ const STRINGS = {
     "f_hide_zero_power": "Ascunde puterea când este 0"
   },
   "ru": {
+    "treadmill": "Беговая дорожка",
+    "incline": "Наклон",
+    "f_incline": "Датчик наклона (%)",
     "iron": "Утюг",
     "steam_station": "Парогенератор",
     "iron_heating": "Нагрев",
@@ -6764,6 +6809,9 @@ const STRINGS = {
     "f_hide_zero_power": "Скрывать мощность, когда она равна 0"
   },
   "sr": {
+    "treadmill": "Трака за трчање",
+    "incline": "Нагиб",
+    "f_incline": "Сензор нагиба (%)",
     "iron": "Пегла",
     "steam_station": "Парна станица",
     "iron_heating": "Загрева се",
@@ -7227,6 +7275,9 @@ const STRINGS = {
     "f_calories": "Сензор калорија"
   },
   "sr-Latn": {
+    "treadmill": "Traka za trčanje",
+    "incline": "Nagib",
+    "f_incline": "Senzor nagiba (%)",
     "iron": "Pegla",
     "steam_station": "Parna stanica",
     "iron_heating": "Zagreva se",
@@ -7690,6 +7741,9 @@ const STRINGS = {
     "f_calories": "Senzor kalorija"
   },
   "uk": {
+    "treadmill": "Бігова доріжка",
+    "incline": "Нахил",
+    "f_incline": "Датчик нахилу (%)",
     "iron": "Праска",
     "steam_station": "Парогенератор",
     "iron_heating": "Нагрівання",
@@ -11397,6 +11451,31 @@ ${lcd(74, 110, 22, 10)}
 <circle class="td-led" cx="101" cy="115" r="1.4"/>
 <ellipse cx="60" cy="132" rx="46" ry="3" fill="url(#ID-shadow)"/>`;
 
+/* Tapis de course (vue de côté) : plateau à bande défilante (rayures qui avancent à la vitesse du capteur speed), console à l'avant,
+   plateau qui se relève selon l'inclinaison (--inc, en degrés, posée par la carte) */
+SVG.treadmill = () => `
+<defs>${DEFS}
+<linearGradient id="ID-tmbody" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a525b"/><stop offset="1" stop-color="#1d2228"/></linearGradient>
+<clipPath id="ID-tmtop"><rect x="16" y="98" width="76" height="5"/></clipPath>
+<clipPath id="ID-tmbot"><rect x="16" y="111" width="76" height="4"/></clipPath></defs>
+<ellipse cx="62" cy="128" rx="56" ry="4" fill="url(#ID-shadow)"/>
+<g class="tm-deck">
+  <rect x="8" y="97" width="92" height="19" rx="9.5" fill="url(#ID-tmbody)" stroke="#12161a" stroke-width=".8"/>
+  <rect x="14" y="98.5" width="80" height="16" rx="8" fill="#171b20"/>
+  <g clip-path="url(#ID-tmtop)"><g class="tm-belt tm-belt-a">${Array.from({ length: 12 }, (_, i) => `<rect x="${14 + i * 8}" y="98" width="2.4" height="5" fill="#59616b"/>`).join("")}</g></g>
+  <g clip-path="url(#ID-tmbot)"><g class="tm-belt tm-belt-b">${Array.from({ length: 12 }, (_, i) => `<rect x="${14 + i * 8}" y="111" width="2.4" height="4" fill="#3a424b"/>`).join("")}</g></g>
+  <path d="M16 103H92" stroke="#9aa3ad" stroke-width=".8" opacity=".5"/>
+  <circle cx="17" cy="106.5" r="7" fill="url(#ID-tmbody)" stroke="#12161a" stroke-width=".7"/><circle cx="17" cy="106.5" r="2.6" fill="url(#ID-chrome)"/>
+  <circle cx="91" cy="106.5" r="7" fill="url(#ID-tmbody)" stroke="#12161a" stroke-width=".7"/><circle cx="91" cy="106.5" r="2.6" fill="url(#ID-chrome)"/>
+  <rect x="24" y="115" width="10" height="4" rx="1.5" fill="#12161a"/><rect x="76" y="115" width="10" height="4" rx="1.5" fill="#12161a"/>
+</g>
+<path d="M94 100L104 48" stroke="#2b3138" stroke-width="5" stroke-linecap="round"/>
+<path d="M84 100L96 50" stroke="#3a424b" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+<path d="M98 66Q74 60 56 70" fill="none" stroke="#59616b" stroke-width="3.2" stroke-linecap="round"/><path d="M98 66Q74 60 56 70" fill="none" stroke="#e5484d" stroke-width="1" stroke-linecap="round" opacity=".8"/>
+<rect x="82" y="20" width="36" height="28" rx="6" fill="url(#ID-tmbody)" stroke="#12161a" stroke-width=".8" transform="rotate(-10 100 34)"/>
+<g transform="rotate(-10 100 34)">${lcd(86, 24, 28, 13)}
+<circle class="tm-led" cx="91" cy="43" r="1.3"/><circle class="tm-led" cx="98" cy="43" r="1.3"/><circle class="tm-led" cx="105" cy="43" r="1.3"/></g>`;
+
 /* style de télé : murale (défaut, rien autour), sur pied central, sur deux pieds */
 const tvStyle = (c) => ({ wall: "wall", mural: "wall", stand: "stand", pied: "stand", base: "stand", feet: "feet", pieds: "feet", legs: "feet" }[String(c?.style || "wall").toLowerCase()] || "wall");
 const TV_STAND = {
@@ -12029,6 +12108,10 @@ const DEF = {
   rowing_machine: { accent: "active", threshold: 10,
     fields: ["entity", "power", "energy", "cost", "speed", "cadence", "distance", "heart_rate", "calories", "usage_time", "switch"],
     keys: ["rameur", "rowing", "rower", "concept2", "waterrower", "ruderger"] },
+  // tapis de course : en marche au-dessus de threshold ; capteurs optionnels (vitesse, inclinaison, cadence, distance, cœur, calories)
+  treadmill: { accent: "active", threshold: 10,
+    fields: ["entity", "power", "energy", "cost", "speed", "incline", "cadence", "distance", "heart_rate", "calories", "usage_time", "switch"],
+    keys: ["tapis_de_course", "tapis_course", "tapis_roulant", "treadmill", "laufband", "loopband", "cinta_de_correr"] },
 };
 
 /* ------------------------------------------------------------------ */
@@ -12238,7 +12321,7 @@ const PERIODS = ["day", "week", "month", ...Object.keys(ROLLING)];
 const TILE_PERIODS = [...PERIODS, "year", "total"];
 // cartes avec la tuile « durée d'utilisation du jour » (capteur usage_time, sinon calcul depuis l'historique)
 // fitness (vélo elliptique, vélo d'appartement, rameur) : allure de l'animation et tuiles de séance
-const FIT_KINDS = ["elliptical", "exercise_bike", "rowing_machine"];
+const FIT_KINDS = ["elliptical", "exercise_bike", "rowing_machine", "treadmill"];
 const USAGE_KINDS = ["tv", "monitor", "ps5", "desktop_pc", "laptop", "air_compressor", ...FIT_KINDS];
 const USAGE_ON = ["on", "playing", "paused", "idle", "buffering", "home"];
 
@@ -12327,7 +12410,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "error", "status_2", "temperature_2", "target_temperature_2", "remaining_2", "power", "power_factor", "current", "voltage", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "switch_low", "switch_high", "direction", "pressure", "runtime_total", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water", "water_level", "steam", "power_level", "pellet_level", "ph", "orp", "dose_interval", "dose_timer", "dose_volume", "dose_time", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "switch_low", "switch_high", "direction", "pressure", "runtime_total", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water", "water_level", "steam", "incline", "power_level", "pellet_level", "ph", "orp", "dose_interval", "dose_timer", "dose_volume", "dose_time", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -12598,7 +12681,7 @@ class ApplianceCardBase extends HTMLElement {
       ftemp: S(c.freezer_temperature), fdoor: S(c.freezer_door), flex: S(c.flex_temperature),
       level: num(S(c.power_level)), pellets: num(S(c.pellet_level)),
       pool: kind === "pool_pump" || kind === "dosing_pump" ? Object.fromEntries(["ph", "orp", "pressure", "tds", "salt", "chlorine"].map((k) => [k, S(c[k])])) : null,
-      fit: FIT_KINDS.includes(kind) ? { cadence: S(c.cadence), distance: S(c.distance), hr: S(c.heart_rate), kcal: S(c.calories) } : null,
+      fit: FIT_KINDS.includes(kind) ? { incline: S(c.incline), cadence: S(c.cadence), distance: S(c.distance), hr: S(c.heart_rate), kcal: S(c.calories) } : null,
       runtime: parseRemaining(S(c.runtime)), runtimeTotal: parseRemaining(S(c.runtime_total)), usage: parseRemaining(S(c.usage_time)), speed: S(c.speed), bedTemp: num(S(c.bed_temperature)), humidity: num(S(c.humidity)), mode: S(c.mode), window: S(c.window), light: S(c.light), keg: num(S(c.keg_level)), pouring: S(c.pouring), batt: num(S(c.battery_level)), zone2: num(S(c.zone2_temperature)), zone2Ent: S(c.zone2_temperature),
       lampE: S(c.lamp_hours), picMode: S(c.picture_mode), tank: S(c.tank_full), fanSpeed: S(c.fan_speed), targetHum: S(c.target_humidity), cleanW: S(c.clean_water), dirtyW: S(c.dirty_water), pm25: S(c.pm25), filterE: S(c.filter),
       status: "idle", phase: null, alerts: [],
@@ -13835,14 +13918,21 @@ class ApplianceCardBase extends HTMLElement {
     }
     if (FIT_KINDS.includes(kind)) {
       // durée d'un tour de pédalier (ou d'un coup de rame) : cadence si elle est fournie, sinon la puissance (max_power = effort maximal)
-      const cad = num(m.fit.cadence), rower = kind === "rowing_machine";
+      const cad = num(m.fit.cadence), rower = kind === "rowing_machine", belt = kind === "treadmill";
       let per;
-      if (cad != null && cad > 0) per = 60 / cad;
+      // tapis : la bande défile à la vitesse du capteur speed (km/h), sinon selon la puissance ; l'inclinaison (%) relève le plateau
+      const spd = belt ? num(m.speed) : null;
+      if (belt && spd != null && spd > 0) per = 9 / spd;
+      else if (!belt && cad != null && cad > 0) per = 60 / cad;
       else {
         const f = m.watts != null ? Math.max(0, Math.min(1, m.watts / (c.max_power || 250))) : 0.4;
         per = rower ? 3.4 - 1.6 * f : 2.2 - 1.5 * f;
       }
       $("wrap").style.setProperty("--fp", `${Math.max(0.35, Math.min(4, per)).toFixed(2)}s`);
+      if (belt) {
+        const inc = num(m.fit.incline);
+        $("wrap").style.setProperty("--inc", (inc != null ? Math.max(0, Math.min(15, Math.atan(inc / 100) * 180 / Math.PI)) : 0).toFixed(1));
+      }
     }
     if (kind === "pool_pump") {
       const sp = num(m.speed), u = String(m.speed?.attributes.unit_of_measurement || "").toLowerCase();
@@ -14330,9 +14420,10 @@ class ApplianceCardBase extends HTMLElement {
       if (m.vol != null && !["off", "standby", "unavailable"].includes(m.status)) tile(m.muted ? "mdi:volume-off" : "mdi:volume-high", `${Math.round(m.vol * 100)} %`, lb("volume"), c.entity, m.muted ? "warn" : "");
       if (spOn && m.app) tile("mdi:music-box-outline", m.app, lb("source"), c.entity);
     } else if (FIT_KINDS.includes(kind)) {
-      const f = m.fit, rower = kind === "rowing_machine";
+      const f = m.fit, rower = kind === "rowing_machine", belt = kind === "treadmill";
       if (m.speed) tile("mdi:speedometer", fmtUnit(hass, m.speed, 1), lb("speed"), c.speed);
-      if (f.cadence) tile(rower ? "mdi:rowing" : "mdi:rotate-right", fmtUnit(hass, f.cadence, 0), lb(rower ? "stroke_rate" : "cadence"), c.cadence);
+      if (f.incline && !BAD.includes(String(f.incline.state).toLowerCase())) tile("mdi:slope-uphill", fmtUnit(hass, f.incline, 1), lb("incline"), c.incline);
+      if (f.cadence) tile(rower ? "mdi:rowing" : belt ? "mdi:shoe-print" : "mdi:rotate-right", fmtUnit(hass, f.cadence, 0), lb(rower ? "stroke_rate" : "cadence"), c.cadence);
       if (f.distance) tile("mdi:map-marker-distance", fmtUnit(hass, f.distance, 2), lb("distance"), c.distance);
       if (f.hr) tile("mdi:heart-pulse", fmtUnit(hass, f.hr, 0), lb("heart_rate"), c.heart_rate);
       if (f.kcal) tile("mdi:fire", fmtUnit(hass, f.kcal, 0), lb("calories"), c.calories);
@@ -14559,6 +14650,7 @@ const SEL = {
   direction: { entity: { domain: ["sensor", "select", "input_select", "fan"] } },
   // fitness : cadence (tr/min ou coups/min), distance, fréquence cardiaque, calories
   cadence: { entity: { domain: ["sensor", "number", "input_number"] } },
+  incline: { entity: { domain: ["sensor", "number", "input_number"] } },
   distance: { entity: { domain: ["sensor", "number", "input_number"] } },
   heart_rate: { entity: { domain: ["sensor", "number", "input_number"] } },
   calories: { entity: { domain: ["sensor", "number", "input_number"] } },
@@ -14925,7 +15017,7 @@ function stubFor(kind, hass) {
   }
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "dosing_pump", "elliptical", "exercise_bike", "rowing_machine", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "iron", "steam_station", "power_strip", "smart_plug", "printer", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "dosing_pump", "elliptical", "exercise_bike", "rowing_machine", "treadmill", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "iron", "steam_station", "power_strip", "smart_plug", "printer", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;
@@ -16573,11 +16665,11 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 
 /* ---------- fitness : vélo elliptique, vélo d'appartement, rameur ----------
    --fp (posé par la carte) : durée d'un tour de pédalier / d'un coup de rame, selon la cadence ou la puissance */
-.k-elliptical, .k-exercise_bike, .k-rowing_machine { --fp: 1.4s; }
-.k-elliptical svg, .k-exercise_bike svg, .k-rowing_machine svg { overflow: visible; }
-.fx-led, .bk-led, .rw-led { fill: #3a424b; transition: fill .3s; }
-.k-elliptical.active .fx-led, .k-exercise_bike.active .bk-led, .k-rowing_machine.active .rw-led { fill: #3ddc84; filter: drop-shadow(0 0 1.4px #3ddc84); }
-.k-elliptical.st-standby .fx-led:first-of-type, .k-exercise_bike.st-standby .bk-led:first-of-type, .k-rowing_machine.st-standby .rw-led:first-of-type { fill: #f5a300; }
+.k-elliptical, .k-exercise_bike, .k-rowing_machine, .k-treadmill { --fp: 1.4s; }
+.k-elliptical svg, .k-exercise_bike svg, .k-rowing_machine svg, .k-treadmill svg { overflow: visible; }
+.fx-led, .bk-led, .rw-led, .tm-led { fill: #3a424b; transition: fill .3s; }
+.k-elliptical.active .fx-led, .k-exercise_bike.active .bk-led, .k-rowing_machine.active .rw-led, .k-treadmill.active .tm-led { fill: #3ddc84; filter: drop-shadow(0 0 1.4px #3ddc84); }
+.k-elliptical.st-standby .fx-led:first-of-type, .k-exercise_bike.st-standby .bk-led:first-of-type, .k-rowing_machine.st-standby .rw-led:first-of-type, .k-treadmill.st-standby .tm-led:first-of-type { fill: #f5a300; }
 
 /* vélo elliptique : pédales en ellipse (x et y déphasés d'un quart de tour), bras en opposition, volant */
 .fx-fly { transform-box: view-box; transform-origin: 97px 108px; }
@@ -16611,6 +16703,13 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 @keyframes rw-seat { 0%, 100% { transform: translateX(0); } 38% { transform: translateX(30px); } }
 @keyframes rw-handle { 0%, 100% { transform: translateX(0); } 38% { transform: translateX(28px); } }
 @keyframes rw-strap { 0%, 100% { transform: scaleX(.5); } 38% { transform: scaleX(.97); } }
+
+/* tapis de course : le plateau se relève de --inc degrés autour de l'arrière, les rayures de la bande défilent (dessus vers l'arrière, dessous vers l'avant) */
+.tm-deck { transform-box: view-box; transform-origin: 14px 112px; transform: rotate(calc(var(--inc, 0) * -1deg)); transition: transform .6s; }
+.k-treadmill.active .tm-belt-a { animation: tm-back var(--fp) linear infinite; }
+.k-treadmill.active .tm-belt-b { animation: tm-front var(--fp) linear infinite; }
+@keyframes tm-back { to { transform: translateX(-8px); } }
+@keyframes tm-front { to { transform: translateX(8px); } }
 
 /* ---------- PlayStation 5 ---------- */
 /* bandeaux : gris éteinte, orange qui respire en mode repos, blanc allumée, balayage bleu au démarrage */

@@ -1,5 +1,8 @@
 {
   "common": {
+    "treadmill": "Bieżnia",
+    "incline": "Nachylenie",
+    "f_incline": "Czujnik nachylenia (%)",
     "iron": "Żelazko",
     "steam_station": "Stacja parowa",
     "iron_heating": "Nagrzewanie",
