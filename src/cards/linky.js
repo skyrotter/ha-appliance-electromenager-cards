@@ -259,7 +259,8 @@ class ApplianceLinkyCard extends HTMLElement {
     if (c.show_index) d.indexes.forEach(([lab, v, id]) => pages.push([lab, kwh(v), id]));
     if (c.show_injection) {
       if (c.entity_power_injection) pages.push([this._l('injection_power'), d.injPower === null ? '—' : `${Math.round(d.injPower.v)} ${d.injPower.unit}`, c.entity_power_injection]);
-      if (c.entity_injection) pages.push([this._l('injection'), kwh(d.injection), c.entity_injection]);
+      // l'index d'injection (kWh produits) est un index : il suit « Index » (show_index) ET « Injection » (show_injection)
+      if (c.entity_injection && c.show_index) pages.push([this._l('injection'), kwh(d.injection), c.entity_injection]);
     }
     if (c.show_tariff) pages.push([this._l('tariff'), this._t(d.hcNow ? 'offpeak' : 'peak'), c.entity_tariff]);
     if (c.show_cost && d.cost !== null) pages.push([this._l('cost'), `${d.cost.toFixed(2)} €`, c.entity_cost]);
