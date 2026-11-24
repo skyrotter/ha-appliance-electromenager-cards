@@ -171,7 +171,7 @@ function buildForm(kind) {
           { name: "animations", selector: { boolean: {} }, default: true },
           { name: "hide_when_inactive", selector: { boolean: {} } },
           { name: "hide_delay", selector: { number: { min: 0, max: 1440, step: 1, mode: "box", unit_of_measurement: "min" } } },
-          ...(kind === "generic" ? [{ name: "image", selector: { text: {} } }, { name: "images", selector: { object: {} } }] : []),
+          ...(kind === "generic" ? [{ name: "image", selector: { text: {} } }, { name: "image_off", selector: { image: { original: true } } }, { name: "image_on", selector: { image: { original: true } } }, { name: "images", selector: { object: {} } }, { name: "ring_light", selector: { entity: { domain: "light" } } }, { name: "ring_style", selector: { select: { mode: "dropdown", options: [{ value: "halo", label: tr(null, "ring_halo") }, { value: "ring", label: tr(null, "ring_ring") }] } } }, { name: "ring_x", selector: { number: { min: 0, max: 100, step: 1, mode: "slider", unit_of_measurement: "%" } } }, { name: "ring_y", selector: { number: { min: 0, max: 100, step: 1, mode: "slider", unit_of_measurement: "%" } } }, { name: "ring_size", selector: { number: { min: 10, max: 150, step: 1, mode: "slider", unit_of_measurement: "%" } } }] : []),
           ...(kind === "printer_3d" ? [
             // model : photo de l'imprimante (vide = dessin d'origine)
             { name: "model", selector: { select: { mode: "dropdown", options: [

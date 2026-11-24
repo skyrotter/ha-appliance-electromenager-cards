@@ -6,3 +6,13 @@
 .k-generic.active .gn-img { filter: drop-shadow(0 0 4px var(--c)); animation: gn-glow 2.6s ease-in-out infinite; }
 @keyframes gn-glow { 0%, 100% { filter: drop-shadow(0 0 3px var(--c)); } 50% { filter: drop-shadow(0 0 8px var(--c)); } }
 .k-generic .gn-empty { opacity: .6; }
+/* image_on / image_off : fondu entre les deux images selon l'état (l'image « éteinte » n'est plus grisée : c'est la vôtre) */
+.k-generic .gn-p { transition: opacity .4s; }
+.k-generic .gn-p.gn-on { opacity: 0; }
+.k-generic.active .gn-p.gn-on { opacity: 1; }
+.k-generic.active .gn-p.gn-off { opacity: 0; }
+.k-generic.st-unavailable .gn-p { opacity: .45; filter: grayscale(1); }
+/* anneau / halo de la lumière suivie (ring_light) */
+.gn-ringg { opacity: var(--rb, 0); transition: opacity .4s; }
+.gn-ring { stroke: var(--rc, #fff); stroke-width: 4; filter: drop-shadow(0 0 4px var(--rc, #fff)); transition: stroke .4s; }
+.gn-halo { opacity: .8; }

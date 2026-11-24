@@ -100,6 +100,7 @@ class ApplianceCardBase extends HTMLElement {
     const c = this._config;
     return ["entity", "error", "status_2", "temperature_2", "target_temperature_2", "remaining_2", "power", "power_factor", "current", "voltage", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
       "switch_low", "switch_high", "direction", "pressure", "runtime_total", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "entity_focus", "entity_activity", "entity_presence", "low_water", "water_level", "steam", "incline", "power_level", "pellet_level", "ph", "orp", "dose_interval", "dose_timer", "dose_volume", "dose_time", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      .concat(typeof c.ring_light === "string" && c.ring_light ? [c.ring_light] : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -1607,6 +1608,21 @@ class ApplianceCardBase extends HTMLElement {
       }
       const img = sr.querySelector(".gn-img");
       if (img && img.tagName.toLowerCase() === "image" && img.getAttribute("href") !== String(src).trim()) img.setAttribute("href", String(src).trim());
+    }
+    if (kind === "generic" && c.ring_light) {
+      // anneau / halo de la couleur et de la luminosité réelles d'une lumière (ex. passerelle Xiaomi) : rgb_color, sinon hs_color, sinon blanc chaud
+      const ls = hass.states[c.ring_light], gs = sr.querySelectorAll(".gn-ringg");
+      if (gs.length) {
+        const a = (ls && ls.attributes) || {}, on = !!ls && String(ls.state).toLowerCase() === "on";
+        let rgb = Array.isArray(a.rgb_color) ? a.rgb_color : null;
+        if (!rgb && Array.isArray(a.hs_color)) {
+          const [h, sa] = a.hs_color, l = 0.5 - sa / 200, f = (n) => { const k = (n + h / 30) % 12, q = (sa / 100) * Math.min(l, 1 - l); return Math.round(255 * (l - q * Math.max(-1, Math.min(k - 3, 9 - k, 1)))); };
+          rgb = [f(0), f(8), f(4)];
+        }
+        if (!rgb) rgb = [255, 226, 176];
+        const bri = Number.isFinite(Number(a.brightness)) ? Math.max(0.15, Math.min(1, Number(a.brightness) / 255)) : 1;
+        gs.forEach((g) => { g.style.setProperty("--rc", `rgb(${rgb.join(",")})`); g.style.setProperty("--rb", on ? bri.toFixed(3) : "0"); });
+      }
     }
     if (kind === "wet_vacuum") {
       // niveaux des réservoirs (capteur %, sinon plein / vide selon l'alerte), anneau de l'écran = batterie
