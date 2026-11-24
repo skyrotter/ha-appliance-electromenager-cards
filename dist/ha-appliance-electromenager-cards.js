@@ -10633,7 +10633,7 @@ SVG.phone_charger = (c) => {
   if (model === "ipad") return `${defs}
 ${phnPad(60, 112, 32, 7.5, 5)}
 <path d="M55 113 L59 66 L66 66 L65 113 Z" fill="url(#ID-phnstand)"/><path d="M59 66 L66 66 L65.5 72 L59.5 72 Z" fill="#4b525a"/>
-<g transform="rotate(-3 60 62)">
+<g>
   <rect x="25" y="14" width="70" height="90" rx="8.5" fill="url(#ID-phnalu)"/>
   <rect x="25.8" y="14.8" width="68.4" height="88.4" rx="7.8" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width=".5"/>
   <rect x="26.6" y="15.6" width="66.8" height="86.8" rx="7.2" fill="#08090b"/>
@@ -10667,11 +10667,11 @@ ${phnUi(PHN_LAYOUT.watch)}
 <rect x="38.8" y="39.8" width="42.4" height="44.4" rx="11.6" fill="url(#ID-phnglass)" pointer-events="none"/>`;
   return `${defs}
 ${phnPad(60, 114, 34, 7.5, 5)}
-<g transform="rotate(-8 60 70)">
+<g>
   <path d="M42 30 Q42 26 46 26 L80 26 Q84 26 84 30 L86 112 L40 112 Z" fill="url(#ID-phnstand)"/>
   <circle cx="63" cy="64" r="11" fill="none" stroke="#4a5158" stroke-width="1"/>
 </g>
-<g transform="rotate(-6 60 70)">
+<g>
   <rect x="32.4" y="38" width="1.8" height="7" rx=".9" fill="#a1a7ae"/><rect x="32.4" y="49" width="1.8" height="11" rx=".9" fill="#a1a7ae"/><rect x="32.4" y="62" width="1.8" height="11" rx=".9" fill="#a1a7ae"/>
   <rect x="85.8" y="46" width="1.8" height="16" rx=".9" fill="#a1a7ae"/>
   <rect x="34" y="18" width="52" height="92" rx="10" fill="url(#ID-phnti)"/>
