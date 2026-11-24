@@ -1849,6 +1849,22 @@
     "f_show_tiles": "Vis ruter",
     "f_show_status": "Vis status"
   },
+  "barometer": {
+    "name": "Barometer",
+    "storm": "Storm",
+    "rain": "Regn",
+    "change": "Ustabilt",
+    "fair": "Pent vær",
+    "unavailable": "Utilgjengelig",
+    "pressure": "Lufttrykk",
+    "temperature": "Temperatur",
+    "humidity": "Luftfuktighet",
+    "f_entity_pressure": "Trykksensor (hPa)",
+    "f_reference_pressure": "Referansevisning (hPa, valgfri)",
+    "f_show_pressure": "trykkflis",
+    "f_show_temperature": "temperaturflis",
+    "f_show_humidity": "fuktighetsflis"
+  },
   "co2_monitor": {
     "name": "CO₂-måler",
     "good": "God luft",

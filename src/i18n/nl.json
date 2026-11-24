@@ -2044,6 +2044,22 @@
     "f_show_tiles": "Tegels tonen",
     "f_show_status": "Status tonen"
   },
+  "barometer": {
+    "name": "Barometer",
+    "storm": "Storm",
+    "rain": "Regen",
+    "change": "Veranderlijk",
+    "fair": "Mooi weer",
+    "unavailable": "Niet beschikbaar",
+    "pressure": "Luchtdruk",
+    "temperature": "Temperatuur",
+    "humidity": "Luchtvochtigheid",
+    "f_entity_pressure": "Druksensor (hPa)",
+    "f_reference_pressure": "Referentiewijzer (hPa, optioneel)",
+    "f_show_pressure": "druktegel",
+    "f_show_temperature": "temperatuurtegel",
+    "f_show_humidity": "vochtigheidstegel"
+  },
   "co2_monitor": {
     "name": "CO₂-monitor",
     "good": "Goede lucht",

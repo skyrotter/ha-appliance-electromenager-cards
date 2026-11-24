@@ -2422,6 +2422,22 @@
     "f_show_tiles": "Прикажи плочице",
     "f_show_status": "Прикажи стање"
   },
+  "barometer": {
+    "name": "Барометар",
+    "storm": "Олуја",
+    "rain": "Киша",
+    "change": "Променљиво",
+    "fair": "Лепо време",
+    "unavailable": "Недоступно",
+    "pressure": "Притисак",
+    "temperature": "Температура",
+    "humidity": "Влажност",
+    "f_entity_pressure": "Сензор притиска (hPa)",
+    "f_reference_pressure": "Референтна казаљка (hPa, опционо)",
+    "f_show_pressure": "плочица притиска",
+    "f_show_temperature": "плочица температуре",
+    "f_show_humidity": "плочица влажности"
+  },
   "co2_monitor": {
     "name": "CO₂ монитор",
     "good": "Добар ваздух",

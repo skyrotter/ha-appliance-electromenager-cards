@@ -2273,6 +2273,22 @@
     "f_show_tiles": "Vis felter",
     "f_show_status": "Vis status"
   },
+  "barometer": {
+    "name": "Barometer",
+    "storm": "Storm",
+    "rain": "Regn",
+    "change": "Ustadigt",
+    "fair": "Godt vejr",
+    "unavailable": "Utilgængelig",
+    "pressure": "Lufttryk",
+    "temperature": "Temperatur",
+    "humidity": "Luftfugtighed",
+    "f_entity_pressure": "Tryksensor (hPa)",
+    "f_reference_pressure": "Referencevisér (hPa, valgfri)",
+    "f_show_pressure": "trykfelt",
+    "f_show_temperature": "temperaturfelt",
+    "f_show_humidity": "fugtighedsfelt"
+  },
   "co2_monitor": {
     "name": "CO₂-måler",
     "good": "God luft",

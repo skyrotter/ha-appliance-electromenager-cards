@@ -2124,6 +2124,22 @@
     "f_show_tiles": "Csempék megjelenítése",
     "f_show_status": "Állapot megjelenítése"
   },
+  "barometer": {
+    "name": "Barométer",
+    "storm": "Vihar",
+    "rain": "Eső",
+    "change": "Változékony",
+    "fair": "Szép idő",
+    "unavailable": "Nem elérhető",
+    "pressure": "Légnyomás",
+    "temperature": "Hőmérséklet",
+    "humidity": "Páratartalom",
+    "f_entity_pressure": "Nyomásérzékelő (hPa)",
+    "f_reference_pressure": "Referenciamutató (hPa, opcionális)",
+    "f_show_pressure": "nyomás csempe",
+    "f_show_temperature": "hőmérséklet csempe",
+    "f_show_humidity": "páratartalom csempe"
+  },
   "co2_monitor": {
     "name": "CO₂-mérő",
     "good": "Jó levegő",

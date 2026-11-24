@@ -3177,6 +3177,22 @@
     "f_show_tiles": "Show tiles",
     "f_show_status": "Show status"
   },
+  "barometer": {
+    "name": "Barometer",
+    "storm": "Storm",
+    "rain": "Rain",
+    "change": "Changeable",
+    "fair": "Fair weather",
+    "unavailable": "Unavailable",
+    "pressure": "Pressure",
+    "temperature": "Temperature",
+    "humidity": "Humidity",
+    "f_entity_pressure": "Pressure sensor (hPa)",
+    "f_reference_pressure": "Reference hand (hPa, optional)",
+    "f_show_pressure": "pressure tile",
+    "f_show_temperature": "temperature tile",
+    "f_show_humidity": "humidity tile"
+  },
   "co2_monitor": {
     "name": "CO₂ monitor",
     "good": "Good air",

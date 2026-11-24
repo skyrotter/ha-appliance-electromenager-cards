@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.211.0";
+const VERSION = "1.212.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -18149,12 +18149,12 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
 (async () => {
   const base = import.meta.url;
   // ?v=<version> : après une mise à jour, le navigateur ne ressert pas d'anciens morceaux depuis son cache
-  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.211.0`, base).href);
+  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.212.0`, base).href);
   await chunk("card-helpers");
   await chunk("editor-labels");
   // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre
   window.dispatchEvent(new Event("appliance-helpers-ready"));
-  await Promise.all(["aquarium", "reef-aquarium", "linky", "battery", "ev-charger", "robot-vacuum", "robot-mower", "pellet-boiler", "gas-boiler", "water-heat-pump", "air-water-heat-pump", "diesel-heater", "jacuzzi", "internet-box", "hue-sync-box", "door-sensor", "motion-sensor", "alarm-keypad", "air-quality", "pet-feeder", "portable-ac", "access", "sauna", "pumps", "pool-robot", "ups", "underfloor-heating", "lights", "shutters", "water-meter", "gas-meter", "electric-meter", "trv", "room-climate", "mailbox", "smoke-detector", "smart-lock", "cat-flap", "pet-fountain", "soundbar", "leak-detector", "mini-pc", "nas", "tv-box", "scale", "thermo-heater", "water-valves", "water-softener", "camera", "poe-switch", "raspberry-pi", "water-filter", "irrigation", "led-strip", "rain-gauge", "plant-monitor", "co2-monitor", "solar-house", "htpc", "humidifier", "fan-heater", "inflatable-spa", "heat-meter", "poubelle", "picker", "zigbee-coordinator", "wall-tablet"].map(chunk));
+  await Promise.all(["aquarium", "reef-aquarium", "linky", "battery", "ev-charger", "robot-vacuum", "robot-mower", "pellet-boiler", "gas-boiler", "water-heat-pump", "air-water-heat-pump", "diesel-heater", "jacuzzi", "internet-box", "hue-sync-box", "door-sensor", "motion-sensor", "alarm-keypad", "air-quality", "pet-feeder", "portable-ac", "access", "sauna", "pumps", "pool-robot", "ups", "underfloor-heating", "lights", "shutters", "water-meter", "gas-meter", "electric-meter", "trv", "room-climate", "mailbox", "smoke-detector", "smart-lock", "cat-flap", "pet-fountain", "soundbar", "leak-detector", "mini-pc", "nas", "tv-box", "scale", "thermo-heater", "water-valves", "water-softener", "camera", "poe-switch", "raspberry-pi", "water-filter", "irrigation", "led-strip", "rain-gauge", "plant-monitor", "co2-monitor", "barometer", "solar-house", "htpc", "humidifier", "fan-heater", "inflatable-spa", "heat-meter", "poubelle", "picker", "zigbee-coordinator", "wall-tablet"].map(chunk));
   // Fires once every chunk has finished registering its card(s): anything that
   // needs to see the complete window.customCards list (e.g. the single-card
   // picker) must wait for this instead of assuming load order.

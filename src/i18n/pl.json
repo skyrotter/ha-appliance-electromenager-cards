@@ -1845,6 +1845,22 @@
     "f_show_tiles": "Pokaż kafelki",
     "f_show_status": "Pokaż stan"
   },
+  "barometer": {
+    "name": "Barometr",
+    "storm": "Burza",
+    "rain": "Deszcz",
+    "change": "Zmienna",
+    "fair": "Ładna pogoda",
+    "unavailable": "Niedostępne",
+    "pressure": "Ciśnienie",
+    "temperature": "Temperatura",
+    "humidity": "Wilgotność",
+    "f_entity_pressure": "Czujnik ciśnienia (hPa)",
+    "f_reference_pressure": "Wskazówka odniesienia (hPa, opcjonalnie)",
+    "f_show_pressure": "kafelek ciśnienia",
+    "f_show_temperature": "kafelek temperatury",
+    "f_show_humidity": "kafelek wilgotności"
+  },
   "co2_monitor": {
     "name": "Monitor CO₂",
     "good": "Dobre powietrze",

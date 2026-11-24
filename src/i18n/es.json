@@ -3099,6 +3099,22 @@
     "f_show_tiles": "Mostrar mosaicos",
     "f_show_status": "Mostrar estado"
   },
+  "barometer": {
+    "name": "Barómetro",
+    "storm": "Tormenta",
+    "rain": "Lluvia",
+    "change": "Variable",
+    "fair": "Buen tiempo",
+    "unavailable": "No disponible",
+    "pressure": "Presión",
+    "temperature": "Temperatura",
+    "humidity": "Humedad",
+    "f_entity_pressure": "Sensor de presión (hPa)",
+    "f_reference_pressure": "Aguja de referencia (hPa, opcional)",
+    "f_show_pressure": "tarjeta de presión",
+    "f_show_temperature": "tarjeta de temperatura",
+    "f_show_humidity": "tarjeta de humedad"
+  },
   "co2_monitor": {
     "name": "Monitor de CO₂",
     "good": "Aire bueno",

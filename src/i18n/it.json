@@ -2044,6 +2044,22 @@
     "f_show_tiles": "Mostra riquadri",
     "f_show_status": "Mostra stato"
   },
+  "barometer": {
+    "name": "Barometro",
+    "storm": "Tempesta",
+    "rain": "Pioggia",
+    "change": "Variabile",
+    "fair": "Bel tempo",
+    "unavailable": "Non disponibile",
+    "pressure": "Pressione",
+    "temperature": "Temperatura",
+    "humidity": "Umidità",
+    "f_entity_pressure": "Sensore di pressione (hPa)",
+    "f_reference_pressure": "Lancetta di riferimento (hPa, opzionale)",
+    "f_show_pressure": "riquadro pressione",
+    "f_show_temperature": "riquadro temperatura",
+    "f_show_humidity": "riquadro umidità"
+  },
   "co2_monitor": {
     "name": "Monitor CO₂",
     "good": "Aria buona",

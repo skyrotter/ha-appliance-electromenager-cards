@@ -3143,6 +3143,22 @@
     "f_show_tiles": "Mostrar blocos",
     "f_show_status": "Mostrar estado"
   },
+  "barometer": {
+    "name": "Barómetro",
+    "storm": "Tempestade",
+    "rain": "Chuva",
+    "change": "Variável",
+    "fair": "Bom tempo",
+    "unavailable": "Indisponível",
+    "pressure": "Pressão",
+    "temperature": "Temperatura",
+    "humidity": "Humidade",
+    "f_entity_pressure": "Sensor de pressão (hPa)",
+    "f_reference_pressure": "Ponteiro de referência (hPa, opcional)",
+    "f_show_pressure": "bloco de pressão",
+    "f_show_temperature": "bloco de temperatura",
+    "f_show_humidity": "bloco de humidade"
+  },
   "co2_monitor": {
     "name": "Monitor de CO₂",
     "good": "Ar bom",

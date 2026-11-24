@@ -3156,6 +3156,22 @@
     "f_show_tiles": "Afficher les tuiles",
     "f_show_status": "Afficher l'état"
   },
+  "barometer": {
+    "name": "Baromètre",
+    "storm": "Tempête",
+    "rain": "Pluie",
+    "change": "Variable",
+    "fair": "Beau temps",
+    "unavailable": "Indisponible",
+    "pressure": "Pression",
+    "temperature": "Température",
+    "humidity": "Humidité",
+    "f_entity_pressure": "Capteur de pression (hPa)",
+    "f_reference_pressure": "Aiguille de repère (hPa, optionnel)",
+    "f_show_pressure": "tuile pression",
+    "f_show_temperature": "tuile température",
+    "f_show_humidity": "tuile humidité"
+  },
   "co2_monitor": {
     "name": "Moniteur de CO₂",
     "good": "Air sain",

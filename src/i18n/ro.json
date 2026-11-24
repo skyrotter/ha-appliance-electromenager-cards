@@ -1681,6 +1681,22 @@
     "f_show_tiles": "Afișează plăcile",
     "f_show_status": "Afișează starea"
   },
+  "barometer": {
+    "name": "Barometru",
+    "storm": "Furtună",
+    "rain": "Ploaie",
+    "change": "Variabil",
+    "fair": "Vreme frumoasă",
+    "unavailable": "Indisponibil",
+    "pressure": "Presiune",
+    "temperature": "Temperatură",
+    "humidity": "Umiditate",
+    "f_entity_pressure": "Senzor de presiune (hPa)",
+    "f_reference_pressure": "Ac de referință (hPa, opțional)",
+    "f_show_pressure": "cardul presiune",
+    "f_show_temperature": "cardul temperatură",
+    "f_show_humidity": "cardul umiditate"
+  },
   "co2_monitor": {
     "name": "Monitor CO₂",
     "good": "Aer bun",

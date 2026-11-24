@@ -1669,6 +1669,22 @@
     "f_show_tiles": "Zobrazit dlaždice",
     "f_show_status": "Zobrazit stav"
   },
+  "barometer": {
+    "name": "Barometr",
+    "storm": "Bouře",
+    "rain": "Déšť",
+    "change": "Proměnlivo",
+    "fair": "Pěkné počasí",
+    "unavailable": "Nedostupné",
+    "pressure": "Tlak",
+    "temperature": "Teplota",
+    "humidity": "Vlhkost",
+    "f_entity_pressure": "Snímač tlaku (hPa)",
+    "f_reference_pressure": "Ručička pro porovnání (hPa, volitelně)",
+    "f_show_pressure": "dlaždice tlaku",
+    "f_show_temperature": "dlaždice teploty",
+    "f_show_humidity": "dlaždice vlhkosti"
+  },
   "co2_monitor": {
     "name": "Monitor CO₂",
     "good": "Dobrý vzduch",

@@ -2445,6 +2445,22 @@
     "f_show_tiles": "Kacheln anzeigen",
     "f_show_status": "Status anzeigen"
   },
+  "barometer": {
+    "name": "Barometer",
+    "storm": "Sturm",
+    "rain": "Regen",
+    "change": "Wechselhaft",
+    "fair": "Schönes Wetter",
+    "unavailable": "Nicht verfügbar",
+    "pressure": "Luftdruck",
+    "temperature": "Temperatur",
+    "humidity": "Luftfeuchtigkeit",
+    "f_entity_pressure": "Drucksensor (hPa)",
+    "f_reference_pressure": "Merkzeiger (hPa, optional)",
+    "f_show_pressure": "Druck-Kachel",
+    "f_show_temperature": "Temperatur-Kachel",
+    "f_show_humidity": "Feuchte-Kachel"
+  },
   "co2_monitor": {
     "name": "CO₂-Monitor",
     "good": "Gute Luft",

@@ -1667,6 +1667,22 @@
     "f_show_tiles": "Показывать плитки",
     "f_show_status": "Показывать состояние"
   },
+  "barometer": {
+    "name": "Барометр",
+    "storm": "Буря",
+    "rain": "Дождь",
+    "change": "Переменно",
+    "fair": "Ясно",
+    "unavailable": "Недоступно",
+    "pressure": "Давление",
+    "temperature": "Температура",
+    "humidity": "Влажность",
+    "f_entity_pressure": "Датчик давления (гПа)",
+    "f_reference_pressure": "Стрелка-метка (гПа, необязательно)",
+    "f_show_pressure": "плитка давления",
+    "f_show_temperature": "плитка температуры",
+    "f_show_humidity": "плитка влажности"
+  },
   "co2_monitor": {
     "name": "Датчик CO₂",
     "good": "Хороший воздух",
