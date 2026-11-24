@@ -139,6 +139,7 @@ Klicke auf eine Karte für ihre Optionen und Beispiele.
 | Karte | Typ |
 |---|---|
 | [Solarmodule](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/solar.md) | `custom:appliance-solar-card` |
+| [Solarhaus (Energiefluss)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/solar-house.md) | `custom:appliance-solar-house-card` |
 | [Heimspeicher](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/battery.md) | `custom:appliance-battery-card` |
 | [E-Auto-Ladestation (Wallbox + Auto)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/ev-charger.md) | `custom:appliance-ev-charger-card` |
 | [Linky-Stromzähler](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/linky.md) | `custom:appliance-linky-card` |

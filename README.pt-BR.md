@@ -151,6 +151,7 @@ Clique em um cartão para consultar as opções e os exemplos.
 | Cartão | Tipo |
 |---|---|
 | [Painéis solares](docs/cards/solar.md) | `custom:appliance-solar-card` |
+| [Casa solar (fluxo de energia)](docs/cards/solar-house.md) | `custom:appliance-solar-house-card` |
 | [Bateria doméstica](docs/cards/battery.md) | `custom:appliance-battery-card` |
 | [Carregador de veículo elétrico (wallbox + carro)](docs/cards/ev-charger.md) | `custom:appliance-ev-charger-card` |
 | [Medidor de energia Linky](docs/cards/linky.md) | `custom:appliance-linky-card` |

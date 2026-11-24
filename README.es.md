@@ -139,6 +139,7 @@ Pulsa una tarjeta para ver sus opciones y ejemplos (documentación en inglés).
 | Tarjeta | Tipo |
 |---|---|
 | [Paneles solares](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/solar.md) | `custom:appliance-solar-card` |
+| [Casa solar (flujo de energía)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/solar-house.md) | `custom:appliance-solar-house-card` |
 | [Batería doméstica](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/battery.md) | `custom:appliance-battery-card` |
 | [Cargador de coche eléctrico (wallbox + coche)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/ev-charger.md) | `custom:appliance-ev-charger-card` |
 | [Contador eléctrico Linky](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/linky.md) | `custom:appliance-linky-card` |
