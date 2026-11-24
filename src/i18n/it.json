@@ -1961,6 +1961,10 @@
     "days": "g"
   },
   "htpc": {
+    "f_poster_position": "Posizione della locandina",
+    "poster_center": "Centrata (predefinito)",
+    "poster_left": "Sinistra",
+    "poster_right": "Destra",
     "name": "PC home theater (HTPC)",
     "off": "Spento",
     "standby": "Standby",

@@ -2190,6 +2190,10 @@
     "room": "Rum"
   },
   "htpc": {
+    "f_poster_position": "Plakatens placering",
+    "poster_center": "Centreret (standard)",
+    "poster_left": "Venstre",
+    "poster_right": "Højre",
     "name": "Hjemmebiograf-pc (HTPC)",
     "off": "Slukket",
     "standby": "Standby",

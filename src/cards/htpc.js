@@ -30,7 +30,9 @@ svg{display:block;width:calc(100% * var(--illus-scale,1));max-width:100%;height:
 .led{transition:fill .3s}
 .marq{animation:htmarq var(--d,10s) linear infinite}
 .ring{fill:none;stroke-width:1.6}.pulse{animation:htpulse 2.2s ease-in-out infinite}
-.now{display:none;align-items:center;gap:10px;margin-top:6px}.now.show{display:flex}
+.now{display:none;align-items:center;justify-content:center;gap:10px;margin-top:6px}.now.show{display:flex}
+.now.left{justify-content:flex-start}.now.right{justify-content:flex-start;flex-direction:row-reverse}.now.right .tx{text-align:right}
+.now .tx{max-width:calc(100% - 76px)}
 .now img{width:64px;height:64px;object-fit:cover;border-radius:8px;flex:none;background:rgba(127,127,127,.15)}
 .now .tx{min-width:0}.now .t{font-size:14px;font-weight:600;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .now .s{font-size:12px;color:var(--secondary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
@@ -67,7 +69,7 @@ svg{display:block;width:calc(100% * var(--illus-scale,1));max-width:100%;height:
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { show_poster: true, show_seek: true, show_volume: true, show_source: true, ...c };
+      this._c = { poster_position: 'center', show_poster: true, show_seek: true, show_volume: true, show_source: true, ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -174,6 +176,7 @@ svg{display:block;width:calc(100% * var(--illus-scale,1));max-width:100%;height:
       // affiche, titre, sous-titre
       const { t, sub } = this._titles(a), pic = a.entity_picture_local || a.entity_picture;
       const now = $('htnow'); now.classList.toggle('show', active && (c.show_poster !== false || !!t));
+      now.classList.toggle('left', c.poster_position === 'left'); now.classList.toggle('right', c.poster_position === 'right');
       const img = $('htpic'); img.style.display = c.show_poster !== false && pic ? '' : 'none';
       if (pic) { const u = String(pic).startsWith('/') && hass.hassUrl ? hass.hassUrl(pic) : pic; if (img.dataset.u !== u) { img.dataset.u = u; img.src = u; } }
       $('htt').textContent = t; $('hts').textContent = sub;
@@ -223,6 +226,7 @@ svg{display:block;width:calc(100% * var(--illus-scale,1));max-width:100%;height:
         { name: 'name', selector: { text: {} } },
         { name: 'entity', selector: { entity: { domain: 'media_player' } } },
         { name: 'entity_power', selector: { entity: { domain: 'sensor' } } },
+        { name: 'poster_position', selector: { select: { mode: 'dropdown', options: ['center', 'left', 'right'].map((value) => ({ value, label: tr[`poster_${value}`] || value })) } } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ...window.applianceTileFields(this._hass),

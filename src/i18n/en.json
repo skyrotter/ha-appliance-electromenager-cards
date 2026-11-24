@@ -3094,6 +3094,10 @@
     "sound_mode": "Audio mode"
   },
   "htpc": {
+    "f_poster_position": "Poster position",
+    "poster_center": "Centered (default)",
+    "poster_left": "Left",
+    "poster_right": "Right",
     "name": "Home theater PC",
     "off": "Off",
     "standby": "Standby",

@@ -2362,6 +2362,10 @@
     "fan_auto": "Auto"
   },
   "htpc": {
+    "f_poster_position": "Position des Covers",
+    "poster_center": "Zentriert (Standard)",
+    "poster_left": "Links",
+    "poster_right": "Rechts",
     "name": "Heimkino-PC (HTPC)",
     "off": "Aus",
     "standby": "Standby",

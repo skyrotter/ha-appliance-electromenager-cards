@@ -1762,6 +1762,10 @@
     "reserve": "Ciepła woda"
   },
   "htpc": {
+    "f_poster_position": "Pozycja plakatu",
+    "poster_center": "Wyśrodkowany (domyślnie)",
+    "poster_left": "Lewo",
+    "poster_right": "Prawo",
     "name": "Komputer kina domowego (HTPC)",
     "off": "Wyłączony",
     "standby": "Czuwanie",

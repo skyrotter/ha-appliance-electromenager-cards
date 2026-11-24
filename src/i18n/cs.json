@@ -1586,6 +1586,10 @@
     "obese": "Obezita"
   },
   "htpc": {
+    "f_poster_position": "Poloha plakátu",
+    "poster_center": "Na střed (výchozí)",
+    "poster_left": "Vlevo",
+    "poster_right": "Vpravo",
     "name": "Počítač domácího kina (HTPC)",
     "off": "Vypnuto",
     "standby": "Pohotovost",
