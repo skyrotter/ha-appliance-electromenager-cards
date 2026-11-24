@@ -3114,6 +3114,11 @@
     "f_show_source": "Mostrar a lista de fontes"
   },
   "solar_house": {
+    "f_battery_count": "Número de baterias (1-3)",
+    "f_entity_battery_2_power": "Bateria 2: potência",
+    "f_entity_battery_2_soc": "Bateria 2: nível de carga (%)",
+    "f_entity_battery_3_power": "Bateria 3: potência",
+    "f_entity_battery_3_soc": "Bateria 3: nível de carga (%)",
     "car": "Carro",
     "f_entity_car_soc": "Nível da bateria do carro (%)",
     "name": "Casa solar",

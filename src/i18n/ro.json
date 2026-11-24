@@ -1652,6 +1652,11 @@
     "f_show_source": "Afișează lista surselor"
   },
   "solar_house": {
+    "f_battery_count": "Număr de baterii (1-3)",
+    "f_entity_battery_2_power": "Bateria 2: putere",
+    "f_entity_battery_2_soc": "Bateria 2: nivel de încărcare (%)",
+    "f_entity_battery_3_power": "Bateria 3: putere",
+    "f_entity_battery_3_soc": "Bateria 3: nivel de încărcare (%)",
     "car": "Mașină",
     "f_entity_car_soc": "Nivelul bateriei mașinii (%)",
     "name": "Casă solară",

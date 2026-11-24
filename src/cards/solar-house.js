@@ -97,6 +97,20 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
     water: 'M226 146 H254',                    // tableau → chauffe-eau (fenêtre droite)
   };
 
+  // une à trois batteries côte à côte (zone x = 6 à 74) ; chaque batterie a son niveau, son éclair de charge et, si plusieurs, son pourcentage
+  const BATTS = (n) => {
+    const span = 68, gap = n > 1 ? 4 : 0, w = n === 1 ? 34 : (span - gap * (n - 1)) / n, x0 = n === 1 ? 40 : 6, out = [];
+    for (let i = 0; i < n; i++) {
+      const x = x0 + i * (w + gap), pad = n === 1 ? 6 : 4, iw = w - 2 * pad, cx = x + w / 2;
+      out.push(`<g><rect x="${x.toFixed(1)}" y="146" width="${w.toFixed(1)}" height="62" rx="5" fill="url(#shbatt)" stroke="#aab4bf"/>
+    <rect x="${(x + pad).toFixed(1)}" y="156" width="${iw.toFixed(1)}" height="44" rx="3" fill="#dfe5ea"/><rect class="blevel" data-i="${i}" x="${(x + pad).toFixed(1)}" y="200" width="${iw.toFixed(1)}" height="0" rx="3" fill="#2fbf71"/>
+    <rect x="${(cx - 5).toFixed(1)}" y="150" width="10" height="2.4" rx="1.2" fill="#9aa3ad"/>
+    <path class="bbolt" data-i="${i}" d="M0 0l-5 9h4l-2 7 6-10h-4z" transform="translate(${(cx).toFixed(1)} 166)" fill="#fff" opacity=".9"/>
+    ${n > 1 ? `<text class="bsoc" data-i="${i}" x="${cx.toFixed(1)}" y="190" text-anchor="middle" font-size="8" font-weight="700" fill="#4b5560"></text>` : ''}</g>`);
+    }
+    return out.join('');
+  };
+
   const SCENE = () => `<svg viewBox="0 0 400 226" role="img">
   <defs>
     <linearGradient id="shsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe8ff"/><stop offset="1" stop-color="#f2f8ff"/></linearGradient>
@@ -130,11 +144,8 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
   <rect x="204" y="134" width="22" height="24" rx="3" fill="#ffffff" stroke="#9aa3ad"/><path d="M209 141h12M209 146h12M209 151h7" stroke="#c3cad3" stroke-width="1.6" stroke-linecap="round"/><circle cx="221" cy="151" r="1.5" fill="#2fbf71"/>
   <!-- compteur (Linky) sur le mur droit -->
   <rect x="296" y="166" width="12" height="16" rx="2" fill="#e8f3d8" stroke="#9ab27a"/><rect x="298.5" y="169" width="7" height="4" rx="1" fill="#2c3a22"/>
-  <!-- batterie de stockage -->
-  <g class="batt"><rect x="40" y="146" width="34" height="62" rx="5" fill="url(#shbatt)" stroke="#aab4bf"/>
-    <rect x="46" y="156" width="22" height="44" rx="3" fill="#dfe5ea"/><rect class="blevel" x="46" y="200" width="22" height="0" rx="3" fill="#2fbf71"/>
-    <rect x="52" y="150" width="10" height="2.4" rx="1.2" fill="#9aa3ad"/>
-    <path class="bbolt" d="M58 166l-5 9h4l-2 7 6-10h-4z" fill="#fff" opacity=".9"/></g>
+  <!-- batterie(s) de stockage : dessinées dynamiquement (battery_count) -->
+  <g class="batt" id="battg"></g>
   <!-- borne de recharge -->
   <g class="evg"><rect x="330" y="164" width="16" height="44" rx="3" fill="#3a4047"/><rect x="332" y="168" width="12" height="20" rx="2" fill="#f2f4f6"/><rect class="evled" x="335.5" y="171" width="5" height="10" rx="2"/>
     <path d="M346 186c8 2 8 12 0 14" fill="none" stroke="#2b3036" stroke-width="2"/></g>
@@ -202,12 +213,25 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       let home = this._w(c.entity_home);
       // consommation calculée : production + soutirage + décharge − injection − charge − borne − ballon
       if (!isFinite(home)) home = Math.max(0, sol + z(grid) - z(batt) - ev - wh);
-      const socS = c.entity_battery_soc && this._hass.states[c.entity_battery_soc];
-      const soc = socS ? parseFloat(socS.state) : NaN;
+      // plusieurs batteries (battery_count, 1 à 3) : soit chacune a ses entités (entity_battery_2_power / _soc…), la puissance totale est alors la somme
+      // et le niveau la moyenne ; soit elles reflètent toutes les entités uniques (capteurs combinés)
+      const MAXB = 3, inv = (x) => (isFinite(x) && c.battery_invert ? -x : x), socOf = (id) => { const st = id && this._hass.states[id]; const x = st ? parseFloat(st.state) : NaN; return x; };
+      const idx = [2, 3].filter((i) => c[`entity_battery_${i}_power`] || c[`entity_battery_${i}_soc`]);
+      const own = idx.length > 0, nb = Math.max(1, Math.min(MAXB, Math.round(Number(c.battery_count)) || 1, MAXB));
+      const count = own ? Math.max(nb, ...idx) : nb;
+      const bats = [];
+      for (let i = 1; i <= count; i++) {
+        const pid = i === 1 ? c.entity_battery_power : c[`entity_battery_${i}_power`], sid = i === 1 ? c.entity_battery_soc : c[`entity_battery_${i}_soc`];
+        const w = own ? inv(this._w(pid)) : batt, sc = own ? socOf(sid) : socOf(c.entity_battery_soc);
+        bats.push({ w, soc: sc });
+      }
+      if (own) { const ws = bats.map((x) => x.w).filter(isFinite); if (ws.length) batt = ws.reduce((x, y) => x + y, 0); }
+      const socs = bats.map((x) => x.soc).filter(isFinite);
+      const soc = socs.length ? socs.reduce((x, y) => x + y, 0) / socs.length : NaN;
       const carS = c.entity_car_soc && this._hass.states[c.entity_car_soc], car = carS ? parseFloat(carS.state) : NaN;
       const sun = this._hass.states['sun.sun'];
       const night = sun ? sun.state === 'below_horizon' : sol < THR;
-      return { sol, batt, grid, ev, wh, home, soc, car, night, hasBatt: !!(c.entity_battery_power || c.entity_battery_soc), hasGrid: isFinite(grid), hasEv: !!(c.entity_ev || c.entity_car_soc), hasWh: !!c.entity_water_heater };
+      return { sol, batt, grid, ev, wh, home, soc, car, night, bats, hasBatt: !!(c.entity_battery_power || c.entity_battery_soc || bats.some((x) => isFinite(x.w) || isFinite(x.soc))), hasGrid: isFinite(grid), hasEv: !!(c.entity_ev || c.entity_car_soc), hasWh: !!c.entity_water_heater };
     }
 
     _build() {
@@ -223,7 +247,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
         const c = this._c, k = el.dataset.k;
         this._more(c[ENT[k]] || (k === 'battery' && c.entity_battery_power) || (k === 'grid' && (c.entity_grid_import || c.entity_grid_export)) || c.entity_solar);
       }));
-      this._root = root; this._card = root.querySelector('ha-card'); this._sig = ''; this._built = true;
+      this._root = root; this._card = root.querySelector('ha-card'); this._sig = ''; this._nB = null; this._built = true;
     }
 
     // points lumineux : 3 par flux actif, sens et vitesse selon la puissance ; reconstruits seulement quand un flux change
@@ -263,9 +287,14 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       r.querySelector('.evg').classList.toggle('hide', !v.hasEv); r.querySelector('.c-ev').classList.toggle('hide', !v.hasEv);
       r.querySelector('.whg').classList.toggle('hide', !v.hasWh); r.querySelector('.c-water').classList.toggle('hide', !v.hasWh);
       // niveau de la batterie (vert, orange sous 30 %, rouge sous 15 %)
-      const soc = isFinite(v.soc) ? Math.max(0, Math.min(100, v.soc)) : 50, lv = r.querySelector('.blevel'), hh = 44 * soc / 100;
-      lv.setAttribute('y', (200 - hh).toFixed(1)); lv.setAttribute('height', hh.toFixed(1)); lv.setAttribute('fill', soc < 15 ? '#ef5350' : soc < 30 ? '#ffa726' : '#2fbf71');
-      r.querySelector('.bbolt').style.opacity = chg ? '.95' : '0';
+      const nB = v.bats.length, many = nB > 1;
+      if (this._nB !== nB) { this._nB = nB; r.getElementById('battg').innerHTML = BATTS(nB); r.querySelector('.p-battery').setAttribute('transform', `translate(${nB === 1 ? 57 : 40} 132)`); }
+      v.bats.forEach((b, i) => {
+        const soc = isFinite(b.soc) ? Math.max(0, Math.min(100, b.soc)) : 50, lv = r.querySelector(`.blevel[data-i="${i}"]`), hh = 44 * soc / 100;
+        lv.setAttribute('y', (200 - hh).toFixed(1)); lv.setAttribute('height', hh.toFixed(1)); lv.setAttribute('fill', soc < 15 ? '#ef5350' : soc < 30 ? '#ffa726' : '#2fbf71');
+        r.querySelector(`.bbolt[data-i="${i}"]`).style.opacity = isFinite(b.w) && b.w > THR ? '.95' : '0';
+        const tx = r.querySelector(`.bsoc[data-i="${i}"]`); if (tx) tx.textContent = isFinite(b.soc) ? `${Math.round(b.soc)}` : '';
+      });
       // source dominante des consommateurs : soleil, sinon batterie, sinon réseau
       const src = v.sol > THR ? COL.solar : dis ? COL.battery : imp ? COL.grid : COL.solar;
       const F = [];
@@ -320,6 +349,9 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
         { name: 'name', selector: { text: {} } },
         pw('entity_solar'), pw('entity_home'),
         pw('entity_battery_power'), { name: 'entity_battery_soc', selector: { entity: { domain: 'sensor' } } },
+        { name: 'battery_count', default: 1, selector: { number: { min: 1, max: 3, step: 1, mode: 'box' } } },
+        pw('entity_battery_2_power'), { name: 'entity_battery_2_soc', selector: { entity: { domain: 'sensor' } } },
+        pw('entity_battery_3_power'), { name: 'entity_battery_3_soc', selector: { entity: { domain: 'sensor' } } },
         pw('entity_grid'), pw('entity_grid_import'), pw('entity_grid_export'),
         pw('entity_ev'), { name: 'entity_car_soc', selector: { entity: { domain: 'sensor' } } }, pw('entity_water_heater'),
         { type: 'grid', name: '', schema: [bool('battery_invert', false), bool('grid_invert', false),

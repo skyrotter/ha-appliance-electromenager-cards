@@ -3148,6 +3148,11 @@
     "f_show_source": "Show the source list"
   },
   "solar_house": {
+    "f_battery_count": "Number of batteries (1-3)",
+    "f_entity_battery_2_power": "Battery 2: power",
+    "f_entity_battery_2_soc": "Battery 2: charge level (%)",
+    "f_entity_battery_3_power": "Battery 3: power",
+    "f_entity_battery_3_soc": "Battery 3: charge level (%)",
     "car": "Car",
     "f_entity_car_soc": "Car battery level (%)",
     "name": "Solar house",

@@ -2095,6 +2095,11 @@
     "f_show_source": "a forráslistát megjelenítése"
   },
   "solar_house": {
+    "f_battery_count": "Akkumulátorok száma (1-3)",
+    "f_entity_battery_2_power": "2. akkumulátor: teljesítmény",
+    "f_entity_battery_2_soc": "2. akkumulátor: töltöttség (%)",
+    "f_entity_battery_3_power": "3. akkumulátor: teljesítmény",
+    "f_entity_battery_3_soc": "3. akkumulátor: töltöttség (%)",
     "car": "Autó",
     "f_entity_car_soc": "Az autó akkumulátorszintje (%)",
     "name": "Napelemes ház",

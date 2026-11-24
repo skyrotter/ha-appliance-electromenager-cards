@@ -3127,6 +3127,11 @@
     "f_show_source": "Afficher la liste des sources"
   },
   "solar_house": {
+    "f_battery_count": "Nombre de batteries (1 à 3)",
+    "f_entity_battery_2_power": "Batterie 2 : puissance",
+    "f_entity_battery_2_soc": "Batterie 2 : niveau de charge (%)",
+    "f_entity_battery_3_power": "Batterie 3 : puissance",
+    "f_entity_battery_3_soc": "Batterie 3 : niveau de charge (%)",
     "car": "Voiture",
     "f_entity_car_soc": "Niveau de la batterie de la voiture (%)",
     "name": "Maison solaire",

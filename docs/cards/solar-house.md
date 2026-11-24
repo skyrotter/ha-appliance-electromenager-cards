@@ -37,4 +37,22 @@ entity_water_heater: sensor.water_heater_power  # optional
 
 **Add it to a dashboard**: edit the dashboard → *Add card* → search for "Solar house" (or *Appliance – Single card* then pick the type), choose the entities in the visual editor. In YAML: *Add card* → *Manual*, paste the example above and replace the entity ids with yours.
 
+## Several batteries
+
+<p align="center"><img src="../solar-batteries.gif" width="460" alt="Solar house with two home batteries side by side"></p>
+
+Up to **3 batteries** are drawn side by side:
+
+- `battery_count` (1 to 3): with the combined sensors of `entity_battery_power` / `entity_battery_soc` (total power, average charge), every battery shows the same level.
+- **One entity per battery** (optional): `entity_battery_2_power`, `entity_battery_2_soc`, and `entity_battery_3_power`, `entity_battery_3_soc`. `entity_battery_power` and `entity_battery_soc` are then battery 1. Each battery shows its own charge level (and its percentage) and its own charging bolt; the legend and the flow use the **sum of the powers** and the **average level**.
+
+```yaml
+type: custom:appliance-solar-house-card
+entity_solar: sensor.pv_power
+entity_battery_power: sensor.venus_1_battery_power
+entity_battery_soc: sensor.venus_1_battery_soc
+entity_battery_2_power: sensor.venus_2_battery_power
+entity_battery_2_soc: sensor.venus_2_battery_soc
+```
+
 [← All cards](../../README.md#the-cards)

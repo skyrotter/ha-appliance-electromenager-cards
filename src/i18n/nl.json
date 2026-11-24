@@ -2015,6 +2015,11 @@
     "f_show_source": "de bronnenlijst tonen"
   },
   "solar_house": {
+    "f_battery_count": "Aantal accu's (1-3)",
+    "f_entity_battery_2_power": "Accu 2: vermogen",
+    "f_entity_battery_2_soc": "Accu 2: laadniveau (%)",
+    "f_entity_battery_3_power": "Accu 3: vermogen",
+    "f_entity_battery_3_soc": "Accu 3: laadniveau (%)",
     "car": "Auto",
     "f_entity_car_soc": "Batterijniveau van de auto (%)",
     "name": "Zonnehuis",
