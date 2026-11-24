@@ -575,6 +575,10 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 .arc{fill:none;stroke-linecap:round;stroke-width:8;transition:stroke-dasharray .9s ease}
 .led{transition:fill .4s}.poor .led.on{animation:copulse 1.1s ease-in-out infinite}
 .unavailable svg{filter:grayscale(.85) opacity(.65)}
+/* mode rotation : un seul grand affichage (sans tuiles), fondu à chaque changement de valeur */
+.rot .tiles{display:none}.rot svg{flex:0 1 calc(280px * var(--illus-scale,1));width:calc(280px * var(--illus-scale,1))}
+.swap .scr{animation:cofade .7s ease}
+@keyframes cofade{from{opacity:0}to{opacity:1}}
 .noanim *{animation:none!important;transition:none!important}
 @keyframes copulse{50%{opacity:.45}}
 `;
@@ -602,6 +606,16 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     return `<g class="glow" fill="#fff" transform="translate(${x0.toFixed(1)} ${y}) skewX(${-lean})">${out}</g>`;
   };
 
+  // pictogrammes des petites valeurs (mode rotation) : dessinés autour de (0,0)
+  const GLYPH = {
+    temperature: '<path d="M-2.6 -8a2.6 2.6 0 0 1 5.2 0v9.5a5 5 0 1 1-5.2 0Z" fill="none"/><path d="M5 -6h3M5 -2h3" />',
+    humidity: '<path d="M0 -9C4 -3 7 0 7 3.5a7 7 0 0 1-14 0C-7 0-4-3 0-9Z" fill="none"/>',
+    pressure: '<path d="M-8 5A9.5 9.5 0 1 1 8 5" fill="none"/><path d="M0 3L4.5 -4.5" /><circle r="1.4" cy="3" fill="#fff"/>',
+    co2: '<text y="3.6" font-size="10" font-weight="700" text-anchor="middle" fill="#fff" stroke="none">CO₂</text>',
+  };
+  // valeur courte d'une petite grandeur : { txt, unit }
+  const smallTxt = (k, v, unit) => ({ txt: isNaN(v) ? '--' : k === 'temperature' ? String(Math.round(v)) : String(Math.round(v)), unit: k === 'temperature' ? (unit || '°C').replace(/^°?c$/i, '°C') : k === 'humidity' ? '%' : k === 'pressure' ? 'hPa' : 'ppm' });
+
   // photo + écran redessiné : v = mesures, lvl = bon / moyen / mauvais, on = écran allumé, f = remplissage de la jauge (0 à 1)
   const SCREENS = {
     rectangle: (o) => {
@@ -619,9 +633,13 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
           <path class="arc glow" d="${arc}" pathLength="100" stroke="${o.big.key === 'co2' ? 'url(#cogr)' : '#35d07a'}" stroke-dasharray="${Math.max(1.5, f * 100).toFixed(1)} 100"/>
           ${num}
           <text x="266" y="190" font-size="15" font-weight="600">${esc(o.big.unit)}</text>
-          <text x="198" y="258" font-size="${o.big.label.length > 5 ? 12 : 17}" text-anchor="middle">${esc(o.big.label)}</text>
-          <text x="145" y="352" font-size="44" text-anchor="middle">${esc(o.t)}<tspan font-size="19" dy="-19">${esc(o.tu)}</tspan></text>
-          <text x="254" y="350" font-size="44" text-anchor="middle">${esc(o.h)}<tspan font-size="34" dy="0">%</tspan></text>
+          <text x="${o.big.label.length > 5 ? 208 : 198}" y="${o.big.label.length > 5 ? 248 : 258}" font-size="${o.big.label.length > 5 ? 11 : 17}" text-anchor="middle">${esc(o.big.label)}</text>
+          ${o.rot ? [[145, 285, 352], [250, 278, 350]].map(([cx, cy, ty], i) => {
+            const sm = o.small[i]; if (!sm) return `<circle cx="${cx}" cy="${cy}" r="24" fill="#050505"/>`;
+            return `<circle cx="${cx}" cy="${cy}" r="24" fill="#050505"/><g class="glow" transform="translate(${cx} ${cy})" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><circle r="20" fill="none"/><g transform="scale(1.05)">${GLYPH[sm.key]}</g></g>
+              <text x="${i ? 254 : 145}" y="${ty}" font-size="${sm.txt.length > 3 ? 32 : 44}" text-anchor="middle">${esc(sm.txt)}<tspan font-size="${sm.unit.length > 2 ? 12 : 22}" dy="${sm.key === 'temperature' ? -17 : 0}">${esc(sm.unit)}</tspan></text>`;
+          }).join('') : `<text x="145" y="352" font-size="44" text-anchor="middle">${esc(o.t)}<tspan font-size="19" dy="-19">${esc(o.tu)}</tspan></text>
+          <text x="254" y="350" font-size="44" text-anchor="middle">${esc(o.h)}<tspan font-size="34" dy="0">%</tspan></text>`}
           ${battery}</g>` : ''}`;
     },
     round: (o) => {
@@ -635,10 +653,10 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
           <text x="227" y="166" font-size="13" text-anchor="middle" opacity=".85">${esc(o.big.unit)}</text>
           ${o.big.key === 'co2' ? `<circle cx="222" cy="185" r="14" fill="none" stroke="#fff" stroke-width="1.7" opacity=".9"/><circle cx="217" cy="180" r="1.5"/><circle cx="227" cy="180" r="1.5"/>
           <path d="${smile}" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/>` : ''}
-          <path d="M78 214a3.2 3.2 0 0 1 6.4 0v14.4a6.6 6.6 0 1 1-6.4 0Z" fill="#ffc933"/>
+          ${o.rot ? [[80, 91], [139, 150]].map(([ix, tx], i) => { const sm = o.small[i]; return sm ? `<g transform="translate(${ix} 227) scale(.62)" stroke="#fff" stroke-width="2.4" stroke-linecap="round" fill="none">${GLYPH[sm.key]}</g><text x="${tx}" y="243" font-size="${sm.txt.length > 3 ? 14 : 17}" font-style="italic" opacity=".92">${esc(sm.txt)}<tspan font-size="${sm.unit.length > 2 ? 7.5 : 9}">${esc(sm.unit)}</tspan></text>` : ''; }).join('') : `<path d="M78 214a3.2 3.2 0 0 1 6.4 0v14.4a6.6 6.6 0 1 1-6.4 0Z" fill="#ffc933"/>
           <text x="97" y="243" font-size="17" font-style="italic" opacity=".92">${esc(o.t)}<tspan font-size="10">${esc(o.tu)}</tspan></text>
           <path d="M142 224c-5 6-7 9-7 12.5a7 7 0 0 0 14 0c0-3.500-2-6.500-7-12.500Z" fill="none" stroke="#35d07a" stroke-width="2"/>
-          <text x="154" y="243" font-size="17" font-style="italic" opacity=".92">${esc(o.h)}<tspan font-size="10">%</tspan></text>
+          <text x="154" y="243" font-size="17" font-style="italic" opacity=".92">${esc(o.h)}<tspan font-size="10">%</tspan></text>`}
           ${isNaN(v.battery) ? '' : `<rect x="139" y="270" width="17" height="9" rx="1.5" fill="none" stroke="#fff" stroke-width="1.1" opacity=".9"/><rect x="141" y="272" width="${(13 * Math.max(0, Math.min(100, v.battery)) / 100).toFixed(1)}" height="5" fill="${v.battery < 20 ? 'var(--co-alert)' : '#fff'}"/>`}
         </g>` : ''}`;
     },
@@ -732,7 +750,13 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const big = { key: fk, label: fk === 'co2' ? 'CO₂' : this._l(fk).toUpperCase(), unit: fk === 'co2' ? this._unit(c.entity_co2, 'ppm').toUpperCase() : fk === 'pressure' ? 'HPA' : this._unit(c[ENT[fk]], { temperature: '°C', humidity: '%' }[fk]).toUpperCase(),
         txt: isNaN(fv) ? '---' : fk === 'temperature' ? String(Math.round(fv * 10) / 10) : String(Math.round(fv)) };
       const f = isNaN(fv) ? 0 : Math.max(0, Math.min(1, (fv - SC[fk][0]) / (SC[fk][1] - SC[fk][0])));
-      r.getElementById('coscr').innerHTML = SCREENS[m]({ v, on, lvl, f, big, col: fk === 'co2' ? COLS[lvl] : COLS.good, unit: this._unit(c.entity_co2, 'ppm').toUpperCase(),
+      // mode rotation : un seul affichage, les deux petites valeurs sont les deux AUTRES grandeurs (jamais celle affichée en grand)
+      const list = this._metrics(), rot = Number(c.rotate_seconds) > 0 && list.length > 1;
+      const others = rot ? [...list.slice(list.indexOf(fk) + 1), ...list.slice(0, list.indexOf(fk))].slice(0, 2) : [];
+      const small = others.map((k) => ({ key: k, ...smallTxt(k, v[k], this._unit(c[ENT[k]], '°C')) }));
+      card.classList.toggle('rot', rot && c.show_tiles !== true);
+      const scr = r.getElementById('coscr'); scr.classList.toggle('swap', rot && this._lastFocus != null && this._lastFocus !== fk); this._lastFocus = fk;
+      scr.innerHTML = SCREENS[m]({ v, on, lvl, f, big, rot, small, col: fk === 'co2' ? COLS[lvl] : COLS.good, unit: this._unit(c.entity_co2, 'ppm').toUpperCase(),
         t: this._fmt(v.temperature, 0), h: this._fmt(v.humidity, 0), tu: this._unit(c.entity_temperature, '°C') });
       const dec = { co2: 0, temperature: 1, humidity: 0, pressure: 0, battery: 0 }, dflt = { co2: 'ppm', temperature: '°C', humidity: '%', pressure: 'hPa', battery: '%' };
       TILES.forEach(([k, , opt]) => {

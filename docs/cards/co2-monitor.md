@@ -20,9 +20,11 @@ entity_humidity: sensor.co2_monitor_humidity
 entity_battery: sensor.co2_monitor_battery
 ```
 
-## Rotating values (one big display)
+## Rotating values (one single display)
 
-`rotate_seconds` (0 = off, 2 to 4 is nice): the big value on the screen **changes every N seconds** between the CO₂, the temperature, the humidity and the **pressure** (new optional `entity_pressure`, converted to hPa). The label on the screen and the card title follow (`rotate_title: false` keeps your own name), and the gauge is rescaled to the displayed value (0-40 °C, 0-100 %, 960-1060 hPa). The small temperature and humidity values stay under the big one. Works on both models.
+<p align="center"><img src="../co2-rotate.gif" width="480" alt="Round and rectangle monitors: the big value changes every few seconds (CO₂, temperature, humidity, pressure)"></p>
+
+`rotate_seconds` (0 = off, 2 to 4 is nice): a **single big display** that changes every N seconds between the CO₂, the temperature, the humidity and the **pressure** (new optional `entity_pressure`, converted to hPa). The label on the screen and the card title follow (`rotate_title: false` keeps your own name), and the gauge is rescaled to the displayed value (0-40 °C, 0-100 %, 960-1060 hPa). The **two small values** under the big one are always the **two other** measurements (never the one shown big). The tiles are hidden so the instrument can be big (`show_tiles: true` brings them back). Works on both models.
 
 ```yaml
 type: custom:appliance-co2-monitor-card
