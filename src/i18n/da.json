@@ -1,5 +1,6 @@
 {
   "common": {
+    "f_invert_position": "Vend positionen (100 % = lærredet er rullet op)",
     "projector_screen": "Projektorlærred",
     "screen_open": "Nede",
     "screen_closed": "Oppe",

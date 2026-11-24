@@ -1,5 +1,6 @@
 {
   "common": {
+    "f_invert_position": "Inverser la position (100 % = écran enroulé)",
     "projector_screen": "Écran de projection",
     "screen_open": "Déployé",
     "screen_closed": "Enroulé",

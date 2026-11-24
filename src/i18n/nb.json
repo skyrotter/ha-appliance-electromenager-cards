@@ -1,5 +1,6 @@
 {
 "common": {
+"f_invert_position": "Snu posisjonen (100 % = lerretet er rullet opp)",
 "projector_screen": "Lerret",
 "screen_open": "Nede",
 "screen_closed": "Oppe",

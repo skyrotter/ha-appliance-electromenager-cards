@@ -1,5 +1,6 @@
 {
   "common": {
+    "f_invert_position": "Обрни положај (100 % = платно је намотано)",
     "projector_screen": "Платно за пројектор",
     "screen_open": "Спуштено",
     "screen_closed": "Намотано",

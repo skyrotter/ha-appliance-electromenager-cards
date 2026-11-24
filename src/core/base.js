@@ -496,10 +496,12 @@ class ApplianceCardBase extends HTMLElement {
       m.status = base === "running" ? "dosing" : base;
     } else if (kind === "projector_screen") {
       // écran de projection (cover : position 0-100 %, 100 = déroulé ; switch / input_boolean : on = déroulé) : ouvert / fermé / en mouvement
-      const sv = main ? String(main.state).toLowerCase() : "", cp = main && main.attributes ? Number(main.attributes.current_position) : NaN;
-      m.scrPos = Number.isFinite(cp) ? Math.max(0, Math.min(1, cp / 100)) : /^(open|opening|on)$/.test(sv) ? 1 : 0;
+      // invert_position : écran piloté par un module de volet roulant (100 % = écran entièrement enroulé, 0 % = déployé) : tout est inversé
+      const inv = c.invert_position === true, sv = main ? String(main.state).toLowerCase() : "", cp = main && main.attributes ? Number(main.attributes.current_position) : NaN;
+      m.scrPos = Number.isFinite(cp) ? Math.max(0, Math.min(1, inv ? 1 - cp / 100 : cp / 100)) : /^(open|opening|on)$/.test(sv) !== inv ? 1 : 0;
       m.scrHasPos = Number.isFinite(cp);
-      m.status = !main || sv === "unavailable" ? "unavailable" : sv === "opening" ? "screen_opening" : sv === "closing" ? "screen_closing" : /^(open|on)$/.test(sv) ? "screen_open" : "screen_closed";
+      const sOpen = inv ? "screen_closed" : "screen_open", sClosed = inv ? "screen_open" : "screen_closed";
+      m.status = !main || sv === "unavailable" ? "unavailable" : sv === "opening" ? (inv ? "screen_closing" : "screen_opening") : sv === "closing" ? (inv ? "screen_opening" : "screen_closing") : /^(open|on)$/.test(sv) ? sOpen : sClosed;
     } else if (kind === "infrared_panel") {
       m.status = base === "running" ? "heating" : base;
     } else if (FIT_KINDS.includes(kind)) {
@@ -2027,8 +2029,9 @@ class ApplianceCardBase extends HTMLElement {
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => {
         ev.stopPropagation();
         const k = b.dataset.act, dom = domainOf(c.entity);
-        if (dom === "cover") hass.callService("cover", k === "open" ? "open_cover" : k === "close" ? "close_cover" : "stop_cover", { entity_id: c.entity });
-        else hass.callService(["switch", "input_boolean"].includes(dom) ? dom : "homeassistant", k === "open" ? "turn_on" : "turn_off", { entity_id: c.entity });
+        const up = (k === "open") !== (c.invert_position === true); // « dérouler » = ouvrir le cover, sauf position inversée (module de volet roulant)
+        if (dom === "cover") hass.callService("cover", k === "stop" ? "stop_cover" : up ? "open_cover" : "close_cover", { entity_id: c.entity });
+        else hass.callService(["switch", "input_boolean"].includes(dom) ? dom : "homeassistant", up ? "turn_on" : "turn_off", { entity_id: c.entity });
       }; });
     } else modesEl.innerHTML = "";
 

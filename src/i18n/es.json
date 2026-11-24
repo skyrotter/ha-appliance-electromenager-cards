@@ -1,5 +1,6 @@
 {
   "common": {
+    "f_invert_position": "Invertir la posición (100 % = pantalla recogida)",
     "projector_screen": "Pantalla de proyección",
     "screen_open": "Desplegada",
     "screen_closed": "Recogida",

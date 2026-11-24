@@ -1,5 +1,6 @@
 {
   "common": {
+    "f_invert_position": "Invert position (100 % = screen rolled up)",
     "projector_screen": "Projector screen",
     "screen_open": "Open",
     "screen_closed": "Closed",

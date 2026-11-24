@@ -1,5 +1,6 @@
 {
   "common": {
+    "f_invert_position": "Odwróć pozycję (100 % = ekran zwinięty)",
     "projector_screen": "Ekran projekcyjny",
     "screen_open": "Rozwinięty",
     "screen_closed": "Zwinięty",

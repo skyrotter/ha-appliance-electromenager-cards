@@ -297,7 +297,7 @@ function buildForm(kind) {
             { name: "preheat_minutes", selector: { number: { min: 1, max: 30, step: 1, mode: "box", unit_of_measurement: "min" } } },
             { name: "ready_minutes", selector: { number: { min: 0, max: 120, step: 1, mode: "box", unit_of_measurement: "min" } } },
           ] : []),
-          ...(kind === "projector_screen" ? [{ name: "show_buttons", selector: { boolean: {} }, default: true }] : []),
+          ...(kind === "projector_screen" ? [{ name: "show_buttons", selector: { boolean: {} }, default: true }, { name: "invert_position", selector: { boolean: {} }, default: false }] : []),
           ...(kind === "iron" || kind === "steam_station" ? [
             { name: "preheat_minutes", selector: { number: { min: 1, max: 30, step: 1, mode: "box", unit_of_measurement: "min" } } },
             { name: "ready_minutes", selector: { number: { min: 0, max: 120, step: 1, mode: "box", unit_of_measurement: "min" } } },
