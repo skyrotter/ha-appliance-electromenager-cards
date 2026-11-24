@@ -255,6 +255,15 @@ const STRINGS = {
     "f_bed_temperature": "Bed temperature sensor",
     "f_filament_color": "Filament color (CSS)",
     "f_image": "Image URL (e.g. /local/my-device.png)",
+    "f_image_on": "Image when on",
+    "f_image_off": "Image when off",
+    "f_ring_light": "Light followed by the ring (colour and brightness)",
+    "f_ring_style": "Ring style",
+    "ring_halo": "Halo (glow)",
+    "ring_ring": "Ring",
+    "f_ring_x": "Ring position X (%)",
+    "f_ring_y": "Ring position Y (%)",
+    "f_ring_size": "Ring size (%)",
     "f_image_min": "Min photo brightness when the light is on (%)",
     "f_image_max": "Max photo brightness (% of the light level)",
     "f_glow_max": "Max glow (% of the light level)",
@@ -772,6 +781,15 @@ const STRINGS = {
     "f_bed_temperature": "Senzor teploty podložky",
     "f_filament_color": "Barva filamentu (CSS)",
     "f_image": "URL obrázku (např. /local/moje-zarizeni.png)",
+    "f_image_on": "Obrázek zapnuto",
+    "f_image_off": "Obrázek vypnuto",
+    "f_ring_light": "Světlo sledované prstencem (barva a jas)",
+    "f_ring_style": "Styl prstence",
+    "ring_halo": "Svatozář (záře)",
+    "ring_ring": "Prstenec",
+    "f_ring_x": "Poloha prstence X (%)",
+    "f_ring_y": "Poloha prstence Y (%)",
+    "f_ring_size": "Velikost prstence (%)",
     "f_nozzle_temperatures": "Senzory teploty trysky (T0, T1…)",
     "filtering": "Filtruje",
     "water": "Voda",
@@ -1192,6 +1210,15 @@ const STRINGS = {
     "f_bed_temperature": "Sensor for pladetemperatur",
     "f_filament_color": "Filamentfarve (CSS)",
     "f_image": "Billed-URL (fx /local/min-enhed.png)",
+    "f_image_on": "Billede tændt",
+    "f_image_off": "Billede slukket",
+    "f_ring_light": "Lys som ringen følger (farve og lysstyrke)",
+    "f_ring_style": "Ringstil",
+    "ring_halo": "Halo (glød)",
+    "ring_ring": "Ring",
+    "f_ring_x": "Ringens position X (%)",
+    "f_ring_y": "Ringens position Y (%)",
+    "f_ring_size": "Ringens størrelse (%)",
     "f_image_min": "Min. lysstyrke på foto når lyset er tændt (%)",
     "f_image_max": "Maks. lysstyrke på foto (% af lysniveauet)",
     "f_glow_max": "Maks. glød (% af lysniveauet)",
@@ -1654,6 +1681,15 @@ const STRINGS = {
     "f_bed_temperature": "Sensor Druckbetttemperatur",
     "f_filament_color": "Filamentfarbe (CSS)",
     "f_image": "Bild-URL (z. B. /local/mein-geraet.png)",
+    "f_image_on": "Bild bei Ein",
+    "f_image_off": "Bild bei Aus",
+    "f_ring_light": "Licht, dem der Ring folgt (Farbe und Helligkeit)",
+    "f_ring_style": "Ringstil",
+    "ring_halo": "Halo (Schein)",
+    "ring_ring": "Ring",
+    "f_ring_x": "Ring-Position X (%)",
+    "f_ring_y": "Ring-Position Y (%)",
+    "f_ring_size": "Ringgröße (%)",
     "f_nozzle_temperatures": "Düsentemperatursensoren (T0, T1…)",
     "filtering": "Filtert",
     "water": "Wasser",
@@ -2206,6 +2242,15 @@ const STRINGS = {
     "f_bed_temperature": "Sensor de temperatura de la cama",
     "f_filament_color": "Color del filamento (CSS)",
     "f_image": "URL de la imagen (p. ej. /local/mi-aparato.png)",
+    "f_image_on": "Imagen encendido",
+    "f_image_off": "Imagen apagado",
+    "f_ring_light": "Luz que sigue el anillo (color y brillo)",
+    "f_ring_style": "Estilo del anillo",
+    "ring_halo": "Halo (resplandor)",
+    "ring_ring": "Anillo",
+    "f_ring_x": "Posición X del anillo (%)",
+    "f_ring_y": "Posición Y del anillo (%)",
+    "f_ring_size": "Tamaño del anillo (%)",
     "f_image_min": "Brillo mínimo de la foto con la luz encendida (%)",
     "f_image_max": "Brillo máximo de la foto (% del nivel de luz)",
     "f_glow_max": "Resplandor máximo (% del nivel de luz)",
@@ -2743,6 +2788,15 @@ const STRINGS = {
     "f_bed_temperature": "Capteur de température du plateau",
     "f_filament_color": "Couleur du filament (CSS)",
     "f_image": "URL de l'image (ex. /local/mon-appareil.png)",
+    "f_image_on": "Image allumé",
+    "f_image_off": "Image éteint",
+    "f_ring_light": "Lumière suivie par l'anneau (couleur et luminosité)",
+    "f_ring_style": "Style de l'anneau",
+    "ring_halo": "Halo (lueur)",
+    "ring_ring": "Anneau",
+    "f_ring_x": "Position X de l'anneau (%)",
+    "f_ring_y": "Position Y de l'anneau (%)",
+    "f_ring_size": "Taille de l'anneau (%)",
     "f_image_min": "Éclairage min de la photo quand la lampe est allumée (%)",
     "f_image_max": "Éclairage max de la photo (% du niveau de la lampe)",
     "f_glow_max": "Lueur max (% du niveau de la lampe)",
@@ -3275,6 +3329,15 @@ const STRINGS = {
     "f_bed_temperature": "Ágy hőmérséklet szenzor",
     "f_filament_color": "Filament szín (CSS)",
     "f_image": "Kép URL (pl. /local/eszkozom.png)",
+    "f_image_on": "Kép bekapcsolva",
+    "f_image_off": "Kép kikapcsolva",
+    "f_ring_light": "A gyűrű által követett fény (szín és fényerő)",
+    "f_ring_style": "Gyűrű stílusa",
+    "ring_halo": "Glória (ragyogás)",
+    "ring_ring": "Gyűrű",
+    "f_ring_x": "Gyűrű X pozíciója (%)",
+    "f_ring_y": "Gyűrű Y pozíciója (%)",
+    "f_ring_size": "Gyűrű mérete (%)",
     "f_image_min": "Min. fotófényesség bekapcsolt fénynél (%)",
     "f_image_max": "Max fotófényesség (% a fény szintjéből)",
     "f_glow_max": "Max izzás (% a fény szintjéből)",
@@ -3726,6 +3789,15 @@ const STRINGS = {
     "f_bed_temperature": "Sensore temperatura piano",
     "f_filament_color": "Colore filamento (CSS)",
     "f_image": "URL immagine (es. /local/mio-apparecchio.png)",
+    "f_image_on": "Immagine accesa",
+    "f_image_off": "Immagine spenta",
+    "f_ring_light": "Luce seguita dall'anello (colore e luminosità)",
+    "f_ring_style": "Stile dell'anello",
+    "ring_halo": "Alone (bagliore)",
+    "ring_ring": "Anello",
+    "f_ring_x": "Posizione X dell'anello (%)",
+    "f_ring_y": "Posizione Y dell'anello (%)",
+    "f_ring_size": "Dimensione dell'anello (%)",
     "f_nozzle_temperatures": "Sensori temperatura ugelli (T0, T1…)",
     "filtering": "Filtrazione",
     "water": "Acqua",
@@ -4252,6 +4324,15 @@ const STRINGS = {
     "f_bed_temperature": "Sensor for platetemperatur",
     "f_filament_color": "Filamentfarge (CSS)",
     "f_image": "Bilde-URL (f.eks. /local/min-enhet.png)",
+    "f_image_on": "Bilde på",
+    "f_image_off": "Bilde av",
+    "f_ring_light": "Lys som ringen følger (farge og lysstyrke)",
+    "f_ring_style": "Ringstil",
+    "ring_halo": "Halo (glød)",
+    "ring_ring": "Ring",
+    "f_ring_x": "Ringens posisjon X (%)",
+    "f_ring_y": "Ringens posisjon Y (%)",
+    "f_ring_size": "Ringens størrelse (%)",
     "f_images": "Bilder etter tilstand (liste: image + above / below / state)",
     "f_nozzle_temperatures": "Dysetemperatursensorer (T0, T1…)",
     "filtering": "Filtrerer",
@@ -4576,6 +4657,15 @@ const STRINGS = {
     "f_bed_temperature": "Sensor bedtemperatuur",
     "f_filament_color": "Filamentkleur (CSS)",
     "f_image": "Afbeeldings-URL (bv. /local/mijn-toestel.png)",
+    "f_image_on": "Afbeelding aan",
+    "f_image_off": "Afbeelding uit",
+    "f_ring_light": "Licht dat de ring volgt (kleur en helderheid)",
+    "f_ring_style": "Ringstijl",
+    "ring_halo": "Halo (gloed)",
+    "ring_ring": "Ring",
+    "f_ring_x": "Positie X van de ring (%)",
+    "f_ring_y": "Positie Y van de ring (%)",
+    "f_ring_size": "Grootte van de ring (%)",
     "f_nozzle_temperatures": "Sensoren spuitmondtemperatuur (T0, T1…)",
     "filtering": "Filteren",
     "water": "Water",
@@ -5040,6 +5130,15 @@ const STRINGS = {
     "f_bed_temperature": "Czujnik temperatury stołu",
     "f_filament_color": "Kolor filamentu (CSS)",
     "f_image": "Adres URL obrazu (np. /local/moje-urzadzenie.png)",
+    "f_image_on": "Obraz włączony",
+    "f_image_off": "Obraz wyłączony",
+    "f_ring_light": "Światło śledzone przez pierścień (kolor i jasność)",
+    "f_ring_style": "Styl pierścienia",
+    "ring_halo": "Halo (poświata)",
+    "ring_ring": "Pierścień",
+    "f_ring_x": "Pozycja X pierścienia (%)",
+    "f_ring_y": "Pozycja Y pierścienia (%)",
+    "f_ring_size": "Rozmiar pierścienia (%)",
     "f_nozzle_temperatures": "Czujniki temperatury dyszy (T0, T1…)",
     "filtering": "Filtrowanie",
     "water": "Woda",
@@ -5495,6 +5594,15 @@ const STRINGS = {
     "f_bed_temperature": "Sensor de temperatura da mesa",
     "f_filament_color": "Cor do filamento (CSS)",
     "f_image": "URL da imagem (ex.: /local/my-device.png)",
+    "f_image_on": "Imagem ligado",
+    "f_image_off": "Imagem desligado",
+    "f_ring_light": "Luz seguida pelo anel (cor e brilho)",
+    "f_ring_style": "Estilo do anel",
+    "ring_halo": "Halo (brilho)",
+    "ring_ring": "Anel",
+    "f_ring_x": "Posição X do anel (%)",
+    "f_ring_y": "Posição Y do anel (%)",
+    "f_ring_size": "Tamanho do anel (%)",
     "f_image_min": "Brilho mínimo da foto com a luz ligada (%)",
     "f_image_max": "Brilho máximo da foto (% da intensidade da luz)",
     "f_glow_max": "Brilho máximo do halo (% da intensidade da luz)",
@@ -6045,6 +6153,15 @@ const STRINGS = {
     "f_bed_temperature": "Sensor de temperatura da mesa",
     "f_filament_color": "Cor do filamento (CSS)",
     "f_image": "URL da imagem (ex.: /local/my-device.png)",
+    "f_image_on": "Imagem ligado",
+    "f_image_off": "Imagem desligado",
+    "f_ring_light": "Luz seguida pelo anel (cor e brilho)",
+    "f_ring_style": "Estilo do anel",
+    "ring_halo": "Halo (brilho)",
+    "ring_ring": "Anel",
+    "f_ring_x": "Posição X do anel (%)",
+    "f_ring_y": "Posição Y do anel (%)",
+    "f_ring_size": "Tamanho do anel (%)",
     "f_image_min": "Brilho mínimo da fotografia com a luz ligada (%)",
     "f_image_max": "Brilho máximo da fotografia (% da intensidade da luz)",
     "f_glow_max": "Brilho máximo do halo (% da intensidade da luz)",
@@ -6561,6 +6678,15 @@ const STRINGS = {
     "f_bed_temperature": "Senzor temperatură platformă",
     "f_filament_color": "Culoare filament (CSS)",
     "f_image": "URL imagine (ex. /local/aparatul-meu.png)",
+    "f_image_on": "Imagine aprins",
+    "f_image_off": "Imagine stins",
+    "f_ring_light": "Lumina urmărită de inel (culoare și luminozitate)",
+    "f_ring_style": "Stilul inelului",
+    "ring_halo": "Halou (strălucire)",
+    "ring_ring": "Inel",
+    "f_ring_x": "Poziția X a inelului (%)",
+    "f_ring_y": "Poziția Y a inelului (%)",
+    "f_ring_size": "Dimensiunea inelului (%)",
     "f_nozzle_temperatures": "Senzori temperatură duze (T0, T1…)",
     "filtering": "Filtrare",
     "water": "Apă",
@@ -6972,6 +7098,15 @@ const STRINGS = {
     "f_bed_temperature": "Датчик температуры стола",
     "f_filament_color": "Цвет филамента (CSS)",
     "f_image": "URL изображения (напр. /local/my-device.png)",
+    "f_image_on": "Изображение (включено)",
+    "f_image_off": "Изображение (выключено)",
+    "f_ring_light": "Свет, за которым следует кольцо (цвет и яркость)",
+    "f_ring_style": "Стиль кольца",
+    "ring_halo": "Гало (свечение)",
+    "ring_ring": "Кольцо",
+    "f_ring_x": "Положение кольца по X (%)",
+    "f_ring_y": "Положение кольца по Y (%)",
+    "f_ring_size": "Размер кольца (%)",
     "f_nozzle_temperatures": "Датчики температуры сопел (T0, T1…)",
     "filtering": "Фильтрация",
     "water": "Вода",
@@ -7397,6 +7532,15 @@ const STRINGS = {
     "f_bed_temperature": "Сензор температуре подлоге",
     "f_filament_color": "Боја филамента (CSS)",
     "f_image": "URL слике (нпр. /local/my-device.png)",
+    "f_image_on": "Слика (укључено)",
+    "f_image_off": "Слика (искључено)",
+    "f_ring_light": "Светло које прстен прати (боја и осветљеност)",
+    "f_ring_style": "Стил прстена",
+    "ring_halo": "Ореол (сјај)",
+    "ring_ring": "Прстен",
+    "f_ring_x": "Положај прстена X (%)",
+    "f_ring_y": "Положај прстена Y (%)",
+    "f_ring_size": "Величина прстена (%)",
     "f_image_min": "Мин. осветљеност фотографије када је светло укључено (%)",
     "f_image_max": "Макс. осветљеност фотографије (% нивоа светлости)",
     "f_glow_max": "Макс. сјај (% нивоа светлости)",
@@ -7889,6 +8033,15 @@ const STRINGS = {
     "f_bed_temperature": "Senzor temperature podloge",
     "f_filament_color": "Boja filamenta (CSS)",
     "f_image": "URL slike (npr. /local/my-device.png)",
+    "f_image_on": "Slika (uključeno)",
+    "f_image_off": "Slika (isključeno)",
+    "f_ring_light": "Svetlo koje prsten prati (boja i osvetljenost)",
+    "f_ring_style": "Stil prstena",
+    "ring_halo": "Oreol (sjaj)",
+    "ring_ring": "Prsten",
+    "f_ring_x": "Položaj prstena X (%)",
+    "f_ring_y": "Položaj prstena Y (%)",
+    "f_ring_size": "Veličina prstena (%)",
     "f_image_min": "Min. osvetljenost fotografije kada je svetlo uključeno (%)",
     "f_image_max": "Maks. osvetljenost fotografije (% nivoa svetlosti)",
     "f_glow_max": "Maks. sjaj (% nivoa svetlosti)",
@@ -8402,6 +8555,15 @@ const STRINGS = {
     "f_bed_temperature": "Датчик температури столу",
     "f_filament_color": "Колір філаменту (CSS)",
     "f_image": "URL зображення (напр. /local/my-device.png)",
+    "f_image_on": "Зображення (увімкнено)",
+    "f_image_off": "Зображення (вимкнено)",
+    "f_ring_light": "Світло, за яким стежить кільце (колір і яскравість)",
+    "f_ring_style": "Стиль кільця",
+    "ring_halo": "Гало (сяйво)",
+    "ring_ring": "Кільце",
+    "f_ring_x": "Положення кільця по X (%)",
+    "f_ring_y": "Положення кільця по Y (%)",
+    "f_ring_size": "Розмір кільця (%)",
     "f_image_min": "Мін. яскравість фото при увімкненому світлі (%)",
     "f_image_max": "Макс. яскравість фото (% від рівня світла)",
     "f_glow_max": "Макс. сяйво (% від рівня світла)",
@@ -10278,9 +10440,20 @@ ${P.map(([x, y], i) => `<g class="gl-bulb" style="--d:${(-i * .3).toFixed(1)}s">
 SVG.generic = (c = {}) => {
   // `images` (liste conditionnelle) : on part de la première ; la carte choisit ensuite selon l'état
   const list = Array.isArray(c && c.images) ? c.images.filter((i) => i && i.image) : [];
-  const src = String((c && c.image) || (list[0] && list[0].image) || "").trim();
-  const art = src
-    ? `<image class="gn-img" href="${esc(src)}" x="4" y="6" width="112" height="124" preserveAspectRatio="xMidYMid meet"/>`
+  const base = String((c && c.image) || (list[0] && list[0].image) || "").trim();
+  // image_on / image_off : deux images distinctes selon que l'appareil fonctionne ou non (l'une des deux peut retomber sur `image`)
+  const iOn = String((c && c.image_on) || "").trim(), iOff = String((c && c.image_off) || "").trim(), pair = !!(iOn || iOff);
+  const src = pair ? iOff || base || iOn : base;
+  const im = (cls, href) => `<image class="${cls}" href="${esc(href)}" x="4" y="6" width="112" height="124" preserveAspectRatio="xMidYMid meet"/>`;
+  // anneau lumineux (option ring_light) : position et taille réglables, couleur / luminosité suivies de la lumière
+  const rx = Number.isFinite(Number(c && c.ring_x)) && c.ring_x !== "" ? Number(c.ring_x) : 50, ry = Number.isFinite(Number(c && c.ring_y)) && c.ring_y !== "" ? Number(c.ring_y) : 46,
+    rs = Number.isFinite(Number(c && c.ring_size)) && c.ring_size !== "" ? Number(c.ring_size) : 60, rr = (Math.max(5, Math.min(150, rs)) / 100) * 56, cxr = (rx / 100) * 120, cyr = (ry / 100) * 140;
+  const ringOnly = c && c.ring_style === "ring";
+  const ringG = c && c.ring_light ? (below) => (below
+    ? `<g class="gn-ringg"><radialGradient id="ID-gnr" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="var(--rc,#fff)" stop-opacity=".9"/><stop offset="1" stop-color="var(--rc,#fff)" stop-opacity="0"/></radialGradient>${ringOnly ? "" : `<circle class="gn-halo" cx="${cxr.toFixed(1)}" cy="${cyr.toFixed(1)}" r="${(rr * 1.25).toFixed(1)}" fill="url(#ID-gnr)"/>`}</g>`
+    : `<g class="gn-ringg gn-ringt">${ringOnly ? `<circle class="gn-ring" cx="${cxr.toFixed(1)}" cy="${cyr.toFixed(1)}" r="${rr.toFixed(1)}" fill="none"/>` : ""}</g>`) : () => "";
+  const art = pair || src
+    ? (pair ? im("gn-p gn-off", src) + im("gn-p gn-on", iOn || base || iOff) : im("gn-img", src))
     // pas d'image : pictogramme de prise pour inviter à renseigner `image`
     : `<g class="gn-img gn-empty">
   <rect x="14" y="22" width="92" height="92" rx="16" fill="none" stroke="#8d959f" stroke-width="2" stroke-dasharray="5 5"/>
@@ -10288,7 +10461,7 @@ SVG.generic = (c = {}) => {
   <rect x="51" y="30" width="5" height="14" rx="2" fill="#8d959f"/><rect x="64" y="30" width="5" height="14" rx="2" fill="#8d959f"/>
   <path d="M60 80v14" stroke="#8d959f" stroke-width="4" stroke-linecap="round"/>
 </g>`;
-  return `<ellipse cx="60" cy="128" rx="34" ry="4" fill="#000" opacity=".18"/>${art}`;
+  return `<ellipse cx="60" cy="128" rx="34" ry="4" fill="#000" opacity=".18"/>${ringG(true)}${art}${ringG(false)}`;
 };
 
 SVG.heat_pump = () => `
@@ -13263,6 +13436,7 @@ class ApplianceCardBase extends HTMLElement {
     const c = this._config;
     return ["entity", "error", "status_2", "temperature_2", "target_temperature_2", "remaining_2", "power", "power_factor", "current", "voltage", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
       "switch_low", "switch_high", "direction", "pressure", "runtime_total", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "entity_focus", "entity_activity", "entity_presence", "low_water", "water_level", "steam", "incline", "power_level", "pellet_level", "ph", "orp", "dose_interval", "dose_timer", "dose_volume", "dose_time", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      .concat(typeof c.ring_light === "string" && c.ring_light ? [c.ring_light] : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -14771,6 +14945,21 @@ class ApplianceCardBase extends HTMLElement {
       const img = sr.querySelector(".gn-img");
       if (img && img.tagName.toLowerCase() === "image" && img.getAttribute("href") !== String(src).trim()) img.setAttribute("href", String(src).trim());
     }
+    if (kind === "generic" && c.ring_light) {
+      // anneau / halo de la couleur et de la luminosité réelles d'une lumière (ex. passerelle Xiaomi) : rgb_color, sinon hs_color, sinon blanc chaud
+      const ls = hass.states[c.ring_light], gs = sr.querySelectorAll(".gn-ringg");
+      if (gs.length) {
+        const a = (ls && ls.attributes) || {}, on = !!ls && String(ls.state).toLowerCase() === "on";
+        let rgb = Array.isArray(a.rgb_color) ? a.rgb_color : null;
+        if (!rgb && Array.isArray(a.hs_color)) {
+          const [h, sa] = a.hs_color, l = 0.5 - sa / 200, f = (n) => { const k = (n + h / 30) % 12, q = (sa / 100) * Math.min(l, 1 - l); return Math.round(255 * (l - q * Math.max(-1, Math.min(k - 3, 9 - k, 1)))); };
+          rgb = [f(0), f(8), f(4)];
+        }
+        if (!rgb) rgb = [255, 226, 176];
+        const bri = Number.isFinite(Number(a.brightness)) ? Math.max(0.15, Math.min(1, Number(a.brightness) / 255)) : 1;
+        gs.forEach((g) => { g.style.setProperty("--rc", `rgb(${rgb.join(",")})`); g.style.setProperty("--rb", on ? bri.toFixed(3) : "0"); });
+      }
+    }
     if (kind === "wet_vacuum") {
       // niveaux des réservoirs (capteur %, sinon plein / vide selon l'alerte), anneau de l'écran = batterie
       const w = $("wrap");
@@ -15680,7 +15869,7 @@ function buildForm(kind) {
           { name: "animations", selector: { boolean: {} }, default: true },
           { name: "hide_when_inactive", selector: { boolean: {} } },
           { name: "hide_delay", selector: { number: { min: 0, max: 1440, step: 1, mode: "box", unit_of_measurement: "min" } } },
-          ...(kind === "generic" ? [{ name: "image", selector: { text: {} } }, { name: "images", selector: { object: {} } }] : []),
+          ...(kind === "generic" ? [{ name: "image", selector: { text: {} } }, { name: "image_off", selector: { image: { original: true } } }, { name: "image_on", selector: { image: { original: true } } }, { name: "images", selector: { object: {} } }, { name: "ring_light", selector: { entity: { domain: "light" } } }, { name: "ring_style", selector: { select: { mode: "dropdown", options: [{ value: "halo", label: tr(null, "ring_halo") }, { value: "ring", label: tr(null, "ring_ring") }] } } }, { name: "ring_x", selector: { number: { min: 0, max: 100, step: 1, mode: "slider", unit_of_measurement: "%" } } }, { name: "ring_y", selector: { number: { min: 0, max: 100, step: 1, mode: "slider", unit_of_measurement: "%" } } }, { name: "ring_size", selector: { number: { min: 10, max: 150, step: 1, mode: "slider", unit_of_measurement: "%" } } }] : []),
           ...(kind === "printer_3d" ? [
             // model : photo de l'imprimante (vide = dessin d'origine)
             { name: "model", selector: { select: { mode: "dropdown", options: [
@@ -17208,6 +17397,16 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-generic.active .gn-img { filter: drop-shadow(0 0 4px var(--c)); animation: gn-glow 2.6s ease-in-out infinite; }
 @keyframes gn-glow { 0%, 100% { filter: drop-shadow(0 0 3px var(--c)); } 50% { filter: drop-shadow(0 0 8px var(--c)); } }
 .k-generic .gn-empty { opacity: .6; }
+/* image_on / image_off : fondu entre les deux images selon l'état (l'image « éteinte » n'est plus grisée : c'est la vôtre) */
+.k-generic .gn-p { transition: opacity .4s; }
+.k-generic .gn-p.gn-on { opacity: 0; }
+.k-generic.active .gn-p.gn-on { opacity: 1; }
+.k-generic.active .gn-p.gn-off { opacity: 0; }
+.k-generic.st-unavailable .gn-p { opacity: .45; filter: grayscale(1); }
+/* anneau / halo de la lumière suivie (ring_light) */
+.gn-ringg { opacity: var(--rb, 0); transition: opacity .4s; }
+.gn-ring { stroke: var(--rc, #fff); stroke-width: 4; filter: drop-shadow(0 0 4px var(--rc, #fff)); transition: stroke .4s; }
+.gn-halo { opacity: .8; }
 
 /* ---------- tool battery charger ---------- */
 .k-tool_charger svg { overflow: visible; }
