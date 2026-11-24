@@ -1,0 +1,9 @@
+/* ---------- assainisseur d'air Airbowl ---------- */
+.k-airbowl svg { overflow: visible; }
+.ab-pw { stroke: #64748b; transition: stroke .3s; }
+.k-airbowl.st-running .ab-pw { stroke: #e2e8f0; }
+.ab-ledon, .ab-on { display: none; }
+.k-airbowl.st-running .ab-ledon, .k-airbowl.st-running .ab-on { display: inline; }
+.k-airbowl.st-running .ab-ledoff, .k-airbowl.st-running .ab-off { display: none; }
+.k-airbowl.st-running .ab-ledon { animation: ab-led 2.4s ease-in-out infinite; }
+@keyframes ab-led { 50% { opacity: .55; } }

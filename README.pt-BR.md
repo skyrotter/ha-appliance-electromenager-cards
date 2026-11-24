@@ -145,6 +145,7 @@ Clique em um cartão para consultar as opções e os exemplos.
 | [Clima do cômodo (temperatura, umidade, histórico, 12 estilos)](docs/cards/room-climate.md) | `custom:appliance-room-climate-card` |
 | [Desumidificador](docs/cards/dehumidifier.md) | `custom:appliance-dehumidifier-card` |
 | [Purificador de ar](docs/cards/air-purifier.md) | `custom:appliance-air-purifier-card` |
+| [Airbowl (higienizador de ar)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/airbowl.md) | `custom:appliance-airbowl-card` |
 
 ### Energia, piscina, spa e aquário
 

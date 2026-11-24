@@ -135,6 +135,7 @@ Click a card for its options and examples.
 | [Room climate (temperature, humidity, history, 12 styles)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/room-climate.md) | `custom:appliance-room-climate-card` |
 | [Dehumidifier](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/dehumidifier.md) | `custom:appliance-dehumidifier-card` |
 | [Air purifier](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/air-purifier.md) | `custom:appliance-air-purifier-card` |
+| [Airbowl air sanitiser](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/airbowl.md) | `custom:appliance-airbowl-card` |
 
 ### Energy, pool, spa and aquarium
 

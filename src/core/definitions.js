@@ -43,6 +43,10 @@ const DEF = {
     fields: ["entity", "power", "energy", "cost", "humidity", "target_humidity", "temperature", "tank_full", "fan_speed", "mode", "switch"],
     keys: ["deshumidificateur", "deshumidifier", "dehumidifier", "dehumidificateur", "absorbeur", "midea_dehum", "dehum"] },
   // purificateur d'air (IKEA FÖRNUFTIG, STARKVIND…) : prise connectée (W) ou entité fan ; vitesse 1 à 3, PM2.5 et filtre si disponibles
+  // assainisseur d'air Airbowl : on/off seul (interrupteur ou prise connectée)
+  airbowl: { accent: "cold", threshold: 1,
+    fields: ["entity", "power", "energy", "cost", "switch"],
+    keys: ["airbowl", "assainisseur", "assainisseur_air", "prowin", "air_sanitizer", "air_sanitiser", "luftreiniger_wasser"] },
   air_purifier: { accent: "cold", threshold: 1,
     fields: ["entity", "power", "energy", "cost", "pm25", "fan_speed", "filter", "switch"],
     keys: ["purificateur", "purifier", "air_purifier", "luftreiniger", "fornuftig", "starkvind", "uppatvind", "purificatore", "depurador"] },
