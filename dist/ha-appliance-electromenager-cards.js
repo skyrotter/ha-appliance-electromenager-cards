@@ -15,6 +15,20 @@ const VERSION = "1.205.0";
 /* ------------------------------------------------------------------ */
 const STRINGS = {
   "en": {
+    "focus": "Focus",
+    "activity": "Activity",
+    "focus_on": "Focus on",
+    "act_stationary": "Still",
+    "act_walking": "Walking",
+    "act_running": "Running",
+    "act_automotive": "Driving",
+    "act_cycling": "Cycling",
+    "pres_home": "Home",
+    "pres_away": "Away",
+    "f_entity_focus": "Focus mode (binary sensor or mode name)",
+    "f_entity_activity": "Activity (Stationary, Walking, Running…)",
+    "f_entity_presence": "Presence (person or device tracker)",
+    "f_always_on_screen": "Always-on screen when not charging",
     "f_invert_position": "Invert position (100 % = screen rolled up)",
     "projector_screen": "Projector screen",
     "screen_open": "Open",
@@ -564,6 +578,20 @@ const STRINGS = {
     "f_power_factor": "Power factor sensor (cos φ, optional)"
   },
   "cs": {
+    "focus": "Soustředění",
+    "activity": "Aktivita",
+    "focus_on": "Soustředění zapnuto",
+    "act_stationary": "Klid",
+    "act_walking": "Chůze",
+    "act_running": "Běh",
+    "act_automotive": "Jízda autem",
+    "act_cycling": "Jízda na kole",
+    "pres_home": "Doma",
+    "pres_away": "Pryč",
+    "f_entity_focus": "Režim Soustředění (binární senzor nebo název režimu)",
+    "f_entity_activity": "Aktivita (Stationary, Walking, Running…)",
+    "f_entity_presence": "Přítomnost (osoba nebo device tracker)",
+    "f_always_on_screen": "Displej stále zapnutý bez nabíjení",
     "f_invert_position": "Obrátit polohu (100 % = plátno svinuté)",
     "projector_screen": "Projekční plátno",
     "screen_open": "Rozvinuto",
@@ -968,6 +996,20 @@ const STRINGS = {
     "f_hide_zero_power": "Skrýt výkon, když je 0"
   },
   "da": {
+    "focus": "Fokus",
+    "activity": "Aktivitet",
+    "focus_on": "Fokus slået til",
+    "act_stationary": "Stille",
+    "act_walking": "Går",
+    "act_running": "Løber",
+    "act_automotive": "Kører bil",
+    "act_cycling": "Cykler",
+    "pres_home": "Hjemme",
+    "pres_away": "Ude",
+    "f_entity_focus": "Fokustilstand (binær sensor eller navn)",
+    "f_entity_activity": "Aktivitet (Stationary, Walking, Running…)",
+    "f_entity_presence": "Tilstedeværelse (person eller device tracker)",
+    "f_always_on_screen": "Skærm altid tændt uden opladning",
     "f_invert_position": "Vend positionen (100 % = lærredet er rullet op)",
     "projector_screen": "Projektorlærred",
     "screen_open": "Nede",
@@ -1432,6 +1474,20 @@ const STRINGS = {
     "f_calories": "Kaloriesensor"
   },
   "de": {
+    "focus": "Fokus",
+    "activity": "Aktivität",
+    "focus_on": "Fokus an",
+    "act_stationary": "Ruhig",
+    "act_walking": "Gehen",
+    "act_running": "Laufen",
+    "act_automotive": "Autofahrt",
+    "act_cycling": "Radfahren",
+    "pres_home": "Zuhause",
+    "pres_away": "Unterwegs",
+    "f_entity_focus": "Fokus-Modus (Binärsensor oder Modusname)",
+    "f_entity_activity": "Aktivität (Stationary, Walking, Running …)",
+    "f_entity_presence": "Anwesenheit (Person oder Device-Tracker)",
+    "f_always_on_screen": "Display bleibt an, wenn nicht geladen wird",
     "f_invert_position": "Position umkehren (100 % = Leinwand eingefahren)",
     "projector_screen": "Leinwand",
     "screen_open": "Ausgefahren",
@@ -1909,6 +1965,20 @@ const STRINGS = {
     "f_dose_time": "Dosierzeit (Sensor mit dem Zeitplan, z. B. 10:00)"
   },
   "es": {
+    "focus": "Concentración",
+    "activity": "Actividad",
+    "focus_on": "Concentración activa",
+    "act_stationary": "Quieto",
+    "act_walking": "Caminando",
+    "act_running": "Corriendo",
+    "act_automotive": "En coche",
+    "act_cycling": "En bici",
+    "pres_home": "En casa",
+    "pres_away": "Fuera",
+    "f_entity_focus": "Modo Concentración (sensor binario o nombre del modo)",
+    "f_entity_activity": "Actividad (Stationary, Walking, Running…)",
+    "f_entity_presence": "Presencia (persona o device tracker)",
+    "f_always_on_screen": "Pantalla siempre encendida sin carga",
     "f_invert_position": "Invertir la posición (100 % = pantalla recogida)",
     "projector_screen": "Pantalla de proyección",
     "screen_open": "Desplegada",
@@ -2434,6 +2504,20 @@ const STRINGS = {
     "f_calories": "Sensor de calorías"
   },
   "fr": {
+    "focus": "Concentration",
+    "activity": "Activité",
+    "focus_on": "Concentration activée",
+    "act_stationary": "Immobile",
+    "act_walking": "Marche",
+    "act_running": "Course",
+    "act_automotive": "En voiture",
+    "act_cycling": "À vélo",
+    "pres_home": "Maison",
+    "pres_away": "Absent",
+    "f_entity_focus": "Mode Concentration (capteur binaire ou nom du mode)",
+    "f_entity_activity": "Activité (Stationary, Walking, Running…)",
+    "f_entity_presence": "Présence (person ou device_tracker)",
+    "f_always_on_screen": "Écran toujours allumé hors charge",
     "f_invert_position": "Inverser la position (100 % = écran enroulé)",
     "projector_screen": "Écran de projection",
     "screen_open": "Déployé",
@@ -2977,6 +3061,20 @@ const STRINGS = {
     "f_power_factor": "Capteur de facteur de puissance (cos φ, facultatif)"
   },
   "hu": {
+    "focus": "Fókusz",
+    "activity": "Aktivitás",
+    "focus_on": "Fókusz bekapcsolva",
+    "act_stationary": "Mozdulatlan",
+    "act_walking": "Séta",
+    "act_running": "Futás",
+    "act_automotive": "Autóban",
+    "act_cycling": "Kerékpározás",
+    "pres_home": "Otthon",
+    "pres_away": "Távol",
+    "f_entity_focus": "Fókusz mód (bináris érzékelő vagy módnév)",
+    "f_entity_activity": "Aktivitás (Stationary, Walking, Running…)",
+    "f_entity_presence": "Jelenlét (személy vagy device tracker)",
+    "f_always_on_screen": "Mindig bekapcsolt kijelző töltés nélkül",
     "f_invert_position": "Pozíció megfordítása (100 % = a vászon fel van tekerve)",
     "projector_screen": "Vetítővászon",
     "screen_open": "Kitekerve",
@@ -3444,6 +3542,20 @@ const STRINGS = {
     "f_calories": "Kalória szenzor"
   },
   "it": {
+    "focus": "Concentrazione",
+    "activity": "Attività",
+    "focus_on": "Concentrazione attiva",
+    "act_stationary": "Fermo",
+    "act_walking": "Camminata",
+    "act_running": "Corsa",
+    "act_automotive": "In auto",
+    "act_cycling": "In bici",
+    "pres_home": "A casa",
+    "pres_away": "Fuori",
+    "f_entity_focus": "Modalità Concentrazione (sensore binario o nome)",
+    "f_entity_activity": "Attività (Stationary, Walking, Running…)",
+    "f_entity_presence": "Presenza (persona o device tracker)",
+    "f_always_on_screen": "Schermo sempre attivo quando non in carica",
     "f_invert_position": "Inverti la posizione (100 % = schermo avvolto)",
     "projector_screen": "Schermo di proiezione",
     "screen_open": "Aperto",
@@ -3875,6 +3987,20 @@ const STRINGS = {
     "f_calories": "Sensore di calorie"
   },
   "nb": {
+    "focus": "Fokus",
+    "activity": "Aktivitet",
+    "focus_on": "Fokus er på",
+    "act_stationary": "Stille",
+    "act_walking": "Går",
+    "act_running": "Løper",
+    "act_automotive": "Kjører bil",
+    "act_cycling": "Sykler",
+    "pres_home": "Hjemme",
+    "pres_away": "Borte",
+    "f_entity_focus": "Fokusmodus (binær sensor eller navn)",
+    "f_entity_activity": "Aktivitet (Stationary, Walking, Running…)",
+    "f_entity_presence": "Tilstedeværelse (person eller device tracker)",
+    "f_always_on_screen": "Skjerm alltid på uten lading",
     "f_invert_position": "Snu posisjonen (100 % = lerretet er rullet opp)",
     "projector_screen": "Lerret",
     "screen_open": "Nede",
@@ -4264,6 +4390,20 @@ const STRINGS = {
     "f_hide_zero_power": "Skjul effekt når den er 0"
   },
   "nl": {
+    "focus": "Focus",
+    "activity": "Activiteit",
+    "focus_on": "Focus aan",
+    "act_stationary": "Stilstaand",
+    "act_walking": "Wandelen",
+    "act_running": "Hardlopen",
+    "act_automotive": "Autorijden",
+    "act_cycling": "Fietsen",
+    "pres_home": "Thuis",
+    "pres_away": "Weg",
+    "f_entity_focus": "Focusmodus (binaire sensor of modusnaam)",
+    "f_entity_activity": "Activiteit (Stationary, Walking, Running…)",
+    "f_entity_presence": "Aanwezigheid (persoon of device tracker)",
+    "f_always_on_screen": "Scherm altijd aan zonder lading",
     "f_invert_position": "Positie omkeren (100 % = scherm opgerold)",
     "projector_screen": "Projectiescherm",
     "screen_open": "Uitgerold",
@@ -4695,6 +4835,20 @@ const STRINGS = {
     "f_calories": "Caloriesensor"
   },
   "pl": {
+    "focus": "Skupienie",
+    "activity": "Aktywność",
+    "focus_on": "Skupienie włączone",
+    "act_stationary": "Bez ruchu",
+    "act_walking": "Spacer",
+    "act_running": "Bieg",
+    "act_automotive": "Jazda samochodem",
+    "act_cycling": "Jazda na rowerze",
+    "pres_home": "W domu",
+    "pres_away": "Poza domem",
+    "f_entity_focus": "Tryb Skupienia (czujnik binarny lub nazwa trybu)",
+    "f_entity_activity": "Aktywność (Stationary, Walking, Running…)",
+    "f_entity_presence": "Obecność (osoba lub device tracker)",
+    "f_always_on_screen": "Ekran zawsze włączony bez ładowania",
     "f_invert_position": "Odwróć pozycję (100 % = ekran zwinięty)",
     "projector_screen": "Ekran projekcyjny",
     "screen_open": "Rozwinięty",
@@ -5112,6 +5266,20 @@ const STRINGS = {
     "f_power_factor": "Czujnik współczynnika mocy (cos φ, opcjonalnie)"
   },
   "pt-BR": {
+    "focus": "Foco",
+    "activity": "Atividade",
+    "focus_on": "Foco ativado",
+    "act_stationary": "Parado",
+    "act_walking": "Caminhando",
+    "act_running": "Correndo",
+    "act_automotive": "De carro",
+    "act_cycling": "De bicicleta",
+    "pres_home": "Em casa",
+    "pres_away": "Fora",
+    "f_entity_focus": "Modo Foco (sensor binário ou nome do modo)",
+    "f_entity_activity": "Atividade (Stationary, Walking, Running…)",
+    "f_entity_presence": "Presença (pessoa ou device tracker)",
+    "f_always_on_screen": "Tela sempre ligada sem carregar",
     "f_invert_position": "Inverter a posição (100 % = tela enrolada)",
     "projector_screen": "Tela de projeção",
     "screen_open": "Aberta",
@@ -5647,6 +5815,20 @@ const STRINGS = {
     "temperature_2": "Temp. cav. 2"
   },
   "pt-PT": {
+    "focus": "Foco",
+    "activity": "Atividade",
+    "focus_on": "Foco ativado",
+    "act_stationary": "Parado",
+    "act_walking": "A caminhar",
+    "act_running": "A correr",
+    "act_automotive": "De carro",
+    "act_cycling": "De bicicleta",
+    "pres_home": "Em casa",
+    "pres_away": "Fora",
+    "f_entity_focus": "Modo Foco (sensor binário ou nome do modo)",
+    "f_entity_activity": "Atividade (Stationary, Walking, Running…)",
+    "f_entity_presence": "Presença (pessoa ou device tracker)",
+    "f_always_on_screen": "Ecrã sempre ligado sem carregar",
     "f_invert_position": "Inverter a posição (100 % = ecrã enrolado)",
     "projector_screen": "Ecrã de projeção",
     "screen_open": "Aberto",
@@ -6182,6 +6364,20 @@ const STRINGS = {
     "temperature_2": "Temp. cav. 2"
   },
   "ro": {
+    "focus": "Concentrare",
+    "activity": "Activitate",
+    "focus_on": "Concentrare activă",
+    "act_stationary": "Nemișcat",
+    "act_walking": "Mers",
+    "act_running": "Alergare",
+    "act_automotive": "Cu mașina",
+    "act_cycling": "Cu bicicleta",
+    "pres_home": "Acasă",
+    "pres_away": "Plecat",
+    "f_entity_focus": "Mod Concentrare (senzor binar sau numele modului)",
+    "f_entity_activity": "Activitate (Stationary, Walking, Running…)",
+    "f_entity_presence": "Prezență (persoană sau device tracker)",
+    "f_always_on_screen": "Ecran mereu aprins fără încărcare",
     "f_invert_position": "Inversează poziția (100 % = ecranul este strâns)",
     "projector_screen": "Ecran de proiecție",
     "screen_open": "Derulat",
@@ -6585,6 +6781,20 @@ const STRINGS = {
     "f_hide_zero_power": "Ascunde puterea când este 0"
   },
   "ru": {
+    "focus": "Фокусировка",
+    "activity": "Активность",
+    "focus_on": "Фокусировка включена",
+    "act_stationary": "Неподвижно",
+    "act_walking": "Ходьба",
+    "act_running": "Бег",
+    "act_automotive": "В машине",
+    "act_cycling": "На велосипеде",
+    "pres_home": "Дома",
+    "pres_away": "Не дома",
+    "f_entity_focus": "Режим «Фокусировка» (бинарный датчик или название режима)",
+    "f_entity_activity": "Активность (Stationary, Walking, Running…)",
+    "f_entity_presence": "Присутствие (person или device tracker)",
+    "f_always_on_screen": "Экран всегда включён без зарядки",
     "f_invert_position": "Инвертировать положение (100 % = экран свёрнут)",
     "projector_screen": "Экран для проектора",
     "screen_open": "Опущен",
@@ -6974,6 +7184,20 @@ const STRINGS = {
     "f_hide_zero_power": "Скрывать мощность, когда она равна 0"
   },
   "sr": {
+    "focus": "Фокус",
+    "activity": "Активност",
+    "focus_on": "Фокус укључен",
+    "act_stationary": "Мирује",
+    "act_walking": "Хода",
+    "act_running": "Трчи",
+    "act_automotive": "У колима",
+    "act_cycling": "На бициклу",
+    "pres_home": "Код куће",
+    "pres_away": "Одсутан",
+    "f_entity_focus": "Режим фокуса (бинарни сензор или назив режима)",
+    "f_entity_activity": "Активност (Stationary, Walking, Running…)",
+    "f_entity_presence": "Присуство (person или device tracker)",
+    "f_always_on_screen": "Екран увек укључен без пуњења",
     "f_invert_position": "Обрни положај (100 % = платно је намотано)",
     "projector_screen": "Платно за пројектор",
     "screen_open": "Спуштено",
@@ -7451,6 +7675,20 @@ const STRINGS = {
     "f_calories": "Сензор калорија"
   },
   "sr-Latn": {
+    "focus": "Fokus",
+    "activity": "Aktivnost",
+    "focus_on": "Fokus uključen",
+    "act_stationary": "Miruje",
+    "act_walking": "Hoda",
+    "act_running": "Trči",
+    "act_automotive": "U kolima",
+    "act_cycling": "Na biciklu",
+    "pres_home": "Kod kuće",
+    "pres_away": "Odsutan",
+    "f_entity_focus": "Režim fokusa (binarni senzor ili naziv režima)",
+    "f_entity_activity": "Aktivnost (Stationary, Walking, Running…)",
+    "f_entity_presence": "Prisustvo (person ili device tracker)",
+    "f_always_on_screen": "Ekran uvek uključen bez punjenja",
     "f_invert_position": "Obrni položaj (100 % = platno je namotano)",
     "projector_screen": "Platno za projektor",
     "screen_open": "Spušteno",
@@ -7928,6 +8166,20 @@ const STRINGS = {
     "f_calories": "Senzor kalorija"
   },
   "uk": {
+    "focus": "Фокусування",
+    "activity": "Активність",
+    "focus_on": "Фокусування увімкнено",
+    "act_stationary": "Нерухомо",
+    "act_walking": "Ходьба",
+    "act_running": "Біг",
+    "act_automotive": "В авто",
+    "act_cycling": "На велосипеді",
+    "pres_home": "Вдома",
+    "pres_away": "Поза домом",
+    "f_entity_focus": "Режим «Фокусування» (бінарний датчик або назва режиму)",
+    "f_entity_activity": "Активність (Stationary, Walking, Running…)",
+    "f_entity_presence": "Присутність (person або device tracker)",
+    "f_always_on_screen": "Екран завжди увімкнено без заряджання",
     "f_invert_position": "Інвертувати положення (100 % = екран згорнуто)",
     "projector_screen": "Екран для проєктора",
     "screen_open": "Опущено",
@@ -10329,24 +10581,59 @@ ${lcd(46, 31.5, 28, 9)}
 <g class="warm-air"><path d="M42 30q-2-3 0-6t0-6"/><path d="M54 30q-2-3 0-6t0-6"/><path d="M66 30q-2-3 0-6t0-6"/><path d="M78 30q-2-3 0-6t0-6"/></g>
 </g>`;
 
-SVG.phone_charger = () => `
-<defs>${DEFS}<linearGradient id="ID-phnwall" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a1a63"/><stop offset=".5" stop-color="#6b3fc9"/><stop offset="1" stop-color="#ff8fab"/></linearGradient></defs>
-<ellipse cx="60" cy="122" rx="46" ry="6" fill="url(#ID-shadow)"/>
+/* Chargeur d'appareil Apple / Android : iPhone (défaut), iPad sur son support ou Apple Watch sur son chargeur magnétique (option model).
+   Écran : heure, batterie et éclair en charge (.phn-ui) ; hors charge, écran « toujours allumé » à luminosité réduite (.phn-aod) avec le mode
+   Concentration ou l'activité (icône + libellé), remplis par la carte. Les trois modèles partagent les mêmes classes (phn-*) et le même CSS. */
+const PHN_BOLT = "M61 63l-5 9h4l-2 7l6-10h-4z"; // éclair, boîte 56-66 × 63-79, centre (61, 71)
+const PHN_LAYOUT = {
+  // iphone / ipad : écran vertical 46 × 84 centré en (60, 64)
+  phone: { time: [60, 52, 12], batt: [45, 66, 30, 12], bolt: [61, 71, 1], pct: [60, 92, 7], aTime: [60, 40, 9], aIcon: [60, 66, 20], aLab: [60, 88, 6.4], aPct: [60, 99, 6] },
+  // apple watch : cadran carré 34 × 34
+  watch: { time: [60, 57, 9], batt: [50, 63, 20, 8], bolt: [60, 67, .78], pct: [60, 77, 5.5], aTime: [60, 54, 8.5], aIcon: [60, 63.5, 12], aLab: [60, 72.5, 4.8], aPct: [60, 77.5, 4.4] },
+};
+const phnUi = (L) => `
+  <g class="phn-ui">
+    <text class="phn-time" x="${L.time[0]}" y="${L.time[1]}" text-anchor="middle" font-size="${L.time[2]}" font-weight="700" fill="#fff" font-family="sans-serif">--:--</text>
+    <rect x="${L.batt[0]}" y="${L.batt[1]}" width="${L.batt[2]}" height="${L.batt[3]}" rx="${L.batt[3] / 4}" fill="none" stroke="#fff" stroke-width="${L.batt[3] > 10 ? 1.4 : 1}"/><rect x="${L.batt[0] + L.batt[2]}" y="${L.batt[1] + L.batt[3] / 2 - 2}" width="2.4" height="4" rx="1" fill="#fff"/>
+    <rect class="phn-fill" x="${L.batt[0] + 2}" y="${L.batt[1] + 2}" width="${L.batt[2] - 4}" height="${L.batt[3] - 4}" rx="1.4"/>
+    <path class="phn-bolt" transform="translate(${(L.bolt[0] - 61 * L.bolt[2]).toFixed(2)} ${(L.bolt[1] - 71 * L.bolt[2] - (L.bolt[2] === 1 ? 0 : 0)).toFixed(2)}) scale(${L.bolt[2]})" d="${PHN_BOLT}" fill="#fff" stroke="#1b1f24" stroke-width=".5"/>
+    <text class="phn-pct" x="${L.pct[0]}" y="${L.pct[1]}" text-anchor="middle" font-size="${L.pct[2]}" fill="#fff" font-family="sans-serif"></text>
+  </g>
+  <g class="phn-aod">
+    <text class="phn-atime" x="${L.aTime[0]}" y="${L.aTime[1]}" text-anchor="middle" font-size="${L.aTime[2]}" font-weight="600" fill="#fff" font-family="sans-serif">--:--</text>
+    <path class="phn-aico" fill="#fff" d="" transform="translate(${L.aIcon[0] - L.aIcon[2] / 2} ${L.aIcon[1] - L.aIcon[2] / 2}) scale(${(L.aIcon[2] / 24).toFixed(3)})"/>
+    <text class="phn-alab" x="${L.aLab[0]}" y="${L.aLab[1]}" text-anchor="middle" font-size="${L.aLab[2]}" fill="#fff" font-family="sans-serif"></text>
+    <text class="phn-apct" x="${L.aPct[0]}" y="${L.aPct[1]}" text-anchor="middle" font-size="${L.aPct[2]}" fill="#fff" opacity=".7" font-family="sans-serif"></text>
+  </g>`;
+SVG.phone_charger = (c) => {
+  const model = c && ["ipad", "apple_watch"].includes(c.model) ? c.model : "iphone";
+  const defs = `<defs>${DEFS}<linearGradient id="ID-phnwall" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a1a63"/><stop offset=".5" stop-color="#6b3fc9"/><stop offset="1" stop-color="#ff8fab"/></linearGradient></defs>`;
+  const base = `<ellipse cx="60" cy="122" rx="46" ry="6" fill="url(#ID-shadow)"/>
 <ellipse cx="60" cy="112" rx="40" ry="10" fill="url(#ID-dark)"/><ellipse cx="60" cy="110" rx="38" ry="9" fill="#2b3036"/>
-<ellipse class="phn-ring" cx="60" cy="110" rx="34" ry="7.5" fill="none" stroke-width="1.6"/>
+<ellipse class="phn-ring" cx="60" cy="110" rx="34" ry="7.5" fill="none" stroke-width="1.6"/>`;
+  if (model === "ipad") return `${defs}${base}
+<path d="M44 102h32l5 8H39z" fill="#3a4047"/><rect x="40" y="104" width="40" height="3" rx="1.5" fill="#4b525a"/>
+<g transform="rotate(-3 60 62)">
+  <rect x="25" y="14" width="70" height="90" rx="8" fill="#9aa1a9"/><rect x="26.4" y="15.4" width="67.2" height="87.2" rx="7" fill="#1b1f24"/>
+  <rect x="30" y="19" width="60" height="80" rx="4.5" fill="#0d1116"/>
+  <rect class="phn-scr" x="30" y="19" width="60" height="80" rx="4.5" fill="url(#ID-phnwall)"/>
+  <circle cx="60" cy="16.8" r="1" fill="#0b0d10"/>${phnUi(PHN_LAYOUT.phone)}
+</g>`;
+  if (model === "apple_watch") return `${defs}${base}
+<rect x="45" y="12" width="30" height="34" rx="9" fill="#2d3238"/><rect x="45" y="76" width="30" height="34" rx="9" fill="#2d3238"/>
+<path d="M50 24h20M50 32h20M50 88h20M50 96h20" stroke="#3b4148" stroke-width="1.2" stroke-linecap="round"/>
+<rect x="38" y="40" width="44" height="44" rx="12" fill="#8e969e"/><rect x="39.4" y="41.4" width="41.2" height="41.2" rx="11" fill="#1b1f24"/>
+<rect x="82" y="54" width="3.4" height="9" rx="1.7" fill="#7b838b"/><rect x="82" y="68" width="2" height="5" rx="1" fill="#4b525a"/>
+<rect x="42" y="44" width="36" height="36" rx="9" fill="#0d1116"/>
+<rect class="phn-scr" x="42" y="44" width="36" height="36" rx="9" fill="url(#ID-phnwall)"/>${phnUi(PHN_LAYOUT.watch)}`;
+  return `${defs}${base}
 <g transform="rotate(-6 60 70)">
   <rect x="34" y="18" width="52" height="92" rx="9" fill="#1b1f24"/>
   <rect x="37" y="22" width="46" height="84" rx="6.5" fill="#0d1116"/>
   <rect class="phn-scr" x="37" y="22" width="46" height="84" rx="6.5" fill="url(#ID-phnwall)"/>
-  <rect x="53" y="24" width="14" height="3.4" rx="1.7" fill="#0b0d10"/>
-  <g class="phn-ui">
-    <text class="phn-time" x="60" y="52" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="sans-serif">--:--</text>
-    <rect x="45" y="66" width="30" height="12" rx="3" fill="none" stroke="#fff" stroke-width="1.4"/><rect x="75" y="70" width="2.4" height="4" rx="1" fill="#fff"/>
-    <rect class="phn-fill" x="47" y="68" width="26" height="8" rx="1.6"/>
-    <path class="phn-bolt" d="M61 63l-5 9h4l-2 7l6-10h-4z" fill="#fff" stroke="#1b1f24" stroke-width=".5"/>
-    <text class="phn-pct" x="60" y="92" text-anchor="middle" font-size="7" fill="#fff" font-family="sans-serif"></text>
-  </g>
+  <rect x="53" y="24" width="14" height="3.4" rx="1.7" fill="#0b0d10"/>${phnUi(PHN_LAYOUT.phone)}
 </g>`;
+};
 
 SVG.piano = () => {
   // 14 touches blanches, touches noires selon le motif d'une octave
@@ -12301,8 +12588,8 @@ const DEF = {
     fields: ["entity", "power", "current", "voltage", "energy", "cost", "switch"],
     keys: ["smartplug", "smart_plug", "prise_connectee", "prise", "plug", "steckdose", "socket"] },
   phone_charger: { accent: "active", threshold: 2,
-    fields: ["entity", "power", "energy", "cost", "battery_level", "switch"],
-    keys: ["chargeur_tel", "chargeur_telephone", "phone_charger", "telephone", "phone", "iphone", "smartphone", "pixel", "galaxy"] },
+    fields: ["entity", "power", "energy", "cost", "battery_level", "entity_focus", "entity_activity", "entity_presence", "switch"],
+    keys: ["chargeur_tel", "chargeur_telephone", "phone_charger", "telephone", "phone", "iphone", "ipad", "apple_watch", "applewatch", "smartphone", "pixel", "galaxy"] },
   piano: { accent: "active", threshold: 3,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["piano", "clavier", "keyboard", "synth", "yamaha_p", "roland", "casio"] },
@@ -12680,7 +12967,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "error", "status_2", "temperature_2", "target_temperature_2", "remaining_2", "power", "power_factor", "current", "voltage", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "switch_low", "switch_high", "direction", "pressure", "runtime_total", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "low_water", "water_level", "steam", "incline", "power_level", "pellet_level", "ph", "orp", "dose_interval", "dose_timer", "dose_volume", "dose_time", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "switch_low", "switch_high", "direction", "pressure", "runtime_total", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "entity_focus", "entity_activity", "entity_presence", "low_water", "water_level", "steam", "incline", "power_level", "pellet_level", "ph", "orp", "dose_interval", "dose_timer", "dose_volume", "dose_time", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -13472,6 +13759,19 @@ class ApplianceCardBase extends HTMLElement {
       if (base === "off" || base === "unavailable") m.status = base;
       else if (watts !== null) m.status = powered && !full ? "charging" : full || watts >= (c.standby_threshold ?? (kind === "phone_charger" ? 0.3 : 1)) ? "charged" : "standby";
       else m.status = base === "running" && !full ? "charging" : full ? "charged" : "standby";
+      if (kind === "phone_charger") {
+        // mode Concentration (binary_sensor on / capteur texte avec le nom du mode), activité (Stationary, Walking…), présence (person / device_tracker)
+        const OFFW = /^(off|none|unknown|unavailable|no focus|aucun|ninguno|keine|nessuno|geen|false|0|)$/i;
+        const fo = S(c.entity_focus), ac = S(c.entity_activity), pe = S(c.entity_presence);
+        const fs = fo ? String(fo.state).trim() : "";
+        m.focusOn = !!fo && !OFFW.test(fs);
+        m.focusName = m.focusOn ? (/^on$/i.test(fs) ? (fo.attributes && (fo.attributes.focus_name || fo.attributes.mode || fo.attributes.name)) || "" : fs) : "";
+        const as = ac ? String(ac.state).toLowerCase().trim() : "";
+        m.activity = !ac || BAD.includes(as) ? "" : /^(stationary|immobile|still|parked|statique|idle|ruhig)/.test(as) ? "stationary" : /walk|marche|gehen|a pie|camina|wandel/.test(as) ? "walking" : /run|course|cour|lauf|corr/.test(as) ? "running" : /autom|vehicle|driv|voiture|conduite|auto|car/.test(as) ? "automotive" : /cycl|bike|v[ée]lo|rad|bici/.test(as) ? "cycling" : as;
+        const ps = pe ? String(pe.state).toLowerCase() : "";
+        m.presenceKnown = !!pe && !BAD.includes(ps);
+        m.atHome = ps === "home" || ps === "on" || ps === "présent" || ps === "present";
+      }
     } else if (kind === "coffee_maker") {
       const warmT = c.warm_threshold ?? 5;
       if (["off", "unavailable"].includes(base)) m.status = base;
@@ -14050,8 +14350,32 @@ class ApplianceCardBase extends HTMLElement {
       const lv = m.batt != null ? Math.max(0, Math.min(100, m.batt)) : null;
       $("wrap").style.setProperty("--batt", String(lv != null ? Math.max(.04, lv / 100) : m.status === "charged" ? 1 : .6));
       $("wrap").classList.toggle("seq", m.status === "charging" && lv == null);
-      this.shadowRoot.querySelector(".phn-time").textContent = fmtClock(hass, new Date());
+      const clock = fmtClock(hass, new Date());
+      this.shadowRoot.querySelector(".phn-time").textContent = clock;
       this.shadowRoot.querySelector(".phn-pct").textContent = lv != null ? `${Math.round(lv)} %` : "";
+      // hors charge : écran « toujours allumé » avec le mode Concentration, sinon l'activité (icône + libellé), à luminosité réduite
+      const PHN_ICON = {
+        moon: "M2 12A10 10 0 0 0 15 21.54A10 10 0 0 1 15 2.46A10 10 0 0 0 2 12Z", work: "M14,6H10V4H14M20,6H16V4A2,2 0 0,0 14,2H10A2,2 0 0,0 8,4V6H4A2,2 0 0,0 2,8V19A2,2 0 0,0 4,21H20A2,2 0 0,0 22,19V8A2,2 0 0,0 20,6Z",
+        dnd: "M12,2C17.52,2 22,6.48 22,12C22,17.52 17.52,22 12,22C6.48,22 2,17.52 2,12C2,6.48 6.48,2 12,2M7,13H17V11H7", home: "M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z",
+        walking: "M14.12,10H19V8.2H15.38L13.38,4.87C13.08,4.37 12.54,4.03 11.92,4.03C11.74,4.03 11.58,4.06 11.42,4.11L6,5.8V11H7.8V7.33L9.91,6.67L6,22H7.8L10.67,13.89L13,17V22H14.8V15.59L12.31,11.05L13.04,8.18M14,3.8C15,3.8 15.8,3 15.8,2C15.8,1 15,0.2 14,0.2C13,0.2 12.2,1 12.2,2C12.2,3 13,3.8 14,3.8Z",
+        running: "M13.49,5.48C14.59,5.48 15.49,4.58 15.49,3.48C15.49,2.38 14.59,1.48 13.49,1.48C12.39,1.48 11.49,2.38 11.49,3.48C11.49,4.58 12.39,5.48 13.49,5.48M9.89,19.38L10.89,15.08L12.99,17.08V23.08H14.99V15.58L12.89,13.58L13.49,10.58C14.69,11.98 16.69,12.98 18.99,12.98V10.98C17.09,10.98 15.49,9.98 14.69,8.58L13.69,6.98C13.29,6.38 12.69,5.98 11.99,5.98C11.69,5.98 11.49,6.08 11.19,6.08L5.99,8.28V12.98H7.99V9.58L9.79,8.78L8.19,16.98L3.29,15.98L2.89,17.98L9.89,19.38Z",
+        automotive: "M5,11L6.5,6.5H17.5L19,11M17.5,16A1.5,1.5 0 0,1 16,14.5A1.5,1.5 0 0,1 17.5,13A1.5,1.5 0 0,1 19,14.5A1.5,1.5 0 0,1 17.5,16M6.5,16A1.5,1.5 0 0,1 5,14.5A1.5,1.5 0 0,1 6.5,13A1.5,1.5 0 0,1 8,14.5A1.5,1.5 0 0,1 6.5,16M18.92,6C18.72,5.42 18.16,5 17.5,5H6.5C5.84,5 5.28,5.42 5.08,6L3,12V20A1,1 0 0,0 4,21H5A1,1 0 0,0 6,20V19H18V20A1,1 0 0,0 19,21H20A1,1 0 0,0 21,20V12L18.92,6Z",
+        cycling: "M5,20.5A3.5,3.5 0 0,1 1.5,17A3.5,3.5 0 0,1 5,13.5A3.5,3.5 0 0,1 8.5,17A3.5,3.5 0 0,1 5,20.5M5,12A5,5 0 0,0 0,17A5,5 0 0,0 5,22A5,5 0 0,0 10,17A5,5 0 0,0 5,12M14.8,10H19V8.2H15.8L13.86,4.93C13.57,4.43 13,4.1 12.4,4.1C11.93,4.1 11.5,4.29 11.2,4.6L7.5,8.29C7.19,8.6 7,9 7,9.5C7,10.13 7.33,10.66 7.85,10.97L11.2,13V18H13V11.5L10.75,9.85L13.07,7.5M19,20.5A3.5,3.5 0 0,1 15.5,17A3.5,3.5 0 0,1 19,13.5A3.5,3.5 0 0,1 22.5,17A3.5,3.5 0 0,1 19,20.5M19,12A5,5 0 0,0 14,17A5,5 0 0,0 19,22A5,5 0 0,0 24,17A5,5 0 0,0 19,12M16,4.8C17,4.8 17.8,4 17.8,3C17.8,2 17,1.2 16,1.2C15,1.2 14.2,2 14.2,3C14.2,4 15,4.8 16,4.8Z",
+        stationary: "M12,2A2,2 0 0,1 14,4A2,2 0 0,1 12,6A2,2 0 0,1 10,4A2,2 0 0,1 12,2M10.5,7H13.5A2,2 0 0,1 15.5,9V14.5H14V22H10V14.5H8.5V9A2,2 0 0,1 10.5,7Z" };
+      const fn = m.focusName.toLowerCase();
+      const fIcon = /sleep|sommeil|dormir|schlaf|sue[ñn]o|slaap|sonno|dormi|noc|søvn|søvn|alvás/.test(fn) ? "moon" : /work|travail|arbeit|trabajo|lavoro|werk|trabalho|praca/.test(fn) ? "work" : /personal|perso|home|maison|zuhause|casa|thuis/.test(fn) ? "home" : /driv|conduite|fahren|conducci|guida|rijden/.test(fn) ? "automotive" : /fitness|sport|workout/.test(fn) ? "running" : "dnd";
+      let aIcon = "", aLab = "";
+      if (m.status !== "charging" && m.status !== "charged") {
+        if (m.focusOn) { aIcon = PHN_ICON[fIcon]; aLab = m.focusName || tr(hass, "focus_on"); }
+        else if (m.activity) { aIcon = PHN_ICON[m.activity] || PHN_ICON.stationary; aLab = tr(hass, `act_${m.activity}`) === `act_${m.activity}` ? m.activity : tr(hass, `act_${m.activity}`); }
+        else if (m.presenceKnown) { aIcon = m.atHome ? PHN_ICON.home : PHN_ICON.stationary; aLab = tr(hass, m.atHome ? "pres_home" : "pres_away"); }
+      }
+      const sr = this.shadowRoot;
+      $("wrap").classList.toggle("aod", !!aIcon && c.always_on_screen !== false);
+      sr.querySelector(".phn-aico").setAttribute("d", aIcon);
+      sr.querySelector(".phn-alab").textContent = aLab;
+      sr.querySelector(".phn-atime").textContent = clock;
+      sr.querySelector(".phn-apct").textContent = lv != null ? `${Math.round(lv)} %` : "";
     }
     if (kind === "garland") {
       const multi = c.multicolor !== false && !(m.glColor && c.multicolor === undefined && m.glEffect == null && this._glSingle(m));
@@ -14636,6 +14960,9 @@ class ApplianceCardBase extends HTMLElement {
       // prises commandées : boutons dans la rangée .modes (plus de tuile « 1 / 3 »)
     } else if (kind === "phone_charger") {
       if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0, 0, c.battery_level)} %`, lb("battery"), c.battery_level);
+      if (m.focusOn) tile("mdi:moon-waning-crescent", m.focusName || tr(hass, "focus_on"), lb("focus"), c.entity_focus);
+      if (m.activity) tile("mdi:run", tr(hass, `act_${m.activity}`) === `act_${m.activity}` ? m.activity : tr(hass, `act_${m.activity}`), lb("activity"), c.entity_activity);
+      if (m.presenceKnown) tile(m.atHome ? "mdi:home" : "mdi:home-export-outline", tr(hass, m.atHome ? "pres_home" : "pres_away"), lb("presence"), c.entity_presence, m.atHome ? "" : "warn");
     } else if (kind === "garland") {
       if (m.glEffect && m.status === "lit") tile("mdi:auto-fix", m.glEffect, lb("effect"), c.entity);
     } else if (kind === "iron" || kind === "steam_station") {
@@ -14934,6 +15261,9 @@ const SEL = {
   light: { entity: { domain: ["light", "switch", "binary_sensor", "input_boolean"] } },
   zone2_temperature: { entity: { domain: ["sensor", "input_number"], device_class: "temperature" } },
   battery_level: { entity: { domain: ["sensor", "number", "input_number"] } },
+  entity_focus: { entity: { domain: ["binary_sensor", "sensor", "input_boolean", "input_select", "select"] } },
+  entity_activity: { entity: { domain: ["sensor", "input_select", "select"] } },
+  entity_presence: { entity: { domain: ["person", "device_tracker", "binary_sensor", "input_boolean"] } },
   keg_level: { entity: { domain: ["sensor", "number", "input_number"] } },
   // chauffe-eau : eau chaude restante, en % ou en litres (avec tank_volume)
   hot_water_level: { entity: { domain: ["sensor", "number", "input_number"] } },
@@ -15247,6 +15577,8 @@ function buildForm(kind) {
               { value: "led", label: tr(null, "ind_led") }, { value: "bolt", label: tr(null, "ind_bolt") }, { value: "ring", label: tr(null, "ind_ring") },
               { value: "glow", label: tr(null, "ind_glow") }, { value: "flow", label: tr(null, "ind_flow") }] } } },
           ] : []),
+          ...(kind === "phone_charger" ? [{ name: "always_on_screen", selector: { boolean: {} }, default: true }] : []),
+          ...(kind === "phone_charger" ? [{ name: "model", selector: { select: { mode: "dropdown", options: [{ value: "", label: "iPhone / " + tr(null, "printer_drawing") }, { value: "ipad", label: "iPad" }, { value: "apple_watch", label: "Apple Watch" }] } } }] : []),
           ...(["phone_charger", "piano"].includes(kind) ? [
             { name: "standby_threshold", selector: { number: { min: 0, max: 10, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
@@ -15293,7 +15625,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "air_compressor" && s.name === "pressure" ? "f_pressure_tank" : ["contact_grill", "iron", "steam_station"].includes(kind) && s.name === "ready_minutes" ? "f_grill_ready_minutes" : kind === "cookeo" && s.name === "style" ? "f_cookeo_style" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "fridge" && s.name === "finish" ? "f_fridge_finish" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "ceiling_fan" && s.name === "show_controls" ? "f_show_fan_controls" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : ["thermomix", "microwave", "vmc", "kettle"].includes(kind) && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : ["printer_3d", "printer"].includes(kind) && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix", "printer"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : kind === "radiator" && s.name === "style" ? "f_radiator_style" : s.name === "view" ? "f_view" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "air_compressor" && s.name === "pressure" ? "f_pressure_tank" : ["contact_grill", "iron", "steam_station"].includes(kind) && s.name === "ready_minutes" ? "f_grill_ready_minutes" : kind === "cookeo" && s.name === "style" ? "f_cookeo_style" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "fridge" && s.name === "finish" ? "f_fridge_finish" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "ceiling_fan" && s.name === "show_controls" ? "f_show_fan_controls" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : ["thermomix", "microwave", "vmc", "kettle", "phone_charger"].includes(kind) && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : ["printer_3d", "printer"].includes(kind) && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix", "printer"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : kind === "radiator" && s.name === "style" ? "f_radiator_style" : s.name === "view" ? "f_view" : `f_${s.name}`) : undefined),
   };
 }
 
@@ -16900,6 +17232,11 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .phn-bolt { opacity: 0; }
 .k-phone_charger.st-charging .phn-bolt { opacity: 1; animation: ac-pulse 1.2s ease-in-out infinite; }
 .k-phone_charger.st-charging.seq .phn-fill { animation: phn-seq 3s linear infinite; }
+.phn-aod { opacity: 0; transition: opacity .5s; }
+/* hors charge : écran « toujours allumé » (classe aod posée par la carte quand le mode Concentration ou l'activité est connu) : fond atténué, texte discret */
+.k-phone_charger.aod .phn-scr { opacity: .32; }
+.k-phone_charger.aod .phn-aod { opacity: .85; }
+.phn-aico { transition: opacity .3s; }
 @keyframes phn-seq { from { transform: scaleX(.05); } to { transform: scaleX(1); } }
 /* ---------- piano ---------- */
 .pn-scr { fill: #10161c; transition: fill .3s; }
