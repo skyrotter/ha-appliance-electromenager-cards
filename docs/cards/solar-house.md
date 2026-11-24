@@ -1,5 +1,7 @@
 # Solar house (energy flow)
 
+<p align="center"><img src="../solar-house.gif" width="480" alt="Animated solar house: midday export, EV charger and water heater, night on battery and grid"></p>
+
 `custom:appliance-solar-house-card`: an animated diagram of a photovoltaic installation: solar panels on the roof, the electrical panel / inverter in the house, a home battery, the grid (electricity poles) and, optionally, an EV charger and a water heater (solar diverter).
 
 - **Animated energy flows**: glowing dots move along the cables in the real direction of the energy, faster when the power is higher (`max_power`, 6000 W by default, is full speed). Colour = source of the energy: yellow (sun), green (battery), purple (grid).

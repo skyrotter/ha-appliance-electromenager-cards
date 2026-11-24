@@ -50,6 +50,7 @@ Alcuni esempi (elenco completo con anteprime nel [README in inglese](README.md#t
 | Congelatore a pozzetto | `custom:appliance-chest-freezer-card` |
 | Congelatore verticale | `custom:appliance-drawer-freezer-card` |
 | Pannelli solari | `custom:appliance-solar-card` |
+| Casa solare (flusso di energia) | `custom:appliance-solar-house-card` |
 | Ventola di estrazione / VMC | `custom:appliance-vmc-card` |
 | Piano cottura | `custom:appliance-hob-card` |
 | Radiatore elettrico | `custom:appliance-radiator-card` |

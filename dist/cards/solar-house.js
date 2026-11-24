@@ -620,7 +620,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
 .tile .l ha-icon{--mdc-icon-size:13px;flex:none}
 .tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tile .s{font-size:10px;color:var(--secondary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tile.hide{display:none}
+.tile.hide,.tiles.hide{display:none}
 .noanim *{animation:none!important}
 @keyframes shspin{to{transform:rotate(360deg)}}
 @keyframes shpulse{50%{opacity:.45}}
