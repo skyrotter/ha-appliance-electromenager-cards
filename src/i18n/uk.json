@@ -994,6 +994,8 @@
     "entity_voltage": "Напруга",
     "entity_current": "Струм",
     "entity_pressure": "Тиск",
+    "rotate_seconds": "Змінювати велике значення кожні (с, 0 = вимк.)",
+    "rotate_title": "Показувати назву значення в заголовку",
     "entity_rain": "Датчик дощу",
     "entity_return_temp": "Температура зворотної лінії",
     "entity_runtime": "Час роботи",
@@ -1764,7 +1766,8 @@
     "resume": "Повернутися до розкладу"
   },
   "room_climate": {
-    "st_display_rect": "Цифровий дисплей (прямокутний)",
+"pressure": "Тиск",
+        "st_display_rect": "Цифровий дисплей (прямокутний)",
     "st_display_round": "Цифровий дисплей (круглий)",
     "name": "Мікроклімат кімнати",
     "comfort": "Комфортно",

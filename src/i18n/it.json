@@ -862,6 +862,8 @@
     "entity_power_l2": "Potenza L2",
     "entity_power_l3": "Potenza L3",
     "entity_pressure": "Pressione",
+    "rotate_seconds": "Cambia il valore grande ogni (s, 0 = no)",
+    "rotate_title": "Mostra il nome del valore come titolo",
     "entity_rain": "Sensore pioggia",
     "entity_return_temp": "Temperatura di ritorno",
     "entity_runtime": "Tempo di funzionamento",
@@ -1414,7 +1416,8 @@
     "resume": "Torna al programma"
   },
   "room_climate": {
-    "st_display_rect": "Display digitale (rettangolare)",
+"pressure": "Pressione",
+        "st_display_rect": "Display digitale (rettangolare)",
     "st_display_round": "Display digitale (rotondo)",
     "name": "Clima della stanza",
     "comfort": "Confortevole",

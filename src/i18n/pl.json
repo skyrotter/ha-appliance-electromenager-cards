@@ -852,6 +852,8 @@
     "entity_power_l2": "Moc L2",
     "entity_power_l3": "Moc L3",
     "entity_pressure": "Ciśnienie",
+    "rotate_seconds": "Zmieniaj dużą wartość co (s, 0 = wył.)",
+    "rotate_title": "Pokaż nazwę wartości jako tytuł",
     "entity_rain": "Czujnik deszczu",
     "entity_return_temp": "Temperatura powrotu",
     "entity_runtime": "Czas pracy",
@@ -1398,7 +1400,8 @@
     "resume": "Powrót do harmonogramu"
   },
   "room_climate": {
-    "st_display_rect": "Wyświetlacz cyfrowy (prostokątny)",
+"pressure": "Ciśnienie",
+        "st_display_rect": "Wyświetlacz cyfrowy (prostokątny)",
     "st_display_round": "Wyświetlacz cyfrowy (okrągły)",
     "name": "Klimat pomieszczenia",
     "comfort": "Komfortowo",

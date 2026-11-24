@@ -1031,6 +1031,8 @@
     "entity_current_l2": "Corriente de la fase L2",
     "entity_current_l3": "Corriente de la fase L3",
     "entity_pressure": "Presión",
+    "rotate_seconds": "Cambiar el valor grande cada (s, 0 = no)",
+    "rotate_title": "Mostrar el nombre del valor como título",
     "entity_rain": "Sensor de lluvia",
     "entity_return_temp": "Temperatura de retorno",
     "entity_runtime": "Tiempo de marcha",
@@ -1847,7 +1849,8 @@
     "resume": "Volver al horario"
   },
   "room_climate": {
-    "st_display_rect": "Pantalla digital (rectangular)",
+"pressure": "Presión",
+        "st_display_rect": "Pantalla digital (rectangular)",
     "st_display_round": "Pantalla digital (redonda)",
     "name": "Clima de la habitación",
     "comfort": "Confortable",

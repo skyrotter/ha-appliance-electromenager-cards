@@ -862,6 +862,8 @@
     "entity_power_l2": "Vermogen L2",
     "entity_power_l3": "Vermogen L3",
     "entity_pressure": "Druk",
+    "rotate_seconds": "Grote waarde wisselen elke (s, 0 = uit)",
+    "rotate_title": "Naam van de waarde als titel tonen",
     "entity_rain": "Regensensor",
     "entity_return_temp": "Retourtemperatuur",
     "entity_runtime": "Looptijd",
@@ -1414,7 +1416,8 @@
     "resume": "Terug naar schema"
   },
   "room_climate": {
-    "st_display_rect": "Digitaal display (rechthoekig)",
+"pressure": "Luchtdruk",
+        "st_display_rect": "Digitaal display (rechthoekig)",
     "st_display_round": "Digitaal display (rond)",
     "name": "Binnenklimaat",
     "comfort": "Comfortabel",

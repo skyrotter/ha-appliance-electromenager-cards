@@ -920,6 +920,8 @@
     "entity_power_l2": "Leistung L2",
     "entity_power_l3": "Leistung L3",
     "entity_pressure": "Druck",
+    "rotate_seconds": "Großen Wert wechseln alle (s, 0 = aus)",
+    "rotate_title": "Namen des Werts als Titel anzeigen",
     "entity_rain": "Regensensor",
     "entity_return_temp": "Rücklauftemperatur",
     "entity_runtime": "Laufzeit",
@@ -1637,7 +1639,8 @@
     "model_atlantic_io2": "Atlantic io Thermostat (vertikal, Drehrad)"
   },
   "room_climate": {
-    "st_display_rect": "Digitalanzeige (rechteckig)",
+"pressure": "Luftdruck",
+        "st_display_rect": "Digitalanzeige (rechteckig)",
     "st_display_round": "Digitalanzeige (rund)",
     "name": "Raumklima",
     "comfort": "Behaglich",

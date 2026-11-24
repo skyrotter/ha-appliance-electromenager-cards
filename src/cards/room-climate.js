@@ -241,6 +241,7 @@ ha-card.st-double_ring{padding:14px 14px 0;--t9:var(--appliance-temperature-colo
 /* ---- afficheurs numériques (variant: display_rect / display_round) : photo + écran redessiné ---- */
 .st-display_rect .disp,.st-display_round .disp{display:block;width:calc(170px * var(--illus-scale,1));max-width:100%;height:auto;margin:4px auto 2px}
 .st-display_rect .meta,.st-display_round .meta{justify-content:center}
+.dscr.swap .dtx{animation:rcfade .7s ease}@keyframes rcfade{from{opacity:0}to{opacity:1}}
 .dtx{font-family:Roboto,"Helvetica Neue",Arial,sans-serif;font-weight:500;fill:#fff}
 .dglow{filter:drop-shadow(0 0 3px rgba(255,255,255,.5))}
 .darc{fill:none;stroke-linecap:round;stroke-width:8;transition:stroke-dasharray .9s ease}
@@ -369,6 +370,14 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
     const p = (a) => [cx + r * Math.cos((a * Math.PI) / 180), cy + r * Math.sin((a * Math.PI) / 180)];
     const [x0, y0] = p(a0), [x1, y1] = p(a1);
     return `M${x0.toFixed(2)} ${y0.toFixed(2)}A${r} ${r} 0 ${a1 - a0 > 180 ? 1 : 0} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}`;
+  };
+  // pictogrammes des petites valeurs (afficheurs en rotation), dessinés autour de (0,0)
+  const DGLYPH = {
+    temperature: '<path d="M-2.6 -8a2.6 2.6 0 0 1 5.2 0v9.5a5 5 0 1 1-5.2 0Z" fill="none"/><path d="M5 -6h3M5 -2h3"/>',
+    setpoint: '<path d="M-2.6 -8a2.6 2.6 0 0 1 5.2 0v9.5a5 5 0 1 1-5.2 0Z" fill="none"/><path d="M5 -6h3M5 -2h3"/>',
+    humidity: '<path d="M0 -9C4 -3 7 0 7 3.5a7 7 0 0 1-14 0C-7 0-4-3 0-9Z" fill="none"/>',
+    pressure: '<path d="M-8 5A9.5 9.5 0 1 1 8 5" fill="none"/><path d="M0 3L4.5 -4.5"/><circle r="1.4" cy="3" fill="#fff"/>',
+    co2: '<text y="3.6" font-size="10" font-weight="700" text-anchor="middle" fill="#fff" stroke="none">CO₂</text>',
   };
   const clamp01 = (v) => (fin(v) ? Math.max(0, Math.min(1, v)) : 0);
   // graduations d'une échelle en unité d'affichage : pas de 10 (°C) ou 20 (°F)
@@ -549,7 +558,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       if (window.applianceSize) window.applianceSize(this, c);
       this._c = { show_status: true, show_outdoor: true, show_dew_point: true, show_advice: true, show_graph: true,
         humidity_min: 35, humidity_max: 65, mold_humidity: 70, battery_low: 20, history_days: 7, history_mode: 'both', ...c };
-      this._built = false; this._hist = null; this._histAt = 0;
+      this._built = false; this._hist = null; this._histAt = 0; this._rot = 0; this._startRot();
       if (this._hass) this._render();
     }
     // Home Assistant renvoie hass à chaque changement d'état de toute l'installation : on ne redessine que si
@@ -566,12 +575,18 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
     _changed(o, h) {
       const c = this._c;
       if (o.locale !== h.locale || o.language !== h.language || o.config !== h.config) return true;
-      return ['entity_temperature', 'entity_humidity', 'entity_outdoor_temperature', 'entity_outdoor_humidity', 'entity_window', 'entity_battery', 'entity_climate']
+      return ['entity_temperature', 'entity_humidity', 'entity_outdoor_temperature', 'entity_outdoor_humidity', 'entity_window', 'entity_battery', 'entity_climate', 'entity_pressure', 'entity_co2']
         .some((k) => c[k] && o.states[c[k]] !== h.states[c[k]]);
     }
     get hass() { return this._hass; }
-    connectedCallback() { this._tick = setInterval(() => { if (this._hass && this._c) this._render(); }, 60000); }
-    disconnectedCallback() { clearInterval(this._tick); }
+    connectedCallback() { this._tick = setInterval(() => { if (this._hass && this._c) this._render(); }, 60000); this._startRot(); }
+    disconnectedCallback() { clearInterval(this._tick); clearInterval(this._rotTimer); this._rotTimer = null; }
+    // rotate_seconds : sur les afficheurs, la grande valeur change toutes les N secondes (température, consigne, humidité, pression, CO₂)
+    _startRot() {
+      clearInterval(this._rotTimer); this._rotTimer = null;
+      const sec = Number(this._c && this._c.rotate_seconds);
+      if (sec > 0 && this.isConnected) this._rotTimer = setInterval(() => { this._rot = (this._rot || 0) + 1; if (this._hass && this._built) this._render(); }, Math.max(1, sec) * 1000);
+    }
     // variant : nom du style ; « style » reste accepté (anciennes configs) quand c'est un nom de style,
     // car dans une carte picture-elements, style est l'objet CSS de positionnement de Home Assistant
     _style() { const c = this._c || {}, v = STYLES.includes(c.variant) ? c.variant : c.style; return STYLES.includes(v) ? v : 'standard'; }
@@ -747,6 +762,45 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       const hum = c.show_humidity !== false && fin(s.h) ? `${this._fmt(s.h, 0)}` : '';
       const mode = heat ? this._t('heating_now').toUpperCase() : off ? 'OFF' : '';
       const unit = String(tmp.unit || '°C').replace('°', '°');
+      // ---- rotation : un seul affichage, les deux petites valeurs sont les deux autres mesures ----
+      const rd = (id, conv) => { const st = id && this._hass.states[id]; if (!st || /^(unavailable|unknown)$/i.test(String(st.state))) return NaN; const v = parseFloat(String(st.state).replace(',', '.')); if (!Number.isFinite(v)) return NaN; return conv ? conv(v, String((st.attributes && st.attributes.unit_of_measurement) || '').toLowerCase()) : v; };
+      const V = { temperature: s.t, setpoint: ck && !off && fin(shown) ? shown : NaN, humidity: c.show_humidity !== false ? s.h : NaN,
+        pressure: rd(c.entity_pressure, (v, u) => (u === 'kpa' ? v * 10 : u === 'pa' ? v / 100 : u === 'inhg' ? v * 33.8639 : u === 'mmhg' ? v * 1.33322 : v)), co2: rd(c.entity_co2) };
+      const list = ['temperature', 'setpoint', 'humidity', 'pressure', 'co2'].filter((k) => fin(V[k]));
+      const rot = Number(c.rotate_seconds) > 0 && list.length > 1;
+      if (rot) {
+        const fk = list[(this._rot || 0) % list.length], fv = V[fk];
+        const UN = { temperature: unit, setpoint: unit, humidity: '%', pressure: 'hPa', co2: 'ppm' }, LB = { temperature: this._l('temperature'), setpoint: this._l('target'), humidity: this._l('humidity'), pressure: this._l('pressure'), co2: 'CO₂' };
+        const SC = { temperature: [mn, mx], setpoint: [mn, mx], humidity: [0, 100], pressure: [960, 1060], co2: [0, 2000] };
+        const fmtV = (k, v, big) => (k === 'temperature' ? this._fmt(v, big ? 1 : 0) : k === 'setpoint' ? this._fmt(v, ck && ck.step < 1 ? 1 : 0) : String(Math.round(v))).replace(/\s/g, '');
+        const frac = clamp01((fv - SC[fk][0]) / (SC[fk][1] - SC[fk][0])), label = LB[fk].toUpperCase(), long = label.length > 5;
+        const others = [...list.slice(list.indexOf(fk) + 1), ...list.slice(0, list.indexOf(fk))].slice(0, 2).map((k) => ({ key: k, txt: fmtV(k, V[k], false), unit: UN[k] }));
+        const swap = this._lastFocus != null && this._lastFocus !== fk; this._lastFocus = fk; g.classList.toggle('swap', swap);
+        this._rotLabel = LB[fk];
+        const bigtxt = fmtV(fk, fv, true);
+        if (kind === 'rect') {
+          const pt = (a) => `${(197 + 92 * Math.cos(a * Math.PI / 180)).toFixed(1)} ${(172 + 92 * Math.sin(a * Math.PI / 180)).toFixed(1)}`, arc = `M${pt(116)}A92 92 0 1 1 ${pt(299)}`;
+          g.innerHTML = `<g class="dtx">
+            <path class="darc" d="${arc}" pathLength="100" stroke="#2a3a35" opacity=".8"/>
+            <path class="darc dglow" d="${arc}" pathLength="100" stroke="${col}" stroke-dasharray="${Math.max(1.5, frac * 100).toFixed(1)} 100"/>
+            ${num7(bigtxt, 258, 138, 62, 112, 32)}
+            <text x="262" y="190" font-size="${UN[fk].length > 2 ? 14 : 17}" font-weight="600">${esc(UN[fk])}</text>
+            <text x="${long ? 208 : 198}" y="${long ? 248 : 258}" font-size="${long ? 11 : 15}" text-anchor="middle">${esc(label)}</text>
+            ${[[145, 285, 352], [250, 278, 350]].map(([cx, cy, ty], i) => { const sm = others[i]; if (!sm) return `<circle cx="${cx}" cy="${cy}" r="24" fill="#050505"/>`;
+              return `<circle cx="${cx}" cy="${cy}" r="24" fill="#050505"/><g class="dglow2" transform="translate(${cx} ${cy})" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><circle r="20" fill="none"/><g transform="scale(1.05)">${DGLYPH[sm.key]}</g></g>
+              <text x="${i ? 254 : 145}" y="${ty}" font-size="${sm.txt.length > 3 ? 32 : 44}" text-anchor="middle">${esc(sm.txt)}<tspan font-size="${sm.unit.length > 2 ? 12 : 22}" dy="${sm.unit.length === 2 && sm.unit[0] === '°' ? -17 : 0}">${esc(sm.unit)}</tspan></text>`; }).join('')}
+            ${heat ? FLAME(280, 82, 26, '#ff8a2a') : s.winOpen ? SNOW(291, 91, 20, '#7cc4ff') : ''}</g>`;
+        } else {
+          g.innerHTML = `<rect x="${heat || !off ? 153 : 151}" y="6" width="42" height="23" rx="12" fill="${col}" class="dled" style="filter:drop-shadow(0 0 5px ${col})"/>
+            <g class="dtx"><text x="151" y="118" font-size="${long ? 12 : 16}" text-anchor="middle" fill="#fff">${esc(label)}</text>
+            ${num7(bigtxt, 197, 140, 68, 146, 31, 9)}
+            <text x="227" y="166" font-size="${UN[fk].length > 2 ? 10 : 13}" text-anchor="middle" opacity=".85">${esc(UN[fk])}</text>
+            ${heat ? FLAME(222, 185, 26, '#ff8a2a') : s.winOpen ? SNOW(222, 185, 22, '#7cc4ff') : ''}
+            ${[[80, 92], [148, 160]].map(([ix, tx], i) => { const sm = others[i]; return sm ? `<g transform="translate(${ix} 227) scale(.62)" stroke="#fff" stroke-width="2.4" stroke-linecap="round" fill="none">${DGLYPH[sm.key]}</g><text x="${tx}" y="243" font-size="${sm.txt.length > 3 ? 13 : 15}" font-style="italic" opacity=".92">${esc(sm.txt)}<tspan font-size="${sm.unit.length > 2 ? 7.5 : 9}">${esc(sm.unit)}</tspan></text>` : ''; }).join('')}</g>`;
+        }
+        return;
+      }
+      this._rotLabel = null; g.classList.remove('swap');
       if (kind === 'rect') {
         const pt = (a) => `${(197 + 92 * Math.cos(a * Math.PI / 180)).toFixed(1)} ${(172 + 92 * Math.sin(a * Math.PI / 180)).toFixed(1)}`, arc = `M${pt(116)}A92 92 0 1 1 ${pt(299)}`;
         g.innerHTML = `<g class="dtx">
@@ -784,7 +838,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       // couleurs personnalisées (éditeur) : variables --appliance-*, lues aussi par le pop-up
       Object.entries(COLORS).forEach(([k, v]) => { const col = cssColor(c[k]); if (col) this.style.setProperty(v, col); else this.style.removeProperty(v); });
       this._renderClimate(tmp);
-      txt('name', c.name || this._t('name'));
+      txt('name', (Number(c.rotate_seconds) > 0 && this._rotLabel && c.rotate_title !== false && /^display_/.test(st)) ? this._rotLabel : (c.name || this._t('name')));
       const ric = $('ric'), icon = c.icon || DEF_ICON[st];
       if (ric) { ric.hidden = !icon; if (icon) icon_(ric, icon); }
       const chip = $('chip');
@@ -1411,6 +1465,8 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
         ent('entity_temperature', 'sensor', 'temperature'), ent('entity_humidity', 'sensor', 'humidity'),
         ent('entity_outdoor_temperature', 'sensor', 'temperature'), ent('entity_outdoor_humidity', 'sensor', 'humidity'),
         ent('entity_window', 'binary_sensor'), ent('entity_battery', ['sensor', 'binary_sensor']), ent('entity_climate', 'climate'),
+        // afficheurs : défilement des valeurs (température, consigne, humidité, pression, CO₂)
+        ...(/^display_/.test(String((this._c && (this._c.variant || this._c.style)) || '')) ? [ent('entity_pressure', 'sensor'), ent('entity_co2', 'sensor'), num('rotate_seconds', 0, 60, 1, 's', 0), bool('rotate_title')] : []),
         // commandes du thermostat : désactivées par défaut, proposées seulement avec un thermostat lié
         ...(this._c && this._c.entity_climate ? [{ type: 'grid', name: '', schema: ['show_hvac_modes', 'show_fan_modes', 'show_preset_modes'].map((name) => ({ name, selector: { boolean: {} }, default: false })) }] : []),
         { type: 'grid', name: '', schema: [tr('comfort_temp_min', 5, 30, Math.round(tmp.c(19))), tr('comfort_temp_max', 10, 40, Math.round(tmp.c(25))),

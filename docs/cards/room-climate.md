@@ -82,5 +82,21 @@ alert_humidity_max: 70
 entity_climate: climate.living_room                       # optional
 ```
 
+## Rotating values on the displays
+
+<p align="center"><img src="../thermostat-rotate.gif" width="480" alt="Digital displays: the big value changes every few seconds (temperature, target, humidity, pressure, CO₂)"></p>
+
+With `variant: display_rect` or `display_round`, `rotate_seconds` (0 = off, 2 to 4 is nice) makes a **single big display** that changes every N seconds: temperature, target of the linked thermostat, humidity and, if you give them, the **pressure** (`entity_pressure`, converted to hPa) and the **CO₂** (`entity_co2`). The label on the screen and the card title follow (`rotate_title: false` keeps your own name). The **two small values** at the bottom are always the two *other* measurements, never the one shown big.
+
+```yaml
+type: custom:appliance-room-climate-card
+variant: display_round
+rotate_seconds: 3
+entity_temperature: sensor.living_room_temperature
+entity_humidity: sensor.living_room_humidity
+entity_climate: climate.living_room
+entity_pressure: sensor.home_pressure   # optional
+entity_co2: sensor.living_room_co2      # optional
+```
 
 [← All cards](../../README.md#the-cards)

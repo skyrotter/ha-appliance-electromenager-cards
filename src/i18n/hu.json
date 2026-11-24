@@ -1061,7 +1061,8 @@
     "alarm_short": "Hiba: ellenőrizd a spa-t"
   },
   "room_climate": {
-    "st_display_rect": "Digitális kijelző (téglalap)",
+"pressure": "Légnyomás",
+        "st_display_rect": "Digitális kijelző (téglalap)",
     "st_display_round": "Digitális kijelző (kerek)",
     "name": "Szobaklíma",
     "comfort": "Kellemes",
@@ -1639,6 +1640,8 @@
     "entity_current": "Áram",
     "entity_battery": "Akkumulátor teljesítmény",
     "entity_pressure": "Nyomás",
+    "rotate_seconds": "A nagy érték váltása (mp, 0 = ki)",
+    "rotate_title": "Az érték nevének megjelenítése címként",
     "entity_rain": "Eső szenzor",
     "entity_return_temp": "Visszatérő hőmérséklet",
     "entity_runtime": "Futási idő",

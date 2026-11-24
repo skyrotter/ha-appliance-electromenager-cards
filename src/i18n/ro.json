@@ -832,6 +832,8 @@
     "entity_power_l2": "Putere L2",
     "entity_power_l3": "Putere L3",
     "entity_pressure": "Presiune",
+    "rotate_seconds": "Schimbă valoarea mare la fiecare (s, 0 = oprit)",
+    "rotate_title": "Afișează numele valorii ca titlu",
     "entity_rain": "Senzor de ploaie",
     "entity_return_temp": "Temperatură retur",
     "entity_runtime": "Timp de funcționare",
@@ -1327,7 +1329,8 @@
     "resume": "Revino la program"
   },
   "room_climate": {
-    "st_display_rect": "Afișaj digital (dreptunghiular)",
+"pressure": "Presiune",
+        "st_display_rect": "Afișaj digital (dreptunghiular)",
     "st_display_round": "Afișaj digital (rotund)",
     "name": "Climat cameră",
     "comfort": "Confortabil",

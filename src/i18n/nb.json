@@ -835,6 +835,8 @@
 "entity_power_l2": "Effekt L2",
 "entity_power_l3": "Effekt L3",
 "entity_pressure": "Trykk",
+"rotate_seconds": "Bytt den store verdien hvert (s, 0 = av)",
+"rotate_title": "Vis verdiens navn som tittel",
 "entity_rain": "Regnsensor",
 "entity_return_temp": "Returtemperatur",
 "entity_runtime": "Driftstid",
@@ -1336,6 +1338,7 @@
 "resume": "Tilbake til timeplan"
 },
 "room_climate": {
+"pressure": "Lufttrykk",
 "st_display_rect": "Digitalt display (rektangulært)",
 "st_display_round": "Digitalt display (rundt)",
 "name": "Romklima",

@@ -1060,6 +1060,8 @@
     "entity_current_l3": "Current phase L3",
     "entity_battery": "Battery group power",
     "entity_pressure": "Pressure",
+    "rotate_seconds": "Rotate the big value every (s, 0 = off)",
+    "rotate_title": "Show the shown value's name as title",
     "entity_rain": "Rain sensor",
     "entity_return_temp": "Return temperature",
     "entity_runtime": "Runtime",
@@ -1893,7 +1895,8 @@
     "resume": "Back to schedule"
   },
   "room_climate": {
-    "st_display_rect": "Digital display (rectangle)",
+"pressure": "Pressure",
+        "st_display_rect": "Digital display (rectangle)",
     "st_display_round": "Digital display (round)",
     "name": "Room climate",
     "comfort": "Comfortable",

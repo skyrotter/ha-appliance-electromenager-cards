@@ -833,6 +833,8 @@
     "entity_power_l2": "Výkon L2",
     "entity_power_l3": "Výkon L3",
     "entity_pressure": "Tlak",
+    "rotate_seconds": "Střídat velkou hodnotu každých (s, 0 = vyp.)",
+    "rotate_title": "Zobrazit název hodnoty jako titulek",
     "entity_rain": "Senzor deště",
     "entity_return_temp": "Teplota zpátečky",
     "entity_runtime": "Doba běhu",
@@ -1316,7 +1318,8 @@
     "model_bht6000": "Termostat Tuya BHT6000 (kulatý, černý displej)"
   },
   "room_climate": {
-    "st_display_rect": "Digitální displej (obdélníkový)",
+"pressure": "Tlak",
+        "st_display_rect": "Digitální displej (obdélníkový)",
     "st_display_round": "Digitální displej (kulatý)",
     "name": "Klima v místnosti",
     "comfort": "Příjemně",

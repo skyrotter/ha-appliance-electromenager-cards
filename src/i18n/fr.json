@@ -1044,6 +1044,8 @@
     "entity_current_l3": "Courant phase L3",
     "entity_battery": "Puissance du groupe de batteries",
     "entity_pressure": "Pression",
+    "rotate_seconds": "Faire défiler la grande valeur toutes les (s, 0 = non)",
+    "rotate_title": "Afficher le nom de la valeur en titre",
     "entity_rain": "Capteur de pluie",
     "entity_return_temp": "Température de retour",
     "entity_runtime": "Durée de fonctionnement",
@@ -1878,7 +1880,8 @@
     "resume": "Reprendre le planning"
   },
   "room_climate": {
-    "st_display_rect": "Afficheur numérique (rectangle)",
+"pressure": "Pression",
+        "st_display_rect": "Afficheur numérique (rectangle)",
     "st_display_round": "Afficheur numérique (rond)",
     "name": "Climat pièce",
     "comfort": "Confort",
