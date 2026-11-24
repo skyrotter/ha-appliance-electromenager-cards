@@ -204,9 +204,10 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       if (!isFinite(home)) home = Math.max(0, sol + z(grid) - z(batt) - ev - wh);
       const socS = c.entity_battery_soc && this._hass.states[c.entity_battery_soc];
       const soc = socS ? parseFloat(socS.state) : NaN;
+      const carS = c.entity_car_soc && this._hass.states[c.entity_car_soc], car = carS ? parseFloat(carS.state) : NaN;
       const sun = this._hass.states['sun.sun'];
       const night = sun ? sun.state === 'below_horizon' : sol < THR;
-      return { sol, batt, grid, ev, wh, home, soc, night, hasBatt: !!(c.entity_battery_power || c.entity_battery_soc), hasGrid: isFinite(grid), hasEv: !!c.entity_ev, hasWh: !!c.entity_water_heater };
+      return { sol, batt, grid, ev, wh, home, soc, car, night, hasBatt: !!(c.entity_battery_power || c.entity_battery_soc), hasGrid: isFinite(grid), hasEv: !!(c.entity_ev || c.entity_car_soc), hasWh: !!c.entity_water_heater };
     }
 
     _build() {
@@ -282,7 +283,8 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       this._pill('home', this._l('consumption'), this._fmt(v.home), v.home > THR);
       this._pill('battery', isFinite(v.soc) ? `${this._l('battery')} ${Math.round(v.soc)} %` : this._l('battery'), isFinite(v.batt) ? `${chg ? '+' : dis ? '−' : ''}${this._fmt(Math.abs(v.batt))}` : '--', chg || dis, v.hasBatt);
       this._pill('grid', exp ? this._l('export') : imp ? this._l('import') : this._l('grid'), v.hasGrid ? this._fmt(Math.abs(v.grid)) : '--', exp || imp, v.hasGrid);
-      this._pill('ev', this._l('ev'), this._fmt(v.ev), v.ev > THR, v.hasEv);
+      this._pill('ev', this._l('ev'), `${isFinite(v.car) ? `${Math.round(v.car)} % · ` : ''}${this._fmt(v.ev)}`, v.ev > THR || isFinite(v.car), v.hasEv);
+      const evTxt = r.querySelector('.p-ev .v'); if (evTxt) evTxt.style.fill = isFinite(v.car) && v.car < 20 ? (v.car < 10 ? '#e53935' : '#ef8a00') : '';
       this._pill('water', this._l('water_heater'), this._fmt(v.wh), v.wh > THR, v.hasWh);
       // tuiles
       const tiles = r.getElementById('shtiles'); tiles.classList.toggle('hide', c.show_tiles === false);
@@ -291,7 +293,8 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       set('consumption', true, this._fmt(v.home));
       set('battery', v.hasBatt, isFinite(v.soc) ? `${Math.round(v.soc)} %` : this._fmt(v.batt), chg ? `${this._t('charging')} ${this._fmt(v.batt)}` : dis ? `${this._t('discharging')} ${this._fmt(-v.batt)}` : '');
       set('grid', v.hasGrid, this._fmt(Math.abs(v.grid)), exp ? this._t('export') : imp ? this._t('import') : '');
-      set('ev', v.hasEv, this._fmt(v.ev)); set('water', v.hasWh, this._fmt(v.wh));
+      set('ev', v.hasEv, this._fmt(v.ev), isFinite(v.car) ? `${this._t('car')} ${Math.round(v.car)} %` : '');
+      const evSub = r.querySelector('.tile[data-k="ev"] .s'); if (evSub) evSub.style.color = isFinite(v.car) && v.car < 20 ? (v.car < 10 ? '#e53935' : '#ef8a00') : ''; set('water', v.hasWh, this._fmt(v.wh));
     }
   }
   customElements.define(TAG, ApplianceSolarHouseCard);
@@ -318,7 +321,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
         pw('entity_solar'), pw('entity_home'),
         pw('entity_battery_power'), { name: 'entity_battery_soc', selector: { entity: { domain: 'sensor' } } },
         pw('entity_grid'), pw('entity_grid_import'), pw('entity_grid_export'),
-        pw('entity_ev'), pw('entity_water_heater'),
+        pw('entity_ev'), { name: 'entity_car_soc', selector: { entity: { domain: 'sensor' } } }, pw('entity_water_heater'),
         { type: 'grid', name: '', schema: [bool('battery_invert', false), bool('grid_invert', false),
           { name: 'max_power', default: 6000, selector: { number: { min: 500, max: 50000, step: 100, mode: 'box', unit_of_measurement: 'W' } } }] },
         { name: 'labels', selector: { object: {} } },

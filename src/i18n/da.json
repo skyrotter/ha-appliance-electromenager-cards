@@ -2231,6 +2231,8 @@
     "f_show_source": "Vis kildelisten"
   },
   "solar_house": {
+    "car": "Bil",
+    "f_entity_car_soc": "Bilens batteriniveau (%)",
     "name": "Solhus",
     "production": "Produktion",
     "consumption": "Forbrug",

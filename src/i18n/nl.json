@@ -2002,6 +2002,8 @@
     "f_show_source": "de bronnenlijst tonen"
   },
   "solar_house": {
+    "car": "Auto",
+    "f_entity_car_soc": "Batterijniveau van de auto (%)",
     "name": "Zonnehuis",
     "production": "Opwekking",
     "consumption": "Verbruik",

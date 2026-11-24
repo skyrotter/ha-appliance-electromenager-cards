@@ -2403,6 +2403,8 @@
     "f_show_source": "die Quellenliste anzeigen"
   },
   "solar_house": {
+    "car": "Auto",
+    "f_entity_car_soc": "Batteriestand des Autos (%)",
     "name": "Solarhaus",
     "production": "Erzeugung",
     "consumption": "Verbrauch",

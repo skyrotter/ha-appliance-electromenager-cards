@@ -2380,6 +2380,8 @@
     "f_show_source": "Prikaži listu izvora"
   },
   "solar_house": {
+    "car": "Automobil",
+    "f_entity_car_soc": "Nivo baterije automobila (%)",
     "name": "Solarna kuća",
     "production": "Proizvodnja",
     "consumption": "Potrošnja",

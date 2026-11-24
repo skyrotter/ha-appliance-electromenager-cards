@@ -3101,6 +3101,8 @@
     "f_show_source": "Mostrar a lista de fontes"
   },
   "solar_house": {
+    "car": "Carro",
+    "f_entity_car_soc": "Nível da bateria do carro (%)",
     "name": "Casa solar",
     "production": "Produção",
     "consumption": "Consumo",
