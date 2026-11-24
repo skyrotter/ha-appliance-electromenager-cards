@@ -608,6 +608,18 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     return `<g class="glow" fill="#fff" transform="translate(${x0.toFixed(1)} ${y}) skewX(${-lean})">${out}</g>`;
   };
 
+  // largeur d'un nombre 7 segments (même calcul que number) ; sert à centrer le groupe « chiffres + unité » dans l'écran
+  const numWidth = (txt, maxW, wMax) => {
+    const toks = [...String(txt).slice(-5)], nd = toks.filter((c) => c !== '.').length, nDot = toks.length - nd, gap = wMax * 0.2;
+    const w = Math.min(wMax, (maxW - (toks.length - 1) * gap - nDot * wMax * 0.3) / Math.max(1, nd)), dw = Math.max(Math.max(3, w * 0.22), w * 0.3);
+    return nd * w + nDot * dw + (toks.length - 1) * gap;
+  };
+  // renvoie le bord droit des chiffres (xr) et le départ de l'unité (xu) pour un groupe centré sur xc
+  const centerGroup = (txt, maxW, wMax, xc, unitLen, perChar, gapU = 9) => {
+    const tw = numWidth(txt, maxW, wMax), G = tw + gapU + unitLen * perChar, xr = xc - G / 2 + tw;
+    return { xr, xu: xr + gapU };
+  };
+
   // pictogrammes des petites valeurs (mode rotation) : dessinés autour de (0,0)
   const GLYPH = {
     temperature: '<path d="M-2.6 -8a2.6 2.6 0 0 1 5.2 0v9.5a5 5 0 1 1-5.2 0Z" fill="none"/><path d="M5 -6h3M5 -2h3" />',
@@ -628,13 +640,13 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       })();
       const pt = (a) => `${(197 + 92 * Math.cos(a * Math.PI / 180)).toFixed(1)} ${(172 + 92 * Math.sin(a * Math.PI / 180)).toFixed(1)}`;
       const arc = `M${pt(116)}A92 92 0 1 1 ${pt(299)}`;
-      const num = number(o.big.txt, 260, 138, 62, 116, 32);
+      const cg = centerGroup(o.big.txt, 116, 32, 214, o.big.unit.length, 10.5), num = number(o.big.txt, cg.xr, 138, 62, 116, 32);
       return `<image href="${IMG_RECT}" width="340" height="462" style="opacity:${on ? 0 : 1}"/><image href="${IMG_RECT_ICONS}" width="340" height="462" style="opacity:${on ? 1 : 0}"/>
         ${on ? `<g class="scr">
           <path class="arc" d="${arc}" pathLength="100" stroke="#2a3a35" opacity=".8"/>
           <path class="arc glow" d="${arc}" pathLength="100" stroke="${o.big.key === 'co2' ? 'url(#cogr)' : '#35d07a'}" stroke-dasharray="${Math.max(1.5, f * 100).toFixed(1)} 100"/>
           ${num}
-          <text x="266" y="190" font-size="15" font-weight="600">${esc(o.big.unit)}</text>
+          <text x="${cg.xu.toFixed(1)}" y="190" font-size="15" font-weight="600">${esc(o.big.unit)}</text>
           <text x="${o.big.label.length > 5 ? 208 : 198}" y="${o.big.label.length > 5 ? 248 : 258}" font-size="${o.big.label.length > 5 ? 11 : 17}" text-anchor="middle">${esc(o.big.label)}</text>
           ${o.rot ? [[145, 285, 352], [250, 278, 350]].map(([cx, cy, ty], i) => {
             const sm = o.small[i]; if (!sm) return `<circle cx="${cx}" cy="${cy}" r="24" fill="#050505"/>`;
@@ -645,14 +657,14 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
           ${battery}</g>` : ''}`;
     },
     round: (o) => {
-      const { v, col, on, lvl } = o, val = o.big.txt;
+      const { v, col, on, lvl } = o, val = o.big.txt, cg = centerGroup(val, 146, 31, 150, o.big.unit.length, 8);
       const smile = lvl === 'good' ? 'M214 188Q222 196 230 188' : lvl === 'moderate' ? 'M214 190H230' : 'M214 193Q222 185 230 193';
       return `<image href="${IMG_ROUND}" width="346" height="406"/>
         <rect class="led ${on ? 'on' : ''}" x="${on ? 153 : 151}" y="${on ? 6 : 5}" width="${on ? 42 : 46}" height="${on ? 23 : 25}" rx="12" fill="${on ? col : '#2d3136'}" ${on ? `style="filter:drop-shadow(0 0 5px ${col})"` : ''}/>
         ${on ? `<g class="scr">
           <text x="151" y="118" font-size="${o.big.label.length > 5 ? 12 : 17}" text-anchor="middle">${esc(o.big.label)}</text>
-          ${number(val, 197, 140, 68, 146, 31, 9)}
-          <text x="227" y="166" font-size="13" text-anchor="middle" opacity=".85">${esc(o.big.unit)}</text>
+          ${number(val, cg.xr, 140, 68, 146, 31, 9)}
+          <text x="${cg.xu.toFixed(1)}" y="166" font-size="13" opacity=".85">${esc(o.big.unit)}</text>
           ${o.big.key === 'co2' ? `<circle cx="222" cy="185" r="14" fill="none" stroke="#fff" stroke-width="1.7" opacity=".9"/><circle cx="217" cy="180" r="1.5"/><circle cx="227" cy="180" r="1.5"/>
           <path d="${smile}" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/>` : ''}
           ${o.rot ? [[80, 91], [139, 150]].map(([ix, tx], i) => { const sm = o.small[i]; return sm ? `<g transform="translate(${ix} 227) scale(.62)" stroke="#fff" stroke-width="2.4" stroke-linecap="round" fill="none">${GLYPH[sm.key]}</g><text x="${tx}" y="243" font-size="${sm.txt.length > 3 ? 14 : 17}" font-style="italic" opacity=".92">${esc(sm.txt)}<tspan font-size="${sm.unit.length > 2 ? 7.5 : 9}">${esc(sm.unit)}</tspan></text>` : ''; }).join('') : `<path d="M78 214a3.2 3.2 0 0 1 6.4 0v14.4a6.6 6.6 0 1 1-6.4 0Z" fill="#ffc933"/>
@@ -746,9 +758,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       r.getElementById('cotitle').textContent = Number(c.rotate_seconds) > 0 && this._metrics().length > 1 && c.rotate_title !== false ? this._l(this._focusKey()) : (c.name || this._t('name'));
       const badge = r.getElementById('cobadge');
       badge.textContent = this._t(st);
-      badge.style.display = c.show_status === false ? 'none' : '';
+      badge.style.display = c.show_status === false || (Number(c.rotate_seconds) > 0 && this._metrics().length > 1 && this._focusKey() !== 'co2') ? 'none' : ''; // l'état « air sain / vicié » ne concerne que le CO₂
       const fk = this._focusKey(), fv = v[fk];
-      const SC = { co2: [0, Number(c.co2_max) > 0 ? Number(c.co2_max) : 2000], temperature: [0, 40], humidity: [0, 100], pressure: [960, 1060] };
+      const SC = { co2: [0, Number(c.co2_max) > 0 ? Number(c.co2_max) : 2000], temperature: [10, 35], humidity: [20, 80], pressure: [980, 1040] };
       const big = { key: fk, label: fk === 'co2' ? 'CO₂' : this._l(fk).toUpperCase(), unit: fk === 'co2' ? this._unit(c.entity_co2, 'ppm').toUpperCase() : fk === 'pressure' ? 'HPA' : this._unit(c[ENT[fk]], { temperature: '°C', humidity: '%' }[fk]).toUpperCase(),
         txt: isNaN(fv) ? '---' : fk === 'temperature' ? String(Math.round(fv * 10) / 10) : String(Math.round(fv)) };
       const f = isNaN(fv) ? 0 : Math.max(0, Math.min(1, (fv - SC[fk][0]) / (SC[fk][1] - SC[fk][0])));
