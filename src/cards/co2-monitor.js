@@ -53,7 +53,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 .led{transition:fill .4s}.poor .led.on{animation:copulse 1.1s ease-in-out infinite}
 .unavailable svg{filter:grayscale(.85) opacity(.65)}
 /* mode rotation : un seul grand affichage (sans tuiles), fondu à chaque changement de valeur */
-.rot .tiles{display:none}.rot svg{flex:0 1 calc(280px * var(--illus-scale,1));width:calc(280px * var(--illus-scale,1))}
+.rot .tiles{display:none}
+/* compact sans tuiles visibles : l'image est centrée (et prend toute la place) */
+.compact.notiles .body{justify-content:center}.compact.notiles svg{flex:0 1 auto;width:auto;height:100%;max-width:100%;margin:0 auto}.compact.notiles .tiles{display:none}.rot svg{flex:0 1 calc(280px * var(--illus-scale,1));width:calc(280px * var(--illus-scale,1))}
 .swap .scr{animation:cofade .7s ease}
 @keyframes cofade{from{opacity:0}to{opacity:1}}
 .noanim *{animation:none!important;transition:none!important}
@@ -245,6 +247,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         const small = document.createElement('small'); small.textContent = isNaN(v[k]) ? '' : k === 'pressure' ? 'hPa' : this._unit(id, dflt[k]);
         el.querySelector('.v').replaceChildren(this._fmt(v[k], dec[k]), small);
       });
+      card.classList.toggle('notiles', !r.querySelector('.tile:not(.hide)')); // aucune tuile visible : l'image est centrée en mode compact
     }
   }
   customElements.define(TAG, ApplianceCo2MonitorCard);
