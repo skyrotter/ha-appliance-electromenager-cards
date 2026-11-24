@@ -212,7 +212,7 @@ class ApplianceAquariumCard extends HTMLElement {
     const tc = window.applianceTemp(this._hass, c), temp = tc.conv(this._num(c.entity_temperature), this._hass.states[c.entity_temperature]);
     const tMin = c.temp_min ?? tc.c(24), tMax = c.temp_max ?? tc.c(27);
     let cost = this._num(c.entity_cost);
-    if (cost === null && energy !== null && c.price_per_kwh) cost = energy * c.price_per_kwh;
+    if (cost === null && energy !== null && c.price_per_kwh && Number.isFinite(window.appliancePrice(this._hass, c.price_per_kwh))) cost = energy * window.appliancePrice(this._hass, c.price_per_kwh);
 
     // Vitesse des bulles/queues liée à la puissance (0.5× à 3×)
     const ratio = power === null ? 0 : Math.min(power / (c.max_power || 200), 1);

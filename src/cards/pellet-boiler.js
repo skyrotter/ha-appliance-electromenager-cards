@@ -236,7 +236,7 @@ class AppliancePelletBoilerCard extends HTMLElement {
     // températures dans l'unité d'affichage (°C / °F)
     const tc = window.applianceTemp(this._hass, c), tv = (id) => tc.conv(this._num(id), this._st(id));
     const dep = tv(c.entity_flow_temp), ret = tv(c.entity_return_temp), lvl = this._num(c.entity_pellet_level);
-    let cost = this._num(c.entity_cost); if (cost === null && e !== null && c.price_per_kwh) cost = e * c.price_per_kwh;
+    let cost = this._num(c.entity_cost); if (cost === null && e !== null && c.price_per_kwh && Number.isFinite(window.appliancePrice(this._hass, c.price_per_kwh))) cost = e * window.appliancePrice(this._hass, c.price_per_kwh);
     const st = this._state(w);
     const low = lvl !== null && lvl <= c.pellet_alert;
     r.getElementById('svg').setAttribute('class', st);

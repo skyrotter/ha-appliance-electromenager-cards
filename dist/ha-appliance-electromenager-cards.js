@@ -14811,6 +14811,11 @@ class ApplianceCardBase extends HTMLElement {
       } else {
         tile("mdi:lightning-bolt-circle", eVal, eHdr ?? lb(solar ? "today" : dual ? "energy_grid" : "energy"), c.energy);
       }
+      // prix du kWh (nombre ou entité tarif) avec un simple compteur d'énergie : coût = énergie du compteur × prix (sans capteur de coût, ni solaire / double compteur)
+      const eF = { Wh: 1e-3, kWh: 1, MWh: 1e3, GWh: 1e6 }[m.energy.attributes && m.energy.attributes.unit_of_measurement], eV = num(m.energy);
+      if (hasPr && showCost && !m.cost && !solar && !dual && showOpt("show_cost") && eF !== undefined && eV != null) {
+        tile("mdi:cash", money(eV * eF * pr), !(c.labels && c.labels.cost) && TILE_PERIODS.includes(c.energy_tile_period) ? tr(hass, `cost_${c.energy_tile_period}`) : lb("cost"), prEnt || c.energy);
+      }
     }
     if (m.energyS) tile("mdi:solar-power-variant", fmtEnergy(hass, m.energyS) ?? "—", lb("energy_solar"), c.energy_solar);
     if (m.cost && showOpt("show_cost")) {

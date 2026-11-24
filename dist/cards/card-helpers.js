@@ -69,6 +69,11 @@
   // réglages de HA lus par les cartes (langue, formats, unité de température, devise), comparés par valeur
   const settings = (h) => [h.language, h.locale?.language, h.locale?.number_format, h.locale?.time_format,
     h.config?.unit_system?.temperature, h.config?.currency].join('|');
+  // prix du kWh (option price_per_kwh) : un nombre, ou une entité (capteur de tarif heures pleines / creuses) ; NaN si l'entité est absente ou indisponible
+  window.appliancePrice = (hass, v) => {
+    if (typeof v === 'string' && /^[a-z_]+\.[a-z0-9_]+$/.test(v.trim())) { const st = hass && hass.states && hass.states[v.trim()]; return st ? parseFloat(String(st.state).replace(',', '.')) : NaN; }
+    return Number(v);
+  };
   window.applianceChanged = (el, hass, cfg) => {
     const p = el._applianceSeen, now = Date.now();
     if (el.hasAttribute('tiles-pos')) Promise.resolve().then(() => window.applianceTilePos && window.applianceTilePos(el)); // tiles_position : réapplique après un rendu
