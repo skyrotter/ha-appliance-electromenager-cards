@@ -858,7 +858,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
       // tuiles : position, consommation du moteur, coût, dernier mouvement
       const energy = this._num(c.entity_energy);
       let cost = this._num(c.entity_cost), costU = this._unit(c.entity_cost, c.currency || '€');
-      if (isNaN(cost) && c.price_per_kwh && !isNaN(energy)) { cost = energy * Number(c.price_per_kwh); costU = c.currency || '€'; }
+      if (isNaN(cost) && c.price_per_kwh && !isNaN(energy) && Number.isFinite(window.appliancePrice(this._hass, c.price_per_kwh))) { cost = energy * window.appliancePrice(this._hass, c.price_per_kwh); costU = c.currency || '€'; }
       const V = {
         position: [known && st !== 'unavailable', this._fmt(pos, 0), '%'],
         power: [c.entity_power, isNaN(pw) ? '--' : (pw >= 1000 ? this._fmt(pw / 1000, 2) : this._fmt(pw, 0)), isNaN(pw) ? '' : (pw >= 1000 ? 'kW' : 'W')],

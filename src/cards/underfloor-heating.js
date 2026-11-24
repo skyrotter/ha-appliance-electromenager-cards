@@ -304,7 +304,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
 
       const energy = this._num(c.entity_energy);
       let cost = this._num(c.entity_cost), costU = this._unit(c.entity_cost, c.currency || '€');
-      if (isNaN(cost) && c.price_per_kwh && !isNaN(energy)) { cost = energy * Number(c.price_per_kwh); costU = c.currency || '€'; }
+      if (isNaN(cost) && c.price_per_kwh && !isNaN(energy) && Number.isFinite(window.appliancePrice(this._hass, c.price_per_kwh))) { cost = energy * window.appliancePrice(this._hass, c.price_per_kwh); costU = c.currency || '€'; }
       const V = {
         temp: [!isNaN(temp), this._fmt(temp, 1), tc.unit],
         target: [!isNaN(target), this._fmt(target, 1), tc.unit],

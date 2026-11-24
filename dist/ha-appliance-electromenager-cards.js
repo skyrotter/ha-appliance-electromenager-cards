@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.204.0";
+const VERSION = "1.205.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -14811,6 +14811,11 @@ class ApplianceCardBase extends HTMLElement {
       } else {
         tile("mdi:lightning-bolt-circle", eVal, eHdr ?? lb(solar ? "today" : dual ? "energy_grid" : "energy"), c.energy);
       }
+      // prix du kWh (nombre ou entité tarif) avec un simple compteur d'énergie : coût = énergie du compteur × prix (sans capteur de coût, ni solaire / double compteur)
+      const eF = { Wh: 1e-3, kWh: 1, MWh: 1e3, GWh: 1e6 }[m.energy.attributes && m.energy.attributes.unit_of_measurement], eV = num(m.energy);
+      if (hasPr && showCost && !m.cost && !solar && !dual && showOpt("show_cost") && eF !== undefined && eV != null) {
+        tile("mdi:cash", money(eV * eF * pr), !(c.labels && c.labels.cost) && TILE_PERIODS.includes(c.energy_tile_period) ? tr(hass, `cost_${c.energy_tile_period}`) : lb("cost"), prEnt || c.energy);
+      }
     }
     if (m.energyS) tile("mdi:solar-power-variant", fmtEnergy(hass, m.energyS) ?? "—", lb("energy_solar"), c.energy_solar);
     if (m.cost && showOpt("show_cost")) {
@@ -17273,7 +17278,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
 (async () => {
   const base = import.meta.url;
   // ?v=<version> : après une mise à jour, le navigateur ne ressert pas d'anciens morceaux depuis son cache
-  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.204.0`, base).href);
+  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.205.0`, base).href);
   await chunk("card-helpers");
   await chunk("editor-labels");
   // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre
