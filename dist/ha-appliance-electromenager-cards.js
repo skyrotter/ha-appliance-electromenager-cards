@@ -13814,6 +13814,13 @@ class ApplianceCardBase extends HTMLElement {
       if (base === "off" || base === "unavailable") m.status = base;
       else if (watts !== null) m.status = powered && !full ? "charging" : full || watts >= (c.standby_threshold ?? (kind === "phone_charger" ? 0.3 : 1)) ? "charged" : "standby";
       else m.status = base === "running" && !full ? "charging" : full ? "charged" : "standby";
+      if (kind === "phone_charger" && main && ["sensor", "input_select", "select"].includes(domainOf(c.entity))) {
+        // capteur texte d'état de la batterie (application Companion : battery_state / watch_battery_state) : Charging / Not Charging / Full / Unplugged
+        const bs = String(main.state).toLowerCase().replace(/[_-]+/g, " ").trim();
+        if (/^(not charging|unplugged|discharging|d[ée]branch|pas en charge|non en charge|entl[äa]dt)/.test(bs)) m.status = full ? "charged" : "standby";
+        else if (/^(full|charged|plein|charg[ée]e?|voll)/.test(bs)) m.status = "charged";
+        else if (/^(charging|en charge|l[äa]dt)/.test(bs)) m.status = full ? "charged" : "charging";
+      }
       if (kind === "phone_charger") {
         // mode Concentration (binary_sensor on / capteur texte avec le nom du mode), activité (Stationary, Walking…), présence (person / device_tracker)
         const OFFW = /^(off|none|unknown|unavailable|no focus|aucun|ninguno|keine|nessuno|geen|false|0|)$/i;
