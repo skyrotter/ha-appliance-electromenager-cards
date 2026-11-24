@@ -59,7 +59,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 .compact .tile{padding:2px 5px;border-radius:8px}.compact .tile .l ha-icon{--mdc-icon-size:12px}.compact .tile .v{font-size:12px;line-height:15px;margin-top:0}
 /* compact sans tuiles visibles : l'image est centrée (et prend toute la place) */
 .compact .body{flex:1 1 auto;min-height:0;flex-wrap:nowrap;gap:6px;margin-top:3px;align-items:stretch}.compact svg{flex:1 1 0;min-width:0;width:auto;height:100%;max-width:none;margin:0}
-.compact.notiles .body{justify-content:center}.compact.notiles svg{flex:0 1 auto;width:auto;height:100%;max-width:100%;margin:0 auto}.compact.notiles .tiles{display:none}`;
+.compact.notiles .body{justify-content:center}.compact.notiles .tiles{display:none}`;
 
   const TILES = [['pressure', 'mdi:gauge', 'show_pressure'], ['temperature', 'mdi:thermometer', 'show_temperature'], ['humidity', 'mdi:water-percent', 'show_humidity']];
   const ENT = { pressure: 'entity_pressure', temperature: 'entity_temperature', humidity: 'entity_humidity' };
