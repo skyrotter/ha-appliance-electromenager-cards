@@ -1794,6 +1794,13 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
     const [x0, y0] = p(a0), [x1, y1] = p(a1);
     return `M${x0.toFixed(2)} ${y0.toFixed(2)}A${r} ${r} 0 ${a1 - a0 > 180 ? 1 : 0} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}`;
   };
+  // largeur d'un nombre 7 segments (même calcul que num7) et centrage du groupe « chiffres + unité » dans l'écran
+  const numWidth = (txt, maxW, wMax) => {
+    const toks = [...String(txt).slice(-5)], nd = toks.filter((c) => c !== '.').length, nDot = toks.length - nd, gap = wMax * 0.2;
+    const w = Math.min(wMax, (maxW - (toks.length - 1) * gap - nDot * wMax * 0.3) / Math.max(1, nd)), dw = Math.max(Math.max(3, w * 0.22), w * 0.3);
+    return nd * w + nDot * dw + (toks.length - 1) * gap;
+  };
+  const centerGroup = (txt, maxW, wMax, xc, unitLen, perChar, gapU = 9) => { const tw = numWidth(txt, maxW, wMax), G = tw + gapU + unitLen * perChar, xr = xc - G / 2 + tw; return { xr, xu: xr + gapU }; };
   // pictogrammes des petites valeurs (afficheurs en rotation), dessinés autour de (0,0)
   const DGLYPH = {
     temperature: '<path d="M-2.6 -8a2.6 2.6 0 0 1 5.2 0v9.5a5 5 0 1 1-5.2 0Z" fill="none"/><path d="M5 -6h3M5 -2h3"/>',
@@ -2194,20 +2201,21 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       if (rot) {
         const fk = list[(this._rot || 0) % list.length], fv = V[fk];
         const UN = { temperature: unit, setpoint: unit, humidity: '%', pressure: 'hPa', co2: 'ppm' }, LB = { temperature: this._l('temperature'), setpoint: this._l('target'), humidity: this._l('humidity'), pressure: this._l('pressure'), co2: 'CO₂' };
-        const SC = { temperature: [mn, mx], setpoint: [mn, mx], humidity: [0, 100], pressure: [960, 1060], co2: [0, 2000] };
+        const SC = { temperature: [mn, mx], setpoint: [mn, mx], humidity: [20, 80], pressure: [980, 1040], co2: [0, 2000] };
         const fmtV = (k, v, big) => (k === 'temperature' ? this._fmt(v, big ? 1 : 0) : k === 'setpoint' ? this._fmt(v, ck && ck.step < 1 ? 1 : 0) : String(Math.round(v))).replace(/\s/g, '');
         const frac = clamp01((fv - SC[fk][0]) / (SC[fk][1] - SC[fk][0])), label = LB[fk].toUpperCase(), long = label.length > 5;
         const others = [...list.slice(list.indexOf(fk) + 1), ...list.slice(0, list.indexOf(fk))].slice(0, 2).map((k) => ({ key: k, txt: fmtV(k, V[k], false), unit: UN[k] }));
         const swap = this._lastFocus != null && this._lastFocus !== fk; this._lastFocus = fk; g.classList.toggle('swap', swap);
         this._rotLabel = LB[fk];
         const bigtxt = fmtV(fk, fv, true);
+        const cgR = centerGroup(bigtxt, 112, 32, 214, UN[fk].length, UN[fk].length > 2 ? 9 : 11), cgO = centerGroup(bigtxt, 146, 31, 150, UN[fk].length, UN[fk].length > 2 ? 6 : 8);
         if (kind === 'rect') {
           const pt = (a) => `${(197 + 92 * Math.cos(a * Math.PI / 180)).toFixed(1)} ${(172 + 92 * Math.sin(a * Math.PI / 180)).toFixed(1)}`, arc = `M${pt(116)}A92 92 0 1 1 ${pt(299)}`;
           g.innerHTML = `<g class="dtx">
             <path class="darc" d="${arc}" pathLength="100" stroke="#2a3a35" opacity=".8"/>
             <path class="darc dglow" d="${arc}" pathLength="100" stroke="${col}" stroke-dasharray="${Math.max(1.5, frac * 100).toFixed(1)} 100"/>
-            ${num7(bigtxt, 258, 138, 62, 112, 32)}
-            <text x="262" y="190" font-size="${UN[fk].length > 2 ? 14 : 17}" font-weight="600">${esc(UN[fk])}</text>
+            ${num7(bigtxt, cgR.xr, 138, 62, 112, 32)}
+            <text x="${cgR.xu.toFixed(1)}" y="190" font-size="${UN[fk].length > 2 ? 14 : 17}" font-weight="600">${esc(UN[fk])}</text>
             <text x="${long ? 208 : 198}" y="${long ? 248 : 258}" font-size="${long ? 11 : 15}" text-anchor="middle">${esc(label)}</text>
             ${[[145, 285, 352], [250, 278, 350]].map(([cx, cy, ty], i) => { const sm = others[i]; if (!sm) return `<circle cx="${cx}" cy="${cy}" r="24" fill="#050505"/>`;
               return `<circle cx="${cx}" cy="${cy}" r="24" fill="#050505"/><g class="dglow2" transform="translate(${cx} ${cy})" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><circle r="20" fill="none"/><g transform="scale(1.05)">${DGLYPH[sm.key]}</g></g>
@@ -2216,8 +2224,8 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
         } else {
           g.innerHTML = `<rect x="${heat || !off ? 153 : 151}" y="6" width="42" height="23" rx="12" fill="${col}" class="dled" style="filter:drop-shadow(0 0 5px ${col})"/>
             <g class="dtx"><text x="151" y="118" font-size="${long ? 12 : 16}" text-anchor="middle" fill="#fff">${esc(label)}</text>
-            ${num7(bigtxt, 197, 140, 68, 146, 31, 9)}
-            <text x="227" y="166" font-size="${UN[fk].length > 2 ? 10 : 13}" text-anchor="middle" opacity=".85">${esc(UN[fk])}</text>
+            ${num7(bigtxt, cgO.xr, 140, 68, 146, 31, 9)}
+            <text x="${cgO.xu.toFixed(1)}" y="166" font-size="${UN[fk].length > 2 ? 10 : 13}" opacity=".85">${esc(UN[fk])}</text>
             ${heat ? FLAME(222, 185, 26, '#ff8a2a') : s.winOpen ? SNOW(222, 185, 22, '#7cc4ff') : ''}
             ${[[80, 92], [148, 160]].map(([ix, tx], i) => { const sm = others[i]; return sm ? `<g transform="translate(${ix} 227) scale(.62)" stroke="#fff" stroke-width="2.4" stroke-linecap="round" fill="none">${DGLYPH[sm.key]}</g><text x="${tx}" y="243" font-size="${sm.txt.length > 3 ? 13 : 15}" font-style="italic" opacity=".92">${esc(sm.txt)}<tspan font-size="${sm.unit.length > 2 ? 7.5 : 9}">${esc(sm.unit)}</tspan></text>` : ''; }).join('')}</g>`;
         }
