@@ -2041,6 +2041,10 @@
     "show_backup": "Show backup heaters and boiler"
   },
   "htpc": {
+    "f_poster_position": "A plakát helye",
+    "poster_center": "Középen (alapértelmezett)",
+    "poster_left": "Balra",
+    "poster_right": "Jobbra",
     "name": "Házimozi PC (HTPC)",
     "off": "Ki",
     "standby": "Készenlét",

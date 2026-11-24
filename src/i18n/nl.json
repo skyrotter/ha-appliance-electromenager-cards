@@ -1961,6 +1961,10 @@
     "days": "d"
   },
   "htpc": {
+    "f_poster_position": "Positie van de poster",
+    "poster_center": "Gecentreerd (standaard)",
+    "poster_left": "Links",
+    "poster_right": "Rechts",
     "name": "Thuisbioscoop-pc (HTPC)",
     "off": "Uit",
     "standby": "Stand-by",

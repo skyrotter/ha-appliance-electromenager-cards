@@ -2339,6 +2339,10 @@
     "fan_auto": "Automatski"
   },
   "htpc": {
+    "f_poster_position": "Položaj postera",
+    "poster_center": "Centrirano (podrazumevano)",
+    "poster_left": "Levo",
+    "poster_right": "Desno",
     "name": "Kućni bioskop računar (HTPC)",
     "off": "Isključen",
     "standby": "Mirovanje",

@@ -3060,6 +3060,10 @@
     "f_show_zones": "Mostrar os chips das zonas"
   },
   "htpc": {
+    "f_poster_position": "Posição do pôster",
+    "poster_center": "Centralizado (padrão)",
+    "poster_left": "Esquerda",
+    "poster_right": "Direita",
     "name": "PC home theater (HTPC)",
     "off": "Desligado",
     "standby": "Em espera",

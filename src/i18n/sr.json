@@ -2339,6 +2339,10 @@
     "fan_auto": "Аутоматски"
   },
   "htpc": {
+    "f_poster_position": "Положај постера",
+    "poster_center": "Центрирано (подразумевано)",
+    "poster_left": "Лево",
+    "poster_right": "Десно",
     "name": "Кућни биоскоп рачунар (HTPC)",
     "off": "Искључен",
     "standby": "Мировање",

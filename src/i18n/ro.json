@@ -1598,6 +1598,10 @@
     "obese": "Obezitate"
   },
   "htpc": {
+    "f_poster_position": "Poziția afișului",
+    "poster_center": "Centrat (implicit)",
+    "poster_left": "Stânga",
+    "poster_right": "Dreapta",
     "name": "PC home cinema (HTPC)",
     "off": "Oprit",
     "standby": "Standby",

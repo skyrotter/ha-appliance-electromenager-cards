@@ -3060,6 +3060,10 @@
     "f_show_zones": "Mostrar os ícones das zonas"
   },
   "htpc": {
+    "f_poster_position": "Posição do cartaz",
+    "poster_center": "Centrado (predefinição)",
+    "poster_left": "Esquerda",
+    "poster_right": "Direita",
     "name": "PC home cinema (HTPC)",
     "off": "Desligado",
     "standby": "Em espera",

@@ -3016,6 +3016,10 @@
     "sound_mode": "Modo de sonido"
   },
   "htpc": {
+    "f_poster_position": "Posición de la carátula",
+    "poster_center": "Centrada (por defecto)",
+    "poster_left": "Izquierda",
+    "poster_right": "Derecha",
     "name": "PC de cine en casa (HTPC)",
     "off": "Apagado",
     "standby": "En espera",

@@ -3073,6 +3073,10 @@
     "sound_mode": "Mode audio"
   },
   "htpc": {
+    "f_poster_position": "Position de l'affiche",
+    "poster_center": "Centrée (défaut)",
+    "poster_left": "À gauche",
+    "poster_right": "À droite",
     "name": "Home cinéma PC (HTPC)",
     "off": "Éteint",
     "standby": "Veille",

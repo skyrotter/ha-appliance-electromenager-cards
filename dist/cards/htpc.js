@@ -11,6 +11,10 @@
 
   const T = {
     "en": {
+      "f_poster_position": "Poster position",
+      "poster_center": "Centered (default)",
+      "poster_left": "Left",
+      "poster_right": "Right",
       "name": "Home theater PC",
       "off": "Off",
       "standby": "Standby",
@@ -34,6 +38,10 @@
       "f_show_source": "Show the source list"
     },
     "cs": {
+      "f_poster_position": "Poloha plakátu",
+      "poster_center": "Na střed (výchozí)",
+      "poster_left": "Vlevo",
+      "poster_right": "Vpravo",
       "name": "Počítač domácího kina (HTPC)",
       "off": "Vypnuto",
       "standby": "Pohotovost",
@@ -57,6 +65,10 @@
       "f_show_source": "Zobrazit seznam zdrojů"
     },
     "da": {
+      "f_poster_position": "Plakatens placering",
+      "poster_center": "Centreret (standard)",
+      "poster_left": "Venstre",
+      "poster_right": "Højre",
       "name": "Hjemmebiograf-pc (HTPC)",
       "off": "Slukket",
       "standby": "Standby",
@@ -80,6 +92,10 @@
       "f_show_source": "Vis kildelisten"
     },
     "de": {
+      "f_poster_position": "Position des Covers",
+      "poster_center": "Zentriert (Standard)",
+      "poster_left": "Links",
+      "poster_right": "Rechts",
       "name": "Heimkino-PC (HTPC)",
       "off": "Aus",
       "standby": "Standby",
@@ -103,6 +119,10 @@
       "f_show_source": "die Quellenliste anzeigen"
     },
     "es": {
+      "f_poster_position": "Posición de la carátula",
+      "poster_center": "Centrada (por defecto)",
+      "poster_left": "Izquierda",
+      "poster_right": "Derecha",
       "name": "PC de cine en casa (HTPC)",
       "off": "Apagado",
       "standby": "En espera",
@@ -126,6 +146,10 @@
       "f_show_source": "Mostrar la lista de fuentes"
     },
     "fr": {
+      "f_poster_position": "Position de l'affiche",
+      "poster_center": "Centrée (défaut)",
+      "poster_left": "À gauche",
+      "poster_right": "À droite",
       "name": "Home cinéma PC (HTPC)",
       "off": "Éteint",
       "standby": "Veille",
@@ -149,6 +173,10 @@
       "f_show_source": "Afficher la liste des sources"
     },
     "hu": {
+      "f_poster_position": "A plakát helye",
+      "poster_center": "Középen (alapértelmezett)",
+      "poster_left": "Balra",
+      "poster_right": "Jobbra",
       "name": "Házimozi PC (HTPC)",
       "off": "Ki",
       "standby": "Készenlét",
@@ -172,6 +200,10 @@
       "f_show_source": "a forráslistát megjelenítése"
     },
     "it": {
+      "f_poster_position": "Posizione della locandina",
+      "poster_center": "Centrata (predefinito)",
+      "poster_left": "Sinistra",
+      "poster_right": "Destra",
       "name": "PC home theater (HTPC)",
       "off": "Spento",
       "standby": "Standby",
@@ -195,6 +227,10 @@
       "f_show_source": "Mostra l'elenco delle sorgenti"
     },
     "nb": {
+      "f_poster_position": "Plakatens plassering",
+      "poster_center": "Sentrert (standard)",
+      "poster_left": "Venstre",
+      "poster_right": "Høyre",
       "name": "Hjemmekino-PC (HTPC)",
       "off": "Av",
       "standby": "Standby",
@@ -218,6 +254,10 @@
       "f_show_source": "Vis kildelisten"
     },
     "nl": {
+      "f_poster_position": "Positie van de poster",
+      "poster_center": "Gecentreerd (standaard)",
+      "poster_left": "Links",
+      "poster_right": "Rechts",
       "name": "Thuisbioscoop-pc (HTPC)",
       "off": "Uit",
       "standby": "Stand-by",
@@ -241,6 +281,10 @@
       "f_show_source": "de bronnenlijst tonen"
     },
     "pl": {
+      "f_poster_position": "Pozycja plakatu",
+      "poster_center": "Wyśrodkowany (domyślnie)",
+      "poster_left": "Lewo",
+      "poster_right": "Prawo",
       "name": "Komputer kina domowego (HTPC)",
       "off": "Wyłączony",
       "standby": "Czuwanie",
@@ -264,6 +308,10 @@
       "f_show_source": "Pokaż listę źródeł"
     },
     "pt-BR": {
+      "f_poster_position": "Posição do pôster",
+      "poster_center": "Centralizado (padrão)",
+      "poster_left": "Esquerda",
+      "poster_right": "Direita",
       "name": "PC home theater (HTPC)",
       "off": "Desligado",
       "standby": "Em espera",
@@ -287,6 +335,10 @@
       "f_show_source": "Mostrar a lista de fontes"
     },
     "pt-PT": {
+      "f_poster_position": "Posição do cartaz",
+      "poster_center": "Centrado (predefinição)",
+      "poster_left": "Esquerda",
+      "poster_right": "Direita",
       "name": "PC home cinema (HTPC)",
       "off": "Desligado",
       "standby": "Em espera",
@@ -310,6 +362,10 @@
       "f_show_source": "Mostrar a lista de fontes"
     },
     "ro": {
+      "f_poster_position": "Poziția afișului",
+      "poster_center": "Centrat (implicit)",
+      "poster_left": "Stânga",
+      "poster_right": "Dreapta",
       "name": "PC home cinema (HTPC)",
       "off": "Oprit",
       "standby": "Standby",
@@ -333,6 +389,10 @@
       "f_show_source": "Afișează lista surselor"
     },
     "ru": {
+      "f_poster_position": "Положение постера",
+      "poster_center": "По центру (по умолчанию)",
+      "poster_left": "Слева",
+      "poster_right": "Справа",
       "name": "Домашний кинотеатр на ПК (HTPC)",
       "off": "Выключен",
       "standby": "Ожидание",
@@ -356,6 +416,10 @@
       "f_show_source": "Показывать список источников"
     },
     "sr": {
+      "f_poster_position": "Положај постера",
+      "poster_center": "Центрирано (подразумевано)",
+      "poster_left": "Лево",
+      "poster_right": "Десно",
       "name": "Кућни биоскоп рачунар (HTPC)",
       "off": "Искључен",
       "standby": "Мировање",
@@ -379,6 +443,10 @@
       "f_show_source": "Прикажи листу извора"
     },
     "sr-Latn": {
+      "f_poster_position": "Položaj postera",
+      "poster_center": "Centrirano (podrazumevano)",
+      "poster_left": "Levo",
+      "poster_right": "Desno",
       "name": "Kućni bioskop računar (HTPC)",
       "off": "Isključen",
       "standby": "Mirovanje",
@@ -402,6 +470,10 @@
       "f_show_source": "Prikaži listu izvora"
     },
     "uk": {
+      "f_poster_position": "Положення постера",
+      "poster_center": "По центру (за замовчуванням)",
+      "poster_left": "Ліворуч",
+      "poster_right": "Праворуч",
       "name": "Домашній кінотеатр на ПК (HTPC)",
       "off": "Вимкнено",
       "standby": "Очікування",
@@ -445,7 +517,9 @@ svg{display:block;width:calc(100% * var(--illus-scale,1));max-width:100%;height:
 .led{transition:fill .3s}
 .marq{animation:htmarq var(--d,10s) linear infinite}
 .ring{fill:none;stroke-width:1.6}.pulse{animation:htpulse 2.2s ease-in-out infinite}
-.now{display:none;align-items:center;gap:10px;margin-top:6px}.now.show{display:flex}
+.now{display:none;align-items:center;justify-content:center;gap:10px;margin-top:6px}.now.show{display:flex}
+.now.left{justify-content:flex-start}.now.right{justify-content:flex-start;flex-direction:row-reverse}.now.right .tx{text-align:right}
+.now .tx{max-width:calc(100% - 76px)}
 .now img{width:64px;height:64px;object-fit:cover;border-radius:8px;flex:none;background:rgba(127,127,127,.15)}
 .now .tx{min-width:0}.now .t{font-size:14px;font-weight:600;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .now .s{font-size:12px;color:var(--secondary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
@@ -482,7 +556,7 @@ svg{display:block;width:calc(100% * var(--illus-scale,1));max-width:100%;height:
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { show_poster: true, show_seek: true, show_volume: true, show_source: true, ...c };
+      this._c = { poster_position: 'center', show_poster: true, show_seek: true, show_volume: true, show_source: true, ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -589,6 +663,7 @@ svg{display:block;width:calc(100% * var(--illus-scale,1));max-width:100%;height:
       // affiche, titre, sous-titre
       const { t, sub } = this._titles(a), pic = a.entity_picture_local || a.entity_picture;
       const now = $('htnow'); now.classList.toggle('show', active && (c.show_poster !== false || !!t));
+      now.classList.toggle('left', c.poster_position === 'left'); now.classList.toggle('right', c.poster_position === 'right');
       const img = $('htpic'); img.style.display = c.show_poster !== false && pic ? '' : 'none';
       if (pic) { const u = String(pic).startsWith('/') && hass.hassUrl ? hass.hassUrl(pic) : pic; if (img.dataset.u !== u) { img.dataset.u = u; img.src = u; } }
       $('htt').textContent = t; $('hts').textContent = sub;
@@ -638,6 +713,7 @@ svg{display:block;width:calc(100% * var(--illus-scale,1));max-width:100%;height:
         { name: 'name', selector: { text: {} } },
         { name: 'entity', selector: { entity: { domain: 'media_player' } } },
         { name: 'entity_power', selector: { entity: { domain: 'sensor' } } },
+        { name: 'poster_position', selector: { select: { mode: 'dropdown', options: ['center', 'left', 'right'].map((value) => ({ value, label: tr[`poster_${value}`] || value })) } } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ...window.applianceTileFields(this._hass),
