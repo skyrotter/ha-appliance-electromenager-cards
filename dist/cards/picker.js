@@ -34,6 +34,14 @@
   // Préférences du sélecteur, enregistrées dans le navigateur (localStorage peut être bloqué)
   const SINGLE_KEY = 'applianceCardsSinglePicker', NOPREV_KEY = 'applianceCardsNoPreview', PREV_KEY = 'applianceCardsPreviews';
   const getPref = (k) => { try { return localStorage.getItem(k) === '1'; } catch (e) { return false; } };
+  // Carte unique : ACTIVÉE par défaut (une seule entrée « Appliance » dans le sélecteur, le type d'appareil se choisit dans l'éditeur).
+  // Pour revoir toutes les cartes : décocher la case dans l'éditeur de la carte unique (stocke '0'), ou window.applianceCardsSinglePicker = false.
+  const isSingle = () => {
+    if (window.applianceCardsSinglePicker === false) return false;
+    if (window.applianceCardsSinglePicker) return true;
+    try { return localStorage.getItem(SINGLE_KEY) !== '0'; } catch (e) { return true; }
+  };
+  const setSingle = (on) => { try { localStorage.setItem(SINGLE_KEY, on ? '1' : '0'); } catch (e) { /* stockage bloqué */ } };
   const setPref = (k, on) => { try { if (on) localStorage.setItem(k, '1'); else localStorage.removeItem(k); } catch (e) { /* stockage bloqué */ } };
 
   // Aperçu live désactivé par défaut sur chaque entrée : c'est lui qui ralentit l'onglet « Par carte ».
@@ -46,7 +54,7 @@
   // quand le chargeur principal signale que tous les chunks ont terminé (voir build.js).
   const applySelectorPrefs = () => {
     setPreviews(!!window.applianceCardsPreviews || getPref(PREV_KEY));
-    if (window.applianceCardsSinglePicker || getPref(SINGLE_KEY)) {
+    if (isSingle()) {
       window.customCards.filter(isOurs).forEach((c) => { if (!hidden.some((h) => h.type === c.type)) hidden.push(c); });
       const keep = window.customCards.filter((c) => !isOurs(c));
       window.customCards.length = 0;
@@ -197,9 +205,9 @@
         this._opt.addEventListener('value-changed', (e) => {
           e.stopPropagation();
           const v = e.detail.value;
-          setPref(SINGLE_KEY, v.single); setPref(PREV_KEY, v.previews); setPref(NOPREV_KEY, v.nopreview);
+          setSingle(v.single); setPref(PREV_KEY, v.previews); setPref(NOPREV_KEY, v.nopreview);
           setPreviews(!!v.previews && !v.nopreview); // effet immédiat sur le sélecteur
-          this._opt.data = { single: getPref(SINGLE_KEY), previews: getPref(PREV_KEY), nopreview: getPref(NOPREV_KEY) };
+          this._opt.data = { single: isSingle(), previews: getPref(PREV_KEY), nopreview: getPref(NOPREV_KEY) };
         });
         box.append(title, this._opt, hint); this.appendChild(box);
         this._optTitle = title; this._optHint = hint;
@@ -207,7 +215,7 @@
       const t = tx(this._hass);
       this._optTitle.textContent = t.opts; this._optHint.textContent = t.hint;
       this._opt.hass = this._hass;
-      this._opt.data = { single: getPref(SINGLE_KEY), previews: getPref(PREV_KEY), nopreview: getPref(NOPREV_KEY) };
+      this._opt.data = { single: isSingle(), previews: getPref(PREV_KEY), nopreview: getPref(NOPREV_KEY) };
       this._opt.schema = [{ name: 'single', selector: { boolean: {} } }, { name: 'previews', selector: { boolean: {} } }, { name: 'nopreview', selector: { boolean: {} } }];
       this._opt.computeLabel = (sc) => t[sc.name];
 
