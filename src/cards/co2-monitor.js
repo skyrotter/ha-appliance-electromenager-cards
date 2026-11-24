@@ -52,6 +52,10 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 .arc{fill:none;stroke-linecap:round;stroke-width:8;transition:stroke-dasharray .9s ease}
 .led{transition:fill .4s}.poor .led.on{animation:copulse 1.1s ease-in-out infinite}
 .unavailable svg{filter:grayscale(.85) opacity(.65)}
+/* mode rotation : un seul grand affichage (sans tuiles), fondu à chaque changement de valeur */
+.rot .tiles{display:none}.rot svg{flex:0 1 calc(280px * var(--illus-scale,1));width:calc(280px * var(--illus-scale,1))}
+.swap .scr{animation:cofade .7s ease}
+@keyframes cofade{from{opacity:0}to{opacity:1}}
 .noanim *{animation:none!important;transition:none!important}
 @keyframes copulse{50%{opacity:.45}}
 `;
@@ -66,13 +70,28 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     const P = { a: hb(t / 2), g: hb(hh), d: hb(h - t / 2), f: vb(t / 2, t * 0.5 + g, hh - g), b: vb(w - t / 2, t * 0.5 + g, hh - g), e: vb(t / 2, hh + g, h - t * 0.5 - g), c: vb(w - t / 2, hh + g, h - t * 0.5 - g) };
     return `<g transform="translate(${x} 0)">${(SEG[ch] || '').split('').map((s) => `<path d="${P[s]}"/>`).join('')}</g>`;
   };
-  // nombre en chiffres 7 segments, aligné à droite sur xr, dans une zone de largeur maxW ; (y, h) = haut et hauteur des chiffres
+  // nombre en chiffres 7 segments (avec point décimal), aligné à droite sur xr, dans une zone de largeur maxW ; (y, h) = haut et hauteur des chiffres
   const number = (txt, xr, y, h, maxW, wMax, lean = 8) => {
-    const s = String(txt).slice(-4), n = s.length, gap = wMax * 0.2;
-    const w = Math.min(wMax, (maxW - (n - 1) * gap) / n), t = Math.max(3, w * 0.22), tw = n * w + (n - 1) * gap;
-    const x0 = xr - tw + h * Math.tan(lean * Math.PI / 180) * 0.5;
-    return `<g class="glow" fill="#fff" transform="translate(${x0.toFixed(1)} ${y}) skewX(${-lean})">${[...s].map((ch, i) => digit(ch, i * (w + gap), w, h, t)).join('')}</g>`;
+    const toks = [...String(txt).slice(-5)], nd = toks.filter((c) => c !== '.').length, nDot = toks.length - nd, gap = wMax * 0.2;
+    const w = Math.min(wMax, (maxW - (toks.length - 1) * gap - nDot * wMax * 0.3) / Math.max(1, nd)), t = Math.max(3, w * 0.22), dw = Math.max(t, w * 0.3);
+    const tw = nd * w + nDot * dw + (toks.length - 1) * gap, x0 = xr - tw + h * Math.tan(lean * Math.PI / 180) * 0.5;
+    let x = 0;
+    const out = toks.map((ch) => {
+      const g = ch === '.' ? `<rect x="${(x + dw / 2 - t * 0.6).toFixed(1)}" y="${(h - t * 1.2).toFixed(1)}" width="${(t * 1.2).toFixed(1)}" height="${(t * 1.2).toFixed(1)}" rx="1"/>` : digit(ch, x, w, h, t);
+      x += (ch === '.' ? dw : w) + gap; return g;
+    }).join('');
+    return `<g class="glow" fill="#fff" transform="translate(${x0.toFixed(1)} ${y}) skewX(${-lean})">${out}</g>`;
   };
+
+  // pictogrammes des petites valeurs (mode rotation) : dessinés autour de (0,0)
+  const GLYPH = {
+    temperature: '<path d="M-2.6 -8a2.6 2.6 0 0 1 5.2 0v9.5a5 5 0 1 1-5.2 0Z" fill="none"/><path d="M5 -6h3M5 -2h3" />',
+    humidity: '<path d="M0 -9C4 -3 7 0 7 3.5a7 7 0 0 1-14 0C-7 0-4-3 0-9Z" fill="none"/>',
+    pressure: '<path d="M-8 5A9.5 9.5 0 1 1 8 5" fill="none"/><path d="M0 3L4.5 -4.5" /><circle r="1.4" cy="3" fill="#fff"/>',
+    co2: '<text y="3.6" font-size="10" font-weight="700" text-anchor="middle" fill="#fff" stroke="none">CO₂</text>',
+  };
+  // valeur courte d'une petite grandeur : { txt, unit }
+  const smallTxt = (k, v, unit) => ({ txt: isNaN(v) ? '--' : k === 'temperature' ? String(Math.round(v)) : String(Math.round(v)), unit: k === 'temperature' ? (unit || '°C').replace(/^°?c$/i, '°C') : k === 'humidity' ? '%' : k === 'pressure' ? 'hPa' : 'ppm' });
 
   // photo + écran redessiné : v = mesures, lvl = bon / moyen / mauvais, on = écran allumé, f = remplissage de la jauge (0 à 1)
   const SCREENS = {
@@ -84,40 +103,44 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       })();
       const pt = (a) => `${(197 + 92 * Math.cos(a * Math.PI / 180)).toFixed(1)} ${(172 + 92 * Math.sin(a * Math.PI / 180)).toFixed(1)}`;
       const arc = `M${pt(116)}A92 92 0 1 1 ${pt(299)}`;
-      const num = number(isNaN(v.co2) ? '---' : String(Math.round(v.co2)), 260, 138, 62, 116, 32);
+      const num = number(o.big.txt, 260, 138, 62, 116, 32);
       return `<image href="${IMG_RECT}" width="340" height="462" style="opacity:${on ? 0 : 1}"/><image href="${IMG_RECT_ICONS}" width="340" height="462" style="opacity:${on ? 1 : 0}"/>
         ${on ? `<g class="scr">
           <path class="arc" d="${arc}" pathLength="100" stroke="#2a3a35" opacity=".8"/>
-          <path class="arc glow" d="${arc}" pathLength="100" stroke="url(#cogr)" stroke-dasharray="${Math.max(1.5, f * 100).toFixed(1)} 100"/>
+          <path class="arc glow" d="${arc}" pathLength="100" stroke="${o.big.key === 'co2' ? 'url(#cogr)' : '#35d07a'}" stroke-dasharray="${Math.max(1.5, f * 100).toFixed(1)} 100"/>
           ${num}
-          <text x="266" y="190" font-size="15" font-weight="600">${esc(o.unit)}</text>
-          <text x="198" y="258" font-size="17" text-anchor="middle">CO₂</text>
-          <text x="145" y="352" font-size="44" text-anchor="middle">${esc(o.t)}<tspan font-size="19" dy="-19">${esc(o.tu)}</tspan></text>
-          <text x="254" y="350" font-size="44" text-anchor="middle">${esc(o.h)}<tspan font-size="34" dy="0">%</tspan></text>
+          <text x="266" y="190" font-size="15" font-weight="600">${esc(o.big.unit)}</text>
+          <text x="${o.big.label.length > 5 ? 208 : 198}" y="${o.big.label.length > 5 ? 248 : 258}" font-size="${o.big.label.length > 5 ? 11 : 17}" text-anchor="middle">${esc(o.big.label)}</text>
+          ${o.rot ? [[145, 285, 352], [250, 278, 350]].map(([cx, cy, ty], i) => {
+            const sm = o.small[i]; if (!sm) return `<circle cx="${cx}" cy="${cy}" r="24" fill="#050505"/>`;
+            return `<circle cx="${cx}" cy="${cy}" r="24" fill="#050505"/><g class="glow" transform="translate(${cx} ${cy})" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><circle r="20" fill="none"/><g transform="scale(1.05)">${GLYPH[sm.key]}</g></g>
+              <text x="${i ? 254 : 145}" y="${ty}" font-size="${sm.txt.length > 3 ? 32 : 44}" text-anchor="middle">${esc(sm.txt)}<tspan font-size="${sm.unit.length > 2 ? 12 : 22}" dy="${sm.key === 'temperature' ? -17 : 0}">${esc(sm.unit)}</tspan></text>`;
+          }).join('') : `<text x="145" y="352" font-size="44" text-anchor="middle">${esc(o.t)}<tspan font-size="19" dy="-19">${esc(o.tu)}</tspan></text>
+          <text x="254" y="350" font-size="44" text-anchor="middle">${esc(o.h)}<tspan font-size="34" dy="0">%</tspan></text>`}
           ${battery}</g>` : ''}`;
     },
     round: (o) => {
-      const { v, col, on, lvl } = o, val = isNaN(v.co2) ? '----' : String(Math.round(v.co2)).padStart(4, '0');
+      const { v, col, on, lvl } = o, val = o.big.txt;
       const smile = lvl === 'good' ? 'M214 188Q222 196 230 188' : lvl === 'moderate' ? 'M214 190H230' : 'M214 193Q222 185 230 193';
       return `<image href="${IMG_ROUND}" width="346" height="406"/>
         <rect class="led ${on ? 'on' : ''}" x="${on ? 153 : 151}" y="${on ? 6 : 5}" width="${on ? 42 : 46}" height="${on ? 23 : 25}" rx="12" fill="${on ? col : '#2d3136'}" ${on ? `style="filter:drop-shadow(0 0 5px ${col})"` : ''}/>
         ${on ? `<g class="scr">
-          <text x="151" y="118" font-size="17" text-anchor="middle">CO₂</text>
+          <text x="151" y="118" font-size="${o.big.label.length > 5 ? 12 : 17}" text-anchor="middle">${esc(o.big.label)}</text>
           ${number(val, 197, 140, 68, 146, 31, 9)}
-          <text x="227" y="166" font-size="13" text-anchor="middle" opacity=".85">${esc(o.unit)}</text>
-          <circle cx="222" cy="185" r="14" fill="none" stroke="#fff" stroke-width="1.7" opacity=".9"/><circle cx="217" cy="180" r="1.5"/><circle cx="227" cy="180" r="1.5"/>
-          <path d="${smile}" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/>
-          <path d="M78 214a3.2 3.2 0 0 1 6.4 0v14.4a6.6 6.6 0 1 1-6.4 0Z" fill="#ffc933"/>
+          <text x="227" y="166" font-size="13" text-anchor="middle" opacity=".85">${esc(o.big.unit)}</text>
+          ${o.big.key === 'co2' ? `<circle cx="222" cy="185" r="14" fill="none" stroke="#fff" stroke-width="1.7" opacity=".9"/><circle cx="217" cy="180" r="1.5"/><circle cx="227" cy="180" r="1.5"/>
+          <path d="${smile}" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/>` : ''}
+          ${o.rot ? [[80, 91], [139, 150]].map(([ix, tx], i) => { const sm = o.small[i]; return sm ? `<g transform="translate(${ix} 227) scale(.62)" stroke="#fff" stroke-width="2.4" stroke-linecap="round" fill="none">${GLYPH[sm.key]}</g><text x="${tx}" y="243" font-size="${sm.txt.length > 3 ? 14 : 17}" font-style="italic" opacity=".92">${esc(sm.txt)}<tspan font-size="${sm.unit.length > 2 ? 7.5 : 9}">${esc(sm.unit)}</tspan></text>` : ''; }).join('') : `<path d="M78 214a3.2 3.2 0 0 1 6.4 0v14.4a6.6 6.6 0 1 1-6.4 0Z" fill="#ffc933"/>
           <text x="97" y="243" font-size="17" font-style="italic" opacity=".92">${esc(o.t)}<tspan font-size="10">${esc(o.tu)}</tspan></text>
           <path d="M142 224c-5 6-7 9-7 12.5a7 7 0 0 0 14 0c0-3.500-2-6.500-7-12.500Z" fill="none" stroke="#35d07a" stroke-width="2"/>
-          <text x="154" y="243" font-size="17" font-style="italic" opacity=".92">${esc(o.h)}<tspan font-size="10">%</tspan></text>
+          <text x="154" y="243" font-size="17" font-style="italic" opacity=".92">${esc(o.h)}<tspan font-size="10">%</tspan></text>`}
           ${isNaN(v.battery) ? '' : `<rect x="139" y="270" width="17" height="9" rx="1.5" fill="none" stroke="#fff" stroke-width="1.1" opacity=".9"/><rect x="141" y="272" width="${(13 * Math.max(0, Math.min(100, v.battery)) / 100).toFixed(1)}" height="5" fill="${v.battery < 20 ? 'var(--co-alert)' : '#fff'}"/>`}
         </g>` : ''}`;
     },
   };
 
-  const TILES = [['co2', 'mdi:molecule-co2', 'show_co2'], ['temperature', 'mdi:thermometer', 'show_temperature'], ['humidity', 'mdi:water-percent', 'show_humidity'], ['battery', 'mdi:battery', 'show_battery']];
-  const ENT = { co2: 'entity_co2', temperature: 'entity_temperature', humidity: 'entity_humidity', battery: 'entity_battery' };
+  const TILES = [['co2', 'mdi:molecule-co2', 'show_co2'], ['temperature', 'mdi:thermometer', 'show_temperature'], ['humidity', 'mdi:water-percent', 'show_humidity'], ['pressure', 'mdi:gauge', 'show_pressure'], ['battery', 'mdi:battery', 'show_battery']];
+  const ENT = { co2: 'entity_co2', temperature: 'entity_temperature', humidity: 'entity_humidity', pressure: 'entity_pressure', battery: 'entity_battery' };
   const COLS = { good: '#2fd27a', moderate: '#ffb300', poor: '#ff4d3d' };
 
   class ApplianceCo2MonitorCard extends HTMLElement {
@@ -131,7 +154,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { model: 'rectangle', co2_good: 800, co2_bad: 1200, co2_max: 2000, ...Object.fromEntries(TILES.map(([, , o]) => [o, true])), ...c };
-      this._built = false;
+      this._built = false; this._rot = 0; this._startRot();
       if (this._hass) this._render();
     }
     set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
@@ -149,9 +172,25 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
     _model() { return MODELS.includes(this._c.model) ? this._c.model : 'rectangle'; }
 
+    // rotate_seconds : la grandeur affichée en grand change toutes les N secondes (CO₂, température, humidité, pression) ; le nom suit
+    _metrics() { const c = this._c; return ['co2', 'temperature', 'humidity', 'pressure'].filter((k) => c[ENT[k]] && c[`show_${k}`] !== false || (k === 'co2' && c[ENT.co2])); }
+    _focusKey() {
+      const c = this._c, list = this._metrics(), sec = Number(c.rotate_seconds);
+      if (!(sec > 0) || list.length < 2) return 'co2';
+      return list[(this._rot || 0) % list.length];
+    }
+    _startRot() {
+      clearInterval(this._rotTimer); this._rotTimer = null;
+      const sec = Number(this._c && this._c.rotate_seconds);
+      if (sec > 0 && this.isConnected) this._rotTimer = setInterval(() => { this._rot = (this._rot || 0) + 1; if (this._hass && this._built) this._render(); }, Math.max(1, sec) * 1000);
+    }
+    connectedCallback() { this._startRot(); }
+    disconnectedCallback() { clearInterval(this._rotTimer); this._rotTimer = null; }
+
     // état : unavailable (aucune mesure ou entité marche / arrêt indisponible), off (entité marche / arrêt éteinte), sinon good / moderate / poor selon le CO₂
     _compute() {
       const c = this._c, v = Object.fromEntries(TILES.map(([k]) => [k, this._num(c[ENT[k]])]));
+      if (!isNaN(v.pressure)) { const u = this._unit(c.entity_pressure, 'hPa').toLowerCase(); v.pressure = u === 'kpa' ? v.pressure * 10 : u === 'pa' ? v.pressure / 100 : u === 'inhg' ? v.pressure * 33.8639 : u === 'mmhg' ? v.pressure * 1.33322 : v.pressure; }
       const known = TILES.some(([k]) => !isNaN(v[k]));
       const sw = this._st(c.entity_status), swOff = !!sw && /^(off|closed|standby)$/i.test(String(sw.state)), swBad = !!sw && /^unavailable$/i.test(String(sw.state));
       const lvl = isNaN(v.co2) ? 'good' : v.co2 < Number(c.co2_good) ? 'good' : v.co2 > Number(c.co2_bad) ? 'poor' : 'moderate';
@@ -179,21 +218,31 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const c = this._c, r = this._root, card = this._card, m = this._model();
       const { v, on, lvl, st } = this._compute();
       card.className = `${st}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`;
-      r.getElementById('cotitle').textContent = c.name || this._t('name');
+      r.getElementById('cotitle').textContent = Number(c.rotate_seconds) > 0 && this._metrics().length > 1 && c.rotate_title !== false ? this._l(this._focusKey()) : (c.name || this._t('name'));
       const badge = r.getElementById('cobadge');
       badge.textContent = this._t(st);
       badge.style.display = c.show_status === false ? 'none' : '';
-      const max = Number(c.co2_max) > 0 ? Number(c.co2_max) : 2000, f = isNaN(v.co2) ? 0 : Math.max(0, Math.min(1, v.co2 / max));
-      r.getElementById('coscr').innerHTML = SCREENS[m]({ v, on, lvl, f, col: COLS[lvl], unit: this._unit(c.entity_co2, 'ppm').toUpperCase(),
+      const fk = this._focusKey(), fv = v[fk];
+      const SC = { co2: [0, Number(c.co2_max) > 0 ? Number(c.co2_max) : 2000], temperature: [0, 40], humidity: [0, 100], pressure: [960, 1060] };
+      const big = { key: fk, label: fk === 'co2' ? 'CO₂' : this._l(fk).toUpperCase(), unit: fk === 'co2' ? this._unit(c.entity_co2, 'ppm').toUpperCase() : fk === 'pressure' ? 'HPA' : this._unit(c[ENT[fk]], { temperature: '°C', humidity: '%' }[fk]).toUpperCase(),
+        txt: isNaN(fv) ? '---' : fk === 'temperature' ? String(Math.round(fv * 10) / 10) : String(Math.round(fv)) };
+      const f = isNaN(fv) ? 0 : Math.max(0, Math.min(1, (fv - SC[fk][0]) / (SC[fk][1] - SC[fk][0])));
+      // mode rotation : un seul affichage, les deux petites valeurs sont les deux AUTRES grandeurs (jamais celle affichée en grand)
+      const list = this._metrics(), rot = Number(c.rotate_seconds) > 0 && list.length > 1;
+      const others = rot ? [...list.slice(list.indexOf(fk) + 1), ...list.slice(0, list.indexOf(fk))].slice(0, 2) : [];
+      const small = others.map((k) => ({ key: k, ...smallTxt(k, v[k], this._unit(c[ENT[k]], '°C')) }));
+      card.classList.toggle('rot', rot && c.show_tiles !== true);
+      const scr = r.getElementById('coscr'); scr.classList.toggle('swap', rot && this._lastFocus != null && this._lastFocus !== fk); this._lastFocus = fk;
+      scr.innerHTML = SCREENS[m]({ v, on, lvl, f, big, rot, small, col: fk === 'co2' ? COLS[lvl] : COLS.good, unit: this._unit(c.entity_co2, 'ppm').toUpperCase(),
         t: this._fmt(v.temperature, 0), h: this._fmt(v.humidity, 0), tu: this._unit(c.entity_temperature, '°C') });
-      const dec = { co2: 0, temperature: 1, humidity: 0, battery: 0 }, dflt = { co2: 'ppm', temperature: '°C', humidity: '%', battery: '%' };
+      const dec = { co2: 0, temperature: 1, humidity: 0, pressure: 0, battery: 0 }, dflt = { co2: 'ppm', temperature: '°C', humidity: '%', pressure: 'hPa', battery: '%' };
       TILES.forEach(([k, , opt]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`), id = c[ENT[k]];
         el.classList.toggle('hide', !id || c[opt] === false);
         el.classList.toggle('bad', k === 'co2' && lvl === 'poor' && !isNaN(v.co2));
         el.classList.toggle('warn', (k === 'co2' && lvl === 'moderate') || (k === 'battery' && !isNaN(v.battery) && v.battery < 20));
         el.querySelector('.lbl').textContent = this._l(k);
-        const small = document.createElement('small'); small.textContent = isNaN(v[k]) ? '' : this._unit(id, dflt[k]);
+        const small = document.createElement('small'); small.textContent = isNaN(v[k]) ? '' : k === 'pressure' ? 'hPa' : this._unit(id, dflt[k]);
         el.querySelector('.v').replaceChildren(this._fmt(v[k], dec[k]), small);
       });
     }
@@ -225,7 +274,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ...window.applianceTileFields(this._hass),
-        ent('entity_status', ['switch', 'binary_sensor', 'input_boolean', 'sensor']), ent('entity_co2', 'sensor'), ent('entity_temperature', 'sensor'), ent('entity_humidity', 'sensor'), ent('entity_battery', 'sensor'),
+        ent('entity_status', ['switch', 'binary_sensor', 'input_boolean', 'sensor']), ent('entity_co2', 'sensor'), ent('entity_temperature', 'sensor'), ent('entity_humidity', 'sensor'), ent('entity_pressure', 'sensor'), ent('entity_battery', 'sensor'),
+        num('rotate_seconds', 0, 0, 60, 1, 's'), bool('rotate_title'),
         { type: 'grid', name: '', schema: [num('co2_good', 800, 400, 3000, 50, 'ppm'), num('co2_bad', 1200, 400, 5000, 50, 'ppm'), num('co2_max', 2000, 800, 10000, 100, 'ppm')] },
         ...window.applianceActionFields,
         window.applianceLanguageField(T),

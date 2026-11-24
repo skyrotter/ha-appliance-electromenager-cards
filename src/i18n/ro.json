@@ -832,6 +832,8 @@
     "entity_power_l2": "Putere L2",
     "entity_power_l3": "Putere L3",
     "entity_pressure": "Presiune",
+    "rotate_seconds": "Schimbă valoarea mare la fiecare (s, 0 = oprit)",
+    "rotate_title": "Afișează numele valorii ca titlu",
     "entity_rain": "Senzor de ploaie",
     "entity_return_temp": "Temperatură retur",
     "entity_runtime": "Timp de funcționare",
@@ -1327,7 +1329,8 @@
     "resume": "Revino la program"
   },
   "room_climate": {
-    "st_display_rect": "Afișaj digital (dreptunghiular)",
+"pressure": "Presiune",
+        "st_display_rect": "Afișaj digital (dreptunghiular)",
     "st_display_round": "Afișaj digital (rotund)",
     "name": "Climat cameră",
     "comfort": "Confortabil",
@@ -1681,6 +1684,22 @@
     "f_show_tiles": "Afișează plăcile",
     "f_show_status": "Afișează starea"
   },
+  "barometer": {
+    "name": "Barometru",
+    "storm": "Furtună",
+    "rain": "Ploaie",
+    "change": "Variabil",
+    "fair": "Vreme frumoasă",
+    "unavailable": "Indisponibil",
+    "pressure": "Presiune",
+    "temperature": "Temperatură",
+    "humidity": "Umiditate",
+    "f_entity_pressure": "Senzor de presiune (hPa)",
+    "f_reference_pressure": "Ac de referință (hPa, opțional)",
+    "f_show_pressure": "cardul presiune",
+    "f_show_temperature": "cardul temperatură",
+    "f_show_humidity": "cardul umiditate"
+  },
   "co2_monitor": {
     "name": "Monitor CO₂",
     "good": "Aer bun",
@@ -1703,6 +1722,11 @@
     "f_show_co2": "Placă CO₂",
     "f_show_temperature": "Placă temperatură",
     "f_show_humidity": "Placă umiditate",
+    "pressure": "Presiune",
+    "f_entity_pressure": "Senzor de presiune (hPa)",
+    "f_rotate_seconds": "Schimbă valoarea mare la fiecare (s, 0 = oprit)",
+    "f_rotate_title": "Afișează numele valorii ca titlu",
+    "f_show_pressure": "cardul presiune",
     "f_show_battery": "Placă baterie"
   },
   "poubelle": {

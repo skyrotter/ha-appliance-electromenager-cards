@@ -833,6 +833,8 @@
     "entity_power_l2": "Výkon L2",
     "entity_power_l3": "Výkon L3",
     "entity_pressure": "Tlak",
+    "rotate_seconds": "Střídat velkou hodnotu každých (s, 0 = vyp.)",
+    "rotate_title": "Zobrazit název hodnoty jako titulek",
     "entity_rain": "Senzor deště",
     "entity_return_temp": "Teplota zpátečky",
     "entity_runtime": "Doba běhu",
@@ -1316,7 +1318,8 @@
     "model_bht6000": "Termostat Tuya BHT6000 (kulatý, černý displej)"
   },
   "room_climate": {
-    "st_display_rect": "Digitální displej (obdélníkový)",
+"pressure": "Tlak",
+        "st_display_rect": "Digitální displej (obdélníkový)",
     "st_display_round": "Digitální displej (kulatý)",
     "name": "Klima v místnosti",
     "comfort": "Příjemně",
@@ -1669,6 +1672,22 @@
     "f_show_tiles": "Zobrazit dlaždice",
     "f_show_status": "Zobrazit stav"
   },
+  "barometer": {
+    "name": "Barometr",
+    "storm": "Bouře",
+    "rain": "Déšť",
+    "change": "Proměnlivo",
+    "fair": "Pěkné počasí",
+    "unavailable": "Nedostupné",
+    "pressure": "Tlak",
+    "temperature": "Teplota",
+    "humidity": "Vlhkost",
+    "f_entity_pressure": "Snímač tlaku (hPa)",
+    "f_reference_pressure": "Ručička pro porovnání (hPa, volitelně)",
+    "f_show_pressure": "dlaždice tlaku",
+    "f_show_temperature": "dlaždice teploty",
+    "f_show_humidity": "dlaždice vlhkosti"
+  },
   "co2_monitor": {
     "name": "Monitor CO₂",
     "good": "Dobrý vzduch",
@@ -1691,6 +1710,11 @@
     "f_show_co2": "Dlaždice CO₂",
     "f_show_temperature": "Dlaždice teplota",
     "f_show_humidity": "Dlaždice vlhkost",
+    "pressure": "Tlak",
+    "f_entity_pressure": "Snímač tlaku (hPa)",
+    "f_rotate_seconds": "Střídat velkou hodnotu každých (s, 0 = vyp.)",
+    "f_rotate_title": "Zobrazit název hodnoty jako titulek",
+    "f_show_pressure": "dlaždice tlaku",
     "f_show_battery": "Dlaždice baterie"
   },
   "poubelle": {

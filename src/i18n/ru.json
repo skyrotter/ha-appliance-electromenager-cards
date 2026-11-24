@@ -818,6 +818,8 @@
     "entity_power_l2": "Мощность L2",
     "entity_power_l3": "Мощность L3",
     "entity_pressure": "Давление",
+    "rotate_seconds": "Менять крупное значение каждые (с, 0 = выкл.)",
+    "rotate_title": "Показывать название значения в заголовке",
     "entity_rain": "Датчик дождя",
     "entity_return_temp": "Температура обратки",
     "entity_runtime": "Наработка",
@@ -1313,7 +1315,8 @@
     "resume": "Вернуться к расписанию"
   },
   "room_climate": {
-    "st_display_rect": "Цифровой дисплей (прямоугольный)",
+"pressure": "Давление",
+        "st_display_rect": "Цифровой дисплей (прямоугольный)",
     "st_display_round": "Цифровой дисплей (круглый)",
     "name": "Климат комнаты",
     "comfort": "Комфортно",
@@ -1667,6 +1670,22 @@
     "f_show_tiles": "Показывать плитки",
     "f_show_status": "Показывать состояние"
   },
+  "barometer": {
+    "name": "Барометр",
+    "storm": "Буря",
+    "rain": "Дождь",
+    "change": "Переменно",
+    "fair": "Ясно",
+    "unavailable": "Недоступно",
+    "pressure": "Давление",
+    "temperature": "Температура",
+    "humidity": "Влажность",
+    "f_entity_pressure": "Датчик давления (гПа)",
+    "f_reference_pressure": "Стрелка-метка (гПа, необязательно)",
+    "f_show_pressure": "плитка давления",
+    "f_show_temperature": "плитка температуры",
+    "f_show_humidity": "плитка влажности"
+  },
   "co2_monitor": {
     "name": "Датчик CO₂",
     "good": "Хороший воздух",
@@ -1689,6 +1708,11 @@
     "f_show_co2": "Плитка CO₂",
     "f_show_temperature": "Плитка температура",
     "f_show_humidity": "Плитка влажность",
+    "pressure": "Давление",
+    "f_entity_pressure": "Датчик давления (гПа)",
+    "f_rotate_seconds": "Менять крупное значение каждые (с, 0 = выкл.)",
+    "f_rotate_title": "Показывать название значения в заголовке",
+    "f_show_pressure": "плитка давления",
     "f_show_battery": "Плитка батарея"
   },
   "poubelle": {

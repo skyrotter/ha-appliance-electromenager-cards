@@ -1044,6 +1044,8 @@
     "entity_current_l3": "Courant phase L3",
     "entity_battery": "Puissance du groupe de batteries",
     "entity_pressure": "Pression",
+    "rotate_seconds": "Faire défiler la grande valeur toutes les (s, 0 = non)",
+    "rotate_title": "Afficher le nom de la valeur en titre",
     "entity_rain": "Capteur de pluie",
     "entity_return_temp": "Température de retour",
     "entity_runtime": "Durée de fonctionnement",
@@ -1878,7 +1880,8 @@
     "resume": "Reprendre le planning"
   },
   "room_climate": {
-    "st_display_rect": "Afficheur numérique (rectangle)",
+"pressure": "Pression",
+        "st_display_rect": "Afficheur numérique (rectangle)",
     "st_display_round": "Afficheur numérique (rond)",
     "name": "Climat pièce",
     "comfort": "Confort",
@@ -3156,6 +3159,22 @@
     "f_show_tiles": "Afficher les tuiles",
     "f_show_status": "Afficher l'état"
   },
+  "barometer": {
+    "name": "Baromètre",
+    "storm": "Tempête",
+    "rain": "Pluie",
+    "change": "Variable",
+    "fair": "Beau temps",
+    "unavailable": "Indisponible",
+    "pressure": "Pression",
+    "temperature": "Température",
+    "humidity": "Humidité",
+    "f_entity_pressure": "Capteur de pression (hPa)",
+    "f_reference_pressure": "Aiguille de repère (hPa, optionnel)",
+    "f_show_pressure": "tuile pression",
+    "f_show_temperature": "tuile température",
+    "f_show_humidity": "tuile humidité"
+  },
   "co2_monitor": {
     "name": "Moniteur de CO₂",
     "good": "Air sain",
@@ -3178,6 +3197,11 @@
     "f_show_co2": "Tuile CO₂",
     "f_show_temperature": "Tuile température",
     "f_show_humidity": "Tuile humidité",
+    "pressure": "Pression",
+    "f_entity_pressure": "Capteur de pression (hPa)",
+    "f_rotate_seconds": "Faire défiler la grande valeur toutes les (s, 0 = non)",
+    "f_rotate_title": "Afficher le nom de la valeur en titre",
+    "f_show_pressure": "tuile pression",
     "f_show_battery": "Tuile batterie"
   },
   "poubelle": {

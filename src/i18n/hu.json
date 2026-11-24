@@ -1061,7 +1061,8 @@
     "alarm_short": "Hiba: ellenőrizd a spa-t"
   },
   "room_climate": {
-    "st_display_rect": "Digitális kijelző (téglalap)",
+"pressure": "Légnyomás",
+        "st_display_rect": "Digitális kijelző (téglalap)",
     "st_display_round": "Digitális kijelző (kerek)",
     "name": "Szobaklíma",
     "comfort": "Kellemes",
@@ -1639,6 +1640,8 @@
     "entity_current": "Áram",
     "entity_battery": "Akkumulátor teljesítmény",
     "entity_pressure": "Nyomás",
+    "rotate_seconds": "A nagy érték váltása (mp, 0 = ki)",
+    "rotate_title": "Az érték nevének megjelenítése címként",
     "entity_rain": "Eső szenzor",
     "entity_return_temp": "Visszatérő hőmérséklet",
     "entity_runtime": "Futási idő",
@@ -2124,6 +2127,22 @@
     "f_show_tiles": "Csempék megjelenítése",
     "f_show_status": "Állapot megjelenítése"
   },
+  "barometer": {
+    "name": "Barométer",
+    "storm": "Vihar",
+    "rain": "Eső",
+    "change": "Változékony",
+    "fair": "Szép idő",
+    "unavailable": "Nem elérhető",
+    "pressure": "Légnyomás",
+    "temperature": "Hőmérséklet",
+    "humidity": "Páratartalom",
+    "f_entity_pressure": "Nyomásérzékelő (hPa)",
+    "f_reference_pressure": "Referenciamutató (hPa, opcionális)",
+    "f_show_pressure": "nyomás csempe",
+    "f_show_temperature": "hőmérséklet csempe",
+    "f_show_humidity": "páratartalom csempe"
+  },
   "co2_monitor": {
     "name": "CO₂-mérő",
     "good": "Jó levegő",
@@ -2146,6 +2165,11 @@
     "f_show_co2": "CO₂ csempe",
     "f_show_temperature": "hőmérséklet csempe",
     "f_show_humidity": "páratartalom csempe",
+    "pressure": "Légnyomás",
+    "f_entity_pressure": "Nyomásérzékelő (hPa)",
+    "f_rotate_seconds": "A nagy érték váltása (mp, 0 = ki)",
+    "f_rotate_title": "Az érték nevének megjelenítése címként",
+    "f_show_pressure": "nyomás csempe",
     "f_show_battery": "akkumulátor csempe"
   },
   "poubelle": {

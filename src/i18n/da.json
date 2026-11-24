@@ -905,6 +905,8 @@
     "entity_power_l2": "Effekt L2",
     "entity_power_l3": "Effekt L3",
     "entity_pressure": "Tryk",
+    "rotate_seconds": "Skift den store værdi hver (s, 0 = fra)",
+    "rotate_title": "Vis værdiens navn som titel",
     "entity_rain": "Regnsensor",
     "entity_return_temp": "Returtemperatur",
     "entity_runtime": "Driftstid",
@@ -1546,7 +1548,8 @@
     "resume": "Tilbage til tidsplan"
   },
   "room_climate": {
-    "st_display_rect": "Digitalt display (rektangulært)",
+"pressure": "Lufttryk",
+        "st_display_rect": "Digitalt display (rektangulært)",
     "st_display_round": "Digitalt display (rundt)",
     "name": "Indeklima",
     "comfort": "Behageligt",
@@ -2273,6 +2276,22 @@
     "f_show_tiles": "Vis felter",
     "f_show_status": "Vis status"
   },
+  "barometer": {
+    "name": "Barometer",
+    "storm": "Storm",
+    "rain": "Regn",
+    "change": "Ustadigt",
+    "fair": "Godt vejr",
+    "unavailable": "Utilgængelig",
+    "pressure": "Lufttryk",
+    "temperature": "Temperatur",
+    "humidity": "Luftfugtighed",
+    "f_entity_pressure": "Tryksensor (hPa)",
+    "f_reference_pressure": "Referencevisér (hPa, valgfri)",
+    "f_show_pressure": "trykfelt",
+    "f_show_temperature": "temperaturfelt",
+    "f_show_humidity": "fugtighedsfelt"
+  },
   "co2_monitor": {
     "name": "CO₂-måler",
     "good": "God luft",
@@ -2295,6 +2314,11 @@
     "f_show_co2": "Felt CO₂",
     "f_show_temperature": "Felt temperatur",
     "f_show_humidity": "Felt fugtighed",
+    "pressure": "Lufttryk",
+    "f_entity_pressure": "Tryksensor (hPa)",
+    "f_rotate_seconds": "Skift den store værdi hver (s, 0 = fra)",
+    "f_rotate_title": "Vis værdiens navn som titel",
+    "f_show_pressure": "trykfelt",
     "f_show_battery": "Felt batteri"
   },
   "poubelle": {

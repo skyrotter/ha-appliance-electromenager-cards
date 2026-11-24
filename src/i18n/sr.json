@@ -933,6 +933,8 @@
     "entity_power_l2": "Снага L2",
     "entity_power_l3": "Снага L3",
     "entity_pressure": "Притисак",
+    "rotate_seconds": "Мењај велику вредност сваких (с, 0 = искљ.)",
+    "rotate_title": "Прикажи назив вредности као наслов",
     "entity_rain": "Сензор кише",
     "entity_return_temp": "Температура повратног вода",
     "entity_runtime": "Време рада",
@@ -1618,7 +1620,8 @@
     "resume": "Назад на распоред"
   },
   "room_climate": {
-    "st_display_rect": "Дигитални дисплеј (правоугаони)",
+"pressure": "Притисак",
+        "st_display_rect": "Дигитални дисплеј (правоугаони)",
     "st_display_round": "Дигитални дисплеј (округли)",
     "name": "Клима у соби",
     "comfort": "Комфорно",
@@ -2422,6 +2425,22 @@
     "f_show_tiles": "Прикажи плочице",
     "f_show_status": "Прикажи стање"
   },
+  "barometer": {
+    "name": "Барометар",
+    "storm": "Олуја",
+    "rain": "Киша",
+    "change": "Променљиво",
+    "fair": "Лепо време",
+    "unavailable": "Недоступно",
+    "pressure": "Притисак",
+    "temperature": "Температура",
+    "humidity": "Влажност",
+    "f_entity_pressure": "Сензор притиска (hPa)",
+    "f_reference_pressure": "Референтна казаљка (hPa, опционо)",
+    "f_show_pressure": "плочица притиска",
+    "f_show_temperature": "плочица температуре",
+    "f_show_humidity": "плочица влажности"
+  },
   "co2_monitor": {
     "name": "CO₂ монитор",
     "good": "Добар ваздух",
@@ -2444,6 +2463,11 @@
     "f_show_co2": "Плочица CO₂",
     "f_show_temperature": "Плочица температура",
     "f_show_humidity": "Плочица влажност",
+    "pressure": "Притисак",
+    "f_entity_pressure": "Сензор притиска (hPa)",
+    "f_rotate_seconds": "Мењај велику вредност сваких (с, 0 = искљ.)",
+    "f_rotate_title": "Прикажи назив вредности као наслов",
+    "f_show_pressure": "плочица притиска",
     "f_show_battery": "Плочица батерија"
   },
   "poubelle": {

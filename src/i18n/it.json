@@ -862,6 +862,8 @@
     "entity_power_l2": "Potenza L2",
     "entity_power_l3": "Potenza L3",
     "entity_pressure": "Pressione",
+    "rotate_seconds": "Cambia il valore grande ogni (s, 0 = no)",
+    "rotate_title": "Mostra il nome del valore come titolo",
     "entity_rain": "Sensore pioggia",
     "entity_return_temp": "Temperatura di ritorno",
     "entity_runtime": "Tempo di funzionamento",
@@ -1414,7 +1416,8 @@
     "resume": "Torna al programma"
   },
   "room_climate": {
-    "st_display_rect": "Display digitale (rettangolare)",
+"pressure": "Pressione",
+        "st_display_rect": "Display digitale (rettangolare)",
     "st_display_round": "Display digitale (rotondo)",
     "name": "Clima della stanza",
     "comfort": "Confortevole",
@@ -2044,6 +2047,22 @@
     "f_show_tiles": "Mostra riquadri",
     "f_show_status": "Mostra stato"
   },
+  "barometer": {
+    "name": "Barometro",
+    "storm": "Tempesta",
+    "rain": "Pioggia",
+    "change": "Variabile",
+    "fair": "Bel tempo",
+    "unavailable": "Non disponibile",
+    "pressure": "Pressione",
+    "temperature": "Temperatura",
+    "humidity": "Umidità",
+    "f_entity_pressure": "Sensore di pressione (hPa)",
+    "f_reference_pressure": "Lancetta di riferimento (hPa, opzionale)",
+    "f_show_pressure": "riquadro pressione",
+    "f_show_temperature": "riquadro temperatura",
+    "f_show_humidity": "riquadro umidità"
+  },
   "co2_monitor": {
     "name": "Monitor CO₂",
     "good": "Aria buona",
@@ -2066,6 +2085,11 @@
     "f_show_co2": "Riquadro CO₂",
     "f_show_temperature": "Riquadro temperatura",
     "f_show_humidity": "Riquadro umidità",
+    "pressure": "Pressione",
+    "f_entity_pressure": "Sensore di pressione (hPa)",
+    "f_rotate_seconds": "Cambia il valore grande ogni (s, 0 = no)",
+    "f_rotate_title": "Mostra il nome del valore come titolo",
+    "f_show_pressure": "riquadro pressione",
     "f_show_battery": "Riquadro batteria"
   },
   "poubelle": {

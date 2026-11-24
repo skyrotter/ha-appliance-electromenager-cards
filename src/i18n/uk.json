@@ -994,6 +994,8 @@
     "entity_voltage": "Напруга",
     "entity_current": "Струм",
     "entity_pressure": "Тиск",
+    "rotate_seconds": "Змінювати велике значення кожні (с, 0 = вимк.)",
+    "rotate_title": "Показувати назву значення в заголовку",
     "entity_rain": "Датчик дощу",
     "entity_return_temp": "Температура зворотної лінії",
     "entity_runtime": "Час роботи",
@@ -1764,7 +1766,8 @@
     "resume": "Повернутися до розкладу"
   },
   "room_climate": {
-    "st_display_rect": "Цифровий дисплей (прямокутний)",
+"pressure": "Тиск",
+        "st_display_rect": "Цифровий дисплей (прямокутний)",
     "st_display_round": "Цифровий дисплей (круглий)",
     "name": "Мікроклімат кімнати",
     "comfort": "Комфортно",
@@ -2959,6 +2962,22 @@
     "f_show_tiles": "Показувати плитки",
     "f_show_status": "Показувати стан"
   },
+  "barometer": {
+    "name": "Барометр",
+    "storm": "Буря",
+    "rain": "Дощ",
+    "change": "Мінливо",
+    "fair": "Ясно",
+    "unavailable": "Недоступно",
+    "pressure": "Тиск",
+    "temperature": "Температура",
+    "humidity": "Вологість",
+    "f_entity_pressure": "Датчик тиску (гПа)",
+    "f_reference_pressure": "Стрілка-мітка (гПа, необов'язково)",
+    "f_show_pressure": "плитка тиску",
+    "f_show_temperature": "плитка температури",
+    "f_show_humidity": "плитка вологості"
+  },
   "co2_monitor": {
     "name": "Датчик CO₂",
     "good": "Гарне повітря",
@@ -2981,6 +3000,11 @@
     "f_show_co2": "Плитка CO₂",
     "f_show_temperature": "Плитка температура",
     "f_show_humidity": "Плитка вологість",
+    "pressure": "Тиск",
+    "f_entity_pressure": "Датчик тиску (гПа)",
+    "f_rotate_seconds": "Змінювати велике значення кожні (с, 0 = вимк.)",
+    "f_rotate_title": "Показувати назву значення в заголовку",
+    "f_show_pressure": "плитка тиску",
     "f_show_battery": "Плитка батарея"
   },
   "poubelle": {

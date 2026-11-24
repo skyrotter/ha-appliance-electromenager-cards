@@ -933,6 +933,8 @@
     "entity_power_l2": "Snaga L2",
     "entity_power_l3": "Snaga L3",
     "entity_pressure": "Pritisak",
+    "rotate_seconds": "Menjaj veliku vrednost svakih (s, 0 = isklj.)",
+    "rotate_title": "Prikaži naziv vrednosti kao naslov",
     "entity_rain": "Senzor kiše",
     "entity_return_temp": "Temperatura povratnog voda",
     "entity_runtime": "Vreme rada",
@@ -1618,7 +1620,8 @@
     "resume": "Nazad na raspored"
   },
   "room_climate": {
-    "st_display_rect": "Digitalni displej (pravougaoni)",
+"pressure": "Pritisak",
+        "st_display_rect": "Digitalni displej (pravougaoni)",
     "st_display_round": "Digitalni displej (okrugli)",
     "name": "Klima u sobi",
     "comfort": "Komforno",
@@ -2422,6 +2425,22 @@
     "f_show_tiles": "Prikaži pločice",
     "f_show_status": "Prikaži stanje"
   },
+  "barometer": {
+    "name": "Barometar",
+    "storm": "Oluja",
+    "rain": "Kiša",
+    "change": "Promenljivo",
+    "fair": "Lepo vreme",
+    "unavailable": "Nedostupno",
+    "pressure": "Pritisak",
+    "temperature": "Temperatura",
+    "humidity": "Vlažnost",
+    "f_entity_pressure": "Senzor pritiska (hPa)",
+    "f_reference_pressure": "Referentna kazaljka (hPa, opciono)",
+    "f_show_pressure": "pločica pritiska",
+    "f_show_temperature": "pločica temperature",
+    "f_show_humidity": "pločica vlažnosti"
+  },
   "co2_monitor": {
     "name": "CO₂ monitor",
     "good": "Dobar vazduh",
@@ -2444,6 +2463,11 @@
     "f_show_co2": "Pločica CO₂",
     "f_show_temperature": "Pločica temperatura",
     "f_show_humidity": "Pločica vlažnost",
+    "pressure": "Pritisak",
+    "f_entity_pressure": "Senzor pritiska (hPa)",
+    "f_rotate_seconds": "Menjaj veliku vrednost svakih (s, 0 = isklj.)",
+    "f_rotate_title": "Prikaži naziv vrednosti kao naslov",
+    "f_show_pressure": "pločica pritiska",
     "f_show_battery": "Pločica baterija"
   },
   "poubelle": {

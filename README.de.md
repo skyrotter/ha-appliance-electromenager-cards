@@ -174,6 +174,7 @@ Klicke auf eine Karte für ihre Optionen und Beispiele.
 | [Bewegungsmelder](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/motion-sensor.md) | `custom:appliance-motion-sensor-card` |
 | [Luftqualität](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/air-quality.md) | `custom:appliance-air-quality-card` |
 | [CO₂-Monitor](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/co2-monitor.md) | `custom:appliance-co2-monitor-card` |
+| [Barometer](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/barometer.md) | `custom:appliance-barometer-card` |
 | [Wassermelder](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/leak-detector.md) | `custom:appliance-leak-detector-card` |
 | [Regenmesser (Intensität, Summen)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/rain-gauge.md) | `custom:appliance-rain-gauge-card` |
 | [Pflanzenmonitor (Mi Flora: Feuchte, Licht, Nährstoffe)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/plant-monitor.md) | `custom:appliance-plant-monitor-card` |

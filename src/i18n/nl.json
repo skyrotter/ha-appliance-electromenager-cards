@@ -862,6 +862,8 @@
     "entity_power_l2": "Vermogen L2",
     "entity_power_l3": "Vermogen L3",
     "entity_pressure": "Druk",
+    "rotate_seconds": "Grote waarde wisselen elke (s, 0 = uit)",
+    "rotate_title": "Naam van de waarde als titel tonen",
     "entity_rain": "Regensensor",
     "entity_return_temp": "Retourtemperatuur",
     "entity_runtime": "Looptijd",
@@ -1414,7 +1416,8 @@
     "resume": "Terug naar schema"
   },
   "room_climate": {
-    "st_display_rect": "Digitaal display (rechthoekig)",
+"pressure": "Luchtdruk",
+        "st_display_rect": "Digitaal display (rechthoekig)",
     "st_display_round": "Digitaal display (rond)",
     "name": "Binnenklimaat",
     "comfort": "Comfortabel",
@@ -2044,6 +2047,22 @@
     "f_show_tiles": "Tegels tonen",
     "f_show_status": "Status tonen"
   },
+  "barometer": {
+    "name": "Barometer",
+    "storm": "Storm",
+    "rain": "Regen",
+    "change": "Veranderlijk",
+    "fair": "Mooi weer",
+    "unavailable": "Niet beschikbaar",
+    "pressure": "Luchtdruk",
+    "temperature": "Temperatuur",
+    "humidity": "Luchtvochtigheid",
+    "f_entity_pressure": "Druksensor (hPa)",
+    "f_reference_pressure": "Referentiewijzer (hPa, optioneel)",
+    "f_show_pressure": "druktegel",
+    "f_show_temperature": "temperatuurtegel",
+    "f_show_humidity": "vochtigheidstegel"
+  },
   "co2_monitor": {
     "name": "CO₂-monitor",
     "good": "Goede lucht",
@@ -2066,6 +2085,11 @@
     "f_show_co2": "Tegel CO₂",
     "f_show_temperature": "Tegel temperatuur",
     "f_show_humidity": "Tegel luchtvochtigheid",
+    "pressure": "Luchtdruk",
+    "f_entity_pressure": "Druksensor (hPa)",
+    "f_rotate_seconds": "Grote waarde wisselen elke (s, 0 = uit)",
+    "f_rotate_title": "Naam van de waarde als titel tonen",
+    "f_show_pressure": "druktegel",
     "f_show_battery": "Tegel batterij"
   },
   "poubelle": {

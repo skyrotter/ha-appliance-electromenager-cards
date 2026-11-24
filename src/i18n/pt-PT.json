@@ -1057,6 +1057,8 @@
     "entity_power_l2": "Potência L2",
     "entity_power_l3": "Potência L3",
     "entity_pressure": "Pressão",
+    "rotate_seconds": "Alternar o valor grande a cada (s, 0 = não)",
+    "rotate_title": "Mostrar o nome do valor como título",
     "entity_rain": "Sensor de chuva",
     "entity_return_temp": "Temperatura de retorno",
     "entity_runtime": "Tempo de funcionamento",
@@ -1860,7 +1862,8 @@
     "resume": "Voltar ao horário"
   },
   "room_climate": {
-    "st_display_rect": "Display digital (retangular)",
+"pressure": "Pressão",
+        "st_display_rect": "Display digital (retangular)",
     "st_display_round": "Display digital (redondo)",
     "name": "Clima da divisão",
     "comfort": "Confortável",
@@ -3143,6 +3146,22 @@
     "f_show_tiles": "Mostrar blocos",
     "f_show_status": "Mostrar estado"
   },
+  "barometer": {
+    "name": "Barómetro",
+    "storm": "Tempestade",
+    "rain": "Chuva",
+    "change": "Variável",
+    "fair": "Bom tempo",
+    "unavailable": "Indisponível",
+    "pressure": "Pressão",
+    "temperature": "Temperatura",
+    "humidity": "Humidade",
+    "f_entity_pressure": "Sensor de pressão (hPa)",
+    "f_reference_pressure": "Ponteiro de referência (hPa, opcional)",
+    "f_show_pressure": "bloco de pressão",
+    "f_show_temperature": "bloco de temperatura",
+    "f_show_humidity": "bloco de humidade"
+  },
   "co2_monitor": {
     "name": "Monitor de CO₂",
     "good": "Ar bom",
@@ -3165,6 +3184,11 @@
     "f_show_co2": "Bloco CO₂",
     "f_show_temperature": "Bloco temperatura",
     "f_show_humidity": "Bloco humidade",
+    "pressure": "Pressão",
+    "f_entity_pressure": "Sensor de pressão (hPa)",
+    "f_rotate_seconds": "Alternar o valor grande a cada (s, 0 = não)",
+    "f_rotate_title": "Mostrar o nome do valor como título",
+    "f_show_pressure": "bloco de pressão",
     "f_show_battery": "Bloco bateria"
   },
   "poubelle": {

@@ -920,6 +920,8 @@
     "entity_power_l2": "Leistung L2",
     "entity_power_l3": "Leistung L3",
     "entity_pressure": "Druck",
+    "rotate_seconds": "Großen Wert wechseln alle (s, 0 = aus)",
+    "rotate_title": "Namen des Werts als Titel anzeigen",
     "entity_rain": "Regensensor",
     "entity_return_temp": "Rücklauftemperatur",
     "entity_runtime": "Laufzeit",
@@ -1637,7 +1639,8 @@
     "model_atlantic_io2": "Atlantic io Thermostat (vertikal, Drehrad)"
   },
   "room_climate": {
-    "st_display_rect": "Digitalanzeige (rechteckig)",
+"pressure": "Luftdruck",
+        "st_display_rect": "Digitalanzeige (rechteckig)",
     "st_display_round": "Digitalanzeige (rund)",
     "name": "Raumklima",
     "comfort": "Behaglich",
@@ -2445,6 +2448,22 @@
     "f_show_tiles": "Kacheln anzeigen",
     "f_show_status": "Status anzeigen"
   },
+  "barometer": {
+    "name": "Barometer",
+    "storm": "Sturm",
+    "rain": "Regen",
+    "change": "Wechselhaft",
+    "fair": "Schönes Wetter",
+    "unavailable": "Nicht verfügbar",
+    "pressure": "Luftdruck",
+    "temperature": "Temperatur",
+    "humidity": "Luftfeuchtigkeit",
+    "f_entity_pressure": "Drucksensor (hPa)",
+    "f_reference_pressure": "Merkzeiger (hPa, optional)",
+    "f_show_pressure": "Druck-Kachel",
+    "f_show_temperature": "Temperatur-Kachel",
+    "f_show_humidity": "Feuchte-Kachel"
+  },
   "co2_monitor": {
     "name": "CO₂-Monitor",
     "good": "Gute Luft",
@@ -2467,6 +2486,11 @@
     "f_show_co2": "Kachel CO₂",
     "f_show_temperature": "Kachel Temperatur",
     "f_show_humidity": "Kachel Luftfeuchtigkeit",
+    "pressure": "Luftdruck",
+    "f_entity_pressure": "Drucksensor (hPa)",
+    "f_rotate_seconds": "Großen Wert wechseln alle (s, 0 = aus)",
+    "f_rotate_title": "Namen des Werts als Titel anzeigen",
+    "f_show_pressure": "Druck-Kachel",
     "f_show_battery": "Kachel Batterie"
   },
   "poubelle": {
