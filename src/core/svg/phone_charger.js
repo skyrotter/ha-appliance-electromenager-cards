@@ -3,6 +3,8 @@
    épaisseur avec câble. Écran : heure, batterie et éclair en charge (.phn-ui) ; hors charge, écran « toujours allumé » à luminosité réduite
    (.phn-aod) avec le mode Concentration ou l'activité (icône + libellé), remplis par la carte. Mêmes classes (phn-*) et même CSS pour les trois. */
 const PHN_BOLT = "M61 63l-5 9h4l-2 7l6-10h-4z"; // éclair, boîte 56-66 × 63-79, centre (61, 71)
+// petit logo Apple, discret, sur la tranche avant du socle (icône 24 × 24)
+const PHN_APPLE = "M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.1,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 12.11,7.75C12.89,7.75 14.37,6.68 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z";
 const PHN_LAYOUT = {
   // iphone / ipad : écran vertical centré en (60, 64)
   phone: { time: [60, 52, 12], batt: [45, 66, 30, 12], bolt: [61, 71, 1], pct: [60, 92, 7], aTime: [60, 40, 9], aIcon: [60, 66, 20], aLab: [60, 88, 6.4], aPct: [60, 99, 6] },
@@ -43,7 +45,8 @@ const phnPad = (cx, cy, rx, ry, h) => `
 <ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="url(#ID-phnpadtop)"/>
 <ellipse cx="${cx}" cy="${cy - ry * .15}" rx="${rx * .86}" ry="${ry * .7}" fill="none" stroke="#fff" stroke-opacity=".08" stroke-width="1"/>
 <ellipse class="phn-ring" cx="${cx}" cy="${cy}" rx="${rx - 3.5}" ry="${ry - 1.6}" fill="none" stroke-width="1.8"/>
-<circle class="phn-ring" cx="${cx}" cy="${cy + ry + h * .55}" r="1.1" fill="#38a8ff" stroke-width="0"/>`;
+<circle class="phn-ring" cx="${cx + rx * .55}" cy="${cy + ry * .84 + h * .5}" r="1.1" fill="#38a8ff" stroke-width="0"/>
+<path d="${PHN_APPLE}" fill="#fff" opacity=".55" transform="translate(${cx - 2.6} ${cy + ry + h * .5 - 2.9}) scale(.22)"/>`;
 SVG.phone_charger = (c) => {
   const model = c && ["ipad", "apple_watch"].includes(c.model) ? c.model : "iphone";
   const defs = `<defs>${DEFS}${PHN_DEFS}</defs>`;
