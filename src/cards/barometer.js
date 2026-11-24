@@ -52,7 +52,14 @@ svg{display:block;flex:0 1 calc(190px * var(--illus-scale,1));width:calc(190px *
 .tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
 .tile.hide{display:none}
-.compact .head{display:none}`;
+/* ---- compact : petits emplacements fixes ---- */
+ha-card.compact{display:flex;flex-direction:column;padding:6px}
+.compact .head{flex:none;gap:4px}.compact .title{font-size:12px;line-height:16px}.compact .badge{font-size:10px;padding:0 6px}
+.compact .tiles{flex:0 0 42%;grid-template-columns:1fr;gap:3px;align-content:center}
+.compact .tile{padding:2px 5px;border-radius:8px}.compact .tile .l ha-icon{--mdc-icon-size:12px}.compact .tile .v{font-size:12px;line-height:15px;margin-top:0}
+/* compact sans tuiles visibles : l'image est centrée (et prend toute la place) */
+.compact .body{flex:1 1 auto;min-height:0;flex-wrap:nowrap;gap:6px;margin-top:3px;align-items:stretch}.compact svg{flex:1 1 0;min-width:0;width:auto;height:100%;max-width:none;margin:0}
+.compact.notiles .body{justify-content:center}.compact.notiles svg{flex:0 1 auto;width:auto;height:100%;max-width:100%;margin:0 auto}.compact.notiles .tiles{display:none}`;
 
   const TILES = [['pressure', 'mdi:gauge', 'show_pressure'], ['temperature', 'mdi:thermometer', 'show_temperature'], ['humidity', 'mdi:water-percent', 'show_humidity']];
   const ENT = { pressure: 'entity_pressure', temperature: 'entity_temperature', humidity: 'entity_humidity' };
@@ -142,6 +149,7 @@ svg{display:block;flex:0 1 calc(190px * var(--illus-scale,1));width:calc(190px *
         const small = document.createElement('small'); small.textContent = isNaN(val[k]) ? '' : k === 'pressure' ? 'hPa' : this._unit(id, dflt[k]);
         el.querySelector('.v').replaceChildren(this._fmt(val[k], dec[k]), small);
       });
+      card.classList.toggle('notiles', !r.querySelector('.tile:not(.hide)')); // aucune tuile visible : l'image est centrée en mode compact
     }
   }
   customElements.define(TAG, ApplianceBarometerCard);
