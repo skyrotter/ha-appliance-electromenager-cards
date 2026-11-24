@@ -2162,6 +2162,11 @@
     "f_show_co2": "CO₂ csempe",
     "f_show_temperature": "hőmérséklet csempe",
     "f_show_humidity": "páratartalom csempe",
+    "pressure": "Légnyomás",
+    "f_entity_pressure": "Nyomásérzékelő (hPa)",
+    "f_rotate_seconds": "A nagy érték váltása (mp, 0 = ki)",
+    "f_rotate_title": "Az érték nevének megjelenítése címként",
+    "f_show_pressure": "nyomás csempe",
     "f_show_battery": "akkumulátor csempe"
   },
   "poubelle": {

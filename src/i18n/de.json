@@ -2483,6 +2483,11 @@
     "f_show_co2": "Kachel CO₂",
     "f_show_temperature": "Kachel Temperatur",
     "f_show_humidity": "Kachel Luftfeuchtigkeit",
+    "pressure": "Luftdruck",
+    "f_entity_pressure": "Drucksensor (hPa)",
+    "f_rotate_seconds": "Großen Wert wechseln alle (s, 0 = aus)",
+    "f_rotate_title": "Namen des Werts als Titel anzeigen",
+    "f_show_pressure": "Druck-Kachel",
     "f_show_battery": "Kachel Batterie"
   },
   "poubelle": {

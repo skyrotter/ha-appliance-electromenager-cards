@@ -3194,6 +3194,11 @@
     "f_show_co2": "Tuile CO₂",
     "f_show_temperature": "Tuile température",
     "f_show_humidity": "Tuile humidité",
+    "pressure": "Pression",
+    "f_entity_pressure": "Capteur de pression (hPa)",
+    "f_rotate_seconds": "Faire défiler la grande valeur toutes les (s, 0 = non)",
+    "f_rotate_title": "Afficher le nom de la valeur en titre",
+    "f_show_pressure": "tuile pression",
     "f_show_battery": "Tuile batterie"
   },
   "poubelle": {

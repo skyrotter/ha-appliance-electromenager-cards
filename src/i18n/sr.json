@@ -2460,6 +2460,11 @@
     "f_show_co2": "Плочица CO₂",
     "f_show_temperature": "Плочица температура",
     "f_show_humidity": "Плочица влажност",
+    "pressure": "Притисак",
+    "f_entity_pressure": "Сензор притиска (hPa)",
+    "f_rotate_seconds": "Мењај велику вредност сваких (с, 0 = искљ.)",
+    "f_rotate_title": "Прикажи назив вредности као наслов",
+    "f_show_pressure": "плочица притиска",
     "f_show_battery": "Плочица батерија"
   },
   "poubelle": {

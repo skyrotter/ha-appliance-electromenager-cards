@@ -2997,6 +2997,11 @@
     "f_show_co2": "Плитка CO₂",
     "f_show_temperature": "Плитка температура",
     "f_show_humidity": "Плитка вологість",
+    "pressure": "Тиск",
+    "f_entity_pressure": "Датчик тиску (гПа)",
+    "f_rotate_seconds": "Змінювати велике значення кожні (с, 0 = вимк.)",
+    "f_rotate_title": "Показувати назву значення в заголовку",
+    "f_show_pressure": "плитка тиску",
     "f_show_battery": "Плитка батарея"
   },
   "poubelle": {

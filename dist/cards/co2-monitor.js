@@ -31,6 +31,11 @@
       "f_show_co2": "CO₂ tile",
       "f_show_temperature": "temperature tile",
       "f_show_humidity": "humidity tile",
+      "pressure": "Pressure",
+      "f_entity_pressure": "Pressure sensor (hPa)",
+      "f_rotate_seconds": "Rotate the big value every (s, 0 = off)",
+      "f_rotate_title": "Show the shown value's name as title",
+      "f_show_pressure": "pressure tile",
       "f_show_battery": "battery tile"
     },
     "cs": {
@@ -55,6 +60,11 @@
       "f_show_co2": "Dlaždice CO₂",
       "f_show_temperature": "Dlaždice teplota",
       "f_show_humidity": "Dlaždice vlhkost",
+      "pressure": "Tlak",
+      "f_entity_pressure": "Snímač tlaku (hPa)",
+      "f_rotate_seconds": "Střídat velkou hodnotu každých (s, 0 = vyp.)",
+      "f_rotate_title": "Zobrazit název hodnoty jako titulek",
+      "f_show_pressure": "dlaždice tlaku",
       "f_show_battery": "Dlaždice baterie"
     },
     "da": {
@@ -79,6 +89,11 @@
       "f_show_co2": "Felt CO₂",
       "f_show_temperature": "Felt temperatur",
       "f_show_humidity": "Felt fugtighed",
+      "pressure": "Lufttryk",
+      "f_entity_pressure": "Tryksensor (hPa)",
+      "f_rotate_seconds": "Skift den store værdi hver (s, 0 = fra)",
+      "f_rotate_title": "Vis værdiens navn som titel",
+      "f_show_pressure": "trykfelt",
       "f_show_battery": "Felt batteri"
     },
     "de": {
@@ -103,6 +118,11 @@
       "f_show_co2": "Kachel CO₂",
       "f_show_temperature": "Kachel Temperatur",
       "f_show_humidity": "Kachel Luftfeuchtigkeit",
+      "pressure": "Luftdruck",
+      "f_entity_pressure": "Drucksensor (hPa)",
+      "f_rotate_seconds": "Großen Wert wechseln alle (s, 0 = aus)",
+      "f_rotate_title": "Namen des Werts als Titel anzeigen",
+      "f_show_pressure": "Druck-Kachel",
       "f_show_battery": "Kachel Batterie"
     },
     "es": {
@@ -127,6 +147,11 @@
       "f_show_co2": "Mosaico CO₂",
       "f_show_temperature": "Mosaico temperatura",
       "f_show_humidity": "Mosaico humedad",
+      "pressure": "Presión",
+      "f_entity_pressure": "Sensor de presión (hPa)",
+      "f_rotate_seconds": "Cambiar el valor grande cada (s, 0 = no)",
+      "f_rotate_title": "Mostrar el nombre del valor como título",
+      "f_show_pressure": "tarjeta de presión",
       "f_show_battery": "Mosaico batería"
     },
     "fr": {
@@ -151,6 +176,11 @@
       "f_show_co2": "Tuile CO₂",
       "f_show_temperature": "Tuile température",
       "f_show_humidity": "Tuile humidité",
+      "pressure": "Pression",
+      "f_entity_pressure": "Capteur de pression (hPa)",
+      "f_rotate_seconds": "Faire défiler la grande valeur toutes les (s, 0 = non)",
+      "f_rotate_title": "Afficher le nom de la valeur en titre",
+      "f_show_pressure": "tuile pression",
       "f_show_battery": "Tuile batterie"
     },
     "hu": {
@@ -175,6 +205,11 @@
       "f_show_co2": "CO₂ csempe",
       "f_show_temperature": "hőmérséklet csempe",
       "f_show_humidity": "páratartalom csempe",
+      "pressure": "Légnyomás",
+      "f_entity_pressure": "Nyomásérzékelő (hPa)",
+      "f_rotate_seconds": "A nagy érték váltása (mp, 0 = ki)",
+      "f_rotate_title": "Az érték nevének megjelenítése címként",
+      "f_show_pressure": "nyomás csempe",
       "f_show_battery": "akkumulátor csempe"
     },
     "it": {
@@ -199,6 +234,11 @@
       "f_show_co2": "Riquadro CO₂",
       "f_show_temperature": "Riquadro temperatura",
       "f_show_humidity": "Riquadro umidità",
+      "pressure": "Pressione",
+      "f_entity_pressure": "Sensore di pressione (hPa)",
+      "f_rotate_seconds": "Cambia il valore grande ogni (s, 0 = no)",
+      "f_rotate_title": "Mostra il nome del valore come titolo",
+      "f_show_pressure": "riquadro pressione",
       "f_show_battery": "Riquadro batteria"
     },
     "nb": {
@@ -223,6 +263,11 @@
       "f_show_co2": "Rute CO₂",
       "f_show_temperature": "Rute temperatur",
       "f_show_humidity": "Rute luftfuktighet",
+      "pressure": "Lufttrykk",
+      "f_entity_pressure": "Trykksensor (hPa)",
+      "f_rotate_seconds": "Bytt den store verdien hvert (s, 0 = av)",
+      "f_rotate_title": "Vis verdiens navn som tittel",
+      "f_show_pressure": "trykkflis",
       "f_show_battery": "Rute batteri"
     },
     "nl": {
@@ -247,6 +292,11 @@
       "f_show_co2": "Tegel CO₂",
       "f_show_temperature": "Tegel temperatuur",
       "f_show_humidity": "Tegel luchtvochtigheid",
+      "pressure": "Luchtdruk",
+      "f_entity_pressure": "Druksensor (hPa)",
+      "f_rotate_seconds": "Grote waarde wisselen elke (s, 0 = uit)",
+      "f_rotate_title": "Naam van de waarde als titel tonen",
+      "f_show_pressure": "druktegel",
       "f_show_battery": "Tegel batterij"
     },
     "pl": {
@@ -271,6 +321,11 @@
       "f_show_co2": "Kafelek CO₂",
       "f_show_temperature": "Kafelek temperatura",
       "f_show_humidity": "Kafelek wilgotność",
+      "pressure": "Ciśnienie",
+      "f_entity_pressure": "Czujnik ciśnienia (hPa)",
+      "f_rotate_seconds": "Zmieniaj dużą wartość co (s, 0 = wył.)",
+      "f_rotate_title": "Pokaż nazwę wartości jako tytuł",
+      "f_show_pressure": "kafelek ciśnienia",
       "f_show_battery": "Kafelek bateria"
     },
     "pt-BR": {
@@ -295,6 +350,11 @@
       "f_show_co2": "Bloco CO₂",
       "f_show_temperature": "Bloco temperatura",
       "f_show_humidity": "Bloco umidade",
+      "pressure": "Pressão",
+      "f_entity_pressure": "Sensor de pressão (hPa)",
+      "f_rotate_seconds": "Alternar o valor grande a cada (s, 0 = não)",
+      "f_rotate_title": "Mostrar o nome do valor como título",
+      "f_show_pressure": "bloco de pressão",
       "f_show_battery": "Bloco bateria"
     },
     "pt-PT": {
@@ -319,6 +379,11 @@
       "f_show_co2": "Bloco CO₂",
       "f_show_temperature": "Bloco temperatura",
       "f_show_humidity": "Bloco humidade",
+      "pressure": "Pressão",
+      "f_entity_pressure": "Sensor de pressão (hPa)",
+      "f_rotate_seconds": "Alternar o valor grande a cada (s, 0 = não)",
+      "f_rotate_title": "Mostrar o nome do valor como título",
+      "f_show_pressure": "bloco de pressão",
       "f_show_battery": "Bloco bateria"
     },
     "ro": {
@@ -343,6 +408,11 @@
       "f_show_co2": "Placă CO₂",
       "f_show_temperature": "Placă temperatură",
       "f_show_humidity": "Placă umiditate",
+      "pressure": "Presiune",
+      "f_entity_pressure": "Senzor de presiune (hPa)",
+      "f_rotate_seconds": "Schimbă valoarea mare la fiecare (s, 0 = oprit)",
+      "f_rotate_title": "Afișează numele valorii ca titlu",
+      "f_show_pressure": "cardul presiune",
       "f_show_battery": "Placă baterie"
     },
     "ru": {
@@ -367,6 +437,11 @@
       "f_show_co2": "Плитка CO₂",
       "f_show_temperature": "Плитка температура",
       "f_show_humidity": "Плитка влажность",
+      "pressure": "Давление",
+      "f_entity_pressure": "Датчик давления (гПа)",
+      "f_rotate_seconds": "Менять крупное значение каждые (с, 0 = выкл.)",
+      "f_rotate_title": "Показывать название значения в заголовке",
+      "f_show_pressure": "плитка давления",
       "f_show_battery": "Плитка батарея"
     },
     "sr": {
@@ -391,6 +466,11 @@
       "f_show_co2": "Плочица CO₂",
       "f_show_temperature": "Плочица температура",
       "f_show_humidity": "Плочица влажност",
+      "pressure": "Притисак",
+      "f_entity_pressure": "Сензор притиска (hPa)",
+      "f_rotate_seconds": "Мењај велику вредност сваких (с, 0 = искљ.)",
+      "f_rotate_title": "Прикажи назив вредности као наслов",
+      "f_show_pressure": "плочица притиска",
       "f_show_battery": "Плочица батерија"
     },
     "sr-Latn": {
@@ -415,6 +495,11 @@
       "f_show_co2": "Pločica CO₂",
       "f_show_temperature": "Pločica temperatura",
       "f_show_humidity": "Pločica vlažnost",
+      "pressure": "Pritisak",
+      "f_entity_pressure": "Senzor pritiska (hPa)",
+      "f_rotate_seconds": "Menjaj veliku vrednost svakih (s, 0 = isklj.)",
+      "f_rotate_title": "Prikaži naziv vrednosti kao naslov",
+      "f_show_pressure": "pločica pritiska",
       "f_show_battery": "Pločica baterija"
     },
     "uk": {
@@ -439,6 +524,11 @@
       "f_show_co2": "Плитка CO₂",
       "f_show_temperature": "Плитка температура",
       "f_show_humidity": "Плитка вологість",
+      "pressure": "Тиск",
+      "f_entity_pressure": "Датчик тиску (гПа)",
+      "f_rotate_seconds": "Змінювати велике значення кожні (с, 0 = вимк.)",
+      "f_rotate_title": "Показувати назву значення в заголовку",
+      "f_show_pressure": "плитка тиску",
       "f_show_battery": "Плитка батарея"
     }
   };
@@ -499,12 +589,17 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     const P = { a: hb(t / 2), g: hb(hh), d: hb(h - t / 2), f: vb(t / 2, t * 0.5 + g, hh - g), b: vb(w - t / 2, t * 0.5 + g, hh - g), e: vb(t / 2, hh + g, h - t * 0.5 - g), c: vb(w - t / 2, hh + g, h - t * 0.5 - g) };
     return `<g transform="translate(${x} 0)">${(SEG[ch] || '').split('').map((s) => `<path d="${P[s]}"/>`).join('')}</g>`;
   };
-  // nombre en chiffres 7 segments, aligné à droite sur xr, dans une zone de largeur maxW ; (y, h) = haut et hauteur des chiffres
+  // nombre en chiffres 7 segments (avec point décimal), aligné à droite sur xr, dans une zone de largeur maxW ; (y, h) = haut et hauteur des chiffres
   const number = (txt, xr, y, h, maxW, wMax, lean = 8) => {
-    const s = String(txt).slice(-4), n = s.length, gap = wMax * 0.2;
-    const w = Math.min(wMax, (maxW - (n - 1) * gap) / n), t = Math.max(3, w * 0.22), tw = n * w + (n - 1) * gap;
-    const x0 = xr - tw + h * Math.tan(lean * Math.PI / 180) * 0.5;
-    return `<g class="glow" fill="#fff" transform="translate(${x0.toFixed(1)} ${y}) skewX(${-lean})">${[...s].map((ch, i) => digit(ch, i * (w + gap), w, h, t)).join('')}</g>`;
+    const toks = [...String(txt).slice(-5)], nd = toks.filter((c) => c !== '.').length, nDot = toks.length - nd, gap = wMax * 0.2;
+    const w = Math.min(wMax, (maxW - (toks.length - 1) * gap - nDot * wMax * 0.3) / Math.max(1, nd)), t = Math.max(3, w * 0.22), dw = Math.max(t, w * 0.3);
+    const tw = nd * w + nDot * dw + (toks.length - 1) * gap, x0 = xr - tw + h * Math.tan(lean * Math.PI / 180) * 0.5;
+    let x = 0;
+    const out = toks.map((ch) => {
+      const g = ch === '.' ? `<rect x="${(x + dw / 2 - t * 0.6).toFixed(1)}" y="${(h - t * 1.2).toFixed(1)}" width="${(t * 1.2).toFixed(1)}" height="${(t * 1.2).toFixed(1)}" rx="1"/>` : digit(ch, x, w, h, t);
+      x += (ch === '.' ? dw : w) + gap; return g;
+    }).join('');
+    return `<g class="glow" fill="#fff" transform="translate(${x0.toFixed(1)} ${y}) skewX(${-lean})">${out}</g>`;
   };
 
   // photo + écran redessiné : v = mesures, lvl = bon / moyen / mauvais, on = écran allumé, f = remplissage de la jauge (0 à 1)
@@ -517,29 +612,29 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       })();
       const pt = (a) => `${(197 + 92 * Math.cos(a * Math.PI / 180)).toFixed(1)} ${(172 + 92 * Math.sin(a * Math.PI / 180)).toFixed(1)}`;
       const arc = `M${pt(116)}A92 92 0 1 1 ${pt(299)}`;
-      const num = number(isNaN(v.co2) ? '---' : String(Math.round(v.co2)), 260, 138, 62, 116, 32);
+      const num = number(o.big.txt, 260, 138, 62, 116, 32);
       return `<image href="${IMG_RECT}" width="340" height="462" style="opacity:${on ? 0 : 1}"/><image href="${IMG_RECT_ICONS}" width="340" height="462" style="opacity:${on ? 1 : 0}"/>
         ${on ? `<g class="scr">
           <path class="arc" d="${arc}" pathLength="100" stroke="#2a3a35" opacity=".8"/>
-          <path class="arc glow" d="${arc}" pathLength="100" stroke="url(#cogr)" stroke-dasharray="${Math.max(1.5, f * 100).toFixed(1)} 100"/>
+          <path class="arc glow" d="${arc}" pathLength="100" stroke="${o.big.key === 'co2' ? 'url(#cogr)' : '#35d07a'}" stroke-dasharray="${Math.max(1.5, f * 100).toFixed(1)} 100"/>
           ${num}
-          <text x="266" y="190" font-size="15" font-weight="600">${esc(o.unit)}</text>
-          <text x="198" y="258" font-size="17" text-anchor="middle">CO₂</text>
+          <text x="266" y="190" font-size="15" font-weight="600">${esc(o.big.unit)}</text>
+          <text x="198" y="258" font-size="${o.big.label.length > 5 ? 12 : 17}" text-anchor="middle">${esc(o.big.label)}</text>
           <text x="145" y="352" font-size="44" text-anchor="middle">${esc(o.t)}<tspan font-size="19" dy="-19">${esc(o.tu)}</tspan></text>
           <text x="254" y="350" font-size="44" text-anchor="middle">${esc(o.h)}<tspan font-size="34" dy="0">%</tspan></text>
           ${battery}</g>` : ''}`;
     },
     round: (o) => {
-      const { v, col, on, lvl } = o, val = isNaN(v.co2) ? '----' : String(Math.round(v.co2)).padStart(4, '0');
+      const { v, col, on, lvl } = o, val = o.big.txt;
       const smile = lvl === 'good' ? 'M214 188Q222 196 230 188' : lvl === 'moderate' ? 'M214 190H230' : 'M214 193Q222 185 230 193';
       return `<image href="${IMG_ROUND}" width="346" height="406"/>
         <rect class="led ${on ? 'on' : ''}" x="${on ? 153 : 151}" y="${on ? 6 : 5}" width="${on ? 42 : 46}" height="${on ? 23 : 25}" rx="12" fill="${on ? col : '#2d3136'}" ${on ? `style="filter:drop-shadow(0 0 5px ${col})"` : ''}/>
         ${on ? `<g class="scr">
-          <text x="151" y="118" font-size="17" text-anchor="middle">CO₂</text>
+          <text x="151" y="118" font-size="${o.big.label.length > 5 ? 12 : 17}" text-anchor="middle">${esc(o.big.label)}</text>
           ${number(val, 197, 140, 68, 146, 31, 9)}
-          <text x="227" y="166" font-size="13" text-anchor="middle" opacity=".85">${esc(o.unit)}</text>
-          <circle cx="222" cy="185" r="14" fill="none" stroke="#fff" stroke-width="1.7" opacity=".9"/><circle cx="217" cy="180" r="1.5"/><circle cx="227" cy="180" r="1.5"/>
-          <path d="${smile}" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/>
+          <text x="227" y="166" font-size="13" text-anchor="middle" opacity=".85">${esc(o.big.unit)}</text>
+          ${o.big.key === 'co2' ? `<circle cx="222" cy="185" r="14" fill="none" stroke="#fff" stroke-width="1.7" opacity=".9"/><circle cx="217" cy="180" r="1.5"/><circle cx="227" cy="180" r="1.5"/>
+          <path d="${smile}" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/>` : ''}
           <path d="M78 214a3.2 3.2 0 0 1 6.4 0v14.4a6.6 6.6 0 1 1-6.4 0Z" fill="#ffc933"/>
           <text x="97" y="243" font-size="17" font-style="italic" opacity=".92">${esc(o.t)}<tspan font-size="10">${esc(o.tu)}</tspan></text>
           <path d="M142 224c-5 6-7 9-7 12.5a7 7 0 0 0 14 0c0-3.500-2-6.500-7-12.500Z" fill="none" stroke="#35d07a" stroke-width="2"/>
@@ -549,8 +644,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     },
   };
 
-  const TILES = [['co2', 'mdi:molecule-co2', 'show_co2'], ['temperature', 'mdi:thermometer', 'show_temperature'], ['humidity', 'mdi:water-percent', 'show_humidity'], ['battery', 'mdi:battery', 'show_battery']];
-  const ENT = { co2: 'entity_co2', temperature: 'entity_temperature', humidity: 'entity_humidity', battery: 'entity_battery' };
+  const TILES = [['co2', 'mdi:molecule-co2', 'show_co2'], ['temperature', 'mdi:thermometer', 'show_temperature'], ['humidity', 'mdi:water-percent', 'show_humidity'], ['pressure', 'mdi:gauge', 'show_pressure'], ['battery', 'mdi:battery', 'show_battery']];
+  const ENT = { co2: 'entity_co2', temperature: 'entity_temperature', humidity: 'entity_humidity', pressure: 'entity_pressure', battery: 'entity_battery' };
   const COLS = { good: '#2fd27a', moderate: '#ffb300', poor: '#ff4d3d' };
 
   class ApplianceCo2MonitorCard extends HTMLElement {
@@ -564,7 +659,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { model: 'rectangle', co2_good: 800, co2_bad: 1200, co2_max: 2000, ...Object.fromEntries(TILES.map(([, , o]) => [o, true])), ...c };
-      this._built = false;
+      this._built = false; this._rot = 0; this._startRot();
       if (this._hass) this._render();
     }
     set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
@@ -582,9 +677,25 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
     _model() { return MODELS.includes(this._c.model) ? this._c.model : 'rectangle'; }
 
+    // rotate_seconds : la grandeur affichée en grand change toutes les N secondes (CO₂, température, humidité, pression) ; le nom suit
+    _metrics() { const c = this._c; return ['co2', 'temperature', 'humidity', 'pressure'].filter((k) => c[ENT[k]] && c[`show_${k}`] !== false || (k === 'co2' && c[ENT.co2])); }
+    _focusKey() {
+      const c = this._c, list = this._metrics(), sec = Number(c.rotate_seconds);
+      if (!(sec > 0) || list.length < 2) return 'co2';
+      return list[(this._rot || 0) % list.length];
+    }
+    _startRot() {
+      clearInterval(this._rotTimer); this._rotTimer = null;
+      const sec = Number(this._c && this._c.rotate_seconds);
+      if (sec > 0 && this.isConnected) this._rotTimer = setInterval(() => { this._rot = (this._rot || 0) + 1; if (this._hass && this._built) this._render(); }, Math.max(1, sec) * 1000);
+    }
+    connectedCallback() { this._startRot(); }
+    disconnectedCallback() { clearInterval(this._rotTimer); this._rotTimer = null; }
+
     // état : unavailable (aucune mesure ou entité marche / arrêt indisponible), off (entité marche / arrêt éteinte), sinon good / moderate / poor selon le CO₂
     _compute() {
       const c = this._c, v = Object.fromEntries(TILES.map(([k]) => [k, this._num(c[ENT[k]])]));
+      if (!isNaN(v.pressure)) { const u = this._unit(c.entity_pressure, 'hPa').toLowerCase(); v.pressure = u === 'kpa' ? v.pressure * 10 : u === 'pa' ? v.pressure / 100 : u === 'inhg' ? v.pressure * 33.8639 : u === 'mmhg' ? v.pressure * 1.33322 : v.pressure; }
       const known = TILES.some(([k]) => !isNaN(v[k]));
       const sw = this._st(c.entity_status), swOff = !!sw && /^(off|closed|standby)$/i.test(String(sw.state)), swBad = !!sw && /^unavailable$/i.test(String(sw.state));
       const lvl = isNaN(v.co2) ? 'good' : v.co2 < Number(c.co2_good) ? 'good' : v.co2 > Number(c.co2_bad) ? 'poor' : 'moderate';
@@ -612,21 +723,25 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const c = this._c, r = this._root, card = this._card, m = this._model();
       const { v, on, lvl, st } = this._compute();
       card.className = `${st}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`;
-      r.getElementById('cotitle').textContent = c.name || this._t('name');
+      r.getElementById('cotitle').textContent = Number(c.rotate_seconds) > 0 && this._metrics().length > 1 && c.rotate_title !== false ? this._l(this._focusKey()) : (c.name || this._t('name'));
       const badge = r.getElementById('cobadge');
       badge.textContent = this._t(st);
       badge.style.display = c.show_status === false ? 'none' : '';
-      const max = Number(c.co2_max) > 0 ? Number(c.co2_max) : 2000, f = isNaN(v.co2) ? 0 : Math.max(0, Math.min(1, v.co2 / max));
-      r.getElementById('coscr').innerHTML = SCREENS[m]({ v, on, lvl, f, col: COLS[lvl], unit: this._unit(c.entity_co2, 'ppm').toUpperCase(),
+      const fk = this._focusKey(), fv = v[fk];
+      const SC = { co2: [0, Number(c.co2_max) > 0 ? Number(c.co2_max) : 2000], temperature: [0, 40], humidity: [0, 100], pressure: [960, 1060] };
+      const big = { key: fk, label: fk === 'co2' ? 'CO₂' : this._l(fk).toUpperCase(), unit: fk === 'co2' ? this._unit(c.entity_co2, 'ppm').toUpperCase() : fk === 'pressure' ? 'HPA' : this._unit(c[ENT[fk]], { temperature: '°C', humidity: '%' }[fk]).toUpperCase(),
+        txt: isNaN(fv) ? '---' : fk === 'temperature' ? String(Math.round(fv * 10) / 10) : String(Math.round(fv)) };
+      const f = isNaN(fv) ? 0 : Math.max(0, Math.min(1, (fv - SC[fk][0]) / (SC[fk][1] - SC[fk][0])));
+      r.getElementById('coscr').innerHTML = SCREENS[m]({ v, on, lvl, f, big, col: fk === 'co2' ? COLS[lvl] : COLS.good, unit: this._unit(c.entity_co2, 'ppm').toUpperCase(),
         t: this._fmt(v.temperature, 0), h: this._fmt(v.humidity, 0), tu: this._unit(c.entity_temperature, '°C') });
-      const dec = { co2: 0, temperature: 1, humidity: 0, battery: 0 }, dflt = { co2: 'ppm', temperature: '°C', humidity: '%', battery: '%' };
+      const dec = { co2: 0, temperature: 1, humidity: 0, pressure: 0, battery: 0 }, dflt = { co2: 'ppm', temperature: '°C', humidity: '%', pressure: 'hPa', battery: '%' };
       TILES.forEach(([k, , opt]) => {
         const el = r.querySelector(`.tile[data-k="${k}"]`), id = c[ENT[k]];
         el.classList.toggle('hide', !id || c[opt] === false);
         el.classList.toggle('bad', k === 'co2' && lvl === 'poor' && !isNaN(v.co2));
         el.classList.toggle('warn', (k === 'co2' && lvl === 'moderate') || (k === 'battery' && !isNaN(v.battery) && v.battery < 20));
         el.querySelector('.lbl').textContent = this._l(k);
-        const small = document.createElement('small'); small.textContent = isNaN(v[k]) ? '' : this._unit(id, dflt[k]);
+        const small = document.createElement('small'); small.textContent = isNaN(v[k]) ? '' : k === 'pressure' ? 'hPa' : this._unit(id, dflt[k]);
         el.querySelector('.v').replaceChildren(this._fmt(v[k], dec[k]), small);
       });
     }
@@ -658,7 +773,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ...window.applianceTileFields(this._hass),
-        ent('entity_status', ['switch', 'binary_sensor', 'input_boolean', 'sensor']), ent('entity_co2', 'sensor'), ent('entity_temperature', 'sensor'), ent('entity_humidity', 'sensor'), ent('entity_battery', 'sensor'),
+        ent('entity_status', ['switch', 'binary_sensor', 'input_boolean', 'sensor']), ent('entity_co2', 'sensor'), ent('entity_temperature', 'sensor'), ent('entity_humidity', 'sensor'), ent('entity_pressure', 'sensor'), ent('entity_battery', 'sensor'),
+        num('rotate_seconds', 0, 0, 60, 1, 's'), bool('rotate_title'),
         { type: 'grid', name: '', schema: [num('co2_good', 800, 400, 3000, 50, 'ppm'), num('co2_bad', 1200, 400, 5000, 50, 'ppm'), num('co2_max', 2000, 800, 10000, 100, 'ppm')] },
         ...window.applianceActionFields,
         window.applianceLanguageField(T),

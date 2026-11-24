@@ -3215,6 +3215,11 @@
     "f_show_co2": "CO₂ tile",
     "f_show_temperature": "temperature tile",
     "f_show_humidity": "humidity tile",
+    "pressure": "Pressure",
+    "f_entity_pressure": "Pressure sensor (hPa)",
+    "f_rotate_seconds": "Rotate the big value every (s, 0 = off)",
+    "f_rotate_title": "Show the shown value's name as title",
+    "f_show_pressure": "pressure tile",
     "f_show_battery": "battery tile"
   },
   "poubelle": {

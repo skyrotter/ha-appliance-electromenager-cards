@@ -3181,6 +3181,11 @@
     "f_show_co2": "Bloco CO₂",
     "f_show_temperature": "Bloco temperatura",
     "f_show_humidity": "Bloco umidade",
+    "pressure": "Pressão",
+    "f_entity_pressure": "Sensor de pressão (hPa)",
+    "f_rotate_seconds": "Alternar o valor grande a cada (s, 0 = não)",
+    "f_rotate_title": "Mostrar o nome do valor como título",
+    "f_show_pressure": "bloco de pressão",
     "f_show_battery": "Bloco bateria"
   },
   "poubelle": {

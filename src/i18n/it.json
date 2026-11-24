@@ -2082,6 +2082,11 @@
     "f_show_co2": "Riquadro CO₂",
     "f_show_temperature": "Riquadro temperatura",
     "f_show_humidity": "Riquadro umidità",
+    "pressure": "Pressione",
+    "f_entity_pressure": "Sensore di pressione (hPa)",
+    "f_rotate_seconds": "Cambia il valore grande ogni (s, 0 = no)",
+    "f_rotate_title": "Mostra il nome del valore come titolo",
+    "f_show_pressure": "riquadro pressione",
     "f_show_battery": "Riquadro batteria"
   },
   "poubelle": {

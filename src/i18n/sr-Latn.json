@@ -2460,6 +2460,11 @@
     "f_show_co2": "Pločica CO₂",
     "f_show_temperature": "Pločica temperatura",
     "f_show_humidity": "Pločica vlažnost",
+    "pressure": "Pritisak",
+    "f_entity_pressure": "Senzor pritiska (hPa)",
+    "f_rotate_seconds": "Menjaj veliku vrednost svakih (s, 0 = isklj.)",
+    "f_rotate_title": "Prikaži naziv vrednosti kao naslov",
+    "f_show_pressure": "pločica pritiska",
     "f_show_battery": "Pločica baterija"
   },
   "poubelle": {

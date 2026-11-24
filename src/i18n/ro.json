@@ -1719,6 +1719,11 @@
     "f_show_co2": "Placă CO₂",
     "f_show_temperature": "Placă temperatură",
     "f_show_humidity": "Placă umiditate",
+    "pressure": "Presiune",
+    "f_entity_pressure": "Senzor de presiune (hPa)",
+    "f_rotate_seconds": "Schimbă valoarea mare la fiecare (s, 0 = oprit)",
+    "f_rotate_title": "Afișează numele valorii ca titlu",
+    "f_show_pressure": "cardul presiune",
     "f_show_battery": "Placă baterie"
   },
   "poubelle": {
