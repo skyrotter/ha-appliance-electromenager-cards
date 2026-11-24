@@ -1,5 +1,6 @@
 {
   "common": {
+    "f_invert_position": "Inversează poziția (100 % = ecranul este strâns)",
     "projector_screen": "Ecran de proiecție",
     "screen_open": "Derulat",
     "screen_closed": "Strâns",

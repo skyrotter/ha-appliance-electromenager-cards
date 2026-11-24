@@ -1,5 +1,6 @@
 {
   "common": {
+    "f_invert_position": "Pozíció megfordítása (100 % = a vászon fel van tekerve)",
     "projector_screen": "Vetítővászon",
     "screen_open": "Kitekerve",
     "screen_closed": "Felcsavarva",

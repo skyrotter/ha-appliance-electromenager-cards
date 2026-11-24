@@ -1,5 +1,6 @@
 {
   "common": {
+    "f_invert_position": "Inverter a posição (100 % = tela enrolada)",
     "projector_screen": "Tela de projeção",
     "screen_open": "Aberta",
     "screen_closed": "Fechada",

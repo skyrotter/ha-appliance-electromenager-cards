@@ -1,5 +1,6 @@
 {
   "common": {
+    "f_invert_position": "Obrni položaj (100 % = platno je namotano)",
     "projector_screen": "Platno za projektor",
     "screen_open": "Spušteno",
     "screen_closed": "Namotano",

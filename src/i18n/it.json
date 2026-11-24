@@ -1,5 +1,6 @@
 {
   "common": {
+    "f_invert_position": "Inverti la posizione (100 % = schermo avvolto)",
     "projector_screen": "Schermo di proiezione",
     "screen_open": "Aperto",
     "screen_closed": "Chiuso",

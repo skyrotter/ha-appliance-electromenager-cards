@@ -1,5 +1,6 @@
 {
   "common": {
+    "f_invert_position": "Position umkehren (100 % = Leinwand eingefahren)",
     "projector_screen": "Leinwand",
     "screen_open": "Ausgefahren",
     "screen_closed": "Eingefahren",

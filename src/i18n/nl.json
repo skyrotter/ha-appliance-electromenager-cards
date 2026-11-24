@@ -1,5 +1,6 @@
 {
   "common": {
+    "f_invert_position": "Positie omkeren (100 % = scherm opgerold)",
     "projector_screen": "Projectiescherm",
     "screen_open": "Uitgerold",
     "screen_closed": "Opgerold",

@@ -1,5 +1,6 @@
 {
   "common": {
+    "f_invert_position": "Obrátit polohu (100 % = plátno svinuté)",
     "projector_screen": "Projekční plátno",
     "screen_open": "Rozvinuto",
     "screen_closed": "Svinuto",

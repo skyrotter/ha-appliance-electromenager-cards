@@ -15,6 +15,7 @@ const VERSION = "1.205.0";
 /* ------------------------------------------------------------------ */
 const STRINGS = {
   "en": {
+    "f_invert_position": "Invert position (100 % = screen rolled up)",
     "projector_screen": "Projector screen",
     "screen_open": "Open",
     "screen_closed": "Closed",
@@ -563,6 +564,7 @@ const STRINGS = {
     "f_power_factor": "Power factor sensor (cos φ, optional)"
   },
   "cs": {
+    "f_invert_position": "Obrátit polohu (100 % = plátno svinuté)",
     "projector_screen": "Projekční plátno",
     "screen_open": "Rozvinuto",
     "screen_closed": "Svinuto",
@@ -966,6 +968,7 @@ const STRINGS = {
     "f_hide_zero_power": "Skrýt výkon, když je 0"
   },
   "da": {
+    "f_invert_position": "Vend positionen (100 % = lærredet er rullet op)",
     "projector_screen": "Projektorlærred",
     "screen_open": "Nede",
     "screen_closed": "Oppe",
@@ -1429,6 +1432,7 @@ const STRINGS = {
     "f_calories": "Kaloriesensor"
   },
   "de": {
+    "f_invert_position": "Position umkehren (100 % = Leinwand eingefahren)",
     "projector_screen": "Leinwand",
     "screen_open": "Ausgefahren",
     "screen_closed": "Eingefahren",
@@ -1905,6 +1909,7 @@ const STRINGS = {
     "f_dose_time": "Dosierzeit (Sensor mit dem Zeitplan, z. B. 10:00)"
   },
   "es": {
+    "f_invert_position": "Invertir la posición (100 % = pantalla recogida)",
     "projector_screen": "Pantalla de proyección",
     "screen_open": "Desplegada",
     "screen_closed": "Recogida",
@@ -2429,6 +2434,7 @@ const STRINGS = {
     "f_calories": "Sensor de calorías"
   },
   "fr": {
+    "f_invert_position": "Inverser la position (100 % = écran enroulé)",
     "projector_screen": "Écran de projection",
     "screen_open": "Déployé",
     "screen_closed": "Enroulé",
@@ -2971,6 +2977,7 @@ const STRINGS = {
     "f_power_factor": "Capteur de facteur de puissance (cos φ, facultatif)"
   },
   "hu": {
+    "f_invert_position": "Pozíció megfordítása (100 % = a vászon fel van tekerve)",
     "projector_screen": "Vetítővászon",
     "screen_open": "Kitekerve",
     "screen_closed": "Felcsavarva",
@@ -3437,6 +3444,7 @@ const STRINGS = {
     "f_calories": "Kalória szenzor"
   },
   "it": {
+    "f_invert_position": "Inverti la posizione (100 % = schermo avvolto)",
     "projector_screen": "Schermo di proiezione",
     "screen_open": "Aperto",
     "screen_closed": "Chiuso",
@@ -3867,6 +3875,7 @@ const STRINGS = {
     "f_calories": "Sensore di calorie"
   },
   "nb": {
+    "f_invert_position": "Snu posisjonen (100 % = lerretet er rullet opp)",
     "projector_screen": "Lerret",
     "screen_open": "Nede",
     "screen_closed": "Oppe",
@@ -4255,6 +4264,7 @@ const STRINGS = {
     "f_hide_zero_power": "Skjul effekt når den er 0"
   },
   "nl": {
+    "f_invert_position": "Positie omkeren (100 % = scherm opgerold)",
     "projector_screen": "Projectiescherm",
     "screen_open": "Uitgerold",
     "screen_closed": "Opgerold",
@@ -4685,6 +4695,7 @@ const STRINGS = {
     "f_calories": "Caloriesensor"
   },
   "pl": {
+    "f_invert_position": "Odwróć pozycję (100 % = ekran zwinięty)",
     "projector_screen": "Ekran projekcyjny",
     "screen_open": "Rozwinięty",
     "screen_closed": "Zwinięty",
@@ -5101,6 +5112,7 @@ const STRINGS = {
     "f_power_factor": "Czujnik współczynnika mocy (cos φ, opcjonalnie)"
   },
   "pt-BR": {
+    "f_invert_position": "Inverter a posição (100 % = tela enrolada)",
     "projector_screen": "Tela de projeção",
     "screen_open": "Aberta",
     "screen_closed": "Fechada",
@@ -5635,6 +5647,7 @@ const STRINGS = {
     "temperature_2": "Temp. cav. 2"
   },
   "pt-PT": {
+    "f_invert_position": "Inverter a posição (100 % = ecrã enrolado)",
     "projector_screen": "Ecrã de projeção",
     "screen_open": "Aberto",
     "screen_closed": "Fechado",
@@ -6169,6 +6182,7 @@ const STRINGS = {
     "temperature_2": "Temp. cav. 2"
   },
   "ro": {
+    "f_invert_position": "Inversează poziția (100 % = ecranul este strâns)",
     "projector_screen": "Ecran de proiecție",
     "screen_open": "Derulat",
     "screen_closed": "Strâns",
@@ -6571,6 +6585,7 @@ const STRINGS = {
     "f_hide_zero_power": "Ascunde puterea când este 0"
   },
   "ru": {
+    "f_invert_position": "Инвертировать положение (100 % = экран свёрнут)",
     "projector_screen": "Экран для проектора",
     "screen_open": "Опущен",
     "screen_closed": "Свёрнут",
@@ -6959,6 +6974,7 @@ const STRINGS = {
     "f_hide_zero_power": "Скрывать мощность, когда она равна 0"
   },
   "sr": {
+    "f_invert_position": "Обрни положај (100 % = платно је намотано)",
     "projector_screen": "Платно за пројектор",
     "screen_open": "Спуштено",
     "screen_closed": "Намотано",
@@ -7435,6 +7451,7 @@ const STRINGS = {
     "f_calories": "Сензор калорија"
   },
   "sr-Latn": {
+    "f_invert_position": "Obrni položaj (100 % = platno je namotano)",
     "projector_screen": "Platno za projektor",
     "screen_open": "Spušteno",
     "screen_closed": "Namotano",
@@ -7911,6 +7928,7 @@ const STRINGS = {
     "f_calories": "Senzor kalorija"
   },
   "uk": {
+    "f_invert_position": "Інвертувати положення (100 % = екран згорнуто)",
     "projector_screen": "Екран для проєктора",
     "screen_open": "Опущено",
     "screen_closed": "Згорнуто",
@@ -13059,10 +13077,12 @@ class ApplianceCardBase extends HTMLElement {
       m.status = base === "running" ? "dosing" : base;
     } else if (kind === "projector_screen") {
       // écran de projection (cover : position 0-100 %, 100 = déroulé ; switch / input_boolean : on = déroulé) : ouvert / fermé / en mouvement
-      const sv = main ? String(main.state).toLowerCase() : "", cp = main && main.attributes ? Number(main.attributes.current_position) : NaN;
-      m.scrPos = Number.isFinite(cp) ? Math.max(0, Math.min(1, cp / 100)) : /^(open|opening|on)$/.test(sv) ? 1 : 0;
+      // invert_position : écran piloté par un module de volet roulant (100 % = écran entièrement enroulé, 0 % = déployé) : tout est inversé
+      const inv = c.invert_position === true, sv = main ? String(main.state).toLowerCase() : "", cp = main && main.attributes ? Number(main.attributes.current_position) : NaN;
+      m.scrPos = Number.isFinite(cp) ? Math.max(0, Math.min(1, inv ? 1 - cp / 100 : cp / 100)) : /^(open|opening|on)$/.test(sv) !== inv ? 1 : 0;
       m.scrHasPos = Number.isFinite(cp);
-      m.status = !main || sv === "unavailable" ? "unavailable" : sv === "opening" ? "screen_opening" : sv === "closing" ? "screen_closing" : /^(open|on)$/.test(sv) ? "screen_open" : "screen_closed";
+      const sOpen = inv ? "screen_closed" : "screen_open", sClosed = inv ? "screen_open" : "screen_closed";
+      m.status = !main || sv === "unavailable" ? "unavailable" : sv === "opening" ? (inv ? "screen_closing" : "screen_opening") : sv === "closing" ? (inv ? "screen_opening" : "screen_closing") : /^(open|on)$/.test(sv) ? sOpen : sClosed;
     } else if (kind === "infrared_panel") {
       m.status = base === "running" ? "heating" : base;
     } else if (FIT_KINDS.includes(kind)) {
@@ -14590,8 +14610,9 @@ class ApplianceCardBase extends HTMLElement {
       modesEl.querySelectorAll("button").forEach((b) => { b.onclick = (ev) => {
         ev.stopPropagation();
         const k = b.dataset.act, dom = domainOf(c.entity);
-        if (dom === "cover") hass.callService("cover", k === "open" ? "open_cover" : k === "close" ? "close_cover" : "stop_cover", { entity_id: c.entity });
-        else hass.callService(["switch", "input_boolean"].includes(dom) ? dom : "homeassistant", k === "open" ? "turn_on" : "turn_off", { entity_id: c.entity });
+        const up = (k === "open") !== (c.invert_position === true); // « dérouler » = ouvrir le cover, sauf position inversée (module de volet roulant)
+        if (dom === "cover") hass.callService("cover", k === "stop" ? "stop_cover" : up ? "open_cover" : "close_cover", { entity_id: c.entity });
+        else hass.callService(["switch", "input_boolean"].includes(dom) ? dom : "homeassistant", up ? "turn_on" : "turn_off", { entity_id: c.entity });
       }; });
     } else modesEl.innerHTML = "";
 
@@ -15154,7 +15175,7 @@ function buildForm(kind) {
             { name: "preheat_minutes", selector: { number: { min: 1, max: 30, step: 1, mode: "box", unit_of_measurement: "min" } } },
             { name: "ready_minutes", selector: { number: { min: 0, max: 120, step: 1, mode: "box", unit_of_measurement: "min" } } },
           ] : []),
-          ...(kind === "projector_screen" ? [{ name: "show_buttons", selector: { boolean: {} }, default: true }] : []),
+          ...(kind === "projector_screen" ? [{ name: "show_buttons", selector: { boolean: {} }, default: true }, { name: "invert_position", selector: { boolean: {} }, default: false }] : []),
           ...(kind === "iron" || kind === "steam_station" ? [
             { name: "preheat_minutes", selector: { number: { min: 1, max: 30, step: 1, mode: "box", unit_of_measurement: "min" } } },
             { name: "ready_minutes", selector: { number: { min: 0, max: 120, step: 1, mode: "box", unit_of_measurement: "min" } } },

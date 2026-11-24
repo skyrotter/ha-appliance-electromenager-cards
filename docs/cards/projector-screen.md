@@ -6,6 +6,7 @@
 - **Light**: red when rolled up, green when unrolled, orange and blinking while it moves.
 - Status: unrolled / rolled up / unrolling / rolling up; position tile (cover with a position).
 - Buttons **Lower / Stop / Raise** (`cover.open_cover`, `stop_cover`, `close_cover`; on a switch: turn on / turn off), hidden with `show_buttons: false`.
+- `invert_position: true`: for a screen driven by a roller shutter module, where 100 % = screen fully rolled up and 0 % = fully unrolled. The drawing, the status, the position tile and the Lower / Raise buttons are inverted.
 - Optional `power`, `energy`, `cost` (motor on a smart plug).
 
 ```yaml

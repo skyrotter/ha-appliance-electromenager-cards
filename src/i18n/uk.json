@@ -1,5 +1,6 @@
 {
   "common": {
+    "f_invert_position": "Інвертувати положення (100 % = екран згорнуто)",
     "projector_screen": "Екран для проєктора",
     "screen_open": "Опущено",
     "screen_closed": "Згорнуто",
