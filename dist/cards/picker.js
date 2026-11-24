@@ -104,7 +104,7 @@
   };
 
   const TXT = {
-    fr: { appliance: 'Type d\'appareil', name: 'Appliance – Carte unique (choix du type)', desc: 'Une seule entrée dans le sélecteur : choisis ensuite l\'appareil dans l\'éditeur.', empty: 'Choisis un type d\'appareil dans l\'éditeur.',
+    fr: { appliance: 'Type d\'appareil', name: 'Appliance électroménager – Carte unique', desc: 'Une seule entrée dans le sélecteur : choisis ensuite l\'appareil dans l\'éditeur.', empty: 'Choisis un type d\'appareil dans l\'éditeur.',
       opts: 'Sélecteur de cartes (sur cet appareil)', single: 'N\'afficher que la carte unique Appliance', previews: 'Afficher l\'aperçu des cartes Appliance dans le sélecteur (plus lent)', nopreview: 'Désactiver les aperçus de toutes les cartes personnalisées',
       hint: 'Réglage enregistré dans ce navigateur (à refaire sur le smartphone). Recharge la page pour l\'appliquer.',
       category: 'Catégorie', all: 'Toutes les catégories',

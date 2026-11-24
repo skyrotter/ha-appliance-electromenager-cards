@@ -215,12 +215,12 @@ appliance-illustration-size: 116px
 
 ## Sélecteur de cartes : une seule entrée
 
-La carte `custom:appliance-card` (**Appliance – Carte unique**) est **la seule entrée Appliance du sélecteur de Home Assistant, par défaut** : on l'ajoute, puis on choisit le type d'appareil dans une liste de son éditeur. Les cartes déjà posées (YAML) continuent de marcher. L'aperçu live des cartes individuelles est désactivé par défaut (onglet « Par carte » plus fluide).
+La carte `custom:appliance-card` (**Appliance électroménager – Carte unique**) est **la seule entrée Appliance du sélecteur de Home Assistant, par défaut** : on l'ajoute, puis on choisit le type d'appareil dans une liste de son éditeur. Les cartes déjà posées (YAML) continuent de marcher. L'aperçu live des cartes individuelles est désactivé par défaut (onglet « Par carte » plus fluide).
 
 Dans l'éditeur de cette carte, trois cases (réglage enregistré dans le navigateur, à cocher aussi sur le smartphone, puis recharger la page) :
 
 - **N'afficher que la carte unique Appliance** (cochée par défaut) : décoche-la, puis recharge la page, pour revoir toutes les cartes Appliance une par une dans le sélecteur.
-- **Afficher l'aperçu des cartes Appliance dans le sélecteur (plus lent)** : réactive l'image animée de chaque carte Appliance dans le sélecteur. Pour la cocher : « Ajouter une carte », cherche « Appliance », choisis **Appliance – Carte unique**, coche la case dans l'éditeur, puis recharge la page.
+- **Afficher l'aperçu des cartes Appliance dans le sélecteur (plus lent)** : réactive l'image animée de chaque carte Appliance dans le sélecteur. Pour la cocher : « Ajouter une carte », cherche « Appliance », choisis **Appliance électroménager – Carte unique**, coche la case dans l'éditeur, puis recharge la page.
 - **Désactiver les aperçus de toutes les cartes personnalisées** : plus aucun aperçu live pour les cartes personnalisées, y compris celles d'autres dépôts HACS. Les aperçus des cartes natives de Home Assistant ne sont pas concernés.
 
 Équivalent sans l'éditeur, dans la console du navigateur :
