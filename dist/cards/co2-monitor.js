@@ -578,7 +578,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 /* mode rotation : un seul grand affichage (sans tuiles), fondu à chaque changement de valeur */
 .rot .tiles{display:none}
 /* compact sans tuiles visibles : l'image est centrée (et prend toute la place) */
-.compact.notiles .body{justify-content:center}.compact.notiles .tiles{display:none}.rot svg{flex:0 1 calc(280px * var(--illus-scale,1));width:calc(280px * var(--illus-scale,1))}
+.compact.notiles .body{justify-content:center}.compact.notiles .tiles{display:none}.compact.notiles svg{max-width:calc(170px * var(--illus-scale,1));margin:0 auto}.rot svg{flex:0 1 calc(280px * var(--illus-scale,1));width:calc(280px * var(--illus-scale,1))}
 .swap .scr{animation:cofade .7s ease}
 @keyframes cofade{from{opacity:0}to{opacity:1}}
 .noanim *{animation:none!important;transition:none!important}
