@@ -891,6 +891,8 @@ class ApplianceCardBase extends HTMLElement {
       if (base === "off" || base === "unavailable") m.status = base;
       else if (watts !== null) m.status = powered && !full ? "charging" : full || watts >= (c.standby_threshold ?? (kind === "phone_charger" ? 0.3 : 1)) ? "charged" : "standby";
       else m.status = base === "running" && !full ? "charging" : full ? "charged" : "standby";
+      // capteur « en charge » explicite (binary_sensor / input_boolean) sur off : l'appareil n'est pas en charge, même batterie pleine
+      if (kind === "phone_charger" && main && ["binary_sensor", "input_boolean"].includes(domainOf(c.entity)) && String(main.state).toLowerCase() === "off" && watts === null) m.status = "standby";
       if (kind === "phone_charger" && main && ["sensor", "input_select", "select"].includes(domainOf(c.entity))) {
         // capteur texte d'état de la batterie (application Companion : battery_state / watch_battery_state) : Charging / Not Charging / Full / Unplugged
         const bs = String(main.state).toLowerCase().replace(/[_-]+/g, " ").trim();
