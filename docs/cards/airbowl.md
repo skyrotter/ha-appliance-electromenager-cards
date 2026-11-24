@@ -1,5 +1,7 @@
 # Airbowl air sanitiser
 
+<p align="center"><img src="../airbowl.gif" width="300" alt="Animated Airbowl air sanitiser card: off, on, off"></p>
+
 `custom:appliance-airbowl-card`: the Airbowl (proWIN) air sanitiser, with its metal dome, its oval control screen and its glass water bowl. It only needs an **on/off** entity (a switch or a smart plug).
 
 - **On**: the LEDs of the screen glow green, the water ripples and bubbles rise in the bowl.
