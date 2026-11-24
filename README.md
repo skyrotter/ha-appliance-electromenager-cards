@@ -141,6 +141,7 @@ Click a card for its options and examples.
 | Card | Type |
 |---|---|
 | [Solar panels](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/solar.md) | `custom:appliance-solar-card` |
+| [Solar house (energy flow)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/solar-house.md) | `custom:appliance-solar-house-card` |
 | [Home battery](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/battery.md) | `custom:appliance-battery-card` |
 | [EV charger (wallbox + car)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/ev-charger.md) | `custom:appliance-ev-charger-card` |
 | [Linky electricity meter](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/linky.md) | `custom:appliance-linky-card` |

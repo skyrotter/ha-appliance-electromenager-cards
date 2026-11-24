@@ -135,6 +135,7 @@ Clique sur une carte pour ses options et ses exemples (pages en anglais).
 | Carte | Type |
 |---|---|
 | [Panneaux solaires](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/solar.md) | `custom:appliance-solar-card` |
+| [Maison solaire (flux d'énergie)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/solar-house.md) | `custom:appliance-solar-house-card` |
 | [Batterie domestique](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/battery.md) | `custom:appliance-battery-card` |
 | [Borne de recharge (wallbox + voiture)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/ev-charger.md) | `custom:appliance-ev-charger-card` |
 | [Compteur Linky](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/linky.md) | `custom:appliance-linky-card` |
