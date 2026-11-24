@@ -49,6 +49,11 @@
 .phn-bolt { opacity: 0; }
 .k-phone_charger.st-charging .phn-bolt { opacity: 1; animation: ac-pulse 1.2s ease-in-out infinite; }
 .k-phone_charger.st-charging.seq .phn-fill { animation: phn-seq 3s linear infinite; }
+.phn-aod { opacity: 0; transition: opacity .5s; }
+/* hors charge : écran « toujours allumé » (classe aod posée par la carte quand le mode Concentration ou l'activité est connu) : fond atténué, texte discret */
+.k-phone_charger.aod .phn-scr { opacity: .32; }
+.k-phone_charger.aod .phn-aod { opacity: .85; }
+.phn-aico { transition: opacity .3s; }
 @keyframes phn-seq { from { transform: scaleX(.05); } to { transform: scaleX(1); } }
 /* ---------- piano ---------- */
 .pn-scr { fill: #10161c; transition: fill .3s; }
