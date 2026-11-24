@@ -2015,6 +2015,11 @@
     "f_show_source": "Mostra l'elenco delle sorgenti"
   },
   "solar_house": {
+    "f_battery_count": "Numero di batterie (1-3)",
+    "f_entity_battery_2_power": "Batteria 2: potenza",
+    "f_entity_battery_2_soc": "Batteria 2: livello di carica (%)",
+    "f_entity_battery_3_power": "Batteria 3: potenza",
+    "f_entity_battery_3_soc": "Batteria 3: livello di carica (%)",
     "car": "Auto",
     "f_entity_car_soc": "Livello batteria dell'auto (%)",
     "name": "Casa solare",

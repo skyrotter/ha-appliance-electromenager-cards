@@ -2393,6 +2393,11 @@
     "f_show_source": "Прикажи листу извора"
   },
   "solar_house": {
+    "f_battery_count": "Број батерија (1-3)",
+    "f_entity_battery_2_power": "Батерија 2: снага",
+    "f_entity_battery_2_soc": "Батерија 2: ниво напуњености (%)",
+    "f_entity_battery_3_power": "Батерија 3: снага",
+    "f_entity_battery_3_soc": "Батерија 3: ниво напуњености (%)",
     "car": "Аутомобил",
     "f_entity_car_soc": "Ниво батерије аутомобила (%)",
     "name": "Соларна кућа",

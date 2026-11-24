@@ -1820,6 +1820,11 @@
     "f_show_source": "Vis kildelisten"
   },
   "solar_house": {
+    "f_battery_count": "Antall batterier (1-3)",
+    "f_entity_battery_2_power": "Batteri 2: effekt",
+    "f_entity_battery_2_soc": "Batteri 2: ladenivå (%)",
+    "f_entity_battery_3_power": "Batteri 3: effekt",
+    "f_entity_battery_3_soc": "Batteri 3: ladenivå (%)",
     "car": "Bil",
     "f_entity_car_soc": "Bilens batterinivå (%)",
     "name": "Solhus",

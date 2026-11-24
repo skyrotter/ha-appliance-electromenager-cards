@@ -14,6 +14,11 @@
 
   const T = {
     "en": {
+      "f_battery_count": "Number of batteries (1-3)",
+      "f_entity_battery_2_power": "Battery 2: power",
+      "f_entity_battery_2_soc": "Battery 2: charge level (%)",
+      "f_entity_battery_3_power": "Battery 3: power",
+      "f_entity_battery_3_soc": "Battery 3: charge level (%)",
       "car": "Car",
       "f_entity_car_soc": "Car battery level (%)",
       "name": "Solar house",
@@ -47,6 +52,11 @@
       "f_show_status": "Show status"
     },
     "cs": {
+      "f_battery_count": "Počet baterií (1-3)",
+      "f_entity_battery_2_power": "Baterie 2: výkon",
+      "f_entity_battery_2_soc": "Baterie 2: úroveň nabití (%)",
+      "f_entity_battery_3_power": "Baterie 3: výkon",
+      "f_entity_battery_3_soc": "Baterie 3: úroveň nabití (%)",
       "car": "Auto",
       "f_entity_car_soc": "Stav baterie auta (%)",
       "name": "Solární dům",
@@ -80,6 +90,11 @@
       "f_show_status": "Zobrazit stav"
     },
     "da": {
+      "f_battery_count": "Antal batterier (1-3)",
+      "f_entity_battery_2_power": "Batteri 2: effekt",
+      "f_entity_battery_2_soc": "Batteri 2: ladeniveau (%)",
+      "f_entity_battery_3_power": "Batteri 3: effekt",
+      "f_entity_battery_3_soc": "Batteri 3: ladeniveau (%)",
       "car": "Bil",
       "f_entity_car_soc": "Bilens batteriniveau (%)",
       "name": "Solhus",
@@ -113,6 +128,11 @@
       "f_show_status": "Vis status"
     },
     "de": {
+      "f_battery_count": "Anzahl Batterien (1-3)",
+      "f_entity_battery_2_power": "Batterie 2: Leistung",
+      "f_entity_battery_2_soc": "Batterie 2: Ladestand (%)",
+      "f_entity_battery_3_power": "Batterie 3: Leistung",
+      "f_entity_battery_3_soc": "Batterie 3: Ladestand (%)",
       "car": "Auto",
       "f_entity_car_soc": "Batteriestand des Autos (%)",
       "name": "Solarhaus",
@@ -146,6 +166,11 @@
       "f_show_status": "Status anzeigen"
     },
     "es": {
+      "f_battery_count": "Número de baterías (1-3)",
+      "f_entity_battery_2_power": "Batería 2: potencia",
+      "f_entity_battery_2_soc": "Batería 2: nivel de carga (%)",
+      "f_entity_battery_3_power": "Batería 3: potencia",
+      "f_entity_battery_3_soc": "Batería 3: nivel de carga (%)",
       "car": "Coche",
       "f_entity_car_soc": "Nivel de la batería del coche (%)",
       "name": "Casa solar",
@@ -179,6 +204,11 @@
       "f_show_status": "Mostrar estado"
     },
     "fr": {
+      "f_battery_count": "Nombre de batteries (1 à 3)",
+      "f_entity_battery_2_power": "Batterie 2 : puissance",
+      "f_entity_battery_2_soc": "Batterie 2 : niveau de charge (%)",
+      "f_entity_battery_3_power": "Batterie 3 : puissance",
+      "f_entity_battery_3_soc": "Batterie 3 : niveau de charge (%)",
       "car": "Voiture",
       "f_entity_car_soc": "Niveau de la batterie de la voiture (%)",
       "name": "Maison solaire",
@@ -212,6 +242,11 @@
       "f_show_status": "Afficher l'état"
     },
     "hu": {
+      "f_battery_count": "Akkumulátorok száma (1-3)",
+      "f_entity_battery_2_power": "2. akkumulátor: teljesítmény",
+      "f_entity_battery_2_soc": "2. akkumulátor: töltöttség (%)",
+      "f_entity_battery_3_power": "3. akkumulátor: teljesítmény",
+      "f_entity_battery_3_soc": "3. akkumulátor: töltöttség (%)",
       "car": "Autó",
       "f_entity_car_soc": "Az autó akkumulátorszintje (%)",
       "name": "Napelemes ház",
@@ -245,6 +280,11 @@
       "f_show_status": "Állapot megjelenítése"
     },
     "it": {
+      "f_battery_count": "Numero di batterie (1-3)",
+      "f_entity_battery_2_power": "Batteria 2: potenza",
+      "f_entity_battery_2_soc": "Batteria 2: livello di carica (%)",
+      "f_entity_battery_3_power": "Batteria 3: potenza",
+      "f_entity_battery_3_soc": "Batteria 3: livello di carica (%)",
       "car": "Auto",
       "f_entity_car_soc": "Livello batteria dell'auto (%)",
       "name": "Casa solare",
@@ -278,6 +318,11 @@
       "f_show_status": "Mostra stato"
     },
     "nb": {
+      "f_battery_count": "Antall batterier (1-3)",
+      "f_entity_battery_2_power": "Batteri 2: effekt",
+      "f_entity_battery_2_soc": "Batteri 2: ladenivå (%)",
+      "f_entity_battery_3_power": "Batteri 3: effekt",
+      "f_entity_battery_3_soc": "Batteri 3: ladenivå (%)",
       "car": "Bil",
       "f_entity_car_soc": "Bilens batterinivå (%)",
       "name": "Solhus",
@@ -311,6 +356,11 @@
       "f_show_status": "Vis status"
     },
     "nl": {
+      "f_battery_count": "Aantal accu's (1-3)",
+      "f_entity_battery_2_power": "Accu 2: vermogen",
+      "f_entity_battery_2_soc": "Accu 2: laadniveau (%)",
+      "f_entity_battery_3_power": "Accu 3: vermogen",
+      "f_entity_battery_3_soc": "Accu 3: laadniveau (%)",
       "car": "Auto",
       "f_entity_car_soc": "Batterijniveau van de auto (%)",
       "name": "Zonnehuis",
@@ -344,6 +394,11 @@
       "f_show_status": "Status tonen"
     },
     "pl": {
+      "f_battery_count": "Liczba akumulatorów (1-3)",
+      "f_entity_battery_2_power": "Akumulator 2: moc",
+      "f_entity_battery_2_soc": "Akumulator 2: poziom naładowania (%)",
+      "f_entity_battery_3_power": "Akumulator 3: moc",
+      "f_entity_battery_3_soc": "Akumulator 3: poziom naładowania (%)",
       "car": "Samochód",
       "f_entity_car_soc": "Poziom baterii samochodu (%)",
       "name": "Dom solarny",
@@ -377,6 +432,11 @@
       "f_show_status": "Pokaż stan"
     },
     "pt-BR": {
+      "f_battery_count": "Número de baterias (1-3)",
+      "f_entity_battery_2_power": "Bateria 2: potência",
+      "f_entity_battery_2_soc": "Bateria 2: nível de carga (%)",
+      "f_entity_battery_3_power": "Bateria 3: potência",
+      "f_entity_battery_3_soc": "Bateria 3: nível de carga (%)",
       "car": "Carro",
       "f_entity_car_soc": "Nível da bateria do carro (%)",
       "name": "Casa solar",
@@ -410,6 +470,11 @@
       "f_show_status": "Mostrar estado"
     },
     "pt-PT": {
+      "f_battery_count": "Número de baterias (1-3)",
+      "f_entity_battery_2_power": "Bateria 2: potência",
+      "f_entity_battery_2_soc": "Bateria 2: nível de carga (%)",
+      "f_entity_battery_3_power": "Bateria 3: potência",
+      "f_entity_battery_3_soc": "Bateria 3: nível de carga (%)",
       "car": "Carro",
       "f_entity_car_soc": "Nível da bateria do carro (%)",
       "name": "Casa solar",
@@ -443,6 +508,11 @@
       "f_show_status": "Mostrar estado"
     },
     "ro": {
+      "f_battery_count": "Număr de baterii (1-3)",
+      "f_entity_battery_2_power": "Bateria 2: putere",
+      "f_entity_battery_2_soc": "Bateria 2: nivel de încărcare (%)",
+      "f_entity_battery_3_power": "Bateria 3: putere",
+      "f_entity_battery_3_soc": "Bateria 3: nivel de încărcare (%)",
       "car": "Mașină",
       "f_entity_car_soc": "Nivelul bateriei mașinii (%)",
       "name": "Casă solară",
@@ -476,6 +546,11 @@
       "f_show_status": "Afișează starea"
     },
     "ru": {
+      "f_battery_count": "Количество аккумуляторов (1-3)",
+      "f_entity_battery_2_power": "Аккумулятор 2: мощность",
+      "f_entity_battery_2_soc": "Аккумулятор 2: уровень заряда (%)",
+      "f_entity_battery_3_power": "Аккумулятор 3: мощность",
+      "f_entity_battery_3_soc": "Аккумулятор 3: уровень заряда (%)",
       "car": "Автомобиль",
       "f_entity_car_soc": "Уровень заряда автомобиля (%)",
       "name": "Солнечный дом",
@@ -509,6 +584,11 @@
       "f_show_status": "Показывать состояние"
     },
     "sr": {
+      "f_battery_count": "Број батерија (1-3)",
+      "f_entity_battery_2_power": "Батерија 2: снага",
+      "f_entity_battery_2_soc": "Батерија 2: ниво напуњености (%)",
+      "f_entity_battery_3_power": "Батерија 3: снага",
+      "f_entity_battery_3_soc": "Батерија 3: ниво напуњености (%)",
       "car": "Аутомобил",
       "f_entity_car_soc": "Ниво батерије аутомобила (%)",
       "name": "Соларна кућа",
@@ -542,6 +622,11 @@
       "f_show_status": "Прикажи стање"
     },
     "sr-Latn": {
+      "f_battery_count": "Broj baterija (1-3)",
+      "f_entity_battery_2_power": "Baterija 2: snaga",
+      "f_entity_battery_2_soc": "Baterija 2: nivo napunjenosti (%)",
+      "f_entity_battery_3_power": "Baterija 3: snaga",
+      "f_entity_battery_3_soc": "Baterija 3: nivo napunjenosti (%)",
       "car": "Automobil",
       "f_entity_car_soc": "Nivo baterije automobila (%)",
       "name": "Solarna kuća",
@@ -575,6 +660,11 @@
       "f_show_status": "Prikaži stanje"
     },
     "uk": {
+      "f_battery_count": "Кількість акумуляторів (1-3)",
+      "f_entity_battery_2_power": "Акумулятор 2: потужність",
+      "f_entity_battery_2_soc": "Акумулятор 2: рівень заряду (%)",
+      "f_entity_battery_3_power": "Акумулятор 3: потужність",
+      "f_entity_battery_3_soc": "Акумулятор 3: рівень заряду (%)",
       "car": "Автомобіль",
       "f_entity_car_soc": "Рівень заряду автомобіля (%)",
       "name": "Сонячний дім",
@@ -692,6 +782,20 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
     water: 'M226 146 H254',                    // tableau → chauffe-eau (fenêtre droite)
   };
 
+  // une à trois batteries côte à côte (zone x = 6 à 74) ; chaque batterie a son niveau, son éclair de charge et, si plusieurs, son pourcentage
+  const BATTS = (n) => {
+    const span = 68, gap = n > 1 ? 4 : 0, w = n === 1 ? 34 : (span - gap * (n - 1)) / n, x0 = n === 1 ? 40 : 6, out = [];
+    for (let i = 0; i < n; i++) {
+      const x = x0 + i * (w + gap), pad = n === 1 ? 6 : 4, iw = w - 2 * pad, cx = x + w / 2;
+      out.push(`<g><rect x="${x.toFixed(1)}" y="146" width="${w.toFixed(1)}" height="62" rx="5" fill="url(#shbatt)" stroke="#aab4bf"/>
+    <rect x="${(x + pad).toFixed(1)}" y="156" width="${iw.toFixed(1)}" height="44" rx="3" fill="#dfe5ea"/><rect class="blevel" data-i="${i}" x="${(x + pad).toFixed(1)}" y="200" width="${iw.toFixed(1)}" height="0" rx="3" fill="#2fbf71"/>
+    <rect x="${(cx - 5).toFixed(1)}" y="150" width="10" height="2.4" rx="1.2" fill="#9aa3ad"/>
+    <path class="bbolt" data-i="${i}" d="M0 0l-5 9h4l-2 7 6-10h-4z" transform="translate(${(cx).toFixed(1)} 166)" fill="#fff" opacity=".9"/>
+    ${n > 1 ? `<text class="bsoc" data-i="${i}" x="${cx.toFixed(1)}" y="190" text-anchor="middle" font-size="8" font-weight="700" fill="#4b5560"></text>` : ''}</g>`);
+    }
+    return out.join('');
+  };
+
   const SCENE = () => `<svg viewBox="0 0 400 226" role="img">
   <defs>
     <linearGradient id="shsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe8ff"/><stop offset="1" stop-color="#f2f8ff"/></linearGradient>
@@ -725,11 +829,8 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
   <rect x="204" y="134" width="22" height="24" rx="3" fill="#ffffff" stroke="#9aa3ad"/><path d="M209 141h12M209 146h12M209 151h7" stroke="#c3cad3" stroke-width="1.6" stroke-linecap="round"/><circle cx="221" cy="151" r="1.5" fill="#2fbf71"/>
   <!-- compteur (Linky) sur le mur droit -->
   <rect x="296" y="166" width="12" height="16" rx="2" fill="#e8f3d8" stroke="#9ab27a"/><rect x="298.5" y="169" width="7" height="4" rx="1" fill="#2c3a22"/>
-  <!-- batterie de stockage -->
-  <g class="batt"><rect x="40" y="146" width="34" height="62" rx="5" fill="url(#shbatt)" stroke="#aab4bf"/>
-    <rect x="46" y="156" width="22" height="44" rx="3" fill="#dfe5ea"/><rect class="blevel" x="46" y="200" width="22" height="0" rx="3" fill="#2fbf71"/>
-    <rect x="52" y="150" width="10" height="2.4" rx="1.2" fill="#9aa3ad"/>
-    <path class="bbolt" d="M58 166l-5 9h4l-2 7 6-10h-4z" fill="#fff" opacity=".9"/></g>
+  <!-- batterie(s) de stockage : dessinées dynamiquement (battery_count) -->
+  <g class="batt" id="battg"></g>
   <!-- borne de recharge -->
   <g class="evg"><rect x="330" y="164" width="16" height="44" rx="3" fill="#3a4047"/><rect x="332" y="168" width="12" height="20" rx="2" fill="#f2f4f6"/><rect class="evled" x="335.5" y="171" width="5" height="10" rx="2"/>
     <path d="M346 186c8 2 8 12 0 14" fill="none" stroke="#2b3036" stroke-width="2"/></g>
@@ -797,12 +898,25 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       let home = this._w(c.entity_home);
       // consommation calculée : production + soutirage + décharge − injection − charge − borne − ballon
       if (!isFinite(home)) home = Math.max(0, sol + z(grid) - z(batt) - ev - wh);
-      const socS = c.entity_battery_soc && this._hass.states[c.entity_battery_soc];
-      const soc = socS ? parseFloat(socS.state) : NaN;
+      // plusieurs batteries (battery_count, 1 à 3) : soit chacune a ses entités (entity_battery_2_power / _soc…), la puissance totale est alors la somme
+      // et le niveau la moyenne ; soit elles reflètent toutes les entités uniques (capteurs combinés)
+      const MAXB = 3, inv = (x) => (isFinite(x) && c.battery_invert ? -x : x), socOf = (id) => { const st = id && this._hass.states[id]; const x = st ? parseFloat(st.state) : NaN; return x; };
+      const idx = [2, 3].filter((i) => c[`entity_battery_${i}_power`] || c[`entity_battery_${i}_soc`]);
+      const own = idx.length > 0, nb = Math.max(1, Math.min(MAXB, Math.round(Number(c.battery_count)) || 1, MAXB));
+      const count = own ? Math.max(nb, ...idx) : nb;
+      const bats = [];
+      for (let i = 1; i <= count; i++) {
+        const pid = i === 1 ? c.entity_battery_power : c[`entity_battery_${i}_power`], sid = i === 1 ? c.entity_battery_soc : c[`entity_battery_${i}_soc`];
+        const w = own ? inv(this._w(pid)) : batt, sc = own ? socOf(sid) : socOf(c.entity_battery_soc);
+        bats.push({ w, soc: sc });
+      }
+      if (own) { const ws = bats.map((x) => x.w).filter(isFinite); if (ws.length) batt = ws.reduce((x, y) => x + y, 0); }
+      const socs = bats.map((x) => x.soc).filter(isFinite);
+      const soc = socs.length ? socs.reduce((x, y) => x + y, 0) / socs.length : NaN;
       const carS = c.entity_car_soc && this._hass.states[c.entity_car_soc], car = carS ? parseFloat(carS.state) : NaN;
       const sun = this._hass.states['sun.sun'];
       const night = sun ? sun.state === 'below_horizon' : sol < THR;
-      return { sol, batt, grid, ev, wh, home, soc, car, night, hasBatt: !!(c.entity_battery_power || c.entity_battery_soc), hasGrid: isFinite(grid), hasEv: !!(c.entity_ev || c.entity_car_soc), hasWh: !!c.entity_water_heater };
+      return { sol, batt, grid, ev, wh, home, soc, car, night, bats, hasBatt: !!(c.entity_battery_power || c.entity_battery_soc || bats.some((x) => isFinite(x.w) || isFinite(x.soc))), hasGrid: isFinite(grid), hasEv: !!(c.entity_ev || c.entity_car_soc), hasWh: !!c.entity_water_heater };
     }
 
     _build() {
@@ -818,7 +932,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
         const c = this._c, k = el.dataset.k;
         this._more(c[ENT[k]] || (k === 'battery' && c.entity_battery_power) || (k === 'grid' && (c.entity_grid_import || c.entity_grid_export)) || c.entity_solar);
       }));
-      this._root = root; this._card = root.querySelector('ha-card'); this._sig = ''; this._built = true;
+      this._root = root; this._card = root.querySelector('ha-card'); this._sig = ''; this._nB = null; this._built = true;
     }
 
     // points lumineux : 3 par flux actif, sens et vitesse selon la puissance ; reconstruits seulement quand un flux change
@@ -858,9 +972,14 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       r.querySelector('.evg').classList.toggle('hide', !v.hasEv); r.querySelector('.c-ev').classList.toggle('hide', !v.hasEv);
       r.querySelector('.whg').classList.toggle('hide', !v.hasWh); r.querySelector('.c-water').classList.toggle('hide', !v.hasWh);
       // niveau de la batterie (vert, orange sous 30 %, rouge sous 15 %)
-      const soc = isFinite(v.soc) ? Math.max(0, Math.min(100, v.soc)) : 50, lv = r.querySelector('.blevel'), hh = 44 * soc / 100;
-      lv.setAttribute('y', (200 - hh).toFixed(1)); lv.setAttribute('height', hh.toFixed(1)); lv.setAttribute('fill', soc < 15 ? '#ef5350' : soc < 30 ? '#ffa726' : '#2fbf71');
-      r.querySelector('.bbolt').style.opacity = chg ? '.95' : '0';
+      const nB = v.bats.length, many = nB > 1;
+      if (this._nB !== nB) { this._nB = nB; r.getElementById('battg').innerHTML = BATTS(nB); r.querySelector('.p-battery').setAttribute('transform', `translate(${nB === 1 ? 57 : 40} 132)`); }
+      v.bats.forEach((b, i) => {
+        const soc = isFinite(b.soc) ? Math.max(0, Math.min(100, b.soc)) : 50, lv = r.querySelector(`.blevel[data-i="${i}"]`), hh = 44 * soc / 100;
+        lv.setAttribute('y', (200 - hh).toFixed(1)); lv.setAttribute('height', hh.toFixed(1)); lv.setAttribute('fill', soc < 15 ? '#ef5350' : soc < 30 ? '#ffa726' : '#2fbf71');
+        r.querySelector(`.bbolt[data-i="${i}"]`).style.opacity = isFinite(b.w) && b.w > THR ? '.95' : '0';
+        const tx = r.querySelector(`.bsoc[data-i="${i}"]`); if (tx) tx.textContent = isFinite(b.soc) ? `${Math.round(b.soc)}` : '';
+      });
       // source dominante des consommateurs : soleil, sinon batterie, sinon réseau
       const src = v.sol > THR ? COL.solar : dis ? COL.battery : imp ? COL.grid : COL.solar;
       const F = [];
@@ -915,6 +1034,9 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
         { name: 'name', selector: { text: {} } },
         pw('entity_solar'), pw('entity_home'),
         pw('entity_battery_power'), { name: 'entity_battery_soc', selector: { entity: { domain: 'sensor' } } },
+        { name: 'battery_count', default: 1, selector: { number: { min: 1, max: 3, step: 1, mode: 'box' } } },
+        pw('entity_battery_2_power'), { name: 'entity_battery_2_soc', selector: { entity: { domain: 'sensor' } } },
+        pw('entity_battery_3_power'), { name: 'entity_battery_3_soc', selector: { entity: { domain: 'sensor' } } },
         pw('entity_grid'), pw('entity_grid_import'), pw('entity_grid_export'),
         pw('entity_ev'), { name: 'entity_car_soc', selector: { entity: { domain: 'sensor' } } }, pw('entity_water_heater'),
         { type: 'grid', name: '', schema: [bool('battery_invert', false), bool('grid_invert', false),

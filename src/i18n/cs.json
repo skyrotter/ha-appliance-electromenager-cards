@@ -1640,6 +1640,11 @@
     "f_show_source": "Zobrazit seznam zdrojů"
   },
   "solar_house": {
+    "f_battery_count": "Počet baterií (1-3)",
+    "f_entity_battery_2_power": "Baterie 2: výkon",
+    "f_entity_battery_2_soc": "Baterie 2: úroveň nabití (%)",
+    "f_entity_battery_3_power": "Baterie 3: výkon",
+    "f_entity_battery_3_soc": "Baterie 3: úroveň nabití (%)",
     "car": "Auto",
     "f_entity_car_soc": "Stav baterie auta (%)",
     "name": "Solární dům",
