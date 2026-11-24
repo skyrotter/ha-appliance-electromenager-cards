@@ -34,6 +34,14 @@
   // Préférences du sélecteur, enregistrées dans le navigateur (localStorage peut être bloqué)
   const SINGLE_KEY = 'applianceCardsSinglePicker', NOPREV_KEY = 'applianceCardsNoPreview', PREV_KEY = 'applianceCardsPreviews';
   const getPref = (k) => { try { return localStorage.getItem(k) === '1'; } catch (e) { return false; } };
+  // Carte unique : ACTIVÉE par défaut (une seule entrée « Appliance » dans le sélecteur, le type d'appareil se choisit dans l'éditeur).
+  // Pour revoir toutes les cartes : décocher la case dans l'éditeur de la carte unique (stocke '0'), ou window.applianceCardsSinglePicker = false.
+  const isSingle = () => {
+    if (window.applianceCardsSinglePicker === false) return false;
+    if (window.applianceCardsSinglePicker) return true;
+    try { return localStorage.getItem(SINGLE_KEY) !== '0'; } catch (e) { return true; }
+  };
+  const setSingle = (on) => { try { localStorage.setItem(SINGLE_KEY, on ? '1' : '0'); } catch (e) { /* stockage bloqué */ } };
   const setPref = (k, on) => { try { if (on) localStorage.setItem(k, '1'); else localStorage.removeItem(k); } catch (e) { /* stockage bloqué */ } };
 
   // Aperçu live désactivé par défaut sur chaque entrée : c'est lui qui ralentit l'onglet « Par carte ».
@@ -46,7 +54,7 @@
   // quand le chargeur principal signale que tous les chunks ont terminé (voir build.js).
   const applySelectorPrefs = () => {
     setPreviews(!!window.applianceCardsPreviews || getPref(PREV_KEY));
-    if (window.applianceCardsSinglePicker || getPref(SINGLE_KEY)) {
+    if (isSingle()) {
       window.customCards.filter(isOurs).forEach((c) => { if (!hidden.some((h) => h.type === c.type)) hidden.push(c); });
       const keep = window.customCards.filter((c) => !isOurs(c));
       window.customCards.length = 0;
@@ -96,23 +104,37 @@
   };
 
   const TXT = {
-    fr: { appliance: 'Type d\'appareil', name: 'Appliance – Carte unique (choix du type)', desc: 'Une seule entrée dans le sélecteur : choisis ensuite l\'appareil dans l\'éditeur.', empty: 'Choisis un type d\'appareil dans l\'éditeur.',
+    fr: { appliance: 'Type d\'appareil', name: 'Appliance électroménager – Carte unique', desc: 'Une seule entrée dans le sélecteur : choisis ensuite l\'appareil dans l\'éditeur.', empty: 'Choisis un type d\'appareil dans l\'éditeur.',
       opts: 'Sélecteur de cartes (sur cet appareil)', single: 'N\'afficher que la carte unique Appliance', previews: 'Afficher l\'aperçu des cartes Appliance dans le sélecteur (plus lent)', nopreview: 'Désactiver les aperçus de toutes les cartes personnalisées',
       hint: 'Réglage enregistré dans ce navigateur (à refaire sur le smartphone). Recharge la page pour l\'appliquer.',
       category: 'Catégorie', all: 'Toutes les catégories',
       cats: { kitchen: 'Cuisine et lessive', climate: 'Chauffage, climatisation et air', energy: 'Énergie et alimentation', water: 'Piscine, jardin et eau', security: 'Accès, sécurité et capteurs', lighting: 'Éclairage', shutters: 'Volets et stores', media: 'Loisirs et multimédia', it: 'Informatique et réseau', home: 'Robots, animaux et divers' } },
-    en: { appliance: 'Appliance type', name: 'Appliance – Single card (pick the type)', desc: 'One single entry in the card picker: choose the appliance in the editor.', empty: 'Pick an appliance type in the editor.',
+    en: { appliance: 'Appliance type', name: 'Appliance home appliances – Single card', desc: 'One single entry in the card picker: choose the appliance in the editor.', empty: 'Pick an appliance type in the editor.',
       opts: 'Card picker (on this device)', single: 'Only show the single Appliance card', previews: 'Show Appliance card previews in the picker (slower)', nopreview: 'Turn off previews of all custom cards',
       hint: 'Saved in this browser (set it again on your phone). Reload the page to apply it.',
       category: 'Category', all: 'All categories',
       cats: { kitchen: 'Kitchen and laundry', climate: 'Heating, cooling and air', energy: 'Energy and power', water: 'Pool, garden and water', security: 'Access, security and sensors', lighting: 'Lighting', shutters: 'Shutters and blinds', media: 'Entertainment and leisure', it: 'Computing and network', home: 'Robots, pets and more' } },
-    'pt-PT': { appliance: 'Tipo de aparelho', name: 'Appliance – Cartão único (escolha do tipo)', desc: 'Uma única entrada no seletor de cartões: escolha o aparelho no editor.', empty: 'Escolha um tipo de aparelho no editor.',
+    'pt-PT': { appliance: 'Tipo de aparelho', name: 'Appliance eletrodomésticos – Cartão único', desc: 'Uma única entrada no seletor de cartões: escolha o aparelho no editor.', empty: 'Escolha um tipo de aparelho no editor.',
       opts: 'Seletor de cartões (neste dispositivo)', single: 'Mostrar apenas o cartão único Appliance', previews: 'Mostrar pré-visualizações dos cartões Appliance no seletor (mais lento)', nopreview: 'Desativar as pré-visualizações de todos os cartões personalizados',
       hint: 'Definição guardada neste navegador (configure novamente no telemóvel). Recarregue a página para aplicar.' },
-    'pt-BR': { appliance: 'Tipo de aparelho', name: 'Appliance – Cartão único (escolha do tipo)', desc: 'Uma única entrada no seletor de cartões: escolha o aparelho no editor.', empty: 'Escolha um tipo de aparelho no editor.',
+    'pt-BR': { appliance: 'Tipo de aparelho', name: 'Appliance eletrodomésticos – Cartão único', desc: 'Uma única entrada no seletor de cartões: escolha o aparelho no editor.', empty: 'Escolha um tipo de aparelho no editor.',
       opts: 'Seletor de cartões (neste dispositivo)', single: 'Mostrar apenas o cartão único Appliance', previews: 'Mostrar prévias dos cartões Appliance no seletor (mais lento)', nopreview: 'Desativar as prévias de todos os cartões personalizados',
       hint: 'Configuração salva neste navegador (configure novamente no celular). Recarregue a página para aplicar.' },
-  };
+    de: { name: 'Appliance Haushaltsgeräte – Einzelkarte' },
+    es: { name: 'Appliance electrodomésticos – Tarjeta única' },
+    it: { name: 'Appliance elettrodomestici – Scheda unica' },
+    nl: { name: 'Appliance huishoudapparaten – Eén kaart' },
+    pl: { name: 'Appliance sprzęt AGD – Jedna karta' },
+    cs: { name: 'Appliance spotřebiče – Jedna karta' },
+    da: { name: 'Appliance husholdningsapparater – Ét kort' },
+    nb: { name: 'Appliance hvitevarer – Ett kort' },
+    hu: { name: 'Appliance háztartási gépek – Egyetlen kártya' },
+    ro: { name: 'Appliance electrocasnice – Card unic' },
+    ru: { name: 'Appliance бытовая техника – Единая карточка' },
+    uk: { name: 'Appliance побутова техніка – Єдина картка' },
+    'sr-Latn': { name: 'Appliance kućni aparati – Jedna kartica' },
+    sr: { name: 'Appliance кућни апарати – Једна картица' },
+};
   // langues sans traduction des catégories : repli sur l'anglais
   const tx = (hass) => Object.assign({}, TXT.en, TXT[window.applianceLang(TXT, null, hass)] || {});
 
@@ -197,9 +219,9 @@
         this._opt.addEventListener('value-changed', (e) => {
           e.stopPropagation();
           const v = e.detail.value;
-          setPref(SINGLE_KEY, v.single); setPref(PREV_KEY, v.previews); setPref(NOPREV_KEY, v.nopreview);
+          setSingle(v.single); setPref(PREV_KEY, v.previews); setPref(NOPREV_KEY, v.nopreview);
           setPreviews(!!v.previews && !v.nopreview); // effet immédiat sur le sélecteur
-          this._opt.data = { single: getPref(SINGLE_KEY), previews: getPref(PREV_KEY), nopreview: getPref(NOPREV_KEY) };
+          this._opt.data = { single: isSingle(), previews: getPref(PREV_KEY), nopreview: getPref(NOPREV_KEY) };
         });
         box.append(title, this._opt, hint); this.appendChild(box);
         this._optTitle = title; this._optHint = hint;
@@ -207,7 +229,7 @@
       const t = tx(this._hass);
       this._optTitle.textContent = t.opts; this._optHint.textContent = t.hint;
       this._opt.hass = this._hass;
-      this._opt.data = { single: getPref(SINGLE_KEY), previews: getPref(PREV_KEY), nopreview: getPref(NOPREV_KEY) };
+      this._opt.data = { single: isSingle(), previews: getPref(PREV_KEY), nopreview: getPref(NOPREV_KEY) };
       this._opt.schema = [{ name: 'single', selector: { boolean: {} } }, { name: 'previews', selector: { boolean: {} } }, { name: 'nopreview', selector: { boolean: {} } }];
       this._opt.computeLabel = (sc) => t[sc.name];
 
