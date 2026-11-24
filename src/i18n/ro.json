@@ -1639,6 +1639,8 @@
     "f_show_source": "Afișează lista surselor"
   },
   "solar_house": {
+    "car": "Mașină",
+    "f_entity_car_soc": "Nivelul bateriei mașinii (%)",
     "name": "Casă solară",
     "production": "Producție",
     "consumption": "Consum",

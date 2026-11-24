@@ -1627,6 +1627,8 @@
     "f_show_source": "Zobrazit seznam zdrojů"
   },
   "solar_house": {
+    "car": "Auto",
+    "f_entity_car_soc": "Stav baterie auta (%)",
     "name": "Solární dům",
     "production": "Výroba",
     "consumption": "Spotřeba",

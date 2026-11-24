@@ -19,6 +19,7 @@
 | `entity_battery_soc` | Battery level (%) |
 | `entity_grid` | Grid power, + = import, − = export (`grid_invert: true` to invert); or `entity_grid_import` + `entity_grid_export` (two positive sensors) |
 | `entity_ev`, `entity_water_heater` | Optional: EV charger and water heater power (shown only if set) |
+| `entity_car_soc` | Optional: the car's battery level (%), shown with the EV charger power in the legend (`74 % · 7.4 kW`) and in the EV tile; orange below 20 %, red below 10 % |
 | `max_power` | Power at which the dots reach full speed (W, default 6000) |
 | `show_tiles`, `show_status`, `animations`, `labels`, `illustration_size`, `transparent`, `language` | Usual options |
 
@@ -30,6 +31,7 @@ entity_battery_power: sensor.battery_power      # + = charging
 entity_battery_soc: sensor.battery_level
 entity_grid: sensor.grid_power                  # + = import, − = export
 entity_ev: sensor.wallbox_power                 # optional
+entity_car_soc: sensor.car_battery_level        # optional: car level next to the charger
 entity_water_heater: sensor.water_heater_power  # optional
 ```
 

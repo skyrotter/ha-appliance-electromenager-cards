@@ -2002,6 +2002,8 @@
     "f_show_source": "Mostra l'elenco delle sorgenti"
   },
   "solar_house": {
+    "car": "Auto",
+    "f_entity_car_soc": "Livello batteria dell'auto (%)",
     "name": "Casa solare",
     "production": "Produzione",
     "consumption": "Consumo",

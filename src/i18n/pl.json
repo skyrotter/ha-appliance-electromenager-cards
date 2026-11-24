@@ -1803,6 +1803,8 @@
     "f_show_source": "Pokaż listę źródeł"
   },
   "solar_house": {
+    "car": "Samochód",
+    "f_entity_car_soc": "Poziom baterii samochodu (%)",
     "name": "Dom solarny",
     "production": "Produkcja",
     "consumption": "Zużycie",

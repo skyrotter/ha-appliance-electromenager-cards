@@ -3114,6 +3114,8 @@
     "f_show_source": "Afficher la liste des sources"
   },
   "solar_house": {
+    "car": "Voiture",
+    "f_entity_car_soc": "Niveau de la batterie de la voiture (%)",
     "name": "Maison solaire",
     "production": "Production",
     "consumption": "Consommation",
