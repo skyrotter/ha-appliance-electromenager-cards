@@ -1697,6 +1697,8 @@
     "f_show_humidity": "dlaždice vlhkosti"
   },
   "litter_box": {
+    "resetting": "Rekalibrace",
+    "btn_light": "Světlo",
     "spray_liquid": "Kapalina ve spreji",
     "spray_batt": "Baterie spreje",
     "name": "Automatické kočičí WC",

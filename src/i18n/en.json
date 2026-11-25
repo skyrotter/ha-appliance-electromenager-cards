@@ -3205,6 +3205,9 @@
     "f_show_humidity": "humidity tile"
   },
   "litter_box": {
+    "resetting": "Recalibrating",
+    "btn_light": "Light",
+    "f_entity_light": "Inner light (light / switch)",
     "spray_liquid": "Spray liquid",
     "spray_batt": "Spray battery",
     "f_entity_spray_battery": "Spray battery level (%)",

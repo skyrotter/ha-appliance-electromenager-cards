@@ -2473,6 +2473,8 @@
     "f_show_humidity": "Feuchte-Kachel"
   },
   "litter_box": {
+    "resetting": "Neukalibrierung",
+    "btn_light": "Licht",
     "spray_liquid": "Sprühflüssigkeit",
     "spray_batt": "Spray-Batterie",
     "name": "Automatische Katzentoilette",

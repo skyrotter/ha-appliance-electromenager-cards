@@ -2072,6 +2072,8 @@
     "f_show_humidity": "riquadro umidità"
   },
   "litter_box": {
+    "resetting": "Ricalibrazione",
+    "btn_light": "Luce",
     "spray_liquid": "Liquido spray",
     "spray_batt": "Batteria spray",
     "name": "Lettiera automatica",

@@ -2450,6 +2450,8 @@
     "f_show_humidity": "pločica vlažnosti"
   },
   "litter_box": {
+    "resetting": "Rekalibracija",
+    "btn_light": "Svetlo",
     "spray_liquid": "Tečnost spreja",
     "spray_batt": "Baterija spreja",
     "name": "Automatski toalet za mačke",

@@ -3184,6 +3184,9 @@
     "f_show_humidity": "tuile humidité"
   },
   "litter_box": {
+    "resetting": "Recalibrage",
+    "btn_light": "Lumière",
+    "f_entity_light": "Lumière intégrée (light / switch)",
     "spray_liquid": "Liquide désodorisant",
     "spray_batt": "Batt. désodorisant",
     "f_entity_spray_battery": "Batterie du spray (%)",

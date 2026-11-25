@@ -1877,6 +1877,8 @@
     "f_show_humidity": "fuktighetsflis"
   },
   "litter_box": {
+    "resetting": "Rekalibrerer",
+    "btn_light": "Lys",
     "spray_liquid": "Sprayvæske",
     "spray_batt": "Spraybatteri",
     "name": "Automatisk kattedo",

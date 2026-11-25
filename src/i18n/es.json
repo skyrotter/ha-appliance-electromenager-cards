@@ -3127,6 +3127,8 @@
     "f_show_humidity": "tarjeta de humedad"
   },
   "litter_box": {
+    "resetting": "Recalibrando",
+    "btn_light": "Luz",
     "spray_liquid": "Líquido del spray",
     "spray_batt": "Batería del spray",
     "name": "Arenero automático",

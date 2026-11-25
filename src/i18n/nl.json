@@ -2072,6 +2072,8 @@
     "f_show_humidity": "vochtigheidstegel"
   },
   "litter_box": {
+    "resetting": "Herkalibreren",
+    "btn_light": "Licht",
     "spray_liquid": "Sprayvloeistof",
     "spray_batt": "Spraybatterij",
     "name": "Automatische kattenbak",

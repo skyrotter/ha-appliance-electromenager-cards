@@ -1709,6 +1709,8 @@
     "f_show_humidity": "cardul umiditate"
   },
   "litter_box": {
+    "resetting": "Recalibrare",
+    "btn_light": "Lumină",
     "spray_liquid": "Lichid spray",
     "spray_batt": "Baterie spray",
     "name": "Litieră automată",
