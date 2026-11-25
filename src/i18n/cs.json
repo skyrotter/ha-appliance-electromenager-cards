@@ -406,6 +406,7 @@
     "yesterday": "včera",
     "f_last_cycle": "Zobrazit poslední cyklus (začátek, konec, délka, energie, cena)",
     "f_estimate": "Odhadnout zbývající čas a průběh (bez senzoru)",
+    "f_progress_reverse": "Ukazatel průběhu odpočítává (plný → prázdný)",
     "f_price_per_kwh": "Cena za kWh (číslo nebo entita, pro výpočet ceny)",
     "wet_vacuum": "Mokrý a suchý vysavač",
     "wv_cleaning": "Čištění",

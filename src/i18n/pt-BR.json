@@ -468,6 +468,7 @@
     "yesterday": "ontem",
     "f_last_cycle": "Mostrar o último ciclo (início, fim, duração, energia, custo)",
     "f_estimate": "Estimar tempo restante e progresso (sem sensor)",
+    "f_progress_reverse": "Barra de progresso em contagem regressiva (cheia → vazia)",
     "f_price_per_kwh": "Preço por kWh (número ou entidade, para custos)",
     "wet_vacuum": "Aspirador de sólidos e líquidos",
     "wv_cleaning": "Limpando",

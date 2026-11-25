@@ -417,6 +417,7 @@
     "yesterday": "wczoraj",
     "f_last_cycle": "Pokaż ostatni cykl (start, koniec, czas trwania, energia, koszt)",
     "f_estimate": "Szacuj pozostały czas i postęp (bez czujnika)",
+    "f_progress_reverse": "Pasek postępu odlicza (pełny → pusty)",
     "f_price_per_kwh": "Cena za kWh (number lub encja, do obliczania kosztów)",
     "wet_vacuum": "Odkurzacz piorący i ssący",
     "wv_cleaning": "Czyszczenie",

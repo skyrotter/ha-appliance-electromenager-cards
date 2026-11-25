@@ -509,6 +509,7 @@
     "yday": "Yesterday",
     "f_last_cycle": "Show the last cycle (start, end, duration, energy, cost)",
     "f_estimate": "Estimate remaining time and progress (no sensor)",
+    "f_progress_reverse": "Progress bar counts down (full → empty)",
     "f_price_per_kwh": "Price per kWh (number or entity, for costs)",
     "wet_vacuum": "Wet & dry vacuum",
     "wv_cleaning": "Cleaning",

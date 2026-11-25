@@ -438,6 +438,7 @@
     "yesterday": "tegnap",
     "f_last_cycle": "Utolsó ciklus megjelenítése (kezdet, vég, időtartam, energia, költség)",
     "f_estimate": "Hátralévő idő és haladás becslése (szenzor nélkül)",
+    "f_progress_reverse": "Visszaszámláló folyamatjelző (tele → üres)",
     "f_price_per_kwh": "Ár kWh-nként (szám vagy entitás, költségekhez)",
     "wet_vacuum": "Nedves-száraz porszívó",
     "wv_cleaning": "Tisztítás",

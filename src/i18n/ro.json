@@ -405,6 +405,7 @@
     "yday": "Ieri",
     "f_last_cycle": "Afișează ultimul ciclu (început, sfârșit, durată, consum, cost)",
     "f_estimate": "Estimează timpul rămas și progresul (fără senzor)",
+    "f_progress_reverse": "Bara de progres numără invers (plină → goală)",
     "f_price_per_kwh": "Preț pe kWh (număr sau entitate, pentru costuri)",
     "wet_vacuum": "Aspirator de spălat",
     "wv_cleaning": "Spălare",

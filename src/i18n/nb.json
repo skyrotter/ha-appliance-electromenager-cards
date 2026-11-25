@@ -391,6 +391,7 @@
 "yesterday": "i går",
 "f_last_cycle": "Vis siste syklus (start, slutt, varighet, forbruk, kostnad)",
 "f_estimate": "Anslå gjenstående tid og fremdrift (uten sensor)",
+"f_progress_reverse": "Fremdriftslinjen teller ned (full → tom)",
 "f_price_per_kwh": "Pris per kWh (tall eller entitet, for kostnader)",
 "wet_vacuum": "Våt- og tørrstøvsuger",
 "wv_cleaning": "Vasker",

@@ -524,6 +524,7 @@ const STRINGS = {
     "yday": "Yesterday",
     "f_last_cycle": "Show the last cycle (start, end, duration, energy, cost)",
     "f_estimate": "Estimate remaining time and progress (no sensor)",
+    "f_progress_reverse": "Progress bar counts down (full → empty)",
     "f_price_per_kwh": "Price per kWh (number or entity, for costs)",
     "wet_vacuum": "Wet & dry vacuum",
     "wv_cleaning": "Cleaning",
@@ -994,6 +995,7 @@ const STRINGS = {
     "yesterday": "včera",
     "f_last_cycle": "Zobrazit poslední cyklus (začátek, konec, délka, energie, cena)",
     "f_estimate": "Odhadnout zbývající čas a průběh (bez senzoru)",
+    "f_progress_reverse": "Ukazatel průběhu odpočítává (plný → prázdný)",
     "f_price_per_kwh": "Cena za kWh (číslo nebo entita, pro výpočet ceny)",
     "wet_vacuum": "Mokrý a suchý vysavač",
     "wv_cleaning": "Čištění",
@@ -1451,6 +1453,7 @@ const STRINGS = {
     "yesterday": "i går",
     "f_last_cycle": "Vis seneste program (start, slut, varighed, energi, pris)",
     "f_estimate": "Anslå resterende tid og fremskridt (uden sensor)",
+    "f_progress_reverse": "Statuslinjen tæller ned (fuld → tom)",
     "f_price_per_kwh": "Pris pr. kWh (tal eller entitet, til priser)",
     "wet_vacuum": "Våd- og tørstøvsuger",
     "wv_cleaning": "Gør rent",
@@ -1906,6 +1909,7 @@ const STRINGS = {
     "yesterday": "gestern",
     "f_last_cycle": "Letzten Zyklus anzeigen (Start, Ende, Dauer, Verbrauch, Kosten)",
     "f_estimate": "Restzeit und Fortschritt schätzen (ohne Sensor)",
+    "f_progress_reverse": "Fortschrittsbalken als Countdown (voll → leer)",
     "f_price_per_kwh": "Preis pro kWh (Zahl oder Entität, für Kosten)",
     "wet_vacuum": "Nass-Trockensauger",
     "wv_cleaning": "Reinigung",
@@ -2492,6 +2496,7 @@ const STRINGS = {
     "yday": "Ayer",
     "f_last_cycle": "Mostrar el último ciclo (inicio, fin, duración, energía, coste)",
     "f_estimate": "Estimar tiempo restante y progreso (sin sensor)",
+    "f_progress_reverse": "Barra de progreso en cuenta atrás (llena → vacía)",
     "f_price_per_kwh": "Precio por kWh (número o entidad, para los costes)",
     "wet_vacuum": "Aspiradora de sólidos y líquidos",
     "wv_cleaning": "Limpiando",
@@ -3057,6 +3062,7 @@ const STRINGS = {
     "yesterday": "hier",
     "f_last_cycle": "Afficher le dernier cycle (début, fin, durée, conso, coût)",
     "f_estimate": "Estimer temps restant et progression (sans capteur)",
+    "f_progress_reverse": "Barre de progression en compte à rebours (pleine → vide)",
     "f_price_per_kwh": "Prix du kWh (nombre ou entité, pour les coûts)",
     "wet_vacuum": "Aspirateur laveur",
     "wv_cleaning": "Lavage",
@@ -3559,6 +3565,7 @@ const STRINGS = {
     "yesterday": "tegnap",
     "f_last_cycle": "Utolsó ciklus megjelenítése (kezdet, vég, időtartam, energia, költség)",
     "f_estimate": "Hátralévő idő és haladás becslése (szenzor nélkül)",
+    "f_progress_reverse": "Visszaszámláló folyamatjelző (tele → üres)",
     "f_price_per_kwh": "Ár kWh-nként (szám vagy entitás, költségekhez)",
     "wet_vacuum": "Nedves-száraz porszívó",
     "wv_cleaning": "Tisztítás",
@@ -4014,6 +4021,7 @@ const STRINGS = {
     "yesterday": "ieri",
     "f_last_cycle": "Mostra l'ultimo ciclo (inizio, fine, durata, energia, costo)",
     "f_estimate": "Stima tempo rimanente e avanzamento (senza sensore)",
+    "f_progress_reverse": "Barra di avanzamento a ritroso (piena → vuota)",
     "f_price_per_kwh": "Prezzo per kWh (numero o entità, per i costi)",
     "wet_vacuum": "Lavapavimenti aspirante",
     "wv_cleaning": "Pulizia",
@@ -4458,6 +4466,7 @@ const STRINGS = {
     "yesterday": "i går",
     "f_last_cycle": "Vis siste syklus (start, slutt, varighet, forbruk, kostnad)",
     "f_estimate": "Anslå gjenstående tid og fremdrift (uten sensor)",
+    "f_progress_reverse": "Fremdriftslinjen teller ned (full → tom)",
     "f_price_per_kwh": "Pris per kWh (tall eller entitet, for kostnader)",
     "wet_vacuum": "Våt- og tørrstøvsuger",
     "wv_cleaning": "Vasker",
@@ -4882,6 +4891,7 @@ const STRINGS = {
     "yesterday": "gisteren",
     "f_last_cycle": "Laatste cyclus tonen (start, einde, duur, verbruik, kosten)",
     "f_estimate": "Resterende tijd en voortgang schatten (zonder sensor)",
+    "f_progress_reverse": "Voortgangsbalk telt af (vol → leeg)",
     "f_price_per_kwh": "Prijs per kWh (getal of entiteit, voor kosten)",
     "wet_vacuum": "Nat-droogstofzuiger",
     "wv_cleaning": "Reinigen",
@@ -5352,6 +5362,7 @@ const STRINGS = {
     "yesterday": "wczoraj",
     "f_last_cycle": "Pokaż ostatni cykl (start, koniec, czas trwania, energia, koszt)",
     "f_estimate": "Szacuj pozostały czas i postęp (bez czujnika)",
+    "f_progress_reverse": "Pasek postępu odlicza (pełny → pusty)",
     "f_price_per_kwh": "Cena za kWh (number lub encja, do obliczania kosztów)",
     "wet_vacuum": "Odkurzacz piorący i ssący",
     "wv_cleaning": "Czyszczenie",
@@ -5844,6 +5855,7 @@ const STRINGS = {
     "yesterday": "ontem",
     "f_last_cycle": "Mostrar o último ciclo (início, fim, duração, energia, custo)",
     "f_estimate": "Estimar tempo restante e progresso (sem sensor)",
+    "f_progress_reverse": "Barra de progresso em contagem regressiva (cheia → vazia)",
     "f_price_per_kwh": "Preço por kWh (número ou entidade, para custos)",
     "wet_vacuum": "Aspirador de sólidos e líquidos",
     "wv_cleaning": "Limpando",
@@ -6403,6 +6415,7 @@ const STRINGS = {
     "yesterday": "ontem",
     "f_last_cycle": "Mostrar o último ciclo (início, fim, duração, energia, custo)",
     "f_estimate": "Estimar tempo restante e progresso (sem sensor)",
+    "f_progress_reverse": "Barra de progresso em contagem decrescente (cheia → vazia)",
     "f_price_per_kwh": "Preço por kWh (número ou entidade, para custos)",
     "wet_vacuum": "Aspirador de sólidos e líquidos",
     "wv_cleaning": "A limpar",
@@ -6899,6 +6912,7 @@ const STRINGS = {
     "yday": "Ieri",
     "f_last_cycle": "Afișează ultimul ciclu (început, sfârșit, durată, consum, cost)",
     "f_estimate": "Estimează timpul rămas și progresul (fără senzor)",
+    "f_progress_reverse": "Bara de progres numără invers (plină → goală)",
     "f_price_per_kwh": "Preț pe kWh (număr sau entitate, pentru costuri)",
     "wet_vacuum": "Aspirator de spălat",
     "wv_cleaning": "Spălare",
@@ -7312,6 +7326,7 @@ const STRINGS = {
     "yesterday": "вчера",
     "f_last_cycle": "Показывать последний цикл (начало, конец, длительность, расход, стоимость)",
     "f_estimate": "Оценивать оставшееся время и прогресс (без датчика)",
+    "f_progress_reverse": "Полоса прогресса в обратном отсчёте (полная → пустая)",
     "f_price_per_kwh": "Цена за кВт·ч (число или сущность, для стоимости)",
     "wet_vacuum": "Моющий пылесос",
     "wv_cleaning": "Уборка",
@@ -7773,6 +7788,7 @@ const STRINGS = {
     "yesterday": "јуче",
     "f_last_cycle": "Прикажи последњи циклус (почетак, крај, трајање, енергија, трошак)",
     "f_estimate": "Процени преостало време и напредак (без сензора)",
+    "f_progress_reverse": "Трака напретка одбројава (пуна → празна)",
     "f_price_per_kwh": "Цена по kWh (број или уређај, за трошкове)",
     "wet_vacuum": "Усисивач за мокро и суво прање",
     "wv_cleaning": "Чишћење",
@@ -8274,6 +8290,7 @@ const STRINGS = {
     "yesterday": "juče",
     "f_last_cycle": "Prikaži poslednji ciklus (početak, kraj, trajanje, energija, trošak)",
     "f_estimate": "Proceni preostalo vreme i napredak (bez senzora)",
+    "f_progress_reverse": "Traka napretka odbrojava (puna → prazna)",
     "f_price_per_kwh": "Cena po kWh (broj ili uređaj, za troškove)",
     "wet_vacuum": "Usisivač za mokro i suvo pranje",
     "wv_cleaning": "Čišćenje",
@@ -8796,6 +8813,7 @@ const STRINGS = {
     "yesterday": "вчора",
     "f_last_cycle": "Показувати останній цикл (початок, кінець, тривалість, енергія, вартість)",
     "f_estimate": "Оцінювати час, що залишився, і прогрес (без датчика)",
+    "f_progress_reverse": "Смуга прогресу у зворотному відліку (повна → порожня)",
     "f_price_per_kwh": "Ціна за кВт·год (число або сутність, для вартості)",
     "wet_vacuum": "Миючий пилосос",
     "wv_cleaning": "Прибирання",
@@ -15176,8 +15194,10 @@ class ApplianceCardBase extends HTMLElement {
       }
     }
     if (pct != null && Number.isFinite(pct)) {
+      pct = Math.max(0, Math.min(100, pct));
+      if (c.progress_reverse) pct = 100 - pct; // compte à rebours : la barre part pleine et se vide (vide à 100 %)
       $("bar").style.display = "";
-      $("barfill").style.width = `${Math.max(0, Math.min(100, pct))}%`;
+      $("barfill").style.width = `${pct}%`;
     } else $("bar").style.display = "none";
 
     // boutons de mode (confort / confort -1 / confort -2 / éco / hors-gel / arrêt)
@@ -15836,6 +15856,9 @@ function buildForm(kind) {
           ...(["washer", "washer_dryer", "dryer", "dishwasher"].includes(kind) ? [
             { name: "last_cycle", selector: { boolean: {} } },
             { name: "estimate", selector: { boolean: {} } },
+          ] : []),
+          ...(d.fields.includes("progress") || ["washer", "washer_dryer", "dryer", "dishwasher"].includes(kind) ? [
+            { name: "progress_reverse", selector: { boolean: {} } },
           ] : []),
           ...(["washer", "dryer", "dishwasher", "oven", "fridge", "drawer_freezer", "wine_cooler"].includes(kind) ? [{ name: "view", selector: { select: { mode: "dropdown", options: [{ value: "front", label: "Vue de face / Front view" }, { value: "side", label: "Vue de côté / Side view" }] } } }] : []),
           ...(kind === "kettle" ? [{ name: "model", selector: { select: { mode: "dropdown", options: [{ value: "", label: "Dessin / Drawing" }, { value: "proficook", label: "ProfiCook PC-WKS 1167G (photo)" }] } } }] : []),
