@@ -1980,6 +1980,7 @@
     "model_mac_mini": "Mac mini",
     "model_lenovo_m720s": "Lenovo ThinkCentre M720s SFF",
     "model_lenovo_m920q": "Lenovo ThinkCentre M920q Tiny",
+    "model_intel_nuc": "Intel NUC 7 (NUC7i3BNH…)",
     "model_bmax_b9": "BMAX B9 Max (Mini-PC)",
     "model_home_assistant_green": "Home Assistant Green",
     "energy": "Energie"
