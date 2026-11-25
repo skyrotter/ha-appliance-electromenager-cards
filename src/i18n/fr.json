@@ -503,6 +503,7 @@
     "yesterday": "hier",
     "f_last_cycle": "Afficher le dernier cycle (début, fin, durée, conso, coût)",
     "f_estimate": "Estimer temps restant et progression (sans capteur)",
+    "f_progress_reverse": "Barre de progression en compte à rebours (pleine → vide)",
     "f_price_per_kwh": "Prix du kWh (nombre ou entité, pour les coûts)",
     "wet_vacuum": "Aspirateur laveur",
     "wv_cleaning": "Lavage",

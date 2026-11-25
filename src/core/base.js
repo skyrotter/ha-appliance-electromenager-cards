@@ -1840,8 +1840,10 @@ class ApplianceCardBase extends HTMLElement {
       }
     }
     if (pct != null && Number.isFinite(pct)) {
+      pct = Math.max(0, Math.min(100, pct));
+      if (c.progress_reverse) pct = 100 - pct; // compte à rebours : la barre part pleine et se vide (vide à 100 %)
       $("bar").style.display = "";
-      $("barfill").style.width = `${Math.max(0, Math.min(100, pct))}%`;
+      $("barfill").style.width = `${pct}%`;
     } else $("bar").style.display = "none";
 
     // boutons de mode (confort / confort -1 / confort -2 / éco / hors-gel / arrêt)

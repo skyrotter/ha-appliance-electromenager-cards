@@ -487,6 +487,7 @@
     "yday": "Ayer",
     "f_last_cycle": "Mostrar el último ciclo (inicio, fin, duración, energía, coste)",
     "f_estimate": "Estimar tiempo restante y progreso (sin sensor)",
+    "f_progress_reverse": "Barra de progreso en cuenta atrás (llena → vacía)",
     "f_price_per_kwh": "Precio por kWh (número o entidad, para los costes)",
     "wet_vacuum": "Aspiradora de sólidos y líquidos",
     "wv_cleaning": "Limpiando",

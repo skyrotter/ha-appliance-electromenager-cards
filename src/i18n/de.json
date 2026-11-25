@@ -402,6 +402,7 @@
     "yesterday": "gestern",
     "f_last_cycle": "Letzten Zyklus anzeigen (Start, Ende, Dauer, Verbrauch, Kosten)",
     "f_estimate": "Restzeit und Fortschritt schätzen (ohne Sensor)",
+    "f_progress_reverse": "Fortschrittsbalken als Countdown (voll → leer)",
     "f_price_per_kwh": "Preis pro kWh (Zahl oder Entität, für Kosten)",
     "wet_vacuum": "Nass-Trockensauger",
     "wv_cleaning": "Reinigung",

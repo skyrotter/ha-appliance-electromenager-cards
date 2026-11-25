@@ -439,6 +439,7 @@
     "yesterday": "juče",
     "f_last_cycle": "Prikaži poslednji ciklus (početak, kraj, trajanje, energija, trošak)",
     "f_estimate": "Proceni preostalo vreme i napredak (bez senzora)",
+    "f_progress_reverse": "Traka napretka odbrojava (puna → prazna)",
     "f_price_per_kwh": "Cena po kWh (broj ili uređaj, za troškove)",
     "wet_vacuum": "Usisivač za mokro i suvo pranje",
     "wv_cleaning": "Čišćenje",

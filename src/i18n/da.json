@@ -435,6 +435,7 @@
     "yesterday": "i går",
     "f_last_cycle": "Vis seneste program (start, slut, varighed, energi, pris)",
     "f_estimate": "Anslå resterende tid og fremskridt (uden sensor)",
+    "f_progress_reverse": "Statuslinjen tæller ned (fuld → tom)",
     "f_price_per_kwh": "Pris pr. kWh (tal eller entitet, til priser)",
     "wet_vacuum": "Våd- og tørstøvsuger",
     "wv_cleaning": "Gør rent",

@@ -139,6 +139,9 @@ function buildForm(kind) {
             { name: "last_cycle", selector: { boolean: {} } },
             { name: "estimate", selector: { boolean: {} } },
           ] : []),
+          ...(d.fields.includes("progress") || ["washer", "washer_dryer", "dryer", "dishwasher"].includes(kind) ? [
+            { name: "progress_reverse", selector: { boolean: {} } },
+          ] : []),
           ...(["washer", "dryer", "dishwasher", "oven", "fridge", "drawer_freezer", "wine_cooler"].includes(kind) ? [{ name: "view", selector: { select: { mode: "dropdown", options: [{ value: "front", label: "Vue de face / Front view" }, { value: "side", label: "Vue de côté / Side view" }] } } }] : []),
           ...(kind === "kettle" ? [{ name: "model", selector: { select: { mode: "dropdown", options: [{ value: "", label: "Dessin / Drawing" }, { value: "proficook", label: "ProfiCook PC-WKS 1167G (photo)" }] } } }] : []),
           ...(kind === "oven" ? [{ name: "last_cycle", selector: { boolean: {} } }, { name: "cavities", selector: { number: { min: 1, max: 2, step: 1, mode: "box" } } }] : []),

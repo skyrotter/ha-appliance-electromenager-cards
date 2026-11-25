@@ -47,6 +47,8 @@ estimate: true
 
 It works best when you mostly use the same program. A `remaining` or `progress` sensor, when set, wins over the estimate. Cycles are split like `last_cycle` (`threshold`, `cycle_gap`); at least one complete cycle in the history is needed.
 
+`progress_reverse: true` turns the progress bar into a countdown: it starts full and empties as the cycle runs, and is gone at 100 %.
+
 The rest of this page is only needed if the card flickers during a cycle.
 
 ## Cycle detection (stops the flicker)
