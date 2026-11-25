@@ -1712,7 +1712,18 @@
     "history_popup_background": "Pop-up background (#hex, rgb(), rgba() or CSS name)",
     "history_popup_opacity": "Pop-up background opacity",
     "show_subscribed": "Show the subscribed power line",
-    "press_animation": "Animate the button presses"
+    "press_animation": "Animate the button presses",
+    "entity_pm03": "PM0.3 sensor",
+    "entity_pm1": "PM1 sensor",
+    "entity_pm4": "PM4 sensor",
+    "entity_nox": "NOx sensor",
+    "entity_radon": "Radon sensor",
+    "entity_radon_long_term": "Radon long-term sensor",
+    "entity_propane": "Propane (C₃H₈) sensor",
+    "entity_o2": "Oxygen (O₂) sensor",
+    "entity_no2": "Nitrogen dioxide (NO₂) sensor",
+    "entity_o3": "Ozone (O₃) sensor",
+    "entity_noise": "Noise sensor (dB)"
   },
   "light": {
     "white_warm": "Warm white",
@@ -2323,7 +2334,20 @@
     "voc": "VOC",
     "hcho": "Formaldehyde",
     "humidity": "Humidity",
-    "temperature": "Temperature"
+    "temperature": "Temperature",
+    "pm03": "PM0.3",
+    "pm1": "PM1",
+    "pm4": "PM4",
+    "nox": "NOx",
+    "co": "CO",
+    "no2": "NO₂",
+    "o3": "O₃",
+    "o2": "O₂",
+    "radon": "Radon",
+    "radon_long_term": "Radon (long-term)",
+    "propane": "Propane",
+    "pressure": "Pressure",
+    "noise": "Noise"
   },
   "mini_pc": {
     "name": "Mini PC",

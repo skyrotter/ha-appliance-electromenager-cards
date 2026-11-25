@@ -1713,7 +1713,18 @@
     "history_popup_background": "Fond du pop-up (#hex, rgb(), rgba() ou nom CSS)",
     "history_popup_opacity": "Opacité du fond du pop-up",
     "show_subscribed": "Afficher la ligne « Souscrite »",
-    "press_animation": "Animer les appuis sur le bouton"
+    "press_animation": "Animer les appuis sur le bouton",
+    "entity_pm03": "Capteur PM0.3",
+    "entity_pm1": "Capteur PM1",
+    "entity_pm4": "Capteur PM4",
+    "entity_nox": "Capteur NOx",
+    "entity_radon": "Capteur radon",
+    "entity_radon_long_term": "Capteur radon long terme",
+    "entity_propane": "Capteur propane (C₃H₈)",
+    "entity_o2": "Capteur oxygène (O₂)",
+    "entity_no2": "Capteur dioxyde d'azote (NO₂)",
+    "entity_o3": "Capteur ozone (O₃)",
+    "entity_noise": "Capteur bruit (dB)"
   },
   "light": {
     "white_warm": "Blanc chaud",
@@ -2324,7 +2335,20 @@
     "voc": "COV",
     "hcho": "Formaldéhyde",
     "humidity": "Humidité",
-    "temperature": "Température"
+    "temperature": "Température",
+    "pm03": "PM0.3",
+    "pm1": "PM1",
+    "pm4": "PM4",
+    "nox": "NOx",
+    "co": "CO",
+    "no2": "NO₂",
+    "o3": "O₃",
+    "o2": "O₂",
+    "radon": "Radon",
+    "radon_long_term": "Radon (long terme)",
+    "propane": "Propane",
+    "pressure": "Pression",
+    "noise": "Bruit"
   },
   "mini_pc": {
     "name": "Mini PC",

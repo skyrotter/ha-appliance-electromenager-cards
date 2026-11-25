@@ -764,7 +764,18 @@
       "history_popup_background": "Pop-up background (#hex, rgb(), rgba() or CSS name)",
       "history_popup_opacity": "Pop-up background opacity",
       "show_subscribed": "Show the subscribed power line",
-      "press_animation": "Animate the button presses"
+      "press_animation": "Animate the button presses",
+      "entity_pm03": "PM0.3 sensor",
+      "entity_pm1": "PM1 sensor",
+      "entity_pm4": "PM4 sensor",
+      "entity_nox": "NOx sensor",
+      "entity_radon": "Radon sensor",
+      "entity_radon_long_term": "Radon long-term sensor",
+      "entity_propane": "Propane (C₃H₈) sensor",
+      "entity_o2": "Oxygen (O₂) sensor",
+      "entity_no2": "Nitrogen dioxide (NO₂) sensor",
+      "entity_o3": "Ozone (O₃) sensor",
+      "entity_noise": "Noise sensor (dB)"
     },
     "cs": {
       "garage_car_image": "Obrázek auta (pohled zepředu, URL nebo soubor /local/)",
@@ -3092,7 +3103,18 @@
       "history_popup_background": "Fondo de la ventana emergente (#hex, rgb(), rgba() o nombre CSS)",
       "history_popup_opacity": "Opacidad del fondo de la ventana emergente",
       "show_subscribed": "Mostrar la línea de potencia contratada",
-      "press_animation": "Animar las pulsaciones de los botones"
+      "press_animation": "Animar las pulsaciones de los botones",
+      "entity_pm03": "Sensor PM0.3",
+      "entity_pm1": "Sensor PM1",
+      "entity_pm4": "Sensor PM4",
+      "entity_nox": "Sensor NOx",
+      "entity_radon": "Sensor de radón",
+      "entity_radon_long_term": "Sensor de radón a largo plazo",
+      "entity_propane": "Sensor de propano (C₃H₈)",
+      "entity_o2": "Sensor de oxígeno (O₂)",
+      "entity_no2": "Sensor de dióxido de nitrógeno (NO₂)",
+      "entity_o3": "Sensor de ozono (O₃)",
+      "entity_noise": "Sensor de ruido (dB)"
     },
     "fr": {
       "confirm_action": "Demander confirmation avant l'action",
@@ -3853,7 +3875,18 @@
       "history_popup_background": "Fond du pop-up (#hex, rgb(), rgba() ou nom CSS)",
       "history_popup_opacity": "Opacité du fond du pop-up",
       "show_subscribed": "Afficher la ligne « Souscrite »",
-      "press_animation": "Animer les appuis sur le bouton"
+      "press_animation": "Animer les appuis sur le bouton",
+      "entity_pm03": "Capteur PM0.3",
+      "entity_pm1": "Capteur PM1",
+      "entity_pm4": "Capteur PM4",
+      "entity_nox": "Capteur NOx",
+      "entity_radon": "Capteur radon",
+      "entity_radon_long_term": "Capteur radon long terme",
+      "entity_propane": "Capteur propane (C₃H₈)",
+      "entity_o2": "Capteur oxygène (O₂)",
+      "entity_no2": "Capteur dioxyde d'azote (NO₂)",
+      "entity_o3": "Capteur ozone (O₃)",
+      "entity_noise": "Capteur bruit (dB)"
     },
     "hu": {
       "garage_car_image": "Autó képe (elölnézet, URL vagy /local/ fájl)",
@@ -6904,7 +6937,18 @@
       "panels": "Número de painéis (1 ou 2)",
       "show_soc_max": "Mostrar carga máxima",
       "show_soc_min": "Mostrar carga mínima",
-      "side": "Lado em que o painel único se empilha"
+      "side": "Lado em que o painel único se empilha",
+      "entity_pm03": "Sensor PM0.3",
+      "entity_pm1": "Sensor PM1",
+      "entity_pm4": "Sensor PM4",
+      "entity_nox": "Sensor NOx",
+      "entity_radon": "Sensor de radônio",
+      "entity_radon_long_term": "Sensor de radônio de longo prazo",
+      "entity_propane": "Sensor de propano (C₃H₈)",
+      "entity_o2": "Sensor de oxigênio (O₂)",
+      "entity_no2": "Sensor de dióxido de nitrogênio (NO₂)",
+      "entity_o3": "Sensor de ozônio (O₃)",
+      "entity_noise": "Sensor de ruído (dB)"
     },
     "pt-PT": {
       "garage_car_image": "Imagem do carro (vista frontal, URL ou ficheiro /local/)",
@@ -7664,7 +7708,18 @@
       "panels": "Número de painéis (1 ou 2)",
       "show_soc_max": "Mostrar carga máxima",
       "show_soc_min": "Mostrar carga mínima",
-      "side": "Lado em que o painel único se empilha"
+      "side": "Lado em que o painel único se empilha",
+      "entity_pm03": "Sensor PM0.3",
+      "entity_pm1": "Sensor PM1",
+      "entity_pm4": "Sensor PM4",
+      "entity_nox": "Sensor NOx",
+      "entity_radon": "Sensor de radão",
+      "entity_radon_long_term": "Sensor de radão de longo prazo",
+      "entity_propane": "Sensor de propano (C₃H₈)",
+      "entity_o2": "Sensor de oxigénio (O₂)",
+      "entity_no2": "Sensor de dióxido de azoto (NO₂)",
+      "entity_o3": "Sensor de ozono (O₃)",
+      "entity_noise": "Sensor de ruído (dB)"
     },
     "ro": {
       "garage_car_image": "Imaginea mașinii (vedere din față, URL sau fișier /local/)",
@@ -8468,7 +8523,23 @@
       "show_heat": "Show heat output",
       "show_cop": "Show COP",
       "show_compressor": "Show compressor (frequency, demand)",
-      "show_backup": "Show backup heaters and boiler"
+      "show_backup": "Show backup heaters and boiler",
+      "entity_co2": "Датчик CO₂",
+      "entity_pm03": "Датчик PM0.3",
+      "entity_pm1": "Датчик PM1",
+      "entity_pm25": "Датчик PM2.5",
+      "entity_pm4": "Датчик PM4",
+      "entity_pm10": "Датчик PM10",
+      "entity_voc": "Датчик VOC / TVOC",
+      "entity_nox": "Датчик NOx",
+      "entity_hcho": "Датчик формальдегида",
+      "entity_radon": "Датчик радона",
+      "entity_radon_long_term": "Датчик радона (долгосрочный)",
+      "entity_propane": "Датчик пропана (C₃H₈)",
+      "entity_o2": "Датчик кислорода (O₂)",
+      "entity_no2": "Датчик диоксида азота (NO₂)",
+      "entity_o3": "Датчик озона (O₃)",
+      "entity_noise": "Датчик шума (дБ)"
     },
     "sr": {
       "garage_car_image": "Слика аутомобила (поглед спреда, URL или /local/ датотека)",
@@ -10434,7 +10505,18 @@
       "history_popup_background": "Фон спливного вікна (#hex, rgb(), rgba() або назва CSS)",
       "history_popup_opacity": "Непрозорість фону спливного вікна",
       "show_subscribed": "Показувати лінію договірної потужності",
-      "press_animation": "Анімувати натискання кнопок"
+      "press_animation": "Анімувати натискання кнопок",
+      "entity_pm03": "Датчик PM0.3",
+      "entity_pm1": "Датчик PM1",
+      "entity_pm4": "Датчик PM4",
+      "entity_nox": "Датчик NOx",
+      "entity_radon": "Датчик радону",
+      "entity_radon_long_term": "Датчик довгострокового радону",
+      "entity_propane": "Датчик пропану (C₃H₈)",
+      "entity_o2": "Датчик кисню (O₂)",
+      "entity_no2": "Датчик діоксиду азоту (NO₂)",
+      "entity_o3": "Датчик озону (O₃)",
+      "entity_noise": "Датчик шуму (дБ)"
     }
   };
   const lang = (hass) => window.applianceLang(L, null, hass);

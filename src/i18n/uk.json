@@ -1706,7 +1706,18 @@
     "history_popup_background": "Фон спливного вікна (#hex, rgb(), rgba() або назва CSS)",
     "history_popup_opacity": "Непрозорість фону спливного вікна",
     "show_subscribed": "Показувати лінію договірної потужності",
-    "press_animation": "Анімувати натискання кнопок"
+    "press_animation": "Анімувати натискання кнопок",
+    "entity_pm03": "Датчик PM0.3",
+    "entity_pm1": "Датчик PM1",
+    "entity_pm4": "Датчик PM4",
+    "entity_nox": "Датчик NOx",
+    "entity_radon": "Датчик радону",
+    "entity_radon_long_term": "Датчик довгострокового радону",
+    "entity_propane": "Датчик пропану (C₃H₈)",
+    "entity_o2": "Датчик кисню (O₂)",
+    "entity_no2": "Датчик діоксиду азоту (NO₂)",
+    "entity_o3": "Датчик озону (O₃)",
+    "entity_noise": "Датчик шуму (дБ)"
   },
   "light": {
     "ceiling_globe": "Стельовий світильник-куля",
@@ -2317,7 +2328,20 @@
     "voc": "ЛОС",
     "hcho": "Формальдегід",
     "humidity": "Вологість",
-    "temperature": "Температура"
+    "temperature": "Температура",
+    "pm03": "PM0.3",
+    "pm1": "PM1",
+    "pm4": "PM4",
+    "nox": "NOx",
+    "co": "CO",
+    "no2": "NO₂",
+    "o3": "O₃",
+    "o2": "O₂",
+    "radon": "Радон",
+    "radon_long_term": "Радон (довгостр.)",
+    "propane": "Пропан",
+    "pressure": "Тиск",
+    "noise": "Шум"
   },
   "mini_pc": {
     "name": "Міні-ПК",
