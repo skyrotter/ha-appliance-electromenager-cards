@@ -2149,6 +2149,8 @@
     "f_show_humidity": "páratartalom csempe"
   },
   "litter_box": {
+    "spray_liquid": "Spray folyadék",
+    "spray_batt": "Spray akkumulátor",
     "name": "Automata macskaalom",
     "idle": "Szabad",
     "cleaning": "Tisztítás",

@@ -2069,6 +2069,8 @@
     "f_show_humidity": "riquadro umidità"
   },
   "litter_box": {
+    "spray_liquid": "Liquido spray",
+    "spray_batt": "Batteria spray",
     "name": "Lettiera automatica",
     "idle": "Libera",
     "cleaning": "Pulizia",

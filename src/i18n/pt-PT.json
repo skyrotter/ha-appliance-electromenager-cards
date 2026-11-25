@@ -3168,6 +3168,8 @@
     "f_show_humidity": "bloco de humidade"
   },
   "litter_box": {
+    "spray_liquid": "Líquido do spray",
+    "spray_batt": "Bateria do spray",
     "name": "Caixa de areia automática",
     "idle": "Livre",
     "cleaning": "Limpeza",

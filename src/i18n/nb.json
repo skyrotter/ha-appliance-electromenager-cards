@@ -1874,6 +1874,8 @@
     "f_show_humidity": "fuktighetsflis"
   },
   "litter_box": {
+    "spray_liquid": "Sprayvæske",
+    "spray_batt": "Spraybatteri",
     "name": "Automatisk kattedo",
     "idle": "Ledig",
     "cleaning": "Rengjøring",

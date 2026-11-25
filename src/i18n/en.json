@@ -3202,6 +3202,11 @@
     "f_show_humidity": "humidity tile"
   },
   "litter_box": {
+    "spray_liquid": "Spray liquid",
+    "spray_batt": "Spray battery",
+    "f_entity_spray_battery": "Spray battery level (%)",
+    "f_n50_max_days": "N50 full life (days)",
+    "f_rings": "Rings chart instead of the % tiles",
     "name": "Automatic litter box",
     "idle": "Ready",
     "cleaning": "Cleaning",

@@ -1706,6 +1706,8 @@
     "f_show_humidity": "cardul umiditate"
   },
   "litter_box": {
+    "spray_liquid": "Lichid spray",
+    "spray_batt": "Baterie spray",
     "name": "Litieră automată",
     "idle": "Liberă",
     "cleaning": "Curățare",

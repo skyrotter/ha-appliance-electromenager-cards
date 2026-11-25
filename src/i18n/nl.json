@@ -2069,6 +2069,8 @@
     "f_show_humidity": "vochtigheidstegel"
   },
   "litter_box": {
+    "spray_liquid": "Sprayvloeistof",
+    "spray_batt": "Spraybatterij",
     "name": "Automatische kattenbak",
     "idle": "Vrij",
     "cleaning": "Reiniging",

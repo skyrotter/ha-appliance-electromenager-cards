@@ -1870,6 +1870,8 @@
     "f_show_humidity": "kafelek wilgotności"
   },
   "litter_box": {
+    "spray_liquid": "Płyn w sprayu",
+    "spray_batt": "Bateria sprayu",
     "name": "Automatyczna kuweta",
     "idle": "Wolna",
     "cleaning": "Czyszczenie",

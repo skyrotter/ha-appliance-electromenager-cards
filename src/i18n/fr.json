@@ -3181,6 +3181,11 @@
     "f_show_humidity": "tuile humidité"
   },
   "litter_box": {
+    "spray_liquid": "Liquide désodorisant",
+    "spray_batt": "Batt. désodorisant",
+    "f_entity_spray_battery": "Batterie du spray (%)",
+    "f_n50_max_days": "Durée de vie du N50 (jours)",
+    "f_rings": "Graphique en anneaux à la place des tuiles %",
     "name": "Litière automatique",
     "idle": "Libre",
     "cleaning": "Nettoyage",

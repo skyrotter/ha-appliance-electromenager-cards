@@ -2447,6 +2447,8 @@
     "f_show_humidity": "pločica vlažnosti"
   },
   "litter_box": {
+    "spray_liquid": "Tečnost spreja",
+    "spray_batt": "Baterija spreja",
     "name": "Automatski toalet za mačke",
     "idle": "Slobodan",
     "cleaning": "Čišćenje",

@@ -1694,6 +1694,8 @@
     "f_show_humidity": "dlaždice vlhkosti"
   },
   "litter_box": {
+    "spray_liquid": "Kapalina ve spreji",
+    "spray_batt": "Baterie spreje",
     "name": "Automatické kočičí WC",
     "idle": "Volné",
     "cleaning": "Čištění",

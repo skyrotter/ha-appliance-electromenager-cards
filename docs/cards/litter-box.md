@@ -8,7 +8,8 @@
 - **Cat inside** (`entity_occupied`): a cat sits in the entrance, the badge shows "Occupied" and the status light turns orange.
 - **Paused**, **maintenance**, **deodorising** (spray), **error** (red blinking light, with the error text) and **unavailable** have their own look.
 - **Alerts**: waste bin full, litter missing, N50 odour eliminator to replace (below `odor_low` days, 3 by default) and spray liquid low (below `spray_low` %, 15 by default).
-- **Tiles**: litter level, waste bin, N50 days left, number of uses, spray liquid, last cat. Each can be hidden (`show_litter`, `show_waste`, `show_odor`, `show_uses`, `show_spray`, `show_lastcat`).
+- **Rings chart** (like the PETKIT dashboards, `rings: false` to go back to tiles): concentric rings for the N50 pellet (days left over `n50_max_days`, 30 by default), the spray liquid, the spray battery (`entity_spray_battery`) and the litter level, with a legend, and the number of uses in the centre.
+- **Tiles**: waste bin, number of uses, last cat (and litter, N50 and spray when `rings: false`). Each can be hidden (`show_litter`, `show_waste`, `show_odor`, `show_uses`, `show_spray`, `show_lastcat`).
 - **Action buttons** (shown only for the entities you give): clean, pause / resume, deodorise, level, **empty the litter** and **reset N50** (both ask for a confirmation, `confirm_dangerous: false` to turn it off), maintenance start / end.
 - The status sensor is read from its text: `idle`, `cleaning`, `paused`, `maintenance`, `emptying`, `leveling`, `deodorizing`, `error`…
 

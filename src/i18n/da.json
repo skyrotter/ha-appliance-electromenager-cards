@@ -2298,6 +2298,8 @@
     "f_show_humidity": "fugtighedsfelt"
   },
   "litter_box": {
+    "spray_liquid": "Sprayvæske",
+    "spray_batt": "Spraybatteri",
     "name": "Automatisk kattebakke",
     "idle": "Fri",
     "cleaning": "Rengøring",
