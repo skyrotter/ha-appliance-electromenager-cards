@@ -243,6 +243,7 @@ Click a card for its options and examples.
 | [Internet box (Freebox Pop, SFR Box)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/internet-box.md) | `custom:appliance-internet-box-card` |
 | [Portable air conditioner](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/portable-ac.md) | `custom:appliance-portable-ac-card` |
 | [Pet feeder (Aqara C1)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/pet-feeder.md) | `custom:appliance-pet-feeder-card` |
+| [Automatic litter box (PETKIT Pura Max)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/litter-box.md) | `custom:appliance-litter-box-card` |
 | [Bin collection](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/poubelle.md) | `custom:appliance-poubelle-card` |
 | [Desktop PC](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/towel-rack-pc-laptop.md) | `custom:appliance-desktop-pc-card` |
 | [Monitors (1 to 3)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/towel-rack-pc-laptop.md) | `custom:appliance-monitor-card` |

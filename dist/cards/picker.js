@@ -86,7 +86,7 @@
     media: 'tv htpc projector-screen av-receiver soundbar smart-speaker ps5 tv-box piano elliptical exercise-bike rowing-machine treadmill',
     it: 'server-rack mini-pc nas internet-box desktop-pc monitor laptop printer printer-3d raspberry-pi poe-switch zigbee-coordinator wall-tablet',
     // catégorie par défaut des cartes non listées ; chaque carte doit pourtant être listée (build.js avertit sinon)
-    home: 'iron steam-station poubelle robot-vacuum-solo robot-vacuum robot-mower canister-vacuum wet-vacuum pet-feeder pet-fountain cat-flap scale air-compressor water-softener-generic generic',
+    home: 'litter-box iron steam-station poubelle robot-vacuum-solo robot-vacuum robot-mower canister-vacuum wet-vacuum pet-feeder pet-fountain cat-flap scale air-compressor water-softener-generic generic',
   };
   const CAT_ORDER = Object.keys(CATS);
   const CAT_OF = {};
