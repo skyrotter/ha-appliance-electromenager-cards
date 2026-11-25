@@ -329,7 +329,8 @@
       "index": "Показання",
       "cost": "Вартість",
       "variant_classic": "Класичний (жовтий мембранний лічильник)",
-      "variant_modern": "Сучасний (сірий лічильник, жовта труба)"
+      "variant_modern": "Сучасний (сірий лічильник, жовта труба)",
+      "variant_belgian": "Бельгійський (комунікаційний лічильник G4, фото)"
     }
   };
   const asList = (v) => (Array.isArray(v) ? v : v ? [v] : []); // entity_leak : string ou array → array
@@ -506,7 +507,9 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       root.querySelector('#gmctl button').addEventListener('click', () => {
         const id = this._c.entity_valve; if (!this._hass || !id) return;
         const dom = id.split('.')[0];
-        this._hass.callService(['switch', 'valve', 'input_boolean'].includes(dom) ? dom : 'homeassistant', 'toggle', { entity_id: id });
+        const run = () => this._hass.callService(['switch', 'valve', 'input_boolean'].includes(dom) ? dom : 'homeassistant', 'toggle', { entity_id: id });
+        // confirmation avant d'ouvrir / fermer la vanne de gaz (désactivable : confirm_actions: false)
+        if (this._c.confirm_actions !== false && window.applianceConfirm) window.applianceConfirm(this, { action: 'toggle', confirmation: true }, run); else run();
       });
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
         const c = this._c; this._more({ flow: c.entity_flow || c.entity_index, today: c.entity_today, index: c.entity_index, cost: c.entity_cost }[el.dataset.k]);
@@ -520,11 +523,13 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       // débit : capteur dédié, sinon déduit de l'index (unité de l'index par heure)
       let flow = this._num(c.entity_flow);
       if (!c.entity_flow && !isNaN(idx)) {
-        if (this._lastIdx == null) { this._lastIdx = idx; this._lastAt = now; this._dflow = 0; }
+        // horodatage = last_changed de l'index (pas l'heure où la carte l'a vu) : pas de pic au chargement de la page
+        const is = this._st(c.entity_index), at = (is && Date.parse(is.last_changed)) || now;
+        if (this._lastIdx == null) { this._lastIdx = idx; this._lastAt = at; this._dflow = 0; }
         else if (idx !== this._lastIdx) {
-          const h = Math.max(.001, (now - this._lastAt) / 3600000);
+          const h = Math.max(.001, (at - this._lastAt) / 3600000);
           this._dflow = idx > this._lastIdx ? (idx - this._lastIdx) / h : 0;
-          this._lastIdx = idx; this._lastAt = now;
+          this._lastIdx = idx; this._lastAt = at;
         } else if (now - this._lastAt > 10 * 60000) this._dflow = 0;
         flow = this._dflow;
       }
@@ -549,8 +554,9 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       const fu0 = this._unit(c.entity_flow, ''), perH = /\/\s*min/i.test(fu0) ? 60 : /\/\s*s$/i.test(fu0) ? 3600 : 1, inM3 = /^(l|litres?|liters?)\s*\//i.test(fu0) ? 1e-3 : 1;
       card.style.setProperty('--spd', `${Math.max(.3, Math.min(4, 1.2 / Math.max(.05, (flow || 0) * perH * inM3))).toFixed(2)}s`);
       // totalisateur : 5 chiffres entiers et 3 décimales
-      const base = isNaN(idx) ? 0 : Math.max(0, idx), whole = Math.floor(base);
-      const ent = String(whole % 100000).padStart(5, '0'), dec = String(Math.floor((base - whole) * 1000)).padStart(3, '0');
+      // chiffres tirés d'un entier arrondi (en millièmes) : pas d'erreur de virgule flottante (873.29 ≠ 873.289)
+      const base = isNaN(idx) ? 0 : Math.max(0, idx), milli = Math.round(base * 1000), whole = Math.floor(milli / 1000);
+      const ent = String(whole % 100000).padStart(5, '0'), dec = String(milli % 1000).padStart(3, '0');
       const lcd = r.querySelector('.gm-lcd');
       if (lcd) { // variante moderne : « 123,456 m³ », police réduite si le texte est long
         const txt = `${base.toLocaleString(window.applianceLocale(c, this._hass), { minimumFractionDigits: 3, maximumFractionDigits: 3, useGrouping: false })} ${this._unit(c.entity_index, 'm³')}`.trim();

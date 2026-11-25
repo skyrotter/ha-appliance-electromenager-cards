@@ -10,7 +10,7 @@ An under-sink drinking water filter with **1, 2 or 3 cartridges** (`stages`) and
 |---|---|
 | `stages` | number of cartridges drawn: 1, 2 or 3 (default 3) |
 | `entity_filter` | filter counter: litres (needs `filter_capacity`) or a percentage |
-| `filter_mode` | `used` (default): the counter is the litres already filtered, it grows until the replacement. `remaining`: the counter is the litres left |
+| `filter_mode` | `used` (default): the counter is the litres already filtered, it grows until the replacement. `remaining`: the counter is the litres left. Only for litre counters: a sensor in % is shown as is |
 | `filter_capacity` | litres a cartridge can filter (e.g. `4000`) |
 | `entity_filter_2`, `entity_filter_3`, `filter_capacity_2`, `filter_capacity_3` | optional separate counters and capacities for the other cartridges (by default they share the first one) |
 | `entity_date` | date of the filter replacement (`sensor` with a date / timestamp, or `input_datetime`) |

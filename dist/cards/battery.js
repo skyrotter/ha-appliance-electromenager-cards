@@ -268,7 +268,11 @@ const I18N_BAT = {
     "idle": "Очікування",
     "full": "Повний через",
     "empty": "Порожній через",
-    "low": "Низький заряд"
+    "low": "Низький заряд",
+    "backup": "Резерв",
+    "soc_min": "Мін. заряд",
+    "soc_max": "Макс. заряд",
+    "mode": "Режим"
   }
 };
 // Home Assistant language, used when `language` option is not explicitly set
@@ -517,6 +521,13 @@ class ApplianceBatteryCard extends HTMLElement {
     if (!s || ['unavailable', 'unknown'].includes(s.state)) return null;
     const n = parseFloat(s.state); return Number.isFinite(n) ? n : null;
   }
+  // puissance en W (capteur en W, kW ou MW converti)
+  _w(id) {
+    if (!id || !this._hass) return null;
+    const s = this._hass.states[id];
+    if (!s || ['unavailable', 'unknown'].includes(s.state)) return null;
+    const n = window.applianceWatts ? window.applianceWatts(s) : parseFloat(s.state); return Number.isFinite(n) ? n : null;
+  }
 
   // date d'une entité (sensor timestamp/date, input_datetime) formatée dans la langue de HA ; texte brut si non datable
   _date(id) {
@@ -534,7 +545,7 @@ class ApplianceBatteryCard extends HTMLElement {
     const c = this._config, r = this.shadowRoot;
     const soc = this._num(c.entity_soc), energy = this._num(c.entity_energy);
     const tc = window.applianceTemp(this._hass, c), temp = tc.conv(this._num(c.entity_temperature), this._hass.states[c.entity_temperature]);
-    let p = this._num(c.entity_power); if (p !== null && c.invert_power) p = -p;
+    let p = this._w(c.entity_power); if (p !== null && c.invert_power) p = -p;
     const pct = soc === null ? 0 : Math.max(0, Math.min(100, soc));
     // Remplissage des 3 modules (corps : y 62 → 160)
     const h = 98 * pct / 100;
@@ -563,8 +574,9 @@ class ApplianceBatteryCard extends HTMLElement {
     let time = null;
     if (c.show_time && p !== null && Math.abs(p) >= 10 && c.capacity_kwh) {
       const kwh = p > 0 ? c.capacity_kwh * (100 - pct) / 100 : c.capacity_kwh * pct / 100;
-      const hrs = kwh * 1000 / Math.abs(p);
-      time = `${p > 0 ? this._t('full') : this._t('empty')} ${Math.floor(hrs)}h${String(Math.round((hrs % 1) * 60)).padStart(2, '0')}`;
+      // minutes totales arrondies d'abord, puis découpées (évite « 1h60 »)
+      const mins = Math.round(kwh * 60000 / Math.abs(p));
+      time = `${p > 0 ? this._t('full') : this._t('empty')} ${Math.floor(mins / 60)}h${String(mins % 60).padStart(2, '0')}`;
     }
     const f = (v, d, u) => (v === null ? '—' : `${v.toFixed(d)} ${u}`);
     const it = [];

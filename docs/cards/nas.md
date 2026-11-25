@@ -27,7 +27,7 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
   All four disks, and each temperature, are optional: fill in only the entities your integration provides (DSM does not always report every disk temperature). The disks tile counts only the disks you set (`OK / known`) and shows the highest temperature among those that have one.
 - `entity_parity` (binary_sensor, **off = invalid**: « Parity invalid » alert) and `entity_flash` (binary_sensor, on = problem: USB flash boot device alert), for Unraid. Each alert can be unchecked in the visual editor (`show_parity`, `show_flash`)
 - `entity_security` (binary_sensor, on = problem), `entity_update` (update entity), `entity_power` (W)
-- `cpu_busy` (default 60 %), `volume_max` (default 85 %), `temp_max` (default 60 °), `disk_temp_max` (default 50 °), `temperature_unit`
+- `cpu_busy` (default 60 %), `volume_max` (default 85 %), `temp_max` (default 60 °C), `disk_temp_max` (default 50 °C), `temperature_unit`. Temperature thresholds are entered in the display unit (°C or °F, from `temperature_unit` or Home Assistant); the defaults are converted
 - `animations` (default true)
 - `compact: true` (small fixed slots: smaller title, tiles and buttons, the illustration takes the remaining height), `transparent: true` (no card background), `illustration_size` (%)
 - One checkbox per tile in the visual editor: `show_status`, `show_volume`, `show_free`, `show_cpu`, `show_ram`, `show_temp`, `show_disks`, `show_down`, `show_up`, `show_uptime`, `show_power` (`show_network: false` hides both network tiles)

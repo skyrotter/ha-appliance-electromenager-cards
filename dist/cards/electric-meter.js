@@ -575,11 +575,13 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       // puissance : capteur dédié, sinon déduite de l'index (kWh écoulés depuis le dernier changement)
       let power = this._watts(c.entity_power);
       if (!c.entity_power && !isNaN(idx)) {
-        if (this._lastIdx == null) { this._lastIdx = idx; this._lastAt = now; this._dpower = 0; }
+        // horodatage = last_changed de l'index (pas l'heure où la carte l'a vu) : pas de pic au chargement de la page
+        const is = this._st(c.entity_index), at = (is && Date.parse(is.last_changed)) || now;
+        if (this._lastIdx == null) { this._lastIdx = idx; this._lastAt = at; this._dpower = 0; }
         else if (idx !== this._lastIdx) {
-          const h = Math.max(.0003, (now - this._lastAt) / 3600000);
+          const h = Math.max(.0003, (at - this._lastAt) / 3600000);
           this._dpower = idx > this._lastIdx ? (idx - this._lastIdx) * 1000 / h : 0;
-          this._lastIdx = idx; this._lastAt = now;
+          this._lastIdx = idx; this._lastAt = at;
         } else if (now - this._lastAt > 15 * 60000) this._dpower = 0;
         power = this._dpower;
       }
@@ -599,8 +601,9 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       // vitesse du disque : un tour en 2 s à 1 kW, bornée (plus la puissance est forte, plus il tourne vite)
       card.style.setProperty('--spd', `${Math.max(.25, Math.min(8, 2000 / Math.max(50, power || 0))).toFixed(2)}s`);
       // totalisateur : 5 chiffres de kWh + 1 décimale
-      const base = isNaN(idx) ? 0 : Math.max(0, idx), whole = Math.floor(base);
-      const ent = String(whole % 100000).padStart(5, '0'), dec = String(Math.floor((base - whole) * 10));
+      // chiffres tirés d'un entier arrondi (en dixièmes) : pas d'erreur de virgule flottante (12345.3 ≠ …5.2)
+      const tenths = isNaN(idx) ? 0 : Math.round(Math.max(0, idx) * 10), whole = Math.floor(tenths / 10);
+      const ent = String(whole % 100000).padStart(5, '0'), dec = String(tenths % 10);
       r.querySelectorAll('.em-d').forEach((el, i) => { el.textContent = ent[i]; });
       r.querySelectorAll('.em-l').forEach((el) => { el.textContent = dec; });
 

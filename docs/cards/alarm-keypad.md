@@ -38,6 +38,7 @@ With an alarm panel, the keypad can be used directly:
 
 - **Digits** type the code (shown as dots on the screen, up to 8 digits, cleared after 10 s or on send); **×** clears it.
 - **Red padlock**: `alarm_arm_away`. **Green padlock**: `alarm_disarm`. **Stay**: `alarm_arm_home`. **↵**: disarms if the alarm is armed, arms (away) otherwise.
+- Arm modes the panel does not support (`supported_features`) are greyed out.
 - The typed code is sent with the command (`code`) when there is one. A refused command shows a message on the screen.
 - Force, Memory, Bypass and the arrows are decorative.
 

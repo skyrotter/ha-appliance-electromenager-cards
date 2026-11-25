@@ -20,6 +20,7 @@ On alarm, smoke rises, the red LED flashes, sound waves come out of the detector
 | `entity_siren` | siren (`siren`): used by the **Silence alarm** button when `entity_silence` is not set |
 | `entity_level` | gas concentration sensor (% LEL, ppm…), shown as a tile (`show_level`) |
 | `entity_valve` | gas shut-off valve (`valve`, `switch`, `input_boolean`): **Close valve** / **Open valve** button |
+| `confirm_actions` | asks for confirmation (Cancel / OK) before re-opening the gas valve; closing stays immediate (`true` by default; `confirm_actions: false` acts on the first tap) |
 | `entity_silence` | **Silence alarm** button (`button`, `switch`, `siren`, `script`, `input_boolean`), shown only during an alarm |
 | `entity_fault` | fault or tamper sensor (`binary_sensor`) |
 | `entity_battery` | battery in % (low below `battery_low`, 20 %) or a battery `binary_sensor` (on = low) |

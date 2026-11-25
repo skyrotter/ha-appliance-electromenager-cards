@@ -512,8 +512,10 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const tObj = this._st(c.entity_temp), temp = tc.conv(this._num(c.entity_temp), tObj);
       const target = (() => { const s = this._st(c.entity_target_temp); if (s && /^climate\./.test(s.entity_id)) { const t = Number(s.attributes && s.attributes.temperature); return tc.conv(isFinite(t) && s.attributes.temperature != null ? t : NaN, s); } return tc.conv(this._num(c.entity_target_temp), s); })();
       const energy = this._num(c.entity_energy);
+      // coût = énergie en kWh × prix (capteur en Wh / MWh converti)
+      const eu = String(this._unit(c.entity_energy, 'kWh')).trim(), ekwh = /^wh$/i.test(eu) ? energy / 1000 : eu === 'MWh' ? energy * 1000 : energy;
       let cost = this._num(c.entity_cost), costU = this._unit(c.entity_cost, c.currency || '€');
-      if (isNaN(cost) && c.price_per_kwh && !isNaN(energy) && Number.isFinite(window.appliancePrice(this._hass, c.price_per_kwh))) { cost = energy * window.appliancePrice(this._hass, c.price_per_kwh); costU = c.currency || '€'; }
+      if (isNaN(cost) && c.price_per_kwh && !isNaN(ekwh) && Number.isFinite(window.appliancePrice(this._hass, c.price_per_kwh))) { cost = ekwh * window.appliancePrice(this._hass, c.price_per_kwh); costU = c.currency || '€'; }
       const md = this._st(c.entity_mode);
       const modeTxt = this._ok(md) ? (isNaN(parseFloat(md.state)) ? String(md.state) : this._fmt(parseFloat(md.state), 0)) : (['fan', 'low', 'high'].includes(st) ? this._t(`mode_${st}`) : '--');
       const V = {

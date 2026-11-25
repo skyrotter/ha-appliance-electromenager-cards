@@ -695,6 +695,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
       const m = MODELS[modelKey(this._c.model)];
       this._model = m;
+      this._ambUrl = ''; // nouvelle ha-card : la couleur d'ambiance (--amb) de l'affiche doit être recalculée
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="tvtitle"></div><div class="badge" id="tvbadge"></div></div>
         ${SVG(this._c.name || m.label, m)}

@@ -45,6 +45,7 @@
       "model_luminea": "Sensor plano (tipo Luminea)",
       "model_wall": "Sensor de pared redondo",
       "model_radar": "Sensor PIR + radar (tipo Tuya)",
+      "background_image": "Foto de fondo (URL o ruta /local/…, solo modelos con foto del detector)",
       "clear": "Sin movimiento",
       "motion": "Movimiento detectado",
       "recent": "Movimiento reciente",
@@ -136,6 +137,7 @@
       "model_luminea": "Плаский датчик (типу Luminea)",
       "model_wall": "Круглий настінний датчик",
       "model_radar": "Датчик PIR + радар (типу Tuya)",
+      "background_image": "Фонове фото (URL або шлях /local/…, лише для моделей з фото датчика)",
       "clear": "Руху немає",
       "motion": "Виявлено рух",
       "recent": "Нещодавно був рух",
@@ -339,7 +341,7 @@ ha-card{--p:4.8s}ha-card.motion{--p:1.15s}ha-card.recent{--p:6s}
       </ha-card>`;
       window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => this._more({ battery: this._c.entity_battery, since: this._c.entity, lux: this._c.entity_illuminance, temp: this._c.entity_temperature }[el.dataset.k])));
-      this._root = root; this._card = root.querySelector('ha-card'); this._fig = root.getElementById('msfig'); this._built = true; this._motion = false;
+      this._root = root; this._card = root.querySelector('ha-card'); this._fig = root.getElementById('msfig'); this._figEls = null; this._figHtml = ''; this._built = true; this._motion = false;
     }
 
     // la silhouette marche en JavaScript, uniquement pendant un mouvement (sans animation : une pose figée)
@@ -347,9 +349,22 @@ ha-card{--p:4.8s}ha-card.motion{--p:1.15s}ha-card.recent{--p:6s}
       this._stop();
       if (this._photo) return; // modèles photo : pas de silhouette, seulement les ondes (CSS)
       const still = this._c.animations === false || matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (still) { this._fig.innerHTML = actors(1.3); return; }
-      const t0 = performance.now(), step = (now) => { this._fig.innerHTML = actors((now - t0) / 1000 + 1.3); this._raf = requestAnimationFrame(step); };
+      if (still) { this._paint(1.3); return; }
+      const t0 = performance.now(), step = (now) => { this._paint((now - t0) / 1000 + 1.3); this._raf = requestAnimationFrame(step); };
       this._raf = requestAnimationFrame(step);
+    }
+    // une image de la silhouette : le balisage n'est construit qu'une fois ; ensuite (même structure à chaque image)
+    // on ne recopie que les attributs qui ont changé sur les éléments existants, sans reconstruire le DOM
+    _paint(t) {
+      const html = actors(t);
+      if (html === this._figHtml) return;
+      this._figHtml = html;
+      const tags = html.match(/<[a-z][^>]*>/gi) || [], els = this._figEls;
+      if (!els || els.length !== tags.length) { this._fig.innerHTML = html; this._figEls = [...this._fig.querySelectorAll('*')]; return; }
+      tags.forEach((tag, i) => {
+        const el = els[i];
+        for (const [, k, v] of tag.matchAll(/([\w:-]+)="([^"]*)"/g)) if (el.getAttribute(k) !== v) el.setAttribute(k, v);
+      });
     }
     _stop() { cancelAnimationFrame(this._raf); this._raf = 0; }
 

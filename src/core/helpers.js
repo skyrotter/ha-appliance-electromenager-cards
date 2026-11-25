@@ -55,9 +55,13 @@ const numLoc = (hass) => (window.applianceLocale ? window.applianceLocale(null, 
 
 // eid : entité source du nombre ; si l'utilisateur a réglé « Précision d'affichage » dans HA (hass.entities[eid].display_precision),
 // elle prime sur les décimales prévues par la carte (sans réglage, comportement inchangé)
+// shift : la valeur est affichée dans une autre unité que celle du capteur (W → kW : +3, kW → W : -3, MWh → kWh : -3) ;
+// la précision HA est alors décalée d'autant, sans dépasser les décimales prévues par la carte (1534 W à 0 décimale → 1,53 kW)
 const dispPrec = (hass, eid) => { const p = eid && hass?.entities?.[eid]?.display_precision; return Number.isInteger(p) && p >= 0 && p <= 20 ? p : null; };
-function fmtNum(hass, n, digits, minDigits = 0, eid) {
-  const dp = dispPrec(hass, eid); if (dp !== null) { digits = dp; minDigits = dp; }
+function fmtNum(hass, n, digits, minDigits = 0, eid, shift = 0) {
+  const dp = dispPrec(hass, eid);
+  if (dp !== null && !shift) { digits = dp; minDigits = dp; }
+  else if (dp !== null) { digits = Math.max(0, Math.min(dp + shift, digits)); minDigits = Math.min(minDigits, digits); }
   try {
     return new Intl.NumberFormat(numLoc(hass), { maximumFractionDigits: digits, minimumFractionDigits: minDigits }).format(n);
   } catch (e) { return n.toFixed(digits); }
@@ -65,7 +69,8 @@ function fmtNum(hass, n, digits, minDigits = 0, eid) {
 const powerW = (st) => { const v = num(st); if (v === null) return null; return st.attributes.unit_of_measurement === "kW" ? v * 1000 : v; };
 function fmtPower(hass, st) {
   const w = powerW(st); if (w === null) return null;
-  return w >= 1000 ? `${fmtNum(hass, w / 1000, 2, 0, st.entity_id)} kW` : `${fmtNum(hass, w, w < 10 ? 1 : 0, 0, st.entity_id)} W`;
+  const kw = st.attributes.unit_of_measurement === "kW"; // unité du capteur : précision HA décalée si l'affichage en change
+  return w >= 1000 ? `${fmtNum(hass, w / 1000, 2, 0, st.entity_id, kw ? 0 : 3)} kW` : `${fmtNum(hass, w, w < 10 ? 1 : 0, 0, st.entity_id, kw ? -3 : 0)} W`;
 }
 function fmtUnit(hass, st, digits, minDigits = 0) {
   const v = num(st); if (v === null) return null;
@@ -79,7 +84,7 @@ function fmtEnergy(hass, st) {
   const f = { Wh: 1e-3, kWh: 1, MWh: 1e3, GWh: 1e6 }[u];
   if (f === undefined) return fmtUnit(hass, st, 2);
   const k = v * f;
-  return `${fmtNum(hass, k, Math.abs(k) >= 1000 ? 0 : 2, 0, st.entity_id)} kWh`;
+  return `${fmtNum(hass, k, Math.abs(k) >= 1000 ? 0 : 2, 0, st.entity_id, -Math.round(Math.log10(f)))} kWh`;
 }
 function parseRemaining(st) {
   if (!st) return null;
@@ -129,12 +134,13 @@ function lastCycle(pw, threshold, gapMin = 15, en = []) {
     if (!(p.w > threshold)) continue;
     // fin de cette période au-dessus du seuil : instant du point suivant (ou maintenant)
     const offAt = next ? next.t : null;
-    if (start === null || p.t - lastOn > gap) { if (start !== null) cyc = { start, end: lastOn }; start = p.t; }
+    // période de moins de 2 min : pic parasite, ignoré (le dernier vrai cycle reste le résultat)
+    if (start === null || p.t - lastOn > gap) { if (start !== null && lastOn - start >= 120000) cyc = { start, end: lastOn }; start = p.t; }
     lastOn = offAt;
     if (offAt === null) return null; // encore au-dessus du seuil : cycle en cours
   }
-  if (start !== null && lastOn !== null) cyc = { start, end: lastOn };
-  if (!cyc || cyc.end - cyc.start < 120000) return null; // < 2 min : pic parasite
+  if (start !== null && lastOn !== null && lastOn - start >= 120000) cyc = { start, end: lastOn };
+  if (!cyc) return null;
   // énergie : écart du compteur, sinon intégrale de la puissance
   const at = (T) => { let v = null; for (const e of en) { if (e.t <= T) v = e.v; else break; } return v; };
   const e0 = at(cyc.start), e1 = at(cyc.end + 60000);

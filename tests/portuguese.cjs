@@ -12,15 +12,19 @@ const tokens = (s) => [...s.matchAll(/\{\w+\}|`[^`]+`/g)].map((m) => m[0]).sort(
 for (const language of ['pt-PT', 'pt-BR']) {
   const t = translations[language] = JSON.parse(read(`src/i18n/${language}.json`));
   assert.deepEqual(Object.keys(t).sort(), Object.keys(en).sort(), `${language}: sections`);
-  for (const [section, strings] of Object.entries(en)) {
-    assert.deepEqual(Object.keys(t[section]).sort(), Object.keys(strings).sort(), `${language}.${section}: keys`);
-    for (const [key, english] of Object.entries(strings)) {
-      const actual = t[section][key];
-      assert.equal(typeof actual, 'string', `${language}.${section}.${key}`);
-      assert.ok(actual.trim(), `${language}.${section}.${key}: empty translation`);
-      assert.deepEqual(tokens(actual), tokens(english), `${language}.${section}.${key}: placeholders/configuration identifiers`);
+  // Sections may nest objects (e.g. poubelle.card / editor / errors): compare recursively.
+  const compare = (actualNode, englishNode, where) => {
+    assert.ok(actualNode && typeof actualNode === 'object' && !Array.isArray(actualNode), `${where}: object`);
+    assert.deepEqual(Object.keys(actualNode).sort(), Object.keys(englishNode).sort(), `${where}: keys`);
+    for (const [key, english] of Object.entries(englishNode)) {
+      const actual = actualNode[key];
+      if (english && typeof english === 'object') { compare(actual, english, `${where}.${key}`); continue; }
+      assert.equal(typeof actual, 'string', `${where}.${key}`);
+      assert.ok(actual.trim(), `${where}.${key}: empty translation`);
+      assert.deepEqual(tokens(actual), tokens(english), `${where}.${key}: placeholders/configuration identifiers`);
     }
-  }
+  };
+  for (const [section, strings] of Object.entries(en)) compare(t[section], strings, `${language}.${section}`);
 }
 // Execute the actual shared resolver and helpers with translation markers filled.
 const context = vm.createContext({ window: {}, document: { documentElement: { lang: 'en' }, querySelector: () => null } });

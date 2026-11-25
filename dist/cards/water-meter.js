@@ -554,7 +554,9 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       root.querySelector('#wmctl button').addEventListener('click', () => {
         const id = this._c.entity_valve; if (!this._hass || !id) return;
         const dom = id.split('.')[0];
-        this._hass.callService(['switch', 'valve', 'input_boolean'].includes(dom) ? dom : 'homeassistant', 'toggle', { entity_id: id });
+        const run = () => this._hass.callService(['switch', 'valve', 'input_boolean'].includes(dom) ? dom : 'homeassistant', 'toggle', { entity_id: id });
+        // vanne d'arrivée d'eau : confirmation « Annuler / OK », sauf confirm_actions: false
+        if (this._c.confirm_actions !== false) window.applianceConfirm(this, { action: 'toggle', confirmation: true }, run); else run();
       });
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
         const c = this._c; this._more({ flow: c.entity_flow || c.entity_index, today: c.entity_today, index: c.entity_index, cost: c.entity_cost, temperature: c.entity_temperature, pressure: c.entity_pressure }[el.dataset.k]);

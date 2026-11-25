@@ -106,7 +106,8 @@ const I18N_EV = {
     "climate_off": "Apagada",
     "doors": "Puertas",
     "doors_open": "Abiertas",
-    "doors_closed": "Cerradas"
+    "doors_closed": "Cerradas",
+    "charger_image": "Imagen del cargador (URL o archivo /local/, vista frontal, fondo transparente)"
   },
   "fr": {
     "name": "Borne de recharge",
@@ -217,7 +218,8 @@ const I18N_EV = {
     "climate_off": "Desligado",
     "doors": "Portas",
     "doors_open": "Abertas",
-    "doors_closed": "Fechadas"
+    "doors_closed": "Fechadas",
+    "charger_image": "Imagem do carregador (URL ou arquivo /local/, vista de frente, fundo transparente)"
   },
   "pt-PT": {
     "name": "Carregador de veículo elétrico",
@@ -239,7 +241,8 @@ const I18N_EV = {
     "climate_off": "Desligado",
     "doors": "Portas",
     "doors_open": "Abertas",
-    "doors_closed": "Fechadas"
+    "doors_closed": "Fechadas",
+    "charger_image": "Imagem do carregador (URL ou ficheiro /local/, vista de frente, fundo transparente)"
   },
   "ro": {
     "name": "Stație de încărcare",
@@ -313,7 +316,8 @@ const I18N_EV = {
     "climate_off": "Вимк.",
     "doors": "Двері",
     "doors_open": "Відчинені",
-    "doors_closed": "Зачинені"
+    "doors_closed": "Зачинені",
+    "charger_image": "Зображення зарядної станції (URL або файл /local/, вигляд спереду, прозорий фон)"
   }
 };
 // Langue de Home Assistant (no / nn → nb), utilisée quand `language` n'est pas configuré
@@ -570,6 +574,12 @@ class ApplianceEvChargerCard extends HTMLElement {
     if (!s || ['unavailable', 'unknown'].includes(s.state)) return null;
     const n = parseFloat(s.state); return Number.isFinite(n) ? n : null;
   }
+  // énergie en kWh (capteur en Wh, kWh ou MWh converti)
+  _kwh(id) {
+    const n = this._num(id); if (n === null) return null;
+    const u = String((this._hass.states[id].attributes || {}).unit_of_measurement || '').trim();
+    return /^wh$/i.test(u) ? n / 1000 : u === 'MWh' ? n * 1000 : n;
+  }
 
   // état d'une ou plusieurs entités : true / false / null (inconnu) ; texte, binary_sensor, switch, cover, climate…
   _flag(ids) {
@@ -598,10 +608,17 @@ class ApplianceEvChargerCard extends HTMLElement {
   _status(watts) {
     const c = this._config, s = c.entity_status && this._hass.states[c.entity_status];
     if (s) {
-      const v = String(s.state).toLowerCase();
-      if (/charg(ing|e)\b|en charge|charging/.test(v) && !/dis|termin|complete/.test(v)) return 'charging';
-      if (/complete|finish|termin|full|plein|done/.test(v)) return 'done';
-      if (/connect|plug|branch|on|wait|attente|ready|prêt/.test(v) && !/disconnect|déconnect|débranch|unplug/.test(v)) return watts > 50 ? 'charging' : 'plugged';
+      // mots entiers ; un mot précédé d'une négation (not / no / non / pas, 2 mots avant au plus) ou suivi de « pas » ne compte pas,
+      // et les préfixes négatifs (dis-, un-, dé-, off…) ne correspondent pas (« disconnected », « unplugged », « offline » ≠ connecté)
+      const ws = String(s.state).toLowerCase().split(/[^a-z0-9à-ÿ]+/).filter(Boolean);
+      const NEG = /^(not|no|non|pas|never|jamais)$/;
+      const hit = (re) => ws.some((x, i) => re.test(x) && !NEG.test(ws[i - 1] || '') && !NEG.test(ws[i - 2] || '') && ws[i + 1] !== 'pas');
+      const done = hit(/^(complete[d]?|finish[a-zà-ÿ]*|termin[a-zà-ÿ]*|full|plein|done)$/);
+      if (hit(/^(charging|charge)$/) && !done) return 'charging';
+      if (done) return 'done';
+      if (hit(/^(connect[a-zà-ÿ]*|plug[a-zà-ÿ]*|branch[a-zà-ÿ]*|on|a?wait[a-zà-ÿ]*|attente|ready|prêt[a-zà-ÿ]*)$/)) return watts > 50 ? 'charging' : 'plugged';
+      // « not charging » / « ne charge pas » : voiture branchée sans charge (sauf si l'état dit aussi débranché)
+      if (ws.some((x) => /^charg/.test(x)) && !ws.some((x) => /^(disconn|unplug|offline|d[ée]branch)/.test(x))) return 'plugged';
       return 'disconnected';
     }
     return watts > 50 ? 'charging' : 'plugged';
@@ -613,7 +630,7 @@ class ApplianceEvChargerCard extends HTMLElement {
     const ps = c.entity_power && this._hass.states[c.entity_power];
     let w = this._num(c.entity_power);
     if (w !== null && ps && /kw/i.test(ps.attributes.unit_of_measurement || '')) w *= 1000;
-    const energy = this._num(c.entity_session_energy), soc = this._num(c.entity_car_soc);
+    const energy = this._kwh(c.entity_session_energy), soc = this._num(c.entity_car_soc);
     let cost = this._num(c.entity_cost);
     if (cost === null && energy !== null && c.price_per_kwh && Number.isFinite(window.appliancePrice(this._hass, c.price_per_kwh))) cost = energy * window.appliancePrice(this._hass, c.price_per_kwh);
     let st = this._status(w || 0);

@@ -1142,7 +1142,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       const m = this.constructor.META;
-      this._c = { battery_low: 20, freeze_temp: 3, quick_times: m.quick, show_status: true, show_buttons: true, ...c };
+      this._c = { battery_low: 20, quick_times: m.quick, show_status: true, show_buttons: true, ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -1218,7 +1218,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const low = binLow || (!isNaN(bat) && bat < Number(c.battery_low));
       const tS = this._st(c.entity_temperature), tc = window.applianceTemp ? window.applianceTemp(this._hass, c) : null;
       const temp = tc ? tc.conv(this._num(tS), tS) : this._num(tS);
-      const freeze = !isNaN(temp) && c.freeze_temp !== '' && c.freeze_temp != null && temp <= Number(c.freeze_temp);
+      // seuil saisi dans l'unité d'affichage ; absent : 3 °C converti (°F) ; vide / null : alerte désactivée
+      const fz = c.freeze_temp === undefined ? (tc ? tc.c(3) : 3) : c.freeze_temp;
+      const freeze = !isNaN(temp) && fz !== '' && fz != null && temp <= Number(fz);
       const leak = this._on(c.entity_leak), fault = this._on(c.entity_fault), rain = this._on(c.entity_rain);
       // alerte prioritaire : l'état ouvert / fermé reste visible dessous (eau qui coule, levier)
       const alert = unavailable ? 'unavailable' : leak ? 'leak' : fault ? 'fault' : freeze ? 'freeze' : low ? 'low_battery' : m.rain && rain && !open ? 'rain' : '';
@@ -1389,7 +1391,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ent('entity_battery', ['sensor', 'binary_sensor'], true),
         { name: 'battery_low', default: 20, selector: { number: { min: 1, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
         ent('entity_signal', 'sensor'), ent('entity_temperature', 'sensor'),
-        { name: 'freeze_temp', default: 3, selector: { number: { min: -30, max: 40, step: 0.5, mode: 'box' } } },
+        // seuil de gel dans l'unité d'affichage (bornes et valeur par défaut données en °C)
+        ((tc) => ({ name: 'freeze_temp', default: Math.round(tc.c(3) * 2) / 2, selector: { number: { ...tc.range(-30, 40), step: 0.5, mode: 'box', unit_of_measurement: tc.unit } } }))(window.applianceTemp(this._hass, this._c)),
         window.applianceTempField,
         ent('entity_pressure', 'sensor'), ent('entity_power', 'sensor'), ent('entity_cost', ['sensor', 'input_number']),
         ...window.applianceActionFields,

@@ -29,3 +29,25 @@ jobs:
       - run: node build.js --check
       - run: node --check dist/ha-appliance-electromenager-cards.js
       - run: find dist/cards -name '*.js' -print0 | xargs -0 -n1 node --check
+  version:
+    name: Version bump
+    # code modifié sans changer la version : le tag v<VERSION> existe déjà et src/ ou dist/ ont changé depuis
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - name: src/ ou dist/ modifiés depuis le tag de la version actuelle
+        run: |
+          v="$(sed -n 's/.*const VERSION = "\([^"]*\)".*/\1/p' src/core/version.js)"
+          [ -n "$v" ] || { echo "::error::VERSION introuvable dans src/core/version.js"; exit 1; }
+          if git rev-parse -q --verify "refs/tags/v$v^{commit}" >/dev/null; then
+            if ! git diff --quiet "v$v" HEAD -- src dist; then
+              echo "::error::la version $v est déjà publiée (tag v$v) mais src/ ou dist/ ont changé depuis : augmente VERSION dans src/core/version.js"
+              git diff --stat "v$v" HEAD -- src dist | tail -n 20
+              exit 1
+            fi
+          fi
+          echo "version $v : OK"

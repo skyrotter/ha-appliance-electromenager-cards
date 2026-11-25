@@ -428,7 +428,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const rot = (id, a, show = true) => { const el = r.getElementById(id); if (!el) return; el.style.display = show ? '' : 'none'; el.style.transform = `rotate(${(-a).toFixed(2)}deg)`; };
       rot('bap', angle.p(isNaN(p) ? 1013 : p));
       rot('bah', angle.h(isNaN(h) ? 0 : h), !!c.entity_humidity);
-      rot('bat', angle.t(isNaN(t) ? 0 : t), !!c.entity_temperature);
+      // cadran gradué en °C : une mesure en °F (ou K) est ramenée en °C pour placer l'aiguille ; le texte de la tuile garde l'unité de l'entité
+      const tC = isNaN(t) || !window.applianceTemp ? t : Number(window.applianceTemp(this._hass, { temperature_unit: 'C' }).conv(t, this._hass && this._hass.states[c.entity_temperature]));
+      rot('bat', angle.t(isNaN(tC) ? 0 : tC), !!c.entity_temperature);
       if (c.reference_pressure != null && c.reference_pressure !== '') rot('bar', angle.p(Number(c.reference_pressure)));
       const val = { pressure: p, temperature: t, humidity: h }, dec = { pressure: 0, temperature: 1, humidity: 0 }, dflt = { pressure: 'hPa', temperature: '°C', humidity: '%' };
       TILES.forEach(([k, , opt]) => {

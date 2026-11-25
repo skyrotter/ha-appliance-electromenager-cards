@@ -862,7 +862,9 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       const dom = id.split('.')[0];
       const call = { button: ['button', 'press'], input_button: ['input_button', 'press'], lock: ['lock', 'unlock'], script: ['script', 'turn_on'],
         switch: ['switch', 'turn_on'], input_boolean: ['input_boolean', 'turn_on'], automation: ['automation', 'trigger'], scene: ['scene', 'turn_on'] }[dom] || ['homeassistant', 'turn_on'];
-      this._hass.callService(call[0], call[1], { entity_id: id });
+      const run = () => this._hass.callService(call[0], call[1], { entity_id: id });
+      // déverrouillage d'une serrure (action sensible) : confirmation « Annuler / OK », sauf confirm_actions: false
+      if (dom === 'lock' && this._c.confirm_actions !== false) window.applianceConfirm(this, { action: 'toggle', confirmation: true }, run); else run();
     }
 
     _doorTxt(id, open) { return !this._ok(this._st(id)) ? '--' : open ? this._t('open_short') : this._t('closed'); }

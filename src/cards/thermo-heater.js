@@ -211,10 +211,13 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
 
     _compute() {
       const c = this._c, e = this._st(c.entity), a = (e && e.attributes) || {};
-      const power = this._num(c.entity_power);
-      const temp = !isNaN(this._num(c.entity_temp)) ? this._num(c.entity_temp) : parseFloat(a.current_temperature);
-      const target = !isNaN(this._num(c.entity_target)) ? this._num(c.entity_target) : parseFloat(a.temperature);
-      const reserve = this._num(c.entity_reserve), bottom = this._num(c.entity_temp_bottom);
+      // puissance en W (seuils green_above / boost_above en W, capteurs en kW convertis)
+      const power = isNaN(this._num(c.entity_power)) ? NaN : window.applianceWatts(this._st(c.entity_power));
+      // températures dans l'unité d'affichage (°C / °F) ; water_heater / climate sans unité : unité de Home Assistant
+      const tc = window.applianceTemp(this._hass, c), tv = (id) => tc.conv(this._num(id), this._st(id));
+      const temp = !isNaN(this._num(c.entity_temp)) ? tv(c.entity_temp) : tc.conv(parseFloat(a.current_temperature), e);
+      const target = !isNaN(this._num(c.entity_target)) ? tv(c.entity_target) : tc.conv(parseFloat(a.temperature), e);
+      const reserve = this._num(c.entity_reserve), bottom = tv(c.entity_temp_bottom);
       const mS = this._st(c.entity_mode);
       const known = [c.entity, c.entity_mode, c.entity_power, c.entity_temp, c.entity_temp_bottom].some((i) => this._ok(this._st(i)));
       const raw = String((this._ok(mS) ? mS.state : a.operation_mode || (e && e.state)) || '');
@@ -236,7 +239,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       const bS = this._st(c.entity_boost), pS = this._st(c.entity_pump);
       if (this._ok(bS) && /^(on|true|heat|heating|boost)$/i.test(String(bS.state))) mode = 'boost';
       else if (this._ok(pS) && mode !== 'off' && mode !== 'unavailable' && mode !== 'boost') mode = /^(on|true|running|heating)$/i.test(String(pS.state)) ? 'green' : 'pause';
-      return { mode, power, temp, bottom, target, reserve };
+      return { mode, power, temp, bottom, target, reserve, tc };
     }
 
     // last_cycle : dernier cycle lu dans l'historique (4 jours), relu au chargement puis 20 s après chaque fin de cycle
@@ -267,7 +270,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
     }
 
     // modèle photo : teinte du ballon, goutte et température de l'écran, jour / heure, puisage détecté
-    _renderPhoto({ f, mode, temp, lvl, bottom }) {
+    _renderPhoto({ f, mode, temp, lvl, bottom, tc }) {
       const c = this._c, r = this._root, $ = (id) => r.getElementById(id);
       // dégradé du haut (eau chaude, rouge) vers le bas (eau froide, bleu) : la limite est à la hauteur de la réserve
       $('at-s1').setAttribute('offset', String(Math.max(0, f - .05).toFixed(3)));
@@ -276,6 +279,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       $('at-fill').setAttribute('height', String((f * 41 + 1).toFixed(1)));
       const v = c.lcd_value === 'target' ? this._compute().target : temp;
       $('at-val').textContent = isNaN(v) ? '--' : String(Math.round(v));
+      $('at-unit').textContent = tc.unit;
       const d = new Date(), loc = window.applianceLocale(c, this._hass);
       let wd = ''; try { wd = d.toLocaleDateString(loc, { weekday: 'short' }).replace('.', ''); } catch (e) { wd = ''; }
       wd = wd.charAt(0).toUpperCase() + wd.slice(1, 3);
@@ -296,7 +300,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
     _render() {
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card;
-      const { mode, power, temp, bottom, target, reserve: reserve0 } = this._compute();
+      const { mode, power, temp, bottom, target, reserve: reserve0, tc } = this._compute();
       // eau chaude restante : entity_reserve (%), sinon hot_water_level (%), sinon hot_water_volume (L) rapporté à tank_volume (L, nombre ou entité)
       const lvlE = this._num(c.hot_water_level), vol = this._num(c.hot_water_volume);
       const cap = typeof c.tank_volume === 'string' ? this._num(c.tank_volume) : Number(c.tank_volume);
@@ -315,10 +319,12 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       card.style.setProperty('--spd', `${spd.toFixed(2)}s`);
       // réserve d'eau chaude (%), position de la limite eau froide / eau chaude dans le ballon ; sans capteur, déduite de la température / consigne
       let lvl = reserve;
-      if (isNaN(lvl) && !isNaN(temp) && !isNaN(target) && target > 15) lvl = Math.max(0, Math.min(100, (temp - 15) / (target - 15) * 100));
+      // calcul en °C (eau froide à 15 °C)
+      const tC = tc.toC(temp), gC = tc.toC(target);
+      if (isNaN(lvl) && !isNaN(tC) && !isNaN(gC) && gC > 15) lvl = Math.max(0, Math.min(100, (tC - 15) / (gC - 15) * 100));
       if (isNaN(lvl)) lvl = mode === 'off' ? 0 : 60;
       const f = Math.max(0, Math.min(1, lvl / 100));
-      if (this._photo()) this._renderPhoto({ f, mode, temp, lvl, bottom, reserve });
+      if (this._photo()) this._renderPhoto({ f, mode, temp, lvl, bottom, reserve, tc });
       else {
       r.getElementById('thg0').setAttribute('offset', '0');
       // le dégradé va du bleu (bas) au rouge (haut) : l'étape violette est la limite entre l'eau froide en bas et l'eau chaude en haut,
@@ -329,7 +335,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       const big = r.getElementById('thbig');
       if (c.lcd_big === true) {
         const cur = c.lcd_value !== 'target', v = cur ? temp : target;
-        const txt = `${this._fmt(v, 0)}${isNaN(v) ? '' : '°C'}`, w = txt.length * 72, slot = 130, x0 = 378 - (w + slot) / 2;
+        const txt = `${this._fmt(v, 0)}${isNaN(v) ? '' : tc.unit}`, w = txt.length * 72, slot = 130, x0 = 378 - (w + slot) / 2;
         const ico = cur
           ? '<g fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"><path d="M0 -42V12"/><circle cx="0" cy="26" r="18" fill="#fff"/></g>'
           : '<g fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"><circle r="32"/><circle r="8" fill="#fff"/><path d="M0 -52V-36M0 36V52M-52 0H-36M36 0H52"/></g>';
@@ -343,14 +349,14 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       badge.textContent = this._t(`mode_${mode}`);
       badge.style.display = c.show_status === false ? 'none' : '';
 
-      const eu = this._unit(c.entity_energy, 'kWh'), tu = this._unit(c.entity_temp || c.entity, '°C'), ru = this._unit(c.entity_reserve, '%');
+      const eu = this._unit(c.entity_energy, 'kWh'), ru = this._unit(c.entity_reserve, '%');
       const V = {
         energy: [c.entity_energy, this._fmt(this._num(c.entity_energy), 2), eu],
-        power: [c.entity_power, this._fmt(power, 0), this._unit(c.entity_power, 'W')],
+        power: [c.entity_power, this._fmt(this._num(c.entity_power), 0), this._unit(c.entity_power, 'W')],
         mode: [c.entity_mode || c.entity || c.entity_power, this._t(`mode_${mode}`), ''],
-        temp: [c.entity_temp || c.entity, this._fmt(temp, 1), tu === '%' ? '°C' : (tu || '°C')],
-        bottom: [c.entity_temp_bottom, this._fmt(bottom, 1), tu === '%' ? '°C' : (tu || '°C')],
-        target: [c.entity_target || c.entity, this._fmt(target, 0), tu === '%' ? '°C' : (tu || '°C')],
+        temp: [c.entity_temp || c.entity, this._fmt(temp, 1), tc.unit],
+        bottom: [c.entity_temp_bottom, this._fmt(bottom, 1), tc.unit],
+        target: [c.entity_target || c.entity, this._fmt(target, 0), tc.unit],
         reserve: [c.entity_reserve || c.hot_water_level || c.hot_water_volume, this._fmt(reserve, 0), c.entity_reserve ? ru : '%'],
         volume: [!isNaN(litres) && (c.hot_water_volume || c.hot_water_level), this._fmt(litres, 0), 'L'],
         cycle: [cy, cy ? `${this._clock(cy.start)} → ${this._clock(cy.end)}` : '', ''],

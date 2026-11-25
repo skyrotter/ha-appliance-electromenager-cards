@@ -214,6 +214,8 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
     _compute() {
       const c = this._c, pS = this._st(c.entity), lS = this._st(c.entity_water_level);
       const wS = this._st(c.entity_power), w = this._num(wS);
+      // seuil power_on en W : la mesure est ramenée en W (capteurs en kW)
+      const wW = wS && !isNaN(w) ? window.applianceWatts(wS) : NaN;
       // niveau d'eau : % (ou volume / capacity), sinon texte (low / ok / empty)
       let level = this._num(lS);
       if (!isNaN(level) && Number(c.capacity) > 0 && this._unit(lS) !== '%') level = level / Number(c.capacity) * 100;
@@ -224,7 +226,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       const drinking = this._on(this._st(c.entity_drinking));
       // marche : interrupteur / pompe, sinon puissance mesurée, sinon allumée
       const dead = (c.entity && !pS) || (pS && /^unavailable$/i.test(String(pS.state)));
-      const off = !dead && (pS && this._ok(pS) ? /^(off|false|0|standby|idle|closed)$/i.test(String(pS.state)) : !isNaN(w) && !c.entity ? w < Number(c.power_on ?? 0.5) : false);
+      const off = !dead && (pS && this._ok(pS) ? /^(off|false|0|standby|idle|closed)$/i.test(String(pS.state)) : !isNaN(wW) && !c.entity ? wW < Number(c.power_on ?? 0.5) : false);
       const state = dead ? 'unavailable' : off ? 'off' : empty ? 'empty' : drinking ? 'drinking' : low ? 'low' : 'flowing';
       // filtre : jours restants, % restant ou capteur binaire « à changer »
       const fS = this._st(c.entity_filter), fv = this._num(fS), fu = this._unit(fS).toLowerCase();
@@ -290,8 +292,9 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       const BTN = [['power', 'mdi:power', c.entity, state === 'unavailable'], ['light', 'mdi:lightbulb', c.entity_light, false],
         ['filter_reset', 'mdi:air-filter', c.entity_filter_reset, false], ['clean_reset', 'mdi:broom', c.entity_clean_reset, false]].filter((b) => b[2]);
       const ctl = r.getElementById('pfctl'), sig = BTN.map((b) => b[0]).join('|');
-      if (this._sig !== sig) {
-        this._sig = sig;
+      // signature posée sur le conteneur : un _build (setConfig) recrée un #pfctl vide qu'il faut remplir à nouveau
+      if (ctl._sig !== sig) {
+        ctl._sig = sig;
         ctl.replaceChildren(...BTN.map(([a, ic]) => {
           const b = document.createElement('button'); b.dataset.a = a;
           const i = document.createElement('ha-icon'); i.setAttribute('icon', ic); b.append(i, document.createElement('span'));
@@ -310,8 +313,8 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       // modes de la fontaine : une pastille par option du select
       const mS = this._st(c.entity_mode), opts = mS && Array.isArray(mS.attributes.options) ? mS.attributes.options : [];
       const mbox = r.getElementById('pfmodes'), msig = opts.join('|');
-      if (this._msig !== msig) {
-        this._msig = msig;
+      if (mbox._sig !== msig) {
+        mbox._sig = msig;
         const human = (o) => { const t = String(o).replace(/_/g, ' '); return t.charAt(0).toUpperCase() + t.slice(1); };
         mbox.replaceChildren(...opts.map((o) => {
           const b = document.createElement('button'); b.dataset.o = o;
@@ -319,7 +322,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
           const i = document.createElement('ha-icon'); i.setAttribute('icon', 'mdi:water-sync');
           const sp = document.createElement('span'); sp.textContent = MODE_KEYS.includes(key) ? this._t(`mode_${key}`) : human(o);
           b.append(i, sp);
-          b.addEventListener('click', () => this._hass.callService(c.entity_mode.split('.')[0], 'select_option', { entity_id: c.entity_mode, option: o }));
+          b.addEventListener('click', () => this._hass.callService(this._c.entity_mode.split('.')[0], 'select_option', { entity_id: this._c.entity_mode, option: o }));
           return b;
         }));
       }

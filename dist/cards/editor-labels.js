@@ -2487,6 +2487,8 @@
       "invert": "Invertir estado",
       "invert_position": "Invertir posición (abierto ↔ cerrado)",
       "invert_buttons": "Invertir los botones (órdenes Abrir ↔ Cerrar)",
+      "panels": "Número de hojas (1 o 2)",
+      "side": "Lado donde se recoge la hoja única",
       "invert_power": "Invertir signo de la potencia",
       "jets_threshold": "Umbral de los chorros (W)",
       "language": "Idioma",
@@ -2682,6 +2684,10 @@
       "tile_background": "Fondo de los recuadros",
       "tile_bg_transparent": "Transparente (por defecto)",
       "tile_bg_theme": "Color del tema",
+      "tile_bg_none": "Ninguno (totalmente transparente)",
+      "illustration_background": "Fondo del dibujo",
+      "illus_bg_default": "Marco suave (por defecto)",
+      "illus_bg_none": "Ninguno (totalmente transparente)",
       "tile_order": "Orden en los recuadros",
       "tile_order_name": "Nombre arriba, valor abajo",
       "tile_order_value": "Valor arriba, nombre abajo",
@@ -3079,7 +3085,14 @@
       "show_heat": "Mostrar potencia térmica",
       "show_cop": "Mostrar COP",
       "show_compressor": "Mostrar compresor (frecuencia, demanda)",
-      "show_backup": "Mostrar apoyos y caldera"
+      "show_backup": "Mostrar apoyos y caldera",
+      "entity_room_target": "Consigna de la estancia",
+      "entity_boost": "Boost / apoyo eléctrico (encendido / apagado)",
+      "entity_draw": "Consumo de agua caliente (encendido / apagado o caudal)",
+      "history_popup_background": "Fondo de la ventana emergente (#hex, rgb(), rgba() o nombre CSS)",
+      "history_popup_opacity": "Opacidad del fondo de la ventana emergente",
+      "show_subscribed": "Mostrar la línea de potencia contratada",
+      "press_animation": "Animar las pulsaciones de los botones"
     },
     "fr": {
       "confirm_action": "Demander confirmation avant l'action",
@@ -3114,6 +3127,7 @@
       "block_on_rain": "Bloquer le démarrage manuel s'il pleut",
       "show_soil": "Afficher l'humidité du sol",
       "show_pump": "Afficher la pompe",
+      "extra_tiles": "Tuiles supplémentaires (liste : entity, name, icon)",
       "animations": "Animations",
       "battery_low": "Batterie faible (%)",
       "buffer_tank": "Ballon tampon",
@@ -3157,6 +3171,12 @@
       "entity_humidity": "Humidité",
       "entity_injection": "Index d'injection",
       "entity_input_voltage": "Tension d'entrée",
+      "entity_battery_voltage": "Tension batterie",
+      "entity_nominal_power": "Puissance nominale",
+      "entity_beeper": "État de l'alarme sonore (bip)",
+      "show_battery_voltage": "Afficher la tension batterie",
+      "show_nominal_power": "Afficher la puissance nominale",
+      "show_beeper": "Afficher l'alarme sonore",
       "entity_level": "Niveau (%)",
       "entity_light": "Éclairage",
       "entity_load": "Charge connectée",
@@ -6449,6 +6469,10 @@
       "tile_background": "Fundo dos blocos",
       "tile_bg_transparent": "Transparente (padrão)",
       "tile_bg_theme": "Cor do tema",
+      "tile_bg_none": "Nenhum (totalmente transparente)",
+      "illustration_background": "Fundo do desenho",
+      "illus_bg_default": "Moldura suave (padrão)",
+      "illus_bg_none": "Nenhum (totalmente transparente)",
       "tile_order": "Ordem dos blocos",
       "tile_order_name": "Nome em cima, valor em baixo",
       "tile_order_value": "Valor em cima, nome em baixo",
@@ -6853,6 +6877,13 @@
       "show_cop": "Mostrar COP",
       "show_compressor": "Mostrar compressor (frequência, procura)",
       "show_backup": "Mostrar apoios e caldeira",
+      "entity_room_target": "Temperatura desejada do ambiente",
+      "entity_boost": "Reforço / apoio elétrico (ligado / desligado)",
+      "entity_draw": "Consumo de água quente (ligado / desligado ou vazão)",
+      "history_popup_background": "Fundo do pop-up (#hex, rgb(), rgba() ou nome CSS)",
+      "history_popup_opacity": "Opacidade do fundo do pop-up",
+      "show_subscribed": "Mostrar a linha da potência contratada",
+      "press_animation": "Animar os cliques nos botões",
       "entity_import_t1": "Importação tarifa 1",
       "entity_import_t2": "Importação tarifa 2",
       "entity_export_t1": "Exportação tarifa 1",
@@ -7198,6 +7229,10 @@
       "tile_background": "Fundo dos blocos",
       "tile_bg_transparent": "Transparente (predefinição)",
       "tile_bg_theme": "Cor do tema",
+      "tile_bg_none": "Nenhum (totalmente transparente)",
+      "illustration_background": "Fundo do desenho",
+      "illus_bg_default": "Moldura suave (predefinição)",
+      "illus_bg_none": "Nenhum (totalmente transparente)",
       "tile_order": "Ordem dos blocos",
       "tile_order_name": "Nome em cima, valor em baixo",
       "tile_order_value": "Valor em cima, nome em baixo",
@@ -7602,6 +7637,13 @@
       "show_cop": "Mostrar COP",
       "show_compressor": "Mostrar compressor (frequência, procura)",
       "show_backup": "Mostrar apoios e caldeira",
+      "entity_room_target": "Temperatura pretendida da divisão",
+      "entity_boost": "Reforço / apoio elétrico (ligado / desligado)",
+      "entity_draw": "Consumo de água quente (ligado / desligado ou caudal)",
+      "history_popup_background": "Fundo da janela pop-up (#hex, rgb(), rgba() ou nome CSS)",
+      "history_popup_opacity": "Opacidade do fundo da janela pop-up",
+      "show_subscribed": "Mostrar a linha da potência contratada",
+      "press_animation": "Animar o premir dos botões",
       "entity_import_t1": "Importação tarifa 1",
       "entity_import_t2": "Importação tarifa 2",
       "entity_export_t1": "Exportação tarifa 1",
@@ -9636,6 +9678,7 @@
     },
     "uk": {
       "garage_car_image": "Зображення автомобіля (вигляд спереду, URL або файл /local/)",
+      "car_image_align": "Вирівнювання зображення авто",
       "confirm_action": "Запитувати підтвердження перед дією",
       "confirm_text": "Текст підтвердження (необов'язково)",
       "tiles_position": "Розташування плиток",
@@ -9740,6 +9783,12 @@
       "entity_avg": "Середня потужність",
       "entity_voltage": "Напруга",
       "entity_current": "Струм",
+      "entity_voltage_l1": "Напруга фази L1",
+      "entity_voltage_l2": "Напруга фази L2",
+      "entity_voltage_l3": "Напруга фази L3",
+      "entity_current_l1": "Струм фази L1",
+      "entity_current_l2": "Струм фази L2",
+      "entity_current_l3": "Струм фази L3",
       "entity_pressure": "Тиск",
       "rotate_seconds": "Змінювати велике значення кожні (с, 0 = вимк.)",
       "rotate_title": "Показувати назву значення в заголовку",
@@ -9750,6 +9799,8 @@
       "entity_session_energy": "Енергія сесії",
       "entity_soc": "Рівень заряду",
       "entity_calibration": "Наступне калібрування (датчик дати)",
+      "entity_soc_min": "Мінімальна межа заряду (число або датчик, %)",
+      "entity_soc_max": "Максимальна межа заряду (число або датчик, %)",
       "entity_source_in_temp": "Температура входу джерела",
       "entity_source_out_temp": "Температура виходу джерела",
       "entity_source_pump": "Насос джерела",
@@ -9779,6 +9830,8 @@
       "invert": "Інвертувати стан",
       "invert_position": "Інвертувати положення (відчинено ↔ зачинено)",
       "invert_buttons": "Інвертувати кнопки (команди Відчинити ↔ Зачинити)",
+      "panels": "Кількість стулок (1 або 2)",
+      "side": "Бік, куди складається одна стулка",
       "invert_power": "Інвертувати знак потужності",
       "jets_threshold": "Поріг форсунок (Вт)",
       "language": "Мова",
@@ -9802,6 +9855,7 @@
       "power_max": "Максимальна потужність",
       "pressure_max": "Тривога надлишкового тиску (бар)",
       "price_per_kwh": "Ціна за кВт·год",
+      "currency": "Валюта",
       "price_per_liter": "Ціна за літр",
       "price_per_unit": "Ціна за одиницю",
       "ready_margin": "Запас готовності",
@@ -9862,6 +9916,8 @@
       "show_temps": "Показувати температури",
       "show_time": "Показувати час",
       "show_calibration": "Показувати наступне калібрування",
+      "show_soc_min": "Показувати мін. заряд",
+      "show_soc_max": "Показувати макс. заряд",
       "show_voltage": "Показувати напруги",
       "show_water": "Показувати температуру води",
       "show_water_level": "Показувати рівень води",
@@ -9874,6 +9930,9 @@
       "dial_decimals": "Десяткові знаки на барабанах літрів циферблата",
       "title_layout": "Назва і стан",
       "illustration_position": "Розташування малюнка",
+      "illus_pos_center": "По центру (типово)",
+      "illus_pos_left": "Ліворуч, перші 2 плитки праворуч",
+      "illus_pos_right": "Праворуч, перші 2 плитки ліворуч",
       "door_model": "Модель",
       "sync_box_model": "Вигляд пристрою",
       "open_alert_minutes": "Попереджати, якщо відчинено довше ніж (хв)",
@@ -9938,6 +9997,18 @@
       "pump_y": "Положення насоса по Y на зображенні (%, від верхнього краю)",
       "pump_icon": "Значок насоса",
       "illustration_size": "Розмір ілюстрації",
+      "lcd_humidity": "Вологість на дисплеї",
+      "battery_model": "Модель акумулятора",
+      "battery_entity_backup": "Резервний вихід (автономне живлення)",
+      "battery_show_backup": "Плитка резерву",
+      "backup_color": "Колір резерву (назва або #hex, типово помаранчевий)",
+      "battery_flip": "Віддзеркалити фото (резервна розетка з іншого боку)",
+      "battery_count": "Кількість блоків поруч",
+      "battery_model_default": "Намальовані модулі (типово)",
+      "battery_model_marstek_venus_e3": "Marstek Venus E 3.0 (фото)",
+      "battery_model_zendure_ac2400": "Zendure SolarFlow 2400 AC+ (фото)",
+      "battery_entity_mode": "Режим роботи (сутність select)",
+      "battery_show_mode": "Показувати режим роботи",
       "handle_color": "Колір ручки",
       "handle_pink": "Рожевий (типово)",
       "handle_blue": "Синій (холодна вода)",
@@ -9956,6 +10027,10 @@
       "tile_background": "Тло плиток",
       "tile_bg_transparent": "Прозоре (типово)",
       "tile_bg_theme": "Колір теми",
+      "tile_bg_none": "Немає (повністю прозоре)",
+      "illustration_background": "Фон малюнка",
+      "illus_bg_default": "М'яка рамка (типово)",
+      "illus_bg_none": "Немає (повністю прозоре)",
       "tile_order": "Порядок плиток",
       "tile_order_name": "Назва зверху, значення знизу",
       "tile_order_value": "Значення зверху, назва знизу",
@@ -10014,6 +10089,12 @@
       "confirm_open": "Підтвердити відкриття засува (2-ге натискання)",
       "show_door": "Показувати двері",
       "lock_model": "Модель замка",
+      "color_locked": "Колір – зачинено (ореол, LED-кільце)",
+      "color_unlocked": "Колір – відчинено (ореол, LED-кільце)",
+      "color_jammed": "Колір – заклинило (ореол, LED-кільце)",
+      "color_locking": "Колір – зачиняється (ореол, LED-кільце)",
+      "color_unlocking": "Колір – відчиняється (ореол, LED-кільце)",
+      "color_open": "Колір – засувку відкрито (ореол, LED-кільце)",
       "tilt_only": "Лише нахил (без вгору / вниз)",
       "tilt_from_position": "Нахил за положенням (двигун на шнурі нахилу)",
       "tilt_presets": "Пресети нахилу (список, напр. [0, 50, 100])",
@@ -10295,6 +10376,17 @@
       "show_source": "Плитка джерела",
       "entity_close": "Команда закриття (button / script)",
       "entity_stop": "Команда зупинки (button / script)",
+      "entity_subwoofer": "Сабвуфер (перемикач увімк. / вимк.)",
+      "entity_subwoofer_gain": "Рівень сабвуфера (number)",
+      "entity_bass": "Низькі частоти (number)",
+      "entity_treble": "Високі частоти (number)",
+      "entity_center": "Центральний канал голосу (number)",
+      "entity_height": "Верхні динаміки (number)",
+      "entity_rear": "Задні динаміки (number)",
+      "entity_sound_mode": "Аудіорежим (select)",
+      "show_subwoofer": "Плитка сабвуфера",
+      "entity_half": "Команда напіввідкриття (button / script)",
+      "half_position": "Положення напіввідкриття (%)",
       "entity_supply_temp": "Температура подачі (Tv)",
       "entity_water_volume": "Загальний об'єм води",
       "entity_room_temp": "Температура в кімнаті",
@@ -10327,10 +10419,22 @@
       "entity_immersion": "Занурювальний нагрівач",
       "entity_boiler": "Котел",
       "frequency_threshold": "Поріг частоти (Гц)",
+      "standby_threshold": "Поріг режиму очікування (Вт)",
+      "zone1_type": "Нагрівальний прилад зони 1",
+      "zone2_type": "Нагрівальний прилад зони 2",
+      "emitter_radiator": "Радіатор",
+      "emitter_floor": "Тепла підлога",
       "show_heat": "Показувати теплову потужність",
       "show_cop": "Показувати COP",
       "show_compressor": "Показувати компресор (частота, запит)",
-      "show_backup": "Показувати резервні нагрівачі та котел"
+      "show_backup": "Показувати резервні нагрівачі та котел",
+      "entity_room_target": "Уставка кімнати",
+      "entity_boost": "Boost / електричний догрів (увімк. / вимк.)",
+      "entity_draw": "Відбір гарячої води (увімк. / вимк. або потік)",
+      "history_popup_background": "Фон спливного вікна (#hex, rgb(), rgba() або назва CSS)",
+      "history_popup_opacity": "Непрозорість фону спливного вікна",
+      "show_subscribed": "Показувати лінію договірної потужності",
+      "press_animation": "Анімувати натискання кнопок"
     }
   };
   const lang = (hass) => window.applianceLang(L, null, hass);
@@ -10509,6 +10613,14 @@
     const a = a0 && typeof a0 === 'object' && a0.confirmation ? { ...a0, confirmation: undefined } : a0;
     window.applianceConfirm(el, a0, () => window.applianceRunAction1(el, a));
   };
+  // « toggle » selon le domaine : homeassistant.toggle ne fait rien pour un verrou, une scène, un script ou un bouton
+  window.applianceToggle = (hass, id) => {
+    const d = id.split('.')[0], st = hass.states && hass.states[id] && hass.states[id].state;
+    if (d === 'lock') hass.callService('lock', st === 'locked' ? 'unlock' : 'lock', { entity_id: id });
+    else if (d === 'scene' || d === 'script') hass.callService(d, 'turn_on', { entity_id: id });
+    else if (d === 'button' || d === 'input_button') hass.callService(d, 'press', { entity_id: id });
+    else hass.callService(['light', 'switch', 'input_boolean', 'fan', 'cover'].includes(d) ? d : 'homeassistant', 'toggle', { entity_id: id });
+  };
   window.applianceRunAction1 = (el, a) => {
     const c = el._c || el._config, hass = el._hass;
     const type = typeof a === 'string' ? a : a && a.action;
@@ -10516,11 +10628,7 @@
     const id = (a && a.entity) || dfltEntity(c);
     if (type === 'more-info') { window.applianceMore(el, id); return; }
     if (type === 'toggle' && id && /^(select|input_select|number|input_number|sensor|counter|binary_sensor)\./.test(id)) { window.applianceMore(el, id); return; } // pas basculable : fiche de l'entité
-    if (type === 'toggle' && id) {
-      const d = id.split('.')[0];
-      hass.callService(['light', 'switch', 'input_boolean', 'fan'].includes(d) ? d : 'homeassistant', 'toggle', { entity_id: id });
-      return;
-    }
+    if (type === 'toggle' && id) { window.applianceToggle(hass, id); return; }
     el.dispatchEvent(new CustomEvent('hass-action', { detail: { config: { entity: id, tap_action: typeof a === 'string' ? { action: a } : a }, action: 'tap' }, bubbles: true, composed: true }));
   };
   // branche l'illustration : clic → tap_action (sinon fallback, la fiche de l'entité), appui long → hold_action

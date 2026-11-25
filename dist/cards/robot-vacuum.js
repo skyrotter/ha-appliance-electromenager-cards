@@ -560,6 +560,8 @@ const COMMON_CSS_VAC = `
 
 class ApplianceRobotVacuumSoloCard extends ApplianceRobotVacuumCard {
   _build() {
+    // langue de ce rendu : le premier hass ne reconstruit pas le DOM si elle n'a pas changé
+    this._lng = lang(this._hass, this._config);
     if (!this.shadowRoot) this.attachShadow({ mode: 'open' });
     const brush = (x) => `<g transform="translate(${x} 113)"><g class="brush">
       ${[0, 120, 240].map((a) => `<line x1="0" y1="0" x2="17" y2="0" transform="rotate(${a}) scale(1 .35)" stroke="#6b7178" stroke-width="2.4" stroke-linecap="round"/>`).join('')}
@@ -629,7 +631,8 @@ class ApplianceRobotVacuumSoloCard extends ApplianceRobotVacuumCard {
       <div class="stats" id="stats"></div>`}
     </ha-card>`;
     this.shadowRoot.querySelectorAll('.btn').forEach((b) => { b.onclick = () => this._call(b.dataset.a); });
-    window.applianceBindIllus(this, this.shadowRoot.querySelector('.illus'), () => window.applianceMore(this, this._config.entity));
+    // .illus n'existe qu'en mode compact : sinon le dessin lui-même (#svg)
+    window.applianceBindIllus(this, this.shadowRoot.querySelector('.illus') || this.shadowRoot.getElementById('svg'), () => window.applianceMore(this, this._config.entity));
     this._built = true;
   }
 

@@ -252,7 +252,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { show_status: true, show_cpu: true, show_temp: true, show_ram: true, show_disk: true, show_network: true, show_uptime: true, show_power: true, show_energy: true,
-        cpu_busy: 70, temp_max: 85, ram_max: 90, disk_max: 90, off_threshold: 3, ...c };
+        cpu_busy: 70, ram_max: 90, disk_max: 90, off_threshold: 3, ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -269,6 +269,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     _watts(id) { const v = this._num(id); if (isNaN(v)) return NaN; return this._unit(id, 'W').toLowerCase() === 'kw' ? v * 1000 : v; }
     _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _more(id) { if (window.applianceMore) window.applianceMore(this, id); }
+    // seuil de température saisi dans l'unité d'affichage ; valeur par défaut écrite en °C, convertie (°F)
+    _tlim(k, defC) { const v = this._c[k]; return v != null && v !== '' ? Number(v) : window.applianceTemp ? window.applianceTemp(this._hass, this._c).c(defC) : defC; }
     _temp(id) {
       const s = this._st(id), v = this._num(id);
       if (!window.applianceTemp) return { v, unit: '°C' };
@@ -318,7 +320,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       else st = 'running';
       const alerts = [];
       if (st === 'running') {
-        if (!isNaN(tp.v) && tp.v >= Number(c.temp_max)) { st = 'hot'; alerts.push('overheating'); }
+        if (!isNaN(tp.v) && tp.v >= this._tlim('temp_max', 85)) { st = 'hot'; alerts.push('overheating'); }
         else if (!isNaN(cpu) && cpu >= Number(c.cpu_busy)) st = 'busy';
         else if (!isNaN(cpu) && cpu < 8) st = 'idle';
       }
@@ -391,6 +393,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const ent = (name, domain) => ({ name, selector: { entity: domain ? { domain } : {} } });
       const tr = { ...T.en, ...T[window.applianceLang(T, null, this._hass)] }; // repli par clé sur l'anglais
       const num = (name, min, max, step, def, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
+      // seuils de température dans l'unité d'affichage (bornes et valeur par défaut données en °C)
+      const tc = window.applianceTemp(this._hass, this._c);
+      const tnum = (name, min, max, step, def) => ({ name, default: Math.round(tc.c(def)), selector: { number: { ...tc.range(min, max), step, mode: 'box', unit_of_measurement: tc.unit } } });
       const bool = (name, def = true) => ({ name, selector: { boolean: {} }, default: def });
       this._form.hass = this._hass;
       this._form.data = this._c;
@@ -404,7 +409,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ent('entity'), ent('entity_cpu', 'sensor'), ent('entity_cpu_temp', 'sensor'), ent('entity_ram', 'sensor'), ent('entity_disk', 'sensor'),
         ent('entity_net_down', 'sensor'), ent('entity_net_up', 'sensor'), ent('entity_uptime', 'sensor'), ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'),
         { name: 'extra_tiles', selector: { object: {} } },
-        { type: 'grid', name: '', schema: [num('cpu_busy', 10, 100, 1, 70, '%'), num('temp_max', 40, 110, 1, 85, '°'), num('ram_max', 10, 100, 1, 90, '%'), num('disk_max', 10, 100, 1, 90, '%')] },
+        { type: 'grid', name: '', schema: [num('cpu_busy', 10, 100, 1, 70, '%'), tnum('temp_max', 40, 110, 1, 85), num('ram_max', 10, 100, 1, 90, '%'), num('disk_max', 10, 100, 1, 90, '%')] },
         window.applianceTempField,
         ...window.applianceActionFields,
         window.applianceLanguageField(T),

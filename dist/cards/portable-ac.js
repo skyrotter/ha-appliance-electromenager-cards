@@ -489,7 +489,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       if (k === 'power') {
         if (d === 'climate') h.callService('climate', off ? 'turn_on' : 'turn_off', { entity_id: c.entity });
         else h.callService('homeassistant', 'toggle', { entity_id: c.entity });
-      } else if ((k === 'up' || k === 'down') && d === 'climate') {
+      } else if ((k === 'up' || k === 'down') && d === 'climate' && a.temperature != null) {
+        // consigne du climate ; sans consigne (temperature null) on se rabat sur entity_target ci-dessous
         const step = Number(c.temp_step) || 1, cur = Number(a.temperature);
         if (isFinite(cur)) h.callService('climate', 'set_temperature', { entity_id: c.entity, temperature: Math.max(Number(a.min_temp) || 16, Math.min(Number(a.max_temp) || 30, cur + (k === 'up' ? step : -step))) });
       } else if ((k === 'up' || k === 'down') && c.entity_target) {

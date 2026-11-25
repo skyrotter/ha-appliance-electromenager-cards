@@ -19,6 +19,12 @@ const POOL_CTL = [["switch_ph_plus", "mdi:plus-circle-outline", "pool_ph_plus"],
   ["switch_electrolysis", "mdi:flash", "electrolysis"], ["switch_heat_pump", "mdi:heat-pump", "pool_heat_pump"], ["switch_shower", "mdi:shower-head", "shower"]];
 // appareils larges et plats dont la zone d'illustration s'ajuste au dessin : sélecteur des calques d'effets animés
 const AUTOFIT = { ac_split: ".ac-warm,.ac-waves,.ac-air,.ac-drops", av_receiver: ".av-waves,.av-notes,.av-ring" };
+// température ramenée en °C d'après son unité (°F → °C), pour la comparer aux seuils écrits en °C
+const toDegC = (v, unit) => (v == null || !Number.isFinite(v) ? v : /^\s*°?\s*F\s*$/i.test(String(unit || "")) ? (v - 32) / 1.8 : v);
+// price_per_kwh : entité (sensor.tarif, input_number.prix…) ou nombre, éventuellement en texte (« 0.25 », « 0,25 »)
+const priceEntity = (v) => (typeof v === "string" && /^[a-z_]+\.[a-z0-9_]+$/i.test(v.trim()) ? v.trim() : null);
+// options dont dépendent les lectures d'historique / statistiques (_fetchCycle, _fetchPeriod, _fetchUsage) : si l'une change, on relit tout
+const FETCH_KEYS = ["entity", "power", "power_solar", "energy", "energy_solar", "threshold", "cycle_gap", "energy_period", "estimate", "last_cycle", "price_per_kwh", "usage_time", "show_usage_time"];
 class ApplianceCardBase extends HTMLElement {
   static get kind() { return "washer"; }
   static getConfigForm() { return buildForm(this.kind); }
@@ -40,6 +46,17 @@ class ApplianceCardBase extends HTMLElement {
       throw new Error(tr(undefined, "err_need_entity"));
     }
     this._config = { ...config };
+    // options des lectures d'historique changées : on oublie ce qui a été lu (dernier cycle, durée de référence, période, durée d'utilisation)
+    // et les lectures encore en cours pour l'ancienne config sont ignorées (jeton _fetchTok)
+    const fsig = JSON.stringify(FETCH_KEYS.map((k) => config[k] ?? null));
+    if (fsig !== this._fetchSig) {
+      this._fetchSig = fsig; this._fetchTok = {};
+      clearTimeout(this._cycTimer);
+      this._cycAt = 0; this._cycle = null; this._refDur = null; this._runStart = 0; this._offAt = 0; this._cycActive = undefined; this._cycBusy = false; this._cycResume = null;
+      this._perKwh = null; this._perSig = null; this._perAt = 0; this._perBusy = false;
+      this._use = null; this._useAt = 0; this._useDay = null; this._useBusy = false;
+      this._dwLastActive = 0;
+    }
     this._kind = this.constructor.kind;
     this._def = DEF[this._kind];
     this._lastKey = null;
@@ -56,8 +73,12 @@ class ApplianceCardBase extends HTMLElement {
   connectedCallback() {
     // keep LCD clock / countdown fresh even when no entity changes
     this._tick = setInterval(() => { if (this._hass && this._config) this._update(false); }, 20000);
+    // relecture du dernier cycle annulée par un retrait de la page (changement de vue…) : reprogrammée pour l'échéance prévue
+    const r = this._cycResume;
+    if (r) { clearTimeout(this._cycTimer); this._cycBusy = true; this._cycTimer = setTimeout(r.run, Math.max(0, r.due - Date.now())); }
   }
-  disconnectedCallback() { clearInterval(this._tick); clearTimeout(this._cycTimer); this._cycBusy = false; this._closeSourcePopup(); }
+  // une relecture programmée (_cycResume) reste en attente et repart au retour de la carte ; sinon plus rien n'est en cours
+  disconnectedCallback() { clearInterval(this._tick); clearTimeout(this._cycTimer); if (!this._cycResume) this._cycBusy = false; this._closeSourcePopup(); }
 
   getCardSize() { return 4; }
 
@@ -99,7 +120,11 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "error", "status_2", "temperature_2", "target_temperature_2", "remaining_2", "power", "power_factor", "current", "voltage", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "switch_low", "switch_high", "direction", "pressure", "runtime_total", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "entity_focus", "entity_activity", "entity_presence", "low_water", "water_level", "steam", "incline", "power_level", "pellet_level", "ph", "orp", "dose_interval", "dose_timer", "dose_volume", "dose_time", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter"].map((k) => c[k]).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "switch_low", "switch_high", "direction", "pressure", "runtime_total", "switch_ph_plus", "switch_ph_minus", "switch_electrolysis", "switch_heat_pump", "switch_shower", "presence", "entity_focus", "entity_activity", "entity_presence", "low_water", "water_level", "steam", "incline", "power_level", "pellet_level", "ph", "orp", "dose_interval", "dose_timer", "dose_volume", "dose_time", "pressure", "tds", "salt", "chlorine", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "hot_water_level", "hot_water_volume", "pm25", "filter",
+      // autres entités lues à l'affichage (tuiles de séance, projecteur, encres, message d'imprimante, compteur, boutons, soleil, prix du kWh)
+      "cadence", "distance", "heart_rate", "calories", "lamp_hours", "picture_mode", "ink_black", "ink_cyan", "ink_magenta", "ink_yellow", "ink_color",
+      "status_message", "counter", "button_on", "button_off", "sun_entity"].map((k) => c[k])
+      .concat(this._kind === "solar" && !c.sun_entity ? ["sun.sun"] : []).concat(priceEntity(c.price_per_kwh) ? [priceEntity(c.price_per_kwh)] : []).concat(typeof c.tank_volume === "string" ? [c.tank_volume] : []).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(typeof c.ring_light === "string" && c.ring_light ? [c.ring_light] : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
@@ -250,7 +275,9 @@ class ApplianceCardBase extends HTMLElement {
     const st = hass.states[src], sig = `${per}|${src}|${fromPower ? "" : st ? st.state : ""}`, now = Date.now();
     if (this._perBusy || (sig === this._perSig && now - (this._perAt || 0) < 300000) || (this._perAt && now - this._perAt < 60000)) return;
     this._perBusy = true; this._perSig = sig; this._perAt = now;
-    const done = () => { this._perBusy = false; if (this._hass) this._render(this._compute()); };
+    const tok = this._fetchTok, cur = () => this._fetchTok === tok; // résultat d'une config plus ancienne : ignoré
+    const set = (v) => { if (cur()) this._perKwh = v; };
+    const done = () => { if (!cur()) return; this._perBusy = false; if (this._hass) this._render(this._compute()); };
     if (fromPower) {
       // début de la période : minuit, lundi 0 h, le 1er à 0 h (calendaire) ou maintenant − N jours (glissante)
       const d = new Date(now);
@@ -264,15 +291,15 @@ class ApplianceCardBase extends HTMLElement {
         .then((r) => ((r && r[src]) || []).reduce((w, x) => w + (Number.isFinite(x.mean) ? x.mean : 0), 0));
       // heures complètes (statistiques horaires) + heure en cours (statistiques de 5 min) ; chaque mesure est une moyenne en W sur sa durée
       Promise.all([q("hour", start, hourStart), q("5minute", hourStart, new Date(now))])
-        .then(([h, m5]) => { this._perKwh = (h * 1 + m5 / 12) / 1000; })
-        .catch(() => { this._perKwh = null; })
+        .then(([h, m5]) => { set((h * 1 + m5 / 12) / 1000); })
+        .catch(() => { set(null); })
         .finally(done);
       return;
     }
     const win = ROLLING[per] ? { rolling_window: { duration: { days: ROLLING[per] } } } : { calendar: { period: per } };
     hass.callWS({ type: "recorder/statistic_during_period", statistic_id: c.energy, ...win, types: ["change"], units: { energy: "kWh" } })
-      .then((r) => { this._perKwh = r && Number.isFinite(r.change) ? r.change : null; })
-      .catch(() => { this._perKwh = null; })
+      .then((r) => { set(r && Number.isFinite(r.change) ? r.change : null); })
+      .catch(() => { set(null); })
       .finally(done);
   }
 
@@ -294,13 +321,18 @@ class ApplianceCardBase extends HTMLElement {
     if (this._cycBusy || !(first || ended) || (first && active && !est)) return;
     this._cycBusy = true; this._cycAt = Date.now();
     clearTimeout(this._cycTimer);
-    this._cycTimer = setTimeout(() => {
+    const tok = this._fetchTok, cur = () => this._fetchTok === tok; // résultat d'une config plus ancienne : ignoré
+    const delay = was === true ? 20000 : 0;
+    const run = () => {
+      this._cycResume = null;
+      if (!cur()) return;
       const now = Date.now(), pIds = [c.power].concat(wh && c.power_solar ? [c.power_solar] : []), eIds = [c.energy].concat(wh && c.energy_solar ? [c.energy_solar] : []).filter(Boolean);
       const ids = pIds.concat(eIds);
       const unit = (i, f) => f[(hass.states[i] && hass.states[i].attributes.unit_of_measurement) || ""] ?? 1;
       hass.callWS({ type: "history/history_during_period", start_time: new Date(now - (est ? 10 : 4) * 86400000).toISOString(), end_time: new Date(now).toISOString(),
         entity_ids: ids, minimal_response: true, no_attributes: true, significant_changes_only: false })
         .then((r) => {
+          if (!cur()) return;
           const pts = (i, f) => ((r && r[i]) || []).map((p) => ({ t: (p.lu ?? p.lc) * 1000, v: parseFloat(p.s) * f })).filter((p) => Number.isFinite(p.t));
           // plusieurs capteurs : somme des séries (chaque capteur garde sa valeur jusqu'à son point suivant)
           const pw = sumSeries(pIds.map((i) => pts(i, unit(i, { kW: 1000 })).map((p) => ({ t: p.t, v: Number.isFinite(p.v) ? p.v : 0 })))).map((p) => ({ t: p.t, w: p.v }));
@@ -315,9 +347,12 @@ class ApplianceCardBase extends HTMLElement {
             if (cur !== null && this._cycActive) this._runStart = cur;
           }
         })
-        .catch(() => { this._cycle = null; })
-        .finally(() => { this._cycBusy = false; if (this._hass) this._render(this._compute()); });
-    }, was === true ? 20000 : 0);
+        .catch(() => { if (cur()) this._cycle = null; })
+        .finally(() => { if (!cur()) return; this._cycBusy = false; if (this._hass) this._render(this._compute()); });
+    };
+    // retenu jusqu'au départ du minuteur : une carte retirée de la page puis remise relance la lecture (connectedCallback)
+    this._cycResume = { run, due: Date.now() + delay };
+    this._cycTimer = setTimeout(run, delay);
   }
 
   // durée d'utilisation du jour, sans capteur usage_time : historique depuis minuit de la puissance
@@ -335,25 +370,34 @@ class ApplianceCardBase extends HTMLElement {
     const t0 = start.getTime(), byPower = !!c.power, thr = c.threshold ?? this._def.threshold;
     const f = byPower && hass.states[id].attributes.unit_of_measurement === "kW" ? 1000 : 1;
     const on = (s) => byPower ? parseFloat(s) * f > thr : USAGE_ON.includes(String(s).toLowerCase());
+    const tok = this._fetchTok, cur = () => this._fetchTok === tok; // résultat d'une config plus ancienne : ignoré
     hass.callWS({ type: "history/history_during_period", start_time: start.toISOString(), end_time: new Date(now).toISOString(),
       entity_ids: [id], minimal_response: true, no_attributes: true, significant_changes_only: false })
       .then((r) => {
+        if (!cur()) return;
         const pts = ((r && r[id]) || []).map((p) => ({ t: Math.max(t0, (p.lu ?? p.lc) * 1000), s: p.s })).filter((p) => Number.isFinite(p.t)).sort((a, b) => a.t - b.t);
         let ms = 0;
         pts.forEach((p, i) => { if (on(p.s)) ms += (i + 1 < pts.length ? pts[i + 1].t : now) - p.t; });
         this._use = { min: ms / 60000, at: now, on: pts.length ? on(pts[pts.length - 1].s) : false };
       })
-      .catch(() => { this._use = null; })
-      .finally(() => { this._useBusy = false; if (this._hass) this._render(this._compute()); });
+      .catch(() => { if (cur()) this._use = null; })
+      .finally(() => { if (!cur()) return; this._useBusy = false; if (this._hass) this._render(this._compute()); });
   }
 
   _update(force) {
     const hass = this._hass;
     this._fetchPeriod();
     this._fetchUsage();
+    // clé de rendu : last_updated change à chaque changement d'état OU d'attribut de l'entité (Home Assistant) ;
+    // sans horodatage (état simulé), repli sur l'état et les attributs affichés. La tranche de 30 s garde à jour les textes horaires.
+    const ATTRS = ["temperature", "current_temperature", "current_humidity", "humidity", "action", "mode", "percentage", "volume_level", "is_volume_muted", "media_title",
+      "hvac_action", "preset_mode", "source", "app_name", "sound_mode", "current_position", "direction", "oscillating", "brightness", "rgb_color", "effect", "status"];
     const key = this._ids().map((i) => {
       const s = hass.states[i];
-      return s ? `${s.state}|${s.attributes.temperature ?? ""}|${s.attributes.current_temperature ?? ""}|${s.attributes.current_humidity ?? ""}|${s.attributes.humidity ?? ""}|${s.attributes.action ?? ""}|${s.attributes.mode ?? ""}|${s.attributes.percentage ?? ""}|${s.attributes.volume_level ?? ""}|${s.attributes.is_volume_muted ?? ""}|${s.attributes.media_title ?? ""}` : "x";
+      if (!s) return "x";
+      if (s.last_updated) return `${s.state}|${s.last_updated}`;
+      const a = s.attributes || {};
+      return `${s.state}|${ATTRS.map((k) => (a[k] == null ? "" : String(a[k]))).join("|")}`;
     }).join(";") + "|" + lang(hass) + "|" + numLoc(hass) + "|" + Math.floor(Date.now() / 30000);
     if (!force && key === this._lastKey) return;
     this._lastKey = key;
@@ -409,7 +453,8 @@ class ApplianceCardBase extends HTMLElement {
       m.dual = true; m.st2 = S(c.status_2);
       m.temp2 = num(S(c.temperature_2)); m.target2 = num(S(c.target_temperature_2)); m.remaining2 = parseRemaining(S(c.remaining_2));
       const raw2 = m.st2 ? String(m.st2.state).toLowerCase() : "";
-      m.active2 = m.st2 ? /running|cooking|heating|preheat|en cours|chauff|cuisson|^on$|^true$/.test(raw2) : m.temp2 != null && m.temp2 >= 50;
+      const t2u = S(c.temperature_2)?.attributes?.unit_of_measurement || m.tempUnit; // seuil de 50 °C : capteur en °F converti
+      m.active2 = m.st2 ? /running|cooking|heating|preheat|en cours|chauff|cuisson|^on$|^true$/.test(raw2) : m.temp2 != null && toDegC(m.temp2, t2u) >= 50;
     }
     // frigo : option temperature_unit (C / F). Les valeurs sont converties depuis l'unité de chaque capteur ; les seuils saisis
     // sont dans l'unité choisie, les seuils par défaut (écrits en °C) sont convertis. Sans l'option, rien ne change.
@@ -449,6 +494,7 @@ class ApplianceCardBase extends HTMLElement {
       // input_boolean / binary_sensor "on", or a descriptive sensor state, means running
       else base = "running";
     }
+    const refBase = base; // état lu dans l'entité, avant toute déduction par la puissance
     /* un état explicite (binary_sensor / input_boolean) prime sur la puissance : la prise peut être coupée alors que l'appareil tourne */
     const explicitState = !!main && ["input_boolean", "binary_sensor"].includes(domainOf(c.entity)) && !BAD.includes(String(main.state).toLowerCase());
     if (base === null && !pw && !pwS && ref) base = "unavailable";
@@ -980,7 +1026,8 @@ class ApplianceCardBase extends HTMLElement {
       else if (on) m.status = kind === "kettle" ? "boiling" : "toasting";
       else if (textCool) m.status = "hot_water";
       else if (m.kettleLifted) m.status = "off";
-      else if (kind === "kettle" && m.tempVal != null) m.status = m.tempVal >= (c.hot_temperature ?? 60) ? "hot_water" : "off";
+      // hot_temperature est dans l'unité du capteur ; le seuil par défaut (60 °C) est comparé à la température ramenée en °C
+      else if (kind === "kettle" && m.tempVal != null) m.status = (c.hot_temperature != null ? m.tempVal >= c.hot_temperature : toDegC(m.tempVal, m.tempUnit) >= 60) ? "hot_water" : "off";
       else m.status = this._onAt && now - this._onAt < keep ? (kind === "kettle" ? "hot_water" : "toast_ready") : "off";
       // bouilloire ESPHome / Tuya : entité « défaut » (binary_sensor allumé, ou capteur texte autre que « ok / aucun / none… »)
       const er = kind === "kettle" ? S(c.error) : null;
@@ -1061,10 +1108,12 @@ class ApplianceCardBase extends HTMLElement {
       }
       const dryingTimeout = 20 * 60 * 1000; // 20 minutes
       const recentlyActive = this._dwLastActive && (Date.now() - this._dwLastActive < dryingTimeout);
+      // 2e cas, séchage déduit d'une activité récente : sauf si l'entité dit explicitement terminé / arrêt / repos ou si la prise est coupée
       if (base === "running" && watts !== null && watts <= threshold) {
         m.status = "running";
         m.phase = "dry";
-      } else if (base !== "running" && !explicitState && recentlyActive && (watts === null || watts <= threshold)) {
+      } else if (base !== "running" && !explicitState && recentlyActive && (watts === null || watts <= threshold)
+        && !["finished", "off", "idle", "standby", "unavailable"].includes(refBase) && base !== "unavailable" && (!sw || isOn(sw))) {
         m.status = "running";
         m.phase = "dry";
       }
@@ -1504,7 +1553,7 @@ class ApplianceCardBase extends HTMLElement {
         automotive: "M5,11L6.5,6.5H17.5L19,11M17.5,16A1.5,1.5 0 0,1 16,14.5A1.5,1.5 0 0,1 17.5,13A1.5,1.5 0 0,1 19,14.5A1.5,1.5 0 0,1 17.5,16M6.5,16A1.5,1.5 0 0,1 5,14.5A1.5,1.5 0 0,1 6.5,13A1.5,1.5 0 0,1 8,14.5A1.5,1.5 0 0,1 6.5,16M18.92,6C18.72,5.42 18.16,5 17.5,5H6.5C5.84,5 5.28,5.42 5.08,6L3,12V20A1,1 0 0,0 4,21H5A1,1 0 0,0 6,20V19H18V20A1,1 0 0,0 19,21H20A1,1 0 0,0 21,20V12L18.92,6Z",
         cycling: "M5,20.5A3.5,3.5 0 0,1 1.5,17A3.5,3.5 0 0,1 5,13.5A3.5,3.5 0 0,1 8.5,17A3.5,3.5 0 0,1 5,20.5M5,12A5,5 0 0,0 0,17A5,5 0 0,0 5,22A5,5 0 0,0 10,17A5,5 0 0,0 5,12M14.8,10H19V8.2H15.8L13.86,4.93C13.57,4.43 13,4.1 12.4,4.1C11.93,4.1 11.5,4.29 11.2,4.6L7.5,8.29C7.19,8.6 7,9 7,9.5C7,10.13 7.33,10.66 7.85,10.97L11.2,13V18H13V11.5L10.75,9.85L13.07,7.5M19,20.5A3.5,3.5 0 0,1 15.5,17A3.5,3.5 0 0,1 19,13.5A3.5,3.5 0 0,1 22.5,17A3.5,3.5 0 0,1 19,20.5M19,12A5,5 0 0,0 14,17A5,5 0 0,0 19,22A5,5 0 0,0 24,17A5,5 0 0,0 19,12M16,4.8C17,4.8 17.8,4 17.8,3C17.8,2 17,1.2 16,1.2C15,1.2 14.2,2 14.2,3C14.2,4 15,4.8 16,4.8Z",
         stationary: "M12,2A2,2 0 0,1 14,4A2,2 0 0,1 12,6A2,2 0 0,1 10,4A2,2 0 0,1 12,2M10.5,7H13.5A2,2 0 0,1 15.5,9V14.5H14V22H10V14.5H8.5V9A2,2 0 0,1 10.5,7Z" };
-      const fn = m.focusName.toLowerCase();
+      const fn = String(m.focusName || "").toLowerCase(); // absent quand l'appareil est indisponible (_compute s'arrête avant)
       const fIcon = /sleep|sommeil|dormir|schlaf|sue[ñn]o|slaap|sonno|dormi|noc|søvn|søvn|alvás/.test(fn) ? "moon" : /work|travail|arbeit|trabajo|lavoro|werk|trabalho|praca/.test(fn) ? "work" : /personal|perso|home|maison|zuhause|casa|thuis/.test(fn) ? "home" : /driv|conduite|fahren|conducci|guida|rijden/.test(fn) ? "automotive" : /fitness|sport|workout/.test(fn) ? "running" : "dnd";
       let aIcon = "", aLab = "";
       if (m.status !== "charging" && m.status !== "charged") {
@@ -1716,7 +1765,7 @@ class ApplianceCardBase extends HTMLElement {
     }
     if (kind === "water_heater") {
       const t = m.tempVal;
-      const ang = t == null ? -135 : -135 + Math.max(0, Math.min(1, (t - 10) / 70)) * 270;
+      const ang = t == null ? -135 : -135 + Math.max(0, Math.min(1, (toDegC(t, m.tempUnit) - 10) / 70)) * 270; // cadran de 10 à 80 °C
       sr.querySelector(".needle").setAttribute("transform", `rotate(${ang.toFixed(1)} 60 76)`);
       sr.querySelector(".gauge-txt").textContent = t == null ? "--°" : `${Math.round(t)}°`;
       // niveau d'eau chaude : l'eau chaude occupe le haut du ballon, l'eau froide (bleue) le bas
@@ -1770,7 +1819,7 @@ class ApplianceCardBase extends HTMLElement {
       } else if (tv >= 6) {
         tCol = "color: #ffeb3b; border-color: rgba(255, 235, 59, 0.45); background: rgba(255, 235, 59, 0.15); box-shadow: 0 0 8px rgba(255, 235, 59, 0.2);";
       }
-      frPill = `<span class="fr-pill" style="${tCol}"><ha-icon icon="mdi:thermometer" style="color: inherit;"></ha-icon>${fmtNum(hass, m.tempVal, 1)} ${m.tempUnit}</span>`;
+      frPill = `<span class="fr-pill" style="${tCol}"><ha-icon icon="mdi:thermometer" style="color: inherit;"></ha-icon>${fmtNum(hass, m.tempVal, 1)} ${esc(m.tempUnit)}</span>`;
     }
     if (c.layout === "split") {
       $("info").innerHTML = `
@@ -1832,11 +1881,12 @@ class ApplianceCardBase extends HTMLElement {
     let pct = null;
     if (active && m.progress != null) pct = m.progress;
     else if (["tool_charger", "phone_charger", "wet_vacuum"].includes(kind) && m.status === "charging" && m.batt != null) pct = m.batt;
-    else if (kind === "kettle" && m.status === "boiling" && m.tempVal != null) pct = ((m.tempVal - 15) / 85) * 100;
+    else if (kind === "kettle" && m.status === "boiling" && m.tempVal != null) pct = ((toDegC(m.tempVal, m.tempUnit) - 15) / 85) * 100; // de 15 à 100 °C
     else if ((kind === "oven" && m.status === "preheating") || (kind === "water_heater" && m.status !== "off")) {
       if (m.tempVal != null && m.targetVal) {
+        // départ à 10 / 20 °C : température et consigne ramenées en °C (capteur en °F)
         const floor = kind === "water_heater" ? 10 : 20;
-        pct = ((m.tempVal - floor) / (m.targetVal - floor)) * 100;
+        pct = ((toDegC(m.tempVal, m.tempUnit) - floor) / (toDegC(m.targetVal, m.tempUnit) - floor)) * 100;
       }
     }
     if (pct != null && Number.isFinite(pct)) {
@@ -2286,9 +2336,12 @@ class ApplianceCardBase extends HTMLElement {
     }
     if (m.pwS && !zero(m.pwS)) tile("mdi:solar-power", fmtPower(hass, m.pwS) ?? "—", lb("solar_surplus"), c.power_solar);
     // display : "energy" (kWh seuls), "cost" (€ seuls, si price_per_kwh est valide), "both" (kWh ET coût de la période), sinon le comportement historique
-    const pr = typeof c.price_per_kwh === "string" ? num(hass.states[c.price_per_kwh]) : Number(c.price_per_kwh);
+    // prix : entité (sensor.x, input_number.x) ou nombre, aussi en texte (« 0.25 », « 0,25 » : virgule décimale acceptée)
+    const prEnt = priceEntity(c.price_per_kwh);
+    const pr = prEnt ? num(hass.states[prEnt]) : typeof c.price_per_kwh === "string" ? (/^\s*-?\d*[.,]?\d+\s*$/.test(c.price_per_kwh) ? Number(c.price_per_kwh.trim().replace(",", ".")) : NaN) : Number(c.price_per_kwh);
     const hasPr = c.price_per_kwh != null && c.price_per_kwh !== "" && Number.isFinite(pr);
-    const prEnt = typeof c.price_per_kwh === "string" ? c.price_per_kwh : null;
+    // kWh calculés ou convertis : la précision d'affichage d'un capteur ne vaut que pour un compteur déjà en kWh (pas pour la puissance, ni un compteur en Wh)
+    const kwhEnt = m.energy && m.energy.attributes && m.energy.attributes.unit_of_measurement === "kWh" ? c.energy : undefined;
     const showKwh = !(c.display === "cost" && hasPr), showCost = hasPr && c.display !== "energy";
     const money = (x) => {
       const cur = (hass.config && hass.config.currency) || "EUR";
@@ -2300,12 +2353,12 @@ class ApplianceCardBase extends HTMLElement {
     // show_energy / show_cost (cases de l'éditeur, cochées par défaut) : masquent les tuiles énergie / coût
     const noEnergy = c.energy_period === "none" || !showOpt("show_energy");
     if (noEnergy) { /* tuile masquée */ } else if (m.energy && per && !dual && !solar) {
-      if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2, 0, c.energy)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.energy);
+      if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2, 0, kwhEnt)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.energy);
       // coût de la période (mode € ou les deux) : conso de la période × prix du kWh actuel
       if (showCost && (c.display === "cost" || c.display === "both") && showOpt("show_cost")) tile("mdi:cash", money(this._perKwh * pr), tr(hass, `cost_${per}`), prEnt || c.energy);
     } else if (!c.energy && !m.energy && per && c.power && !dual && !solar) {
       // période calculée depuis la puissance de la prise (pas de compteur kWh) : kWh puis coût (avec price_per_kwh)
-      if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2, 0, c.power)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.power);
+      if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.power);
       if (showCost && showOpt("show_cost")) tile("mdi:cash", money(this._perKwh * pr), tr(hass, `cost_${per}`), prEnt || c.power);
     } else if (m.energy) {
       const eVal = fmtEnergy(hass, m.energy) ?? "—";
@@ -2352,7 +2405,7 @@ class ApplianceCardBase extends HTMLElement {
       else if (ago > 1) { try { day = ` · ${s0.toLocaleDateString(loc(hass), { day: "numeric", month: "short" })}`; } catch (e) { day = ` · ${s0.getDate()}/${s0.getMonth() + 1}`; } }
       tile("mdi:history", `${fmtClock(hass, s0)} → ${fmtClock(hass, s1)}`, `${lb("last_cycle")}${day}`, c.power);
       tile("mdi:timer-outline", fmtDuration((cy.end - cy.start) / 60000), lb("cycle_duration"), c.power);
-      if (showKwh) tile("mdi:lightning-bolt", `${fmtNum(hass, cy.kwh, 2, 0, c.energy || c.power)} kWh`, lb("cycle_energy"), c.energy || c.power);
+      if (showKwh) tile("mdi:lightning-bolt", `${fmtNum(hass, cy.kwh, 2, 0, kwhEnt)} kWh`, lb("cycle_energy"), c.energy || c.power);
       // prix du kWh : nombre, ou entité (tarif) ; devise de Home Assistant
       if (showCost) tile("mdi:cash", money(cy.kwh * pr), lb("cycle_cost"), prEnt || c.energy || c.power);
     }

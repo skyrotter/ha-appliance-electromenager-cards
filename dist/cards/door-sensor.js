@@ -278,7 +278,8 @@ svg{display:block;width:100%;max-width:calc(240px * var(--illus-scale,1));height
     set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 5; }
     getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
-    disconnectedCallback() { cancelAnimationFrame(this._raf); }
+    // animation coupée en cours : on oublie la cible pour que le prochain rendu reprenne le mouvement depuis l'angle atteint
+    disconnectedCallback() { cancelAnimationFrame(this._raf); this._raf = null; this._tgt = null; }
 
     _lang() { return window.applianceLang(T, this._c, this._hass); }
     _t(k) { return (T[this._lang()] || {})[k] ?? T.en[k] ?? k; }
@@ -306,17 +307,21 @@ svg{display:block;width:100%;max-width:calc(240px * var(--illus-scale,1));height
       </ha-card>`;
       window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => this._more({ battery: this._c.entity_battery, since: this._c.entity }[el.dataset.k])));
-      this._root = root; this._card = root.querySelector('ha-card'); this._scene = root.getElementById('dsscene'); this._built = true; this._a = null;
+      this._root = root; this._card = root.querySelector('ha-card'); this._scene = root.getElementById('dsscene'); this._built = true; this._a = null; this._tgt = null;
     }
 
     // anime le battant vers l'angle cible (0 fermé → 1 ouvert) ; sans animation il saute directement
     _swing(target) {
+      // même cible (atteinte ou en cours d'animation) : rien à refaire, la scène n'est pas reconstruite à chaque rendu
+      if (this._tgt === target && this._a != null) return;
+      this._tgt = target;
       cancelAnimationFrame(this._raf);
       if (this._a == null || this._c.animations === false || matchMedia('(prefers-reduced-motion: reduce)').matches) { this._a = target; this._scene.innerHTML = scene(target, this._use()); return; }
       const from = this._a, t0 = performance.now(), dur = 900, ease = (x) => (x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2);
       const step = (now) => {
-        const k = Math.min(1, (now - t0) / dur); this._a = from + (target - from) * ease(k); this._scene.innerHTML = scene(this._a, this._use());
-        if (k < 1) this._raf = requestAnimationFrame(step);
+        const k = Math.min(1, (now - t0) / dur), a = from + (target - from) * ease(k);
+        if (a !== this._a) { this._a = a; this._scene.innerHTML = scene(a, this._use()); } // angle inchangé : pas de redessin
+        if (k < 1) this._raf = requestAnimationFrame(step); else this._raf = null;
       };
       this._raf = requestAnimationFrame(step);
     }

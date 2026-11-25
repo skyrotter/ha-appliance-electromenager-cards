@@ -194,8 +194,19 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       if (this._hass) this._render();
     }
     set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
-    disconnectedCallback() { cancelAnimationFrame(this._raf); clearInterval(this._cyc); clearTimeout(this._wt); }
-    connectedCallback() { if (this._built && this._hass) this._render(); }
+    // retrait de la page : on arrête les minuteries et on remet l'état de pesée à zéro (sinon _weighing reste vrai et l'écran se fige)
+    disconnectedCallback() {
+      cancelAnimationFrame(this._raf); clearInterval(this._cyc); clearTimeout(this._wt);
+      this._raf = 0; this._cyc = 0; this._wt = 0; this._weighing = false; this._cycOn = false;
+      if (this._card) this._card.classList.remove('weigh', 'blink');
+    }
+    connectedCallback() {
+      if (!this._built || !this._hass) return;
+      this._render();
+      // retour sur la page : réaffiche le poids (fixe ou alterné), une pesée interrompue n'ayant pas fini son animation
+      const s = this._st(this._c.entity_weight);
+      if (!this._weighing && s && !/^(unavailable|unknown)$/.test(String(s.state))) this._startCycle();
+    }
     getCardSize() { return 5; }
     getGridOptions() { return { columns: 12, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 

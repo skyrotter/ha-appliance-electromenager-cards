@@ -97,6 +97,15 @@ const SEL = {
   pm25: { entity: { domain: ["sensor", "number", "input_number"] } },
   filter: { entity: { domain: ["sensor", "binary_sensor", "number", "input_number", "input_boolean"] } },
 };
+// libellé de l'éditeur : section common (tr), sinon section editor (window.applianceEditorLabel, définie par le morceau
+// editor-labels chargé à part, clé sans « f_ »), sinon common sans « f_ » (current, voltage…), sinon nom lisible tiré
+// de la clé (même règle que editor-labels, qui le renvoie aussi quand il ne connaît pas la clé) ; jamais la clé brute « f_… »
+const edLabel = (key) => {
+  const t = tr(null, key); if (t !== key) return t;
+  const n = key.replace(/^f_/, ""), hn = n.replace(/^entity_/, "").replace(/_/g, " "), h = hn.charAt(0).toUpperCase() + hn.slice(1);
+  const e = window.applianceEditorLabel ? window.applianceEditorLabel(n) : h; if (e !== h) return e;
+  const c = tr(null, n); return c !== n ? c : h;
+};
 function buildForm(kind) {
   const d = DEF[kind];
   return {
@@ -187,7 +196,7 @@ function buildForm(kind) {
           ] : []),
           ...(["radiator", "towel_dryer", "ac_split"].includes(kind) ? [
             { name: "lcd_value", selector: { select: { mode: "dropdown", options: [
-              { value: "target", label: tr(null, "lcd_value_target") }, { value: "current", label: tr(null, "lcd_value_current") }] } } },
+              { value: "target", label: edLabel("lcd_value_target") }, { value: "current", label: edLabel("lcd_value_current") }] } } },
             { name: "lcd_big", selector: { boolean: {} }, default: false },
           ] : []),
           ...(kind === "ac_split" ? [{ name: "lcd_humidity", selector: { boolean: {} }, default: true }] : []),
@@ -423,7 +432,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "air_compressor" && s.name === "pressure" ? "f_pressure_tank" : ["contact_grill", "iron", "steam_station"].includes(kind) && s.name === "ready_minutes" ? "f_grill_ready_minutes" : kind === "cookeo" && s.name === "style" ? "f_cookeo_style" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "fridge" && s.name === "finish" ? "f_fridge_finish" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "ceiling_fan" && s.name === "show_controls" ? "f_show_fan_controls" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : ["thermomix", "microwave", "vmc", "kettle", "phone_charger"].includes(kind) && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : ["printer_3d", "printer"].includes(kind) && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix", "printer"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : kind === "radiator" && s.name === "style" ? "f_radiator_style" : s.name === "view" ? "f_view" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? edLabel(kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "air_compressor" && s.name === "pressure" ? "f_pressure_tank" : ["contact_grill", "iron", "steam_station"].includes(kind) && s.name === "ready_minutes" ? "f_grill_ready_minutes" : kind === "cookeo" && s.name === "style" ? "f_cookeo_style" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "fridge" && s.name === "finish" ? "f_fridge_finish" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "ceiling_fan" && s.name === "show_controls" ? "f_show_fan_controls" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : ["thermomix", "microwave", "vmc", "kettle", "phone_charger", "deep_fryer"].includes(kind) && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : ["printer_3d", "printer"].includes(kind) && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix", "printer"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : kind === "radiator" && s.name === "style" ? "f_radiator_style" : s.name === "view" ? "f_view" : `f_${s.name}`) : undefined),
   };
 }
 

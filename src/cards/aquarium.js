@@ -204,10 +204,35 @@ class ApplianceAquariumCard extends HTMLElement {
     return Number.isFinite(n) ? n : null;
   }
 
+  // puissance en W (capteur en W, kW ou MW converti)
+  _w(id) {
+    const s = id && this._hass && this._hass.states[id];
+    if (!s || s.state === 'unavailable' || s.state === 'unknown') return null;
+    const n = window.applianceWatts ? window.applianceWatts(s) : parseFloat(s.state);
+    return Number.isFinite(n) ? n : null;
+  }
+
+  // énergie en kWh (capteur en Wh, kWh ou MWh converti)
+  _kwh(id) {
+    const n = this._num(id); if (n === null) return null;
+    const u = String((this._hass.states[id].attributes || {}).unit_of_measurement || '').trim();
+    return /^wh$/i.test(u) ? n / 1000 : u === 'MWh' ? n * 1000 : n;
+  }
+
+  // symbole de la devise : option `currency`, sinon celle de Home Assistant (Intl), sinon €
+  _cur() {
+    const c = this._config, cur = this._hass && this._hass.config && this._hass.config.currency;
+    if (c.currency) return String(c.currency);
+    try {
+      const loc = window.applianceLocale ? window.applianceLocale(c, this._hass) : undefined;
+      return new Intl.NumberFormat(loc, { style: 'currency', currency: cur, currencyDisplay: 'narrowSymbol' }).formatToParts(0).find((x) => x.type === 'currency').value;
+    } catch (e) { return '€'; }
+  }
+
   _update() {
     if (!this._built || !this._hass) return;
     const c = this._config, root = this.shadowRoot;
-    const power = this._num(c.entity_power), energy = this._num(c.entity_energy);
+    const power = this._w(c.entity_power), energy = this._kwh(c.entity_energy);
     // température dans l'unité d'affichage (°C / °F) ; seuils par défaut 24-27 °C convertis
     const tc = window.applianceTemp(this._hass, c), temp = tc.conv(this._num(c.entity_temperature), this._hass.states[c.entity_temperature]);
     const tMin = c.temp_min ?? tc.c(24), tMax = c.temp_max ?? tc.c(27);
@@ -240,7 +265,7 @@ class ApplianceAquariumCard extends HTMLElement {
     if (c.show_power) items.push(['p', this._l('power'), fmt(power, 0, 'W'), c.entity_power]);
     if (c.show_energy) items.push(['e', this._l('energy'), fmt(energy, 2, 'kWh'), c.entity_energy]);
     if (c.show_temperature) items.push(['t', this._l('temp'), fmt(temp, 1, tc.unit), c.entity_temperature]);
-    if (c.show_cost) items.push(['c', this._l('cost'), fmt(cost, 2, '€'), c.entity_cost || c.entity_energy]);
+    if (c.show_cost) items.push(['c', this._l('cost'), fmt(cost, 2, this._cur()), c.entity_cost || c.entity_energy]);
     root.getElementById('stats').innerHTML = items.map(([k, l, v, id]) =>
       `<div class="stat ${k}${id ? ' link' : ''}"${id ? ` data-e="${esc(id)}" role="button" tabindex="0"` : ''}><div class="v">${esc(v)}</div><div class="l">${esc(l)}</div></div>`).join('');
   }

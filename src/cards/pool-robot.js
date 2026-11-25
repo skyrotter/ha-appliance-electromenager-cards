@@ -231,7 +231,12 @@ svg{display:block;width:100%;max-width:calc(280px * var(--illus-scale,1));height
 
     _action(a) {
       const c = this._c, h = this._hass; if (!h || !(c.entity || c.entity_switch)) return;
-      if (a === 'power') { h.callService('homeassistant', 'toggle', { entity_id: this._plug() }); return; }
+      if (a === 'power') {
+        const id = this._plug(), run = () => h.callService('homeassistant', 'toggle', { entity_id: id });
+        // coupure de la prise (marche → arrêt) : confirmation « Annuler / OK », sauf confirm_actions: false
+        if ((this._st(id) || {}).state === 'on' && c.confirm_actions !== false) window.applianceConfirm(this, { action: 'toggle', confirmation: true }, run); else run();
+        return;
+      }
       if (!c.entity) return;
       h.callService('vacuum', { start: 'start', pause: 'pause', dock: 'return_to_base' }[a], { entity_id: c.entity });
     }
@@ -305,13 +310,14 @@ svg{display:block;width:100%;max-width:calc(280px * var(--illus-scale,1));height
         b.querySelector('span').textContent = this._t(a === 'power' ? (plugOn ? 'turn_off' : 'turn_on') : a);
       });
 
-      const mode = this._st(c.entity_mode);
+      const mode = this._st(c.entity_mode), tm = Math.round(time);
       const V = {
         status: [true, this._t(st), ''],
         filter: [c.entity_filter, this._fmt(filter, 0), this._unit(c.entity_filter, '%')],
         water_level: [c.entity_water_level, this._fmt(lvl, 0), this._unit(c.entity_water_level, '%')],
         water_temp: [c.entity_water_temp, this._fmt(temp, 1), tc.unit],
-        time: [c.entity_time, isNaN(time) ? '--' : time >= 60 ? `${Math.floor(time / 60)} h ${String(Math.round(time % 60)).padStart(2, '0')}` : this._fmt(time, 0), isNaN(time) || time >= 60 ? '' : 'min'],
+        // minutes arrondies d'abord, puis découpées en h / min (évite « 1 h 60 »)
+        time: [c.entity_time, isNaN(time) ? '--' : tm >= 60 ? `${Math.floor(tm / 60)} h ${String(tm % 60).padStart(2, '0')}` : this._fmt(time, 0), isNaN(time) || tm >= 60 ? '' : 'min'],
         battery: [c.entity_battery || isFinite(Number(attr.battery_level)), this._fmt(batt, 0), '%'],
         mode: [c.entity_mode, mode ? String(mode.state) : '--', ''],
         power: [c.entity_power, isNaN(pw) ? '--' : this._fmt(pw, 0), 'W'],

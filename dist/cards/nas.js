@@ -219,6 +219,10 @@
       "model_terramaster_f6_424": "TerraMaster F6-424 (6 bahías)",
       "model_qnap_ts251": "QNAP TS-251+ (2 bahías)",
       "model_qnap_ts253": "QNAP TS-253 (2 bahías)",
+      "model_asustor_2bay": "NAS Asustor (2 bahías)",
+      "model_asustor_4bay": "NAS Asustor (4 bahías)",
+      "model_asustor_6bay": "NAS Asustor (6 bahías)",
+      "model_synology_ds1525": "Synology DS1525+ (5 bahías)",
       "model_synology_ds224": "Synology DS224+ (2 bahías)",
       "model_synology_ds1812": "Synology DS1812+ (8 bahías)",
       "model_ugreen_dxp4800_plus": "UGREEN DXP4800 Plus (4 bahías)",
@@ -495,7 +499,8 @@
       "nvme_alert": "SSD {n}: problema",
       "model_asustor_2bay": "NAS Asustor (2 baias)",
       "model_asustor_4bay": "NAS Asustor (4 baias)",
-      "model_asustor_6bay": "NAS Asustor (6 baias)"
+      "model_asustor_6bay": "NAS Asustor (6 baias)",
+      "model_synology_ds1525": "Synology DS1525+ (5 baias)"
     },
     "pt-PT": {
       "model_generic_1": "NAS genérico (1 baia)",
@@ -547,7 +552,8 @@
       "nvme_alert": "SSD {n}: problema",
       "model_asustor_2bay": "NAS Asustor (2 baias)",
       "model_asustor_4bay": "NAS Asustor (4 baias)",
-      "model_asustor_6bay": "NAS Asustor (6 baias)"
+      "model_asustor_6bay": "NAS Asustor (6 baias)",
+      "model_synology_ds1525": "Synology DS1525+ (5 baias)"
     },
     "ro": {
       "name": "NAS",
@@ -730,6 +736,10 @@
       "model_terramaster_f6_424": "TerraMaster F6-424 (6 відсіків)",
       "model_qnap_ts251": "QNAP TS-251+ (2 відсіки)",
       "model_qnap_ts253": "QNAP TS-253 (2 відсіки)",
+      "model_asustor_2bay": "NAS Asustor (2 відсіки)",
+      "model_asustor_4bay": "NAS Asustor (4 відсіки)",
+      "model_asustor_6bay": "NAS Asustor (6 відсіків)",
+      "model_synology_ds1525": "Synology DS1525+ (5 відсіків)",
       "model_synology_ds224": "Synology DS224+ (2 відсіки)",
       "model_synology_ds1812": "Synology DS1812+ (8 відсіки)",
       "model_ugreen_dxp4800_plus": "UGREEN DXP4800 Plus (4 відсіки)",
@@ -1006,7 +1016,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { model: 'synology_ds423', show_status: true, show_volume: true, show_cpu: true, show_ram: true, show_temp: true, show_disks: true, show_network: true, show_power: true,
-        cpu_busy: 60, temp_max: 60, disk_temp_max: 50, volume_max: 85, ...c };
+        cpu_busy: 60, volume_max: 85, ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -1045,6 +1055,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     }
     _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _more(id) { if (window.applianceMore) window.applianceMore(this, id); }
+    // seuil de température saisi dans l'unité d'affichage ; valeur par défaut écrite en °C, convertie (°F)
+    _tlim(k, defC) { const v = this._c[k]; return v != null && v !== '' ? Number(v) : window.applianceTemp ? window.applianceTemp(this._hass, this._c).c(defC) : defC; }
     _temp(id) {
       const s = this._st(id), v = this._num(id);
       if (!window.applianceTemp) return { v, unit: '°C' };
@@ -1085,7 +1097,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         const isBin = !!id && /^binary_sensor\./.test(id);
         const empty = !!s && !isBin && EMPTY.test(raw);
         const fault = isBin ? /^(on|true|problem)$/i.test(raw) : BAD.test(raw);
-        const bad = !!s && !empty && (fault || (!isNaN(tp.v) && tp.v >= Number(c.disk_temp_max)));
+        const bad = !!s && !empty && (fault || (!isNaN(tp.v) && tp.v >= this._tlim('disk_temp_max', 50)));
         return { i, nvme: kind === 'nvme', id, raw, tp, empty, bad, known: !!s };
       });
     }
@@ -1107,7 +1119,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       if (st === 'running') {
         if (asList(c.entity_volume).some((id) => { const vs = this._st(id); return vs && BAD.test(String(vs.state)); })) alerts.push(this._t('volume_alert'));
         drives.filter((d) => d.bad).forEach((d) => alerts.push(this._t(d.nvme ? 'nvme_alert' : 'drive_alert').replace('{n}', d.i)));
-        if (!isNaN(tp.v) && tp.v >= Number(c.temp_max)) alerts.push(this._t('hot'));
+        if (!isNaN(tp.v) && tp.v >= this._tlim('temp_max', 60)) alerts.push(this._t('hot'));
         if (!isNaN(vol) && vol >= Number(c.volume_max)) alerts.push(this._t('volume_full'));
         // Unraid : parité (binary_sensor « valide » : off = invalide) et clé USB flash (binary_sensor « problème »), cochables dans l'éditeur
         const par = this._st(c.entity_parity), fl = this._st(c.entity_flash);
@@ -1124,7 +1136,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         else if ((!isNaN(cpu) && cpu >= Number(c.cpu_busy)) || Math.max(nd, nu) > 0.7) st = 'busy';
         else if (act < 0.2) st = 'idle';
       }
-      const hot = !isNaN(tp.v) && tp.v >= Number(c.temp_max);
+      const hot = !isNaN(tp.v) && tp.v >= this._tlim('temp_max', 60);
       return { st, cpu, ram, vol, tp, pw, nd, nu, act, drives, alerts, hot };
     }
 
@@ -1141,7 +1153,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       set('--net-d', on ? nd.toFixed(2) : 0); set('--net-u', on ? nu.toFixed(2) : 0);
       set('--sd', `${(2.2 - nd * 1.8).toFixed(2)}s`); set('--su', `${(2.2 - nu * 1.8).toFixed(2)}s`);
       // barre de température : 20 °C → vide, temp_max → pleine (échelle dans l'unité d'affichage)
-      const tmax = Number(c.temp_max), tmin = tp.unit === '°F' ? 68 : 20;
+      const tmax = this._tlim('temp_max', 60), tmin = tp.unit === '°F' ? 68 : 20;
       set('--tmp', clamp((tp.v - tmin) / (tmax - tmin)).toFixed(3));
       const ring = r.querySelector('.ring');
       ring.classList.toggle('full', !isNaN(vol) && vol >= Number(c.volume_max));
@@ -1204,6 +1216,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const ent = (name, domain, multiple) => ({ name, selector: { entity: { ...(domain ? { domain } : {}), ...(multiple ? { multiple: true } : {}) } } });
       const tr = { ...T.en, ...T[window.applianceLang(T, null, this._hass)] }; // repli par clé sur l'anglais
       const num = (name, min, max, step, def, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
+      // seuils de température dans l'unité d'affichage (bornes et valeur par défaut données en °C)
+      const tc = window.applianceTemp(this._hass, this._c);
+      const tnum = (name, min, max, step, def) => ({ name, default: Math.round(tc.c(def)), selector: { number: { ...tc.range(min, max), step, mode: 'box', unit_of_measurement: tc.unit } } });
       const bool = (name, def = true) => ({ name, selector: { boolean: {} }, default: def });
       this._form.hass = this._hass;
       this._form.data = this._c;
@@ -1220,7 +1235,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         { type: 'grid', name: '', schema: [1, 2].flatMap((i) => [ent(`entity_nvme_${i}`, ['sensor', 'binary_sensor']), ent(`entity_nvme_${i}_temp`, 'sensor')]) },
         ent('entity_parity', 'binary_sensor'), ent('entity_flash', 'binary_sensor'),
         ent('entity_security', 'binary_sensor'), ent('entity_update', 'update'), ent('entity_power', 'sensor'),
-        { type: 'grid', name: '', schema: [num('cpu_busy', 10, 100, 1, 60, '%'), num('volume_max', 10, 100, 1, 85, '%'), num('temp_max', 30, 100, 1, 60, '°'), num('disk_temp_max', 30, 80, 1, 50, '°')] },
+        { type: 'grid', name: '', schema: [num('cpu_busy', 10, 100, 1, 60, '%'), num('volume_max', 10, 100, 1, 85, '%'), tnum('temp_max', 30, 100, 1, 60), tnum('disk_temp_max', 30, 80, 1, 50)] },
         window.applianceTempField,
         ...window.applianceActionFields,
         window.applianceLanguageField(T),

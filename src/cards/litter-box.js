@@ -243,10 +243,10 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
         let show = !!c[opt] && c.show_buttons !== false;
         if (k === 'pause') show = show && !paused; if (k === 'resume') show = show && (paused || !c.button_pause);
         if (k === 'maint') show = show && !maint; if (k === 'maint_exit') show = show && maint;
-        b.classList.toggle('hide', !show); b.classList.toggle('on', k === 'light' && lightOn); b.querySelector('span').textContent = this._l(`btn_${k}`); b.disabled = v.st === 'unavailable'; any = any || show;
+        b.classList.toggle('hide', !show); b.classList.toggle('on', k === 'light' && lightOn); b.querySelector('span').textContent = this._l(`btn_${k}`); // nettoyer / vider : désactivés quand un chat est dedans ou qu'un cycle tourne déjà
+        b.disabled = v.st === 'unavailable' || ((k === 'clean' || k === 'empty') && (v.st === 'occupied' || cleaning)); any = any || show;
       });
       r.getElementById('lbbtns').classList.toggle('hide', !any);
-      void cleaning;
     }
   }
   customElements.define(TAG, ApplianceLitterBoxCard);

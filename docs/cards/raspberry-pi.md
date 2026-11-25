@@ -28,5 +28,5 @@ entity_power_status: binary_sensor.rpi_power_status
 | `entity_data_down`, `entity_data_up` | total data received / sent |
 | `entity_uptime` | « Last boot » timestamp sensor or a duration |
 | `entity_power_status` | `binary_sensor` of the **Raspberry Pi Power Supply Checker** (on = undervoltage) |
-| `cpu_busy`, `temp_max`, `ram_max`, `disk_max` | thresholds: busy (70 %), overheating (80 °), memory saturated (90 %), disk almost full (90 %) |
+| `cpu_busy`, `temp_max`, `ram_max`, `disk_max` | thresholds: busy (70 %), overheating (80 °C), memory saturated (90 %), disk almost full (90 %). `temp_max` is entered in the display unit (°C or °F, from `temperature_unit` or Home Assistant); the default is converted |
 | `show_cpu`, `show_temp`, `show_ram`, `show_ram_free`, `show_disk`, `show_down`, `show_up`, `show_data_down`, `show_data_up`, `show_uptime`, `show_power`, `show_status`, `compact`, `animations`, `extra_tiles`, `labels`, `language`, `illustration_size`, `transparent`, `tile_background`, `tile_order` | |

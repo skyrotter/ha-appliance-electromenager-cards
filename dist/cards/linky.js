@@ -565,6 +565,16 @@ class ApplianceLinkyCard extends HTMLElement {
     return /^wh$/i.test(u) ? v / 1000 : /^mwh$/i.test(u) ? v * 1000 : v;
   }
 
+  // symbole de la devise : option `currency`, sinon celle de Home Assistant (Intl), sinon €
+  _cur() {
+    const c = this._config, cur = this._hass && this._hass.config && this._hass.config.currency;
+    if (c.currency) return String(c.currency);
+    try {
+      const loc = window.applianceLocale ? window.applianceLocale(c, this._hass) : undefined;
+      return new Intl.NumberFormat(loc, { style: 'currency', currency: cur, currencyDisplay: 'narrowSymbol' }).formatToParts(0).find((x) => x.type === 'currency').value;
+    } catch (e) { return '€'; }
+  }
+
   // Index de soutirage : liste « indexes » ([{ entity, name }] ou identifiants seuls), sinon HP / HC
   _indexes() {
     const c = this._config;
@@ -606,7 +616,7 @@ class ApplianceLinkyCard extends HTMLElement {
       if (c.entity_injection && c.show_index) pages.push([this._l('injection'), kwh(d.injection), c.entity_injection]);
     }
     if (c.show_tariff) pages.push([this._l('tariff'), this._t(d.hcNow ? 'offpeak' : 'peak'), c.entity_tariff]);
-    if (c.show_cost && d.cost !== null) pages.push([this._l('cost'), `${d.cost.toFixed(2)} €`, c.entity_cost]);
+    if (c.show_cost && d.cost !== null) pages.push([this._l('cost'), `${d.cost.toFixed(2)} ${this._cur()}`, c.entity_cost]);
     const p = pages[(this._page || 0) % pages.length];
     this._pageId = p[2]; // entité de la page affichée : ouverte par un clic sur l'écran
     const lab = this.shadowRoot.getElementById('lab'), val = this.shadowRoot.getElementById('val');

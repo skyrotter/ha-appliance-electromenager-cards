@@ -198,7 +198,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { show_status: true, show_cpu: true, show_temp: true, show_ram: true, show_ram_free: true, show_disk: true, show_down: true, show_up: true,
-        show_data_down: true, show_data_up: true, show_uptime: true, show_power: true, cpu_busy: 70, temp_max: 80, ram_max: 90, disk_max: 90, ...c };
+        show_data_down: true, show_data_up: true, show_uptime: true, show_power: true, cpu_busy: 70, ram_max: 90, disk_max: 90, ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -214,6 +214,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
     _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _more(id) { if (window.applianceMore) window.applianceMore(this, id); }
+    // seuil de température saisi dans l'unité d'affichage ; valeur par défaut écrite en °C, convertie (°F)
+    _tlim(k, defC) { const v = this._c[k]; return v != null && v !== '' ? Number(v) : window.applianceTemp ? window.applianceTemp(this._hass, this._c).c(defC) : defC; }
     _temp(id) {
       const s = this._st(id), v = this._num(id);
       if (!window.applianceTemp) return { v, unit: '°C' };
@@ -269,7 +271,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       else st = 'running';
       const alerts = [];
       if (st === 'running') {
-        if (!isNaN(tp.v) && tp.v >= Number(c.temp_max)) { st = 'hot'; alerts.push('overheating'); }
+        if (!isNaN(tp.v) && tp.v >= this._tlim('temp_max', 80)) { st = 'hot'; alerts.push('overheating'); }
         else if (!isNaN(cpu) && cpu >= Number(c.cpu_busy)) st = 'busy';
         else if (!isNaN(cpu) && cpu < 8) st = 'idle';
       }
@@ -293,7 +295,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const nd = lvl(dn), nu = lvl(upr), net = on && (nd > 0 || nu > 0);
       card.className = `${st}${net ? ' on-net' : ''}${uv ? ' uv' : ''}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`;
       const set = (k, v) => card.style.setProperty(k, v);
-      const heat = isNaN(tp.v) ? clamp(cpu / 100) * .6 : clamp((tp.v - 40) / (Number(c.temp_max) - 40));
+      // chaleur du dessin calculée en °C (40 °C → froid, temp_max → chaud)
+      const tt = window.applianceTemp ? window.applianceTemp(this._hass, c) : { toC: (v) => v, c: (v) => v };
+      const heat = isNaN(tp.v) ? clamp(cpu / 100) * .6 : clamp((tt.toC(tp.v) - 40) / (tt.toC(this._tlim('temp_max', 80)) - 40));
       set('--cpu', on ? clamp(cpu / 100).toFixed(3) : 0); set('--heat', on ? heat.toFixed(3) : 0);
       set('--act', `${(1.2 - clamp(cpu / 100) * 1.05).toFixed(2)}s`);
       set('--net-d', nd.toFixed(2)); set('--net-u', nu.toFixed(2));
@@ -313,7 +317,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         down: fmtNet(c.entity_net_down), up: fmtNet(c.entity_net_up), data_down: volume(c.entity_data_down), data_up: volume(c.entity_data_up),
         uptime: [this._dur(this._uptimeSec(c.entity_uptime)), ''], power: [pow == null ? '--' : this._t(pow ? 'undervoltage_short' : 'power_ok'), ''],
       };
-      const bars = { cpu: [cpu, Number(c.cpu_busy)], temp: [tp.v, Number(c.temp_max), 100], ram: [ram, Number(c.ram_max)], disk: [dsk, Number(c.disk_max)] };
+      const bars = { cpu: [cpu, Number(c.cpu_busy)], temp: [tp.v, this._tlim('temp_max', 80), tt.c(100)], ram: [ram, Number(c.ram_max)], disk: [dsk, Number(c.disk_max)] };
       const bad = { temp: st === 'hot', ram: alerts.includes('ram_full'), disk: alerts.includes('disk_full'), power: pow === true };
       const colors = { cpu: '#4f8dff', temp: '#e5533d', ram: '#e5533d', disk: '#9aa3aa' };
       TILES.forEach(([k, , opt, ent, bar]) => {
@@ -350,6 +354,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       }
       const ent = (name, domain) => ({ name, selector: { entity: domain ? { domain } : {} } });
       const num = (name, min, max, step, def, unit) => ({ name, default: def, selector: { number: { min, max, step, mode: 'box', ...(unit ? { unit_of_measurement: unit } : {}) } } });
+      // seuils de température dans l'unité d'affichage (bornes et valeur par défaut données en °C)
+      const tc = window.applianceTemp(this._hass, this._c);
+      const tnum = (name, min, max, step, def) => ({ name, default: Math.round(tc.c(def)), selector: { number: { ...tc.range(min, max), step, mode: 'box', unit_of_measurement: tc.unit } } });
       const bool = (name, def = true) => ({ name, selector: { boolean: {} }, default: def });
       this._form.hass = this._hass;
       this._form.data = this._c;
@@ -363,7 +370,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ent('entity_net_down', 'sensor'), ent('entity_net_up', 'sensor'), ent('entity_data_down', 'sensor'), ent('entity_data_up', 'sensor'), ent('entity_uptime', 'sensor'),
         ent('entity_power_status'),
         { name: 'extra_tiles', selector: { object: {} } },
-        { type: 'grid', name: '', schema: [num('cpu_busy', 10, 100, 1, 70, '%'), num('temp_max', 40, 110, 1, 80, '°'), num('ram_max', 10, 100, 1, 90, '%'), num('disk_max', 10, 100, 1, 90, '%')] },
+        { type: 'grid', name: '', schema: [num('cpu_busy', 10, 100, 1, 70, '%'), tnum('temp_max', 40, 110, 1, 80), num('ram_max', 10, 100, 1, 90, '%'), num('disk_max', 10, 100, 1, 90, '%')] },
         window.applianceTempField,
         ...window.applianceActionFields,
         window.applianceLanguageField(T),

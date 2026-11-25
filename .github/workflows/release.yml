@@ -14,6 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      - name: Le tag de la release pointe sur le dernier commit de main
+        run: |
+          git fetch --no-tags --depth=1 origin +refs/heads/main:refs/remotes/origin/main
+          tag="$(git rev-parse HEAD)"
+          main="$(git rev-parse origin/main)"
+          [ "$tag" = "$main" ] \
+            || { echo "::error::le tag $GITHUB_REF_NAME ($tag) n'est pas le dernier commit de main ($main) : crée la release depuis main à jour"; exit 1; }
       - name: dist/ est à jour et porte la version du tag
         run: |
           v="${GITHUB_REF_NAME#v}"

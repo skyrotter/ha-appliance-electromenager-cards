@@ -39,6 +39,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
 .glow{fill:var(--ak-c);opacity:0}.intrusion .glow{animation:akp 1s ease-in-out infinite}.entry_delay .glow,.exit_delay .glow{animation:akp 1.6s ease-in-out infinite}
 .armed .glow,.armed_partial .glow{opacity:.1}
 .key{pointer-events:none}.live .key{cursor:pointer;pointer-events:all}.key rect.hit{fill:transparent}.live .key:active rect.hit{fill:rgba(127,127,127,.2)}
+.live .key.na{pointer-events:none;opacity:.35}
 .scr-t.err{fill:var(--ak-alert)}
 .unavailable svg{filter:grayscale(.8) opacity(.6)}
 .noanim *{animation:none!important}
@@ -113,6 +114,12 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
     // centrale pilotée : entity_control, sinon entity si c'est déjà une alarm_control_panel
     _ctl() { const c = this._c; return c.entity_control || (/^alarm_control_panel\./.test(c.entity) ? c.entity : ''); }
+    // mode d'armement pris en charge par la centrale (supported_features : ARM_HOME 1, ARM_AWAY 2) ; sans l'attribut, on suppose que oui
+    _can(svc) {
+      const bit = { alarm_arm_home: 1, alarm_arm_away: 2 }[svc]; if (!bit) return true;
+      const f = Number(((this._st(this._ctl()) || {}).attributes || {}).supported_features);
+      return !Number.isFinite(f) || (f & bit) !== 0;
+    }
     // saisie du code sur le pavé : chiffres affichés masqués sur l'écran, effacés après 10 s d'inactivité ou après l'envoi
     _press(k) {
       const ctl = this._ctl(); if (!ctl || !this._hass) return;
@@ -122,6 +129,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       else {
         const st = norm((this._st(this._c.entity) || {}).state), code = this._buf || undefined;
         const svc = k === 'arm' ? 'alarm_arm_away' : k === 'stay' ? 'alarm_arm_home' : k === 'disarm' ? 'alarm_disarm' : st === 'disarmed' || st === 'ready' ? 'alarm_arm_away' : 'alarm_disarm';
+        if (!this._can(svc)) { if (this._buf) this._tb = setTimeout(() => { this._buf = ''; this._render(); }, 10000); this._render(); return; } // mode absent de la centrale : pas d'appel (sinon faux « code erroné »), le code saisi est gardé
         this._buf = '';
         Promise.resolve(this._hass.callService('alarm_control_panel', svc, { entity_id: ctl, ...(code ? { code } : {}) }))
           .catch(() => { this._msg = this._t('code_error'); this._render(); this._tb = setTimeout(() => { this._msg = ''; this._render(); }, 3000); });
@@ -129,7 +137,8 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       if (this._buf) this._tb = setTimeout(() => { this._buf = ''; this._render(); }, 10000);
       this._render();
     }
-    disconnectedCallback() { clearTimeout(this._tb); }
+    // carte retirée de la page : on efface le code à moitié saisi (et le message) pour qu'il ne réapparaisse pas
+    disconnectedCallback() { clearTimeout(this._tb); this._buf = ''; this._msg = ''; if (this._built && this._hass) this._render(); }
     _zones() { return (Array.isArray(this._c.zones) ? this._c.zones : []).filter((z) => z && (z.entity || z.entity_fault)).slice(0, 8); }
 
     _build() {
@@ -165,6 +174,9 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       // écran du clavier : statut + nombre de zones ouvertes
       const ti = r.getElementById('aktitle'), sub = r.getElementById('aksub');
       card.classList.toggle('live', !!this._ctl());
+      // touches d'armement non prises en charge par la centrale : grisées et inactives
+      r.querySelector('.key[data-k="arm"]').classList.toggle('na', !this._can('alarm_arm_away'));
+      r.querySelector('.key[data-k="stay"]').classList.toggle('na', !this._can('alarm_arm_home'));
       ti.classList.toggle('err', !!this._msg);
       ti.textContent = this._msg || (this._buf ? '•'.repeat(this._buf.length) : this._l(st));
       sub.textContent = this._msg || this._buf ? (this._buf ? this._t('enter_code') : '') : nOpen == null ? '' : `${nOpen} ${this._t(nOpen === 1 ? 'zone_open_one' : 'zone_open_many')}`;

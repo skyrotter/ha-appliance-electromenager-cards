@@ -173,7 +173,9 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       const vS = this._st(c.entity_valve), valveClosed = this._ok(vS) && /^(off|closed|closing)$/i.test(String(vS.state));
       const tS = this._st(c.entity_temperature), tc = window.applianceTemp ? window.applianceTemp(this._hass, c) : null;
       const temp = tc ? tc.conv(this._num(tS), tS) : this._num(tS);
-      const freeze = !isNaN(temp) && c.freeze_temp !== '' && c.freeze_temp != null && temp <= Number(c.freeze_temp);
+      // freeze_temp est en °C (doc) : on compare la mesure ramenée en °C, quelle que soit l'unité d'affichage
+      const tempC = tc && tc.toC ? tc.toC(temp) : temp;
+      const freeze = !isNaN(temp) && c.freeze_temp !== '' && c.freeze_temp != null && tempC <= Number(c.freeze_temp);
       const st = !usable.length ? 'unavailable' : wet.length ? 'leak' : freeze ? 'freeze' : low ? 'low_battery' : 'dry';
       return { st, probes, usable, wet, last: pick, bat, low, binLow, valveClosed, vS, temp, tc };
     }
@@ -191,7 +193,10 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       root.getElementById('lkvalve').addEventListener('click', () => {
         const id = this._c.entity_valve; if (!this._hass || !id) return;
         const dom = id.split('.')[0];
-        this._hass.callService(['switch', 'valve', 'input_boolean'].includes(dom) ? dom : 'homeassistant', 'toggle', { entity_id: id });
+        const run = () => this._hass && this._hass.callService(['switch', 'valve', 'input_boolean'].includes(dom) ? dom : 'homeassistant', 'toggle', { entity_id: id });
+        // ouverture / fermeture de l'arrivée d'eau : confirmation (désactivable avec confirm_actions: false)
+        if (this._c.confirm_actions === false || !window.applianceConfirm) run();
+        else window.applianceConfirm(this, { action: 'toggle', confirmation: true }, run);
       });
       root.getElementById('lksiren').addEventListener('click', () => {
         const id = this._c.entity_siren; if (!this._hass || !id) return;
