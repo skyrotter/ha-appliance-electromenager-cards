@@ -1568,6 +1568,7 @@
     "days": "n"
   },
   "editor": {
+    "garage_car_image": "Autó képe (elölnézet, URL vagy /local/ fájl)",
     "confirm_action": "Megerősítés kérése a művelet előtt",
     "confirm_text": "Megerősítő szöveg (nem kötelező)",
     "tiles_position": "Csempék helye",

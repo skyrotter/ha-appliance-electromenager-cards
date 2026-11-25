@@ -858,6 +858,7 @@
     "wall_hot": "Wand zu heiß"
   },
   "editor": {
+    "garage_car_image": "Fahrzeugbild (Frontansicht, URL oder /local/-Datei)",
     "confirm_action": "Vor der Aktion bestätigen lassen",
     "confirm_text": "Bestätigungstext (optional)",
     "tiles_position": "Position der Kacheln",

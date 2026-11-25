@@ -790,6 +790,7 @@
     "water_hot": "Woda za gorąca"
   },
   "editor": {
+    "garage_car_image": "Obraz samochodu (widok z przodu, URL lub plik /local/)",
     "confirm_action": "Pytaj o potwierdzenie przed akcją",
     "confirm_text": "Tekst potwierdzenia (opcjonalnie)",
     "tiles_position": "Pozycja kafelków",

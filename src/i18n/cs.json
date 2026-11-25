@@ -772,6 +772,7 @@
     "water_hot": "Voda příliš horká"
   },
   "editor": {
+    "garage_car_image": "Obrázek auta (pohled zepředu, URL nebo soubor /local/)",
     "confirm_action": "Před akcí požádat o potvrzení",
     "confirm_text": "Text potvrzení (volitelné)",
     "tiles_position": "Poloha dlaždic",

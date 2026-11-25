@@ -800,6 +800,7 @@
     "water_hot": "Water te heet"
   },
   "editor": {
+    "garage_car_image": "Auto-afbeelding (vooraanzicht, URL of /local/-bestand)",
     "confirm_action": "Om bevestiging vragen vóór de actie",
     "confirm_text": "Bevestigingstekst (optioneel)",
     "tiles_position": "Positie van de tegels",

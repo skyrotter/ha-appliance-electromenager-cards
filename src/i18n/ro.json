@@ -771,6 +771,7 @@
     "water_hot": "Apa prea caldă"
   },
   "editor": {
+    "garage_car_image": "Imaginea mașinii (vedere din față, URL sau fișier /local/)",
     "confirm_action": "Cere confirmare înainte de acțiune",
     "confirm_text": "Text de confirmare (opțional)",
     "tiles_position": "Poziția plăcilor",

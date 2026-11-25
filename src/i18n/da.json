@@ -836,6 +836,7 @@
     "water_hot": "Vandet er for varmt"
   },
   "editor": {
+    "garage_car_image": "Billede af bilen (set forfra, URL eller /local/-fil)",
     "confirm_action": "Bed om bekræftelse før handlingen",
     "confirm_text": "Bekræftelsestekst (valgfri)",
     "tiles_position": "Placering af felter",
