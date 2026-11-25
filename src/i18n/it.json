@@ -800,6 +800,7 @@
     "water_hot": "Acqua troppo calda"
   },
   "editor": {
+    "garage_car_image": "Immagine dell'auto (vista frontale, URL o file /local/)",
     "confirm_action": "Chiedi conferma prima dell'azione",
     "confirm_text": "Testo di conferma (facoltativo)",
     "tiles_position": "Posizione dei riquadri",

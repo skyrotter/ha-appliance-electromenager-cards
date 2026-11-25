@@ -46,6 +46,7 @@
       "capacity_kwh": "Capacity (kWh)",
       "car_color": "Car colour",
       "car_image": "Car image (URL or /local/ file, side view, front on the right)",
+      "garage_car_image": "Car image (front view, URL or /local/ file)",
       "car_image_align": "Car image alignment",
       "compressor_threshold": "Compressor threshold (W)",
       "entity": "Main entity",
@@ -766,6 +767,7 @@
       "press_animation": "Animate the button presses"
     },
     "cs": {
+      "garage_car_image": "Obrázek auta (pohled zepředu, URL nebo soubor /local/)",
       "confirm_action": "Před akcí požádat o potvrzení",
       "confirm_text": "Text potvrzení (volitelné)",
       "tiles_position": "Poloha dlaždic",
@@ -1164,6 +1166,7 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "da": {
+      "garage_car_image": "Billede af bilen (set forfra, URL eller /local/-fil)",
       "confirm_action": "Bed om bekræftelse før handlingen",
       "confirm_text": "Bekræftelsestekst (valgfri)",
       "tiles_position": "Placering af felter",
@@ -1715,6 +1718,7 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "de": {
+      "garage_car_image": "Fahrzeugbild (Frontansicht, URL oder /local/-Datei)",
       "confirm_action": "Vor der Aktion bestätigen lassen",
       "confirm_text": "Bestätigungstext (optional)",
       "tiles_position": "Position der Kacheln",
@@ -2331,6 +2335,7 @@
       "show_backup": "Zusatzheizungen und Kessel anzeigen"
     },
     "es": {
+      "garage_car_image": "Imagen del coche (vista frontal, URL o archivo /local/)",
       "confirm_action": "Pedir confirmación antes de la acción",
       "confirm_text": "Texto de confirmación (opcional)",
       "tiles_position": "Posición de los mosaicos",
@@ -3115,6 +3120,7 @@
       "capacity_kwh": "Capacité (kWh)",
       "car_color": "Couleur de la voiture",
       "car_image": "Image du véhicule (URL ou fichier /local/, vue de profil, avant à droite)",
+      "garage_car_image": "Image de la voiture (vue de face, URL ou fichier /local/)",
       "car_image_align": "Alignement de l'image du véhicule",
       "compressor_threshold": "Seuil du compresseur (W)",
       "entity": "Entité principale",
@@ -3830,6 +3836,7 @@
       "press_animation": "Animer les appuis sur le bouton"
     },
     "hu": {
+      "garage_car_image": "Autó képe (elölnézet, URL vagy /local/ fájl)",
       "confirm_action": "Megerősítés kérése a művelet előtt",
       "confirm_text": "Megerősítő szöveg (nem kötelező)",
       "tiles_position": "Csempék helye",
@@ -4327,6 +4334,7 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "it": {
+      "garage_car_image": "Immagine dell'auto (vista frontale, URL o file /local/)",
       "confirm_action": "Chiedi conferma prima dell'azione",
       "confirm_text": "Testo di conferma (facoltativo)",
       "tiles_position": "Posizione dei riquadri",
@@ -4784,6 +4792,7 @@
       "show_backup": "Mostra integrazioni e caldaia"
     },
     "nb": {
+      "garage_car_image": "Bilde av bilen (sett forfra, URL eller /local/-fil)",
       "confirm_action": "Be om bekreftelse før handlingen",
       "confirm_text": "Bekreftelsestekst (valgfri)",
       "tiles_position": "Plassering av rutene",
@@ -5208,6 +5217,7 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "nl": {
+      "garage_car_image": "Auto-afbeelding (vooraanzicht, URL of /local/-bestand)",
       "confirm_action": "Om bevestiging vragen vóór de actie",
       "confirm_text": "Bevestigingstekst (optioneel)",
       "tiles_position": "Positie van de tegels",
@@ -5665,6 +5675,7 @@
       "show_backup": "Bijverwarming en ketel tonen"
     },
     "pl": {
+      "garage_car_image": "Obraz samochodu (widok z przodu, URL lub plik /local/)",
       "confirm_action": "Pytaj o potwierdzenie przed akcją",
       "confirm_text": "Tekst potwierdzenia (opcjonalnie)",
       "tiles_position": "Pozycja kafelków",
@@ -6116,6 +6127,7 @@
       "press_animation": "Animuj naciśnięcia przycisku"
     },
     "pt-BR": {
+      "garage_car_image": "Imagem do carro (vista frontal, URL ou arquivo /local/)",
       "confirm_action": "Pedir confirmação antes da ação",
       "confirm_text": "Texto de confirmação (opcional)",
       "tiles_position": "Posição dos blocos",
@@ -6864,6 +6876,7 @@
       "side": "Lado em que o painel único se empilha"
     },
     "pt-PT": {
+      "garage_car_image": "Imagem do carro (vista frontal, URL ou ficheiro /local/)",
       "confirm_action": "Pedir confirmação antes da ação",
       "confirm_text": "Texto de confirmação (opcional)",
       "tiles_position": "Posição dos blocos",
@@ -7612,6 +7625,7 @@
       "side": "Lado em que o painel único se empilha"
     },
     "ro": {
+      "garage_car_image": "Imaginea mașinii (vedere din față, URL sau fișier /local/)",
       "confirm_action": "Cere confirmare înainte de acțiune",
       "confirm_text": "Text de confirmare (opțional)",
       "tiles_position": "Poziția plăcilor",
@@ -8013,6 +8027,7 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "ru": {
+      "garage_car_image": "Изображение автомобиля (вид спереди, URL или файл /local/)",
       "confirm_action": "Запрашивать подтверждение перед действием",
       "confirm_text": "Текст подтверждения (необязательно)",
       "tiles_position": "Положение плиток",
@@ -8414,6 +8429,7 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "sr": {
+      "garage_car_image": "Слика аутомобила (поглед спреда, URL или /local/ датотека)",
       "confirm_action": "Затражи потврду пре радње",
       "confirm_text": "Текст потврде (опционо)",
       "tiles_position": "Положај плочица",
@@ -9016,6 +9032,7 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "sr-Latn": {
+      "garage_car_image": "Slika automobila (pogled spreda, URL ili /local/ datoteka)",
       "confirm_action": "Zatraži potvrdu pre radnje",
       "confirm_text": "Tekst potvrde (opciono)",
       "tiles_position": "Položaj pločica",
@@ -9618,6 +9635,7 @@
       "show_backup": "Show backup heaters and boiler"
     },
     "uk": {
+      "garage_car_image": "Зображення автомобіля (вигляд спереду, URL або файл /local/)",
       "confirm_action": "Запитувати підтвердження перед дією",
       "confirm_text": "Текст підтвердження (необов'язково)",
       "tiles_position": "Розташування плиток",

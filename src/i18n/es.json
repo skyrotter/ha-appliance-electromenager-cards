@@ -920,6 +920,7 @@
     "water_hot": "Agua demasiado caliente"
   },
   "editor": {
+    "garage_car_image": "Imagen del coche (vista frontal, URL o archivo /local/)",
     "confirm_action": "Pedir confirmación antes de la acción",
     "confirm_text": "Texto de confirmación (opcional)",
     "tiles_position": "Posición de los mosaicos",

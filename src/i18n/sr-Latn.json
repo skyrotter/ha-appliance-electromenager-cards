@@ -852,6 +852,7 @@
     "water_hot": "Voda je previše topla"
   },
   "editor": {
+    "garage_car_image": "Slika automobila (pogled spreda, URL ili /local/ datoteka)",
     "confirm_action": "Zatraži potvrdu pre radnje",
     "confirm_text": "Tekst potvrde (opciono)",
     "tiles_position": "Položaj pločica",

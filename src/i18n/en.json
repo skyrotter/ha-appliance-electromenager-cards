@@ -987,6 +987,7 @@
     "capacity_kwh": "Capacity (kWh)",
     "car_color": "Car colour",
     "car_image": "Car image (URL or /local/ file, side view, front on the right)",
+    "garage_car_image": "Car image (front view, URL or /local/ file)",
     "car_image_align": "Car image alignment",
     "compressor_threshold": "Compressor threshold (W)",
     "entity": "Main entity",
