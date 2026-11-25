@@ -1,6 +1,6 @@
 # Weather station (Davis Vantage Pro2 style)
 
-<p align="center"><img src="../weather-station.png" width="460" alt="Weather station card: Davis Vantage Pro2 style console with its backlit LCD"></p>
+<p align="center"><img src="../weather-station.gif" width="460" alt="Animated weather station card: Davis Vantage Pro2 style console with its backlit LCD"></p>
 
 `custom:appliance-weather-station-card`: a weather station console in the style of the Davis Vantage Pro2, fully drawn in SVG, with its backlit LCD redrawn live.
 
