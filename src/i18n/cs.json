@@ -1614,6 +1614,8 @@
     "obese": "Obezita"
   },
   "htpc": {
+    "f_switch": "Zásuvka PC (spínač)",
+    "confirm_off": "Vypnout zásuvku, když je PC zapnutý?",
     "f_poster_position": "Poloha plakátu",
     "poster_center": "Na střed (výchozí)",
     "poster_left": "Vlevo",

@@ -3122,6 +3122,8 @@
     "sound_mode": "Audio mode"
   },
   "htpc": {
+    "f_switch": "PC power plug (switch)",
+    "confirm_off": "Switch off the plug while the PC is on?",
     "f_poster_position": "Poster position",
     "poster_center": "Centered (default)",
     "poster_left": "Left",

@@ -1790,6 +1790,8 @@
     "reserve": "Ciepła woda"
   },
   "htpc": {
+    "f_switch": "Gniazdko komputera (przełącznik)",
+    "confirm_off": "Wyłączyć gniazdko, gdy komputer jest włączony?",
     "f_poster_position": "Pozycja plakatu",
     "poster_center": "Wyśrodkowany (domyślnie)",
     "poster_left": "Lewo",

@@ -2390,6 +2390,8 @@
     "fan_auto": "Auto"
   },
   "htpc": {
+    "f_switch": "PC-Steckdose (Schalter)",
+    "confirm_off": "Steckdose ausschalten, obwohl der PC läuft?",
     "f_poster_position": "Position des Covers",
     "poster_center": "Zentriert (Standard)",
     "poster_left": "Links",

@@ -8,13 +8,15 @@
 - **Below**: poster, title and subtitle (series · SxxExx, artist…), clickable progress bar to seek, previous / play-pause / next / shuffle, power, volume with mute, source list. Each control only shows if the player supports it (`supported_features`).
 - Optional power sensor of the PC (smart plug) as a tile.
 - `poster_position` (`center` by default, `left` or `right`): where the poster and the title sit under the case.
-- Options: `entity` (the `media_player`), `entity_power`, `show_poster`, `show_seek`, `show_volume`, `show_source`, `show_status`.
+- `switch` (optional): the **smart plug of the PC** (`switch`, `input_boolean`, `light`). The power button then drives the plug: it stays usable when the player is unavailable (PC cut), lights up when the plug is on, and asks for a confirmation before cutting the plug while the PC is on. Without `switch`, the button controls the media player (`turn_on` / `turn_off`) as before.
+- Options: `entity` (the `media_player`), `entity_power`, `switch`, `show_poster`, `show_seek`, `show_volume`, `show_source`, `show_status`.
 
 ```yaml
 type: custom:appliance-htpc-card
 name: Home theater
 entity: media_player.htpc_kodi
 entity_power: sensor.htpc_plug_power   # optional
+switch: switch.htpc_plug               # optional: the power button drives the plug
 ```
 
 [← All cards](../../README.md#the-cards)

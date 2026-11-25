@@ -3088,6 +3088,8 @@
     "f_show_zones": "Mostrar os ícones das zonas"
   },
   "htpc": {
+    "f_switch": "Tomada do PC (interruptor)",
+    "confirm_off": "Desligar a tomada com o PC ligado?",
     "f_poster_position": "Posição do cartaz",
     "poster_center": "Centrado (predefinição)",
     "poster_left": "Esquerda",
