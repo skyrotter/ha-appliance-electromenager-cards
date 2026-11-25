@@ -1794,6 +1794,8 @@
 "days": "d"
 },
   "htpc": {
+    "f_switch": "PC-ens stikkontakt (bryter)",
+    "confirm_off": "Slå av stikkontakten mens PC-en er på?",
     "f_poster_position": "Plakatens plassering",
     "poster_center": "Sentrert (standard)",
     "poster_left": "Venstre",

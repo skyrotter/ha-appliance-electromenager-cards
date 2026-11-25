@@ -2218,6 +2218,8 @@
     "room": "Rum"
   },
   "htpc": {
+    "f_switch": "PC'ens stikkontakt (kontakt)",
+    "confirm_off": "Slå stikkontakten fra, mens pc'en er tændt?",
     "f_poster_position": "Plakatens placering",
     "poster_center": "Centreret (standard)",
     "poster_left": "Venstre",

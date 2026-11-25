@@ -3101,6 +3101,8 @@
     "sound_mode": "Mode audio"
   },
   "htpc": {
+    "f_switch": "Prise du PC (interrupteur)",
+    "confirm_off": "Couper la prise alors que le PC est allumé ?",
     "f_poster_position": "Position de l'affiche",
     "poster_center": "Centrée (défaut)",
     "poster_left": "À gauche",

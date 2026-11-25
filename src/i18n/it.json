@@ -1989,6 +1989,8 @@
     "days": "g"
   },
   "htpc": {
+    "f_switch": "Presa del PC (interruttore)",
+    "confirm_off": "Spegnere la presa mentre il PC è acceso?",
     "f_poster_position": "Posizione della locandina",
     "poster_center": "Centrata (predefinito)",
     "poster_left": "Sinistra",

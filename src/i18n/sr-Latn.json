@@ -2367,6 +2367,8 @@
     "fan_auto": "Automatski"
   },
   "htpc": {
+    "f_switch": "Utičnica računara (prekidač)",
+    "confirm_off": "Isključiti utičnicu dok je računar uključen?",
     "f_poster_position": "Položaj postera",
     "poster_center": "Centrirano (podrazumevano)",
     "poster_left": "Levo",

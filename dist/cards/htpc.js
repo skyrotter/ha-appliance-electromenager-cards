@@ -11,6 +11,8 @@
 
   const T = {
     "en": {
+      "f_switch": "PC power plug (switch)",
+      "confirm_off": "Switch off the plug while the PC is on?",
       "f_poster_position": "Poster position",
       "poster_center": "Centered (default)",
       "poster_left": "Left",
@@ -38,6 +40,8 @@
       "f_show_source": "Show the source list"
     },
     "cs": {
+      "f_switch": "Zásuvka PC (spínač)",
+      "confirm_off": "Vypnout zásuvku, když je PC zapnutý?",
       "f_poster_position": "Poloha plakátu",
       "poster_center": "Na střed (výchozí)",
       "poster_left": "Vlevo",
@@ -65,6 +69,8 @@
       "f_show_source": "Zobrazit seznam zdrojů"
     },
     "da": {
+      "f_switch": "PC'ens stikkontakt (kontakt)",
+      "confirm_off": "Slå stikkontakten fra, mens pc'en er tændt?",
       "f_poster_position": "Plakatens placering",
       "poster_center": "Centreret (standard)",
       "poster_left": "Venstre",
@@ -92,6 +98,8 @@
       "f_show_source": "Vis kildelisten"
     },
     "de": {
+      "f_switch": "PC-Steckdose (Schalter)",
+      "confirm_off": "Steckdose ausschalten, obwohl der PC läuft?",
       "f_poster_position": "Position des Covers",
       "poster_center": "Zentriert (Standard)",
       "poster_left": "Links",
@@ -119,6 +127,8 @@
       "f_show_source": "die Quellenliste anzeigen"
     },
     "es": {
+      "f_switch": "Enchufe del PC (interruptor)",
+      "confirm_off": "¿Apagar el enchufe mientras el PC está encendido?",
       "f_poster_position": "Posición de la carátula",
       "poster_center": "Centrada (por defecto)",
       "poster_left": "Izquierda",
@@ -146,6 +156,8 @@
       "f_show_source": "Mostrar la lista de fuentes"
     },
     "fr": {
+      "f_switch": "Prise du PC (interrupteur)",
+      "confirm_off": "Couper la prise alors que le PC est allumé ?",
       "f_poster_position": "Position de l'affiche",
       "poster_center": "Centrée (défaut)",
       "poster_left": "À gauche",
@@ -173,6 +185,8 @@
       "f_show_source": "Afficher la liste des sources"
     },
     "hu": {
+      "f_switch": "A PC dugalja (kapcsoló)",
+      "confirm_off": "Kikapcsolja a dugaljat, miközben a PC be van kapcsolva?",
       "f_poster_position": "A plakát helye",
       "poster_center": "Középen (alapértelmezett)",
       "poster_left": "Balra",
@@ -200,6 +214,8 @@
       "f_show_source": "a forráslistát megjelenítése"
     },
     "it": {
+      "f_switch": "Presa del PC (interruttore)",
+      "confirm_off": "Spegnere la presa mentre il PC è acceso?",
       "f_poster_position": "Posizione della locandina",
       "poster_center": "Centrata (predefinito)",
       "poster_left": "Sinistra",
@@ -227,6 +243,8 @@
       "f_show_source": "Mostra l'elenco delle sorgenti"
     },
     "nb": {
+      "f_switch": "PC-ens stikkontakt (bryter)",
+      "confirm_off": "Slå av stikkontakten mens PC-en er på?",
       "f_poster_position": "Plakatens plassering",
       "poster_center": "Sentrert (standard)",
       "poster_left": "Venstre",
@@ -254,6 +272,8 @@
       "f_show_source": "Vis kildelisten"
     },
     "nl": {
+      "f_switch": "Stekker van de pc (schakelaar)",
+      "confirm_off": "Stekker uitschakelen terwijl de pc aan staat?",
       "f_poster_position": "Positie van de poster",
       "poster_center": "Gecentreerd (standaard)",
       "poster_left": "Links",
@@ -281,6 +301,8 @@
       "f_show_source": "de bronnenlijst tonen"
     },
     "pl": {
+      "f_switch": "Gniazdko komputera (przełącznik)",
+      "confirm_off": "Wyłączyć gniazdko, gdy komputer jest włączony?",
       "f_poster_position": "Pozycja plakatu",
       "poster_center": "Wyśrodkowany (domyślnie)",
       "poster_left": "Lewo",
@@ -308,6 +330,8 @@
       "f_show_source": "Pokaż listę źródeł"
     },
     "pt-BR": {
+      "f_switch": "Tomada do PC (interruptor)",
+      "confirm_off": "Desligar a tomada com o PC ligado?",
       "f_poster_position": "Posição do pôster",
       "poster_center": "Centralizado (padrão)",
       "poster_left": "Esquerda",
@@ -335,6 +359,8 @@
       "f_show_source": "Mostrar a lista de fontes"
     },
     "pt-PT": {
+      "f_switch": "Tomada do PC (interruptor)",
+      "confirm_off": "Desligar a tomada com o PC ligado?",
       "f_poster_position": "Posição do cartaz",
       "poster_center": "Centrado (predefinição)",
       "poster_left": "Esquerda",
@@ -362,6 +388,8 @@
       "f_show_source": "Mostrar a lista de fontes"
     },
     "ro": {
+      "f_switch": "Priza PC-ului (comutator)",
+      "confirm_off": "Opriți priza cât timp PC-ul este pornit?",
       "f_poster_position": "Poziția afișului",
       "poster_center": "Centrat (implicit)",
       "poster_left": "Stânga",
@@ -389,6 +417,8 @@
       "f_show_source": "Afișează lista surselor"
     },
     "ru": {
+      "f_switch": "Розетка ПК (выключатель)",
+      "confirm_off": "Отключить розетку, пока компьютер включён?",
       "f_poster_position": "Положение постера",
       "poster_center": "По центру (по умолчанию)",
       "poster_left": "Слева",
@@ -416,6 +446,8 @@
       "f_show_source": "Показывать список источников"
     },
     "sr": {
+      "f_switch": "Утичница рачунара (прекидач)",
+      "confirm_off": "Искључити утичницу док је рачунар укључен?",
       "f_poster_position": "Положај постера",
       "poster_center": "Центрирано (подразумевано)",
       "poster_left": "Лево",
@@ -443,6 +475,8 @@
       "f_show_source": "Прикажи листу извора"
     },
     "sr-Latn": {
+      "f_switch": "Utičnica računara (prekidač)",
+      "confirm_off": "Isključiti utičnicu dok je računar uključen?",
       "f_poster_position": "Položaj postera",
       "poster_center": "Centrirano (podrazumevano)",
       "poster_left": "Levo",
@@ -470,6 +504,8 @@
       "f_show_source": "Prikaži listu izvora"
     },
     "uk": {
+      "f_switch": "Розетка ПК (вимикач)",
+      "confirm_off": "Вимкнути розетку, поки комп'ютер увімкнено?",
       "f_poster_position": "Положення постера",
       "poster_center": "По центру (за замовчуванням)",
       "poster_left": "Ліворуч",
@@ -572,6 +608,16 @@ svg{display:block;width:calc(100% * var(--illus-scale,1));max-width:100%;height:
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
     _svc(s, d = {}) { this._hass.callService('media_player', s, { entity_id: this._c.entity, ...d }); }
 
+    // bouton marche / arrêt : avec `switch` (prise du PC), il pilote la prise (même quand Kodi est indisponible, PC coupé) ;
+    // couper la prise alors que le PC est allumé demande confirmation ; sans `switch`, il pilote le lecteur multimédia
+    _power(s) {
+      const c = this._c, sw = c.switch && this._hass.states[c.switch];
+      if (!sw) { this._svc(s === 'off' || s === 'standby' ? 'turn_on' : 'turn_off'); return; }
+      const dom = c.switch.split('.')[0], on = String(sw.state).toLowerCase() === 'on', pcOn = !/^(off|standby|unavailable|unknown)$/.test(s);
+      const run = () => this._hass.callService(['switch', 'input_boolean', 'light'].includes(dom) ? dom : 'homeassistant', on ? 'turn_off' : 'turn_on', { entity_id: c.switch });
+      if (on && pcOn && window.applianceConfirm) window.applianceConfirm(this, { action: 'toggle', confirmation: { text: this._t('confirm_off') } }, run); else run();
+    }
+
     // état affichable : unavailable, off, standby, idle, on, playing, paused
     _state(st) {
       const s = st ? String(st.state).toLowerCase() : 'unavailable';
@@ -610,7 +656,7 @@ svg{display:block;width:calc(100% * var(--illus-scale,1));max-width:100%;height:
       const $ = (id) => root.getElementById(id);
       root.querySelectorAll('#htctl button,#htvol button').forEach((b) => b.addEventListener('click', () => {
         const st = this._st(), a = (st && st.attributes) || {}, s = this._state(st), k = b.dataset.a;
-        if (k === 'power') this._svc(s === 'off' || s === 'standby' ? 'turn_on' : 'turn_off');
+        if (k === 'power') this._power(s);
         else if (k === 'prev') this._svc('media_previous_track');
         else if (k === 'next') this._svc('media_next_track');
         else if (k === 'play') this._svc('media_play_pause');
@@ -672,11 +718,12 @@ svg{display:block;width:calc(100% * var(--illus-scale,1));max-width:100%;height:
       $('htd').textContent = isFinite(d) && d > 0 ? hms(d) : ''; $('htsk').disabled = !has(F.SEEK);
       // boutons
       const b = (k) => r.querySelector(`#htctl button[data-a="${k}"]`), pw = b('power'), off = state === 'off' || state === 'standby';
-      pw.classList.toggle('hide', !(has(F.TURN_ON) || has(F.TURN_OFF))); pw.classList.toggle('on', !off && state !== 'unavailable'); pw.title = this._t('btn_power');
+      const swSt = c.switch && hass.states[c.switch], hasSw = !!swSt && !/^(unavailable|unknown)$/i.test(String(swSt.state));
+      pw.classList.toggle('hide', !hasSw && !(has(F.TURN_ON) || has(F.TURN_OFF))); pw.classList.toggle('on', hasSw ? String(swSt.state).toLowerCase() === 'on' : !off && state !== 'unavailable'); pw.title = this._t('btn_power');
       b('prev').classList.toggle('hide', !has(F.PREV)); b('next').classList.toggle('hide', !has(F.NEXT)); b('prev').title = this._t('btn_prev'); b('next').title = this._t('btn_next');
       const pl = b('play'); pl.classList.toggle('hide', !(has(F.PAUSE) || has(F.PLAY))); pl.title = this._t('btn_play'); pl.querySelector('ha-icon').setAttribute('icon', state === 'playing' ? 'mdi:pause' : 'mdi:play');
       const sh = b('shuffle'); sh.classList.toggle('hide', !has(F.SHUFFLE) || !active); sh.classList.toggle('on', !!a.shuffle); sh.title = this._t('btn_shuffle');
-      r.querySelectorAll('#htctl button').forEach((x) => { x.disabled = state === 'unavailable'; });
+      r.querySelectorAll('#htctl button').forEach((x) => { x.disabled = state === 'unavailable' && !(hasSw && x.dataset.a === 'power'); });
       // volume, source
       const vol = $('htvol'); vol.classList.toggle('hide', c.show_volume === false || !has(F.VOLUME_SET) || off);
       if (a.volume_level != null) $('htv').value = String(Math.round(Number(a.volume_level) * 100));
@@ -713,6 +760,7 @@ svg{display:block;width:calc(100% * var(--illus-scale,1));max-width:100%;height:
         { name: 'name', selector: { text: {} } },
         { name: 'entity', selector: { entity: { domain: 'media_player' } } },
         { name: 'entity_power', selector: { entity: { domain: 'sensor' } } },
+        { name: 'switch', selector: { entity: { domain: ['switch', 'input_boolean', 'light'] } } },
         { name: 'poster_position', selector: { select: { mode: 'dropdown', options: ['center', 'left', 'right'].map((value) => ({ value, label: tr[`poster_${value}`] || value })) } } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },

@@ -2069,6 +2069,8 @@
     "show_backup": "Show backup heaters and boiler"
   },
   "htpc": {
+    "f_switch": "A PC dugalja (kapcsoló)",
+    "confirm_off": "Kikapcsolja a dugaljat, miközben a PC be van kapcsolva?",
     "f_poster_position": "A plakát helye",
     "poster_center": "Középen (alapértelmezett)",
     "poster_left": "Balra",

@@ -1989,6 +1989,8 @@
     "days": "d"
   },
   "htpc": {
+    "f_switch": "Stekker van de pc (schakelaar)",
+    "confirm_off": "Stekker uitschakelen terwijl de pc aan staat?",
     "f_poster_position": "Positie van de poster",
     "poster_center": "Gecentreerd (standaard)",
     "poster_left": "Links",
