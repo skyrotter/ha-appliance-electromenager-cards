@@ -2113,6 +2113,11 @@
     "confirm_empty": "Alle grit legen? De legencyclus start.",
     "confirm_reset": "Teller van de N50-geurverwijderaar resetten?"
   },
+  "weather_station": {
+    "name": "Weerstation",
+    "wind": "Wind",
+    "extra": "Hitte-index"
+  },
   "co2_monitor": {
     "name": "CO₂-monitor",
     "good": "Goede lucht",

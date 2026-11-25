@@ -173,6 +173,7 @@ Clique sur une carte pour ses options et ses exemples (pages en anglais).
 | [Qualité de l'air](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/air-quality.md) | `custom:appliance-air-quality-card` |
 | [Moniteur de CO₂](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/co2-monitor.md) | `custom:appliance-co2-monitor-card` |
 | [Baromètre](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/barometer.md) | `custom:appliance-barometer-card` |
+| [Station météo (style Davis Vantage Pro2)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/weather-station.md) | `custom:appliance-weather-station-card` |
 | [Détecteur de fuite d'eau](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/leak-detector.md) | `custom:appliance-leak-detector-card` |
 | [Arrosage (zones, pompe, pluie)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/irrigation.md) | `custom:appliance-irrigation-card` |
 | [Ruban LED (couleur, luminosité, effet)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/led-strip.md) | `custom:appliance-led-strip-card` |

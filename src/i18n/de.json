@@ -2514,6 +2514,11 @@
     "confirm_empty": "Die gesamte Streu entleeren? Der Entleerungszyklus startet.",
     "confirm_reset": "Zähler des N50-Geruchsentferners zurücksetzen?"
   },
+  "weather_station": {
+    "name": "Wetterstation",
+    "wind": "Wind",
+    "extra": "Hitzeindex"
+  },
   "co2_monitor": {
     "name": "CO₂-Monitor",
     "good": "Gute Luft",

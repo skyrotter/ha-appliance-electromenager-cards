@@ -3277,6 +3277,11 @@
     "f_show_spray": "bloco spray",
     "f_show_lastcat": "bloco último gato"
   },
+  "weather_station": {
+    "name": "Estação meteorológica",
+    "wind": "Vento",
+    "extra": "Índice de calor"
+  },
   "co2_monitor": {
     "name": "Monitor de CO₂",
     "good": "Ar bom",

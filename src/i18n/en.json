@@ -3281,6 +3281,27 @@
     "f_show_spray": "spray tile",
     "f_show_lastcat": "last cat tile"
   },
+  "weather_station": {
+    "name": "Weather station",
+    "wind": "Wind",
+    "extra": "Heat index",
+    "f_entity_weather": "Weather entity (local station or web)",
+    "f_entity_temp_out": "Outdoor temperature",
+    "f_entity_hum_out": "Outdoor humidity",
+    "f_entity_pressure": "Pressure (barometer, trend over 3 h)",
+    "f_entity_wind_speed": "Wind speed",
+    "f_entity_wind_bearing": "Wind direction (degrees or N, NE…)",
+    "f_entity_temp_in": "Indoor temperature",
+    "f_entity_hum_in": "Indoor humidity",
+    "f_entity_extra": "Extra value (heat index, dew point, UV…)",
+    "f_extra_label": "Label of the extra value",
+    "f_entity_rain_day": "Daily rain",
+    "f_entity_rain_rate": "Rain rate",
+    "f_entity_graph": "24 h graph (sensor)",
+    "f_entity_ticker": "Ticker text (sensor or input_text)",
+    "f_backlight": "Backlit LCD (orange)",
+    "f_show_name": "Show the name"
+  },
   "co2_monitor": {
     "name": "CO₂ monitor",
     "good": "Good air",

@@ -2491,6 +2491,11 @@
     "confirm_empty": "Isprazniti svu posteljinu? Počinje ciklus pražnjenja.",
     "confirm_reset": "Resetovati brojač N50 neutralizatora mirisa?"
   },
+  "weather_station": {
+    "name": "Meteorološka stanica",
+    "wind": "Vetar",
+    "extra": "Toplotni indeks"
+  },
   "co2_monitor": {
     "name": "CO₂ monitor",
     "good": "Dobar vazduh",

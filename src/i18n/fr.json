@@ -3282,6 +3282,27 @@
     "f_show_spray": "tuile spray",
     "f_show_lastcat": "tuile dernier passage"
   },
+  "weather_station": {
+    "name": "Station météo",
+    "wind": "Vent",
+    "extra": "Indice de chaleur",
+    "f_entity_weather": "Entité météo (station locale ou web)",
+    "f_entity_temp_out": "Température extérieure",
+    "f_entity_hum_out": "Humidité extérieure",
+    "f_entity_pressure": "Pression (baromètre, tendance sur 3 h)",
+    "f_entity_wind_speed": "Vitesse du vent",
+    "f_entity_wind_bearing": "Direction du vent (degrés ou N, NE…)",
+    "f_entity_temp_in": "Température intérieure",
+    "f_entity_hum_in": "Humidité intérieure",
+    "f_entity_extra": "Valeur au choix (indice de chaleur, point de rosée, UV…)",
+    "f_extra_label": "Nom de la valeur au choix",
+    "f_entity_rain_day": "Pluie du jour",
+    "f_entity_rain_rate": "Intensité de pluie",
+    "f_entity_graph": "Graphique 24 h (capteur)",
+    "f_entity_ticker": "Texte du bandeau (capteur ou input_text)",
+    "f_backlight": "Écran rétroéclairé (orange)",
+    "f_show_name": "Afficher le nom"
+  },
   "co2_monitor": {
     "name": "Moniteur de CO₂",
     "good": "Air sain",

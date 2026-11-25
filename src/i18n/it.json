@@ -2113,6 +2113,11 @@
     "confirm_empty": "Svuotare tutta la lettiera? Parte il ciclo di svuotamento.",
     "confirm_reset": "Azzerare il contatore dell'eliminatore di odori N50?"
   },
+  "weather_station": {
+    "name": "Stazione meteo",
+    "wind": "Vento",
+    "extra": "Indice di calore"
+  },
   "co2_monitor": {
     "name": "Monitor CO₂",
     "good": "Aria buona",

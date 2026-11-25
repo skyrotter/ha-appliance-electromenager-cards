@@ -1914,6 +1914,11 @@
     "confirm_empty": "Opróżnić cały żwirek? Rozpocznie się cykl opróżniania.",
     "confirm_reset": "Wyzerować licznik neutralizatora zapachów N50?"
   },
+  "weather_station": {
+    "name": "Stacja pogodowa",
+    "wind": "Wiatr",
+    "extra": "Indeks ciepła"
+  },
   "co2_monitor": {
     "name": "Monitor CO₂",
     "good": "Dobre powietrze",
