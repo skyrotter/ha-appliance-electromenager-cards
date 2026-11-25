@@ -11,6 +11,9 @@
 
   const T = {
     "en": {
+      "resetting": "Recalibrating",
+      "btn_light": "Light",
+      "f_entity_light": "Inner light (light / switch)",
       "spray_liquid": "Spray liquid",
       "spray_batt": "Spray battery",
       "f_entity_spray_battery": "Spray battery level (%)",
@@ -84,6 +87,8 @@
       "f_show_lastcat": "last cat tile"
     },
     "cs": {
+      "resetting": "Rekalibrace",
+      "btn_light": "Světlo",
       "spray_liquid": "Kapalina ve spreji",
       "spray_batt": "Baterie spreje",
       "name": "Automatické kočičí WC",
@@ -123,6 +128,8 @@
       "confirm_reset": "Vynulovat počítadlo odstraňovače pachů N50?"
     },
     "da": {
+      "resetting": "Genkalibrerer",
+      "btn_light": "Lys",
       "spray_liquid": "Sprayvæske",
       "spray_batt": "Spraybatteri",
       "name": "Automatisk kattebakke",
@@ -162,6 +169,8 @@
       "confirm_reset": "Nulstil tælleren for N50-lugtfjerneren?"
     },
     "de": {
+      "resetting": "Neukalibrierung",
+      "btn_light": "Licht",
       "spray_liquid": "Sprühflüssigkeit",
       "spray_batt": "Spray-Batterie",
       "name": "Automatische Katzentoilette",
@@ -201,6 +210,8 @@
       "confirm_reset": "Zähler des N50-Geruchsentferners zurücksetzen?"
     },
     "es": {
+      "resetting": "Recalibrando",
+      "btn_light": "Luz",
       "spray_liquid": "Líquido del spray",
       "spray_batt": "Batería del spray",
       "name": "Arenero automático",
@@ -240,6 +251,9 @@
       "confirm_reset": "¿Reiniciar el contador del eliminador de olores N50?"
     },
     "fr": {
+      "resetting": "Recalibrage",
+      "btn_light": "Lumière",
+      "f_entity_light": "Lumière intégrée (light / switch)",
       "spray_liquid": "Liquide désodorisant",
       "spray_batt": "Batt. désodorisant",
       "f_entity_spray_battery": "Batterie du spray (%)",
@@ -313,6 +327,8 @@
       "f_show_lastcat": "tuile dernier passage"
     },
     "hu": {
+      "resetting": "Újrakalibrálás",
+      "btn_light": "Fény",
       "spray_liquid": "Spray folyadék",
       "spray_batt": "Spray akkumulátor",
       "name": "Automata macskaalom",
@@ -352,6 +368,8 @@
       "confirm_reset": "Nullázza az N50 szagsemlegesítő számlálóját?"
     },
     "it": {
+      "resetting": "Ricalibrazione",
+      "btn_light": "Luce",
       "spray_liquid": "Liquido spray",
       "spray_batt": "Batteria spray",
       "name": "Lettiera automatica",
@@ -391,6 +409,8 @@
       "confirm_reset": "Azzerare il contatore dell'eliminatore di odori N50?"
     },
     "nb": {
+      "resetting": "Rekalibrerer",
+      "btn_light": "Lys",
       "spray_liquid": "Sprayvæske",
       "spray_batt": "Spraybatteri",
       "name": "Automatisk kattedo",
@@ -430,6 +450,8 @@
       "confirm_reset": "Nullstille telleren for N50-luktfjerneren?"
     },
     "nl": {
+      "resetting": "Herkalibreren",
+      "btn_light": "Licht",
       "spray_liquid": "Sprayvloeistof",
       "spray_batt": "Spraybatterij",
       "name": "Automatische kattenbak",
@@ -469,6 +491,8 @@
       "confirm_reset": "Teller van de N50-geurverwijderaar resetten?"
     },
     "pl": {
+      "resetting": "Rekalibracja",
+      "btn_light": "Światło",
       "spray_liquid": "Płyn w sprayu",
       "spray_batt": "Bateria sprayu",
       "name": "Automatyczna kuweta",
@@ -508,6 +532,8 @@
       "confirm_reset": "Wyzerować licznik neutralizatora zapachów N50?"
     },
     "pt-BR": {
+      "resetting": "Recalibrando",
+      "btn_light": "Luz",
       "spray_liquid": "Líquido do spray",
       "spray_batt": "Bateria do spray",
       "name": "Caixa de areia automática",
@@ -547,6 +573,8 @@
       "confirm_reset": "Reiniciar o contador do eliminador de odores N50?"
     },
     "pt-PT": {
+      "resetting": "A recalibrar",
+      "btn_light": "Luz",
       "spray_liquid": "Líquido do spray",
       "spray_batt": "Bateria do spray",
       "name": "Caixa de areia automática",
@@ -586,6 +614,8 @@
       "confirm_reset": "Repor o contador do eliminador de odores N50?"
     },
     "ro": {
+      "resetting": "Recalibrare",
+      "btn_light": "Lumină",
       "spray_liquid": "Lichid spray",
       "spray_batt": "Baterie spray",
       "name": "Litieră automată",
@@ -625,6 +655,8 @@
       "confirm_reset": "Resetați contorul eliminatorului de mirosuri N50?"
     },
     "ru": {
+      "resetting": "Калибровка",
+      "btn_light": "Свет",
       "spray_liquid": "Жидкость спрея",
       "spray_batt": "Батарея спрея",
       "name": "Автоматический лоток",
@@ -664,6 +696,8 @@
       "confirm_reset": "Сбросить счётчик нейтрализатора запаха N50?"
     },
     "sr": {
+      "resetting": "Рекалибрација",
+      "btn_light": "Светло",
       "spray_liquid": "Течност спреја",
       "spray_batt": "Батерија спреја",
       "name": "Аутоматски тоалет за мачке",
@@ -703,6 +737,8 @@
       "confirm_reset": "Ресетовати бројач N50 неутрализатора мириса?"
     },
     "sr-Latn": {
+      "resetting": "Rekalibracija",
+      "btn_light": "Svetlo",
       "spray_liquid": "Tečnost spreja",
       "spray_batt": "Baterija spreja",
       "name": "Automatski toalet za mačke",
@@ -742,6 +778,8 @@
       "confirm_reset": "Resetovati brojač N50 neutralizatora mirisa?"
     },
     "uk": {
+      "resetting": "Калібрування",
+      "btn_light": "Світло",
       "spray_liquid": "Рідина спрея",
       "spray_batt": "Батарея спрея",
       "name": "Автоматичний лоток",
@@ -797,7 +835,7 @@
 .title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--secondary-background-color);color:var(--secondary-text-color);white-space:nowrap}
 .idle .badge{background:color-mix(in srgb,var(--lb-ok) 22%,transparent);color:var(--lb-ok)}
-.cleaning .badge,.emptying .badge,.leveling .badge,.deodorizing .badge,.maintenance .badge{background:color-mix(in srgb,var(--lb-act) 24%,transparent);color:var(--lb-act)}
+.cleaning .badge,.resetting .badge,.emptying .badge,.leveling .badge,.deodorizing .badge,.maintenance .badge{background:color-mix(in srgb,var(--lb-act) 24%,transparent);color:var(--lb-act)}
 .paused .badge,.occupied .badge{background:color-mix(in srgb,var(--lb-warn) 26%,transparent);color:var(--lb-warn)}
 .error .badge{background:color-mix(in srgb,var(--lb-alert) 22%,transparent);color:var(--lb-alert)}
 svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height:auto;margin:2px auto 0;overflow:visible;cursor:pointer}
@@ -835,13 +873,16 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
 .cleaning .ring,.emptying .ring,.leveling .ring{animation:lbspin 2.6s linear infinite}
 .cleaning .ring.r2,.emptying .ring.r2,.leveling .ring.r2{animation-duration:4s;animation-direction:reverse}
 .hatch{fill:none;stroke:#8aa2b3;stroke-width:6;stroke-linecap:round;stroke-dasharray:16 22;opacity:0;transition:opacity .4s}
-.cleaning .hatch,.emptying .hatch,.leveling .hatch,.maintenance .hatch{opacity:.9;animation:lbdash 1.4s linear infinite}
-.maintenance .hatch{animation-duration:3s}
+.cleaning .hatch,.emptying .hatch,.leveling .hatch,.maintenance .hatch,.resetting .hatch{opacity:.9;animation:lbdash 1.4s linear infinite}
+.maintenance .hatch,.resetting .hatch{animation-duration:3s}
+.resetting .led{animation:lbblink 1.4s ease-in-out infinite}
 .grain{fill:#cdb48c;opacity:0}
 .cleaning .grain,.leveling .grain{animation:lbfall 1.6s ease-in infinite}
 .cleaning .grain:nth-of-type(2n){animation-delay:.5s}.cleaning .grain:nth-of-type(3n){animation-delay:1s}
 .spray{fill:none;stroke:#9be3c0;stroke-width:4;stroke-linecap:round;opacity:0}
 .deodorizing .spray{animation:lbspray 1.4s ease-out infinite}
+.lamp{opacity:0;transition:opacity .5s;mix-blend-mode:screen}.lit .lamp{opacity:1}
+.btns button.on{background:color-mix(in srgb,var(--lb-warn) 30%,var(--secondary-background-color));color:var(--primary-text-color)}.btns button.on ha-icon{color:var(--lb-warn)}
 .led{transition:fill .4s}.error .led{animation:lbblink 1s ease-in-out infinite}
 .eye{fill:#ffe27a}.occupied .eye{opacity:1;animation:lbblinkeye 4s ease-in-out infinite}
 .noanim *{animation:none!important;transition:none!important}
@@ -861,19 +902,20 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
   // boutons d'action : [clé, icône, option de l'entité, dangereux]
   const BUTTONS = [['clean', 'mdi:broom', 'button_clean', false], ['pause', 'mdi:pause-circle-outline', 'button_pause', false], ['resume', 'mdi:play-circle-outline', 'button_continue', false],
     ['deodorize', 'mdi:spray', 'button_deodorize', false], ['level', 'mdi:equal-box', 'button_level', false], ['empty', 'mdi:delete-sweep', 'button_empty', true],
-    ['maint', 'mdi:wrench', 'button_maintenance', false], ['maint_exit', 'mdi:wrench-check', 'button_maintenance_exit', false], ['reset', 'mdi:restore', 'button_reset_n50', true]];
+    ['light', 'mdi:lightbulb-outline', 'entity_light', false], ['maint', 'mdi:wrench', 'button_maintenance', false], ['maint_exit', 'mdi:wrench-check', 'button_maintenance_exit', false], ['reset', 'mdi:restore', 'button_reset_n50', true]];
 
-  const STATUS = [[/error|fault|err\b|erreur|problem/i, 'error'], [/pause/i, 'paused'], [/maint/i, 'maintenance'], [/empty|dump|vid/i, 'emptying'], [/level|nivel/i, 'leveling'],
+  const STATUS = [[/error|fault|err\b|erreur|problem/i, 'error'], [/reset|calibr|recalib/i, 'resetting'], [/pause/i, 'paused'], [/maint/i, 'maintenance'], [/empty|dump|vid/i, 'emptying'], [/level|nivel/i, 'leveling'],
     [/deodor|odor|d[ée]sodor/i, 'deodorizing'], [/clean|work|run|nettoy|cycle/i, 'cleaning'], [/idle|ready|libre|standby|stand-by|free|wait/i, 'idle']];
 
   // décor de l'illustration : tambour, chat, voyant, pause, clé
   const OVERLAY = () => `
-    <defs><clipPath id="lbwin"><polygon points="${WIN}"/></clipPath></defs>
+    <defs><clipPath id="lbwin"><polygon points="${WIN}"/></clipPath><radialGradient id="lblamp" cx=".5" cy=".18" r=".85"><stop offset="0" stop-color="#fff6d6" stop-opacity=".7"/><stop offset=".55" stop-color="#ffd98a" stop-opacity=".4"/><stop offset="1" stop-color="#ffc861" stop-opacity=".18"/></radialGradient></defs>
     <g class="drum" clip-path="url(#lbwin)">
       <circle class="ring" cx="476" cy="306" r="190" stroke-dasharray="120 70"/><circle class="ring r2" cx="476" cy="306" r="130" stroke-dasharray="70 60"/>
       ${[400, 440, 480, 520, 560, 590].map((x, i) => `<circle class="grain" cx="${x}" cy="${150 + (i % 3) * 18}" r="${4 + (i % 2)}"/>`).join('')}
       <g class="spray-g">${[0, 1, 2].map((i) => `<path class="spray" d="M${430 + i * 45} 330q10-30 0-60" style="transform-origin:${450 + i * 45}px 330px;animation-delay:${i * .25}s"/>`).join('')}</g>
     </g>
+    <g class="lamp" clip-path="url(#lbwin)"><rect x="340" y="125" width="272" height="360" fill="url(#lblamp)"/></g>
     <ellipse class="hatch" cx="68" cy="352" rx="38" ry="112"/>
     <g class="cat" clip-path="url(#lbwin)"><g transform="translate(476 480) scale(1.5) translate(-476 -480)">
       <path d="M478 480C430 480 418 420 434 372c10-34 74-34 84 0 16 48 4 108-40 108Z" fill="#c4ab82"/><path d="M520 450c42 0 52-52 22-68" fill="none" stroke="#c4ab82" stroke-width="13" stroke-linecap="round"/>
@@ -957,14 +999,17 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
     _press(k) {
       const def = BUTTONS.find(([key]) => key === k), id = def && this._c[def[2]];
       if (!id) return;
-      const dom = id.split('.')[0], run = () => this._hass.callService(dom === 'button' || dom === 'input_button' ? dom : dom === 'script' || dom === 'switch' ? dom : 'button', dom === 'button' || dom === 'input_button' ? 'press' : 'turn_on', { entity_id: id });
+      const dom = id.split('.')[0];
+      if (k === 'light') { this._hass.callService(['light', 'switch', 'input_boolean'].includes(dom) ? dom : 'homeassistant', 'toggle', { entity_id: id }); return; }
+      const run = () => this._hass.callService(dom === 'button' || dom === 'input_button' ? dom : dom === 'script' || dom === 'switch' ? dom : 'button', dom === 'button' || dom === 'input_button' ? 'press' : 'turn_on', { entity_id: id });
       if (def[3] && this._c.confirm_dangerous !== false && window.applianceConfirm) window.applianceConfirm(this, { action: 'toggle', confirmation: { text: this._t(k === 'empty' ? 'confirm_empty' : 'confirm_reset') } }, run); else run();
     }
 
     _render() {
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card, v = this._compute();
-      card.className = `${v.st}${c.animations === false ? ' noanim' : ''}`;
+      const lightOn = this._on(c.entity_light);
+      card.className = `${v.st}${lightOn ? ' lit' : ''}${c.animations === false ? ' noanim' : ''}`;
       r.getElementById('lbtitle').textContent = c.name || this._t('name');
       const badge = r.getElementById('lbbadge'); badge.textContent = this._t(v.st); badge.style.display = c.show_status === false ? 'none' : '';
       // voyant de l'écran : vert libre, bleu en action, orange pause / occupé, rouge erreur
@@ -1007,7 +1052,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
         let show = !!c[opt] && c.show_buttons !== false;
         if (k === 'pause') show = show && !paused; if (k === 'resume') show = show && (paused || !c.button_pause);
         if (k === 'maint') show = show && !maint; if (k === 'maint_exit') show = show && maint;
-        b.classList.toggle('hide', !show); b.querySelector('span').textContent = this._l(`btn_${k}`); b.disabled = v.st === 'unavailable'; any = any || show;
+        b.classList.toggle('hide', !show); b.classList.toggle('on', k === 'light' && lightOn); b.querySelector('span').textContent = this._l(`btn_${k}`); b.disabled = v.st === 'unavailable'; any = any || show;
       });
       r.getElementById('lbbtns').classList.toggle('hide', !any);
       void cleaning;
@@ -1044,7 +1089,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
         ent('entity_waste_full', ['binary_sensor']), ent('entity_no_litter', ['binary_sensor']),
         ent('entity_litter_level', 'sensor'), ent('entity_litter_weight', 'sensor'), ent('entity_odor_days', 'sensor'), ent('entity_times_used', 'sensor'),
         ent('entity_spray_liquid', 'sensor'), ent('entity_spray_battery', 'sensor'), ent('entity_last_cat', 'sensor'), ent('entity_last_event', 'sensor'),
-        ent('button_clean', btn), ent('button_pause', btn), ent('button_continue', btn), ent('button_deodorize', btn), ent('button_level', btn),
+        ent('entity_light', ['light', 'switch']), ent('button_clean', btn), ent('button_pause', btn), ent('button_continue', btn), ent('button_deodorize', btn), ent('button_level', btn),
         ent('button_empty', btn), ent('button_maintenance', btn), ent('button_maintenance_exit', btn), ent('button_reset_n50', btn),
         { type: 'grid', name: '', schema: [num('odor_low', 3, 0, 30, 1, 'd'), num('spray_low', 15, 0, 100, 1, '%'), num('n50_max_days', 30, 1, 120, 1, 'd')] },
         bool('rings'),

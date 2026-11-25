@@ -3171,6 +3171,8 @@
     "f_show_humidity": "bloco de humidade"
   },
   "litter_box": {
+    "resetting": "A recalibrar",
+    "btn_light": "Luz",
     "spray_liquid": "Líquido do spray",
     "spray_batt": "Bateria do spray",
     "name": "Caixa de areia automática",

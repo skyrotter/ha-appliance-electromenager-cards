@@ -1695,6 +1695,8 @@
     "f_show_humidity": "плитка влажности"
   },
   "litter_box": {
+    "resetting": "Калибровка",
+    "btn_light": "Свет",
     "spray_liquid": "Жидкость спрея",
     "spray_batt": "Батарея спрея",
     "name": "Автоматический лоток",

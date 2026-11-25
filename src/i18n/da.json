@@ -2301,6 +2301,8 @@
     "f_show_humidity": "fugtighedsfelt"
   },
   "litter_box": {
+    "resetting": "Genkalibrerer",
+    "btn_light": "Lys",
     "spray_liquid": "Sprayvæske",
     "spray_batt": "Spraybatteri",
     "name": "Automatisk kattebakke",

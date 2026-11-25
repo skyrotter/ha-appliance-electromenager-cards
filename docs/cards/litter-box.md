@@ -11,7 +11,8 @@
 - **Rings chart** (like the PETKIT dashboards, `rings: false` to go back to tiles): concentric rings for the N50 pellet (days left over `n50_max_days`, 30 by default), the spray liquid, the spray battery (`entity_spray_battery`) and the litter level, with a legend, and the number of uses in the centre.
 - **Tiles**: waste bin, number of uses, last cat (and litter, N50 and spray when `rings: false`). Each can be hidden (`show_litter`, `show_waste`, `show_odor`, `show_uses`, `show_spray`, `show_lastcat`).
 - **Action buttons** (shown only for the entities you give): clean, pause / resume, deodorise, level, **empty the litter** and **reset N50** (both ask for a confirmation, `confirm_dangerous: false` to turn it off), maintenance start / end.
-- The status sensor is read from its text: `idle`, `cleaning`, `paused`, `maintenance`, `emptying`, `leveling`, `deodorizing`, `error`…
+- **Inner light** (`entity_light`, a `light` or `switch`): a **Light** button turns it on or off, and when it is on the inside of the window is lit up on the photo.
+- The status sensor is read from its text: `idle`, `cleaning`, `paused`, `maintenance`, `emptying`, `leveling`, `deodorizing`, `error`, and `resetting_device` (the box recalibrating its position after the maintenance mode, shown as "Recalibrating")…
 
 ```yaml
 type: custom:appliance-litter-box-card
@@ -26,6 +27,7 @@ entity_odor_days: sensor.litiere_n50_odor_eliminator
 entity_times_used: sensor.litiere_times_used
 entity_spray_liquid: sensor.litiere_pura_air_liquid
 entity_last_cat: sensor.litiere_derniere_utilisation_par
+entity_light: light.litiere_lumiere
 button_clean: button.litiere_nettoyer
 button_pause: button.litiere_action_pause
 button_continue: button.litiere_action_continuer
