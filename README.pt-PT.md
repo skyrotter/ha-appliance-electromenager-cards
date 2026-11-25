@@ -254,6 +254,7 @@ Clique num cartão para consultar as opções e os exemplos.
 | [Router de Internet (Freebox Pop, SFR Box)](docs/cards/internet-box.md) | `custom:appliance-internet-box-card` |
 | [Ar condicionado portátil](docs/cards/portable-ac.md) | `custom:appliance-portable-ac-card` |
 | [Alimentador de animais (Aqara C1)](docs/cards/pet-feeder.md) | `custom:appliance-pet-feeder-card` |
+| [Caixa de areia automática (PETKIT Pura Max)](docs/cards/litter-box.md) | `custom:appliance-litter-box-card` |
 | [Caixote do lixo (dias de recolha)](docs/cards/poubelle.md) | `custom:appliance-poubelle-card` |
 | [Computador de secretária](docs/cards/towel-rack-pc-laptop.md) | `custom:appliance-desktop-pc-card` |
 | [Monitores (1 a 3)](docs/cards/towel-rack-pc-laptop.md) | `custom:appliance-monitor-card` |
