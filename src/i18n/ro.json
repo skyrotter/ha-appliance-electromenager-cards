@@ -1750,6 +1750,11 @@
     "confirm_empty": "Goliți tot așternutul? Pornește ciclul de golire.",
     "confirm_reset": "Resetați contorul eliminatorului de mirosuri N50?"
   },
+  "weather_station": {
+    "name": "Stație meteo",
+    "wind": "Vânt",
+    "extra": "Indice de căldură"
+  },
   "co2_monitor": {
     "name": "Monitor CO₂",
     "good": "Aer bun",

@@ -1738,6 +1738,11 @@
     "confirm_empty": "Vyprázdnit veškerou podestýlku? Spustí se vyprazdňovací cyklus.",
     "confirm_reset": "Vynulovat počítadlo odstraňovače pachů N50?"
   },
+  "weather_station": {
+    "name": "Meteostanice",
+    "wind": "Vítr",
+    "extra": "Tepelný index"
+  },
   "co2_monitor": {
     "name": "Monitor CO₂",
     "good": "Dobrý vzduch",

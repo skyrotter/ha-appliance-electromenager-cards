@@ -77,7 +77,7 @@
   // Les « sous-catégories » sont les variantes de l'appareil (style, modèle, finition…), remontées en tête de l'éditeur.
   const CATS = {
     kitchen: 'washer washer-dryer dryer dishwasher oven microwave fridge chest-freezer drawer-freezer hob air-fryer coffee-maker thermomix cookeo kettle toaster range-hood wine-cooler beer-tap contact-grill deep-fryer',
-    climate: 'water-heater thermo-heater fan-heater infrared-panel underfloor-heating radiator towel-dryer pellet-stove pellet-boiler gas-boiler diesel-heater water-heat-pump air-water-heat-pump ac-split portable-ac heat-pump vmc room-climate trv dehumidifier humidifier air-purifier airbowl air-quality co2-monitor barometer fan ceiling-fan',
+    climate: 'water-heater thermo-heater fan-heater infrared-panel underfloor-heating radiator towel-dryer pellet-stove pellet-boiler gas-boiler diesel-heater water-heat-pump air-water-heat-pump ac-split portable-ac heat-pump vmc room-climate trv dehumidifier humidifier air-purifier airbowl air-quality co2-monitor barometer weather-station fan ceiling-fan',
     energy: 'solar solar-house battery ev-charger linky water-meter heat-meter gas-meter electric-meter ups smart-plug power-strip phone-charger tool-charger',
     water: 'pool-pump dosing-pump pool-robot jacuzzi inflatable-spa sauna aquarium reef-aquarium irrigation rain-gauge plant-monitor water-pump industrial-pump sump-pump rainwater-tank water-valve smart-tap water-softener water-filter robot-mower-solo',
     security: 'barrier sliding-gate swing-gate garage-door mailbox smart-lock door-sensor motion-sensor alarm-keypad smoke-detector leak-detector camera nvr',

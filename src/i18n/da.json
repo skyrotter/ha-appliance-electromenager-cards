@@ -2342,6 +2342,11 @@
     "confirm_empty": "Tøm al strøelse? Tømningscyklussen starter.",
     "confirm_reset": "Nulstil tælleren for N50-lugtfjerneren?"
   },
+  "weather_station": {
+    "name": "Vejrstation",
+    "wind": "Vind",
+    "extra": "Varmeindeks"
+  },
   "co2_monitor": {
     "name": "CO₂-måler",
     "good": "God luft",

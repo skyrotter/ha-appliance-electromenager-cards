@@ -3276,6 +3276,11 @@
     "f_show_spray": "mosaico spray",
     "f_show_lastcat": "mosaico último gato"
   },
+  "weather_station": {
+    "name": "Estación meteorológica",
+    "wind": "Viento",
+    "extra": "Índice de calor"
+  },
   "co2_monitor": {
     "name": "Monitor de CO₂",
     "good": "Aire bueno",

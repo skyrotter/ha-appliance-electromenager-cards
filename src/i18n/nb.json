@@ -1918,6 +1918,11 @@
     "confirm_empty": "Tømme alt strø? Tømmesyklusen starter.",
     "confirm_reset": "Nullstille telleren for N50-luktfjerneren?"
   },
+  "weather_station": {
+    "name": "Værstasjon",
+    "wind": "Vind",
+    "extra": "Varmeindeks"
+  },
   "co2_monitor": {
     "name": "CO₂-måler",
     "good": "God luft",

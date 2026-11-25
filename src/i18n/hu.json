@@ -2193,6 +2193,11 @@
     "confirm_empty": "Kiüríti az összes almot? Elindul az ürítési ciklus.",
     "confirm_reset": "Nullázza az N50 szagsemlegesítő számlálóját?"
   },
+  "weather_station": {
+    "name": "Időjárás-állomás",
+    "wind": "Szél",
+    "extra": "Hőindex"
+  },
   "co2_monitor": {
     "name": "CO₂-mérő",
     "good": "Jó levegő",
