@@ -41,7 +41,7 @@
   const LEVELS = ['good', 'moderate', 'poor', 'bad'];
 
   const CSS = `
-:host{display:block;height:100%} ha-card{height:100%;box-sizing:border-box}
+:host{display:block;height:100%} ha-card{height:100%;box-sizing:border-box;container-type:inline-size}
 ha-card{position:relative;display:block;padding:10px 12px 12px;overflow:hidden;--aq-c0:var(--appliance-ok-color,#43a047);--aq-c1:#f9a825;--aq-c2:#f4511e;--aq-c3:var(--appliance-alert-color,#d32f2f);--aq-c:var(--aq-c0)}
 ha-card.lv1{--aq-c:var(--aq-c1)}ha-card.lv2{--aq-c:var(--aq-c2)}ha-card.lv3{--aq-c:var(--aq-c3)}ha-card.unavailable{--aq-c:#8a929a}
 .head{display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -79,6 +79,13 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
 .lv3 .face-all{animation:aqshake 1.1s ease-in-out infinite}
 .noanim *{animation:none!important;transition:none!important}
 .noanim .dust circle{opacity:.5}.noanim .spark{opacity:.8}
+@container (min-width:440px){
+  :host(:not([tiles-pos])) .aq-wrap{display:grid;grid-template-columns:clamp(120px,24%,164px) minmax(0,1fr);column-gap:12px;align-items:center}
+  :host(:not([tiles-pos])) .head,:host(:not([tiles-pos])) .chart{grid-column:1/-1}
+  :host(:not([tiles-pos])) .hero{margin-top:0}
+  :host(:not([tiles-pos])) svg.face{max-width:calc(146px * var(--illus-scale,1))}
+  :host(:not([tiles-pos])) .tiles{margin-top:6px;grid-template-columns:repeat(auto-fit,minmax(88px,1fr));align-self:stretch;align-content:center}
+}
 @keyframes aqglow{50%{opacity:.34}}
 @keyframes aqblink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
 @keyframes aqdust{0%{opacity:0;transform:translate(0,0)}15%{opacity:.7}85%{opacity:.55}100%{opacity:0;transform:translate(var(--dx,12px),var(--dy,-30px))}}
@@ -212,15 +219,19 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
 
     _build() {
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
-      root.innerHTML = `<style>${CSS}</style><ha-card>
+      root.innerHTML = `<style>${CSS}</style><ha-card><div class="aq-wrap">
         <div class="head"><div class="title" id="aqtitle"></div><div class="badge" id="aqbadge"></div></div>
         <div class="hero">${face(this._c.name || this._t('name'))}<div class="sub" id="aqsub"></div></div>
         <div class="tiles">${ORDER.map((k) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${METRICS[k].icon}"></ha-icon><span></span></div><div class="v"></div><svg viewBox="0 0 100 22" preserveAspectRatio="none"></svg></div>`).join('')}</div>
         <div class="chart hide" id="aqchart"><div class="ct"><b id="aqct"></b><span class="cv" id="aqcv"></span></div><div id="aqcc"></div></div>
-      </ha-card>`;
+      </div></ha-card>`;
       window.applianceBindIllus(this, root.querySelector('svg.face'), () => this._more(this._sel && this._c[METRICS[this._sel].opt]));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => { this._sel = el.dataset.k; this._userSel = true; this._render(); }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
+      if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => {
+        const w = Math.round(this._card.clientWidth || 0);
+        if (w && w !== this._lastW && this._lastRow) { this._lastW = w; this._drawChart(this._lastRow); }
+      }).observe(this._card);
     }
 
     _render() {
@@ -268,7 +279,8 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
           } else sv.innerHTML = '';
         }
       });
-      this._drawChart(rows.find((x) => x.k === this._sel));
+      this._lastRow = rows.find((x) => x.k === this._sel);
+      this._drawChart(this._lastRow);
     }
 
     // courbe 24 h de la mesure choisie, avec bandes de seuils colorées et infobulle
@@ -281,7 +293,9 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
       const cv = r.getElementById('aqcv'); cv.textContent = isFinite(x.v) ? `${this._fmt(x.v, this._dec(x.k, x.s))} ${x.unit}` : ''; box.style.setProperty('--tc', x.lv < 0 ? '#8a929a' : COL[x.lv]);
       const cc = r.getElementById('aqcc'), pts = this._series(x.id).filter((p) => isFinite(p.v));
       if (pts.length < 2) { cc.innerHTML = `<div class="msg">${esc(this._t(this._hist === null && this._histAt ? 'no_history' : 'loading'))}</div>`; return; }
-      const now = Date.now(), t0 = now - 24 * 3600e3, W = 320, H = 130, L = 34, R = 6, Tp = 8, B = 20, iw = W - L - R, ih = H - Tp - B;
+      const cw = Math.round(cc.clientWidth || (this._card && this._card.clientWidth - 40) || 0);
+      this._lastW = Math.round((this._card && this._card.clientWidth) || 0);
+      const now = Date.now(), t0 = now - 24 * 3600e3, W = Math.max(320, cw || 320), H = 115, L = 34, R = 6, Tp = 8, B = 20, iw = W - L - R, ih = H - Tp - B;
       const vals = pts.map((p) => p.v), th = x.M.th ? this._th(x.k, x.s) : null;
       let lo = Math.min(...vals), hi = Math.max(...vals);
       if (th) { lo = Math.min(lo, 0); hi = Math.max(hi, th[0] * 1.15); } else { const m = (hi - lo) * .15 || 1; lo -= m; hi += m; }
