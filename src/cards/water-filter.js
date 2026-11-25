@@ -151,7 +151,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     // part de vie restante (%) d'un compteur : litres filtrés ou restants selon filter_mode, avec la capacité ; sinon valeur en %
     _pct(id, cap) {
       const v = this._num(id); if (isNaN(v)) return NaN;
-      if (this._unit(id, '') === '%') return this._c.filter_mode === 'used' ? 100 - v : v;
+      // capteur déjà en % (vie restante) : filter_mode ne concerne que les compteurs en litres, pas d'inversion
+      if (this._unit(id, '') === '%') return Math.max(0, Math.min(100, v));
       if (!(cap > 0)) return NaN;
       return Math.max(0, Math.min(100, (this._c.filter_mode === 'used' ? cap - v : v) / cap * 100));
     }

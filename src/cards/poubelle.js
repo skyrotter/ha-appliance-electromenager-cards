@@ -261,7 +261,8 @@ function effective(rule, d, ctx) {
 /* Collections around today: [{ k: days from today, moved: bool }], sorted, de-duplicated. */
 function collections(rule, now, ctx, range) {
   const today = midnight(now);
-  const K = range ?? (rule.months.length ? 370 : 75);
+  // fenêtre : au moins un intervalle complet (every semaines) de part et d'autre, plus une marge pour les reports de jours fériés
+  const K = range ?? (rule.months.length ? 370 : Math.max(75, rule.every * 7 + 42));
   const seen = new Map();
   for (let k = -K; k <= K; k++) {
     const d = addDays(today, k);
@@ -462,6 +463,9 @@ const ensureForm = () => formReady ??= (async () => {
   await customElements.whenDefined('ha-form');
 })();
 
+/* valeur CSS de la config (couleur, filtre) insérée dans <style> : refusée si elle peut sortir de la déclaration */
+const cssSafe = v => { const s = String(v ?? '').trim(); return /[<>{};"'\\]/.test(s) ? '' : s; };
+
 const isEmpty = v => v === undefined || v === null || v === '' || (Array.isArray(v) && !v.length);
 
 class PoubelleCardEditor extends HTMLElement {
@@ -649,6 +653,9 @@ class PoubelleCard extends HTMLElement {
     this._holKey = key;
     const [hol, work] = await Promise.all([calendarDays(h, holiday), calendarDays(h, workday)]);
     if (key !== this._holKey) return; // config changed meanwhile
+    // échec de lecture (null alors qu'un calendrier est configuré) : on oublie la clé pour réessayer au prochain tour
+    // (calendarDays garde l'échec en cache 10 min, puis relance vraiment la lecture)
+    if ((holiday && !hol) || (workday && !work)) this._holKey = null;
     this._hol = hol; this._work = work;
     this._render();
   }
@@ -666,14 +673,14 @@ class PoubelleCard extends HTMLElement {
 
   _build() {
     const c = this._c, s = Number(c.scale), hr = Number(c.headroom ?? 70), B = PB_BINS[this._bin];
-    const color = c.color || B.color;
+    const color = cssSafe(c.color) || B.color;
     const content = PB_CONTENT[CONTENT_ALIASES[c.content] || c.content] || PB_CONTENT[B.content];
     // full_color : tout le bac prend la couleur (et pas seulement le couvercle). Une couche de la couleur,
     // découpée à la forme du corps, colorise le gris en gardant ses ombres et ses reflets (mix-blend-mode: color).
     const img = String(c.image || '').trim();
-    const paint = c.full_color && !this._bag && !this._bulky && !img ? (c.body_color || B.paint || '') : '';
+    const paint = c.full_color && !this._bag && !this._bulky && !img ? (cssSafe(c.body_color) || B.paint || '') : '';
     // dark colours (burgundy) darken the grey body under the paint, which only sets hue and saturation
-    const bodyF = c.body_filter || (paint && !c.body_color && B.paintBody) || B.body || '', lidF = c.lid_filter || B.lid || '';
+    const bodyF = cssSafe(c.body_filter) || (paint && !cssSafe(c.body_color) && B.paintBody) || B.body || '', lidF = cssSafe(c.lid_filter) || B.lid || '';
     const [bagCol, bagOp] = PB_BAG_COLORS[this._bin];
     const bodyImg = PB_IMG[B.img].body;
     if (!this.shadowRoot) this.attachShadow({ mode: 'open' });
@@ -772,11 +779,13 @@ class PoubelleCard extends HTMLElement {
     const a = st.attributes || {}, s = st.state;
     const today = midnight(new Date());
     const fromDays = n => addDays(today, Number(n));
-    if (a.daysTo !== undefined && !isNaN(a.daysTo)) return fromDays(a.daysTo);          // Waste Collection Schedule
+    // nombre de jours : null, '', 'unknown' ou 'unavailable' ne valent pas 0 (« aujourd'hui »)
+    const isNum = v => v != null && typeof v !== 'boolean' && String(v).trim() !== '' && isFinite(Number(v));
+    if (isNum(a.daysTo)) return fromDays(a.daysTo);                                      // Waste Collection Schedule
     if (st.entity_id.startsWith('calendar.')) return a.start_time ? addDays(new Date(String(a.start_time).replace(' ', 'T')), this._c.calendar_offset) : null;
     if (st.entity_id.startsWith('input_datetime.') && a.year) return new Date(a.year, a.month - 1, a.day);
     if (s === 'unknown' || s === 'unavailable' || s === '' || s == null) return null;
-    if (!isNaN(s)) return fromDays(s);                                                   // number of days
+    if (isNum(s)) return fromDays(s);                                                    // number of days
     const lower = String(s).toLowerCase();
     if (['today', "aujourd'hui", 'aujourdhui'].includes(lower)) return today;
     if (['tomorrow', 'demain'].includes(lower)) return fromDays(1);
@@ -784,14 +793,15 @@ class PoubelleCard extends HTMLElement {
     const txt = String(s).trim();
     if (/^\d{4}-\d{2}-\d{2}/.test(txt)) return parseDate(txt);                           // ISO date / timestamp
     // texte libre (Waste Collection Schedule : « on Thu, 03.12.2026 », « dans 3 jours »…) : jour.mois.année (ou /, -), année sur 2 chiffres acceptée
-    const dmy = txt.match(/(\d{1,2})[./-](\d{1,2})[./-](\d{4}|\d{2})(?!\d)/);
+    // date ISO dans le texte (« Restmüll on 2026-11-04 ») d'abord : sinon jour.mois.année lirait 26-11-04
+    const iso = txt.match(/(?<!\d)(\d{4})-(\d{2})-(\d{2})(?!\d)/);
+    if (iso) return new Date(Number(iso[1]), Number(iso[2]) - 1, Number(iso[3]));
+    const dmy = txt.match(/(?<!\d)(\d{1,2})[./-](\d{1,2})[./-](\d{4}|\d{2})(?!\d)/);
     if (dmy) {
       const y = Number(dmy[3]) < 100 ? 2000 + Number(dmy[3]) : Number(dmy[3]), m = Number(dmy[2]), dd = Number(dmy[1]);
       const dt = new Date(y, m - 1, dd);
       if (m >= 1 && m <= 12 && dt.getMonth() === m - 1) return dt;
     }
-    const iso = txt.match(/(\d{4})-(\d{2})-(\d{2})/);
-    if (iso) return new Date(Number(iso[1]), Number(iso[2]) - 1, Number(iso[3]));
     const inDays = lower.match(/(?:\bin\b|\bdans\b|\ben\b|\bover\b|\bza\b)\s+(\d+)\s*(?:day|jour|tag|dag|d[ií]a|giorn)/);
     if (inDays) return fromDays(inDays[1]);
     if (['heute', 'hoy', 'oggi', 'vandaag'].includes(lower)) return today;

@@ -19,7 +19,7 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `entity` (switch, input_boolean, fan, binary_sensor or text sensor)
 - `entity_power`
 - `entity_flow` (L/min, m³/h, L/h, L/s or gal/min: converted to L/min for the animation and the thresholds, the tile keeps the sensor unit)
-- `entity_pressure` (bar)
+- `entity_pressure` (bar; psi, kPa, mbar… are converted to bar for the alerts, the thresholds stay in bar)
 - `entity_temp` (motor or fluid temperature)
 - `entity_level` (tank level in %, water pump drawing)
 - `entity_fault` (binary_sensor, on = fault)

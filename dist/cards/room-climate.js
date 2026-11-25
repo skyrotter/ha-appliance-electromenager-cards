@@ -2010,7 +2010,11 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
     }
     get hass() { return this._hass; }
     connectedCallback() { this._tick = setInterval(() => { if (this._hass && this._c) this._render(); }, 60000); this._startRot(); }
-    disconnectedCallback() { clearInterval(this._tick); clearInterval(this._rotTimer); this._rotTimer = null; }
+    disconnectedCallback() {
+      clearInterval(this._tick); clearInterval(this._rotTimer); this._rotTimer = null;
+      // consigne déjà envoyée : on lâche tout de suite la valeur en attente au lieu de laisser courir le minuteur de 4 s
+      if (this._climClr) { clearTimeout(this._climClr); this._climClr = null; this._pending = null; }
+    }
     // rotate_seconds : sur les afficheurs, la grande valeur change toutes les N secondes (température, consigne, humidité, pression, CO₂)
     _startRot() {
       clearInterval(this._rotTimer); this._rotTimer = null;
@@ -2433,8 +2437,12 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       const cs = this._st(this._c.entity_climate);
       if (!cs) return null;
       const a = cs.attributes || {}, cv = (v) => { const n = parseFloat(v); return Number.isFinite(n) ? tmp.conv(n, cs) : NaN; };
+      // target_temp_step est dans l'unité de Home Assistant (sstep) : converti dans l'unité d'affichage (step) quand elle diffère,
+      // puis arrondi à un pas lisible (0,5 °F → 0,5 °C, 0,5 °C → 1 °F, 1 °C → 2 °F…)
+      const sf = this._sysF(), df = tmp.unit === '°F', sstep = Number(a.target_temp_step) > 0 ? Number(a.target_temp_step) : (sf ? 1 : 0.5);
+      const nice = (x) => [0.1, 0.2, 0.5, 1, 2, 5].find((n) => n >= x * 0.9) || Math.ceil(x);
       return { cs, a, t: cv(a.temperature), lo: cv(a.target_temp_low), hi: cv(a.target_temp_high), min: cv(a.min_temp), max: cv(a.max_temp),
-        step: Number(a.target_temp_step) || (tmp.unit === '°F' ? 1 : 0.5) };
+        step: sf === df ? sstep : nice(df ? sstep * 1.8 : sstep / 1.8), sstep };
     }
     _renderClimate(tmp) {
       const r = this._root, el = r.getElementById('clim'), c = this._c, k = c.entity_climate && this._climTarget(tmp);
@@ -2512,11 +2520,17 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       this._pending = Math.round(v / k.step) * k.step;
       this._renderClimate(tmp);
       clearTimeout(this._climTimer);
+      // un nouvel appui annule la remise à zéro programmée par l'envoi précédent (sinon la consigne en attente disparaît avant l'envoi)
+      clearTimeout(this._climClr); this._climClr = null;
       this._climTimer = setTimeout(() => {
+        this._climTimer = null;
         const disp = this._pending, f = tmp.unit === '°F', sf = this._sysF();
-        const send = f === sf ? disp : f ? (disp - 32) / 1.8 : disp * 1.8 + 32;
-        this._hass.callService('climate', 'set_temperature', { entity_id: this._c.entity_climate, temperature: Math.round(send * 10) / 10 });
-        setTimeout(() => { this._pending = null; if (this._hass) this._render(); }, 4000);
+        if (!fin(disp) || !this._hass) return; // jamais d'envoi sans consigne (0 °C ou -17,8 °C)
+        const sys = f === sf ? disp : f ? (disp - 32) / 1.8 : disp * 1.8 + 32;
+        // valeur envoyée arrondie au pas de l'entité (dans l'unité de Home Assistant)
+        const send = Math.round(Math.round(sys / k.sstep) * k.sstep * 100) / 100;
+        this._hass.callService('climate', 'set_temperature', { entity_id: this._c.entity_climate, temperature: send });
+        this._climClr = setTimeout(() => { this._climClr = null; this._pending = null; if (this._hass) this._render(); }, 4000);
       }, 800);
     }
 

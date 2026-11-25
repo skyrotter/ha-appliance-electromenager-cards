@@ -786,7 +786,9 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
       root.getElementById('sdvalve').addEventListener('click', () => {
         const id = this._c.entity_valve; if (!this._hass || !id) return;
         const dom = id.split('.')[0];
-        this._hass.callService(['switch', 'valve', 'input_boolean'].includes(dom) ? dom : 'homeassistant', 'toggle', { entity_id: id });
+        const run = () => this._hass.callService(['switch', 'valve', 'input_boolean'].includes(dom) ? dom : 'homeassistant', 'toggle', { entity_id: id });
+        // réouverture de la vanne de gaz : confirmation « Annuler / OK », sauf confirm_actions: false (la fermeture reste immédiate)
+        if (this._compute().valveClosed && this._c.confirm_actions !== false) window.applianceConfirm(this, { action: 'toggle', confirmation: true }, run); else run();
       });
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
         const c = this._c; this._more({ since: c.entity_smoke, co_level: c.entity_co, battery: c.entity_battery, temperature: c.entity_temperature, level: c.entity_level }[el.dataset.k]);

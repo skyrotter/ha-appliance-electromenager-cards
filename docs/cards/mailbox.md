@@ -47,6 +47,7 @@ box_color: anthracite
 | `box_model` | `standard` (default, drawing) or `boks` (photo) |
 | `entity_door` | the BOKS **Door** sensor |
 | `entity_open` | **Open the door** button: `button` / `input_button` (press), `lock` (unlock), `script`, `switch`, `input_boolean` (turn on) |
+| `confirm_actions` | asks for confirmation (Cancel / OK) before unlocking a `lock` `entity_open` (`true` by default; `confirm_actions: false` acts on the first tap) |
 | `entity_last_open` | one or more timestamp sensors (**Last VIGIK / badge / code opening**): the **Last opened** tile shows the most recent |
 | `entity_battery` | **Battery** (%) |
 | `entity_battery_low` | **Battery low** (`binary_sensor`): battery tile in red and blinking light on the box |

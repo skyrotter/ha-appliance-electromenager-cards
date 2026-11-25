@@ -366,6 +366,8 @@ class AppliancePelletBoilerCard extends HTMLElement {
   _l(k) { const L = this._config && this._config.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
 
   _build() {
+    // langue de ce rendu : le premier hass ne reconstruit pas le DOM si elle n'a pas changé
+    this._lng = lang(this._hass, this._config);
     if (!this.shadowRoot) this.attachShadow({ mode: 'open' });
     // Granulés : petits bâtonnets en rangées (dans l'ouverture de la trémie et le hublot de niveau)
     const pellets = (x0, y0, w, h, n) => Array.from({ length: n }, (_, i) => {
@@ -521,7 +523,10 @@ class AppliancePelletBoilerCard extends HTMLElement {
   _update() {
     if (!this._built || !this._hass) return;
     const c = this._config, r = this.shadowRoot;
-    const w = this._num(c.entity_power), e = this._num(c.entity_energy);
+    // puissance ramenée en W (seuils threshold / ignition_threshold en W, capteurs en kW convertis) ; énergie en kWh (Wh / MWh convertis)
+    const wr = this._num(c.entity_power), ww = wr === null ? NaN : window.applianceWatts(this._st(c.entity_power)), w = Number.isFinite(ww) ? ww : null;
+    const er = this._num(c.entity_energy), eu = String(((this._st(c.entity_energy) || {}).attributes || {}).unit_of_measurement || '').trim();
+    const e = er === null ? null : /^wh$/i.test(eu) ? er / 1000 : /^mwh$/i.test(eu) ? er * 1000 : er;
     // températures dans l'unité d'affichage (°C / °F)
     const tc = window.applianceTemp(this._hass, c), tv = (id) => tc.conv(this._num(id), this._st(id));
     const dep = tv(c.entity_flow_temp), ret = tv(c.entity_return_temp), lvl = this._num(c.entity_pellet_level);

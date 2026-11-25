@@ -434,9 +434,14 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 
     _cmd(k) {
       const c = this._c, hass = this._hass; if (!hass) return;
-      if (k === 'wifi' && c.entity_wifi) hass.callService('homeassistant', 'toggle', { entity_id: c.entity_wifi });
-      else if (BANDS.some((b) => b[0] === k) && c['entity_' + k]) hass.callService('homeassistant', 'toggle', { entity_id: c['entity_' + k] });
-      else if (k === 'reboot' && c.entity_reboot) {
+      // Wi-Fi (ou une bande) : couper demande confirmation (désactivable avec confirm_actions: false), rallumer se fait d'un appui
+      const wid = k === 'wifi' ? c.entity_wifi : BANDS.some((b) => b[0] === k) ? c['entity_' + k] : '';
+      if (wid) {
+        const run = () => this._hass && this._hass.callService('homeassistant', 'toggle', { entity_id: wid });
+        const st = hass.states[wid], on = !!st && String(st.state).toLowerCase() === 'on';
+        if (!on || c.confirm_actions === false || !window.applianceConfirm) run();
+        else window.applianceConfirm(this, { action: 'toggle', confirmation: true }, run);
+      } else if (k === 'reboot' && c.entity_reboot) {
         if (!window.confirm || window.confirm(this._t('reboot_confirm'))) hass.callService(c.entity_reboot.split('.')[0], c.entity_reboot.startsWith('button.') ? 'press' : 'turn_on', { entity_id: c.entity_reboot });
       }
     }

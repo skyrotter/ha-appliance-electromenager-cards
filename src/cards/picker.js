@@ -86,7 +86,7 @@
     media: 'tv htpc projector-screen av-receiver soundbar smart-speaker ps5 tv-box piano elliptical exercise-bike rowing-machine treadmill',
     it: 'server-rack mini-pc nas internet-box desktop-pc monitor laptop printer printer-3d raspberry-pi poe-switch zigbee-coordinator wall-tablet',
     // catégorie par défaut des cartes non listées ; chaque carte doit pourtant être listée (build.js avertit sinon)
-    home: 'litter-box iron steam-station poubelle robot-vacuum-solo robot-vacuum robot-mower canister-vacuum wet-vacuum pet-feeder pet-fountain cat-flap scale air-compressor water-softener-generic generic',
+    home: 'litter-box iron steam-station poubelle robot-vacuum-solo canister-vacuum wet-vacuum pet-feeder pet-fountain cat-flap scale air-compressor water-softener-generic generic',
   };
   const CAT_ORDER = Object.keys(CATS);
   const CAT_OF = {};
@@ -149,16 +149,37 @@
       const tag = config.appliance;
       if (this._tag !== tag) {
         this._tag = tag;
-        this._child = tag ? document.createElement(tag) : null;
+        const child = this._child = tag ? document.createElement(tag) : null;
         this.replaceChildren();
-        if (this._child) this.appendChild(this._child);
+        if (child) this.appendChild(child);
+        // le chunk qui définit la carte n'est peut-être pas encore chargé : l'élément créé n'est alors qu'un HTMLElement
+        // sans setConfig. On attend sa définition, puis on le met à niveau et on applique la config et hass les plus récents.
+        if (child && !customElements.get(tag)) {
+          customElements.whenDefined(tag).then(() => {
+            if (this._child !== child) return; // type d'appareil changé entre-temps
+            customElements.upgrade(child);
+            try { this._apply(); } catch (e) {
+              // erreur de config découverte en différé : HA reconstruit la carte, qui affiche alors l'erreur normalement
+              console.error(e);
+              this.dispatchEvent(new CustomEvent('ll-rebuild', { bubbles: true, composed: true }));
+            }
+          });
+        }
       }
-      if (this._child) { this._child.setConfig(inner(config)); if (this._hass) this._child.hass = this._hass; }
-      else this._renderEmpty();
+      this._apply();
+    }
+    // config et hass vers la vraie carte, seulement une fois sa classe chargée
+    _ready() { return !!this._child && typeof this._child.setConfig === 'function'; }
+    _apply() {
+      if (!this._child) { this._renderEmpty(); return; }
+      if (!this._ready()) return; // appliqué par whenDefined
+      this._child.setConfig(inner(this._config));
+      if (this._hass) this._child.hass = this._hass;
     }
     set hass(hass) {
       this._hass = hass;
-      if (this._child) this._child.hass = hass;
+      // pas avant la définition : une propriété « hass » posée sur l'élément non mis à niveau masquerait le setter de la carte
+      if (this._child) { if (this._ready()) this._child.hass = hass; }
       else if (this._config) this._renderEmpty();
     }
     _renderEmpty() { this.innerHTML = `<ha-card><div style="padding:16px">${tx(this._hass).empty}</div></ha-card>`; }

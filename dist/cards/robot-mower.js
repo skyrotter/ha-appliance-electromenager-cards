@@ -485,7 +485,7 @@ class ApplianceRobotMowerCard extends HTMLElement {
     if (c.show_battery) it.push([this._l('battery'), batt === null ? '—' : `${Math.round(batt)} %`, c.entity_battery || c.entity]);
     if (c.show_status && !compact) it.push([this._l('status'), stTxt, c.entity_status || c.entity]);
     if (c.show_area && area !== null) it.push([this._l('area'), `${Math.round(area)} m²`, c.entity_area]);
-    if (c.show_time && time !== null) it.push([this._l('time'), time >= 60 ? `${Math.floor(time / 60)}h${String(Math.round(time % 60)).padStart(2, '0')}` : `${Math.round(time)} min`, c.entity_time]);
+    if (c.show_time && time !== null) it.push([this._l('time'), Math.round(time) >= 60 ? `${Math.floor(Math.round(time) / 60)}h${String(Math.round(time) % 60).padStart(2, '0')}` : `${Math.round(time)} min`, c.entity_time]);
     if (c.show_next && next) it.push([this._l('next'), next, c.entity_next_start]);
     if (c.show_blade && blade !== null) it.push([this._l('blade'), `${Math.round(blade)} %`, c.entity_blade]);
     const stats = r.getElementById('stats');
@@ -503,6 +503,8 @@ window.customCards = window.customCards || [];
  * ─────────────────────────────────────────────────────────────── */
 class ApplianceRobotMowerSoloCard extends ApplianceRobotMowerCard {
   _build() {
+    // langue de ce rendu : le premier hass ne reconstruit pas le DOM si elle n'a pas changé
+    this._lng = lang(this._hass, this._config);
     if (!this.shadowRoot) this.attachShadow({ mode: 'open' });
     const wheel = (x, y, rr) => `<g transform="translate(${x} ${y})"><circle r="${rr}" fill="#1b1b1b"/>
       <g class="spin">${[0, 45, 90, 135].map((a) => `<rect x="${-rr}" y="-.7" width="${rr * 2}" height="1.4" fill="#2e2e2e" transform="rotate(${a})"/>`).join('')}
@@ -575,7 +577,8 @@ class ApplianceRobotMowerSoloCard extends ApplianceRobotMowerCard {
       <div class="stats" id="stats"></div>`}
     </ha-card>`;
     this.shadowRoot.querySelectorAll('.btn').forEach((b) => { b.onclick = () => this._call(b.dataset.a); });
-    window.applianceBindIllus(this, this.shadowRoot.querySelector('.illus'), () => window.applianceMore(this, this._config.entity));
+    // .illus n'existe qu'en mode compact : sinon le dessin lui-même (#svg)
+    window.applianceBindIllus(this, this.shadowRoot.querySelector('.illus') || this.shadowRoot.getElementById('svg'), () => window.applianceMore(this, this._config.entity));
     this._built = true;
   }
 }

@@ -175,7 +175,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       }));
       // boutons : un par zone, arrêt général, arrosage auto (interrupteur maître) — reconstruits seulement quand la config change
       const zb = root.getElementById('irzones');
-      const btn = (key, icon, id) => `<button class="zb" data-b="${key}"${id ? ` data-id="${id}"` : ''}><ha-icon icon="${icon}"></ha-icon><span></span></button>`;
+      // icône et entité viennent de la config : échappées avant insertion dans le HTML
+      const e = (v) => String(v).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+      const btn = (key, icon, id) => `<button class="zb" data-b="${key}"${id ? ` data-id="${e(id)}"` : ''}><ha-icon icon="${e(icon)}"></ha-icon><span></span></button>`;
       zb.innerHTML = this._c.show_buttons === false ? '' :
         this._zones.map((z, i) => (this._c.image && z.x != null ? '' : btn('z' + i, z.icon || (this._dom(z.id) === 'valve' ? 'mdi:valve' : 'mdi:sprinkler-variant'), z.id))).join('')
         + (this._zones.length > 1 ? btn('stop', 'mdi:stop', '').replace('class="zb"', 'class="zb stop"') : '')

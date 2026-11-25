@@ -369,7 +369,16 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       colb.classList.toggle('hide', !palCan); colb.classList.toggle('on', !!(palCan && this._palOpen)); colb.title = this._t('color');
       pal.classList.toggle('on', !!(palCan && this._palOpen));
       if (palCan) {
-        const list = Array.isArray(c.presets) && c.presets.length ? c.presets : PRESETS;
+        // presets : [r, g, b] ou chaîne hexa (#rgb / #rrggbb) ; entrées invalides ignorées (que des nombres 0-255 dans le HTML)
+        const toRgb = (p) => {
+          if (Array.isArray(p) && p.length >= 3 && p.slice(0, 3).every((v) => Number.isFinite(Number(v)))) return p.slice(0, 3).map((v) => Math.max(0, Math.min(255, Math.round(Number(v)))));
+          const m = typeof p === 'string' && /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(p.trim());
+          if (!m) return null;
+          const h = m[1].length === 3 ? m[1].replace(/./g, '$&$&') : m[1];
+          return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
+        };
+        const own = Array.isArray(c.presets) ? c.presets.map(toRgb).filter(Boolean) : [];
+        const list = own.length ? own : PRESETS;
         const lo = Number(a.min_color_temp_kelvin) || 2000, hi = Number(a.max_color_temp_kelvin) || 6500;
         const WHITES = [[Math.max(lo, 2700), 'warm', 'rgb(255,167,87)'], [Math.min(Math.max(lo, 4000), hi), 'neutral', 'rgb(255,228,206)'], [Math.min(hi, 6500), 'cold', 'rgb(206,224,255)']];
         const html = (ctOk ? WHITES.map(([k, n, col]) => `<button type="button" style="--sw:${col}" data-sw="k:${k}" title="${this._t('white_' + n)}" aria-label="${this._t('white_' + n)}"></button>`).join('') : '')

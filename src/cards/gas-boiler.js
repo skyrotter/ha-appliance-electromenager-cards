@@ -260,16 +260,23 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       const c = this._c;
       const pw = this._watts(c.entity_power);
       const stObj = this._st(c.entity_status);
-      let txt = '';
+      // état et hvac_action lus séparément : « heat » + « idle » ne doit pas donner « chauffe »
+      let txt = '', act = '';
       if (stObj) {
         txt = String(stObj.state).toLowerCase();
         const a = stObj.attributes || {};
-        if (a.hvac_action) txt += ' ' + String(a.hvac_action).toLowerCase();
+        if (a.hvac_action) act = String(a.hvac_action).toLowerCase();
       }
       const flameEnt = this._st(c.entity_flame);
       const flame = flameEnt ? flameEnt.state === 'on' : null;
       let st;
       if (/alarm|alarme|error|erreur|fault|défaut|defaut|lock|verrou/.test(txt)) st = 'alarm';
+      // hvac_action présent : il prime (heating / preheating → chauffe, off → arrêt, idle et autres → veille ; flamme allumée → chauffe)
+      else if (act) {
+        if (/^(pre)?heating$/.test(act) || flame === true) st = /dhw|ecs|hot.?water|eau chaude|sanitaire|water_heat/.test(txt) ? 'dhw' : 'heating';
+        else if (act === 'off' || /unavailable|unknown|^off$/.test(txt)) st = 'off';
+        else st = 'standby';
+      }
       else if (/unavailable|unknown|^off| off$|arr[eê]t|eteint|éteint/.test(txt) && flame !== true) st = 'off';
       else if (/dhw|ecs|hot.?water|eau chaude|sanitaire|water_heat/.test(txt)) st = 'dhw';
       else if (/heat|chauff|ignit|allum|burn|brûl|brul|running|^on/.test(txt) || flame === true) st = 'heating';
@@ -309,7 +316,9 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       const tc = window.applianceTemp(h, c), tv = (id) => tc.conv(this._num(id), this._st(id));
       const flow = tv(c.entity_flow_temp), ret = tv(c.entity_return_temp), flowMax = c.flow_temp_max ?? tc.c(80);
       const press = this._num(c.entity_pressure);
-      let mod = this._num(c.entity_modulation); mod = isNaN(mod) ? 1 : Math.max(0, Math.min(100, mod)) / 100;
+      // modulation indisponible : animation à 100 % mais tuile « -- »
+      const modV = this._num(c.entity_modulation);
+      const mod = isNaN(modV) ? 1 : Math.max(0, Math.min(100, modV)) / 100;
       card.className = `${st} ${burning ? 'burning' : ''} ${pump ? 'pump' : ''} ${c.animations === false ? 'noanim' : ''} ${this._photo() ? 'photo' : ''}`;
       card.style.setProperty('--mod', mod);
       // couleur des tuyaux : bleu à 25 °C, rouge à 75 °C
@@ -351,7 +360,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
         flow: [c.entity_flow_temp, this._fmt(flow, 1), tc.unit],
         ret: [c.entity_return_temp, this._fmt(ret, 1), tc.unit],
         pressure: [c.entity_pressure, this._fmt(press, 2), 'bar'],
-        mod: [c.entity_modulation, this._fmt(mod * 100, 0), '%'],
+        mod: [c.entity_modulation, this._fmt(isNaN(modV) ? NaN : mod * 100, 0), '%'],
         outdoor: [c.entity_outdoor_temp, this._fmt(tv(c.entity_outdoor_temp), 1), tc.unit],
         room: [c.entity_room_temp, this._fmt(tv(c.entity_room_temp), 1), tc.unit],
         setpoint: [c.entity_room_target, this._fmt(tv(c.entity_room_target), 1), tc.unit],

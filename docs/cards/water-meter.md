@@ -21,6 +21,7 @@ Every sensor is optional, so it works with whatever your meter integration provi
 | `entity_temperature` | water temperature sensor (1 decimal, unit read from the sensor) |
 | `entity_pressure` | water pressure sensor (unit read from the sensor, no conversion, no alert) |
 | `entity_valve` | shut-off valve (`valve`, `switch` or `input_boolean`): **Close / Open valve** button, the valve handle on the pipe turns red |
+| `confirm_actions` | asks for confirmation (Cancel / OK) before opening or closing the valve (`true` by default; `confirm_actions: false` acts on the first tap) |
 | `leak_minutes` | without a leak sensor: "Possible leak" when water runs non-stop for longer than this (60 min; `0` turns it off) |
 | `freeze_threshold` | frost alert below this temperature, in °C (3; `0` or empty turns it off). Works with a sensor in °F or K |
 | `flow_threshold` | flow below this counts as zero (0.05 L/min) |

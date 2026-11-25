@@ -601,8 +601,10 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
 
       // tuiles
       const energy = this._num(c.entity_energy);
+      // coût = énergie en kWh × prix (capteur en Wh / MWh converti)
+      const eu = String(this._unit(c.entity_energy, 'kWh')).trim(), ekwh = /^wh$/i.test(eu) ? energy / 1000 : eu === 'MWh' ? energy * 1000 : energy;
       let cost = this._num(c.entity_cost), costU = this._unit(c.entity_cost, c.currency || '€');
-      if (isNaN(cost) && c.price_per_kwh && !isNaN(energy) && Number.isFinite(window.appliancePrice(this._hass, c.price_per_kwh))) { cost = energy * window.appliancePrice(this._hass, c.price_per_kwh); costU = c.currency || '€'; }
+      if (isNaN(cost) && c.price_per_kwh && !isNaN(ekwh) && Number.isFinite(window.appliancePrice(this._hass, c.price_per_kwh))) { cost = ekwh * window.appliancePrice(this._hass, c.price_per_kwh); costU = c.currency || '€'; }
       const V = {
         power: [c.entity_power, isNaN(pw) ? '--' : (pw >= 1000 ? this._fmt(pw / 1000, 2) : this._fmt(pw, 0)), isNaN(pw) ? '' : (pw >= 1000 ? 'kW' : 'W')],
         energy: [c.entity_energy, this._fmt(energy, 2), this._unit(c.entity_energy, 'kWh')],

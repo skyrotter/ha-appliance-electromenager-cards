@@ -310,6 +310,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     const b = t >= 66 ? 255 : t <= 19 ? 0 : cl(138.5177312231 * Math.log(t - 10) - 305.0447927307);
     return `rgb(${r},${g},${b})`;
   };
+  // préréglages de couleur (option presets) : seulement des triplets [r, g, b] entiers 0-255 (rien de brut dans le HTML)
+  const rgb3 = (v) => (Array.isArray(v) && v.length === 3 ? v.map((x) => Math.max(0, Math.min(255, Math.round(Number(x) || 0)))) : null);
+  const presetsOf = (c) => { const l = Array.isArray(c.presets) ? c.presets.map(rgb3).filter(Boolean) : []; return l.length ? l : PRESETS; };
   // couleur de l'option : [r, g, b] (sélecteur de l'éditeur) ou texte CSS (#ffaa00, orange…)
   const cfgColor = (v) => (Array.isArray(v) && v.length === 3 ? `rgb(${v.map((x) => Math.round(Number(x) || 0)).join(',')})` :
     typeof v === 'string' && /^[#a-z0-9(),.\s%]+$/i.test(v.trim()) ? v.trim() : '');
@@ -323,7 +326,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       this._c = { show_status: true, show_controls: true, show_brightness: true, show_power: true, show_energy: true, show_button_labels: true, follow_light_color: true, ...c };
-      this._built = false;
+      this._built = false; this._lastLc = null;
       if (this._hass) this._render();
     }
     set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
@@ -410,6 +413,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       if (!type || type === 'none' || !this._hass) return;
       if (type === 'more-info') { this._more((a && a.entity) || c.entity); return; }
       if (type === 'toggle' && c.entity) {
+        // service adapté au domaine (verrou, scène, script, bouton, cover…), défini dans editor-labels
+        if (window.applianceToggle) { window.applianceToggle(this._hass, c.entity); return; }
         const d = c.entity.split('.')[0];
         this._hass.callService(['light', 'switch', 'input_boolean', 'fan'].includes(d) ? d : 'homeassistant', 'toggle', { entity_id: c.entity });
         return;
@@ -423,7 +428,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       if (a === 'color' && c.color_palette === true) { this._palOpen = !this._palOpen; this._render(); return; } // ouvre ou ferme la palette
       if (a === 'color') {
         // couleur suivante de la liste (presets en configuration, sinon une palette de six teintes)
-        const list = Array.isArray(c.presets) && c.presets.length ? c.presets : PRESETS;
+        const list = presetsOf(c);
         this._preset = ((this._preset ?? -1) + 1) % list.length;
         h.callService('light', 'turn_on', { entity_id: c.entity, rgb_color: list[this._preset] });
         return;
@@ -450,12 +455,19 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       // couleur : celle de l'ampoule (RVB ou kelvins) si on la suit, sinon l'option color, sinon celle du luminaire
       let col = '';
       if (c.follow_light_color !== false) {
-        if (Array.isArray(a.rgb_color)) col = `rgb(${a.rgb_color.join(',')})`;
-        else if (isFinite(Number(a.color_temp_kelvin))) col = kelvin(Number(a.color_temp_kelvin));
-        else if (isFinite(Number(a.color_temp))) col = kelvin(1e6 / Number(a.color_temp));
+        // kelvins / mireds à null (lampe éteinte) : Number(null) = 0 donnerait un rouge-orangé pendant le fondu
+        const pos = (v) => v != null && v !== '' && isFinite(Number(v)) && Number(v) > 0;
+        const rgb = rgb3(a.rgb_color);
+        if (rgb) col = `rgb(${rgb.join(',')})`;
+        else if (pos(a.color_temp_kelvin)) col = kelvin(Number(a.color_temp_kelvin));
+        else if (pos(a.color_temp)) col = kelvin(1e6 / Number(a.color_temp));
+        // éteinte : on garde la dernière couleur connue de l'ampoule pour le fondu
+        if (col) this._lastLc = col; else if (st !== 'on') col = this._lastLc || '';
       }
       col = col || cfgColor(c.color) || K.color;
-      const bri = isFinite(Number(a.brightness)) ? Math.max(0.15, Number(a.brightness) / 255) : 1;
+      // luminosité réelle (tuile) ; plancher de 15 % seulement pour la lueur, pour qu'une lampe très tamisée reste visible
+      const briReal = a.brightness != null && isFinite(Number(a.brightness)) ? Number(a.brightness) / 255 : 1;
+      const bri = Math.max(0.15, briReal);
       const cycle = this.kind === 'color_bulb' && st === 'on' && (c.color_cycle === true || /loop|rainbow|cycle|colou?r/i.test(String(a.effect || '')));
       card.className = `${st}${cycle ? ' cycle' : ''} ${c.animations === false ? 'noanim' : ''}${c.compact === true ? ' compact' : ''}`;
       card.style.setProperty('--lc', col);
@@ -503,7 +515,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const showPal = c.color_palette === true && d === 'light' && st !== 'unavailable' && (rgbOk || ctOk) && !!this._palOpen;
       pal.classList.toggle('on', showPal);
       if (showPal) {
-        const list = Array.isArray(c.presets) && c.presets.length ? c.presets : PRESETS;
+        const list = presetsOf(c);
         const lo = Number(a.min_color_temp_kelvin) || 2000, hi = Number(a.max_color_temp_kelvin) || 6500;
         const WHITES = [[Math.max(lo, 2700), 'warm', 'rgb(255,167,87)'], [Math.min(Math.max(lo, 4000), hi), 'neutral', 'rgb(255,228,206)'], [Math.min(hi, 6500), 'cold', 'rgb(206,224,255)']];
         const html = (ctOk ? WHITES.map(([k, n, col]) => `<button type="button" style="--sw:${col}" data-sw="k:${k}" title="${esc(this._l('white_' + n))}" aria-label="${esc(this._l('white_' + n))}"></button>`).join('') : '')
@@ -518,7 +530,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const slider = dimmable && (c.brightness_slider ?? this.kind === 'ceiling_spot') !== false;
       const pct = st === 'on' && isFinite(Number(a.brightness)) ? Math.max(1, Math.round(Number(a.brightness) / 2.55)) : 0;
       const V = {
-        brightness: [!slider && st === 'on' && isFinite(Number(a.brightness)), Math.round(bri * 100), '%', 'show_brightness'],
+        brightness: [!slider && st === 'on' && isFinite(Number(a.brightness)), Math.round(briReal * 100), '%', 'show_brightness'],
         power: [c.entity_power, this._fmt(pw, pw < 10 ? 1 : 0), this._unit(c.entity_power, 'W'), 'show_power'],
         energy: [c.entity_energy, this._fmt(energy, 2), this._unit(c.entity_energy, 'kWh'), 'show_energy'],
       };

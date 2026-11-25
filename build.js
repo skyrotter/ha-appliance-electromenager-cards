@@ -77,7 +77,12 @@ const warn = (msg) => { warnings++; console.warn(`warning: ${msg}`); };
 const listed = new Set(["header.js", ...CORE_FILES.flatMap(expand), ...CSS_FILES, ...CARD_FILES]);
 const walk = (dir) => fs.readdirSync(path.join(SRC, dir), { withFileTypes: true }).flatMap((e) =>
   e.isDirectory() ? walk(`${dir}${e.name}/`) : [`${dir}${e.name}`]);
-for (const f of walk("").filter((f) => /\.(js|css)$/.test(f) && !listed.has(f))) warn(`src/${f} is not listed in build.js`);
+// fichier oublié : erreur bloquante (build et --check), sinon il manquerait en silence dans dist/
+const unlisted = walk("").filter((f) => /\.(js|css)$/.test(f) && !listed.has(f));
+if (unlisted.length) {
+  for (const f of unlisted) console.error(`error: src/${f} is not listed in build.js`);
+  process.exit(1);
+}
 
 /* ---- i18n ---- */
 const I18N_DIR = path.join(SRC, "i18n");
@@ -149,12 +154,14 @@ const loader = `
 (async () => {
   const base = import.meta.url;
   // ?v=<version> : après une mise à jour, le navigateur ne ressert pas d'anciens morceaux depuis son cache
-  const chunk = (name) => import(new URL(\`cards/\${name}.js?v=${VERSION_STR}\`, base).href);
+  // un morceau qui échoue (réseau, cache, erreur de syntaxe) est signalé en console sans empêcher les autres ni les événements
+  const chunk = (name) => import(new URL(\`cards/\${name}.js?v=${VERSION_STR}\`, base).href)
+    .catch((e) => console.error(\`ha-appliance-electromenager-cards: chunk "\${name}" failed to load\`, e));
   await chunk(${JSON.stringify(first)});
   await chunk(${JSON.stringify(second)});
   // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre
   window.dispatchEvent(new Event("appliance-helpers-ready"));
-  await Promise.all([${rest.map((n) => JSON.stringify(n)).join(", ")}].map(chunk));
+  await Promise.allSettled([${rest.map((n) => JSON.stringify(n)).join(", ")}].map(chunk));
   // Fires once every chunk has finished registering its card(s): anything that
   // needs to see the complete window.customCards list (e.g. the single-card
   // picker) must wait for this instead of assuming load order.

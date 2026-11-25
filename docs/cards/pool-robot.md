@@ -12,6 +12,7 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 
 - `entity` (vacuum, switch, input_boolean or sensor)
 - `entity_switch` (smart plug powering the robot, adds an On/Off button)
+- `confirm_actions` (default `true`): turning the plug off asks for confirmation (Cancel / OK); `confirm_actions: false` turns it off
 - `entity_status` (text sensor, overrides the entity state)
 - `entity_filter` (filter clogging, %)
 - `entity_water_level` (% or any unit, see `water_level_full`)

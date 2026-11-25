@@ -151,6 +151,34 @@
       "height": "Colunas de altura",
       "rear": "Colunas traseiras",
       "sound_mode": "Modo de áudio"
+    },
+    "uk": {
+      "name": "Саундбар + сабвуфер",
+      "muted": "Звук вимкнено",
+      "st_playing": "Відтворення",
+      "st_paused": "Пауза",
+      "st_on": "Увімк.",
+      "st_off": "Вимк.",
+      "st_unavailable": "Недоступно",
+      "on": "Увімк.",
+      "off": "Вимк.",
+      "sub_unlinked": "Не під'єднано",
+      "btn_power": "Увімк. / вимк.",
+      "btn_mute": "Вимкнути звук",
+      "btn_vol_down": "Гучність тихіше",
+      "btn_vol_up": "Гучність голосніше",
+      "btn_source": "Наступне джерело",
+      "btn_sub": "Сабвуфер",
+      "volume": "Гучність",
+      "source": "Джерело",
+      "subwoofer": "Сабвуфер",
+      "sub_gain": "Рівень сабвуфера",
+      "bass": "Низькі",
+      "treble": "Високі",
+      "center": "Центральний канал голосу",
+      "height": "Верхні динаміки",
+      "rear": "Задні динаміки",
+      "sound_mode": "Аудіорежим"
     }
   };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr

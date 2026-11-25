@@ -21,7 +21,7 @@ The drawing is just the **strip** (a flexible band with its LEDs) and its glow, 
 | `color` | forces the glow color (`"#ff6600"`, `orange`…), for strips that do not report their color |
 | `entity_power`, `entity_energy` | power and energy tiles |
 | `color_palette` | `true`: adds a **Colour** button that opens a palette: a warm / neutral / cold white (if the light has a colour temperature) and RGB colours (if it supports colour). One tap turns the strip on with that colour and closes the palette. Default `false` |
-| `presets` | the RGB colours of the palette, e.g. `presets: [[255, 0, 0], [0, 255, 0], [0, 0, 255]]` (default: 6 shades) |
+| `presets` | the RGB colours of the palette, as `[r, g, b]` arrays or hex strings, e.g. `presets: [[255, 0, 0], "#00ff00", "#00f"]` (default: 6 shades) |
 | `compact`, `show_status`, `show_controls`, `show_brightness`, `show_effect`, `show_power`, `show_energy`, `animations`, `labels`, `language`, `illustration_size`, `transparent`, `tap_action`, `hold_action` | |
 
 ```yaml

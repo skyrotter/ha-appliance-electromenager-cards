@@ -124,6 +124,8 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
       if (Array.isArray(o) && o.length === 3 && o.every((x) => isFinite(Number(x)))) return o.map(Number);
       const u = String((s && s.attributes && s.attributes.unit_of_measurement) || '').toLowerCase();
       if (k === 'voc') return u.includes('µg') || u.includes('ug') || u.includes('mg') ? (u.includes('mg') ? [.3, 1, 3] : [300, 1000, 3000]) : u === 'ppm' ? [.22, .66, 2.2] : u === '' || u.includes('index') ? [100, 200, 300] : METRICS.voc.th;
+      // formaldéhyde : seuils en µg/m³ convertis (mg/m³ ÷ 1000 ; 1 ppb ≈ 1,23 µg/m³)
+      if (k === 'hcho') return u.includes('mg') ? [.03, .06, .1] : u === 'ppb' ? [24, 49, 81] : u === 'ppm' ? [.024, .049, .081] : METRICS.hcho.th;
       if (k === 'co2' && u === '%') return [.08, .1, .15];
       return METRICS[k].th;
     }

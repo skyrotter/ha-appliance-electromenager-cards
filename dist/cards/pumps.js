@@ -1032,6 +1032,17 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       if (/^gal\/min|^gpm/.test(u)) return v * 3.78541;
       return v;
     }
+    // pression convertie en bar (seuils pressure_max / max_pressure), quelle que soit l'unité du capteur
+    _bar(id) {
+      const v = this._num(id); if (isNaN(v)) return NaN;
+      const u = this._unit(id, 'bar').toLowerCase().replace(/\s/g, '');
+      if (u === 'psi') return v * 0.0689476;
+      if (u === 'kpa') return v / 100;
+      if (u === 'mpa') return v * 10;
+      if (u === 'hpa' || u === 'mbar') return v / 1000;
+      if (u === 'pa') return v / 100000;
+      return v;
+    }
     _unit(id, d) { const s = this._st(id); return (s && s.attributes && s.attributes.unit_of_measurement) || d; }
     _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
@@ -1062,7 +1073,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
 
     _compute() {
       const c = this._c, s = this._st(c.entity);
-      const pw = this._watts(c.entity_power), flow = this._lpm(c.entity_flow), pres = this._num(c.entity_pressure);
+      const pw = this._watts(c.entity_power), flow = this._lpm(c.entity_flow), pres = this._bar(c.entity_pressure);
       // température dans l'unité d'affichage (°C / °F)
       const tc = window.applianceTemp(this._hass, c), temp = tc.conv(this._num(c.entity_temp), this._st(c.entity_temp)), level = this._num(c.entity_level);
       const tMax = c.temp_max ?? tc.c(KINDS[this.kind].d.temp_max);
@@ -1097,7 +1108,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card, K = KINDS[this.kind];
       const { st, pw, flow, pres, temp, tUnit, level, alerts } = this._compute();
-      const flowRaw = this._num(c.entity_flow); // valeur affichée, dans l'unité du capteur
+      const flowRaw = this._num(c.entity_flow), presRaw = this._num(c.entity_pressure); // valeurs affichées, dans l'unité du capteur
       const clamp = (x) => Math.max(0, Math.min(1, x));
       const on = st === 'running' || st === 'warning';
       // vitesse d'animation : débit sinon puissance, au moins 0,25 pour que ça reste lisible
@@ -1158,7 +1169,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       const ms = this._st(c.entity_mains), mainsOn = !!ms && /^(on|open|opening|true|1)$/.test(String(ms.state).toLowerCase());
       const V = {
         flow: [c.entity_flow, this._fmt(flowRaw, 1), this._unit(c.entity_flow, 'L/min')],
-        pressure: [c.entity_pressure, this._fmt(pres, 1), this._unit(c.entity_pressure, 'bar')],
+        pressure: [c.entity_pressure, this._fmt(presRaw, 1), this._unit(c.entity_pressure, 'bar')],
         power: [c.entity_power, isNaN(pw) ? '--' : (pw >= 1000 ? this._fmt(pw / 1000, 2) : this._fmt(pw, 0)), isNaN(pw) ? '' : (pw >= 1000 ? 'kW' : 'W')],
         temp: [c.entity_temp, this._fmt(temp, 0), tUnit],
         level: [c.entity_level, this._fmt(level, 0), this._unit(c.entity_level, '%')],

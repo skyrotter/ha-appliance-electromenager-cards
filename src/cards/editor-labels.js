@@ -182,6 +182,14 @@
     const a = a0 && typeof a0 === 'object' && a0.confirmation ? { ...a0, confirmation: undefined } : a0;
     window.applianceConfirm(el, a0, () => window.applianceRunAction1(el, a));
   };
+  // « toggle » selon le domaine : homeassistant.toggle ne fait rien pour un verrou, une scène, un script ou un bouton
+  window.applianceToggle = (hass, id) => {
+    const d = id.split('.')[0], st = hass.states && hass.states[id] && hass.states[id].state;
+    if (d === 'lock') hass.callService('lock', st === 'locked' ? 'unlock' : 'lock', { entity_id: id });
+    else if (d === 'scene' || d === 'script') hass.callService(d, 'turn_on', { entity_id: id });
+    else if (d === 'button' || d === 'input_button') hass.callService(d, 'press', { entity_id: id });
+    else hass.callService(['light', 'switch', 'input_boolean', 'fan', 'cover'].includes(d) ? d : 'homeassistant', 'toggle', { entity_id: id });
+  };
   window.applianceRunAction1 = (el, a) => {
     const c = el._c || el._config, hass = el._hass;
     const type = typeof a === 'string' ? a : a && a.action;
@@ -189,11 +197,7 @@
     const id = (a && a.entity) || dfltEntity(c);
     if (type === 'more-info') { window.applianceMore(el, id); return; }
     if (type === 'toggle' && id && /^(select|input_select|number|input_number|sensor|counter|binary_sensor)\./.test(id)) { window.applianceMore(el, id); return; } // pas basculable : fiche de l'entité
-    if (type === 'toggle' && id) {
-      const d = id.split('.')[0];
-      hass.callService(['light', 'switch', 'input_boolean', 'fan'].includes(d) ? d : 'homeassistant', 'toggle', { entity_id: id });
-      return;
-    }
+    if (type === 'toggle' && id) { window.applianceToggle(hass, id); return; }
     el.dispatchEvent(new CustomEvent('hass-action', { detail: { config: { entity: id, tap_action: typeof a === 'string' ? { action: a } : a }, action: 'tap' }, bubbles: true, composed: true }));
   };
   // branche l'illustration : clic → tap_action (sinon fallback, la fiche de l'entité), appui long → hold_action

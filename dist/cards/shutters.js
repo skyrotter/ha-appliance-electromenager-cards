@@ -871,6 +871,7 @@
       "btn_open": "Відчинити",
       "btn_stop": "Стоп",
       "btn_close": "Зачинити",
+      "btn_half": "Напіввідкрито",
       "position": "Положення",
       "tilt": "Нахил",
       "power": "Двигун",
@@ -1777,7 +1778,8 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
       tbt.classList.toggle('hide', !(this._tiltOnly && isCover && !tiltSet && c.show_controls !== false));
       tbt.querySelectorAll('button').forEach((b) => {
         b.querySelector('span').textContent = this._t(`btn_${b.dataset.k}`);
-        b.classList.toggle('hide', b.dataset.k === 'stop' && !has(64));
+        // stop : tilt_from_position envoie stop_cover (STOP = 8), sinon stop_cover_tilt (STOP_TILT = 64)
+        b.classList.toggle('hide', b.dataset.k === 'stop' && !has(this._tiltFromPos ? 8 : 64));
         b.disabled = st === 'unavailable';
       });
       pre.querySelectorAll('button').forEach((b) => { b.classList.toggle('on', !isNaN(tilt) && Math.abs(tilt - Number(b.dataset.tilt)) <= 2); b.disabled = st === 'unavailable'; });

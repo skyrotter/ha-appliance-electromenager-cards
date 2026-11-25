@@ -630,6 +630,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       root.querySelectorAll('.ctl button').forEach((b) => b.addEventListener('click', () => {
         const id = this._c[(BTNS.find((x) => x[0] === b.dataset.b) || [])[2]]; if (!this._hass || !id) return;
         const dom = id.split('.')[0];
+        // capteur (binary_sensor / sensor) : pas basculable, on ouvre sa fiche au lieu d'un toggle sans effet
+        if (dom === 'binary_sensor' || dom === 'sensor') { this._more(id); return; }
         this._hass.callService(['switch', 'input_boolean', 'light', 'fan'].includes(dom) ? dom : 'homeassistant', 'toggle', { entity_id: id });
       }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
@@ -660,8 +662,10 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const ae = r.getElementById('spalert'); ae.textContent = al; ae.classList.toggle('on', !!al);
 
       const energy = this._num(c.entity_energy);
+      // coût = énergie en kWh × prix (capteur en Wh / MWh converti)
+      const eu = String(this._unit(c.entity_energy, 'kWh')).trim(), ekwh = /^wh$/i.test(eu) ? energy / 1000 : eu === 'MWh' ? energy * 1000 : energy;
       let cost = this._num(c.entity_cost), costU = this._unit(c.entity_cost, c.currency || '€');
-      if (isNaN(cost) && c.price_per_kwh && !isNaN(energy) && Number.isFinite(window.appliancePrice(this._hass, c.price_per_kwh))) { cost = energy * window.appliancePrice(this._hass, c.price_per_kwh); costU = c.currency || '€'; }
+      if (isNaN(cost) && c.price_per_kwh && !isNaN(ekwh) && Number.isFinite(window.appliancePrice(this._hass, c.price_per_kwh))) { cost = ekwh * window.appliancePrice(this._hass, c.price_per_kwh); costU = c.currency || '€'; }
       const V = {
         temp: [c.entity_temp, this._fmt(temp, 1), tc.unit],
         target: [c.entity_target_temp, this._fmt(target, 1), tc.unit],

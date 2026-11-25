@@ -438,7 +438,12 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const c = this._c, h = this._hass; if (!h) return;
       if (k === 'feed' && c.entity_feed) {
         const d = c.entity_feed.split('.')[0];
-        if (d === 'select') h.callService('select', 'select_option', { entity_id: c.entity_feed, option: c.feed_option || 'start' });
+        if (d === 'select') {
+          // option envoyée telle que le select la déclare (« start » accepte « START », « Start »…)
+          const want = String(c.feed_option || 'start'), fs = this._st(c.entity_feed), opts = (fs && fs.attributes && fs.attributes.options) || [];
+          const opt = opts.find((o) => String(o) === want) ?? opts.find((o) => String(o).toLowerCase() === want.toLowerCase()) ?? want;
+          h.callService('select', 'select_option', { entity_id: c.entity_feed, option: opt });
+        }
         else if (d === 'button' || d === 'input_button') h.callService(d, 'press', { entity_id: c.entity_feed });
         else h.callService(d === 'script' ? 'script' : 'homeassistant', 'turn_on', { entity_id: c.entity_feed });
         this._feedAnim(); this._render();
@@ -448,9 +453,6 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         // trémie remplie : remet le niveau à la capacité (grammes, ou 100 si l'entité est en %)
         const d = c.entity_level.split('.')[0], pct = /%/.test(this._unit(c.entity_level));
         h.callService(d, 'set_value', { entity_id: c.entity_level, value: pct ? 100 : this._cap() });
-      } else if (k === 'mode' && c.entity_mode) {
-        const s = this._st(c.entity_mode), opts = (s && s.attributes && s.attributes.options) || [];
-        if (opts.length) h.callService('select', 'select_option', { entity_id: c.entity_mode, option: opts[(opts.indexOf(s.state) + 1) % opts.length] });
       }
     }
 
@@ -531,7 +533,6 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         if (sub) { const pc = document.createElement('small'); pc.className = 'pc'; pc.textContent = sub; parts.push(pc); }
         el.querySelector('.v').replaceChildren(...parts);
         el.classList.toggle('bad', low && (k === 'level' || k === 'autonomy'));
-        if (k === 'mode') el.onclick = () => this._cmd('mode');
       });
     }
     // valeurs Zigbee2MQTT (schedule, manual, remote, mode…) → texte traduit quand il existe

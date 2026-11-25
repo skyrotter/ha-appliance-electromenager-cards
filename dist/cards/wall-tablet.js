@@ -355,8 +355,13 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
  </svg>`;
   };
 
-  // grandeur → fraction 0..1 : % (≤ 100) ou 0..255
-  const frac = (v) => (isNaN(v) ? 1 : Math.max(0, Math.min(1, v <= 100 ? v / 100 : v / 255)));
+  // grandeur → fraction 0..1 : échelle = attribut max (entité number), sinon unité % → 100, sinon 0..255 (Fully Kiosk)
+  const frac = (v, st) => {
+    if (isNaN(v)) return 1;
+    const a = (st && st.attributes) || {}, mx = parseFloat(a.max);
+    const scale = isFinite(mx) && mx > 0 ? mx : String(a.unit_of_measurement || '').trim() === '%' ? 100 : 255;
+    return Math.max(0, Math.min(1, v / scale));
+  };
   const uptimeSeconds = (st) => {
     if (!st || /^(unavailable|unknown|none)$/i.test(String(st.state))) return NaN;
     const raw = String(st.state), n = parseFloat(raw.replace(',', '.'));
@@ -457,7 +462,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     _render() {
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card, st = this._state();
-      const br = c.entity_brightness ? frac(this._num(c.entity_brightness)) : 1;
+      const br = c.entity_brightness ? frac(this._num(c.entity_brightness), this._st(c.entity_brightness)) : 1;
       card.className = `${st}${c.orientation === 'portrait' ? ' portrait' : ''}${c.animations === false ? ' noanim' : ''}${c.compact === true ? ' compact' : ''}`;
       card.style.setProperty('--br', String(isNaN(br) ? 1 : br.toFixed(2)));
       r.getElementById('wttitle').textContent = c.name || this._t('name');

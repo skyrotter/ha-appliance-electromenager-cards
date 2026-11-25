@@ -679,7 +679,9 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
   // décor commun : halo de l'état, ombre, ondes d'ouverture, cadenas, pictogrammes (porte, blocage, pile)
   const DEFS = `<radialGradient id="slaurag"><stop offset="0" class="sl-auras" stop-opacity=".55"/><stop offset=".6" class="sl-auras" stop-opacity=".12"/><stop offset="1" class="sl-auras" stop-opacity="0"/></radialGradient>
     <radialGradient id="slglint" cx="0" cy="0" r="80" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff" stop-opacity=".05"/><stop offset=".7" stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>`;
-  const SVG = (model, label) => {
+  const SVG = (model0, label) => {
+    // modèle limité aux modèles connus (sinon défaut) et identifiant réduit à [a-z0-9_-] : il sert dans les id / url(#…) du SVG
+    const model = Object.prototype.hasOwnProperty.call(MODELS, model0) ? String(model0).toLowerCase().replace(/[^a-z0-9_-]/g, '_') : 'nuki_3_pro';
     const M = MODELS[model] || MODELS.nuki_3_pro, [rx0, ry0, rrx, rry] = M.ring, [dx, dy, drx, dry] = M.disc;
     // reflets du disque : secteurs clairs dessinés autour de (0, 0), étirés en ellipse, qui tournent
     const wedges = [0, 180].map((a) => `<path d="M0 0 L${Math.cos((a - 22) * Math.PI / 180) * 80} ${Math.sin((a - 22) * Math.PI / 180) * 80} A80 80 0 0 1 ${Math.cos((a + 22) * Math.PI / 180) * 80} ${Math.sin((a + 22) * Math.PI / 180) * 80}Z" fill="url(#slglint)"/>`).join('');

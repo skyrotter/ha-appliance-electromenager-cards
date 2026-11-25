@@ -272,7 +272,8 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       r.querySelectorAll('.ld').forEach((el, i) => el.setAttribute('class', `ld${i < n ? ' on' : ''}${i >= 3 ? ' hi' : ''}${i >= 4 ? ' max' : ''}`));
 
       const rt = this._minutes(c.entity_runtime);
-      const fmtRt = (m) => isNaN(m) ? '--' : m >= 60 ? `${Math.floor(m / 60)} h ${String(Math.round(m % 60)).padStart(2, '0')}` : `${Math.round(m)} min`;
+      // minutes arrondies d'abord, puis découpées en h / min (évite « 1 h 60 »)
+      const fmtRt = (m0) => { if (isNaN(m0)) return '--'; const m = Math.round(m0); return m >= 60 ? `${Math.floor(m / 60)} h ${String(m % 60).padStart(2, '0')}` : `${m} min`; };
       r.getElementById('uplcd').textContent = st === 'offline' || st === 'unavailable' ? '- - -' : isNaN(charge) ? (st === 'online' ? 'AC' : 'BATT') : `${Math.round(charge)}%`;
       r.getElementById('uplcds').textContent = st === 'on_battery' || st === 'low_battery' ? (isNaN(rt) ? 'BATT' : fmtRt(rt)) : st === 'charging' ? 'CHARGE' : isNaN(vin) ? 'UPS' : `${Math.round(vin)} V`;
 

@@ -188,7 +188,8 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       this._built = false; this._prev = null;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    // redessin seulement si une entité de la carte (animaux compris) a changé : sinon les pastilles (img, écouteurs) seraient recréées à chaque état de la maison
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 6; }
     getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 

@@ -328,7 +328,11 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
     set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     // horloge de l'écran (BHT6000) : rafraîchie chaque minute
     connectedCallback() { this._tick = setInterval(() => { if (this._hass && this._c && ['bht6000', 'atlantic_io2'].includes(this._model())) this._render(); }, 30000); }
-    disconnectedCallback() { clearInterval(this._tick); }
+    disconnectedCallback() {
+      clearInterval(this._tick);
+      // consigne déjà envoyée : on lâche tout de suite la valeur en attente au lieu de laisser courir le minuteur de 4 s
+      if (this._clr) { clearTimeout(this._clr); this._clr = null; this._pending = null; }
+    }
     getCardSize() { return 5; }
     getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
@@ -532,26 +536,31 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       const step = Number(k.a.target_temp_step) || (this._unit().includes('F') ? 1 : 0.5);
       const v = this._snap((this._pending != null ? this._pending : k.target) + dir * step);
       if (!fin(v)) return;
+      clearTimeout(this._clr); this._clr = null; // la remise à zéro de l'envoi précédent ne doit pas effacer cette consigne
       this._pending = v;
       this._render();
       this._schedule();
     }
     _schedule() {
       clearTimeout(this._timer);
+      clearTimeout(this._clr); this._clr = null;
       this._timer = setTimeout(() => {
+        this._timer = null;
+        if (!fin(this._pending) || !this._hass) return; // jamais d'envoi sans consigne (0 °)
         const t = Math.round(this._pending * 10) / 10, d = this._ovr() ? this._dur || 0 : 0;
         if (d > 0) {
           // dérogation : la tête revient à son planning à la fin de la durée (service de l'intégration Netatmo)
           const hh = String(Math.floor(d / 60)).padStart(2, '0'), mm = String(d % 60).padStart(2, '0');
           this._hass.callService('netatmo', 'set_temperature_with_time_period', { entity_id: this._c.entity, target_temperature: t, time_period: `${hh}:${mm}:00` });
         } else this._hass.callService('climate', 'set_temperature', { entity_id: this._c.entity, temperature: t });
-        setTimeout(() => { this._pending = null; if (this._hass) this._render(); }, 4000);
+        this._clr = setTimeout(() => { this._clr = null; this._pending = null; if (this._hass) this._render(); }, 4000);
       }, 800);
     }
     // Nest : glisser l'arc (270°, de 135° à 405°) règle la consigne entre min_temp et max_temp ; l'appel part au relâchement (+ 0,8 s)
     _bindArc(root, hit) {
       const svg = hit.ownerSVGElement;
-      let from = null, moved = false;
+      let from = null;
+      this._arcMoved = false; // partagé avec la garde du clic, posée une seule fois sur la racine
       const frac = (ev) => {
         const m = svg.getScreenCTM(); if (!m) return NaN;
         const pt = svg.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY;
@@ -562,14 +571,14 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       hit.addEventListener('pointerdown', (ev) => {
         const k = this._compute();
         if ((ev.button != null && ev.button > 0) || k.dead || k.off || !fin(k.target)) return;
-        from = { x: ev.clientX, y: ev.clientY }; moved = false;
+        from = { x: ev.clientX, y: ev.clientY }; this._arcMoved = false;
         try { hit.setPointerCapture(ev.pointerId); } catch (e) { /* navigateur ancien */ }
       });
       hit.addEventListener('touchstart', (ev) => { const k = this._compute(); if (!k.dead && !k.off && fin(k.target)) ev.preventDefault(); }, { passive: false });
       hit.addEventListener('pointermove', (ev) => {
         if (!from) return;
-        if (!moved && Math.hypot(ev.clientX - from.x, ev.clientY - from.y) < 5) return; // un simple appui n'est pas un glissement
-        moved = true; this._drag = true; clearTimeout(this._timer);
+        if (!this._arcMoved && Math.hypot(ev.clientX - from.x, ev.clientY - from.y) < 5) return; // un simple appui n'est pas un glissement
+        this._arcMoved = true; this._drag = true; clearTimeout(this._timer); clearTimeout(this._clr); this._clr = null;
         hit.classList.add('drag'); this._card && this._card.classList.add('dragging');
         const a = this._compute().a, mn = fin(this._num(a.min_temp)) ? this._num(a.min_temp) : 5, mx = fin(this._num(a.max_temp)) ? this._num(a.max_temp) : 30;
         const v = this._snap(mn + frac(ev) * (mx - mn));
@@ -578,13 +587,17 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       const end = (ev) => {
         if (!from) return;
         from = null; hit.classList.remove('drag'); this._card && this._card.classList.remove('dragging');
-        if (moved) { this._drag = false; this._schedule(); setTimeout(() => { moved = false; }, 0); }
+        if (this._arcMoved) { this._drag = false; this._schedule(); setTimeout(() => { this._arcMoved = false; }, 0); }
         // au doigt, touchstart annulé = pas de clic synthétique : un simple appui rouvre la fiche de l'entité
         else if (ev.type === 'pointerup' && ev.pointerType === 'touch') svg.dispatchEvent(new MouseEvent('click', { bubbles: true, composed: true }));
       };
       ['pointerup', 'pointercancel'].forEach((t) => hit.addEventListener(t, end));
       // le clic qui suit un glissement ne doit pas ouvrir la fiche de l'entité
-      root.addEventListener('click', (ev) => { if (moved) { ev.stopPropagation(); ev.preventDefault(); } }, true);
+      // (une seule fois : _build est rappelé à chaque changement de config, la racine reste la même)
+      if (!root._tvClickGuard) {
+        root._tvClickGuard = true;
+        root.addEventListener('click', (ev) => { if (this._arcMoved) { ev.stopPropagation(); ev.preventDefault(); } }, true);
+      }
     }
   }
   customElements.define(TAG, ApplianceTrvCard);
