@@ -3301,7 +3301,11 @@
     "f_entity_graph": "24 h graph (sensor)",
     "f_entity_ticker": "Ticker text (sensor or input_text)",
     "f_backlight": "Backlit LCD (orange)",
-    "f_show_name": "Show the name"
+    "f_show_name": "Show the name",
+    "f_pressure_unit": "Pressure unit (hPa, inHg, mmHg)",
+    "f_rain_from_forecast": "Rain from the weather forecast (no rain gauge)",
+    "f_extra_calc": "Calculate the heat index (no extra sensor)",
+    "f_hide_keys": "Hide the side buttons (bigger screen)"
   },
   "co2_monitor": {
     "name": "CO₂ monitor",

@@ -20,6 +20,7 @@
 .head.hide{display:none}
 .title{font-size:14px;font-weight:500;color:var(--primary-text-color);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 svg{display:block;width:100%;max-width:calc(440px * var(--illus-scale,1));height:auto;margin:0 auto;cursor:pointer}
+svg.compact{max-width:calc(600px * var(--illus-scale,1))}
 .lcdtxt{font-family:"Arial Narrow",Arial,Roboto,sans-serif;font-weight:700;fill:var(--ink)}
 .seg{fill:var(--ink)}.ghost{fill:var(--ink);opacity:.07}
 .tick{animation:wsticker var(--dur,14s) linear infinite}
@@ -78,8 +79,23 @@ svg{display:block;width:100%;max-width:calc(440px * var(--illus-scale,1));height
     const lit = p <= 0.5, k = Math.cos(2 * Math.PI * p), rx = Math.abs(k) * r, side = lit ? 1 : 0;
     // partie éclairée (en encre) : demi-disque d'un côté + ellipse du terminateur
     const half = `M${cx} ${cy - r}A${r} ${r} 0 0 ${side} ${cx} ${cy + r}`;
-    const term = `A${rx.toFixed(2)} ${r} 0 0 ${(k > 0) === lit ? 1 - side : side} ${cx} ${cy - r}`;
+    const term = `A${rx.toFixed(2)} ${r} 0 0 ${lit === (k > 0) ? 0 : 1} ${cx} ${cy - r}`; // terminateur : du côté éclairé en croissant (k > 0), de l'autre en gibbeuse
     return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--ink)" stroke-width=".8" opacity=".5"/><path d="${half}${term}Z" fill="var(--ink)"/>`;
+  };
+  // pression : facteur de conversion vers l'hPa selon l'unité d'origine
+  const PF = { hpa: 1, mbar: 1, kpa: 10, pa: 0.01, inhg: 33.8639, mmhg: 1.33322, psi: 68.9476 };
+  const pfac = (u) => PF[String(u || '').toLowerCase().replace(/\s/g, '')];
+  // indice de chaleur (formule de Rothfusz/NWS) : en dessous de ~27 °C il n'a pas de sens, la console affiche alors la température
+  const heatIndex = (t, rh, unit) => {
+    if (!fin(t) || !fin(rh)) return NaN;
+    const f = /f/i.test(unit) ? t : t * 1.8 + 32;
+    let hi = f;
+    if (f >= 80) {
+      hi = -42.379 + 2.04901523 * f + 10.14333127 * rh - 0.22475541 * f * rh - 0.00683783 * f * f - 0.05481717 * rh * rh + 0.00122874 * f * f * rh + 0.00085282 * f * rh * rh - 0.00000199 * f * f * rh * rh;
+      if (rh < 13 && f <= 112) hi -= ((13 - rh) / 4) * Math.sqrt((17 - Math.abs(f - 95)) / 17);
+      else if (rh > 85 && f <= 87) hi += ((rh - 85) / 10) * ((87 - f) / 5);
+    }
+    return /f/i.test(unit) ? hi : (hi - 32) / 1.8;
   };
   const CARD = { N: 0, NNE: 22.5, NE: 45, ENE: 67.5, E: 90, ESE: 112.5, SE: 135, SSE: 157.5, S: 180, SSW: 202.5, SW: 225, WSW: 247.5, W: 270, WNW: 292.5, NW: 315, NNW: 337.5, O: 270, NO: 315, SO: 225, ONO: 292.5, OSO: 247.5, NNO: 337.5, SSO: 202.5 };
 
@@ -140,12 +156,26 @@ svg{display:block;width:100%;max-width:calc(440px * var(--illus-scale,1));height
         }).catch(() => { this._hist = null; })
         .finally(() => { this._histBusy = false; if (this._hass) this._render(); });
     }
+    // pluie sans pluviomètre : précipitations des prévisions de l'entité météo (service weather.get_forecasts), rafraîchies toutes les 30 min
+    _loadFc() {
+      const h = this._hass, c = this._c;
+      if (c.rain_from_forecast === false || !c.entity_weather || (c.entity_rain_day && c.entity_rain_rate) || this._fcBusy || Date.now() - (this._fcAt || 0) < 30 * 60000 || !h || typeof h.callWS !== 'function') return;
+      this._fcBusy = true; this._fcAt = Date.now();
+      const get = (type) => h.callWS({ type: 'call_service', domain: 'weather', service: 'get_forecasts', service_data: { type }, target: { entity_id: c.entity_weather }, return_response: true })
+        .then((r) => ((r && r.response && r.response[c.entity_weather]) || {}).forecast || []).catch(() => []);
+      Promise.all([get('daily'), get('hourly')]).then(([d, hr]) => {
+        const day = new Date().toDateString(), now = Date.now();
+        const dd = d.find((x) => new Date(x.datetime).toDateString() === day) || d[0], hh = hr.find((x) => new Date(x.datetime).getTime() > now - 3600e3) || hr[0];
+        const n = (x) => { const v = x && parseFloat(x.precipitation); return Number.isFinite(v) ? v : NaN; };
+        this._fc = { day: n(dd), rate: n(hh) };
+      }).finally(() => { this._fcBusy = false; if (this._hass) this._render(); });
+    }
     // tendance du baromètre sur 3 h : -2 (baisse rapide) … +2 (hausse rapide)
     _trend(p) {
       const H = (this._hist && this._hist[this._c.entity_pressure]) || [];
       if (!fin(p) || !H.length) return null;
       const t0 = Date.now() - 3 * 3600e3, old = H.find((x) => x.t >= t0) || H[0];
-      const d = p - old.v; return d > 2 ? 2 : d > 0.5 ? 1 : d < -2 ? -2 : d < -0.5 ? -1 : 0;
+      const d = p - old.v * (pfac(this._unit(this._c.entity_pressure, 'hPa')) || 1); // p et la tendance sont en hPa return d > 2 ? 2 : d > 0.5 ? 1 : d < -2 ? -2 : d < -0.5 ? -1 : 0;
     }
 
     _build() {
@@ -157,17 +187,29 @@ svg{display:block;width:100%;max-width:calc(440px * var(--illus-scale,1));height
 
     _render() {
       if (!this._built) this._build();
-      this._loadHist();
+      this._loadHist(); this._loadFc();
       const c = this._c, r = this._root, hass = this._hass, loc = window.applianceLocale(c, hass);
       const f = (v, d) => (fin(v) ? v.toFixed(d) : '--');
       const w = this._st(c.entity_weather), cond = w ? String(w.state) : '';
       const tOut = this._m('entity_temp_out', 'temperature', 'temperature_unit', '°C'), hOut = this._m('entity_hum_out', 'humidity', '', '%');
       const pr = this._m('entity_pressure', 'pressure', 'pressure_unit', 'hPa'), ws = this._m('entity_wind_speed', 'wind_speed', 'wind_speed_unit', 'km/h');
+      const ps = String(c.pressure_unit || '').replace(/\s/g, '').toLowerCase(), pd = { hpa: 'hPa', inhg: 'inHg', mmhg: 'mmHg' }[ps], pfs = pfac(pr.u);
+      let prHpa = fin(pr.v) && pfs ? pr.v * pfs : pr.v; // pression en hPa, pour la tendance
+      if (pd && pfs && fin(pr.v)) { pr.v = prHpa / pfac(pd); pr.u = pd; }
       const tIn = { v: this._num(c.entity_temp_in), u: this._unit(c.entity_temp_in, '°C') }, hIn = { v: this._num(c.entity_hum_in), u: '%' };
       const ex = { v: this._num(c.entity_extra), u: this._unit(c.entity_extra, '') };
-      const rd = { v: this._num(c.entity_rain_day), u: this._unit(c.entity_rain_day, 'mm') }, rr = { v: this._num(c.entity_rain_rate), u: this._unit(c.entity_rain_rate, 'mm/h') };
-      const bear = this._bearing(), trend = this._trend(pr.v);
-      const raining = (fin(rr.v) && rr.v > 0) || /rain|pour/.test(cond);
+      let rd = { v: this._num(c.entity_rain_day), u: this._unit(c.entity_rain_day, 'mm') }, rr = { v: this._num(c.entity_rain_rate), u: this._unit(c.entity_rain_rate, 'mm/h') };
+      let rdOk = !!c.entity_rain_day, rrOk = !!c.entity_rain_rate;
+      if (c.rain_from_forecast !== false && c.entity_weather) {
+        const wa = (w && w.attributes) || {}, fc = this._fc || {}, pa = parseFloat(wa.precipitation);
+        if (!rdOk && fin(fc.day)) { rd = { v: fc.day, u: 'mm' }; rdOk = true; }
+        if (!rrOk) { const v = fin(fc.rate) ? fc.rate : pa; if (fin(v)) { rr = { v, u: 'mm/h' }; rrOk = true; } }
+      }
+      // indice de chaleur calculé s'il n'y a pas de capteur « valeur au choix » (extra_calc: false pour le désactiver)
+      if (!c.entity_extra && c.extra_calc !== false && fin(tOut.v) && fin(hOut.v)) ex.v = heatIndex(tOut.v, hOut.v, tOut.u), ex.u = tOut.u;
+      const exOk = !!c.entity_extra || fin(ex.v);
+      const bear = this._bearing(), trend = this._trend(prHpa);
+      const raining = (rrOk && fin(rr.v) && rr.v > 0) || /rain|pour/.test(cond);
       this._card.className = `${raining ? 'rainy' : ''}${c.animations === false ? ' noanim' : ''}`;
       r.getElementById('wstitle').textContent = c.name || this._t('name');
       r.getElementById('wshead').classList.toggle('hide', c.show_name === false);
@@ -195,16 +237,18 @@ svg{display:block;width:100%;max-width:calc(440px * var(--illus-scale,1));height
       const keyL = [['HEAT', 'TEMP'], ['DEW', 'HUM'], ['CHILL', 'WIND'], ['SOLAR', 'RAIN DAY'], ['UV', 'RAIN YR'], ['ET', 'BAR']], keyR = [['LAMPS', '2nd'], ['TIME', 'FORECAST'], ['UNITS', 'GRAPH'], ['CLEAR', 'HI/LOW'], ['SET', 'ALARM'], ['', 'DONE']];
       const key = (x, y, top, txt) => `${top ? `<text x="${x + 20}" y="${y - 2}" text-anchor="middle" font-size="5.4" fill="#86b7e6" font-weight="600">${top}</text>` : ''}<rect x="${x}" y="${y}" width="40" height="10.5" rx="5.25" fill="#1a1f26" stroke="#5d6875" stroke-width=".7"/><text x="${x + 20}" y="${y + 7.6}" text-anchor="middle" font-size="5.6" fill="#e9eef3" font-weight="600">${txt}</text>`;
       const tickW = ticker.length * 6.3, dx = Math.max(0, tickW - 236);
-      r.getElementById('wsart').innerHTML = `<svg viewBox="0 0 424 262" role="img" aria-label="${esc(c.name || this._t('name'))}" style="--ink:#2a1a0b">
+      // hide_keys : écran seul (sans le clavier), plus large à l'écran donc textes plus grands
+      const cp = c.hide_keys === true, bw = cp ? 312 : 400;
+      r.getElementById('wsart').innerHTML = `<svg class="${cp ? 'compact' : ''}" viewBox="0 0 ${cp ? 318 : 424} 262" role="img" aria-label="${esc(c.name || this._t('name'))}" style="--ink:#2a1a0b">
         <defs>
           <linearGradient id="wsbody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3c4552"/><stop offset=".55" stop-color="#2a3039"/><stop offset="1" stop-color="#1c2027"/></linearGradient>
           <linearGradient id="wslcd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${lcd[0]}"/><stop offset="1" stop-color="${lcd[1]}"/></linearGradient>
           <radialGradient id="wsglow" cx=".5" cy=".45" r=".7"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
           <clipPath id="wstk"><rect x="36" y="200" width="250" height="12"/></clipPath>
         </defs>
-        <ellipse cx="212" cy="256" rx="190" ry="5" fill="#000" opacity=".22"/>
-        <path d="M24 10h376a18 18 0 0 1 18 18v200a20 20 0 0 1-20 20H26a20 20 0 0 1-20-20V28a18 18 0 0 1 18-18z" fill="url(#wsbody)" stroke="#11151a" stroke-width="1.2"/>
-        <path d="M26 13h372" stroke="#fff" stroke-opacity=".12" stroke-width="1.4"/>
+        <ellipse cx="${cp ? 159 : 212}" cy="256" rx="${cp ? 142 : 190}" ry="5" fill="#000" opacity=".22"/>
+        <path d="M24 10H${bw - 24}a18 18 0 0 1 18 18v200a20 20 0 0 1-20 20H26a20 20 0 0 1-20-20V28a18 18 0 0 1 18-18z" fill="url(#wsbody)" stroke="#11151a" stroke-width="1.2"/>
+        <path d="M26 13H${bw - 28}" stroke="#fff" stroke-opacity=".12" stroke-width="1.4"/>
         <text x="28" y="27" font-size="12.5" font-weight="800" font-style="italic" fill="#f1f4f7" letter-spacing=".6">DAVIS</text><path d="M72 18h12l-3 9h-12z" fill="none" stroke="#f1f4f7" stroke-width="1.2"/>
         <rect x="20" y="33" width="282" height="190" rx="9" fill="#12161c" stroke="#4b5561" stroke-width="1"/>
         <rect x="27" y="39" width="268" height="178" rx="5" fill="url(#wslcd)"/><rect x="27" y="39" width="268" height="178" rx="5" fill="url(#wsglow)"/>
@@ -232,7 +276,7 @@ svg{display:block;width:100%;max-width:calc(440px * var(--illus-scale,1));height
         <text class="lcdtxt" x="142" y="116" text-anchor="middle" font-size="6">${L('temp_in', 'TEMP IN')}</text><text class="lcdtxt" x="196" y="116" text-anchor="middle" font-size="6">${L('hum_in', 'HUM IN')}</text><text class="lcdtxt" x="252" y="116" text-anchor="middle" font-size="6">${esc(String(c.extra_label || this._t('extra')).toUpperCase())}</text>
         ${seg7(c.entity_temp_in ? f(tIn.v, 1) : '--', 158, 120, 16, 7.6)}<text class="lcdtxt" x="160" y="126" font-size="6">${esc(tIn.u)}</text>
         ${seg7(c.entity_hum_in ? f(hIn.v, 0) : '--', 206, 120, 16, 7.6)}<text class="lcdtxt" x="208" y="136" font-size="6.5">%</text>
-        ${seg7(c.entity_extra ? f(ex.v, ex.v >= 100 ? 0 : 1) : '--', 272, 120, 16, 7.6)}<text class="lcdtxt" x="274" y="136" font-size="5.5">${esc(ex.u)}</text>
+        ${seg7(exOk ? f(ex.v, ex.v >= 100 ? 0 : 1) : '--', 272, 120, 16, 7.6)}<text class="lcdtxt" x="274" y="136" font-size="5.5">${esc(ex.u)}</text>
         <!-- mini graphique 24 h -->
         <path d="M36 140V172H104" fill="none" stroke="var(--ink)" stroke-width=".9"/>
         ${[0, 1, 2, 3].map((i) => `<path d="M${36 + i * 22.6} 172v2" stroke="var(--ink)" stroke-width=".8"/>`).join('')}
@@ -241,18 +285,18 @@ svg{display:block;width:100%;max-width:calc(440px * var(--illus-scale,1));height
         <!-- pluie -->
         <g class="umb" transform="translate(122 166)"><path d="M-8 0a8 7 0 0 1 16 0z" fill="var(--ink)"/><path d="M0 0v7a2 2 0 0 1-4 0" fill="none" stroke="var(--ink)" stroke-width="1.3"/></g>
         <text class="lcdtxt" x="170" y="159" text-anchor="middle" font-size="6">${L('daily_rain', 'DAILY RAIN')}</text><text class="lcdtxt" x="252" y="159" text-anchor="middle" font-size="6">${L('rain_rate', 'RAIN RATE')}</text>
-        ${seg7(c.entity_rain_day ? f(rd.v, 1) : '--', 188, 163, 16, 7.6)}<text class="lcdtxt" x="190" y="178" font-size="5.5">${esc(rd.u)}</text>
-        ${seg7(c.entity_rain_rate ? f(rr.v, 1) : '--', 270, 163, 16, 7.6)}<text class="lcdtxt" x="272" y="178" font-size="5.5">${esc(rr.u)}</text>
+        ${seg7(rdOk ? f(rd.v, 1) : '--', 188, 163, 16, 7.6)}<text class="lcdtxt" x="190" y="178" font-size="5.5">${esc(rd.u)}</text>
+        ${seg7(rrOk ? f(rr.v, 1) : '--', 270, 163, 16, 7.6)}<text class="lcdtxt" x="272" y="178" font-size="5.5">${esc(rr.u)}</text>
         <text class="lcdtxt" x="220" y="192" text-anchor="middle" font-size="5">${L('station', 'STATION NO. 1')}</text>
         <!-- bandeau défilant -->
         <path d="M33 197h256" stroke="var(--ink)" stroke-width=".6" opacity=".6"/>
         <g clip-path="url(#wstk)"><text class="lcdtxt ${dx > 0 ? 'tick' : ''}" x="38" y="209.5" font-size="9.5" letter-spacing="1.4" style="--dx:${-dx - 20}px;--dur:${Math.max(8, dx / 18)}s" font-family="monospace">${esc(ticker)}</text></g>
         <!-- clavier -->
-        ${keyL.map(([t, k], i) => key(312, 48 + i * 27, t, k)).join('')}
-        ${keyR.map(([t, k], i) => key(364, 48 + i * 27, t, k)).join('')}
-        <g transform="translate(392 222)"><rect x="-13" y="-13" width="26" height="26" rx="7" transform="rotate(45)" fill="#1a1f26" stroke="#5d6875" stroke-width=".7"/>
+        ${cp ? '' : keyL.map(([t, k], i) => key(312, 48 + i * 27, t, k)).join('')}
+        ${cp ? '' : keyR.map(([t, k], i) => key(364, 48 + i * 27, t, k)).join('')}
+        <g transform="translate(392 222)" ${cp ? 'display="none"' : ''}><rect x="-13" y="-13" width="26" height="26" rx="7" transform="rotate(45)" fill="#1a1f26" stroke="#5d6875" stroke-width=".7"/>
           ${[0, 90, 180, 270].map((a) => `<path d="M0 -12l3.5 4.5h-7z" fill="#8a96a3" transform="rotate(${a})"/>`).join('')}<circle r="3" fill="#2b323b"/></g>
-        <text x="182" y="241" text-anchor="middle" font-size="14" font-style="italic" fill="#eef2f6" font-weight="600">Vantage <tspan font-weight="800">PRO2</tspan></text>
+        <text x="${cp ? 160 : 182}" y="241" text-anchor="middle" font-size="14" font-style="italic" fill="#eef2f6" font-weight="600">Vantage <tspan font-weight="800">PRO2</tspan></text>
       </svg>`;
     }
   }
@@ -285,11 +329,12 @@ svg{display:block;width:100%;max-width:calc(440px * var(--illus-scale,1));height
         ent('entity_rain_day', 'sensor'), ent('entity_rain_rate', 'sensor'),
         ent('entity_graph', 'sensor'), ent('entity_ticker', ['sensor', 'input_text']),
         { name: 'labels', selector: { object: {} } },
+        { name: 'pressure_unit', selector: { select: { mode: 'dropdown', options: ['hPa', 'inHg', 'mmHg'] } } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ...window.applianceActionFields,
         window.applianceLanguageField(T),
-        { type: 'grid', name: '', schema: [bool('backlight'), bool('show_name'), bool('animations')] },
+        { type: 'grid', name: '', schema: [bool('backlight'), bool('show_name'), bool('animations'), bool('rain_from_forecast'), bool('extra_calc'), { name: 'hide_keys', selector: { boolean: {} } }] },
       ];
       this._form.computeLabel = (s) => tr[`f_${s.name}`] || window.applianceEditorLabel(s.name, this._hass);
     }

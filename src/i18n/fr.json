@@ -3302,7 +3302,11 @@
     "f_entity_graph": "Graphique 24 h (capteur)",
     "f_entity_ticker": "Texte du bandeau (capteur ou input_text)",
     "f_backlight": "Écran rétroéclairé (orange)",
-    "f_show_name": "Afficher le nom"
+    "f_show_name": "Afficher le nom",
+    "f_pressure_unit": "Unité de pression (hPa, inHg, mmHg)",
+    "f_rain_from_forecast": "Pluie d'après les prévisions météo (sans pluviomètre)",
+    "f_extra_calc": "Calculer l'indice de chaleur (sans capteur)",
+    "f_hide_keys": "Masquer les boutons latéraux (écran plus grand)"
   },
   "co2_monitor": {
     "name": "Moniteur de CO₂",
