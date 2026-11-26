@@ -305,16 +305,27 @@
           this.appendChild(this._sub);
         } else if (C && C.getConfigForm) {
           // cartes « de base » : pas d'éditeur dédié, seulement un schéma ha-form (entité, capteurs, options…)
+          const applyForm = (f) => {
+            if (!f || !f.schema) return;
+            this._sub = document.createElement('ha-form');
+            this._subForm = f;
+            this._sub.schema = hoist(f.schema);
+            this._sub.computeLabel = f.computeLabel;
+            this._sub.addEventListener('value-changed', (e) => {
+              e.stopPropagation();
+              this._fire(wrap(this._config.appliance, e.detail.value));
+            });
+            this._sub.hass = this._hass;
+            this._sub.data = inner(this._config);
+            this.appendChild(this._sub);
+            if (this._opt && this._opt.parentNode) this.appendChild(this._opt.parentNode);
+          };
           const f = C.getConfigForm();
-          this._sub = document.createElement('ha-form');
-          this._subForm = f;
-          this._sub.schema = hoist(f.schema);
-          this._sub.computeLabel = f.computeLabel;
-          this._sub.addEventListener('value-changed', (e) => {
-            e.stopPropagation();
-            this._fire(wrap(this._config.appliance, e.detail.value));
-          });
-          this.appendChild(this._sub);
+          if (f && typeof f.then === 'function') {
+            f.then((resolved) => { if (this._subTag === tag) applyForm(resolved); });
+          } else {
+            applyForm(f);
+          }
         }
       }
       if (this._sub) {

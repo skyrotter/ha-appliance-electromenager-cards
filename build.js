@@ -212,6 +212,9 @@ const manifestCards = [];
     vm.runInContext(chunks[name], sandbox);
     for (let i = prevLen; i < customCards.length; i++) manifestCards.push(customCards[i]);
   }
+  var formTags = Object.entries(defined)
+    .filter(([t, cls]) => tagToChunk[String(t).toLowerCase()] && typeof cls?.getConfigForm === "function" && typeof cls?.getConfigElement !== "function")
+    .map(([t]) => String(t).toLowerCase());
 }
 
 /* ---- main file: header + asset bootstrap + core + on-demand lazy loader ---- */
@@ -290,6 +293,7 @@ const loader = `
   const w = window;
   const base = import.meta.url;
   const TAG_TO_CHUNK = ${JSON.stringify(tagToChunk)};
+  const FORM_TAGS = new Set(${JSON.stringify(formTags)});
   const ALL_CHUNKS = ${JSON.stringify(standaloneNames)};
   const ASSET_GROUPS = ${JSON.stringify(assetNames)};
   const MANIFEST_CARDS = ${JSON.stringify(manifestCards)};
@@ -411,10 +415,10 @@ const loader = `
       };
       for (const [tag, chunkName] of Object.entries(TAG_TO_CHUNK)) {
         const k = tag.toLowerCase();
+        const isForm = FORM_TAGS.has(k);
         if (!origGet(k)) {
           STUBS.add(k);
           const StubCard = class extends HTMLElement {
-            static getConfigElement() { return document.createElement(\`\${k}-editor\`); }
             static getStubConfig(hass) {
               loadChunk(chunkName);
               return REAL[k] && REAL[k].getStubConfig ? REAL[k].getStubConfig(hass) : {};
@@ -455,10 +459,18 @@ const loader = `
             getCardSize() { return this._impl && this._impl.getCardSize ? this._impl.getCardSize() : 3; }
             getGridOptions() { return this._impl && this._impl.getGridOptions ? this._impl.getGridOptions() : { columns: 6, min_columns: 3, rows: "auto", min_rows: 1 }; }
           };
+          if (isForm) {
+            StubCard.getConfigForm = async () => {
+              await loadChunk(chunkName);
+              return REAL[k] && REAL[k].getConfigForm ? REAL[k].getConfigForm() : { schema: [] };
+            };
+          } else {
+            StubCard.getConfigElement = () => document.createElement(\`\${k}-editor\`);
+          }
           origDefine(k, StubCard);
         }
         const ek = \`\${k}-editor\`;
-        if (!origGet(ek)) {
+        if (!isForm && !origGet(ek)) {
           STUBS.add(ek);
           const StubEditor = class extends HTMLElement {
             constructor() {

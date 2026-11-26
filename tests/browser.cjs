@@ -53,6 +53,24 @@ window.addEventListener('appliance-helpers-ready', async () => {
   nas.hass = { states: { 'sensor.c': { entity_id: 'sensor.c', state: '10', attributes: { unit_of_measurement: '%' } } }, language: 'en', locale: { language: 'en' }, config: {} };
   await new Promise(r => setTimeout(r, 400));
   const nasHref = nas.shadowRoot.querySelector('image.photo')?.getAttribute('href') || '';
+  const nasElCls = customElements.get('appliance-nas-card');
+  const nasEd = nasElCls && nasElCls.getConfigElement ? nasElCls.getConfigElement() : null;
+  if (nasEd) { document.body.appendChild(nasEd); await new Promise(r => setTimeout(r, 150)); }
+  const formTags = [
+    'appliance-battery-card', 'appliance-aquarium-card', 'appliance-ev-charger-card',
+    'appliance-linky-card', 'appliance-pellet-boiler-card', 'appliance-robot-mower-solo-card',
+    'appliance-robot-vacuum-solo-card', 'appliance-water-heat-pump-card', 'appliance-air-water-heat-pump-card',
+  ];
+  const formResults = {};
+  for (const tag of formTags) {
+    const cls = customElements.get(tag);
+    const hasGetConfigElement = !!(cls && cls.getConfigElement);
+    const form = cls && cls.getConfigForm ? await cls.getConfigForm() : null;
+    formResults[tag] = {
+      hasGetConfigElement,
+      schemaLen: form && Array.isArray(form.schema) ? form.schema.length : 0,
+    };
+  }
   window.__lazyProbe = {
     adoptedCount: w.shadowRoot.adoptedStyleSheets ? w.shadowRoot.adoptedStyleSheets.length : 0,
     inlineStyleTags: w.shadowRoot.querySelectorAll('style').length,
@@ -60,6 +78,8 @@ window.addEventListener('appliance-helpers-ready', async () => {
     afterNasResources: performance.getEntriesByType('resource').map(e => new URL(e.name).pathname),
     nasHrefLen: nasHref.length,
     nasHydrated: nasHref.startsWith('data:image/webp;base64,') && !nasHref.includes('#ac:'),
+    nasEditorLen: nasEd ? nasEd.innerHTML.length : 0,
+    formResults,
   };
 });
 </script>`);
@@ -134,6 +154,11 @@ window.addEventListener('appliance-helpers-ready', async () => {
     assert.equal(lazy.idleResources.filter((p) => p.endsWith('.js')).length, 3, `expected 3 JS files on startup, got ${lazy.idleResources.join(', ')}`);
     assert.ok(lazy.afterNasResources.includes('/dist/cards/nas.js') && lazy.afterNasResources.includes('/dist/assets/nas.js'), 'expected on-demand nas chunk & asset');
     assert.ok(lazy.nasHydrated && lazy.nasHrefLen > 5000, 'nas photo must hydrate to real WebP');
+    assert.ok(lazy.nasEditorLen > 0, 'nas getConfigElement() must mount a non-empty editor');
+    for (const [tag, res] of Object.entries(lazy.formResults)) {
+      assert.equal(res.hasGetConfigElement, false, `${tag} must not define getConfigElement on its stub`);
+      assert.ok(res.schemaLen > 0, `${tag} getConfigForm() must return a non-empty schema`);
+    }
 
     // 2. Run full docs/tests.html suite
     await call('Page.addScriptToEvaluateOnNewDocument', { source: 'localStorage.setItem("applianceCardsSinglePicker", "0");' });
