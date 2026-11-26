@@ -107,6 +107,7 @@ const edLabel = (key) => {
   const c = tr(null, n); return c !== n ? c : h;
 };
 function buildForm(kind) {
+  if (typeof window.applianceLoadChunk === "function") window.applianceLoadChunk("editor-labels");
   const d = DEF[kind];
   return {
     schema: [
@@ -180,6 +181,8 @@ function buildForm(kind) {
           { name: "title_layout", selector: { select: { mode: "dropdown", options: [{ value: "inline", label: tr(null, "header_inline") }, { value: "stacked", label: tr(null, "header_stacked") }] } } },
           { name: "illustration_position", selector: { select: { mode: "dropdown", options: [{ value: "center", label: tr(null, "illus_pos_center") }, { value: "left", label: tr(null, "illus_pos_left") }, { value: "right", label: tr(null, "illus_pos_right") }] } } },
           ...(window.applianceTileFields ? window.applianceTileFields() : []), // absent tant que le morceau editor-labels n'est pas chargé
+          { name: "icons", selector: { object: {} } },
+          { name: "extra_tiles", selector: { object: {} } },
           { name: "animations", selector: { boolean: {} }, default: true },
           { name: "hide_when_inactive", selector: { boolean: {} } },
           { name: "hide_delay", selector: { number: { min: 0, max: 1440, step: 1, mode: "box", unit_of_measurement: "min" } } },
@@ -342,6 +345,7 @@ function buildForm(kind) {
           ...(d.fields.includes("cost") || d.fields.includes("energy") ? [{ name: "show_cost", selector: { boolean: {} }, default: true }] : []),
           ...(d.fields.includes("switch") ? [{ name: "show_toggle", selector: { boolean: {} }, default: true }] : []),
           { name: "hide_zero_power", selector: { boolean: {} }, default: true },
+          { name: "show_sparklines", selector: { boolean: {} }, default: false },
           ...(["radiator", "towel_dryer", "pellet_stove", "kettle"].includes(kind) ? [{ name: "show_modes", selector: { boolean: {} }, default: true }] : []),
           ...(kind === "kettle" ? [{ name: "show_selector", selector: { boolean: {} }, default: true }, { name: "show_buttons", selector: { boolean: {} }, default: true }, { name: "show_slider", selector: { boolean: {} }, default: true }] : []),
           ...(USAGE_KINDS.includes(kind) ? [{ name: "show_usage_time", selector: { boolean: {} }, default: true }] : []),

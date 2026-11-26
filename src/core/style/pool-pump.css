@@ -10,8 +10,12 @@
 .k-pool_pump.st-filtering .ripple { animation-duration: 3s; }
 .bubbles circle { fill: #fff; opacity: 0; }
 .k-pool_pump.st-filtering .bubbles circle { animation: ac-jetbub calc(1.4s / var(--spd)) ease-out infinite; }
-.bubbles circle:nth-child(2) { animation-delay: -.35s !important; } .bubbles circle:nth-child(3) { animation-delay: -.7s !important; } .bubbles circle:nth-child(4) { animation-delay: -1.05s !important; }
-.k-pool_pump.st-filtering .hum { animation: ac-shake-soft .18s linear infinite; }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .bubbles circle { animation-delay: calc((sibling-index() - 1) * -.35s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .bubbles circle:nth-child(2) { animation-delay: -.35s !important; } .bubbles circle:nth-child(3) { animation-delay: -.7s !important; } .bubbles circle:nth-child(4) { animation-delay: -1.05s !important; }
+}.k-pool_pump.st-filtering .hum { animation: ac-shake-soft .18s linear infinite; }
 .k-pool_pump.st-filtering .l1 { fill: #3ddc84; }
 .k-pool_pump .lcd { font-size: 6.4px; }
 @keyframes ac-flow { to { stroke-dashoffset: -16; } }

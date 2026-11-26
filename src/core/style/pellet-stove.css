@@ -22,8 +22,12 @@
 .smoke-in path:nth-child(2), .flue-smoke path:nth-child(2) { animation-delay: 1.1s !important; }
 .warm-air path { fill: none; stroke: var(--ac-heat); stroke-width: 1.6; stroke-linecap: round; opacity: 0; }
 .k-pellet_stove.st-heating .warm-air path { animation: ac-steam 2s ease-out infinite; }
-.warm-air path:nth-child(2) { animation-delay: .5s !important; } .warm-air path:nth-child(3) { animation-delay: 1s !important; } .warm-air path:nth-child(4) { animation-delay: 1.5s !important; }
-.k-pellet_stove .lcd { fill: #ff9a4a; }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .warm-air path { animation-delay: calc((sibling-index() - 1) * .5s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .warm-air path:nth-child(2) { animation-delay: .5s !important; } .warm-air path:nth-child(3) { animation-delay: 1s !important; } .warm-air path:nth-child(4) { animation-delay: 1.5s !important; }
+}.k-pellet_stove .lcd { fill: #ff9a4a; }
 .k-pellet_stove.st-off .lcd, .k-pellet_stove.st-standby .lcd { fill: #6fd8ff; }
 .k-pellet_stove.st-alarm .dot { background: var(--ac-alert); }
 .k-pellet_stove.st-alarm .status { color: var(--ac-alert); font-weight: 600; }

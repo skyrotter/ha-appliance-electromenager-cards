@@ -6,13 +6,21 @@
 .intake path { fill: none; stroke: #8fb6d8; stroke-width: 1.5; stroke-linecap: round; opacity: 0; transform-box: view-box; transform-origin: 60px 70px; }
 .k-vmc.st-speed1 .intake path { animation: ac-suck 2.4s ease-in infinite; }
 .k-vmc.st-speed2 .intake path { animation: ac-suck 1s ease-in infinite; }
-.intake path:nth-child(2) { animation-delay: -.5s !important; } .intake path:nth-child(3) { animation-delay: -1s !important; }
-.intake path:nth-child(4) { animation-delay: -1.5s !important; } .intake path:nth-child(5) { animation-delay: -2s !important; }
-.k-vmc.st-speed2 .intake path:nth-child(n) { animation-delay: calc(var(--i, 0) * -.2s); }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .intake path { animation-delay: calc((sibling-index() - 1) * -.5s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .intake path:nth-child(2) { animation-delay: -.5s !important; } .intake path:nth-child(3) { animation-delay: -1s !important; }
+  .intake path:nth-child(4) { animation-delay: -1.5s !important; } .intake path:nth-child(5) { animation-delay: -2s !important; }
+}.k-vmc.st-speed2 .intake path:nth-child(n) { animation-delay: calc(var(--i, 0) * -.2s); }
 .steam path { fill: none; stroke: #ffffff; stroke-width: 3; stroke-linecap: round; opacity: 0; }
 .humid .steam path { animation: ac-steam 2.8s ease-out infinite; }
-.steam path:nth-child(2) { animation-delay: .9s !important; } .steam path:nth-child(3) { animation-delay: 1.8s !important; }
-.condensation path { fill: #9fd6ff; opacity: 0; transition: opacity 1s; }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .steam path { animation-delay: calc((sibling-index() - 1) * .9s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .steam path:nth-child(2) { animation-delay: .9s !important; } .steam path:nth-child(3) { animation-delay: 1.8s !important; }
+}.condensation path { fill: #9fd6ff; opacity: 0; transition: opacity 1s; }
 .humid .condensation path { opacity: .9; animation: ac-drip 3s ease-in infinite; }
 .condensation path:nth-child(2n) { animation-delay: -1.4s !important; } .condensation path:nth-child(3n) { animation-delay: -2.1s !important; }
 @keyframes ac-suck { 0% { opacity: 0; transform: scale(1.25); } 30% { opacity: .85; } 100% { opacity: 0; transform: scale(.45); } }

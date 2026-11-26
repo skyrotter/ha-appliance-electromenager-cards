@@ -317,7 +317,7 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
               const mn = Math.min(...f), mx = Math.max(...f), rg = mx - mn || 1;
               const P = b.map((v, i) => (isFinite(v) ? [i / (b.length - 1) * 100, 19 - (v - mn) / rg * 16] : null)).filter(Boolean);
               sv.innerHTML = `<polyline points="${P.map((p) => p.map((n) => n.toFixed(1)).join(',')).join(' ')}" fill="none" stroke="var(--tc)" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke" opacity=".85"/>`;
-            } else sv.innerHTML = '';
+            } else sv.replaceChildren();
           }
         }
       });

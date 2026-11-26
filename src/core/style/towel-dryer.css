@@ -11,8 +11,12 @@
 .k-towel_dryer.st-heating .td-towel2 { animation-duration: 2.6s; animation-delay: .4s; }
 .td-steam path { transform-box: fill-box; transform-origin: 50% 100%; fill: none; stroke: #e3e8ed; stroke-width: 2; stroke-linecap: round; opacity: 0; }
 .k-towel_dryer.st-heating .td-steam path { animation: hd-suck 2.6s ease-out infinite; }
-.td-steam path:nth-child(2) { animation-delay: .8s !important; } .td-steam path:nth-child(3) { animation-delay: 1.6s !important; }
-.td-led { fill: #5a636d; transition: fill .3s; }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .td-steam path { animation-delay: calc((sibling-index() - 1) * .8s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .td-steam path:nth-child(2) { animation-delay: .8s !important; } .td-steam path:nth-child(3) { animation-delay: 1.6s !important; }
+}.td-led { fill: #5a636d; transition: fill .3s; }
 .k-towel_dryer.st-heating .td-led { fill: #ff7a2e; filter: drop-shadow(0 0 1.5px #ff7a2e); }
 .k-towel_dryer.st-at_target .td-led { fill: #43c07a; }
 .k-towel_dryer .lcd { fill: #6fd8ff; }

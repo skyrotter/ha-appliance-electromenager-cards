@@ -24,13 +24,11 @@ function haLanguage(hass) {
 /* Maps a language code to one we ship: exact → case/separator-insensitive → base language → English. */
 function resolveLang(code) {
   if (!code) return DEFAULT_LANG;
+  if (typeof window !== 'undefined' && typeof window.applianceResolveLanguage === 'function') {
+    return window.applianceResolveLanguage(LANGS, code);
+  }
   const c = String(code).replace('_', '-');
-  if (LANGS[c]) return c;
-  const lc = c.toLowerCase();
-  const hit = Object.keys(LANGS).find(k => k.toLowerCase() === lc);
-  if (hit) return hit;
-  const base = lc.split('-')[0];
-  return LANGS[base] ? base : DEFAULT_LANG;
+  return LANGS[c] ? c : DEFAULT_LANG;
 }
 
 /* Language for a card: the card's `language` option, or the HA user's language when "auto". */
@@ -274,7 +272,7 @@ function collections(rule, now, ctx, range) {
     const prev = seen.get(ek);
     seen.set(ek, { k: ek, moved: prev ? prev.moved && moved : moved });
   }
-  return [...seen.values()].sort((a, b) => a.k - b.k);
+  return [...seen.values()].toSorted((a, b) => a.k - b.k);
 }
 
 /* Card state from a fixed schedule: { state: ''|'eve'|'today'|'emptied'|'unknown', n, fill, moved } */
@@ -282,7 +280,7 @@ function computeFixed(rule, now, ctx) {
   const h = now.getHours() + now.getMinutes() / 60, H = rule.hour;
   const list = collections(rule, now, ctx);
   const next = list.find(x => x.k > 0 || (x.k === 0 && h < H));
-  const last = [...list].reverse().find(x => x.k < 0 || (x.k === 0 && h >= H));
+  const last = list.findLast(x => x.k < 0 || (x.k === 0 && h >= H));
   if (!next || !last) return { state: 'unknown', n: null, fill: 0 };
   const n = next.k, l = -last.k, moved = next.moved;
   const fill = (l + n) ? l / (l + n) : 0;
@@ -898,7 +896,9 @@ class PoubelleCard extends HTMLElement {
 customElements.define(TAG, PoubelleCard);
 window.customCards = window.customCards || [];
 if (!window.customCards.some(c => c.type === TAG))
-  window.customCards.push({ type: TAG, name: 'Appliance – Poubelle / Bin collection', preview: true,
+  window.customCards.push({ type: TAG, name: 'Appliance – Poubelle / Bin collection',
+    names: { en: 'Bin collection', fr: 'Poubelle', ru: 'Вывоз мусора', de: 'Müllabfuhr', es: 'Recogida de basura', it: 'Raccolta rifiuti', nl: 'Afvalophaling', 'pt-PT': 'Recolha de lixo', 'pt-BR': 'Coleta de lixo' },
+    preview: true,
     description: 'Animated bin that fills up and empties with your collection days',
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/poubelle.md' });
 

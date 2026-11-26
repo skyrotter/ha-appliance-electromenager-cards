@@ -16,4 +16,9 @@
 .drops circle:nth-child(4) { animation-delay: .85s !important; }
 .steam-in path { fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; opacity: 0; }
 .k-dishwasher.ph-dry .steam-in path, .k-microwave.active .steam-in path { animation: ac-steam 2.6s ease-out infinite; }
-.steam-in path:nth-child(2) { animation-delay: .8s !important; } .steam-in path:nth-child(3) { animation-delay: 1.6s !important; }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .steam-in path { animation-delay: calc((sibling-index() - 1) * .8s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .steam-in path:nth-child(2) { animation-delay: .8s !important; } .steam-in path:nth-child(3) { animation-delay: 1.6s !important; }
+}

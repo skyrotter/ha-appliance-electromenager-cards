@@ -10,4 +10,9 @@
 .k-contact_grill.st-grilling .cg-heat, .k-contact_grill.st-grill_ready .cg-heat { opacity: .85; animation: ac-pulse 1.6s ease-in-out infinite; }
 .cg-steam path { fill: none; stroke: #dfe6ee; stroke-width: 2.6; stroke-linecap: round; opacity: 0; }
 .k-contact_grill.st-grilling .cg-steam path, .k-contact_grill.st-grill_ready .cg-steam path { animation: ac-steam 2.6s ease-out infinite; }
-.cg-steam path:nth-child(2) { animation-delay: .8s !important; } .cg-steam path:nth-child(3) { animation-delay: 1.6s !important; }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .cg-steam path { animation-delay: calc((sibling-index() - 1) * .8s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .cg-steam path:nth-child(2) { animation-delay: .8s !important; } .cg-steam path:nth-child(3) { animation-delay: 1.6s !important; }
+}

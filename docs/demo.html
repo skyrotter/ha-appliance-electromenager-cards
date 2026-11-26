@@ -77,6 +77,7 @@ customElements.define('ha-icon', class extends HTMLElement {
 <!-- le fichier principal est un module : il charge ses cartes en parallèle puis émet « appliance-cards-ready » ; la page attend cet événement -->
 <script type="module" src="../dist/ha-appliance-electromenager-cards.js"></script>
 <script>
+window.__acWantAll = true;
 window.addEventListener('appliance-cards-ready', () => {
 const W = { unit_of_measurement: 'W', device_class: 'power' };
 const T = { unit_of_measurement: '°C', device_class: 'temperature' };

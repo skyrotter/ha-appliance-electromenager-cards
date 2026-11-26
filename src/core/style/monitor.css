@@ -11,12 +11,20 @@
 .k-monitor.st-standby .mn-led { fill: #ffb020; animation: ac-pulse 2.4s ease-in-out infinite; }
 .mn-code rect { transform-box: fill-box; transform-origin: 0 50%; }
 .k-monitor.st-screen_on .mn-code rect { animation: pc-type 4.4s ease-in-out infinite; }
-.mn-code rect:nth-child(2) { animation-delay: .5s !important; } .mn-code rect:nth-child(3) { animation-delay: 1s !important; }
-.mn-code rect:nth-child(4) { animation-delay: 1.5s !important; } .mn-code rect:nth-child(5) { animation-delay: 2s !important; } .mn-code rect:nth-child(6) { animation-delay: 2.5s !important; }
-.mn-bars rect { transform-box: fill-box; transform-origin: 50% 100%; }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .mn-code rect { animation-delay: calc((sibling-index() - 1) * .5s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .mn-code rect:nth-child(2) { animation-delay: .5s !important; } .mn-code rect:nth-child(3) { animation-delay: 1s !important; }
+  .mn-code rect:nth-child(4) { animation-delay: 1.5s !important; } .mn-code rect:nth-child(5) { animation-delay: 2s !important; } .mn-code rect:nth-child(6) { animation-delay: 2.5s !important; }
+}.mn-bars rect { transform-box: fill-box; transform-origin: 50% 100%; }
 .k-monitor.st-screen_on .mn-bars rect { animation: pc-bar 3.2s ease-in-out infinite alternate; }
-.mn-bars rect:nth-child(2) { animation-delay: .4s !important; } .mn-bars rect:nth-child(3) { animation-delay: .8s !important; } .mn-bars rect:nth-child(4) { animation-delay: 1.2s !important; }
-.mn-line { stroke-dasharray: 60; stroke-dashoffset: 0; }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .mn-bars rect { animation-delay: calc((sibling-index() - 1) * .4s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .mn-bars rect:nth-child(2) { animation-delay: .4s !important; } .mn-bars rect:nth-child(3) { animation-delay: .8s !important; } .mn-bars rect:nth-child(4) { animation-delay: 1.2s !important; }
+}.mn-line { stroke-dasharray: 60; stroke-dashoffset: 0; }
 .k-monitor.st-screen_on .mn-line { animation: mn-draw 5s ease-in-out infinite; }
 .mn-sun { transform-box: fill-box; transform-origin: 50% 50%; }
 .k-monitor.st-screen_on .mn-sun { animation: ac-pulse 3.6s ease-in-out infinite; }

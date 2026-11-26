@@ -118,7 +118,7 @@ function fmtDuration(min) {
 function sumSeries(list) {
   const S = list.filter((s) => s.length);
   if (S.length <= 1) return S[0] || [];
-  const ts = [...new Set(S.flatMap((s) => s.map((p) => p.t)))].sort((a, b) => a - b), idx = S.map(() => -1);
+  const ts = [...new Set(S.flatMap((s) => s.map((p) => p.t)))].toSorted((a, b) => a - b), idx = S.map(() => -1);
   return ts.map((t) => {
     let v = 0;
     S.forEach((s, k) => { while (idx[k] + 1 < s.length && s[idx[k] + 1].t <= t) idx[k]++; if (idx[k] >= 0) v += s[idx[k]].v; });
@@ -172,7 +172,7 @@ function cycleList(pw, threshold, gapMin = 15) {
   const t0 = pw.length ? pw[0].t : 0;
   return { done: out.filter((x) => x.start > t0 && x.end - x.start >= 300000), cur };
 }
-const median = (a) => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y), h = s.length >> 1; return s.length % 2 ? s[h] : (s[h - 1] + s[h]) / 2; };
+const median = (a) => { if (!a.length) return null; const s = a.toSorted((x, y) => x - y), h = s.length >> 1; return s.length % 2 ? s[h] : (s[h - 1] + s[h]) / 2; };
 // H:MM like a real washer/oven display; M:SS for short countdowns (microwave)
 const lcdDuration = (min, short = false) => {
   if (short) { const s = Math.round(min * 60); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; }

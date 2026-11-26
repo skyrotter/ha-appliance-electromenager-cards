@@ -11,8 +11,12 @@
 .k-printer_3d.st-heating .tip { fill: #ff4a1f; filter: drop-shadow(0 0 2px #ff5a1f); animation: ac-pulse 1s ease-in-out infinite; }
 .bedheat path { fill: none; stroke: var(--ac-heat); stroke-width: 1.4; stroke-linecap: round; opacity: 0; }
 .k-printer_3d.st-heating .bedheat path { animation: ac-steam 1.8s ease-out infinite; }
-.bedheat path:nth-child(2) { animation-delay: .45s !important; } .bedheat path:nth-child(3) { animation-delay: .9s !important; } .bedheat path:nth-child(4) { animation-delay: 1.35s !important; }
-.k-printer_3d.indeterminate.st-printing .gantry { transition: none; animation: ac-zrise 14s linear infinite; }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .bedheat path { animation-delay: calc((sibling-index() - 1) * .45s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .bedheat path:nth-child(2) { animation-delay: .45s !important; } .bedheat path:nth-child(3) { animation-delay: .9s !important; } .bedheat path:nth-child(4) { animation-delay: 1.35s !important; }
+}.k-printer_3d.indeterminate.st-printing .gantry { transition: none; animation: ac-zrise 14s linear infinite; }
 .k-printer_3d.indeterminate.st-printing .object { transform-box: view-box; transform-origin: 60px 104px; animation: ac-grow 14s linear infinite; }
 .k-printer_3d.indeterminate.st-printing .objclip { transform: none; }
 .k-printer_3d.indeterminate .objclip { y: 66px; height: 38px; }
