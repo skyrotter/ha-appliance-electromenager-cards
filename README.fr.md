@@ -176,6 +176,7 @@ Clique sur une carte pour ses options et ses exemples (pages en anglais).
 | [Station météo (style Davis Vantage Pro2)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/weather-station.md) | `custom:appliance-weather-station-card` |
 | [Moniteur de consommation (style Ecojoko)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/energy-monitor.md) | `custom:appliance-energy-monitor-card` |
 | [Minuteur de cuisine](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/kitchen-timer.md) | `custom:appliance-kitchen-timer-card` |
+| [Four et plaque (un seul capteur)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/oven-hob.md) | `custom:appliance-oven-hob-card` |
 | [Détecteur de fuite d'eau](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/leak-detector.md) | `custom:appliance-leak-detector-card` |
 | [Arrosage (zones, pompe, pluie)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/irrigation.md) | `custom:appliance-irrigation-card` |
 | [Ruban LED (couleur, luminosité, effet)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/led-strip.md) | `custom:appliance-led-strip-card` |
