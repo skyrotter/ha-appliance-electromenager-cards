@@ -211,6 +211,8 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       if (!isFinite(grid) && (c.entity_grid_import || c.entity_grid_export)) grid = z(this._w(c.entity_grid_import)) - z(this._w(c.entity_grid_export));
       const ev = Math.max(0, z(this._w(c.entity_ev))), wh = Math.max(0, z(this._w(c.entity_water_heater)));
       let home = this._w(c.entity_home);
+      // une consommation ne peut pas être négative (pince ampèremétrique qui oscille autour de 0…) : négatif = 0, sauf show_negative: true (valeur affichée avec son signe)
+      if (isFinite(home) && !c.show_negative) home = Math.max(0, home);
       // consommation calculée : production + soutirage + décharge − injection − charge − borne − ballon
       if (!isFinite(home)) home = Math.max(0, sol + z(grid) - z(batt) - ev - wh);
       // plusieurs batteries (battery_count, 1 à 3) : soit chacune a ses entités (entity_battery_2_power / _soc…), la puissance totale est alors la somme
@@ -311,7 +313,9 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       this._pill('solar', this._l('production'), this._fmt(v.sol), v.sol > THR);
       this._pill('home', this._l('consumption'), this._fmt(v.home), v.home > THR);
       this._pill('battery', isFinite(v.soc) ? `${this._l('battery')} ${Math.round(v.soc)} %` : this._l('battery'), isFinite(v.batt) ? `${chg ? '+' : dis ? '−' : ''}${this._fmt(Math.abs(v.batt))}` : '--', chg || dis, v.hasBatt);
-      this._pill('grid', exp ? this._l('export') : imp ? this._l('import') : this._l('grid'), v.hasGrid ? this._fmt(Math.abs(v.grid)) : '--', exp || imp, v.hasGrid);
+      // réseau : valeur sans signe (le libellé donne le sens), ou avec son signe (+ import, − export) si show_negative: true
+      const gv = this._c.show_negative ? v.grid : Math.abs(v.grid);
+      this._pill('grid', exp ? this._l('export') : imp ? this._l('import') : this._l('grid'), v.hasGrid ? this._fmt(gv) : '--', exp || imp, v.hasGrid);
       this._pill('ev', this._l('ev'), `${isFinite(v.car) ? `${Math.round(v.car)} % · ` : ''}${this._fmt(v.ev)}`, v.ev > THR || isFinite(v.car), v.hasEv);
       const evTxt = r.querySelector('.p-ev .v'); if (evTxt) evTxt.style.fill = isFinite(v.car) && v.car < 20 ? (v.car < 10 ? '#e53935' : '#ef8a00') : '';
       this._pill('water', this._l('water_heater'), this._fmt(v.wh), v.wh > THR, v.hasWh);
@@ -321,7 +325,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       set('production', true, this._fmt(v.sol));
       set('consumption', true, this._fmt(v.home));
       set('battery', v.hasBatt, isFinite(v.soc) ? `${Math.round(v.soc)} %` : this._fmt(v.batt), chg ? `${this._t('charging')} ${this._fmt(v.batt)}` : dis ? `${this._t('discharging')} ${this._fmt(-v.batt)}` : '');
-      set('grid', v.hasGrid, this._fmt(Math.abs(v.grid)), exp ? this._t('export') : imp ? this._t('import') : '');
+      set('grid', v.hasGrid, this._fmt(gv), exp ? this._t('export') : imp ? this._t('import') : '');
       set('ev', v.hasEv, this._fmt(v.ev), isFinite(v.car) ? `${this._t('car')} ${Math.round(v.car)} %` : '');
       const evSub = r.querySelector('.tile[data-k="ev"] .s'); if (evSub) evSub.style.color = isFinite(v.car) && v.car < 20 ? (v.car < 10 ? '#e53935' : '#ef8a00') : ''; set('water', v.hasWh, this._fmt(v.wh));
     }
@@ -354,7 +358,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
         pw('entity_battery_3_power'), { name: 'entity_battery_3_soc', selector: { entity: { domain: 'sensor' } } },
         pw('entity_grid'), pw('entity_grid_import'), pw('entity_grid_export'),
         pw('entity_ev'), { name: 'entity_car_soc', selector: { entity: { domain: 'sensor' } } }, pw('entity_water_heater'),
-        { type: 'grid', name: '', schema: [bool('battery_invert', false), bool('grid_invert', false),
+        { type: 'grid', name: '', schema: [bool('battery_invert', false), bool('grid_invert', false), bool('show_negative', false),
           { name: 'max_power', default: 6000, selector: { number: { min: 500, max: 50000, step: 100, mode: 'box', unit_of_measurement: 'W' } } }] },
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },

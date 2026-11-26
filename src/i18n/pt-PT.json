@@ -3212,6 +3212,7 @@
     "f_entity_water_heater": "Termoacumulador (W)",
     "f_battery_invert": "Inverter o sinal da bateria",
     "f_grid_invert": "Inverter o sinal da rede",
+    "f_show_negative": "Mostrar os valores negativos com o respetivo sinal",
     "f_max_power": "Animação à velocidade máxima com (W)",
     "f_show_tiles": "Mostrar blocos",
     "f_show_status": "Mostrar estado"

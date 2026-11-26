@@ -3212,6 +3212,7 @@
     "f_entity_water_heater": "Water heater (W)",
     "f_battery_invert": "Invert the battery sign",
     "f_grid_invert": "Invert the grid sign",
+    "f_show_negative": "Show negative values with their sign",
     "f_max_power": "Animation full speed at (W)",
     "f_show_tiles": "Show tiles",
     "f_show_status": "Show status"

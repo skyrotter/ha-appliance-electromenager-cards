@@ -3212,6 +3212,7 @@
     "f_entity_water_heater": "Chauffe-eau (W)",
     "f_battery_invert": "Inverser le signe de la batterie",
     "f_grid_invert": "Inverser le signe du réseau",
+    "f_show_negative": "Afficher les valeurs négatives avec leur signe",
     "f_max_power": "Animation à pleine vitesse à (W)",
     "f_show_tiles": "Afficher les tuiles",
     "f_show_status": "Afficher l'état"
