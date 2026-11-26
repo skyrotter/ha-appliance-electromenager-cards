@@ -1,12 +1,11 @@
 /* ---------- Nintendo Switch 2 ---------- */
-/* anneaux des Joy-Con : éteints (gris), allumés (bleu / orange), pulsation en jeu */
-.k-switch2 .sw-ring { stroke: #4a525b; stroke-opacity: .5; transition: stroke .5s, stroke-opacity .5s; }
-.k-switch2.st-sw_sleep .sw-ring { stroke-opacity: .5; }
+/* anneaux des Joy-Con : la photo montre déjà les anneaux ; allumés, ils brillent (bleu / orange) (bleu / orange), pulsation en jeu */
+.k-switch2 .sw-ring { stroke: #4a525b; stroke-opacity: 0; transition: stroke .5s, stroke-opacity .5s; }
 .k-switch2.st-screen_on .sw-ring.l, .k-switch2.st-ps_gaming .sw-ring.l { stroke: #38c8ff; stroke-opacity: 1; filter: drop-shadow(0 0 1.8px #38c8ff); }
 .k-switch2.st-screen_on .sw-ring.r, .k-switch2.st-ps_gaming .sw-ring.r { stroke: #ff8a3d; stroke-opacity: 1; filter: drop-shadow(0 0 1.8px #ff8a3d); }
 .k-switch2.st-ps_gaming .sw-ring { animation: ac-glow 1.8s ease-in-out infinite; }
 /* voyant du dock : éteint, orange qui respire en veille, blanc allumée */
-.sw-led { fill: #3a424b; transition: fill .4s; }
+.sw-led { fill: transparent; transition: fill .4s; }
 .k-switch2.st-sw_sleep .sw-led { fill: #ff9d2e; animation: ac-pulse 3.2s ease-in-out infinite; }
 .k-switch2.st-screen_on .sw-led, .k-switch2.st-ps_gaming .sw-led { fill: #f2f8ff; filter: drop-shadow(0 0 1.4px #cfe6ff); }
 /* écran entrevu au-dessus du dock : noir éteinte, lumineux allumée, plus vif en jeu */
@@ -22,6 +21,7 @@
 .sw-amb { opacity: 0; transition: opacity .8s; }
 .k-switch2.st-ps_gaming .sw-amb { opacity: 1; animation: ps-amb 5s ease-in-out infinite; }
 /* boutons des Joy-Con qui s'allument à tour de rôle en jeu */
+.sw-btn circle { fill: transparent; }
 .k-switch2.st-ps_gaming .sw-btn circle { animation: sw-press 1.2s steps(1) infinite; }
 .sw-btn circle:nth-child(2) { animation-delay: .3s !important; } .sw-btn circle:nth-child(3) { animation-delay: .6s !important; } .sw-btn circle:nth-child(4) { animation-delay: .9s !important; }
-@keyframes sw-press { 0% { fill: #4aa8ff; } 25%, 100% { fill: #23252a; } }
+@keyframes sw-press { 0% { fill: rgba(74,168,255,.85); } 25%, 100% { fill: transparent; } }

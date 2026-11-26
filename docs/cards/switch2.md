@@ -1,11 +1,11 @@
 # Nintendo Switch 2
 
-`custom:appliance-switch2-card`: the console on its dock, seen from the front, with its two Joy-Con 2 (blue ring on the left stick, orange ring on the right one). Silhouette only, no logo.
+`custom:appliance-switch2-card`: cut-out photo of the console on its dock (seen from the front, Joy-Con 2 on each side), animated on top: screen, stick rings (blue on the left, orange on the right), dock LED, buttons, warm air and glow.
 
 There is no Home Assistant integration for the Switch 2: the card relies on a **smart plug** (power, energy and switch).
 
 States and animations:
-- **Off**: grey rings, dark screen, unlit dock LED.
+- **Off**: dark screen, unlit dock LED.
 - **Sleep mode**: the dock LED breathes in orange.
 - **On**: the screen lights up, the rings turn blue and orange, a little warm air comes out of the top.
 - **Gaming**: bright screen with a blue glow around the console, more warm air, the Joy-Con buttons light up one after the other.
