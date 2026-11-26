@@ -69,6 +69,7 @@ window.addEventListener('appliance-helpers-ready', async () => {
     formResults[tag] = {
       hasGetConfigElement,
       schemaLen: form && Array.isArray(form.schema) ? form.schema.length : 0,
+      editorLabelsFull: !!(window.applianceEditorLabel && window.applianceEditorLabel._full),
     };
   }
   window.__lazyProbe = {
@@ -158,6 +159,7 @@ window.addEventListener('appliance-helpers-ready', async () => {
     for (const [tag, res] of Object.entries(lazy.formResults)) {
       assert.equal(res.hasGetConfigElement, false, `${tag} must not define getConfigElement on its stub`);
       assert.ok(res.schemaLen > 0, `${tag} getConfigForm() must return a non-empty schema`);
+      assert.equal(res.editorLabelsFull, true, `${tag} getConfigForm() must ensure editor-labels is loaded`);
     }
 
     // 2. Run full docs/tests.html suite

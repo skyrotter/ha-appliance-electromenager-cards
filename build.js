@@ -461,7 +461,7 @@ const loader = `
           };
           if (isForm) {
             StubCard.getConfigForm = async () => {
-              await loadChunk(chunkName);
+              await Promise.all([loadChunk(chunkName), loadChunk("editor-labels")]);
               return REAL[k] && REAL[k].getConfigForm ? REAL[k].getConfigForm() : { schema: [] };
             };
           } else {
@@ -476,8 +476,11 @@ const loader = `
             constructor() {
               super();
               this._cfg = null; this._h = null; this._impl = null;
-              loadChunk(chunkName);
-              onReal(ek, (Cls) => {
+              Promise.all([
+                loadChunk("editor-labels"),
+                new Promise((resolve) => onReal(ek, resolve)),
+                loadChunk(chunkName),
+              ]).then(([, Cls]) => {
                 if (!this._impl) this._impl = new Cls();
                 if (this.isConnected && this._impl.parentNode !== this) this.replaceChildren(this._impl);
                 if (this._h) this._impl.hass = this._h;
