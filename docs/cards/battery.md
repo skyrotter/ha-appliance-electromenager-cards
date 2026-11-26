@@ -26,11 +26,30 @@ capacity_kwh: 2.4
 max_power: 2400
 ```
 
+## Zendure SolarFlow 800 Plus (photo)
+
+`model: zendure_sf800_plus`: cut-out photo of the **Zendure SolarFlow 800 Plus**. Same principle as the 2400 AC+: the battery icon of its small screen is redrawn with 4 segments that follow the state of charge (green / orange / red, the last lit segment blinks while charging), and the charge in %, the state and the flow arrow are drawn on the front. `count` places several units side by side.
+
+The Zendure integration gives the power to the battery and from the battery as two separate sensors: use `entity_charge_power` and `entity_discharge_power` (the card shows charge − discharge).
+
+```yaml
+type: custom:appliance-battery-card
+model: zendure_sf800_plus
+entity_soc: sensor.solarflow_800_plus_electric_level
+entity_charge_power: sensor.solarflow_800_plus_output_pack_power      # power to the battery
+entity_discharge_power: sensor.solarflow_800_plus_pack_input_power    # power from the battery
+entity_temperature: sensor.solarflow_800_plus_battery_temperature
+capacity_kwh: 1.92
+max_power: 800
+```
+
+The entity names above are examples: use the ones of your integration.
+
 ## Options
 
 Every value tile can be hidden with its `show_…` option, and `language: fr|en|de|it|es|nb|nl|pl|ro|ru|sr|sr-Latn` forces the language. Temperatures follow `temperature_unit: C|F`, otherwise the unit of Home Assistant: each sensor is converted from its own unit, and temperature thresholds are entered in that unit (the defaults below are in °C and are converted, e.g. 40 °C → 104 °F).
 
-- `model`: `default` (the three drawn modules), `zendure_ac2400` (Zendure SolarFlow 2400 AC+, see below) or `marstek_venus_e3` (cut-out photo of the **Marstek Venus E 3.0**: its light strip fills with the state of charge, in green / orange / red, and runs in the direction of the energy flow when charging or discharging; the percentage and state are shown on the black front)
+- `model`: `default` (the three drawn modules), `zendure_ac2400` (Zendure SolarFlow 2400 AC+, see below), `zendure_sf800_plus` (Zendure SolarFlow 800 Plus, see below) or `marstek_venus_e3` (cut-out photo of the **Marstek Venus E 3.0**: its light strip fills with the state of charge, in green / orange / red, and runs in the direction of the energy flow when charging or discharging; the percentage and state are shown on the black front)
 - `count` (1 to 4, default 1): number of units drawn side by side with `model: marstek_venus_e3`, e.g. `2` for two batteries combined in a single charge sensor
 <p align="center"><img src="../battery-backup.png" width="560" alt="Marstek Venus E 3.0: backup socket lit at 185 W, off at 0 W"></p>
 

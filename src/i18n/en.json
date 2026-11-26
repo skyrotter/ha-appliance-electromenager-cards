@@ -1286,6 +1286,7 @@
     "battery_model_default": "Drawn modules (default)",
     "battery_model_marstek_venus_e3": "Marstek Venus E 3.0 (photo)",
     "battery_model_zendure_ac2400": "Zendure SolarFlow 2400 AC+ (photo)",
+    "battery_model_zendure_sf800_plus": "Zendure SolarFlow 800 Plus (photo)",
     "battery_entity_mode": "Operating mode (select entity)",
     "battery_show_mode": "Show operating mode",
     "handle_color": "Handle colour",
