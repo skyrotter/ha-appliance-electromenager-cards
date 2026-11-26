@@ -8,7 +8,7 @@
  */
 (() => {
 "use strict";
-const VERSION = "1.234.0";
+const VERSION = "1.235.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -9173,7 +9173,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
   const base = import.meta.url;
   // ?v=<version> : après une mise à jour, le navigateur ne ressert pas d'anciens morceaux depuis son cache
   // un morceau qui échoue (réseau, cache, erreur de syntaxe) est signalé en console sans empêcher les autres ni les événements
-  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.234.0`, base).href)
+  const chunk = (name) => import(new URL(`cards/${name}.js?v=1.235.0`, base).href)
     .catch((e) => console.error(`ha-appliance-electromenager-cards: chunk "${name}" failed to load`, e));
   await chunk("card-helpers");
   await chunk("editor-labels");
