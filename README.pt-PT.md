@@ -190,6 +190,8 @@ Clique num cartão para consultar as opções e os exemplos.
 | [Monitor de CO₂](docs/cards/co2-monitor.md) | `custom:appliance-co2-monitor-card` |
 | [Barómetro](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/barometer.md) | `custom:appliance-barometer-card` |
 | [Estação meteorológica (estilo Davis Vantage Pro2)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/weather-station.md) | `custom:appliance-weather-station-card` |
+| [Monitor de energia (estilo Ecojoko)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/energy-monitor.md) | `custom:appliance-energy-monitor-card` |
+| [Temporizador de cozinha](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/kitchen-timer.md) | `custom:appliance-kitchen-timer-card` |
 | [Detetor de fugas de água](docs/cards/leak-detector.md) | `custom:appliance-leak-detector-card` |
 | [Rega (zonas, bomba, chuva)](docs/cards/irrigation.md) | `custom:appliance-irrigation-card` |
 | [Fita LED (cor, brilho, efeito)](docs/cards/led-strip.md) | `custom:appliance-led-strip-card` |

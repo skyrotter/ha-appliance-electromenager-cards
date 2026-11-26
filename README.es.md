@@ -176,6 +176,8 @@ Pulsa una tarjeta para ver sus opciones y ejemplos (documentación en inglés).
 | [Monitor de CO₂](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/co2-monitor.md) | `custom:appliance-co2-monitor-card` |
 | [Barómetro](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/barometer.md) | `custom:appliance-barometer-card` |
 | [Estación meteorológica (estilo Davis Vantage Pro2)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/weather-station.md) | `custom:appliance-weather-station-card` |
+| [Monitor de energía (estilo Ecojoko)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/energy-monitor.md) | `custom:appliance-energy-monitor-card` |
+| [Temporizador de cocina](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/kitchen-timer.md) | `custom:appliance-kitchen-timer-card` |
 | [Detector de fugas de agua](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/leak-detector.md) | `custom:appliance-leak-detector-card` |
 | [Pluviómetro (intensidad, totales)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/rain-gauge.md) | `custom:appliance-rain-gauge-card` |
 | [Monitor de plantas (Mi Flora: humedad, luz, fertilidad)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/plant-monitor.md) | `custom:appliance-plant-monitor-card` |
