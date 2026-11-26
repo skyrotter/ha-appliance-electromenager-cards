@@ -1318,7 +1318,7 @@
     "entity_today": "Consumo de hoy",
     "entity_leak": "Sensor de fuga",
     "detector": "Tipo de detector",
-    "entity_valve": "Válvula de corte",
+    "entity_valve": "Válvula de 3 vías (agua caliente)",
     "leak_minutes": "Alerta de fuga tras (min de caudal continuo)",
     "freeze_threshold": "Umbral de helada (°C)",
     "flow_threshold": "Caudal considerado cero por debajo de",
@@ -1686,7 +1686,6 @@
     "entity_dhw_temp": "Temperatura del depósito ACS",
     "entity_pump_1": "Circulador zona 1",
     "entity_pump_2": "Circulador zona 2",
-    "entity_valve": "Válvula de 3 vías (agua caliente)",
     "entity_backup": "Calefacción de apoyo",
     "entity_immersion": "Resistencia de inmersión",
     "entity_boiler": "Caldera",
@@ -1903,8 +1902,8 @@
     "resume": "Volver al horario"
   },
   "room_climate": {
-"pressure": "Presión",
-        "st_display_rect": "Pantalla digital (rectangular)",
+    "pressure": "Presión",
+    "st_display_rect": "Pantalla digital (rectangular)",
     "st_display_round": "Pantalla digital (redonda)",
     "name": "Clima de la habitación",
     "comfort": "Confortable",
@@ -2342,7 +2341,8 @@
     "propane": "Propano",
     "o2": "O₂",
     "pressure": "Presión",
-    "noise": "Ruido"
+    "noise": "Ruido",
+    "more_sensors": "Sensores adicionales"
   },
   "mini_pc": {
     "name": "Mini PC",

@@ -8,7 +8,7 @@
  *                                        sur la langue ; dates = true l'ignore.
  * window.applianceNum(st)              → valeur numérique d'un état (climate / water_heater : current_temperature), sinon NaN.
  * window.applianceWatts(st)            → puissance en W (kW et MW convertis), sinon NaN.
- * window.applianceChanged(el, hass, cfg) → faut-il redessiner la carte ? (entités de la config, langue, format, 30 s)
+ * window.applianceChanged(el, hass, cfg, ttl) → faut-il redessiner la carte ? (entités de la config, langue, format, ttl ms)
  */
 (() => {
   const haLang = (cfg, hass) => {
@@ -74,12 +74,13 @@
     if (typeof v === 'string' && /^[a-z_]+\.[a-z0-9_]+$/.test(v.trim())) { const st = hass && hass.states && hass.states[v.trim()]; return st ? parseFloat(String(st.state).replace(',', '.')) : NaN; }
     return Number(v);
   };
-  window.applianceChanged = (el, hass, cfg) => {
+  window.applianceChanged = (el, hass, cfg, ttl = 30000) => {
     const p = el._applianceSeen, now = Date.now();
     if (el.hasAttribute('tiles-pos')) Promise.resolve().then(() => window.applianceTilePos && window.applianceTilePos(el)); // tiles_position : réapplique après un rendu
     if (!p || p.cfg !== cfg) el._applianceIds = [...idsOf(cfg)];
     const set = hass ? settings(hass) : '';
-    const changed = !p || !hass || p.cfg !== cfg || now - p.at >= 30000 || p.set !== set || p.hass.entities !== hass.entities
+    const due = ttl > 0 && p && now - p.at >= ttl;
+    const changed = !p || !hass || p.cfg !== cfg || due || p.set !== set || p.hass.entities !== hass.entities
       || el._applianceIds.some((i) => p.hass.states[i] !== hass.states[i]);
     if (changed && hass) el._applianceSeen = { hass, set, cfg, at: now };
     return changed;

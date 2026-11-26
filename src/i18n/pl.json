@@ -1010,7 +1010,7 @@
     "entity_today": "Dzisiejsze zużycie",
     "entity_leak": "Czujnik wycieku",
     "detector": "Typ detektora",
-    "entity_valve": "Zawór odcinający",
+    "entity_valve": "3-way valve (hot water)",
     "leak_minutes": "Alarm wycieku po (min ciągłego przepływu)",
     "freeze_threshold": "Próg zamarzania (°C)",
     "flow_threshold": "Przepływ uznawany za zerowy poniżej",
@@ -1224,7 +1224,6 @@
     "entity_dhw_temp": "Hot water tank temperature",
     "entity_pump_1": "Zone 1 circulator",
     "entity_pump_2": "Zone 2 circulator",
-    "entity_valve": "3-way valve (hot water)",
     "entity_backup": "Backup heater",
     "entity_immersion": "Immersion heater",
     "entity_boiler": "Boiler",
@@ -1402,8 +1401,8 @@
     "resume": "Powrót do harmonogramu"
   },
   "room_climate": {
-"pressure": "Ciśnienie",
-        "st_display_rect": "Wyświetlacz cyfrowy (prostokątny)",
+    "pressure": "Ciśnienie",
+    "st_display_rect": "Wyświetlacz cyfrowy (prostokątny)",
     "st_display_round": "Wyświetlacz cyfrowy (okrągły)",
     "name": "Klimat pomieszczenia",
     "comfort": "Komfortowo",

@@ -12,246 +12,8 @@
   const TAG = 'appliance-air-quality-card';
   if (customElements.get(TAG)) return;
 
-  const T = {
-    "en": {
-      "name": "Air quality",
-      "good": "Good",
-      "moderate": "Moderate",
-      "poor": "Poor",
-      "bad": "Bad",
-      "unavailable": "Unavailable",
-      "all_good": "All indicators are good",
-      "main": "Main pollutant",
-      "last24": "last 24 h",
-      "now": "now",
-      "loading": "Loading history…",
-      "no_history": "No history available",
-      "co2": "CO₂",
-      "pm25": "PM2.5",
-      "pm10": "PM10",
-      "voc": "VOC",
-      "hcho": "Formaldehyde",
-      "humidity": "Humidity",
-      "temperature": "Temperature",
-      "pm03": "PM0.3",
-      "pm1": "PM1",
-      "pm4": "PM4",
-      "nox": "NOx",
-      "co": "CO",
-      "no2": "NO₂",
-      "o3": "O₃",
-      "radon": "Radon",
-      "radon_long_term": "Radon (long term)",
-      "propane": "Propane",
-      "o2": "Oxygen (O₂)",
-      "pressure": "Pressure",
-      "noise": "Noise"
-    },
-    "es": {
-      "name": "Calidad del aire",
-      "good": "Buena",
-      "moderate": "Moderada",
-      "poor": "Mala",
-      "bad": "Muy mala",
-      "unavailable": "No disponible",
-      "all_good": "Todos los indicadores están bien",
-      "main": "Contaminante principal",
-      "last24": "últimas 24 h",
-      "now": "ahora",
-      "loading": "Cargando el historial…",
-      "no_history": "No hay historial disponible",
-      "co2": "CO₂",
-      "pm25": "PM2.5",
-      "pm10": "PM10",
-      "voc": "COV",
-      "hcho": "Formaldehído",
-      "humidity": "Humedad",
-      "temperature": "Temperatura",
-      "pm03": "PM0.3",
-      "pm1": "PM1",
-      "pm4": "PM4",
-      "nox": "NOx",
-      "co": "CO",
-      "no2": "NO₂",
-      "o3": "O₃",
-      "radon": "Radón",
-      "radon_long_term": "Radón (largo plazo)",
-      "propane": "Propano",
-      "o2": "O₂",
-      "pressure": "Presión",
-      "noise": "Ruido"
-    },
-    "fr": {
-      "name": "Qualité de l'air",
-      "good": "Bon",
-      "moderate": "Moyen",
-      "poor": "Médiocre",
-      "bad": "Mauvais",
-      "unavailable": "Indisponible",
-      "all_good": "Tous les indicateurs sont bons",
-      "main": "Polluant principal",
-      "last24": "24 dernières heures",
-      "now": "maintenant",
-      "loading": "Chargement de l'historique…",
-      "no_history": "Aucun historique disponible",
-      "co2": "CO₂",
-      "pm25": "PM2.5",
-      "pm10": "PM10",
-      "voc": "COV",
-      "hcho": "Formaldéhyde",
-      "humidity": "Humidité",
-      "temperature": "Température",
-      "pm03": "PM0.3",
-      "pm1": "PM1",
-      "pm4": "PM4",
-      "nox": "NOx",
-      "co": "CO",
-      "no2": "NO₂",
-      "o3": "O₃",
-      "radon": "Radon",
-      "radon_long_term": "Radon (long terme)",
-      "propane": "Propane",
-      "o2": "Oxygène (O₂)",
-      "pressure": "Pression",
-      "noise": "Bruit"
-    },
-    "pt-BR": {
-      "name": "Qualidade do ar",
-      "good": "Boa",
-      "moderate": "Moderada",
-      "poor": "Ruim",
-      "bad": "Péssima",
-      "unavailable": "Indisponível",
-      "all_good": "Todos os indicadores estão bons",
-      "main": "Poluente principal",
-      "last24": "últimas 24 h",
-      "now": "agora",
-      "loading": "Carregando o histórico…",
-      "no_history": "Sem histórico disponível",
-      "co2": "CO₂",
-      "pm25": "PM2.5",
-      "pm10": "PM10",
-      "voc": "COV",
-      "hcho": "Formaldeído",
-      "humidity": "Umidade",
-      "temperature": "Temperatura",
-      "pm03": "PM0.3",
-      "pm1": "PM1",
-      "pm4": "PM4",
-      "nox": "NOx",
-      "co": "CO",
-      "no2": "NO₂",
-      "o3": "O₃",
-      "radon": "Radônio",
-      "radon_long_term": "Radônio (longo prazo)",
-      "propane": "Propano",
-      "o2": "O₂",
-      "pressure": "Pressão",
-      "noise": "Ruído"
-    },
-    "pt-PT": {
-      "name": "Qualidade do ar",
-      "good": "Boa",
-      "moderate": "Moderada",
-      "poor": "Fraca",
-      "bad": "Má",
-      "unavailable": "Indisponível",
-      "all_good": "Todos os indicadores são bons",
-      "main": "Poluente principal",
-      "last24": "últimas 24 h",
-      "now": "agora",
-      "loading": "A carregar o histórico…",
-      "no_history": "Sem histórico disponível",
-      "co2": "CO₂",
-      "pm25": "PM2.5",
-      "pm10": "PM10",
-      "voc": "COV",
-      "hcho": "Formaldeído",
-      "humidity": "Humidade",
-      "temperature": "Temperatura",
-      "pm03": "PM0.3",
-      "pm1": "PM1",
-      "pm4": "PM4",
-      "nox": "NOx",
-      "co": "CO",
-      "no2": "NO₂",
-      "o3": "O₃",
-      "radon": "Radão",
-      "radon_long_term": "Radão (longo prazo)",
-      "propane": "Propano",
-      "o2": "O₂",
-      "pressure": "Pressão",
-      "noise": "Ruído"
-    },
-    "ru": {
-      "name": "Качество воздуха",
-      "good": "Хорошее",
-      "moderate": "Умеренное",
-      "poor": "Плохое",
-      "bad": "Очень плохое",
-      "unavailable": "Недоступно",
-      "all_good": "Все показатели в норме",
-      "main": "Главный загрязнитель",
-      "last24": "за 24 ч",
-      "now": "сейчас",
-      "loading": "Загрузка истории…",
-      "no_history": "История недоступна",
-      "co2": "CO₂",
-      "pm25": "PM2.5",
-      "pm10": "PM10",
-      "voc": "VOC",
-      "hcho": "Формальдегид",
-      "humidity": "Влажность",
-      "temperature": "Температура",
-      "pm03": "PM0.3",
-      "pm1": "PM1",
-      "pm4": "PM4",
-      "nox": "NOx",
-      "co": "CO",
-      "no2": "NO₂",
-      "o3": "O₃",
-      "radon": "Радон",
-      "radon_long_term": "Радон (долгосрочный)",
-      "propane": "Пропан",
-      "o2": "Кислород (O₂)",
-      "pressure": "Давление",
-      "noise": "Шум"
-    },
-    "uk": {
-      "name": "Якість повітря",
-      "good": "Добра",
-      "moderate": "Помірна",
-      "poor": "Погана",
-      "bad": "Дуже погана",
-      "unavailable": "Недоступно",
-      "all_good": "Усі показники в нормі",
-      "main": "Головний забруднювач",
-      "last24": "останні 24 год",
-      "now": "зараз",
-      "loading": "Завантаження історії…",
-      "no_history": "Історія недоступна",
-      "co2": "CO₂",
-      "pm25": "PM2.5",
-      "pm10": "PM10",
-      "voc": "ЛОС",
-      "hcho": "Формальдегід",
-      "humidity": "Вологість",
-      "temperature": "Температура",
-      "pm03": "PM0.3",
-      "pm1": "PM1",
-      "pm4": "PM4",
-      "nox": "NOx",
-      "co": "CO",
-      "no2": "NO₂",
-      "o3": "O₃",
-      "radon": "Радон",
-      "radon_long_term": "Радон (довгостр.)",
-      "propane": "Пропан",
-      "o2": "O₂",
-      "pressure": "Тиск",
-      "noise": "Шум"
-    }
-  };
+  const T = {"en":{"name":"Air quality","good":"Good","moderate":"Moderate","poor":"Poor","bad":"Bad","unavailable":"Unavailable","all_good":"All indicators are good","main":"Main pollutant","last24":"last 24 h","now":"now","loading":"Loading history…","no_history":"No history available","co2":"CO₂","pm25":"PM2.5","pm10":"PM10","voc":"VOC","hcho":"Formaldehyde","humidity":"Humidity","temperature":"Temperature","pm03":"PM0.3","pm1":"PM1","pm4":"PM4","nox":"NOx","co":"CO","no2":"NO₂","o3":"O₃","radon":"Radon","radon_long_term":"Radon (long term)","propane":"Propane","o2":"Oxygen (O₂)","pressure":"Pressure","noise":"Noise","more_sensors":"Additional sensors"},"es":{"name":"Calidad del aire","good":"Buena","moderate":"Moderada","poor":"Mala","bad":"Muy mala","unavailable":"No disponible","all_good":"Todos los indicadores están bien","main":"Contaminante principal","last24":"últimas 24 h","now":"ahora","loading":"Cargando el historial…","no_history":"No hay historial disponible","co2":"CO₂","pm25":"PM2.5","pm10":"PM10","voc":"COV","hcho":"Formaldehído","humidity":"Humedad","temperature":"Temperatura","pm03":"PM0.3","pm1":"PM1","pm4":"PM4","nox":"NOx","co":"CO","no2":"NO₂","o3":"O₃","radon":"Radón","radon_long_term":"Radón (largo plazo)","propane":"Propano","o2":"O₂","pressure":"Presión","noise":"Ruido","more_sensors":"Sensores adicionales"},"fr":{"name":"Qualité de l'air","good":"Bon","moderate":"Moyen","poor":"Médiocre","bad":"Mauvais","unavailable":"Indisponible","all_good":"Tous les indicateurs sont bons","main":"Polluant principal","last24":"24 dernières heures","now":"maintenant","loading":"Chargement de l'historique…","no_history":"Aucun historique disponible","co2":"CO₂","pm25":"PM2.5","pm10":"PM10","voc":"COV","hcho":"Formaldéhyde","humidity":"Humidité","temperature":"Température","pm03":"PM0.3","pm1":"PM1","pm4":"PM4","nox":"NOx","co":"CO","no2":"NO₂","o3":"O₃","radon":"Radon","radon_long_term":"Radon (long terme)","propane":"Propane","o2":"Oxygène (O₂)","pressure":"Pression","noise":"Bruit","more_sensors":"Capteurs supplémentaires"},"pt-BR":{"name":"Qualidade do ar","good":"Boa","moderate":"Moderada","poor":"Ruim","bad":"Péssima","unavailable":"Indisponível","all_good":"Todos os indicadores estão bons","main":"Poluente principal","last24":"últimas 24 h","now":"agora","loading":"Carregando o histórico…","no_history":"Sem histórico disponível","co2":"CO₂","pm25":"PM2.5","pm10":"PM10","voc":"COV","hcho":"Formaldeído","humidity":"Umidade","temperature":"Temperatura","pm03":"PM0.3","pm1":"PM1","pm4":"PM4","nox":"NOx","co":"CO","no2":"NO₂","o3":"O₃","radon":"Radônio","radon_long_term":"Radônio (longo prazo)","propane":"Propano","o2":"O₂","pressure":"Pressão","noise":"Ruído","more_sensors":"Sensores adicionais"},"pt-PT":{"name":"Qualidade do ar","good":"Boa","moderate":"Moderada","poor":"Fraca","bad":"Má","unavailable":"Indisponível","all_good":"Todos os indicadores são bons","main":"Poluente principal","last24":"últimas 24 h","now":"agora","loading":"A carregar o histórico…","no_history":"Sem histórico disponível","co2":"CO₂","pm25":"PM2.5","pm10":"PM10","voc":"COV","hcho":"Formaldeído","humidity":"Humidade","temperature":"Temperatura","pm03":"PM0.3","pm1":"PM1","pm4":"PM4","nox":"NOx","co":"CO","no2":"NO₂","o3":"O₃","radon":"Radão","radon_long_term":"Radão (longo prazo)","propane":"Propano","o2":"O₂","pressure":"Pressão","noise":"Ruído","more_sensors":"Sensores adicionais"},"ru":{"name":"Качество воздуха","good":"Хорошее","moderate":"Умеренное","poor":"Плохое","bad":"Очень плохое","unavailable":"Недоступно","all_good":"Все показатели в норме","main":"Главный загрязнитель","last24":"за 24 ч","now":"сейчас","loading":"Загрузка истории…","no_history":"История недоступна","co2":"CO₂","pm25":"PM2.5","pm10":"PM10","voc":"VOC","hcho":"Формальдегид","humidity":"Влажность","temperature":"Температура","pm03":"PM0.3","pm1":"PM1","pm4":"PM4","nox":"NOx","co":"CO","no2":"NO₂","o3":"O₃","radon":"Радон","radon_long_term":"Радон (долгосрочный)","propane":"Пропан","o2":"Кислород (O₂)","pressure":"Давление","noise":"Шум","more_sensors":"Дополнительные датчики"},"uk":{"name":"Якість повітря","good":"Добра","moderate":"Помірна","poor":"Погана","bad":"Дуже погана","unavailable":"Недоступно","all_good":"Усі показники в нормі","main":"Головний забруднювач","last24":"останні 24 год","now":"зараз","loading":"Завантаження історії…","no_history":"Історія недоступна","co2":"CO₂","pm25":"PM2.5","pm10":"PM10","voc":"ЛОС","hcho":"Формальдегід","humidity":"Вологість","temperature":"Температура","pm03":"PM0.3","pm1":"PM1","pm4":"PM4","nox":"NOx","co":"CO","no2":"NO₂","o3":"O₃","radon":"Радон","radon_long_term":"Радон (довгостр.)","propane":"Пропан","o2":"O₂","pressure":"Тиск","noise":"Шум","more_sensors":"Додаткові датчики"}};
+  const NF_CACHE = new Map();
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
 
   // mesures : clé de config, icône, seuils [bon → moyen, moyen → médiocre, médiocre → mauvais] ; comfort = plages de confort [bon min, bon max, moyen min, moyen max]
@@ -299,6 +61,8 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:6px;margin-top:10px}
 .tile{position:relative;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;background:var(--ac-tile-bg,rgba(127,127,127,.09));border-radius:10px;padding:6px 8px 4px;min-width:0;cursor:pointer;border:1.5px solid transparent;transition:border-color .2s}
 .tile.sel{border-color:color-mix(in srgb,var(--tc) 70%,transparent)}
+.tile:focus-visible{outline:2px solid var(--tc);outline-offset:1px}
+:host([tile-order="value"]) .tile .v{order:-1}
 .tile .l{display:flex;align-items:center;gap:4px;font-size:10.5px;line-height:14px;color:var(--secondary-text-color)}.tile .l ha-icon{--mdc-icon-size:14px;flex:none;color:var(--tc)}
 .tile .v{font-size:17px;line-height:22px;font-weight:700;color:var(--tc);white-space:nowrap}.tile .v small{font-size:10px;font-weight:500;color:var(--secondary-text-color);margin-left:3px}
 .tile svg{display:block;width:100%;height:22px;margin-top:2px}
@@ -361,28 +125,44 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
     static getStubConfig(hass) {
       const ids = Object.keys((hass && hass.states) || {}), dc = (i) => (hass.states[i].attributes || {}).device_class;
       const f = (...cls) => ids.find((i) => i.startsWith('sensor.') && cls.includes(dc(i))) || '';
-      return { entity_co2: f('carbon_dioxide'), entity_pm25: f('pm25'), entity_pm10: f('pm10'), entity_voc: f('volatile_organic_compounds', 'volatile_organic_compounds_parts'), entity_humidity: f('humidity'), entity_temperature: f('temperature') };
+      const cfg = { entity_co2: f('carbon_dioxide'), entity_pm25: f('pm25'), entity_pm10: f('pm10'), entity_voc: f('volatile_organic_compounds', 'volatile_organic_compounds_parts'), entity_humidity: f('humidity'), entity_temperature: f('temperature') };
+      const opt = { entity_pm1: f('pm1'), entity_nox: f('nitrogen_oxide'), entity_no2: f('nitrogen_dioxide'), entity_o3: f('ozone'), entity_co: f('carbon_monoxide'), entity_pressure: f('atmospheric_pressure', 'pressure'), entity_noise: f('sound_pressure') };
+      for (const [k, v] of Object.entries(opt)) if (v) cfg[k] = v;
+      return cfg;
     }
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
       if (!ORDER.some((k) => c[METRICS[k].opt])) throw new Error('At least one sensor is required (entity_co2, entity_pm25, entity_pm10, entity_voc, entity_nox, entity_co, ...)');
       this._c = { show_status: true, show_chart: true, show_sparklines: true, ...c };
-      this._built = false; this._hist = null; this._histAt = 0; this._live = {};
+      this._built = false; this._hist = null; this._histAt = 0; this._live = {}; this._spkCache = {};
       if (this._hass) this._render();
     }
-    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c, this._c.show_chart === false && this._c.show_sparklines === false ? 0 : 60000); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 6; }
     getGridOptions() { return { columns: 6, min_columns: 3, rows: 'auto', min_rows: 1 }; }
 
     _lang() { return window.applianceLang(T, this._c, this._hass); }
+    _locale(dates) { return window.applianceLocale ? window.applianceLocale(this._c, this._hass, dates) : this._lang(); }
     _t(k) { return (T[this._lang()] || {})[k] ?? T.en[k] ?? k; }
     _l(k) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : this._t(k); }
     _st(id) { return id && this._hass.states[id]; }
     _ok(s) { return !!s && !/^(unavailable|unknown)$/i.test(String(s.state)); }
     _num(s) { if (!this._ok(s)) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
-    _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
-    _fmt(v, d) { try { return new Intl.NumberFormat(this._lang(), { maximumFractionDigits: d }).format(v); } catch (e) { return String(Math.round(v * 10 ** d) / 10 ** d); } }
+    _more(id) { if (window.applianceMore) window.applianceMore(this, id); else if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
+    _fmt(v, d) {
+      const loc = this._locale(), key = `${loc}|${d}`;
+      let nf = NF_CACHE.get(key);
+      if (nf === undefined) {
+        try { nf = new Intl.NumberFormat(loc, { maximumFractionDigits: d }); } catch (e) { nf = null; }
+        NF_CACHE.set(key, nf);
+      }
+      return nf ? nf.format(v) : String(Math.round(v * 10 ** d) / 10 ** d);
+    }
+    _isF(s) {
+      const u = String((s && s.attributes && s.attributes.unit_of_measurement) || (this._hass && this._hass.config && this._hass.config.unit_system && this._hass.config.unit_system.temperature) || '');
+      return /f/i.test(u);
+    }
 
     // seuils : option thresholds {co2: [a, b, c], …} sinon seuils par défaut (COV : adaptés à l'unité de l'entité)
     _th(k, s) {
@@ -397,9 +177,10 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
       if (cv) { const f = Object.keys(cv).find((p) => u.startsWith(p)); if (f) return METRICS[k].th.map((t) => +(t * cv[f]).toPrecision(3)); }
       return METRICS[k].th;
     }
-    // plage de confort dans l'unité de l'entité (pression : convertie depuis l'hPa)
+    // plage de confort dans l'unité de l'entité (température en °F, pression convertie depuis l'hPa)
     _cmf(k, s) {
       const M = METRICS[k].comfort;
+      if (k === 'temperature') return this._isF(s) ? M.map((v) => +(v * 1.8 + 32).toFixed(1)) : M;
       if (k !== 'pressure') return M;
       const f = PFAC[String((s && s.attributes && s.attributes.unit_of_measurement) || '').toLowerCase().replace(/\s/g, '')] || 1;
       return M.map((v) => v / f);
@@ -410,7 +191,7 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
       const M = METRICS[k];
       if (M.comfort) {
         const u = String((s && s.attributes && s.attributes.unit_of_measurement) || '');
-        const x = k === 'temperature' && /f/i.test(u) ? (v - 32) / 1.8 : v, [a, b, c, d] = k === 'pressure' ? this._cmf(k, s) : M.comfort, m = (M.cm || 8) / (k === 'pressure' ? (PFAC[u.toLowerCase().replace(/\s/g, '')] || 1) : 1);
+        const x = k === 'temperature' && this._isF(s) ? (v - 32) / 1.8 : v, [a, b, c, d] = k === 'pressure' ? this._cmf(k, s) : M.comfort, m = (M.cm || 8) / (k === 'pressure' ? (PFAC[u.toLowerCase().replace(/\s/g, '')] || 1) : 1);
         return x >= a && x <= b ? 0 : x >= c && x <= d ? 1 : (x < c - m || x > d + m) ? 3 : 2;
       }
       return this._th(k, s).filter((t) => v >= t).length;
@@ -453,31 +234,49 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
       return out;
     }
 
+    connectedCallback() {
+      if (this._built && this._card && !this._ro && typeof ResizeObserver !== 'undefined') this._observeResize();
+    }
+    disconnectedCallback() {
+      if (this._ro) { this._ro.disconnect(); this._ro = null; }
+    }
+    _observeResize() {
+      if (typeof ResizeObserver === 'undefined' || !this._card) return;
+      this.disconnectedCallback();
+      this._ro = new ResizeObserver(() => {
+        const w = Math.round(this._card.clientWidth || 0);
+        if (w && w !== this._lastW && this._lastRow) { this._lastW = w; this._drawChart(this._lastRow); }
+      });
+      this._ro.observe(this._card);
+    }
+
     _build() {
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
       root.innerHTML = `<style>${CSS}</style><ha-card><div class="aq-wrap">
         <div class="head"><div class="title" id="aqtitle"></div><div class="badge" id="aqbadge"></div></div>
         <div class="hero">${face(this._c.name || this._t('name'))}<div class="sub" id="aqsub"></div></div>
-        <div class="tiles">${ORDER.map((k) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${METRICS[k].icon}"></ha-icon><span></span></div><div class="v"></div><svg viewBox="0 0 100 22" preserveAspectRatio="none"></svg></div>`).join('')}</div>
+        <div class="tiles">${ORDER.map((k) => `<div class="tile hide" data-k="${k}" role="button" tabindex="0"><div class="l"><ha-icon icon="${METRICS[k].icon}"></ha-icon><span></span></div><div class="v"></div><svg viewBox="0 0 100 22" preserveAspectRatio="none"></svg></div>`).join('')}</div>
         <div class="chart hide" id="aqchart"><div class="ct"><b id="aqct"></b><span class="cv" id="aqcv"></span></div><div id="aqcc"></div></div>
       </div></ha-card>`;
       window.applianceBindIllus(this, root.querySelector('svg.face'), () => this._more(this._sel && this._c[METRICS[this._sel].opt]));
-      root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => { this._sel = el.dataset.k; this._userSel = true; this._render(); }));
+      const selectTile = (el) => { this._sel = el.dataset.k; this._userSel = true; this._render(); };
+      root.querySelectorAll('.tile').forEach((el) => {
+        el.addEventListener('click', () => selectTile(el));
+        el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectTile(el); } });
+      });
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
       // la courbe est dessinee a la largeur du conteneur : la redessiner quand la carte est redimensionnee
-      if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => {
-        const w = Math.round(this._card.clientWidth || 0);
-        if (w && w !== this._lastW && this._lastRow) { this._lastW = w; this._drawChart(this._lastRow); }
-      }).observe(this._card);
+      this._observeResize();
     }
 
     _render() {
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card;
-      this._loadHist();
+      if (c.show_chart !== false || c.show_sparklines !== false) this._loadHist();
       const rows = ORDER.filter((k) => c[METRICS[k].opt]).map((k) => {
         const id = c[METRICS[k].opt], s = this._st(id), v = this._num(s), lv = this._level(k, v, s);
-        return { k, id, s, v, lv, M: METRICS[k], unit: (s && s.attributes && s.attributes.unit_of_measurement) || METRICS[k].unit };
+        const u = s && s.attributes && s.attributes.unit_of_measurement;
+        return { k, id, s, v, lv, M: METRICS[k], unit: u || (k === 'voc' && s ? 'index' : METRICS[k].unit) };
       });
       const live = rows.filter((x) => x.lv >= 0);
       // pire polluant (humidité et température exclues de l'indicateur)
@@ -503,17 +302,23 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
         if (!x) return;
         el.style.setProperty('--tc', x.lv < 0 ? '#8a929a' : COL[x.lv]);
         el.classList.toggle('sel', this._sel === k && c.show_chart !== false);
+        const ic = window.applianceIcon ? window.applianceIcon(c, k, METRICS[k].icon) : METRICS[k].icon;
+        const ico = el.querySelector('.l ha-icon'); if (ico && ico.getAttribute('icon') !== ic) ico.setAttribute('icon', ic);
         el.querySelector('.l span').textContent = this._l(k);
         const d = dec(k, x.v), small = document.createElement('small'); small.textContent = isFinite(x.v) ? x.unit : '';
         el.querySelector('.v').replaceChildren(isFinite(x.v) ? this._fmt(x.v, d) : '--', small);
         const sv = el.querySelector('svg'); sv.style.display = c.show_sparklines === false ? 'none' : '';
         if (c.show_sparklines !== false) {
-          const b = this._bucket(this._series(x.id), 36).map((v) => (v == null ? NaN : v)), f = b.filter(isFinite);
-          if (f.length > 1) {
-            const mn = Math.min(...f), mx = Math.max(...f), rg = mx - mn || 1;
-            const P = b.map((v, i) => (isFinite(v) ? [i / (b.length - 1) * 100, 19 - (v - mn) / rg * 16] : null)).filter(Boolean);
-            sv.innerHTML = `<polyline points="${P.map((p) => p.map((n) => n.toFixed(1)).join(',')).join(' ')}" fill="none" stroke="${x.lv < 0 ? '#8a929a' : COL[x.lv]}" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke" opacity=".85"/>`;
-          } else sv.innerHTML = '';
+          const spkKey = `${x.id}|${this._histAt}|${Math.floor(Date.now() / 60000)}|${isFinite(x.v) ? x.v : ''}`;
+          if (this._spkCache[k] !== spkKey) {
+            this._spkCache[k] = spkKey;
+            const b = this._bucket(this._series(x.id), 36).map((v) => (v == null ? NaN : v)), f = b.filter(isFinite);
+            if (f.length > 1) {
+              const mn = Math.min(...f), mx = Math.max(...f), rg = mx - mn || 1;
+              const P = b.map((v, i) => (isFinite(v) ? [i / (b.length - 1) * 100, 19 - (v - mn) / rg * 16] : null)).filter(Boolean);
+              sv.innerHTML = `<polyline points="${P.map((p) => p.map((n) => n.toFixed(1)).join(',')).join(' ')}" fill="none" stroke="var(--tc)" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke" opacity=".85"/>`;
+            } else sv.innerHTML = '';
+          }
         }
       });
       this._lastRow = rows.find((x) => x.k === this._sel);
@@ -529,9 +334,9 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
       r.getElementById('aqct').textContent = `${this._l(x.k)} · ${this._t('last24')}`;
       const cv = r.getElementById('aqcv'); cv.textContent = isFinite(x.v) ? `${this._fmt(x.v, dec(x.k, x.v))} ${x.unit}` : ''; box.style.setProperty('--tc', x.lv < 0 ? '#8a929a' : COL[x.lv]);
       const cc = r.getElementById('aqcc'), pts = this._series(x.id).filter((p) => isFinite(p.v));
+      this._lastW = Math.round((this._card && this._card.clientWidth) || 0);
       if (pts.length < 2) { cc.innerHTML = `<div class="msg">${esc(this._t(this._hist === null && this._histAt ? 'no_history' : 'loading'))}</div>`; return; }
       const cw = Math.round(cc.clientWidth || (this._card && this._card.clientWidth - 40) || 0);
-      this._lastW = Math.round((this._card && this._card.clientWidth) || 0);
       const now = Date.now(), t0 = now - 24 * 3600e3, W = Math.max(320, cw || 320), H = 115, L = 34, R = 6, Tp = 8, B = 20, iw = W - L - R, ih = H - Tp - B;
       const vals = pts.map((p) => p.v), th = x.M.th ? this._th(x.k, x.s) : null;
       let lo = Math.min(...vals), hi = Math.max(...vals);
@@ -550,7 +355,7 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
       }
       // axe du bas : -24 h, -12 h, maintenant
       [[0, '-24 h'], [.5, '-12 h'], [1, this._t('now')]].forEach(([f, lab]) => { g += `<text x="${(L + f * iw).toFixed(1)}" y="${H - 5}" text-anchor="${f === 0 ? 'start' : f === 1 ? 'end' : 'middle'}" font-size="9" fill="var(--secondary-text-color)">${esc(lab)}</text>`; });
-      [lo, hi].forEach((v) => { if (!th) g += `<text x="${L - 4}" y="${(Y(v) + 3).toFixed(1)}" text-anchor="end" font-size="9" fill="var(--secondary-text-color)">${this._fmt(v, 0)}</text>`; });
+      [lo, hi].forEach((v) => { if (!th) g += `<text x="${L - 4}" y="${(Y(v) + 3).toFixed(1)}" text-anchor="end" font-size="9" fill="var(--secondary-text-color)">${this._fmt(v, hi - lo < 5 ? Math.max(1, dec(x.k, v)) : dec(x.k, v))}</text>`; });
       const path = pts.map((p, i) => `${i ? 'L' : 'M'}${X(p.t).toFixed(1)} ${Y(p.v).toFixed(1)}`).join('');
       const col = x.lv < 0 ? '#8a929a' : COL[x.lv];
       g += `<path d="${path}L${X(pts[pts.length - 1].t).toFixed(1)} ${Y(lo).toFixed(1)}L${X(pts[0].t).toFixed(1)} ${Y(lo).toFixed(1)}Z" fill="${col}" opacity=".16"/><path d="${path}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
@@ -563,7 +368,7 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
         const rc = svg.getBoundingClientRect(), px = (ev.clientX - rc.left) / rc.width * W, t = t0 + Math.min(1, Math.max(0, (px - L) / iw)) * (now - t0);
         let best = pts[0]; for (const p of pts) if (Math.abs(p.t - t) < Math.abs(best.t - t)) best = p;
         cur.style.display = ''; cur.setAttribute('transform', `translate(${X(best.t).toFixed(1)} 0)`); cur.querySelector('circle').setAttribute('cy', Y(best.v).toFixed(1));
-        const hhmm = window.applianceClock(this._hass, new Date(best.t), this._lang());
+        const hhmm = window.applianceClock(this._hass, new Date(best.t), this._locale(true));
         vEl.textContent = `${this._fmt(best.v, dec(x.k, best.v))} ${x.unit} · ${hhmm}`;
       };
       const leave = () => { cur.style.display = 'none'; vEl.textContent = base; };
@@ -573,6 +378,8 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
   customElements.define(TAG, ApplianceAirQualityCard);
 
   /* ---- éditeur visuel ---- */
+  const PRIMARY_ED = ['co2', 'pm1', 'pm25', 'pm10', 'voc', 'humidity', 'temperature'];
+  const EXTRA_ED = ORDER.filter((k) => !PRIMARY_ED.includes(k));
   class ApplianceAirQualityCardEditor extends HTMLElement {
     setConfig(c) { this._c = c; this._draw(); }
     set hass(h) { this._hass = h; if (this._form) this._form.hass = h; }
@@ -587,11 +394,14 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
       }
       const ent = (name) => ({ name, selector: { entity: { domain: 'sensor' } } });
       const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
+      const lang = window.applianceLang(T, this._c, this._hass);
+      const moreTitle = (T[lang] || T.en).more_sensors || T.en.more_sensors || 'Additional sensors';
       this._form.hass = this._hass;
       this._form.data = this._c;
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
-        ORDER.map((k) => ent(METRICS[k].opt)),
+        ...PRIMARY_ED.map((k) => ent(METRICS[k].opt)),
+        { type: 'expandable', name: '', title: moreTitle, flatten: true, schema: EXTRA_ED.map((k) => ent(METRICS[k].opt)) },
         { name: 'thresholds', selector: { object: {} } },
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },

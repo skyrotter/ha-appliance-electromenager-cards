@@ -991,7 +991,7 @@
     "entity_today": "Dnešní spotřeba",
     "entity_leak": "Senzor úniku",
     "detector": "Typ detektoru",
-    "entity_valve": "Uzavírací ventil",
+    "entity_valve": "3-way valve (hot water)",
     "leak_minutes": "Upozornění na únik po (min nepřetržitého průtoku)",
     "freeze_threshold": "Práh mrazu (°C)",
     "flow_threshold": "Průtok považovat za nulový pod",
@@ -1162,7 +1162,6 @@
     "entity_dhw_temp": "Hot water tank temperature",
     "entity_pump_1": "Zone 1 circulator",
     "entity_pump_2": "Zone 2 circulator",
-    "entity_valve": "3-way valve (hot water)",
     "entity_backup": "Backup heater",
     "entity_immersion": "Immersion heater",
     "entity_boiler": "Boiler",
@@ -1320,8 +1319,8 @@
     "model_bht6000": "Termostat Tuya BHT6000 (kulatý, černý displej)"
   },
   "room_climate": {
-"pressure": "Tlak",
-        "st_display_rect": "Digitální displej (obdélníkový)",
+    "pressure": "Tlak",
+    "st_display_rect": "Digitální displej (obdélníkový)",
     "st_display_round": "Digitální displej (kulatý)",
     "name": "Klima v místnosti",
     "comfort": "Příjemně",
