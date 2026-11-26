@@ -428,10 +428,13 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Rest mode",
     "ps_gaming": "Gaming",
+    "switch2": "Nintendo Switch 2",
+    "sw_sleep": "Sleep mode",
     "confirm_off_console": "Console on – click again to cut power",
     "confirm_off_always": "Click again to cut power",
     "f_confirm_always": "Always confirm before cutting power (plug on)",
     "f_standby_threshold_ps5": "Rest mode above (W)",
+    "f_standby_threshold_switch2": "Sleep mode above (W)",
     "f_gaming_threshold": "Gaming above (W)",
     "f_energy_period": "Energy shown (counter or period)",
     "flex_temp": "Flex zone",
@@ -2997,10 +3000,13 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Mode repos",
     "ps_gaming": "En jeu",
+    "switch2": "Nintendo Switch 2",
+    "sw_sleep": "Mode veille",
     "confirm_off_console": "Console allumée – cliquer encore pour couper",
     "confirm_off_always": "Cliquer encore pour couper",
     "f_confirm_always": "Toujours confirmer avant de couper (prise allumée)",
     "f_standby_threshold_ps5": "Mode repos au-dessus de (W)",
+    "f_standby_threshold_switch2": "Veille au-dessus de (W)",
     "f_gaming_threshold": "En jeu au-dessus de (W)",
     "f_energy_period": "Énergie affichée (compteur ou période)",
     "flex_temp": "Zone flex",
@@ -12422,6 +12428,43 @@ SVG.steam_station = () => `
 <ellipse class="ir-heat" cx="30" cy="80" rx="14" ry="2.2" fill="#ff7a1a" filter="url(#ID-irblur)" transform="rotate(32 30 80)"/>
 <g class="ir-steam">${[[22, 80], [32, 76], [42, 72]].map(([x, y]) => `<path d="M${x} ${y}q-4-6 0-12t0-12"/>`).join("")}</g>`;
 
+/* Nintendo Switch 2 : console sur son dock, vue de face (dock noir mat, écran entrevu au-dessus, Joy-Con 2 sur les côtés avec leur anneau
+   bleu à gauche et orange à droite autour du stick). Silhouette seulement : aucun logo. */
+SVG.switch2 = () => `
+<defs>${DEFS}
+<linearGradient id="ID-swd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3d42"/><stop offset=".5" stop-color="#2a2c30"/><stop offset="1" stop-color="#1a1b1e"/></linearGradient>
+<linearGradient id="ID-swj" x1="0" x2="1"><stop offset="0" stop-color="#4a4d53"/><stop offset=".5" stop-color="#2d2f33"/><stop offset="1" stop-color="#1c1d20"/></linearGradient>
+<linearGradient id="ID-swscr" x1="0" x2="1"><stop offset="0" stop-color="#5fb4ff"/><stop offset=".5" stop-color="#b9e0ff"/><stop offset="1" stop-color="#ff9a6b"/></linearGradient>
+<radialGradient id="ID-swamb"><stop offset="0" stop-color="#4aa8ff" stop-opacity=".55"/><stop offset="1" stop-color="#4aa8ff" stop-opacity="0"/></radialGradient></defs>
+<ellipse class="sw-amb" cx="60" cy="68" rx="62" ry="40" fill="url(#ID-swamb)"/>
+<ellipse cx="60" cy="101" rx="56" ry="3.4" fill="url(#ID-shadow)"/>
+<g class="sw-air" fill="none" stroke-width="1.3" stroke-linecap="round">
+  <path d="M42 40q-2.5-3 0-6t0-6"/><path d="M60 38q-2.5-3 0-6t0-6"/><path d="M78 40q-2.5-3 0-6t0-6"/>
+</g>
+<g class="sw-body">
+  <rect x="19" y="44" width="82" height="48" rx="4" fill="#0b0c0e" stroke="#000" stroke-width=".5"/>
+  <rect class="sw-scr" x="21" y="45.5" width="78" height="8" rx="1.5" fill="url(#ID-swscr)"/>
+  <rect x="21" y="45.5" width="78" height="2" rx="1" fill="#fff" opacity=".08"/>
+  <path d="M21 56Q21 53 24 53H96Q99 53 99 56V90H21Z" fill="url(#ID-swd)" stroke="#0b0c0e" stroke-width=".5"/>
+  <path d="M23 54.2H97" stroke="#fff" stroke-opacity=".14" stroke-width=".7" stroke-linecap="round"/>
+  <rect x="19" y="90" width="82" height="8" rx="2" fill="url(#ID-swd)" stroke="#0b0c0e" stroke-width=".5"/>
+  <rect class="sw-led" x="21.4" y="93.6" width="3.2" height="1.3" rx=".5"/>
+</g>
+<g class="sw-jcl">
+  <path d="M8 49Q8 42 15 42H19V92H15Q8 92 8 85Z" fill="url(#ID-swj)" stroke="#0b0c0e" stroke-width=".5"/>
+  <circle cx="13.5" cy="53" r="4.6" fill="#17181a"/><circle class="sw-ring l" cx="13.5" cy="53" r="4.6" fill="none" stroke-width="1.1"/><circle cx="13.5" cy="53" r="2.6" fill="#2b2d31"/>
+  <g class="sw-btn" fill="#23252a" stroke="#0b0c0e" stroke-width=".3"><circle cx="13.5" cy="65" r="1.5"/><circle cx="10.2" cy="68.3" r="1.5"/><circle cx="16.8" cy="68.3" r="1.5"/><circle cx="13.5" cy="71.6" r="1.5"/></g>
+  <rect x="11.5" y="78" width="3.4" height="3.4" rx=".8" fill="#23252a" stroke="#0b0c0e" stroke-width=".3"/>
+  <path d="M10 45.6h4" stroke="#6a6e75" stroke-width=".8" stroke-linecap="round"/>
+</g>
+<g class="sw-jcr">
+  <path d="M112 49Q112 42 105 42H101V92H105Q112 92 112 85Z" fill="url(#ID-swj)" stroke="#0b0c0e" stroke-width=".5"/>
+  <circle cx="106.5" cy="72" r="4.6" fill="#17181a"/><circle class="sw-ring r" cx="106.5" cy="72" r="4.6" fill="none" stroke-width="1.1"/><circle cx="106.5" cy="72" r="2.6" fill="#2b2d31"/>
+  <g class="sw-btn" fill="#23252a" stroke="#0b0c0e" stroke-width=".3"><circle cx="106.5" cy="53" r="1.5"/><circle cx="103.2" cy="56.3" r="1.5"/><circle cx="109.8" cy="56.3" r="1.5"/><circle cx="106.5" cy="59.6" r="1.5"/></g>
+  <rect x="105" y="83" width="3.4" height="3.4" rx=".8" fill="#23252a" stroke="#0b0c0e" stroke-width=".3"/>
+  <path d="M104 45.6h4M106 43.8v3.6" stroke="#6a6e75" stroke-width=".8" stroke-linecap="round"/>
+</g>`;
+
 /* Thermomix TM6 / TM7 : photo détourée (fond transparent) + calques animés par-dessus.
    option model : "tm6" (blanc, par défaut) ou "tm7" (noir).
    Calques : vitre sombre de l'écran (éteint), voyants (veille / mixage / chauffe), vapeur (chauffe, turbo) ;
@@ -13166,6 +13209,9 @@ const DEF = {
   ps5: { accent: "active", threshold: 25,
     fields: ["entity", "power", "energy", "cost", "usage_time", "switch"],
     keys: ["ps5", "playstation", "play_station"] },
+  switch2: { accent: "active", threshold: 6,
+    fields: ["entity", "power", "energy", "cost", "usage_time", "switch"],
+    keys: ["switch2", "switch_2", "nintendo", "ns2"] },
   desktop_pc: { accent: "active", threshold: 40,
     fields: ["entity", "power", "energy", "cost", "usage_time", "switch"],
     keys: ["pc_fixe", "pcfixe", "desktop", "ordinateur", "gaming", "workstation", "pc_bureau", "unite_centrale", "tour_pc"] },
@@ -13480,14 +13526,14 @@ const TILE_PERIODS = [...PERIODS, "year", "total"];
 // cartes avec la tuile « durée d'utilisation du jour » (capteur usage_time, sinon calcul depuis l'historique)
 // fitness (vélo elliptique, vélo d'appartement, rameur) : allure de l'animation et tuiles de séance
 const FIT_KINDS = ["elliptical", "exercise_bike", "rowing_machine", "treadmill"];
-const USAGE_KINDS = ["tv", "monitor", "ps5", "desktop_pc", "laptop", "air_compressor", ...FIT_KINDS];
+const USAGE_KINDS = ["tv", "monitor", "ps5", "switch2", "desktop_pc", "laptop", "air_compressor", ...FIT_KINDS];
 const USAGE_ON = ["on", "playing", "paused", "idle", "buffering", "home"];
 
 // piscine : équipements commandables [option, icône, clé de libellé]
 const POOL_CTL = [["switch_ph_plus", "mdi:plus-circle-outline", "pool_ph_plus"], ["switch_ph_minus", "mdi:minus-circle-outline", "pool_ph_minus"],
   ["switch_electrolysis", "mdi:flash", "electrolysis"], ["switch_heat_pump", "mdi:heat-pump", "pool_heat_pump"], ["switch_shower", "mdi:shower-head", "shower"]];
 // appareils larges et plats dont la zone d'illustration s'ajuste au dessin : sélecteur des calques d'effets animés
-const AUTOFIT = { ac_split: ".ac-warm,.ac-waves,.ac-air,.ac-drops", av_receiver: ".av-waves,.av-notes,.av-ring" };
+const AUTOFIT = { ac_split: ".ac-warm,.ac-waves,.ac-air,.ac-drops", av_receiver: ".av-waves,.av-notes,.av-ring", switch2: ".sw-air,.sw-amb" };
 // température ramenée en °C d'après son unité (°F → °C), pour la comparer aux seuils écrits en °C
 const toDegC = (v, unit) => (v == null || !Number.isFinite(v) ? v : /^\s*°?\s*F\s*$/i.test(String(unit || "")) ? (v - 32) / 1.8 : v);
 // price_per_kwh : entité (sensor.tarif, input_number.prix…) ou nombre, éventuellement en texte (« 0.25 », « 0,25 »)
@@ -14296,15 +14342,17 @@ class ApplianceCardBase extends HTMLElement {
       else if (watts !== null) m.status = powered ? "online" : watts > 0.5 ? "standby" : "off";
       else m.status = base === "running" ? "online" : base === "standby" ? "standby" : "off";
       m.load = watts !== null ? Math.max(0, Math.min(1, watts / (c.max_power || 300))) : 0.4;
-    } else if (kind === "ps5") {
+    } else if (kind === "ps5" || kind === "switch2") {
       // PlayStation 5 : la prise fait foi (éteinte / mode repos / allumée / en jeu au-dessus de gaming_threshold) ;
       // le media_player PlayStation Network donne « en jeu » et le titre du jeu, et sert seul s'il n'y a pas de prise
+      // Nintendo Switch 2 : pas d'intégration, la prise seule suffit (veille 0,5 W, allumée 6 W, en jeu 18 W par défaut) ; « sw_sleep » = mode veille
+      const sw2 = kind === "switch2", restSt = sw2 ? "sw_sleep" : "ps_rest";
       const isMp = main && domainOf(c.entity) === "media_player", ms = isMp ? String(main.state).toLowerCase() : "";
       const mpOk = isMp && !BAD.includes(ms), playing = mpOk && ms === "playing";
       if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
-      else if (watts !== null) m.status = watts > threshold ? (playing || watts > (c.gaming_threshold ?? 100) ? "ps_gaming" : "screen_on") : watts >= (c.standby_threshold ?? 0.8) ? "ps_rest" : "off";
+      else if (watts !== null) m.status = watts > threshold ? (playing || watts > (c.gaming_threshold ?? (sw2 ? 18 : 100)) ? "ps_gaming" : "screen_on") : watts >= (c.standby_threshold ?? (sw2 ? 0.5 : 0.8)) ? restSt : "off";
       else if (mpOk) m.status = playing ? "ps_gaming" : ["on", "idle", "paused", "buffering"].includes(ms) ? "screen_on" : "off";
-      else m.status = base === "unavailable" ? "unavailable" : base === "running" ? "screen_on" : base === "standby" ? "ps_rest" : "off";
+      else m.status = base === "unavailable" ? "unavailable" : base === "running" ? "screen_on" : base === "standby" ? restSt : "off";
       m.game = m.status === "ps_gaming" && playing ? main.attributes.media_title || null : null;
     } else if (kind === "desktop_pc" || kind === "laptop" || kind === "monitor") {
       if (base === "off" || base === "unavailable") m.status = base;
@@ -15329,7 +15377,7 @@ class ApplianceCardBase extends HTMLElement {
       // PC fixe / baie serveur : couper la prise d'une machine allumée ou en veille = arrêt brutal
       const computer = ["desktop_pc", "server_rack"].includes(kind) && ["screen_on", "online", "standby"].includes(m.status);
       // PS5 : couper la prise allumée ou en mode repos (téléchargements, mises à jour) peut abîmer les données
-      const console_ = kind === "ps5" && ["screen_on", "ps_gaming", "ps_rest"].includes(m.status);
+      const console_ = (kind === "ps5" || kind === "switch2") && ["screen_on", "ps_gaming", "ps_rest", "sw_sleep"].includes(m.status);
       // confirm_always: true (ou confirm_off: always) : 2e clic dès que la prise est allumée ;
       // sinon confirm_off : true (défaut, protection selon l'appareil) / false (jamais)
       const always = c.confirm_always === true || c.confirm_off === "always";
@@ -16173,7 +16221,7 @@ function buildForm(kind) {
             { name: "show_temperature", selector: { boolean: {} }, default: true },
             { name: "volume_step", selector: { number: { min: 0.01, max: 0.2, step: 0.01, mode: "box" } } },
           ] : []),
-          ...(kind === "ps5" ? [
+          ...(kind === "ps5" || kind === "switch2" ? [
             { name: "standby_threshold", selector: { number: { min: 0, max: 20, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
             { name: "gaming_threshold", selector: { number: { min: 30, max: 400, step: 5, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
@@ -16307,7 +16355,7 @@ function buildForm(kind) {
             { name: "ignition_threshold", selector: { number: { min: 50, max: 1000, step: 10, mode: "box", unit_of_measurement: "W" } } },
             { name: "pellet_alert", selector: { number: { min: 0, max: 50, step: 1, mode: "box", unit_of_measurement: "%" } } },
           ] : []),
-          ...(["washer", "washer_dryer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "chest_freezer", "drawer_freezer", "desktop_pc", "server_rack", "ps5", "thermomix", "cookeo"].includes(kind) ? [{ name: "confirm_off", selector: { boolean: {} }, default: true }] : []),
+          ...(["washer", "washer_dryer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "chest_freezer", "drawer_freezer", "desktop_pc", "server_rack", "ps5", "switch2", "thermomix", "cookeo"].includes(kind) ? [{ name: "confirm_off", selector: { boolean: {} }, default: true }] : []),
           // case à cocher : 2e clic obligatoire dès que la prise est allumée, quel que soit l'appareil
           ...(d.fields.includes("switch") || kind === "power_strip" ? [{ name: "confirm_always", selector: { boolean: {} } }] : []),
           { name: "tap_action", selector: { ui_action: { actions: ["more-info", "toggle", "navigate", "url", "perform-action", "none"] } } },
@@ -16318,7 +16366,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? edLabel(kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "air_compressor" && s.name === "pressure" ? "f_pressure_tank" : ["contact_grill", "iron", "steam_station"].includes(kind) && s.name === "ready_minutes" ? "f_grill_ready_minutes" : kind === "cookeo" && s.name === "style" ? "f_cookeo_style" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "fridge" && s.name === "finish" ? "f_fridge_finish" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "ceiling_fan" && s.name === "show_controls" ? "f_show_fan_controls" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : ["thermomix", "microwave", "vmc", "kettle", "phone_charger", "deep_fryer"].includes(kind) && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : ["printer_3d", "printer"].includes(kind) && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix", "printer"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : kind === "radiator" && s.name === "style" ? "f_radiator_style" : s.name === "view" ? "f_view" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? edLabel(kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "air_compressor" && s.name === "pressure" ? "f_pressure_tank" : ["contact_grill", "iron", "steam_station"].includes(kind) && s.name === "ready_minutes" ? "f_grill_ready_minutes" : kind === "cookeo" && s.name === "style" ? "f_cookeo_style" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "fridge" && s.name === "finish" ? "f_fridge_finish" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "ceiling_fan" && s.name === "show_controls" ? "f_show_fan_controls" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : ["thermomix", "microwave", "vmc", "kettle", "phone_charger", "deep_fryer"].includes(kind) && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : ["printer_3d", "printer"].includes(kind) && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix", "printer"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "switch2" && s.name === "standby_threshold" ? "f_standby_threshold_switch2" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : kind === "radiator" && s.name === "style" ? "f_radiator_style" : s.name === "view" ? "f_view" : `f_${s.name}`) : undefined),
   };
 }
 
@@ -16353,7 +16401,7 @@ function stubFor(kind, hass) {
   }
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "dosing_pump", "elliptical", "exercise_bike", "rowing_machine", "treadmill", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "iron", "steam_station", "infrared_panel", "power_strip", "smart_plug", "printer", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier", "airbowl"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "dosing_pump", "elliptical", "exercise_bike", "rowing_machine", "treadmill", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "switch2", "laptop", "monitor", "kettle", "toaster", "iron", "steam_station", "infrared_panel", "power_strip", "smart_plug", "printer", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier", "airbowl"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;
@@ -18137,6 +18185,34 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 @keyframes ps-amb { 0%, 100% { opacity: .65; } 50% { opacity: 1; } }
 @keyframes ps-play { 0%, 100% { transform: translate(0, -7px) rotate(-3deg); } 25% { transform: translate(-1px, -8px) rotate(2deg); } 50% { transform: translate(.6px, -6.4px) rotate(-1deg); } 75% { transform: translate(-.4px, -8px) rotate(3deg); } }
 @keyframes ps-press { 0% { fill: #3b9cff; } 25%, 100% { fill: #9aa3ac; } }
+
+/* ---------- Nintendo Switch 2 ---------- */
+/* anneaux des Joy-Con : éteints (gris), allumés (bleu / orange), pulsation en jeu */
+.k-switch2 .sw-ring { stroke: #4a525b; stroke-opacity: .5; transition: stroke .5s, stroke-opacity .5s; }
+.k-switch2.st-sw_sleep .sw-ring { stroke-opacity: .5; }
+.k-switch2.st-screen_on .sw-ring.l, .k-switch2.st-ps_gaming .sw-ring.l { stroke: #38c8ff; stroke-opacity: 1; filter: drop-shadow(0 0 1.8px #38c8ff); }
+.k-switch2.st-screen_on .sw-ring.r, .k-switch2.st-ps_gaming .sw-ring.r { stroke: #ff8a3d; stroke-opacity: 1; filter: drop-shadow(0 0 1.8px #ff8a3d); }
+.k-switch2.st-ps_gaming .sw-ring { animation: ac-glow 1.8s ease-in-out infinite; }
+/* voyant du dock : éteint, orange qui respire en veille, blanc allumée */
+.sw-led { fill: #3a424b; transition: fill .4s; }
+.k-switch2.st-sw_sleep .sw-led { fill: #ff9d2e; animation: ac-pulse 3.2s ease-in-out infinite; }
+.k-switch2.st-screen_on .sw-led, .k-switch2.st-ps_gaming .sw-led { fill: #f2f8ff; filter: drop-shadow(0 0 1.4px #cfe6ff); }
+/* écran entrevu au-dessus du dock : noir éteinte, lumineux allumée, plus vif en jeu */
+.sw-scr { opacity: 0; transition: opacity .6s; }
+.k-switch2.st-screen_on .sw-scr { opacity: .55; } .k-switch2.st-ps_gaming .sw-scr { opacity: 1; animation: ac-glow 2.4s ease-in-out infinite; }
+/* air chaud par le haut du dock */
+.sw-air { opacity: 0; } .sw-air path { stroke: #9aa7b4; }
+.k-switch2.st-screen_on .sw-air { opacity: .45; } .k-switch2.st-ps_gaming .sw-air { opacity: 1; } .k-switch2.st-ps_gaming .sw-air path { stroke: #ffab70; }
+.k-switch2.active .sw-air path { animation: ac-steam 2.6s ease-out infinite; }
+.sw-air path:nth-child(2) { animation-delay: .8s !important; } .sw-air path:nth-child(3) { animation-delay: 1.6s !important; }
+.k-switch2.st-ps_gaming .sw-air path { animation-duration: 1.6s; }
+/* halo de l'écran en jeu */
+.sw-amb { opacity: 0; transition: opacity .8s; }
+.k-switch2.st-ps_gaming .sw-amb { opacity: 1; animation: ps-amb 5s ease-in-out infinite; }
+/* boutons des Joy-Con qui s'allument à tour de rôle en jeu */
+.k-switch2.st-ps_gaming .sw-btn circle { animation: sw-press 1.2s steps(1) infinite; }
+.sw-btn circle:nth-child(2) { animation-delay: .3s !important; } .sw-btn circle:nth-child(3) { animation-delay: .6s !important; } .sw-btn circle:nth-child(4) { animation-delay: .9s !important; }
+@keyframes sw-press { 0% { fill: #4aa8ff; } 25%, 100% { fill: #23252a; } }
 
 /* ---------- Thermomix (photo + calques) ---------- */
 .k-thermomix { --tmx-led1: #7dff5a; --tmx-led2: #2fd600; }

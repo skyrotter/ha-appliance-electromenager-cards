@@ -11,14 +11,14 @@ const TILE_PERIODS = [...PERIODS, "year", "total"];
 // cartes avec la tuile « durée d'utilisation du jour » (capteur usage_time, sinon calcul depuis l'historique)
 // fitness (vélo elliptique, vélo d'appartement, rameur) : allure de l'animation et tuiles de séance
 const FIT_KINDS = ["elliptical", "exercise_bike", "rowing_machine", "treadmill"];
-const USAGE_KINDS = ["tv", "monitor", "ps5", "desktop_pc", "laptop", "air_compressor", ...FIT_KINDS];
+const USAGE_KINDS = ["tv", "monitor", "ps5", "switch2", "desktop_pc", "laptop", "air_compressor", ...FIT_KINDS];
 const USAGE_ON = ["on", "playing", "paused", "idle", "buffering", "home"];
 
 // piscine : équipements commandables [option, icône, clé de libellé]
 const POOL_CTL = [["switch_ph_plus", "mdi:plus-circle-outline", "pool_ph_plus"], ["switch_ph_minus", "mdi:minus-circle-outline", "pool_ph_minus"],
   ["switch_electrolysis", "mdi:flash", "electrolysis"], ["switch_heat_pump", "mdi:heat-pump", "pool_heat_pump"], ["switch_shower", "mdi:shower-head", "shower"]];
 // appareils larges et plats dont la zone d'illustration s'ajuste au dessin : sélecteur des calques d'effets animés
-const AUTOFIT = { ac_split: ".ac-warm,.ac-waves,.ac-air,.ac-drops", av_receiver: ".av-waves,.av-notes,.av-ring" };
+const AUTOFIT = { ac_split: ".ac-warm,.ac-waves,.ac-air,.ac-drops", av_receiver: ".av-waves,.av-notes,.av-ring", switch2: ".sw-air,.sw-amb" };
 // température ramenée en °C d'après son unité (°F → °C), pour la comparer aux seuils écrits en °C
 const toDegC = (v, unit) => (v == null || !Number.isFinite(v) ? v : /^\s*°?\s*F\s*$/i.test(String(unit || "")) ? (v - 32) / 1.8 : v);
 // price_per_kwh : entité (sensor.tarif, input_number.prix…) ou nombre, éventuellement en texte (« 0.25 », « 0,25 »)
@@ -827,15 +827,17 @@ class ApplianceCardBase extends HTMLElement {
       else if (watts !== null) m.status = powered ? "online" : watts > 0.5 ? "standby" : "off";
       else m.status = base === "running" ? "online" : base === "standby" ? "standby" : "off";
       m.load = watts !== null ? Math.max(0, Math.min(1, watts / (c.max_power || 300))) : 0.4;
-    } else if (kind === "ps5") {
+    } else if (kind === "ps5" || kind === "switch2") {
       // PlayStation 5 : la prise fait foi (éteinte / mode repos / allumée / en jeu au-dessus de gaming_threshold) ;
       // le media_player PlayStation Network donne « en jeu » et le titre du jeu, et sert seul s'il n'y a pas de prise
+      // Nintendo Switch 2 : pas d'intégration, la prise seule suffit (veille 0,5 W, allumée 6 W, en jeu 18 W par défaut) ; « sw_sleep » = mode veille
+      const sw2 = kind === "switch2", restSt = sw2 ? "sw_sleep" : "ps_rest";
       const isMp = main && domainOf(c.entity) === "media_player", ms = isMp ? String(main.state).toLowerCase() : "";
       const mpOk = isMp && !BAD.includes(ms), playing = mpOk && ms === "playing";
       if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
-      else if (watts !== null) m.status = watts > threshold ? (playing || watts > (c.gaming_threshold ?? 100) ? "ps_gaming" : "screen_on") : watts >= (c.standby_threshold ?? 0.8) ? "ps_rest" : "off";
+      else if (watts !== null) m.status = watts > threshold ? (playing || watts > (c.gaming_threshold ?? (sw2 ? 18 : 100)) ? "ps_gaming" : "screen_on") : watts >= (c.standby_threshold ?? (sw2 ? 0.5 : 0.8)) ? restSt : "off";
       else if (mpOk) m.status = playing ? "ps_gaming" : ["on", "idle", "paused", "buffering"].includes(ms) ? "screen_on" : "off";
-      else m.status = base === "unavailable" ? "unavailable" : base === "running" ? "screen_on" : base === "standby" ? "ps_rest" : "off";
+      else m.status = base === "unavailable" ? "unavailable" : base === "running" ? "screen_on" : base === "standby" ? restSt : "off";
       m.game = m.status === "ps_gaming" && playing ? main.attributes.media_title || null : null;
     } else if (kind === "desktop_pc" || kind === "laptop" || kind === "monitor") {
       if (base === "off" || base === "unavailable") m.status = base;
@@ -1860,7 +1862,7 @@ class ApplianceCardBase extends HTMLElement {
       // PC fixe / baie serveur : couper la prise d'une machine allumée ou en veille = arrêt brutal
       const computer = ["desktop_pc", "server_rack"].includes(kind) && ["screen_on", "online", "standby"].includes(m.status);
       // PS5 : couper la prise allumée ou en mode repos (téléchargements, mises à jour) peut abîmer les données
-      const console_ = kind === "ps5" && ["screen_on", "ps_gaming", "ps_rest"].includes(m.status);
+      const console_ = (kind === "ps5" || kind === "switch2") && ["screen_on", "ps_gaming", "ps_rest", "sw_sleep"].includes(m.status);
       // confirm_always: true (ou confirm_off: always) : 2e clic dès que la prise est allumée ;
       // sinon confirm_off : true (défaut, protection selon l'appareil) / false (jamais)
       const always = c.confirm_always === true || c.confirm_off === "always";

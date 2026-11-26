@@ -232,6 +232,7 @@ Click a card for its options and examples.
 | [Soundbar + subwoofer (Bose)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/soundbar.md) | `custom:appliance-soundbar-card` |
 | [Smart speaker (Echo, Nest, Sonos, IKEA SYMFONISK, Devialet, HomePod)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/smart-speaker.md) | `custom:appliance-smart-speaker-card` |
 | [PlayStation 5](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/ps5.md) | `custom:appliance-ps5-card` |
+| [Nintendo Switch 2](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/switch2.md) | `custom:appliance-switch2-card` |
 | [Cross trainer (elliptical)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/fitness.md) | `custom:appliance-elliptical-card` |
 | [Exercise bike](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/fitness.md) | `custom:appliance-exercise-bike-card` |
 | [Rowing machine](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/fitness.md) | `custom:appliance-rowing-machine-card` |
