@@ -428,10 +428,13 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Rest mode",
     "ps_gaming": "Gaming",
+    "switch2": "Nintendo Switch 2",
+    "sw_sleep": "Sleep mode",
     "confirm_off_console": "Console on – click again to cut power",
     "confirm_off_always": "Click again to cut power",
     "f_confirm_always": "Always confirm before cutting power (plug on)",
     "f_standby_threshold_ps5": "Rest mode above (W)",
+    "f_standby_threshold_switch2": "Sleep mode above (W)",
     "f_gaming_threshold": "Gaming above (W)",
     "f_energy_period": "Energy shown (counter or period)",
     "flex_temp": "Flex zone",
@@ -2997,10 +3000,13 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Mode repos",
     "ps_gaming": "En jeu",
+    "switch2": "Nintendo Switch 2",
+    "sw_sleep": "Mode veille",
     "confirm_off_console": "Console allumée – cliquer encore pour couper",
     "confirm_off_always": "Cliquer encore pour couper",
     "f_confirm_always": "Toujours confirmer avant de couper (prise allumée)",
     "f_standby_threshold_ps5": "Mode repos au-dessus de (W)",
+    "f_standby_threshold_switch2": "Veille au-dessus de (W)",
     "f_gaming_threshold": "En jeu au-dessus de (W)",
     "f_energy_period": "Énergie affichée (compteur ou période)",
     "flex_temp": "Zone flex",
@@ -12422,6 +12428,26 @@ SVG.steam_station = () => `
 <ellipse class="ir-heat" cx="30" cy="80" rx="14" ry="2.2" fill="#ff7a1a" filter="url(#ID-irblur)" transform="rotate(32 30 80)"/>
 <g class="ir-steam">${[[22, 80], [32, 76], [42, 72]].map(([x, y]) => `<path d="M${x} ${y}q-4-6 0-12t0-12"/>`).join("")}</g>`;
 
+/* Nintendo Switch 2 : photo détourée de la console sur son dock (vue de face, Joy-Con 2 de chaque côté), animée par-dessus :
+   écran entrevu au-dessus du dock, anneaux des sticks (bleu à gauche, orange à droite), voyant du dock, boutons, air chaud et halo en jeu.
+   Photo : 570 × 287 px, placée en (2, 34) sur 116 × 58,4 ; les repères d'animation sont donnés dans les mêmes coordonnées. */
+const SW2_IMG = "data:image/webp;base64,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";
+SVG.switch2 = () => `
+<defs>${DEFS}
+<linearGradient id="ID-swscr" x1="0" x2="1"><stop offset="0" stop-color="#5fb4ff"/><stop offset=".5" stop-color="#b9e0ff"/><stop offset="1" stop-color="#ff9a6b"/></linearGradient>
+<radialGradient id="ID-swamb"><stop offset="0" stop-color="#4aa8ff" stop-opacity=".55"/><stop offset="1" stop-color="#4aa8ff" stop-opacity="0"/></radialGradient></defs>
+<ellipse class="sw-amb" cx="60" cy="64" rx="62" ry="40" fill="url(#ID-swamb)"/>
+<ellipse cx="60" cy="95" rx="54" ry="3.4" fill="url(#ID-shadow)"/>
+<g class="sw-air" fill="none" stroke-width="1.3" stroke-linecap="round">
+  <path d="M42 32q-2.5-3 0-6t0-6"/><path d="M60 30q-2.5-3 0-6t0-6"/><path d="M78 32q-2.5-3 0-6t0-6"/>
+</g>
+<image href="${SW2_IMG}" x="2" y="34" width="116" height="58.4"/>
+<rect class="sw-scr" x="18.3" y="36.0" width="83.4" height="7.3" rx="1" fill="url(#ID-swscr)"/>
+<circle class="sw-ring l" cx="10.1" cy="46.8" r="4.3" fill="none" stroke-width="1.1"/>
+<circle class="sw-ring r" cx="109.9" cy="59.0" r="4.3" fill="none" stroke-width="1.1"/>
+<rect class="sw-led" x="16.7" y="87.7" width="2.2" height="1.1" rx=".4"/>
+<g class="sw-btn"><circle cx="9.1" cy="55.4" r="1.15"/><circle cx="4.8" cy="59.6" r="1.15"/><circle cx="13.4" cy="59.6" r="1.15"/><circle cx="9.1" cy="63.9" r="1.15"/><circle cx="109.7" cy="43.2" r="1.15"/><circle cx="106.0" cy="46.8" r="1.15"/><circle cx="113.3" cy="46.8" r="1.15"/><circle cx="109.7" cy="50.5" r="1.15"/></g>`;
+
 /* Thermomix TM6 / TM7 : photo détourée (fond transparent) + calques animés par-dessus.
    option model : "tm6" (blanc, par défaut) ou "tm7" (noir).
    Calques : vitre sombre de l'écran (éteint), voyants (veille / mixage / chauffe), vapeur (chauffe, turbo) ;
@@ -13166,6 +13192,9 @@ const DEF = {
   ps5: { accent: "active", threshold: 25,
     fields: ["entity", "power", "energy", "cost", "usage_time", "switch"],
     keys: ["ps5", "playstation", "play_station"] },
+  switch2: { accent: "active", threshold: 6,
+    fields: ["entity", "power", "energy", "cost", "usage_time", "switch"],
+    keys: ["switch2", "switch_2", "nintendo", "ns2"] },
   desktop_pc: { accent: "active", threshold: 40,
     fields: ["entity", "power", "energy", "cost", "usage_time", "switch"],
     keys: ["pc_fixe", "pcfixe", "desktop", "ordinateur", "gaming", "workstation", "pc_bureau", "unite_centrale", "tour_pc"] },
@@ -13480,14 +13509,14 @@ const TILE_PERIODS = [...PERIODS, "year", "total"];
 // cartes avec la tuile « durée d'utilisation du jour » (capteur usage_time, sinon calcul depuis l'historique)
 // fitness (vélo elliptique, vélo d'appartement, rameur) : allure de l'animation et tuiles de séance
 const FIT_KINDS = ["elliptical", "exercise_bike", "rowing_machine", "treadmill"];
-const USAGE_KINDS = ["tv", "monitor", "ps5", "desktop_pc", "laptop", "air_compressor", ...FIT_KINDS];
+const USAGE_KINDS = ["tv", "monitor", "ps5", "switch2", "desktop_pc", "laptop", "air_compressor", ...FIT_KINDS];
 const USAGE_ON = ["on", "playing", "paused", "idle", "buffering", "home"];
 
 // piscine : équipements commandables [option, icône, clé de libellé]
 const POOL_CTL = [["switch_ph_plus", "mdi:plus-circle-outline", "pool_ph_plus"], ["switch_ph_minus", "mdi:minus-circle-outline", "pool_ph_minus"],
   ["switch_electrolysis", "mdi:flash", "electrolysis"], ["switch_heat_pump", "mdi:heat-pump", "pool_heat_pump"], ["switch_shower", "mdi:shower-head", "shower"]];
 // appareils larges et plats dont la zone d'illustration s'ajuste au dessin : sélecteur des calques d'effets animés
-const AUTOFIT = { ac_split: ".ac-warm,.ac-waves,.ac-air,.ac-drops", av_receiver: ".av-waves,.av-notes,.av-ring" };
+const AUTOFIT = { ac_split: ".ac-warm,.ac-waves,.ac-air,.ac-drops", av_receiver: ".av-waves,.av-notes,.av-ring", switch2: ".sw-air,.sw-amb" };
 // température ramenée en °C d'après son unité (°F → °C), pour la comparer aux seuils écrits en °C
 const toDegC = (v, unit) => (v == null || !Number.isFinite(v) ? v : /^\s*°?\s*F\s*$/i.test(String(unit || "")) ? (v - 32) / 1.8 : v);
 // price_per_kwh : entité (sensor.tarif, input_number.prix…) ou nombre, éventuellement en texte (« 0.25 », « 0,25 »)
@@ -14296,15 +14325,17 @@ class ApplianceCardBase extends HTMLElement {
       else if (watts !== null) m.status = powered ? "online" : watts > 0.5 ? "standby" : "off";
       else m.status = base === "running" ? "online" : base === "standby" ? "standby" : "off";
       m.load = watts !== null ? Math.max(0, Math.min(1, watts / (c.max_power || 300))) : 0.4;
-    } else if (kind === "ps5") {
+    } else if (kind === "ps5" || kind === "switch2") {
       // PlayStation 5 : la prise fait foi (éteinte / mode repos / allumée / en jeu au-dessus de gaming_threshold) ;
       // le media_player PlayStation Network donne « en jeu » et le titre du jeu, et sert seul s'il n'y a pas de prise
+      // Nintendo Switch 2 : pas d'intégration, la prise seule suffit (veille 0,5 W, allumée 6 W, en jeu 18 W par défaut) ; « sw_sleep » = mode veille
+      const sw2 = kind === "switch2", restSt = sw2 ? "sw_sleep" : "ps_rest";
       const isMp = main && domainOf(c.entity) === "media_player", ms = isMp ? String(main.state).toLowerCase() : "";
       const mpOk = isMp && !BAD.includes(ms), playing = mpOk && ms === "playing";
       if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
-      else if (watts !== null) m.status = watts > threshold ? (playing || watts > (c.gaming_threshold ?? 100) ? "ps_gaming" : "screen_on") : watts >= (c.standby_threshold ?? 0.8) ? "ps_rest" : "off";
+      else if (watts !== null) m.status = watts > threshold ? (playing || watts > (c.gaming_threshold ?? (sw2 ? 18 : 100)) ? "ps_gaming" : "screen_on") : watts >= (c.standby_threshold ?? (sw2 ? 0.5 : 0.8)) ? restSt : "off";
       else if (mpOk) m.status = playing ? "ps_gaming" : ["on", "idle", "paused", "buffering"].includes(ms) ? "screen_on" : "off";
-      else m.status = base === "unavailable" ? "unavailable" : base === "running" ? "screen_on" : base === "standby" ? "ps_rest" : "off";
+      else m.status = base === "unavailable" ? "unavailable" : base === "running" ? "screen_on" : base === "standby" ? restSt : "off";
       m.game = m.status === "ps_gaming" && playing ? main.attributes.media_title || null : null;
     } else if (kind === "desktop_pc" || kind === "laptop" || kind === "monitor") {
       if (base === "off" || base === "unavailable") m.status = base;
@@ -15329,7 +15360,7 @@ class ApplianceCardBase extends HTMLElement {
       // PC fixe / baie serveur : couper la prise d'une machine allumée ou en veille = arrêt brutal
       const computer = ["desktop_pc", "server_rack"].includes(kind) && ["screen_on", "online", "standby"].includes(m.status);
       // PS5 : couper la prise allumée ou en mode repos (téléchargements, mises à jour) peut abîmer les données
-      const console_ = kind === "ps5" && ["screen_on", "ps_gaming", "ps_rest"].includes(m.status);
+      const console_ = (kind === "ps5" || kind === "switch2") && ["screen_on", "ps_gaming", "ps_rest", "sw_sleep"].includes(m.status);
       // confirm_always: true (ou confirm_off: always) : 2e clic dès que la prise est allumée ;
       // sinon confirm_off : true (défaut, protection selon l'appareil) / false (jamais)
       const always = c.confirm_always === true || c.confirm_off === "always";
@@ -16173,7 +16204,7 @@ function buildForm(kind) {
             { name: "show_temperature", selector: { boolean: {} }, default: true },
             { name: "volume_step", selector: { number: { min: 0.01, max: 0.2, step: 0.01, mode: "box" } } },
           ] : []),
-          ...(kind === "ps5" ? [
+          ...(kind === "ps5" || kind === "switch2" ? [
             { name: "standby_threshold", selector: { number: { min: 0, max: 20, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
             { name: "gaming_threshold", selector: { number: { min: 30, max: 400, step: 5, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
@@ -16307,7 +16338,7 @@ function buildForm(kind) {
             { name: "ignition_threshold", selector: { number: { min: 50, max: 1000, step: 10, mode: "box", unit_of_measurement: "W" } } },
             { name: "pellet_alert", selector: { number: { min: 0, max: 50, step: 1, mode: "box", unit_of_measurement: "%" } } },
           ] : []),
-          ...(["washer", "washer_dryer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "chest_freezer", "drawer_freezer", "desktop_pc", "server_rack", "ps5", "thermomix", "cookeo"].includes(kind) ? [{ name: "confirm_off", selector: { boolean: {} }, default: true }] : []),
+          ...(["washer", "washer_dryer", "dryer", "dishwasher", "pellet_stove", "printer_3d", "chest_freezer", "drawer_freezer", "desktop_pc", "server_rack", "ps5", "switch2", "thermomix", "cookeo"].includes(kind) ? [{ name: "confirm_off", selector: { boolean: {} }, default: true }] : []),
           // case à cocher : 2e clic obligatoire dès que la prise est allumée, quel que soit l'appareil
           ...(d.fields.includes("switch") || kind === "power_strip" ? [{ name: "confirm_always", selector: { boolean: {} } }] : []),
           { name: "tap_action", selector: { ui_action: { actions: ["more-info", "toggle", "navigate", "url", "perform-action", "none"] } } },
@@ -16318,7 +16349,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? edLabel(kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "air_compressor" && s.name === "pressure" ? "f_pressure_tank" : ["contact_grill", "iron", "steam_station"].includes(kind) && s.name === "ready_minutes" ? "f_grill_ready_minutes" : kind === "cookeo" && s.name === "style" ? "f_cookeo_style" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "fridge" && s.name === "finish" ? "f_fridge_finish" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "ceiling_fan" && s.name === "show_controls" ? "f_show_fan_controls" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : ["thermomix", "microwave", "vmc", "kettle", "phone_charger", "deep_fryer"].includes(kind) && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : ["printer_3d", "printer"].includes(kind) && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix", "printer"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : kind === "radiator" && s.name === "style" ? "f_radiator_style" : s.name === "view" ? "f_view" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? edLabel(kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "air_compressor" && s.name === "pressure" ? "f_pressure_tank" : ["contact_grill", "iron", "steam_station"].includes(kind) && s.name === "ready_minutes" ? "f_grill_ready_minutes" : kind === "cookeo" && s.name === "style" ? "f_cookeo_style" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "fridge" && s.name === "finish" ? "f_fridge_finish" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "ceiling_fan" && s.name === "show_controls" ? "f_show_fan_controls" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : ["thermomix", "microwave", "vmc", "kettle", "phone_charger", "deep_fryer"].includes(kind) && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : ["printer_3d", "printer"].includes(kind) && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix", "printer"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "switch2" && s.name === "standby_threshold" ? "f_standby_threshold_switch2" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : kind === "radiator" && s.name === "style" ? "f_radiator_style" : s.name === "view" ? "f_view" : `f_${s.name}`) : undefined),
   };
 }
 
@@ -16353,7 +16384,7 @@ function stubFor(kind, hass) {
   }
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "dosing_pump", "elliptical", "exercise_bike", "rowing_machine", "treadmill", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "iron", "steam_station", "infrared_panel", "power_strip", "smart_plug", "printer", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier", "airbowl"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "dosing_pump", "elliptical", "exercise_bike", "rowing_machine", "treadmill", "air_fryer", "coffee_maker", "thermomix", "cookeo", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "switch2", "laptop", "monitor", "kettle", "toaster", "iron", "steam_station", "infrared_panel", "power_strip", "smart_plug", "printer", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier", "air_purifier", "airbowl"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;
@@ -18137,6 +18168,34 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 @keyframes ps-amb { 0%, 100% { opacity: .65; } 50% { opacity: 1; } }
 @keyframes ps-play { 0%, 100% { transform: translate(0, -7px) rotate(-3deg); } 25% { transform: translate(-1px, -8px) rotate(2deg); } 50% { transform: translate(.6px, -6.4px) rotate(-1deg); } 75% { transform: translate(-.4px, -8px) rotate(3deg); } }
 @keyframes ps-press { 0% { fill: #3b9cff; } 25%, 100% { fill: #9aa3ac; } }
+
+/* ---------- Nintendo Switch 2 ---------- */
+/* anneaux des Joy-Con : la photo montre déjà les anneaux ; allumés, ils brillent (bleu / orange) (bleu / orange), pulsation en jeu */
+.k-switch2 .sw-ring { stroke: #4a525b; stroke-opacity: 0; transition: stroke .5s, stroke-opacity .5s; }
+.k-switch2.st-screen_on .sw-ring.l, .k-switch2.st-ps_gaming .sw-ring.l { stroke: #38c8ff; stroke-opacity: 1; filter: drop-shadow(0 0 1.8px #38c8ff); }
+.k-switch2.st-screen_on .sw-ring.r, .k-switch2.st-ps_gaming .sw-ring.r { stroke: #ff8a3d; stroke-opacity: 1; filter: drop-shadow(0 0 1.8px #ff8a3d); }
+.k-switch2.st-ps_gaming .sw-ring { animation: ac-glow 1.8s ease-in-out infinite; }
+/* voyant du dock : éteint, orange qui respire en veille, blanc allumée */
+.sw-led { fill: transparent; transition: fill .4s; }
+.k-switch2.st-sw_sleep .sw-led { fill: #ff9d2e; animation: ac-pulse 3.2s ease-in-out infinite; }
+.k-switch2.st-screen_on .sw-led, .k-switch2.st-ps_gaming .sw-led { fill: #f2f8ff; filter: drop-shadow(0 0 1.4px #cfe6ff); }
+/* écran entrevu au-dessus du dock : noir éteinte, lumineux allumée, plus vif en jeu */
+.sw-scr { opacity: 0; transition: opacity .6s; }
+.k-switch2.st-screen_on .sw-scr { opacity: .55; } .k-switch2.st-ps_gaming .sw-scr { opacity: 1; animation: ac-glow 2.4s ease-in-out infinite; }
+/* air chaud par le haut du dock */
+.sw-air { opacity: 0; } .sw-air path { stroke: #9aa7b4; }
+.k-switch2.st-screen_on .sw-air { opacity: .45; } .k-switch2.st-ps_gaming .sw-air { opacity: 1; } .k-switch2.st-ps_gaming .sw-air path { stroke: #ffab70; }
+.k-switch2.active .sw-air path { animation: ac-steam 2.6s ease-out infinite; }
+.sw-air path:nth-child(2) { animation-delay: .8s !important; } .sw-air path:nth-child(3) { animation-delay: 1.6s !important; }
+.k-switch2.st-ps_gaming .sw-air path { animation-duration: 1.6s; }
+/* halo de l'écran en jeu */
+.sw-amb { opacity: 0; transition: opacity .8s; }
+.k-switch2.st-ps_gaming .sw-amb { opacity: 1; animation: ps-amb 5s ease-in-out infinite; }
+/* boutons des Joy-Con qui s'allument à tour de rôle en jeu */
+.sw-btn circle { fill: transparent; }
+.k-switch2.st-ps_gaming .sw-btn circle { animation: sw-press 1.2s steps(1) infinite; }
+.sw-btn circle:nth-child(2) { animation-delay: .3s !important; } .sw-btn circle:nth-child(3) { animation-delay: .6s !important; } .sw-btn circle:nth-child(4) { animation-delay: .9s !important; }
+@keyframes sw-press { 0% { fill: rgba(74,168,255,.85); } 25%, 100% { fill: transparent; } }
 
 /* ---------- Thermomix (photo + calques) ---------- */
 .k-thermomix { --tmx-led1: #7dff5a; --tmx-led2: #2fd600; }

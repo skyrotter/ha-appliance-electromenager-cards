@@ -241,6 +241,7 @@ Clique num cartão para consultar as opções e os exemplos.
 | [Soundbar + subwoofer (Bose)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/soundbar.md) | `custom:appliance-soundbar-card` |
 | [Coluna inteligente (Echo, Nest, Sonos, Devialet, HomePod)](docs/cards/smart-speaker.md) | `custom:appliance-smart-speaker-card` |
 | [PlayStation 5](docs/cards/ps5.md) | `custom:appliance-ps5-card` |
+| [Nintendo Switch 2](docs/cards/switch2.md) | `custom:appliance-switch2-card` |
 | [Bicicleta elíptica](docs/cards/fitness.md) | `custom:appliance-elliptical-card` |
 | [Bicicleta estática](docs/cards/fitness.md) | `custom:appliance-exercise-bike-card` |
 | [Máquina de remo](docs/cards/fitness.md) | `custom:appliance-rowing-machine-card` |
