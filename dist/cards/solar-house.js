@@ -211,6 +211,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       if (!isFinite(grid) && (c.entity_grid_import || c.entity_grid_export)) grid = z(this._w(c.entity_grid_import)) - z(this._w(c.entity_grid_export));
       const ev = Math.max(0, z(this._w(c.entity_ev))), wh = Math.max(0, z(this._w(c.entity_water_heater)));
       let home = this._w(c.entity_home);
+      if (isFinite(home)) home = Math.max(0, home); // une consommation ne peut pas être négative (pince ampèremétrique qui oscille autour de 0, injection…) : négatif = 0
       // consommation calculée : production + soutirage + décharge − injection − charge − borne − ballon
       if (!isFinite(home)) home = Math.max(0, sol + z(grid) - z(batt) - ev - wh);
       // plusieurs batteries (battery_count, 1 à 3) : soit chacune a ses entités (entity_battery_2_power / _soc…), la puissance totale est alors la somme
