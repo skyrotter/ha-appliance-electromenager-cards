@@ -113,6 +113,26 @@
       "low": "Fraca",
       "ok": "OK"
     },
+    "ru": {
+      "name": "Датчик двери",
+      "name_service_door": "Датчик технической двери",
+      "name_window": "Датчик окна",
+      "model_front_door": "Входная дверь",
+      "model_service_door": "Техническая дверь",
+      "model_window": "Окно",
+      "closed": "Закрыто",
+      "open": "Открыто",
+      "left_open": "Оставлено открытым",
+      "unavailable": "Недоступно",
+      "unknown": "Недоступно",
+      "battery": "Батарея",
+      "since": "С",
+      "open_since": "Открыто с",
+      "closed_since": "Закрыто с",
+      "open_for": "Открыто {time}",
+      "low": "Низкий",
+      "ok": "ОК"
+    },
     "uk": {
       "name": "Датчик дверей",
       "name_service_door": "Датчик засклених дверей",

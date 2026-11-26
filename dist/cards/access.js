@@ -335,7 +335,8 @@
       "btn_open": "Открыть",
       "btn_stop": "Стоп",
       "btn_close": "Закрыть",
-      "btn_command": "Команда"
+      "btn_command": "Команда",
+      "btn_pedestrian": "Калитка"
     },
     "sr": {
       "barrier": "Рампа",

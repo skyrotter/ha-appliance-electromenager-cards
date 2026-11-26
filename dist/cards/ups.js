@@ -300,6 +300,9 @@
       "input": "Вход",
       "output": "Выход",
       "energy": "Энергия",
+      "battery_voltage": "Напряжение АКБ",
+      "nominal_power": "Номинальная мощность",
+      "beeper": "Зуммер",
       "overload": "Перегрузка",
       "replace_battery": "Замените батарею"
     },

@@ -192,6 +192,26 @@
       "style_plant_photo": "Planta (fotografia)",
       "style_sensor_photo": "Sensor (fotografia)"
     },
+    "ru": {
+      "name": "Датчик растения",
+      "ok": "В норме",
+      "dry": "Нужен полив",
+      "cold": "Слишком холодно",
+      "dark": "Мало света",
+      "hungry": "Нужно удобрение",
+      "low_battery": "Батарея разряжена",
+      "unavailable": "Недоступно",
+      "moisture": "Влажность почвы",
+      "temperature": "Температура",
+      "conductivity": "Плодородие",
+      "brightness": "Освещённость",
+      "battery": "Батарея",
+      "rssi": "Сигнал",
+      "style_plant": "Растение (SVG)",
+      "style_sensor": "Датчик (SVG)",
+      "style_plant_photo": "Растение (фото)",
+      "style_sensor_photo": "Датчик (фото)"
+    },
     "sr": {
       "name": "Монитор за биљке",
       "ok": "Здрава",

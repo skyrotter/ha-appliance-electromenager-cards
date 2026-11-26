@@ -131,7 +131,8 @@
       "f_pressure_unit": "Unidade de pressão (hPa, inHg, mmHg)",
       "f_rain_from_forecast": "Chuva a partir da previsão meteorológica (sem pluviômetro)",
       "f_extra_calc": "Calcular o índice de calor (sem sensor)",
-      "f_hide_keys": "Ocultar os botões laterais (tela maior)"
+      "f_hide_keys": "Ocultar os botões laterais (tela maior)",
+      "f_wind_trend": "Ventos dominantes da última hora (setas vazadas)"
     },
     "pt-PT": {
       "name": "Estação meteorológica",
@@ -156,7 +157,8 @@
       "f_pressure_unit": "Unidade de pressão (hPa, inHg, mmHg)",
       "f_rain_from_forecast": "Chuva a partir da previsão meteorológica (sem pluviómetro)",
       "f_extra_calc": "Calcular o índice de calor (sem sensor)",
-      "f_hide_keys": "Ocultar os botões laterais (ecrã maior)"
+      "f_hide_keys": "Ocultar os botões laterais (ecrã maior)",
+      "f_wind_trend": "Ventos dominantes da última hora (setas vazadas)"
     },
     "ro": {
       "name": "Stație meteo",
@@ -166,7 +168,28 @@
     "ru": {
       "name": "Метеостанция",
       "wind": "Ветер",
-      "extra": "Индекс жары"
+      "extra": "Индекс жары",
+      "f_entity_weather": "Сущность погоды (локальная станция или сеть)",
+      "f_entity_temp_out": "Уличная температура",
+      "f_entity_hum_out": "Уличная влажность",
+      "f_entity_pressure": "Давление (барометр, тренд за 3 ч)",
+      "f_entity_wind_speed": "Скорость ветра",
+      "f_entity_wind_bearing": "Направление ветра (градусы или С, СВ…)",
+      "f_entity_temp_in": "Температура в помещении",
+      "f_entity_hum_in": "Влажность в помещении",
+      "f_entity_extra": "Доп. значение (индекс тепла, точка росы, УФ…)",
+      "f_extra_label": "Подпись доп. значения",
+      "f_entity_rain_day": "Осадки за день",
+      "f_entity_rain_rate": "Интенсивность осадков",
+      "f_entity_graph": "График за 24 ч (сенсор)",
+      "f_entity_ticker": "Бегущая строка (sensor или input_text)",
+      "f_backlight": "Подсветка ЖК-дисплея (оранжевая)",
+      "f_show_name": "Показать название",
+      "f_pressure_unit": "Единица давления (hPa, inHg, mmHg)",
+      "f_rain_from_forecast": "Осадки из прогноза погоды (без осадкомера)",
+      "f_extra_calc": "Рассчитать индекс тепла (без доп. сенсора)",
+      "f_hide_keys": "Скрыть боковые кнопки (экран крупнее)",
+      "f_wind_trend": "Преобладающие ветры за последний час (контурные стрелки)"
     },
     "sr": {
       "name": "Метеоролошка станица",

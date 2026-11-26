@@ -1020,7 +1020,7 @@
     "entity_today": "Consumo di oggi",
     "entity_leak": "Sensore perdite",
     "detector": "Tipo di rilevatore",
-    "entity_valve": "Valvola di intercettazione",
+    "entity_valve": "Valvola a 3 vie (acqua calda)",
     "leak_minutes": "Avviso perdita dopo (min di flusso continuo)",
     "freeze_threshold": "Soglia di gelo (°C)",
     "flow_threshold": "Portata considerata nulla sotto",
@@ -1249,7 +1249,6 @@
     "entity_dhw_temp": "Temperatura del bollitore ACS",
     "entity_pump_1": "Circolatore zona 1",
     "entity_pump_2": "Circolatore zona 2",
-    "entity_valve": "Valvola a 3 vie (acqua calda)",
     "entity_backup": "Riscaldamento di integrazione",
     "entity_immersion": "Resistenza a immersione",
     "entity_boiler": "Caldaia",
@@ -1418,8 +1417,8 @@
     "resume": "Torna al programma"
   },
   "room_climate": {
-"pressure": "Pressione",
-        "st_display_rect": "Display digitale (rettangolare)",
+    "pressure": "Pressione",
+    "st_display_rect": "Display digitale (rettangolare)",
     "st_display_round": "Display digitale (rotondo)",
     "name": "Clima della stanza",
     "comfort": "Confortevole",

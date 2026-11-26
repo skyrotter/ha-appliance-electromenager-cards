@@ -169,6 +169,25 @@
       "duration": "Duração do ciclo",
       "cycle_kwh": "Energia do ciclo"
     },
+    "ru": {
+      "name": "Теплонасосный водонагреватель",
+      "mode_off": "Выключен",
+      "mode_pause": "Пауза",
+      "mode_green": "Эко",
+      "mode_boost": "Турбо",
+      "mode_unavailable": "Недоступно",
+      "energy": "Энергия",
+      "power": "Мощность",
+      "mode": "Режим",
+      "temp": "Температура",
+      "target": "Цель",
+      "bottom": "Низ бака",
+      "reserve": "Горячая вода",
+      "volume": "Объём",
+      "cycle": "Последний цикл",
+      "duration": "Длительность цикла",
+      "cycle_kwh": "Энергия цикла"
+    },
     "sr": {
       "name": "Термодинамички бојлер",
       "mode_off": "Искључено",

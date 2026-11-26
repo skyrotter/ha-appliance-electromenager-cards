@@ -268,7 +268,17 @@ const I18N_EV = {
     "charging": "Зарядка",
     "plugged": "Подключено",
     "done": "Завершено",
-    "disconnected": "Отключено"
+    "disconnected": "Отключено",
+    "climate_pill": "Климат",
+    "climate_heat_pill": "Обогрев",
+    "climate": "Климат",
+    "climate_heat": "Обогрев",
+    "climate_cool": "Охлаждение",
+    "climate_off": "Выкл",
+    "doors": "Двери",
+    "doors_open": "Открыты",
+    "doors_closed": "Закрыты",
+    "charger_image": "Изображение зарядной станции (URL или /local/, вид спереди, прозрачный фон)"
   },
   "sr": {
     "name": "Пуњач за ЕВ",

@@ -1020,7 +1020,7 @@
     "entity_today": "Verbruik vandaag",
     "entity_leak": "Leksensor",
     "detector": "Type melder",
-    "entity_valve": "Afsluitkraan",
+    "entity_valve": "3-wegklep (warm water)",
     "leak_minutes": "Lekmelding na (min onafgebroken stroming)",
     "freeze_threshold": "Vorstdrempel (°C)",
     "flow_threshold": "Debiet telt als nul onder",
@@ -1249,7 +1249,6 @@
     "entity_dhw_temp": "Temperatuur warmwaterboiler",
     "entity_pump_1": "Circulatiepomp zone 1",
     "entity_pump_2": "Circulatiepomp zone 2",
-    "entity_valve": "3-wegklep (warm water)",
     "entity_backup": "Bijverwarming",
     "entity_immersion": "Elektrisch element",
     "entity_boiler": "Ketel",
@@ -1418,8 +1417,8 @@
     "resume": "Terug naar schema"
   },
   "room_climate": {
-"pressure": "Luchtdruk",
-        "st_display_rect": "Digitaal display (rechthoekig)",
+    "pressure": "Luchtdruk",
+    "st_display_rect": "Digitaal display (rechthoekig)",
     "st_display_round": "Digitaal display (rond)",
     "name": "Binnenklimaat",
     "comfort": "Comfortabel",

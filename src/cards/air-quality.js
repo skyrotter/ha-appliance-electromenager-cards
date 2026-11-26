@@ -122,7 +122,10 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
     static getStubConfig(hass) {
       const ids = Object.keys((hass && hass.states) || {}), dc = (i) => (hass.states[i].attributes || {}).device_class;
       const f = (...cls) => ids.find((i) => i.startsWith('sensor.') && cls.includes(dc(i))) || '';
-      return { entity_co2: f('carbon_dioxide'), entity_pm25: f('pm25'), entity_pm10: f('pm10'), entity_voc: f('volatile_organic_compounds', 'volatile_organic_compounds_parts'), entity_humidity: f('humidity'), entity_temperature: f('temperature') };
+      const cfg = { entity_co2: f('carbon_dioxide'), entity_pm25: f('pm25'), entity_pm10: f('pm10'), entity_voc: f('volatile_organic_compounds', 'volatile_organic_compounds_parts'), entity_humidity: f('humidity'), entity_temperature: f('temperature') };
+      const opt = { entity_pm1: f('pm1'), entity_nox: f('nitrogen_oxide'), entity_no2: f('nitrogen_dioxide'), entity_o3: f('ozone'), entity_co: f('carbon_monoxide'), entity_pressure: f('atmospheric_pressure', 'pressure'), entity_noise: f('sound_pressure') };
+      for (const [k, v] of Object.entries(opt)) if (v) cfg[k] = v;
+      return cfg;
     }
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
@@ -214,6 +217,22 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
       return out;
     }
 
+    connectedCallback() {
+      if (this._built && this._card && !this._ro && typeof ResizeObserver !== 'undefined') this._observeResize();
+    }
+    disconnectedCallback() {
+      if (this._ro) { this._ro.disconnect(); this._ro = null; }
+    }
+    _observeResize() {
+      if (typeof ResizeObserver === 'undefined' || !this._card) return;
+      this.disconnectedCallback();
+      this._ro = new ResizeObserver(() => {
+        const w = Math.round(this._card.clientWidth || 0);
+        if (w && w !== this._lastW && this._lastRow) { this._lastW = w; this._drawChart(this._lastRow); }
+      });
+      this._ro.observe(this._card);
+    }
+
     _build() {
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
       root.innerHTML = `<style>${CSS}</style><ha-card><div class="aq-wrap">
@@ -226,10 +245,7 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => { this._sel = el.dataset.k; this._userSel = true; this._render(); }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
       // la courbe est dessinee a la largeur du conteneur : la redessiner quand la carte est redimensionnee
-      if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => {
-        const w = Math.round(this._card.clientWidth || 0);
-        if (w && w !== this._lastW && this._lastRow) { this._lastW = w; this._drawChart(this._lastRow); }
-      }).observe(this._card);
+      this._observeResize();
     }
 
     _render() {
@@ -238,7 +254,8 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
       this._loadHist();
       const rows = ORDER.filter((k) => c[METRICS[k].opt]).map((k) => {
         const id = c[METRICS[k].opt], s = this._st(id), v = this._num(s), lv = this._level(k, v, s);
-        return { k, id, s, v, lv, M: METRICS[k], unit: (s && s.attributes && s.attributes.unit_of_measurement) || METRICS[k].unit };
+        const u = s && s.attributes && s.attributes.unit_of_measurement;
+        return { k, id, s, v, lv, M: METRICS[k], unit: u || (k === 'voc' && s ? 'index' : METRICS[k].unit) };
       });
       const live = rows.filter((x) => x.lv >= 0);
       // pire polluant (humidité et température exclues de l'indicateur)
@@ -311,7 +328,7 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
       }
       // axe du bas : -24 h, -12 h, maintenant
       [[0, '-24 h'], [.5, '-12 h'], [1, this._t('now')]].forEach(([f, lab]) => { g += `<text x="${(L + f * iw).toFixed(1)}" y="${H - 5}" text-anchor="${f === 0 ? 'start' : f === 1 ? 'end' : 'middle'}" font-size="9" fill="var(--secondary-text-color)">${esc(lab)}</text>`; });
-      [lo, hi].forEach((v) => { if (!th) g += `<text x="${L - 4}" y="${(Y(v) + 3).toFixed(1)}" text-anchor="end" font-size="9" fill="var(--secondary-text-color)">${this._fmt(v, 0)}</text>`; });
+      [lo, hi].forEach((v) => { if (!th) g += `<text x="${L - 4}" y="${(Y(v) + 3).toFixed(1)}" text-anchor="end" font-size="9" fill="var(--secondary-text-color)">${this._fmt(v, hi - lo < 5 ? Math.max(1, dec(x.k, v)) : dec(x.k, v))}</text>`; });
       const path = pts.map((p, i) => `${i ? 'L' : 'M'}${X(p.t).toFixed(1)} ${Y(p.v).toFixed(1)}`).join('');
       const col = x.lv < 0 ? '#8a929a' : COL[x.lv];
       g += `<path d="${path}L${X(pts[pts.length - 1].t).toFixed(1)} ${Y(lo).toFixed(1)}L${X(pts[0].t).toFixed(1)} ${Y(lo).toFixed(1)}Z" fill="${col}" opacity=".16"/><path d="${path}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
@@ -334,6 +351,8 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
   customElements.define(TAG, ApplianceAirQualityCard);
 
   /* ---- éditeur visuel ---- */
+  const PRIMARY_ED = ['co2', 'pm1', 'pm25', 'pm10', 'voc', 'humidity', 'temperature'];
+  const EXTRA_ED = ORDER.filter((k) => !PRIMARY_ED.includes(k));
   class ApplianceAirQualityCardEditor extends HTMLElement {
     setConfig(c) { this._c = c; this._draw(); }
     set hass(h) { this._hass = h; if (this._form) this._form.hass = h; }
@@ -348,11 +367,14 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
       }
       const ent = (name) => ({ name, selector: { entity: { domain: 'sensor' } } });
       const bool = (name) => ({ name, selector: { boolean: {} }, default: true });
+      const lang = window.applianceLang(T, this._c, this._hass);
+      const moreTitle = (T[lang] || T.en).more_sensors || T.en.more_sensors || 'Additional sensors';
       this._form.hass = this._hass;
       this._form.data = this._c;
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
-        ORDER.map((k) => ent(METRICS[k].opt)),
+        ...PRIMARY_ED.map((k) => ent(METRICS[k].opt)),
+        { type: 'expandable', name: '', title: moreTitle, flatten: true, schema: EXTRA_ED.map((k) => ent(METRICS[k].opt)) },
         { name: 'thresholds', selector: { object: {} } },
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },

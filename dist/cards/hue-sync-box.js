@@ -105,6 +105,25 @@
       "plugged": "Ligado",
       "unplugged": "Desligado"
     },
+    "ru": {
+      "name": "Hue Sync Box",
+      "model_top": "Вид сверху",
+      "model_ports": "Вид с портами (питание, USB, HDMI)",
+      "off": "Выключен",
+      "on": "Включён",
+      "syncing": "Синхронизация",
+      "unavailable": "Недоступно",
+      "btn_power": "Питание",
+      "btn_sync": "Синхронизация света",
+      "btn_dolby": "Dolby Vision",
+      "area": "Зона развлечений",
+      "intensity": "Интенсивность",
+      "mode": "Режим синхронизации",
+      "input": "Вход HDMI",
+      "led": "Светодиодный индикатор",
+      "plugged": "Подключено",
+      "unplugged": "Отключено"
+    },
     "uk": {
       "name": "Hue Sync Box",
       "model_top": "Вигляд згори",

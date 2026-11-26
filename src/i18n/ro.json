@@ -990,7 +990,7 @@
     "entity_today": "Consumul de azi",
     "entity_leak": "Senzor de scurgere",
     "detector": "Tip detector",
-    "entity_valve": "Robinet de închidere",
+    "entity_valve": "3-way valve (hot water)",
     "leak_minutes": "Alertă scurgere după (min de curgere continuă)",
     "freeze_threshold": "Prag de îngheț (°C)",
     "flow_threshold": "Debit considerat nul sub",
@@ -1164,7 +1164,6 @@
     "entity_dhw_temp": "Hot water tank temperature",
     "entity_pump_1": "Zone 1 circulator",
     "entity_pump_2": "Zone 2 circulator",
-    "entity_valve": "3-way valve (hot water)",
     "entity_backup": "Backup heater",
     "entity_immersion": "Immersion heater",
     "entity_boiler": "Boiler",
@@ -1331,8 +1330,8 @@
     "resume": "Revino la program"
   },
   "room_climate": {
-"pressure": "Presiune",
-        "st_display_rect": "Afișaj digital (dreptunghiular)",
+    "pressure": "Presiune",
+    "st_display_rect": "Afișaj digital (dreptunghiular)",
     "st_display_round": "Afișaj digital (rotund)",
     "name": "Climat cameră",
     "comfort": "Confortabil",

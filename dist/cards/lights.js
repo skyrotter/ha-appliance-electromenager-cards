@@ -366,7 +366,9 @@
       "ceiling_spot": "Spoturi încastrate"
     },
     "ru": {
-      "ceiling_globe": "Потолочный светильник-шар",
+      "white_warm": "Тёплый белый",
+      "white_neutral": "Нейтральный белый",
+      "white_cold": "Холодный белый",
       "light_bulb": "Лампа",
       "color_bulb": "Цветная лампа",
       "filament_bulb": "Филаментная лампа",
@@ -386,7 +388,11 @@
       "brightness": "Яркость",
       "power": "Мощность",
       "energy": "Энергия",
-      "ceiling_spot": "Встраиваемые светильники"
+      "ceiling_spot": "Встраиваемые светильники",
+      "ceiling_globe": "Потолочный светильник-шар",
+      "slider_bottom": "Под лампой",
+      "slider_left": "Слева",
+      "slider_right": "Справа"
     },
     "sr": {
       "ceiling_globe": "Плафоњера лопта",
