@@ -12,17 +12,26 @@
 - **24 h graph** of a sensor (`entity_graph`, outdoor temperature by default) and the **ticker** at the bottom (`entity_ticker`, or the forecast translated by Home Assistant and the wind).
 - `backlight: false` for the grey, unlit LCD. The LCD labels (TEMP OUT, BAROMETER…) stay in English like on the real console; change them with `labels`.
 
+- **Pressure unit**: `pressure_unit: hPa | inHg | mmHg` converts the value (the trend arrow always works in hPa).
+- **Heat index**: calculated from the outdoor temperature and humidity when `entity_extra` is empty (equal to the temperature below about 27 °C, like the console). `extra_calc: false` to disable it.
+- **Rain without a rain gauge**: if `entity_rain_day` / `entity_rain_rate` are empty, the card uses the precipitation of the `weather.*` forecast (daily total of today, and the current hour for the rate). `rain_from_forecast: false` to disable it.
+- **Bigger screen**: `hide_keys: true` removes the side buttons so the LCD fills the card; combine it with `illustration_size` (%) on a tablet.
+- **24 h graph**: needs a sensor with history (`entity_graph`, or `entity_temp_out`); a `weather.*` entity alone has no history.
+
 Sources: a `weather.*` entity (local station or web weather) and / or separate sensors, all optional. A separate sensor wins over the attribute of the weather entity.
 
 ```yaml
 type: custom:appliance-weather-station-card
 name: Weather station
 entity_weather: weather.home
-entity_temp_out: sensor.outdoor_temperature     # optional
+entity_temp_out: sensor.outdoor_temperature     # optional (also feeds the 24 h graph)
+entity_hum_out: sensor.outdoor_humidity         # optional
+pressure_unit: hPa                              # optional
+hide_keys: true                                 # optional: bigger screen
 entity_pressure: sensor.outdoor_pressure        # optional (trend arrow)
 entity_temp_in: sensor.living_room_temperature
 entity_hum_in: sensor.living_room_humidity
-entity_extra: sensor.dew_point
+entity_extra: sensor.dew_point                  # optional (otherwise heat index, calculated)
 extra_label: Dew point
 entity_rain_day: sensor.rain_today
 entity_rain_rate: sensor.rain_rate
