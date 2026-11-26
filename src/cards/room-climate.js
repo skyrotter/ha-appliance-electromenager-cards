@@ -1057,7 +1057,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       const dead = !cs || /^(unavailable|unknown)$/i.test(String(cs.state));
       // boutons de mode : seulement les modes que propose le thermostat, dans l'ordre de Home Assistant
       const box = r.getElementById('cmodes');
-      const modes = Array.isArray(a.hvac_modes) ? [...a.hvac_modes].sort((x, y) => (HVAC_ORDER.indexOf(x) + 1 || 99) - (HVAC_ORDER.indexOf(y) + 1 || 99)) : [];
+      const modes = Array.isArray(a.hvac_modes) ? a.hvac_modes.toSorted((x, y) => (HVAC_ORDER.indexOf(x) + 1 || 99) - (HVAC_ORDER.indexOf(y) + 1 || 99)) : [];
       box.hidden = !k || c.show_hvac_modes !== true || !modes.length;
       if (!box.hidden) {
         const key = modes.join(',');
@@ -1326,8 +1326,8 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       // valeurs actuelles, ajoutées en fin de série
       const curT = card._temp(c.entity_temperature), curH = card._raw(c.entity_humidity);
       const fT = (v) => `${card._fmt(v)}${tmp.unit}`, fH = (v) => `${card._fmt(v, 0)} %`;
-      if (!D) { chart.innerHTML = `<div class="msg">${esc(card._t('loading'))}</div>`; r.getElementById('stats').innerHTML = ''; r.getElementById('lg').innerHTML = ''; r.getElementById('days').innerHTML = ''; return; }
-      if (D.err || (!D.t.length && !D.h.length)) { chart.innerHTML = `<div class="msg">${esc(card._t('no_history'))}</div>`; r.getElementById('stats').innerHTML = ''; r.getElementById('lg').innerHTML = ''; r.getElementById('days').innerHTML = ''; return; }
+      if (!D) { chart.innerHTML = `<div class="msg">${esc(card._t('loading'))}</div>`; r.getElementById('stats').replaceChildren(); r.getElementById('lg').replaceChildren(); r.getElementById('days').replaceChildren(); return; }
+      if (D.err || (!D.t.length && !D.h.length)) { chart.innerHTML = `<div class="msg">${esc(card._t('no_history'))}</div>`; r.getElementById('stats').replaceChildren(); r.getElementById('lg').replaceChildren(); r.getElementById('days').replaceChildren(); return; }
       const end = Date.now(), start = end - days * 86400e3, n = RANGES[days].n;
       const withCur = (s, v) => (fin(v) ? s.concat([{ t: end - 1, v, mn: v, mx: v }]) : s);
       const sT = this._bucket(withCur(D.t, curT), start, end, n), sH = this._bucket(withCur(D.h, curH), start, end, n);
@@ -1337,7 +1337,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       const pT = P && P.t.length ? this._bucket(P.t, start, end, n) : none, pH = P && P.h.length ? this._bucket(P.h, start, end, n) : none;
       const prevLbl = card._l(days === 1 ? 'yesterday' : 'previous');
       const vals = (s) => s.filter(Boolean);
-      if (!vals(sT).length && !vals(sH).length) { chart.innerHTML = `<div class="msg">${esc(card._t('no_history'))}</div>`; r.getElementById('stats').innerHTML = ''; r.getElementById('lg').innerHTML = ''; r.getElementById('days').innerHTML = ''; return; }
+      if (!vals(sT).length && !vals(sH).length) { chart.innerHTML = `<div class="msg">${esc(card._t('no_history'))}</div>`; r.getElementById('stats').replaceChildren(); r.getElementById('lg').replaceChildren(); r.getElementById('days').replaceChildren(); return; }
 
       // tuiles : actuelle, moyenne, min, max
       const agg = (s) => { const v = vals(s); return v.length ? { avg: v.reduce((a, p) => a + p.v, 0) / v.length, min: Math.min(...v.map((p) => p.mn)), max: Math.max(...v.map((p) => p.mx)) } : null; };
@@ -1363,7 +1363,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       const line = (s, y, k = 'v') => { let d = '', pen = false; s.forEach((p, i) => { if (!p) { pen = false; return; } d += `${pen ? 'L' : 'M'}${x(i).toFixed(1)} ${y(p[k]).toFixed(1)}`; pen = true; }); return d; };
       const band = (s, y) => { // bande min-max, segment par segment (les trous coupent la bande)
         let d = '', seg = [];
-        const flush = () => { if (seg.length > 1) d += `M${seg.map(([i, p]) => `${x(i).toFixed(1)} ${y(p.mx).toFixed(1)}`).join('L')}L${seg.slice().reverse().map(([i, p]) => `${x(i).toFixed(1)} ${y(p.mn).toFixed(1)}`).join('L')}Z`; seg = []; };
+        const flush = () => { if (seg.length > 1) d += `M${seg.map(([i, p]) => `${x(i).toFixed(1)} ${y(p.mx).toFixed(1)}`).join('L')}L${seg.toReversed().map(([i, p]) => `${x(i).toFixed(1)} ${y(p.mn).toFixed(1)}`).join('L')}Z`; seg = []; };
         s.forEach((p, i) => { if (p) seg.push([i, p]); else flush(); }); flush();
         return d;
       };

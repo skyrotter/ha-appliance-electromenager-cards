@@ -5,19 +5,31 @@
 .k-desktop_pc.st-screen_on .pc-fan { animation: ac-rot .7s linear infinite; }
 .pc-rgb circle { stroke: #1d242b; transition: stroke .5s; }
 .k-desktop_pc.st-screen_on .pc-rgb circle { animation: pc-rgb 4s linear infinite; filter: drop-shadow(0 0 1.6px currentColor); }
-.pc-rgb circle:nth-child(2) { animation-delay: -1.3s !important; } .pc-rgb circle:nth-child(3) { animation-delay: -2.6s !important; }
-.pc-led { fill: #5a636d; transition: fill .3s; }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .pc-rgb circle { animation-delay: calc((sibling-index() - 1) * -1.3s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .pc-rgb circle:nth-child(2) { animation-delay: -1.3s !important; } .pc-rgb circle:nth-child(3) { animation-delay: -2.6s !important; }
+}.pc-led { fill: #5a636d; transition: fill .3s; }
 .k-desktop_pc.st-screen_on .pc-led { fill: #38d9ff; filter: drop-shadow(0 0 1.4px #38d9ff); }
 .k-desktop_pc.st-standby .pc-led { fill: #ffb020; animation: ac-pulse 2.4s ease-in-out infinite; }
 .pc-mled { fill: #3a424b; } .k-desktop_pc.st-screen_on .pc-mled { fill: #43c07a; } .k-desktop_pc.st-standby .pc-mled { fill: #ffb020; }
 .pc-code rect { transform-box: fill-box; transform-origin: 0 50%; }
 .k-desktop_pc.st-screen_on .pc-code rect { animation: pc-type 4.4s ease-in-out infinite; }
-.pc-code rect:nth-child(2) { animation-delay: .5s !important; } .pc-code rect:nth-child(3) { animation-delay: 1s !important; }
-.pc-code rect:nth-child(4) { animation-delay: 1.5s !important; } .pc-code rect:nth-child(5) { animation-delay: 2s !important; }
-.pc-bars rect { transform-box: fill-box; transform-origin: 50% 100%; }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .pc-code rect { animation-delay: calc((sibling-index() - 1) * .5s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .pc-code rect:nth-child(2) { animation-delay: .5s !important; } .pc-code rect:nth-child(3) { animation-delay: 1s !important; }
+  .pc-code rect:nth-child(4) { animation-delay: 1.5s !important; } .pc-code rect:nth-child(5) { animation-delay: 2s !important; }
+}.pc-bars rect { transform-box: fill-box; transform-origin: 50% 100%; }
 .k-desktop_pc.st-screen_on .pc-bars rect { animation: pc-bar 3.2s ease-in-out infinite alternate; }
-.pc-bars rect:nth-child(2) { animation-delay: .4s !important; } .pc-bars rect:nth-child(3) { animation-delay: .8s !important; } .pc-bars rect:nth-child(4) { animation-delay: 1.2s !important; }
-.pc-cursor { transform: translate(20px, 30px); }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .pc-bars rect { animation-delay: calc((sibling-index() - 1) * .4s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .pc-bars rect:nth-child(2) { animation-delay: .4s !important; } .pc-bars rect:nth-child(3) { animation-delay: .8s !important; } .pc-bars rect:nth-child(4) { animation-delay: 1.2s !important; }
+}.pc-cursor { transform: translate(20px, 30px); }
 .k-desktop_pc.st-screen_on .pc-cursor { animation: pc-mouse 6s ease-in-out infinite; }
 .k-desktop_pc.st-screen_on .pc-keys rect { fill: #38d9ff; opacity: .5; animation: ac-glow 2.4s ease-in-out infinite; }
 @keyframes pc-rgb { 0% { stroke: #ff3b6b; color: #ff3b6b; } 33% { stroke: #3bff9a; color: #3bff9a; } 66% { stroke: #3b9cff; color: #3b9cff; } 100% { stroke: #ff3b6b; color: #ff3b6b; } }

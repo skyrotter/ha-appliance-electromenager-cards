@@ -11,8 +11,12 @@
 .steam-pot path { fill: none; stroke: #ffffff; stroke-width: 2.2; stroke-linecap: round; opacity: 0; }
 .pot-on .steam-pot path { animation: ac-steam 2.6s ease-out infinite; }
 .pot-boil .steam-pot path { animation-duration: 1.4s; }
-.steam-pot path:nth-child(2) { animation-delay: .8s !important; } .steam-pot path:nth-child(3) { animation-delay: 1.6s !important; }
-.lid { transform-box: view-box; transform-origin: 40px 80px; }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .steam-pot path { animation-delay: calc((sibling-index() - 1) * .8s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .steam-pot path:nth-child(2) { animation-delay: .8s !important; } .steam-pot path:nth-child(3) { animation-delay: 1.6s !important; }
+}.lid { transform-box: view-box; transform-origin: 40px 80px; }
 .pot-boil .lid { animation: ac-lid .35s steps(2) infinite; }
 .sizzle path { fill: none; stroke: #f2c94c; stroke-width: .8; stroke-linecap: round; opacity: 0; }
 .pan-on .sizzle path { animation: ac-pulse .5s steps(2) infinite; }

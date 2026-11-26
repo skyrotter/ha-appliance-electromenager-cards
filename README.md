@@ -136,6 +136,7 @@ Click a card for its options and examples.
 | [Dehumidifier](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/dehumidifier.md) | `custom:appliance-dehumidifier-card` |
 | [Air purifier](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/air-purifier.md) | `custom:appliance-air-purifier-card` |
 | [Airbowl air sanitiser](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/airbowl.md) | `custom:appliance-airbowl-card` |
+| [Fresh air purifier (breezer)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/breezer.md) | `custom:appliance-breezer-card` |
 
 ### Energy, pool, spa and aquarium
 
@@ -173,6 +174,7 @@ Click a card for its options and examples.
 | [Mailbox (mail and parcels)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/mailbox.md) | `custom:appliance-mailbox-card` |
 | [Smoke detector (smoke, CO, 2 models)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/smoke-detector.md) | `custom:appliance-smoke-detector-card` |
 | [Smart lock (Nuki, 2 models)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/smart-lock.md) | `custom:appliance-smart-lock-card` |
+| [Video doorbell](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/video-doorbell.md) | `custom:appliance-video-doorbell-card` |
 | [Hue Play HDMI Sync Box](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/hue-sync-box.md) | `custom:appliance-hue-sync-box-card` |
 | [Door sensor](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/door-sensor.md) | `custom:appliance-door-sensor-card` |
 | [Motion sensor](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/motion-sensor.md) | `custom:appliance-motion-sensor-card` |

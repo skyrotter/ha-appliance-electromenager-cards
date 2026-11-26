@@ -30,6 +30,8 @@ jobs:
       - run: node build.js --check
       - run: node --check dist/ha-appliance-electromenager-cards.js
       - run: find dist/cards -name '*.js' -print0 | xargs -0 -n1 node --check
+      - run: find dist/assets -name '*.js' -print0 | xargs -0 -n1 node --check
+      - run: node tests/browser.cjs
   version:
     name: Version bump
     # code modifié sans changer la version : le tag v<VERSION> existe déjà et src/ ou dist/ ont changé depuis

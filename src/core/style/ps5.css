@@ -9,8 +9,12 @@
 .ps-air { opacity: 0; } .ps-air path { stroke: #9aa7b4; }
 .k-ps5.st-screen_on .ps-air { opacity: .5; } .k-ps5.st-ps_gaming .ps-air { opacity: 1; } .k-ps5.st-ps_gaming .ps-air path { stroke: #ffab70; }
 .k-ps5.active .ps-air path { animation: ac-steam 2.6s ease-out infinite; }
-.ps-air path:nth-child(2) { animation-delay: .8s !important; } .ps-air path:nth-child(3) { animation-delay: 1.6s !important; }
-.k-ps5.st-ps_gaming .ps-air path { animation-duration: 1.6s; }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .ps-air path { animation-delay: calc((sibling-index() - 1) * .8s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .ps-air path:nth-child(2) { animation-delay: .8s !important; } .ps-air path:nth-child(3) { animation-delay: 1.6s !important; }
+}.k-ps5.st-ps_gaming .ps-air path { animation-duration: 1.6s; }
 /* halo bleu de l'écran en jeu */
 .ps-amb { opacity: 0; transition: opacity .8s; }
 .k-ps5.st-ps_gaming .ps-amb { opacity: 1; animation: ps-amb 5s ease-in-out infinite; }
@@ -24,8 +28,12 @@
 .k-ps5.st-ps_gaming .ps-pad { animation: ps-play 2.8s ease-in-out infinite; }
 .ps-btn circle { fill: #9aa3ac; }
 .k-ps5.st-ps_gaming .ps-btn circle { animation: ps-press 1.2s steps(1) infinite; }
-.ps-btn circle:nth-child(2) { animation-delay: .3s !important; } .ps-btn circle:nth-child(3) { animation-delay: .6s !important; } .ps-btn circle:nth-child(4) { animation-delay: .9s !important; }
-@keyframes ps-sweep { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .ps-btn circle { animation-delay: calc((sibling-index() - 1) * .3s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .ps-btn circle:nth-child(2) { animation-delay: .3s !important; } .ps-btn circle:nth-child(3) { animation-delay: .6s !important; } .ps-btn circle:nth-child(4) { animation-delay: .9s !important; }
+}@keyframes ps-sweep { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
 @keyframes ps-boot { 0%, 60% { stroke: #3b9cff; } 100% { stroke: #f2f8ff; } }
 @keyframes ps-amb { 0%, 100% { opacity: .65; } 50% { opacity: 1; } }
 @keyframes ps-play { 0%, 100% { transform: translate(0, -7px) rotate(-3deg); } 25% { transform: translate(-1px, -8px) rotate(2deg); } 50% { transform: translate(.6px, -6.4px) rotate(-1deg); } 75% { transform: translate(-.4px, -8px) rotate(3deg); } }

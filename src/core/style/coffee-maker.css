@@ -10,8 +10,12 @@
 .k-coffee_maker.st-brewing .cf-stream { opacity: .95; animation: cf-flow .45s linear infinite; }
 .cf-drip circle { fill: #4a2a14; opacity: 0; }
 .k-coffee_maker.st-brewing .cf-drip circle { animation: cf-drop 1.1s ease-in infinite; }
-.cf-drip circle:nth-child(2) { animation-delay: .37s !important; } .cf-drip circle:nth-child(3) { animation-delay: .74s !important; }
-.cf-plate { fill: #3a3232; transition: fill .6s; }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .cf-drip circle { animation-delay: calc((sibling-index() - 1) * .37s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .cf-drip circle:nth-child(2) { animation-delay: .37s !important; } .cf-drip circle:nth-child(3) { animation-delay: .74s !important; }
+}.cf-plate { fill: #3a3232; transition: fill .6s; }
 .k-coffee_maker.st-brewing .cf-plate, .k-coffee_maker.st-keep_warm .cf-plate { fill: #ff5a1f; filter: drop-shadow(0 0 2px #ff7a2e); animation: ac-pulse 1.8s ease-in-out infinite; }
 .cf-led { fill: #3a424b; transition: fill .3s; }
 .k-coffee_maker.st-ready .cf-led { fill: #3ddc84; }
