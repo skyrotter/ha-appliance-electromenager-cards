@@ -2,7 +2,7 @@
 
 `custom:appliance-energy-monitor-card`: a home energy display from a **single sensor**, in the spirit of the Ecojoko screen. For example one sensor that reports the whole consumption of the induction hob and the oven.
 
-- **Round white box** like the real thing: the **watts scale** on the top arc (0, 50, 100, 500, 1K, 5K, 10K, MAX) with a blue marker that follows the power right now; the part reached is tinted green / orange / red following your thresholds.
+- **Round white box** like the real thing: the **watts scale** on the top arc (0, 50, 100, 500, 1K, 5K, 10K, MAX) with a blue marker that follows the power right now; the whole arc carries a **colour scale** (green / orange / red following your thresholds), the part already reached is full and the rest is dimmed.
 - **% scale** on the bottom arc (-20 … +20): the evolution of your consumption over the **last 7 days compared with the 7 days before** (needs the long-term statistics of the sensor, at least 10 days). The second blue marker shows it.
 - **Black screen** in the middle that cycles every 6 seconds: power, energy of the day, cost, **base load** (the lowest hourly average power of the last 24 h) and "Saving over 7 days -18 % of consumption".
 - **Tiles** (today, cost, base load) and a **24 h histogram**: average power per hour, coloured by level, with a dashed line for the base load. The history comes from the Home Assistant recorder, completed by the live value.
