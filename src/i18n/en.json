@@ -1610,6 +1610,7 @@
     "target_step": "Target step (%)",
     "show_tank": "Tank tile",
     "target_humidity": "Target humidity",
+    "humidity": "Current humidity",
     "fan_speed": "Fan speed (select)",
     "water_level": "Water level (%)",
     "entity_lux": "Light level sensor (lux)",

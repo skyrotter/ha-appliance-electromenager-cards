@@ -1580,6 +1580,7 @@
     "target_step": "Incremento da umidade desejada (%)",
     "show_tank": "Bloco do reservatório",
     "target_humidity": "Umidade desejada",
+    "humidity": "Umidade atual",
     "fan_speed": "Velocidade de ventilação (select)",
     "water_level": "Nível de água (%)",
     "entity_lux": "Sensor de luminosidade (lux)",

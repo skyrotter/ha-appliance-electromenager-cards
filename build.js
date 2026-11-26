@@ -108,11 +108,12 @@ const substituteI18n = (text) => text.replace(/^([ \t]*)(.*?)\/\*@i18n (\w+)\*\/
   if (!i18n.en[ns]) throw new Error(`namespace "${ns}" missing from src/i18n/en.json`);
   usedI18n.add(ns);
   const table = Object.fromEntries(langs.filter((l) => i18n[l][ns]).map((l) => [l, i18n[l][ns]]));
-  return indent + before + JSON.stringify(table, null, 2).replace(/\n/g, `\n${indent}`);
+  return indent + before + JSON.stringify(table);
 });
 
 /* ---- core (one shared IIFE) ---- */
-const css = CSS_FILES.map(load).join("\n").replace(/[\\`]|\$\{/g, (c) => `\\${c}`);
+const compactCss = (raw) => raw.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s+/gm, "").replace(/\n{2,}/g, "\n").trim();
+const css = compactCss(CSS_FILES.map(load).join("\n")).replace(/[\\`]|\$\{/g, (c) => `\\${c}`);
 let core = '(() => {\n"use strict";\n' + CORE_FILES.flatMap(expand).map(load).join("\n") + "})();\n";
 const cssMarkers = core.split("/*@css*/``").length - 1;
 if (cssMarkers !== 1) throw new Error(`expected one /*@css*/\`\` marker, found ${cssMarkers}`);
