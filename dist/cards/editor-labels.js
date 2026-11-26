@@ -3103,7 +3103,18 @@
       "history_popup_background": "Fondo de la ventana emergente (#hex, rgb(), rgba() o nombre CSS)",
       "history_popup_opacity": "Opacidad del fondo de la ventana emergente",
       "show_subscribed": "Mostrar la línea de potencia contratada",
-      "press_animation": "Animar las pulsaciones de los botones"
+      "press_animation": "Animar las pulsaciones de los botones",
+      "entity_pm03": "Sensor PM0.3",
+      "entity_pm1": "Sensor PM1",
+      "entity_pm4": "Sensor PM4",
+      "entity_nox": "Sensor NOx",
+      "entity_radon": "Sensor de radón",
+      "entity_radon_long_term": "Sensor de radón a largo plazo",
+      "entity_propane": "Sensor de propano (C₃H₈)",
+      "entity_o2": "Sensor de oxígeno (O₂)",
+      "entity_no2": "Sensor de dióxido de nitrógeno (NO₂)",
+      "entity_o3": "Sensor de ozono (O₃)",
+      "entity_noise": "Sensor de ruido (dB)"
     },
     "fr": {
       "confirm_action": "Demander confirmation avant l'action",
@@ -6926,7 +6937,18 @@
       "panels": "Número de painéis (1 ou 2)",
       "show_soc_max": "Mostrar carga máxima",
       "show_soc_min": "Mostrar carga mínima",
-      "side": "Lado em que o painel único se empilha"
+      "side": "Lado em que o painel único se empilha",
+      "entity_pm03": "Sensor PM0.3",
+      "entity_pm1": "Sensor PM1",
+      "entity_pm4": "Sensor PM4",
+      "entity_nox": "Sensor NOx",
+      "entity_radon": "Sensor de radônio",
+      "entity_radon_long_term": "Sensor de radônio de longo prazo",
+      "entity_propane": "Sensor de propano (C₃H₈)",
+      "entity_o2": "Sensor de oxigênio (O₂)",
+      "entity_no2": "Sensor de dióxido de nitrogênio (NO₂)",
+      "entity_o3": "Sensor de ozônio (O₃)",
+      "entity_noise": "Sensor de ruído (dB)"
     },
     "pt-PT": {
       "garage_car_image": "Imagem do carro (vista frontal, URL ou ficheiro /local/)",
@@ -7686,7 +7708,18 @@
       "panels": "Número de painéis (1 ou 2)",
       "show_soc_max": "Mostrar carga máxima",
       "show_soc_min": "Mostrar carga mínima",
-      "side": "Lado em que o painel único se empilha"
+      "side": "Lado em que o painel único se empilha",
+      "entity_pm03": "Sensor PM0.3",
+      "entity_pm1": "Sensor PM1",
+      "entity_pm4": "Sensor PM4",
+      "entity_nox": "Sensor NOx",
+      "entity_radon": "Sensor de radão",
+      "entity_radon_long_term": "Sensor de radão de longo prazo",
+      "entity_propane": "Sensor de propano (C₃H₈)",
+      "entity_o2": "Sensor de oxigénio (O₂)",
+      "entity_no2": "Sensor de dióxido de azoto (NO₂)",
+      "entity_o3": "Sensor de ozono (O₃)",
+      "entity_noise": "Sensor de ruído (dB)"
     },
     "ro": {
       "garage_car_image": "Imaginea mașinii (vedere din față, URL sau fișier /local/)",
@@ -10456,7 +10489,18 @@
       "history_popup_background": "Фон спливного вікна (#hex, rgb(), rgba() або назва CSS)",
       "history_popup_opacity": "Непрозорість фону спливного вікна",
       "show_subscribed": "Показувати лінію договірної потужності",
-      "press_animation": "Анімувати натискання кнопок"
+      "press_animation": "Анімувати натискання кнопок",
+      "entity_pm03": "Датчик PM0.3",
+      "entity_pm1": "Датчик PM1",
+      "entity_pm4": "Датчик PM4",
+      "entity_nox": "Датчик NOx",
+      "entity_radon": "Датчик радону",
+      "entity_radon_long_term": "Датчик довгострокового радону",
+      "entity_propane": "Датчик пропану (C₃H₈)",
+      "entity_o2": "Датчик кисню (O₂)",
+      "entity_no2": "Датчик діоксиду азоту (NO₂)",
+      "entity_o3": "Датчик озону (O₃)",
+      "entity_noise": "Датчик шуму (дБ)"
     }
   };
   const lang = (hass) => window.applianceLang(L, null, hass);
