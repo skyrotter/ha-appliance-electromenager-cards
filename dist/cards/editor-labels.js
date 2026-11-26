@@ -764,7 +764,18 @@
       "history_popup_background": "Pop-up background (#hex, rgb(), rgba() or CSS name)",
       "history_popup_opacity": "Pop-up background opacity",
       "show_subscribed": "Show the subscribed power line",
-      "press_animation": "Animate the button presses"
+      "press_animation": "Animate the button presses",
+      "entity_pm03": "PM0.3 sensor",
+      "entity_pm1": "PM1 sensor",
+      "entity_pm4": "PM4 sensor",
+      "entity_nox": "NOx sensor",
+      "entity_radon": "Radon sensor",
+      "entity_radon_long_term": "Radon (long term) sensor",
+      "entity_propane": "Propane sensor",
+      "entity_o2": "Oxygen (O₂) sensor",
+      "entity_no2": "NO₂ sensor",
+      "entity_o3": "Ozone (O₃) sensor",
+      "entity_noise": "Noise sensor (dB)"
     },
     "cs": {
       "garage_car_image": "Obrázek auta (pohled zepředu, URL nebo soubor /local/)",
@@ -3853,7 +3864,18 @@
       "history_popup_background": "Fond du pop-up (#hex, rgb(), rgba() ou nom CSS)",
       "history_popup_opacity": "Opacité du fond du pop-up",
       "show_subscribed": "Afficher la ligne « Souscrite »",
-      "press_animation": "Animer les appuis sur le bouton"
+      "press_animation": "Animer les appuis sur le bouton",
+      "entity_pm03": "Capteur PM0.3",
+      "entity_pm1": "Capteur PM1",
+      "entity_pm4": "Capteur PM4",
+      "entity_nox": "Capteur NOx",
+      "entity_radon": "Capteur de radon",
+      "entity_radon_long_term": "Capteur de radon (long terme)",
+      "entity_propane": "Capteur de propane",
+      "entity_o2": "Capteur d'oxygène (O₂)",
+      "entity_no2": "Capteur NO₂",
+      "entity_o3": "Capteur d'ozone (O₃)",
+      "entity_noise": "Capteur de bruit (dB)"
     },
     "hu": {
       "garage_car_image": "Autó képe (elölnézet, URL vagy /local/ fájl)",
