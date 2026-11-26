@@ -14,12 +14,13 @@
 | Option | Description |
 | --- | --- |
 | `entity_solar` | Solar production (W or kW) |
-| `entity_home` | House consumption (optional: otherwise computed = production + import + discharge − export − charge − EV − water heater). A negative value (for example a current clamp that swings around 0) is shown as 0 |
+| `entity_home` | House consumption (optional: otherwise computed = production + import + discharge − export − charge − EV − water heater). A negative value (for example a current clamp that swings around 0) is shown as 0, unless `show_negative: true` |
 | `entity_battery_power` | Battery power, + = charging, − = discharging (`battery_invert: true` if your sensor is the other way round) |
 | `entity_battery_soc` | Battery level (%) |
 | `entity_grid` | Grid power, + = import, − = export (`grid_invert: true` to invert); or `entity_grid_import` + `entity_grid_export` (two positive sensors) |
 | `entity_ev`, `entity_water_heater` | Optional: EV charger and water heater power (shown only if set) |
 | `entity_car_soc` | Optional: the car's battery level (%), shown with the EV charger power in the legend (`74 % · 7.4 kW`) and in the EV tile; orange below 20 %, red below 10 % |
+| `show_negative` | `true` shows negative values with their sign: the house consumption as it is (for example `-8 W`) and the grid with `+` import / `-` export (instead of the value without sign and the Import / Export label). Default `false` |
 | `max_power` | Power at which the dots reach full speed (W, default 6000) |
 | `show_tiles`, `show_status`, `animations`, `labels`, `illustration_size`, `transparent`, `language` | Usual options |
 
