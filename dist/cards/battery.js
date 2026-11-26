@@ -290,12 +290,13 @@ class ApplianceBatteryCard extends HTMLElement {
     const c = this._config, r = this.shadowRoot;
     const soc = this._num(c.entity_soc), energy = this._num(c.entity_energy);
     const tc = window.applianceTemp(this._hass, c), temp = tc.conv(this._num(c.entity_temperature), this._hass.states[c.entity_temperature]);
-    let p = this._w(c.entity_power); if (p !== null && c.invert_power) p = -p;
+    let p = this._w(c.entity_power);
     // deux capteurs séparés (ex. Zendure : puissance vers la batterie / depuis la batterie) : charge − décharge, positif = charge
     if (!c.entity_power && (c.entity_charge_power || c.entity_discharge_power)) {
       const ch = this._w(c.entity_charge_power), di = this._w(c.entity_discharge_power);
       p = ch === null && di === null ? null : (ch || 0) - (di || 0);
     }
+    if (p !== null && c.invert_power) p = -p; // invert_power s'applique au capteur signé comme à la paire charge / décharge
     const pct = soc === null ? 0 : Math.max(0, Math.min(100, soc));
     // Remplissage des 3 modules (corps : y 62 → 160)
     const h = 98 * pct / 100;

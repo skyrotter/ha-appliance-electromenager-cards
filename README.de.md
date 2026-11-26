@@ -176,6 +176,9 @@ Klicke auf eine Karte für ihre Optionen und Beispiele.
 | [CO₂-Monitor](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/co2-monitor.md) | `custom:appliance-co2-monitor-card` |
 | [Barometer](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/barometer.md) | `custom:appliance-barometer-card` |
 | [Wetterstation (Stil Davis Vantage Pro2)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/weather-station.md) | `custom:appliance-weather-station-card` |
+| [Energiemonitor (Stil Ecojoko)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/energy-monitor.md) | `custom:appliance-energy-monitor-card` |
+| [Küchentimer](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/kitchen-timer.md) | `custom:appliance-kitchen-timer-card` |
+| [Backofen und Kochfeld (ein Sensor)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/oven-hob.md) | `custom:appliance-oven-hob-card` |
 | [Wassermelder](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/leak-detector.md) | `custom:appliance-leak-detector-card` |
 | [Regenmesser (Intensität, Summen)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/rain-gauge.md) | `custom:appliance-rain-gauge-card` |
 | [Pflanzenmonitor (Mi Flora: Feuchte, Licht, Nährstoffe)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/plant-monitor.md) | `custom:appliance-plant-monitor-card` |
