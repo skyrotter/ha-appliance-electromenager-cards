@@ -120,6 +120,8 @@ svg.compact{max-width:calc(600px * var(--illus-scale,1))}
     getGridOptions() { return { columns: 12, min_columns: 6, rows: 'auto', min_rows: 2 }; }
 
     _t(k) { return T[this._lang()][k] ?? T.en[k] ?? k; }
+    // texte du bandeau : dans la langue de Home Assistant, comme la prévision traduite par HA (sinon « CLOUDY · VENT 5 KM/H » mélange deux langues)
+    _tHa(k) { const L = window.applianceLang(T, {}, this._hass); return (T[L] || {})[k] ?? T.en[k] ?? k; }
     _l(k, d) { const L = this._c && this._c.labels; return L && L[k] != null && L[k] !== '' ? String(L[k]) : d; }
     _lang() { return window.applianceLang(T, this._c, this._hass); }
     _st(id) { return id && this._hass.states[id]; }
@@ -257,7 +259,7 @@ svg.compact{max-width:calc(600px * var(--illus-scale,1))}
       }
       // bandeau : texte du capteur choisi, sinon la prévision traduite par Home Assistant
       const condTxt = cond ? ((hass.localize && hass.localize(`component.weather.entity_component._.state.${cond}`)) || cond.replace(/-/g, ' ')) : '';
-      const ticker = String((c.entity_ticker && (this._st(c.entity_ticker) || {}).state) || [condTxt, fin(ws.v) ? `${this._t('wind')} ${f(ws.v, 0)} ${ws.u}` : ''].filter(Boolean).join('  ·  ') || this._t('name')).toUpperCase();
+      const ticker = String((c.entity_ticker && (this._st(c.entity_ticker) || {}).state) || [condTxt, fin(ws.v) ? `${this._tHa('wind')} ${f(ws.v, 0)} ${ws.u}` : ''].filter(Boolean).join('  ·  ') || this._t('name')).toUpperCase();
       const lcd = c.backlight === false ? ['#c9cfb7', '#aeb69a'] : ['#f6c46d', '#e7963d'];
       const L = (k, d) => esc(this._l(k, d));
       // pointeur du vent sur la rose
@@ -269,7 +271,7 @@ svg.compact{max-width:calc(600px * var(--illus-scale,1))}
       const key = (x, y, top, txt) => `${top ? `<text x="${x + 20}" y="${y - 2}" text-anchor="middle" font-size="5.4" fill="#86b7e6" font-weight="600">${top}</text>` : ''}<rect x="${x}" y="${y}" width="40" height="10.5" rx="5.25" fill="#1a1f26" stroke="#5d6875" stroke-width=".7"/><text x="${x + 20}" y="${y + 7.6}" text-anchor="middle" font-size="5.6" fill="#e9eef3" font-weight="600">${txt}</text>`;
       const tickW = ticker.length * 6.3, dx = Math.max(0, tickW - 236);
       // hide_keys : écran seul (sans le clavier), plus large à l'écran donc textes plus grands
-      const cp = c.hide_keys === true, bw = cp ? 312 : 400;
+      const cp = c.hide_keys === true, bw = cp ? 312 : 418; // bord droit du boîtier : 418 avec le clavier, 312 sans
       r.getElementById('wsart').innerHTML = `<svg class="${cp ? 'compact' : ''}" viewBox="0 0 ${cp ? 318 : 424} 262" role="img" aria-label="${esc(c.name || this._t('name'))}" style="--ink:#2a1a0b">
         <defs>
           <linearGradient id="wsbody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3c4552"/><stop offset=".55" stop-color="#2a3039"/><stop offset="1" stop-color="#1c2027"/></linearGradient>
@@ -278,8 +280,8 @@ svg.compact{max-width:calc(600px * var(--illus-scale,1))}
           <clipPath id="wstk"><rect x="36" y="200" width="250" height="12"/></clipPath>
         </defs>
         <ellipse cx="${cp ? 159 : 212}" cy="256" rx="${cp ? 142 : 190}" ry="5" fill="#000" opacity=".22"/>
-        <path d="M24 10H${bw - 24}a18 18 0 0 1 18 18v200a20 20 0 0 1-20 20H26a20 20 0 0 1-20-20V28a18 18 0 0 1 18-18z" fill="url(#wsbody)" stroke="#11151a" stroke-width="1.2"/>
-        <path d="M26 13H${bw - 28}" stroke="#fff" stroke-opacity=".12" stroke-width="1.4"/>
+        <path d="M24 10H${bw - 18}a18 18 0 0 1 18 18v200a20 20 0 0 1-20 20H26a20 20 0 0 1-20-20V28a18 18 0 0 1 18-18z" fill="url(#wsbody)" stroke="#11151a" stroke-width="1.2"/>
+        <path d="M26 13H${bw - 20}" stroke="#fff" stroke-opacity=".12" stroke-width="1.4"/>
         <text x="28" y="27" font-size="12.5" font-weight="800" font-style="italic" fill="#f1f4f7" letter-spacing=".6">DAVIS</text><path d="M72 18h12l-3 9h-12z" fill="none" stroke="#f1f4f7" stroke-width="1.2"/>
         <rect x="20" y="33" width="282" height="190" rx="9" fill="#12161c" stroke="#4b5561" stroke-width="1"/>
         <rect x="27" y="39" width="268" height="178" rx="5" fill="url(#wslcd)"/><rect x="27" y="39" width="268" height="178" rx="5" fill="url(#wsglow)"/>
@@ -304,7 +306,7 @@ svg.compact{max-width:calc(600px * var(--illus-scale,1))}
         ${trendArrow}
         <!-- zone variable : intérieur et valeur au choix -->
         <rect x="113" y="108" width="178" height="40" fill="none" stroke="var(--ink)" stroke-width=".9"/>
-        <text class="lcdtxt" x="142" y="116" text-anchor="middle" font-size="6">${L('temp_in', 'TEMP IN')}</text><text class="lcdtxt" x="196" y="116" text-anchor="middle" font-size="6">${L('hum_in', 'HUM IN')}</text><text class="lcdtxt" x="252" y="116" text-anchor="middle" font-size="6">${esc(String(c.extra_label || this._t('extra')).toUpperCase())}</text>
+        <text class="lcdtxt" x="142" y="116" text-anchor="middle" font-size="6">${L('temp_in', 'TEMP IN')}</text><text class="lcdtxt" x="196" y="116" text-anchor="middle" font-size="6">${L('hum_in', 'HUM IN')}</text><text class="lcdtxt" x="252" y="116" text-anchor="middle" font-size="6">${esc(String(c.extra_label || T.en.extra).toUpperCase())}</text>
         ${seg7(c.entity_temp_in ? f(tIn.v, 1) : '--', 158, 120, 16, 7.6)}<text class="lcdtxt" x="160" y="126" font-size="6">${esc(tIn.u)}</text>
         ${seg7(c.entity_hum_in ? f(hIn.v, 0) : '--', 206, 120, 16, 7.6)}<text class="lcdtxt" x="208" y="136" font-size="6.5">%</text>
         ${seg7(exOk ? f(ex.v, ex.v >= 100 ? 0 : 1) : '--', 272, 120, 16, 7.6)}<text class="lcdtxt" x="274" y="136" font-size="5.5">${esc(ex.u)}</text>
