@@ -8,40 +8,7 @@
   const TAG = 'appliance-kitchen-timer-card';
   if (customElements.get(TAG)) return;
 
-  const T = {
-    "en": {
-      "name": "Kitchen timer",
-      "ready": "Ready",
-      "running": "Running",
-      "paused": "Paused",
-      "done": "Time's up!",
-      "unavailable": "Unavailable",
-      "start": "Start",
-      "pause": "Pause",
-      "resume": "Resume",
-      "cancel": "Cancel",
-      "min": "min",
-      "f_entity": "Timer entity (timer.…)",
-      "f_presets": "Preset durations (minutes, e.g. [1, 5, 10])",
-      "f_show_presets": "Show the presets"
-    },
-    "fr": {
-      "name": "Minuteur de cuisine",
-      "ready": "Prêt",
-      "running": "En cours",
-      "paused": "En pause",
-      "done": "Terminé !",
-      "unavailable": "Indisponible",
-      "start": "Démarrer",
-      "pause": "Pause",
-      "resume": "Reprendre",
-      "cancel": "Annuler",
-      "min": "min",
-      "f_entity": "Entité timer (timer.…)",
-      "f_presets": "Durées prédéfinies (minutes, ex. [1, 5, 10])",
-      "f_show_presets": "Afficher les durées prédéfinies"
-    }
-  };
+  const T = {"en":{"name":"Kitchen timer","ready":"Ready","running":"Running","paused":"Paused","done":"Time's up!","unavailable":"Unavailable","start":"Start","pause":"Pause","resume":"Resume","cancel":"Cancel","min":"min","f_entity":"Timer entity (timer.…)","f_presets":"Preset durations (minutes, e.g. [1, 5, 10])","f_show_presets":"Show the presets"},"fr":{"name":"Minuteur de cuisine","ready":"Prêt","running":"En cours","paused":"En pause","done":"Terminé !","unavailable":"Indisponible","start":"Démarrer","pause":"Pause","resume":"Reprendre","cancel":"Annuler","min":"min","f_entity":"Entité timer (timer.…)","f_presets":"Durées prédéfinies (minutes, ex. [1, 5, 10])","f_show_presets":"Afficher les durées prédéfinies"}};
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
   const fin = (v) => typeof v === 'number' && Number.isFinite(v);
   const CIRC = 2 * Math.PI * 78;

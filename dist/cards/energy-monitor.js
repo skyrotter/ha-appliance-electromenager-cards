@@ -10,60 +10,7 @@
   const TAG = 'appliance-energy-monitor-card';
   if (customElements.get(TAG)) return;
 
-  const T = {
-    "en": {
-      "name": "Energy monitor",
-      "now": "Now",
-      "today": "Today",
-      "cost": "Cost",
-      "base": "Base load",
-      "hourly": "Hourly average power",
-      "last24": "last 24 h",
-      "now_short": "now",
-      "eco_good": "Economical",
-      "eco_ok": "Moderate",
-      "eco_high": "High use",
-      "unavailable": "Unavailable",
-      "loading": "Loading history…",
-      "no_history": "No history available",
-      "f_entity_power": "Power sensor (W / kW)",
-      "f_entity_energy": "Energy sensor (kWh, total)",
-      "f_entity_cost": "Cost of the day (sensor)",
-      "f_price_per_kwh": "Price per kWh (number or entity)",
-      "f_currency": "Currency symbol",
-      "f_max_power": "Full ring power (W)",
-      "f_thresholds": "Thresholds [orange from, red from] (W)",
-      "f_show_graph": "24 h histogram",
-      "f_show_base": "Base load",
-      "f_show_cost": "Cost"
-    },
-    "fr": {
-      "name": "Moniteur de consommation",
-      "now": "En ce moment",
-      "today": "Aujourd'hui",
-      "cost": "Coût",
-      "base": "Talon",
-      "hourly": "Puissance moyenne par heure",
-      "last24": "24 dernières heures",
-      "now_short": "maint.",
-      "eco_good": "Économe",
-      "eco_ok": "Modéré",
-      "eco_high": "Forte conso",
-      "unavailable": "Indisponible",
-      "loading": "Chargement de l'historique…",
-      "no_history": "Aucun historique disponible",
-      "f_entity_power": "Capteur de puissance (W / kW)",
-      "f_entity_energy": "Capteur d'énergie (kWh, cumul)",
-      "f_entity_cost": "Coût du jour (capteur)",
-      "f_price_per_kwh": "Prix du kWh (nombre ou entité)",
-      "f_currency": "Symbole de la devise",
-      "f_max_power": "Puissance de l'anneau plein (W)",
-      "f_thresholds": "Seuils [orange à partir de, rouge à partir de] (W)",
-      "f_show_graph": "Histogramme 24 h",
-      "f_show_base": "Talon",
-      "f_show_cost": "Coût"
-    }
-  };
+  const T = {"en":{"name":"Energy monitor","now":"Now","today":"Today","cost":"Cost","base":"Base load","hourly":"Hourly average power","last24":"last 24 h","now_short":"now","eco_good":"Economical","eco_ok":"Moderate","eco_high":"High use","unavailable":"Unavailable","loading":"Loading history…","no_history":"No history available","f_entity_power":"Power sensor (W / kW)","f_entity_energy":"Energy sensor (kWh, total)","f_entity_cost":"Cost of the day (sensor)","f_price_per_kwh":"Price per kWh (number or entity)","f_currency":"Currency symbol","f_max_power":"Full ring power (W)","f_thresholds":"Thresholds [orange from, red from] (W)","f_show_graph":"24 h histogram","f_show_base":"Base load","f_show_cost":"Cost"},"fr":{"name":"Moniteur de consommation","now":"En ce moment","today":"Aujourd'hui","cost":"Coût","base":"Talon","hourly":"Puissance moyenne par heure","last24":"24 dernières heures","now_short":"maint.","eco_good":"Économe","eco_ok":"Modéré","eco_high":"Forte conso","unavailable":"Indisponible","loading":"Chargement de l'historique…","no_history":"Aucun historique disponible","f_entity_power":"Capteur de puissance (W / kW)","f_entity_energy":"Capteur d'énergie (kWh, cumul)","f_entity_cost":"Coût du jour (capteur)","f_price_per_kwh":"Prix du kWh (nombre ou entité)","f_currency":"Symbole de la devise","f_max_power":"Puissance de l'anneau plein (W)","f_thresholds":"Seuils [orange à partir de, rouge à partir de] (W)","f_show_graph":"Histogramme 24 h","f_show_base":"Talon","f_show_cost":"Coût"}};
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
   const fin = (v) => typeof v === 'number' && Number.isFinite(v);
   const H = 3600e3;

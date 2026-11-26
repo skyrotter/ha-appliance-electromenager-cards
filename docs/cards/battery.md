@@ -61,7 +61,7 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `flip` (`true` / `false`, default false): mirrors the Marstek photo (the side panel with the backup socket is on the right by default, as on the real device; the MARSTEK logo and labels are mirrored too)
 - `entity_soc` (%)
 - `entity_power` (positive = charging, `invert_power: true` if yours is reversed)
-- `entity_charge_power` / `entity_discharge_power`: two separate power sensors (in W) when your battery has no single signed sensor, e.g. Zendure (power to the battery and from the battery). The card shows charge − discharge (positive = charging). Ignored when `entity_power` is set.
+- `entity_charge_power` / `entity_discharge_power`: two separate power sensors (in W) when your battery has no single signed sensor, e.g. Zendure (power to the battery and from the battery). The card shows charge − discharge (positive = charging). Ignored when `entity_power` is set. If the card says "Discharging" while the battery charges (or the reverse), swap the two sensors or set `invert_power: true`.
 - `entity_energy`
 - `entity_temperature`
 - `entity_soc_min` / `entity_soc_max`: minimum and maximum charge limits (a `number`, `input_number` or `sensor`, in %), shown in **Min charge** / **Max charge** tiles (`show_soc_min`, `show_soc_max`: default true)
