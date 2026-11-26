@@ -651,7 +651,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         const a = this._c.invert_buttons ? { open: 'close', close: 'open' }[b.dataset.a] || b.dataset.a : b.dataset.a;
         // dispositifs indépendants : un bouton / script / interrupteur par commande (volets sans entité cover, ou commandes à part)
         const own = this._c['entity_' + a];
-        if (own && ['open', 'close', 'stop'].includes(a)) { this._fire(own); this._remember(a); return; }
+        if (own && ['open', 'close', 'stop'].includes(a)) { this._fire(own, a); this._remember(a); return; }
         if (this._hass && this._main()) this._hass.callService('cover', `${a}_cover`, { entity_id: this._main() });
       }));
       root.querySelector('#shpos input').addEventListener('change', (e) => {
@@ -693,11 +693,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
     }
 
     // commande par un dispositif : bouton (press), script / scène / interrupteur (turn_on), cover (open_cover)
-    _fire(id) {
+    // a = commande demandée (open / close / stop / half) : pour une entité cover, close → close_cover, stop → stop_cover (sinon open_cover)
+    _fire(id, a) {
       const h = this._hass; if (!h || !id) return;
       const d = id.split('.')[0];
       if (d === 'button' || d === 'input_button') h.callService(d, 'press', { entity_id: id });
-      else if (d === 'cover') h.callService('cover', 'open_cover', { entity_id: id });
+      else if (d === 'cover') h.callService('cover', a === 'close' ? 'close_cover' : a === 'stop' ? 'stop_cover' : 'open_cover', { entity_id: id });
       else h.callService(['script', 'scene', 'switch', 'input_boolean'].includes(d) ? d : 'homeassistant', 'turn_on', { entity_id: id });
     }
     // volet commandé seulement par des dispositifs, sans cover ni capteur : l'état affiché est celui de la dernière commande

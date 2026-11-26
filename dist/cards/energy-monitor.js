@@ -160,10 +160,18 @@ svg.gauge{display:block;width:100%;max-width:calc(260px * var(--illus-scale,1));
         <radialGradient id="emk" cx=".35" cy=".25" r=".9"><stop offset="0" stop-color="#26262b"/><stop offset="1" stop-color="#050506"/></radialGradient></defs>
         <circle r="98" fill="url(#emw)" stroke="#c9ccd2" stroke-width="1.5"/><circle r="91" fill="none" stroke="#fff" stroke-opacity=".9" stroke-width="2"/><circle r="90" fill="none" stroke="#d3d6db" stroke-width=".8"/>`;
       // arc des watts : segments entre repères (gris), partie atteinte colorée selon les seuils
+      // échelle de couleur : tout l'arc est coloré (vert → orange → rouge d'après les seuils, un repère de seuil peut tomber au milieu d'un segment),
+      // la partie déjà atteinte est pleine, le reste est atténué
+      const th = this._th();
       for (let i = 0; i < STOPS.length - 1; i++) {
-        const a0 = taOf(i) + 1.6, a1 = taOf(i + 1) - 1.6;
-        g += `<path d="${arc(a0, a1, 64)}" fill="none" stroke="#c4c7cf" stroke-width="6.5" opacity="${i % 2 ? .75 : 1}"/>`;
-        if (fin(d.cur) && aw > a0) g += `<path d="${arc(a0, Math.min(a1, aw), 64)}" fill="none" stroke="${COLM[this._level(STOPS[i][0] + 1)]}" stroke-width="6.5" opacity=".55"/>`;
+        const w0 = STOPS[i][0], w1 = STOPS[i + 1][0], a0 = taOf(i) + 1.6, a1 = taOf(i + 1) - 1.6;
+        const cuts = [w0, ...th.filter((x) => x > w0 && x < w1), w1], ang = (w) => (w <= w0 ? a0 : w >= w1 ? a1 : Math.max(a0, Math.min(a1, taOf(i) + (taOf(i + 1) - taOf(i)) * (w - w0) / (w1 - w0))));
+        for (let k = 0; k < cuts.length - 1; k++) {
+          const b0 = k === 0 ? a0 : ang(cuts[k]), b1 = k === cuts.length - 2 ? a1 : ang(cuts[k + 1]), col = COLM[this._level((cuts[k] + cuts[k + 1]) / 2)];
+          if (b1 <= b0) continue;
+          g += `<path d="${arc(b0, b1, 64)}" fill="none" stroke="${col}" stroke-width="7" opacity=".38"/>`;
+          if (fin(d.cur) && aw > b0) g += `<path d="${arc(b0, Math.min(b1, aw), 64)}" fill="none" stroke="${col}" stroke-width="7"/>`;
+        }
       }
       STOPS.forEach(([, t], i) => { const a = taOf(i), [x, y] = pt(a, 79); g += `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" transform="rotate(${a.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})" ${lab}>${t}</text>`; });
       g += `<text x="0" y="-87" text-anchor="middle" font-size="5" letter-spacing="1" fill="#9a9ea8" font-family="system-ui,sans-serif">WATTS</text>`;
@@ -172,12 +180,12 @@ svg.gauge{display:block;width:100%;max-width:calc(260px * var(--illus-scale,1));
       [-20, -10, 0, 10, 20].forEach((v) => { const a = pAng(v), [x, y] = pt(a, 79); g += `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" transform="rotate(${(a - 180).toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})" ${lab}>${v}</text>`; });
       g += `<text x="0" y="87" text-anchor="middle" font-size="5" letter-spacing="1" fill="#9a9ea8" font-family="system-ui,sans-serif">%</text>`;
       // repères bleus (puissance, évolution sur 7 jours)
-      const bar = (a) => `<path d="M${P2(pt(a, 57))}L${P2(pt(a, 72))}" stroke="#29b6f6" stroke-width="4.2" stroke-linecap="round"/>`;
+      const bar = (a) => `<path d="M${P2(pt(a, 59))}L${P2(pt(a, 72))}" stroke="#29b6f6" stroke-width="4.2" stroke-linecap="round"/>`;
       if (fin(d.cur)) g += bar(aw);
       if (fin(this._evo)) g += bar(pAng(this._evo));
       // écran central
-      g += `<circle r="47" fill="url(#emk)"/><circle r="47" fill="none" stroke="#fff" stroke-opacity=".08"/>`;
-      pages.forEach((pg, i) => { g += `<g class="pg${i === (this._pg || 0) % pages.length ? ' on' : ''}" fill="#fff" text-anchor="middle" font-family="system-ui,sans-serif">${pg}</g>`; });
+      g += `<circle r="55" fill="url(#emk)"/><circle r="55" fill="none" stroke="#fff" stroke-opacity=".08"/>`;
+      pages.forEach((pg, i) => { g += `<g class="pg${i === (this._pg || 0) % pages.length ? ' on' : ''}" fill="#fff" text-anchor="middle" font-family="system-ui,sans-serif" transform="scale(1.17)">${pg}</g>`; });
       return g;
     }
     _pages(d, sym, cost) {

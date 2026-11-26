@@ -355,10 +355,11 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
     }
 
     // déclenche une entité de commande : bouton, script, scène, interrupteur, cover…
-    _fire(id) {
+    // a = commande demandée (open / close / stop) : pour une entité cover, close → close_cover, stop → stop_cover (sinon open_cover)
+    _fire(id, a) {
       const h = this._hass, d = id.split('.')[0];
       if (d === 'button' || d === 'input_button') h.callService(d, 'press', { entity_id: id });
-      else if (d === 'cover') h.callService('cover', 'open_cover', { entity_id: id });
+      else if (d === 'cover') h.callService('cover', a === 'close' ? 'close_cover' : a === 'stop' ? 'stop_cover' : 'open_cover', { entity_id: id });
       else h.callService(['script', 'scene', 'switch', 'input_boolean'].includes(d) ? d : 'homeassistant', 'turn_on', { entity_id: id });
     }
 
@@ -367,7 +368,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
       if (a === 'pedestrian') { this._fire(c.entity_pedestrian); return; } // ouverture partielle : entité dédiée
       // contact sec double : une entité par commande (entity_open / entity_close / entity_stop)
       const own = { open: c.entity_open, close: c.entity_close, stop: c.entity_stop }[a];
-      if (own) { this._fire(own); if (a === 'open') { this._pressAt = Date.now(); this._render(); } return; }
+      if (own) { this._fire(own, a); if (a === 'open') { this._pressAt = Date.now(); this._render(); } return; }
       if (a === 'command') {
         this._pressAt = Date.now(); // départ du compte à rebours auto_close
         this._render();
