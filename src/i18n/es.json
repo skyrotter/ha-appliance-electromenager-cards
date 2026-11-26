@@ -1707,7 +1707,18 @@
     "history_popup_background": "Fondo de la ventana emergente (#hex, rgb(), rgba() o nombre CSS)",
     "history_popup_opacity": "Opacidad del fondo de la ventana emergente",
     "show_subscribed": "Mostrar la línea de potencia contratada",
-    "press_animation": "Animar las pulsaciones de los botones"
+    "press_animation": "Animar las pulsaciones de los botones",
+    "entity_pm03": "Sensor PM0.3",
+    "entity_pm1": "Sensor PM1",
+    "entity_pm4": "Sensor PM4",
+    "entity_nox": "Sensor NOx",
+    "entity_radon": "Sensor de radón",
+    "entity_radon_long_term": "Sensor de radón a largo plazo",
+    "entity_propane": "Sensor de propano (C₃H₈)",
+    "entity_o2": "Sensor de oxígeno (O₂)",
+    "entity_no2": "Sensor de dióxido de nitrógeno (NO₂)",
+    "entity_o3": "Sensor de ozono (O₃)",
+    "entity_noise": "Sensor de ruido (dB)"
   },
   "light": {
     "ceiling_globe": "Plafón globo",
@@ -2318,7 +2329,20 @@
     "voc": "COV",
     "hcho": "Formaldehído",
     "humidity": "Humedad",
-    "temperature": "Temperatura"
+    "temperature": "Temperatura",
+    "pm03": "PM0.3",
+    "pm1": "PM1",
+    "pm4": "PM4",
+    "nox": "NOx",
+    "co": "CO",
+    "no2": "NO₂",
+    "o3": "O₃",
+    "radon": "Radón",
+    "radon_long_term": "Radón (largo plazo)",
+    "propane": "Propano",
+    "o2": "O₂",
+    "pressure": "Presión",
+    "noise": "Ruido"
   },
   "mini_pc": {
     "name": "Mini PC",
