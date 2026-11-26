@@ -34,7 +34,8 @@
       "f_pressure_unit": "Pressure unit (hPa, inHg, mmHg)",
       "f_rain_from_forecast": "Rain from the weather forecast (no rain gauge)",
       "f_extra_calc": "Calculate the heat index (no extra sensor)",
-      "f_hide_keys": "Hide the side buttons (bigger screen)"
+      "f_hide_keys": "Hide the side buttons (bigger screen)",
+      "f_wind_trend": "Dominant winds of the last hour (hollow arrows)"
     },
     "cs": {
       "name": "Meteostanice",
@@ -79,7 +80,8 @@
       "f_pressure_unit": "Unité de pression (hPa, inHg, mmHg)",
       "f_rain_from_forecast": "Pluie d'après les prévisions météo (sans pluviomètre)",
       "f_extra_calc": "Calculer l'indice de chaleur (sans capteur)",
-      "f_hide_keys": "Masquer les boutons latéraux (écran plus grand)"
+      "f_hide_keys": "Masquer les boutons latéraux (écran plus grand)",
+      "f_wind_trend": "Vents dominants de la dernière heure (flèches creuses)"
     },
     "hu": {
       "name": "Időjárás-állomás",
@@ -307,6 +309,35 @@ svg.compact{max-width:calc(600px * var(--illus-scale,1))}
       const v = parseFloat(a[attr]);
       return { v: Number.isFinite(v) ? v : NaN, u: String(a[unitAttr] || dflt || '') };
     }
+    // direction en degrés depuis un nombre ou un point cardinal (N, NE…)
+    _deg(raw) { const n = parseFloat(raw); if (Number.isFinite(n)) return n; const k = String(raw || '').toUpperCase().trim(); return k in CARD ? CARD[k] : NaN; }
+    // vents dominants : fenêtre glissante d'1 h découpée en 6 périodes de 10 min ; pour chacune, le secteur (parmi 16) le plus souvent visé,
+    // pondéré par la durée, quand le vent souffle (vitesse > 0). Les points viennent de l'historique (capteurs) et des valeurs vues en direct.
+    _live(bear, spd) {
+      const L = this._wl = this._wl || [], now = Date.now(), last = L[L.length - 1];
+      if (fin(bear) && (!last || last.d !== bear || last.s !== (fin(spd) ? spd : null) || now - last.t > 60000)) L.push({ t: now, d: bear, s: fin(spd) ? spd : null });
+      while (L.length && L[0].t < now - 2 * 3600e3) L.shift();
+    }
+    _dominant() {
+      const c = this._c, B = 600e3, end = Math.floor(Date.now() / B) * B, HOLD = 20 * 60e3, H = this._hist || {};
+      const sp = (H[c.entity_wind_speed] || []);
+      // timeline : historique de la direction puis valeurs vues en direct plus récentes
+      const hb = (H[c.entity_wind_bearing] || []).map((x) => ({ t: x.t, d: x.v })), lastH = hb.length ? hb[hb.length - 1].t : 0;
+      const T = [...hb, ...(this._wl || []).filter((x) => x.t > lastH)].sort((a, b) => a.t - b.t);
+      const speedAt = (t, live) => { if (live != null) return live; let v = null; for (const x of sp) { if (x.t <= t) v = x.v; else break; } return v; };
+      const out = [];
+      for (let i = 0; i < 6; i++) {
+        const a = end - (6 - i) * B, b = a + B, wgt = new Array(16).fill(0);
+        T.forEach((p, k) => {
+          const e = Math.min(k + 1 < T.length ? T[k + 1].t : Infinity, p.t + HOLD), st = Math.max(p.t, a), en = Math.min(e, b);
+          if (en <= st) return;
+          const v = speedAt(st, p.s); if (v != null && !(v > 0)) return;
+          wgt[Math.round((((p.d % 360) + 360) % 360) / 22.5) % 16] += en - st;
+        });
+        const m = Math.max(...wgt); if (m > 0) out.push(wgt.indexOf(m));
+      }
+      return [...new Set(out)];
+    }
     _bearing() {
       const c = this._c, raw = c.entity_wind_bearing ? (this._st(c.entity_wind_bearing) || {}).state : ((this._st(c.entity_weather) || {}).attributes || {}).wind_bearing;
       const n = parseFloat(raw); if (Number.isFinite(n)) return n;
@@ -315,14 +346,14 @@ svg.compact{max-width:calc(600px * var(--illus-scale,1))}
 
     // historique : 24 h pour le mini graphique, 3 h pour la tendance du baromètre (rafraîchi toutes les 10 min)
     _loadHist() {
-      const h = this._hass, c = this._c, gid = c.entity_graph || c.entity_temp_out, ids = [...new Set([gid, c.entity_pressure].filter(Boolean))];
+      const h = this._hass, c = this._c, gid = c.entity_graph || c.entity_temp_out, ids = [...new Set([gid, c.entity_pressure, c.wind_trend === false ? '' : c.entity_wind_bearing, c.wind_trend === false ? '' : c.entity_wind_speed].filter(Boolean))];
       if (!ids.length || this._histBusy || Date.now() - this._histAt < 10 * 60000 || !h || typeof h.callWS !== 'function') return;
       this._histBusy = true; this._histAt = Date.now();
       const end = Date.now(), start = end - 24 * 3600e3;
       h.callWS({ type: 'history/history_during_period', start_time: new Date(start).toISOString(), end_time: new Date(end).toISOString(), entity_ids: ids, minimal_response: true, no_attributes: true, significant_changes_only: false })
         .then((r) => {
           const out = {};
-          ids.forEach((id) => { out[id] = ((r && r[id]) || []).map((p) => ({ t: (p.lu ?? p.lc) * 1000, v: parseFloat(p.s) })).filter((p) => fin(p.v) && fin(p.t)); });
+          ids.forEach((id) => { out[id] = ((r && r[id]) || []).map((p) => ({ t: (p.lu ?? p.lc) * 1000, v: id === c.entity_wind_bearing ? this._deg(p.s) : parseFloat(p.s) })).filter((p) => fin(p.v) && fin(p.t)); });
           this._hist = out;
         }).catch(() => { this._hist = null; })
         .finally(() => { this._histBusy = false; if (this._hass) this._render(); });
@@ -380,6 +411,7 @@ svg.compact{max-width:calc(600px * var(--illus-scale,1))}
       if (!c.entity_extra && c.extra_calc !== false && fin(tOut.v) && fin(hOut.v)) ex.v = heatIndex(tOut.v, hOut.v, tOut.u), ex.u = tOut.u;
       const exOk = !!c.entity_extra || fin(ex.v);
       const bear = this._bearing(), trend = this._trend(prHpa);
+      this._live(bear, ws.v); const dom = c.wind_trend === false ? [] : this._dominant();
       const raining = (rrOk && fin(rr.v) && rr.v > 0) || /rain|pour/.test(cond);
       this._card.className = `${raining ? 'rainy' : ''}${c.animations === false ? ' noanim' : ''}`;
       r.getElementById('wstitle').textContent = c.name || this._t('name');
@@ -403,6 +435,7 @@ svg.compact{max-width:calc(600px * var(--illus-scale,1))}
       const L = (k, d) => esc(this._l(k, d));
       // pointeur du vent sur la rose
       const bx = 74, by = 95, br = 33, ba = (bear - 90) * Math.PI / 180;
+      const hol = dom.map((q) => { const a = (q * 22.5 - 90) * Math.PI / 180, R = br + 0.6, k = 1.3; return `<path d="M${(bx + Math.cos(a) * R).toFixed(1)} ${(by + Math.sin(a) * R).toFixed(1)}l${(Math.cos(a + 2.6) * 7 * k).toFixed(1)} ${(Math.sin(a + 2.6) * 7 * k).toFixed(1)}l${((Math.cos(a - 2.6) - Math.cos(a + 2.6)) * 7 * k).toFixed(1)} ${((Math.sin(a - 2.6) - Math.sin(a + 2.6)) * 7 * k).toFixed(1)}z" fill="none" stroke="var(--ink)" stroke-width=".9" stroke-linejoin="round"/>`; }).join('');
       const ptr = fin(bear) ? `<path d="M${(bx + Math.cos(ba) * (br - 1)).toFixed(1)} ${(by + Math.sin(ba) * (br - 1)).toFixed(1)}l${(Math.cos(ba + 2.6) * 7).toFixed(1)} ${(Math.sin(ba + 2.6) * 7).toFixed(1)}l${(Math.cos(ba - 2.6) * 7 - Math.cos(ba + 2.6) * 7).toFixed(1)} ${(Math.sin(ba - 2.6) * 7 - Math.sin(ba + 2.6) * 7).toFixed(1)}z" fill="var(--ink)"/>` : '';
       const trendArrow = trend == null ? '' : `<g transform="translate(287 82) rotate(${-trend * 30})"><path d="M-7 0h11M1 -3.5l4 3.5-4 3.5" fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>`;
       const keyL = [['HEAT', 'TEMP'], ['DEW', 'HUM'], ['CHILL', 'WIND'], ['SOLAR', 'RAIN DAY'], ['UV', 'RAIN YR'], ['ET', 'BAR']], keyR = [['LAMPS', '2nd'], ['TIME', 'FORECAST'], ['UNITS', 'GRAPH'], ['CLEAR', 'HI/LOW'], ['SET', 'ALARM'], ['', 'DONE']];
@@ -428,7 +461,7 @@ svg.compact{max-width:calc(600px * var(--illus-scale,1))}
         ${Array.from({ length: 16 }, (_, i) => { const a = i * 22.5 * Math.PI / 180, l = i % 4 === 0 ? 5 : 2.6; return `<path d="M${(bx + Math.sin(a) * br).toFixed(1)} ${(by - Math.cos(a) * br).toFixed(1)}L${(bx + Math.sin(a) * (br - l)).toFixed(1)} ${(by - Math.cos(a) * (br - l)).toFixed(1)}" stroke="var(--ink)" stroke-width="1"/>`; }).join('')}
         <text class="lcdtxt" x="${bx}" y="${by - br + 12}" text-anchor="middle" font-size="6.5">N</text><text class="lcdtxt" x="${bx + br - 9}" y="${by + 2.2}" text-anchor="middle" font-size="6.5">E</text>
         <text class="lcdtxt" x="${bx}" y="${by + br - 6}" text-anchor="middle" font-size="6.5">S</text><text class="lcdtxt" x="${bx - br + 9}" y="${by + 2.2}" text-anchor="middle" font-size="6.5">W</text>
-        ${ptr}
+        ${hol}${ptr}
         ${seg7(fin(ws.v) ? f(ws.v, 0) : '--', bx + 11, by - 10, 17, 9)}
         <text class="lcdtxt" x="${bx}" y="${by + 16}" text-anchor="middle" font-size="5.6">${esc(ws.u.toUpperCase())}</text>
         <text class="lcdtxt" x="38" y="50" font-size="5.2">${L('wind', 'WIND')}</text>
@@ -505,7 +538,7 @@ svg.compact{max-width:calc(600px * var(--illus-scale,1))}
         { name: 'transparent', selector: { boolean: {} } },
         ...window.applianceActionFields,
         window.applianceLanguageField(T),
-        { type: 'grid', name: '', schema: [bool('backlight'), bool('show_name'), bool('animations'), bool('rain_from_forecast'), bool('extra_calc'), { name: 'hide_keys', selector: { boolean: {} } }] },
+        { type: 'grid', name: '', schema: [bool('backlight'), bool('show_name'), bool('animations'), bool('rain_from_forecast'), bool('extra_calc'), bool('wind_trend'), { name: 'hide_keys', selector: { boolean: {} } }] },
       ];
       this._form.computeLabel = (s) => tr[`f_${s.name}`] || window.applianceEditorLabel(s.name, this._hass);
     }

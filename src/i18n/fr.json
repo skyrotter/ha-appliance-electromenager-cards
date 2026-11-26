@@ -3336,7 +3336,8 @@
     "f_pressure_unit": "Unité de pression (hPa, inHg, mmHg)",
     "f_rain_from_forecast": "Pluie d'après les prévisions météo (sans pluviomètre)",
     "f_extra_calc": "Calculer l'indice de chaleur (sans capteur)",
-    "f_hide_keys": "Masquer les boutons latéraux (écran plus grand)"
+    "f_hide_keys": "Masquer les boutons latéraux (écran plus grand)",
+    "f_wind_trend": "Vents dominants de la dernière heure (flèches creuses)"
   },
   "co2_monitor": {
     "name": "Moniteur de CO₂",

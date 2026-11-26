@@ -3335,7 +3335,8 @@
     "f_pressure_unit": "Pressure unit (hPa, inHg, mmHg)",
     "f_rain_from_forecast": "Rain from the weather forecast (no rain gauge)",
     "f_extra_calc": "Calculate the heat index (no extra sensor)",
-    "f_hide_keys": "Hide the side buttons (bigger screen)"
+    "f_hide_keys": "Hide the side buttons (bigger screen)",
+    "f_wind_trend": "Dominant winds of the last hour (hollow arrows)"
   },
   "co2_monitor": {
     "name": "CO₂ monitor",
