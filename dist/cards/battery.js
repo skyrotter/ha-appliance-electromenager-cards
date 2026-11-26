@@ -311,6 +311,8 @@ class ApplianceBatteryCard extends HTMLElement {
         { name: 'entity_soc', selector: { entity: { domain: 'sensor', device_class: 'battery' } } },
         { name: 'entity_power', selector: { entity: { domain: 'sensor', device_class: 'power' } } },
         { name: 'invert_power', selector: { boolean: {} } },
+        { name: 'entity_charge_power', selector: { entity: { domain: 'sensor', device_class: 'power' } } },
+        { name: 'entity_discharge_power', selector: { entity: { domain: 'sensor', device_class: 'power' } } },
         { name: 'entity_energy', selector: { entity: { domain: 'sensor', device_class: 'energy' } } },
         { name: 'entity_temperature', selector: { entity: { domain: 'sensor', device_class: 'temperature' } } },
         // sortie de secours (off-grid) : puissance en W, tuile « Secours » et prise allumée sur la photo Marstek
@@ -546,6 +548,11 @@ class ApplianceBatteryCard extends HTMLElement {
     const soc = this._num(c.entity_soc), energy = this._num(c.entity_energy);
     const tc = window.applianceTemp(this._hass, c), temp = tc.conv(this._num(c.entity_temperature), this._hass.states[c.entity_temperature]);
     let p = this._w(c.entity_power); if (p !== null && c.invert_power) p = -p;
+    // deux capteurs séparés (ex. Zendure : puissance vers la batterie / depuis la batterie) : charge − décharge, positif = charge
+    if (!c.entity_power && (c.entity_charge_power || c.entity_discharge_power)) {
+      const ch = this._w(c.entity_charge_power), di = this._w(c.entity_discharge_power);
+      p = ch === null && di === null ? null : (ch || 0) - (di || 0);
+    }
     const pct = soc === null ? 0 : Math.max(0, Math.min(100, soc));
     // Remplissage des 3 modules (corps : y 62 → 160)
     const h = 98 * pct / 100;
@@ -580,7 +587,7 @@ class ApplianceBatteryCard extends HTMLElement {
     }
     const f = (v, d, u) => (v === null ? '—' : `${v.toFixed(d)} ${u}`);
     const it = [];
-    if (c.show_power) it.push([this._l('power'), f(p === null ? null : Math.abs(p), 0, 'W'), c.entity_power]);
+    if (c.show_power) it.push([this._l('power'), f(p === null ? null : Math.abs(p), 0, 'W'), c.entity_power || c.entity_charge_power || c.entity_discharge_power]);
     if (c.show_energy) it.push([this._l('energy'), f(energy !== null ? energy : (soc === null ? null : c.capacity_kwh * pct / 100), 1, 'kWh'), c.entity_energy || c.entity_soc]);
     if (c.show_temperature) it.push([this._l('temp'), f(temp, 0, tc.unit), c.entity_temperature]);
     // limites de charge et mode de fonctionnement (ex. Zendure : number min_soc / soc_set, select du mode)

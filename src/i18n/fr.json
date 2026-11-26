@@ -1074,6 +1074,8 @@
     "entity_session_energy": "Énergie de la session",
     "entity_soc": "Niveau de charge",
     "entity_calibration": "Prochaine calibration (capteur de date)",
+    "entity_charge_power": "Puissance de charge de la batterie (vers la batterie)",
+    "entity_discharge_power": "Puissance de décharge de la batterie (depuis la batterie)",
     "entity_soc_min": "Limite de charge minimale (number ou capteur, %)",
     "entity_soc_max": "Limite de charge maximale (number ou capteur, %)",
     "entity_source_in_temp": "Température d'entrée source",

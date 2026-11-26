@@ -1074,6 +1074,8 @@
     "entity_session_energy": "Session energy",
     "entity_soc": "State of charge",
     "entity_calibration": "Next calibration (date sensor)",
+    "entity_charge_power": "Battery charge power (to the battery)",
+    "entity_discharge_power": "Battery discharge power (from the battery)",
     "entity_soc_min": "Minimum charge limit (number or sensor, %)",
     "entity_soc_max": "Maximum charge limit (number or sensor, %)",
     "entity_source_in_temp": "Source inlet temperature",

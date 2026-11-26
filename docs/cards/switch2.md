@@ -1,5 +1,7 @@
 # Nintendo Switch 2
 
+<p align="center"><img src="../switch2.gif" width="440" alt="Animated Nintendo Switch 2 card: off, sleep mode, on and gaming"></p>
+
 `custom:appliance-switch2-card`: cut-out photo of the console on its dock (seen from the front, Joy-Con 2 on each side), animated on top: screen, stick rings (blue on the left, orange on the right), dock LED, buttons, warm air and glow.
 
 There is no Home Assistant integration for the Switch 2: the card relies on a **smart plug** (power, energy and switch).
