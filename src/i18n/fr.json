@@ -3354,6 +3354,25 @@
     "f_presets": "Durées prédéfinies (minutes, ex. [1, 5, 10])",
     "f_show_presets": "Afficher les durées prédéfinies"
   },
+  "oven_hob": {
+    "name": "Four et plaque",
+    "active": "En cuisson",
+    "idle": "Éteints",
+    "unavailable": "Indisponible",
+    "power": "Puissance",
+    "energy": "Énergie",
+    "cost": "Coût",
+    "f_power": "Capteur de puissance (four + plaque)",
+    "f_energy": "Capteur d'énergie (four + plaque)",
+    "f_cost": "Coût (capteur)",
+    "f_price_per_kwh": "Prix du kWh (nombre ou entité)",
+    "f_threshold": "En cuisson au-dessus de (W)",
+    "f_oven": "Options du four (objet : température, porte…)",
+    "f_hob": "Options de la plaque (objet : zone_1 … zone_4…)",
+    "f_show_power": "Puissance",
+    "f_show_energy": "Énergie",
+    "f_show_cost": "Coût"
+  },
   "weather_station": {
     "name": "Station météo",
     "wind": "Vent",
