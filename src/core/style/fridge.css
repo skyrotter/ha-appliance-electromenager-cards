@@ -20,10 +20,13 @@
 .k-fridge.st-cooling .flake, .k-chest_freezer.st-cooling .flake, .k-drawer_freezer.st-cooling .flake { animation: ac-pulse 2.4s ease-in-out infinite; }
 .mist circle { fill: #9fd6ff; opacity: 0; }
 .k-fridge.st-cooling .mist circle, .k-chest_freezer.st-cooling .mist circle, .k-drawer_freezer.st-cooling .mist circle { animation: ac-mist 3s ease-out infinite; }
-.mist circle:nth-child(2) { animation-delay: .7s !important; } .mist circle:nth-child(3) { animation-delay: 1.4s !important; }
-.mist circle:nth-child(4) { animation-delay: 2.1s !important; }
-
-@keyframes ac-rot { to { transform: rotate(360deg); } }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .mist circle { animation-delay: calc((sibling-index() - 1) * .7s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .mist circle:nth-child(2) { animation-delay: .7s !important; } .mist circle:nth-child(3) { animation-delay: 1.4s !important; }
+  .mist circle:nth-child(4) { animation-delay: 2.1s !important; }
+}@keyframes ac-rot { to { transform: rotate(360deg); } }
 @keyframes ac-tumble { 0% { transform: rotate(0); } 42% { transform: rotate(250deg); } 50% { transform: rotate(250deg); } 92% { transform: rotate(0); } 100% { transform: rotate(0); } }
 @keyframes ac-wave { from { transform: translateX(0); } to { transform: translateX(-40px); } }
 @keyframes ac-bubble { 0% { opacity: 0; transform: translateY(4px); } 30% { opacity: .9; } 100% { opacity: 0; transform: translateY(-10px); } }

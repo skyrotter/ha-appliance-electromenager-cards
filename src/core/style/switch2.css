@@ -15,13 +15,21 @@
 .sw-air { opacity: 0; } .sw-air path { stroke: #9aa7b4; }
 .k-switch2.st-screen_on .sw-air { opacity: .45; } .k-switch2.st-ps_gaming .sw-air { opacity: 1; } .k-switch2.st-ps_gaming .sw-air path { stroke: #ffab70; }
 .k-switch2.active .sw-air path { animation: ac-steam 2.6s ease-out infinite; }
-.sw-air path:nth-child(2) { animation-delay: .8s !important; } .sw-air path:nth-child(3) { animation-delay: 1.6s !important; }
-.k-switch2.st-ps_gaming .sw-air path { animation-duration: 1.6s; }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .sw-air path { animation-delay: calc((sibling-index() - 1) * .8s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .sw-air path:nth-child(2) { animation-delay: .8s !important; } .sw-air path:nth-child(3) { animation-delay: 1.6s !important; }
+}.k-switch2.st-ps_gaming .sw-air path { animation-duration: 1.6s; }
 /* halo de l'écran en jeu */
 .sw-amb { opacity: 0; transition: opacity .8s; }
 .k-switch2.st-ps_gaming .sw-amb { opacity: 1; animation: ps-amb 5s ease-in-out infinite; }
 /* boutons des Joy-Con qui s'allument à tour de rôle en jeu */
 .sw-btn circle { fill: transparent; }
 .k-switch2.st-ps_gaming .sw-btn circle { animation: sw-press 1.2s steps(1) infinite; }
-.sw-btn circle:nth-child(2) { animation-delay: .3s !important; } .sw-btn circle:nth-child(3) { animation-delay: .6s !important; } .sw-btn circle:nth-child(4) { animation-delay: .9s !important; }
-@keyframes sw-press { 0% { fill: rgba(74,168,255,.85); } 25%, 100% { fill: transparent; } }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .sw-btn circle { animation-delay: calc((sibling-index() - 1) * .3s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .sw-btn circle:nth-child(2) { animation-delay: .3s !important; } .sw-btn circle:nth-child(3) { animation-delay: .6s !important; } .sw-btn circle:nth-child(4) { animation-delay: .9s !important; }
+}@keyframes sw-press { 0% { fill: rgba(74,168,255,.85); } 25%, 100% { fill: transparent; } }

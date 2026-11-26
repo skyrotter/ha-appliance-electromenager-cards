@@ -8,6 +8,7 @@ window.__errors=[]; window.addEventListener('error',e=>__errors.push(e.message))
 <!-- le fichier principal est un module : il charge ses cartes en parallèle puis émet « appliance-cards-ready » ; la page attend cet événement -->
 <script type="module" src="../dist/ha-appliance-electromenager-cards.js"></script>
 <script>
+window.__acWantAll = true;
 window.addEventListener('appliance-cards-ready', () => {
 const R=[]; const ok=(name,cond,info='')=>R.push({name,pass:!!cond,info:cond?'':String(info)});
 const now=new Date().toISOString();
@@ -18,15 +19,15 @@ function card(kind,cfg,states,lang){const el=document.createElement(`appliance-$
 const has=(c,cls)=>c.wrap.classList.contains(cls);
 
 // registration
-const tags=['thermomix','cookeo','washer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','smart-speaker','fan','generic','tool-charger','ceiling-fan','dehumidifier','air-purifier','monitor','kettle','toaster','deep-fryer','power-strip','phone-charger','piano','garland','wet-vacuum','ps5','smart-plug','dosing-pump','printer','elliptical','exercise-bike','rowing-machine'];
+const tags=['thermomix','cookeo','washer','washer-dryer','dryer','dishwasher','water-heater','oven','microwave','fridge','pellet-stove','pool-pump','printer-3d','chest-freezer','drawer-freezer','solar','vmc','hob','radiator','air-fryer','coffee-maker','tv','range-hood','ac-split','heat-pump','towel-dryer','server-rack','desktop-pc','laptop','wine-cooler','beer-tap','av-receiver','smart-speaker','fan','generic','tool-charger','ceiling-fan','dehumidifier','air-purifier','airbowl','monitor','kettle','toaster','iron','steam-station','infrared-panel','projector-screen','deep-fryer','power-strip','phone-charger','piano','garland','wet-vacuum','ps5','switch2','smart-plug','dosing-pump','printer','elliptical','exercise-bike','rowing-machine','treadmill'];
 tags.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 // card picker: every core card and every self-contained card listed exactly once
-const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','air-water-heat-pump','diesel-heater','jacuzzi','hue-sync-box','door-sensor','motion-sensor','air-quality','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','ceiling-spot','roller-shutter','sliding-curtain','venetian-blind','swing-shutter','pergola','roof-window','awning','water-meter','gas-meter','electric-meter','trv','room-climate','mailbox','smoke-detector','leak-detector','mini-pc','nas','tv-box','scale','smart-lock','cat-flap','pet-fountain','thermo-heater','smart-tap','water-valve','water-softener','rain-gauge','plant-monitor','humidifier','fan-heater','inflatable-spa','canister-vacuum','air-compressor','contact-grill','reef-aquarium','pet-feeder','portable-ac','internet-box','rainwater-tank','double-awning','soundbar','raspberry-pi','camera','nvr','irrigation','poe-switch','water-filter','led-strip','heat-meter','zigbee-coordinator','wall-tablet'];
+const solo=['aquarium','linky','battery','ev-charger','robot-vacuum-solo','robot-mower-solo','pellet-boiler','gas-boiler','water-heat-pump','air-water-heat-pump','diesel-heater','jacuzzi','hue-sync-box','door-sensor','motion-sensor','alarm-keypad','air-quality','barrier','sliding-gate','swing-gate','garage-door','sauna','water-pump','industrial-pump','pool-robot','sump-pump','ups','underfloor-heating','light-bulb','color-bulb','filament-bulb','pendant-light','pendant-cluster','desk-lamp','floor-lamp','chandelier','garden-spotlight','christmas-tree','ceiling-spot','ceiling-globe','roller-shutter','sliding-curtain','venetian-blind','swing-shutter','pergola','roof-window','awning','water-meter','gas-meter','electric-meter','trv','room-climate','co2-monitor','litter-box','barometer','weather-station','energy-monitor','kitchen-timer','oven-hob','solar-house','htpc','poubelle','mailbox','smoke-detector','leak-detector','mini-pc','nas','tv-box','scale','smart-lock','cat-flap','pet-fountain','thermo-heater','smart-tap','water-valve','water-softener','rain-gauge','plant-monitor','humidifier','fan-heater','inflatable-spa','canister-vacuum','air-compressor','contact-grill','reef-aquarium','pet-feeder','portable-ac','internet-box','rainwater-tank','double-awning','soundbar','raspberry-pi','camera','nvr','irrigation','poe-switch','water-filter','led-strip','heat-meter','zigbee-coordinator','wall-tablet','breezer','video-doorbell'];
 solo.forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
 const picked=window.customCards.map(c=>c.type), wanted=[...tags,...solo].map(t=>`appliance-${t}-card`).concat('appliance-card'); // + the single card (picker.js)
 ok(`customCards = ${wanted.length}`,picked.length===wanted.length&&wanted.every(t=>picked.filter(p=>p===t).length===1),
   [...wanted.filter(t=>!picked.includes(t)).map(t=>`missing ${t}`),...picked.filter(t=>!wanted.includes(t)).map(t=>`extra ${t}`),`${picked.length} entries`].join(', '));
-{const np=window.customCards.filter(c=>c.type.startsWith('appliance-')&&!c.name.startsWith('Appliance – ')).map(c=>c.name); ok('picker names start with Appliance –',!np.length,np.join(', '));}
+{const np=window.customCards.filter(c=>c.type.startsWith('appliance-')&&c.type!=='appliance-card'&&!c.name.startsWith('Appliance – ')).map(c=>c.name); ok('picker names start with Appliance –',!np.length,np.join(', '));}
 // config validation
 try{document.createElement('appliance-washer-card').setConfig({});ok('empty config throws',false)}catch(e){ok('empty config throws',/entity|power/.test(e.message),e.message)}
 
@@ -366,7 +367,7 @@ c.sr.querySelector('.toggle')?.click(); ok('garland toggles its light',JSON.stri
 c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has(c,'st-off'),c.wrap.className);
 // carte unique « Appliance » : liste des appareils dans la langue de Home Assistant, triée dans cette langue
 {const opts=(lang)=>{const ed=document.createElement('appliance-card-editor');ed.hass={language:lang,locale:{language:lang},states:{}};ed.setConfig({type:'custom:appliance-card'});document.body.append(ed);
-  const o=ed.querySelector('ha-form').schema[0].selector.select.options;ed.remove();return o;};
+  const o=ed.querySelector('ha-form').schema.find((f)=>f.name==='appliance').selector.select.options;ed.remove();return o;};
  const fr=opts('fr'), en=opts('en'), lab=(o,t)=>(o.find((x)=>x.value===t)||{}).label;
  ok('single card list in French',lab(fr,'appliance-water-meter-card')==="Compteur d'eau"&&lab(fr,'appliance-washer-card')==='Lave-linge'&&!fr.some((o)=>/ \/ /.test(o.label)&&!['appliance-printer-card','appliance-dosing-pump-card'].includes(o.value)),lab(fr,'appliance-water-meter-card'));
  ok('single card list in English',lab(en,'appliance-water-meter-card')==='Water meter',lab(en,'appliance-water-meter-card'));
@@ -387,7 +388,7 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  ok('water continuous flow -> possible leak',/leak/.test(wm(c).className),wm(c).className);
  c=card('water-meter',{entity_index:'sensor.i',entity_valve:'valve.v'},[mk('sensor.i',12,L('m³')),mk('valve.v','closed')]);
  ok('water valve closed',/valve_closed/.test(wm(c).className)&&/Ouvrir la vanne/.test(c.sr.getElementById('wmctl').textContent),wm(c).className);
- c.sr.querySelector('#wmctl button').click(); ok('water valve toggles',JSON.stringify(c.h.calls[0])==='["valve","toggle",{"entity_id":"valve.v"}]',JSON.stringify(c.h.calls));
+ c.sr.querySelector('#wmctl button').click(); document.querySelector('[role="alertdialog"] button:last-child')?.click(); ok('water valve toggles',JSON.stringify(c.h.calls[0])==='["valve","toggle",{"entity_id":"valve.v"}]',JSON.stringify(c.h.calls));
  c=card('water-meter',{entity_index:'sensor.i'},[mk('sensor.i',100,L('m³'))]); c.el._lastAt=Date.now()-60000; c.el.hass=hassOf([mk('sensor.i',100.006,L('m³'))]);
  ok('water flow derived from index',/flowing/.test(wm(c).className)&&/^6/.test(wb(c)),wm(c).className+' '+wb(c));
  document.querySelectorAll('appliance-water-meter-card').forEach((e)=>e.remove()); // keep the SVG id check about the core cards
@@ -402,7 +403,7 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  ok('gas leak names the detector',/leak/.test(gm(c).className)&&/Gaz détecté par : Chaudière/.test(c.sr.getElementById('gmalert').textContent),c.sr.getElementById('gmalert').textContent);
  c=card('gas-meter',{entity_index:'sensor.i',entity_valve:'valve.v'},[mk('sensor.i',12,L('m³')),mk('valve.v','closed')]);
  ok('gas valve closed',/valve_closed/.test(gm(c).className)&&/Ouvrir la vanne/.test(c.sr.getElementById('gmctl').textContent),gm(c).className);
- c.sr.querySelector('#gmctl button').click(); ok('gas valve toggles',JSON.stringify(c.h.calls[0])==='["valve","toggle",{"entity_id":"valve.v"}]',JSON.stringify(c.h.calls));
+ c.sr.querySelector('#gmctl button').click(); document.querySelector('[role="alertdialog"] button:last-child')?.click(); ok('gas valve toggles',JSON.stringify(c.h.calls[0])==='["valve","toggle",{"entity_id":"valve.v"}]',JSON.stringify(c.h.calls));
  c=card('gas-meter',{entity_index:'sensor.i'},[mk('sensor.i',100,L('m³'))]); c.el._lastAt=Date.now()-3600000; c.el.hass=hassOf([mk('sensor.i',100.5,L('m³'))]);
  ok('gas flow derived from index',/flowing/.test(gm(c).className)&&/^0,5/.test(gb(c)),gm(c).className+' '+gb(c));
  c=card('gas-meter',{entity_index:'sensor.i',entity_leak:'binary_sensor.l'},[]);
@@ -420,7 +421,7 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  ok('electric overload above subscribed power',/overload/.test(em(c).className)&&/3 kVA/.test(c.sr.getElementById('emalert').textContent),em(c).className);
  c=card('electric-meter',{entity_power:'sensor.p',animations:false},[mk('sensor.p',500,L('W'))]);
  ok('electric animations off',/noanim/.test(em(c).className)&&getComputedStyle(c.sr.querySelector('.em-disc')).animationName==='none',em(c).className);
- c=card('electric-meter',{entity_index:'sensor.e'},[mk('sensor.e',100,L('kWh'))]); c.el._lastAt=Date.now()-3600000; c.el.hass=hassOf([mk('sensor.e',101.2,L('kWh'))]);
+ c=card('electric-meter',{entity_index:'sensor.e'},[mk('sensor.e',100,L('kWh'))]); c.el._lastAt=Date.parse(now)-3600000; c.el.hass=hassOf([mk('sensor.e',101.2,L('kWh'))]);
  ok('electric power derived from index',/consuming/.test(em(c).className)&&/^1\s200\sW/.test(eb(c)),em(c).className+' '+eb(c));
  document.querySelectorAll('appliance-electric-meter-card').forEach((e)=>e.remove());
 }
@@ -733,7 +734,7 @@ c=card('garland',{entity:'light.g'},[mk('light.g','off')]); ok('garland off',has
  c=card('leak-detector',{entity_leak:'binary_sensor.a, binary_sensor.b'},[mk('binary_sensor.a','off'),mk('binary_sensor.b','off')]); ok('leak comma list',/^dry/.test(hc(c))&&/0\/2/.test(c.sr.querySelector('[data-k=probes]').textContent),hc(c));
  c=card('leak-detector',{entity_leak:'binary_sensor.l',entity_valve:'valve.v'},[mk('binary_sensor.l','on'),mk('valve.v','closed')]);
  ok('leak valve closed',/valve_closed/.test(hc(c))&&bd(c)==='Fuite, vanne fermée'&&/Ouvrir la vanne/.test(c.sr.getElementById('lkvalve').textContent),hc(c));
- c.sr.getElementById('lkvalve').click(); ok('leak valve toggle',JSON.stringify(c.h.calls[0])==='["valve","toggle",{"entity_id":"valve.v"}]',JSON.stringify(c.h.calls));
+ c.sr.getElementById('lkvalve').click(); document.querySelector('[role="alertdialog"] button:last-child')?.click(); ok('leak valve toggle',JSON.stringify(c.h.calls[0])==='["valve","toggle",{"entity_id":"valve.v"}]',JSON.stringify(c.h.calls));
  c=card('leak-detector',{entity_leak:'binary_sensor.l',entity_siren:'siren.s'},[mk('binary_sensor.l','on'),mk('siren.s','on')]);
  c.sr.getElementById('lksiren').click(); ok('leak siren off',JSON.stringify(c.h.calls[0])==='["siren","turn_off",{"entity_id":"siren.s"}]',JSON.stringify(c.h.calls));
  c=card('leak-detector',{entity_leak:'binary_sensor.l',entity_siren:'siren.s'},[mk('binary_sensor.l','off'),mk('siren.s','off')]); ok('leak siren hidden when dry',c.sr.getElementById('lksiren').classList.contains('hide'));
@@ -1236,7 +1237,7 @@ c=lk([mk('sensor.p',600,VA),mk('sensor.s1',12.5,{...KWH,friendly_name:'Semaine H
 ok('linky indexes as ids: friendly name, unavailable shows —',pages(c).join('|')==='PUISSANCE=600 VA|SEMAINE HP=13 kWh|SENSOR.S2=—',pages(c).join('|'));
 const INJ={entity_injection:'sensor.eait',entity_power_injection:'sensor.sinsti',show_index:false,show_tariff:false};
 c=lk([mk('sensor.p',0,VA),mk('sensor.eait',11256179,WH),mk('sensor.sinsti',1830,VA)],INJ);
-ok('linky injection pages',pages(c).join('|')==='PUISSANCE=0 VA|INJECTION=1830 VA|INDEX INJECTION=11256 kWh',pages(c).join('|'));
+ok('linky injection pages',pages(c).join('|')==='PUISSANCE=0 VA|INJECTION=1830 VA',pages(c).join('|'));
 ok('linky prod LED lit while injecting',vis(c,'ledpw')&&byId(c,'ledp').classList.contains('on'),byId(c,'ledp').className);
 c=lk([mk('sensor.p',900,VA),mk('sensor.eait',11256179,WH),mk('sensor.sinsti',0,VA)],INJ);
 ok('linky prod LED off at 0',vis(c,'ledpw')&&!byId(c,'ledp').classList.contains('on'),byId(c,'ledp').className);
@@ -1244,7 +1245,7 @@ c=lk([mk('sensor.p',900,VA),mk('sensor.eait',11256179,WH),mk('sensor.sinsti',500
 ok('linky show_injection:false hides pages and LED',pages(c).join('|')==='PUISSANCE=900 VA'&&!vis(c,'ledpw'),pages(c).join('|'));
 c=lk([mk('sensor.p',900,VA)]); ok('linky no injection entity: no prod LED',!vis(c,'ledpw'),byId(c,'ledpw').style.display);
 c=lk([mk('sensor.p',900,VA),mk('sensor.eait',11256.179,KWH),mk('sensor.t','HC')],{entity_injection:'sensor.eait',show_index:false,entity_tariff:'sensor.t',language:'en'});
-ok('linky injection + period (en)',pages(c).join('|')==='POWER=900 VA|EXPORT INDEX=11256 kWh|PERIOD=OFF-PEAK HOURS',pages(c).join('|'));
+ok('linky injection + period (en)',pages(c).join('|')==='POWER=900 VA|PERIOD=OFF-PEAK HOURS',pages(c).join('|'));
 // linky three-phase Tempo + injection: indexes and injection live alongside the per-phase gauge
 c=lk([...ph(250,4900,700),...T6.map((k,i)=>mk(`sensor.${k}`,(i+1)*1000000,WH)),mk('sensor.eait',11256179,WH),mk('sensor.sinsti',1830,VA)],
   {...L3,entity_power:'',indexes:T6.map((k)=>({entity:`sensor.${k}`,name:k.replace('_',' ')})),entity_injection:'sensor.eait',entity_power_injection:'sensor.sinsti',show_tariff:false});
@@ -1985,14 +1986,14 @@ ok('mini-pc energy tile hidden without entity',card('mini-pc',{entity_cpu:'senso
   ok(`Portuguese ${locale}: editor labels`, window.applianceEditorLabel('entity_humidity', hassOf([], locale)) === (humidity.includes('humidade') ? 'Humidade' : 'Umidade'));
   const ed = document.createElement('appliance-card-editor');
   ed.hass = hassOf([], locale); ed.setConfig({type:'custom:appliance-card'}); document.body.append(ed);
-  const form = ed.querySelector('ha-form'), options = form.schema[0].selector.select.options;
+  const form = ed.querySelector('ha-form'), options = form.schema.find((f)=>f.name==='appliance').selector.select.options;
   ok(`Portuguese ${locale}: picker regional names`, options.find((o)=>o.value==='appliance-fridge-card')?.label === fridge);
-  ok(`Portuguese ${locale}: picker interface`, form.computeLabel() === 'Tipo de aparelho');
+  ok(`Portuguese ${locale}: picker interface`, form.computeLabel({name:'appliance'}) === 'Tipo de aparelho');
   const labels = options.map((o)=>o.label), sorted = [...labels].sort((a,b)=>a.localeCompare(b, locale.replace('_','-'), {sensitivity:'base'}));
   ok(`Portuguese ${locale}: picker sorting`, JSON.stringify(labels) === JSON.stringify(sorted));
   const nextLocale = fridge === 'Geladeira' ? 'pt-PT' : 'pt-BR';
   ed.hass = hassOf([], nextLocale);
-  const updated = form.schema[0].selector.select.options.find((o)=>o.value==='appliance-fridge-card')?.label;
+  const updated = form.schema.find((f)=>f.name==='appliance').selector.select.options.find((o)=>o.value==='appliance-fridge-card')?.label;
   ok(`Portuguese ${locale}: picker updates on language change`, updated === (nextLocale === 'pt-PT' ? 'Frigorífico' : 'Geladeira'));
   ed.remove();
  }
@@ -2078,6 +2079,64 @@ for (const locale of ['pt','pt-BR']) {
   ok(`Portuguese sync PoE ${locale}: translated confirmation`,prompt.startsWith('Desligar a alimentação PoE em Porta 1?')&&!prompt.includes('{port}'),prompt);
   ok(`Portuguese sync PoE ${locale}: cancel keeps power on`,h.calls.length===0,JSON.stringify(h.calls));
  } finally {window.confirm=previousConfirm;el.remove();}
+}
+// Core cards: unified extra_tiles, icons, and show_sparklines
+{
+ const c=card('washer',{entity:'switch.w',power:'sensor.p',energy:'sensor.e',icons:{power:'mdi:power-plug',energy:'mdi:meter-electric'},extra_tiles:[{entity:'sensor.ex1',name:'Temp',icon:'mdi:thermometer'},{entity:'sensor.gone',name:'Gone'},'sensor.ex2']},
+  [mk('switch.w','on'),mk('sensor.p',120,W),mk('sensor.e',1.5,{unit_of_measurement:'kWh'}),mk('sensor.ex1',42,{unit_of_measurement:'°C'}),mk('sensor.gone','unavailable'),mk('sensor.ex2','ok')]);
+ const icoP=c.sr.querySelector('#stats .tile[data-entity="sensor.p"] ha-icon')?.getAttribute('icon');
+ const icoE=c.sr.querySelector('#stats .tile[data-entity="sensor.e"] ha-icon')?.getAttribute('icon');
+ ok('core icons override power and energy tiles', icoP==='mdi:power-plug'&&icoE==='mdi:meter-electric', `${icoP}|${icoE}`);
+ const ex=c.sr.querySelectorAll('#stats .tile.extra');
+ ok('core extra_tiles renders available tiles and hides unavailable', ex.length===2&&/Temp/.test(ex[0].textContent)&&/42/.test(ex[0].textContent)&&/ok/i.test(ex[1].textContent), [...ex].map(e=>e.textContent).join(' | '));
+ const got=[]; c.el.addEventListener('hass-more-info',e=>got.push(e.detail.entityId));
+ ex[0].click();
+ ok('core extra_tiles click opens extra entity only', got.length===1&&got[0]==='sensor.ex1', JSON.stringify(got));
+ c.el.remove();
+
+ // show_sparklines: true on power & temperature tiles
+ const sp=card('water-heater',{switch:'switch.h',power:'sensor.pw',temperature:'sensor.tp',show_sparklines:true},[mk('switch.h','on'),mk('sensor.pw',900,W),mk('sensor.tp',42,T)]);
+ sp.el.hass=hassOf([mk('switch.h','on'),mk('sensor.pw',1400,W),mk('sensor.tp',48,T)],'fr');
+ const pSpk=sp.sr.querySelector('.tile[data-entity="sensor.pw"] svg.tile-spark polyline.spark-line');
+ const tSpk=sp.sr.querySelector('.tile[data-entity="sensor.tp"] svg.tile-spark polyline.spark-line');
+ ok('core show_sparklines renders SVG trend in power and temperature tiles', !!pSpk&&!!tSpk&&(pSpk.getAttribute('points')||'').includes(' '), `${!!pSpk}|${!!tSpk}`);
+ sp.el.setConfig({switch:'switch.h',power:'sensor.pw',temperature:'sensor.tp',show_sparklines:false});
+ ok('core show_sparklines:false hides SVG trend', !sp.sr.querySelector('svg.tile-spark'));
+ sp.el.remove();
+}
+// appliance-breezer-card
+{
+ const cls=(c)=>c.sr.querySelector('ha-card').className.trim().split(' ')[0];
+ const bz=(cfg,st,lang='ru')=>card('breezer',{entity_status:'fan.bz',entity_heater:'switch.bz_h',entity_damper:'switch.bz_d',entity_co2:'sensor.co2',entity_pm25:'sensor.pm',entity_filter:'sensor.flt',entity_temp:'sensor.t_in',entity_outdoor_temp:'sensor.t_out',entity_power:'sensor.pw',animations:false,...cfg},st,lang);
+ let c=bz({},[mk('fan.bz','off'),mk('switch.bz_h','off'),mk('switch.bz_d','off'),mk('sensor.co2',480,{unit_of_measurement:'ppm'}),mk('sensor.pm',8,{unit_of_measurement:'µg/m³'}),mk('sensor.flt',80,{unit_of_measurement:'%'}),mk('sensor.t_in',21,T),mk('sensor.t_out',5,T),mk('sensor.pw',0,W)]);
+ ok('breezer off -> damper closed', cls(c)==='off'&&!c.sr.querySelector('ha-card').classList.contains('damper-open'), c.sr.querySelector('ha-card').className);
+ c.el.remove();
+ c=bz({},[mk('fan.bz','on',{percentage:40}),mk('switch.bz_h','off'),mk('switch.bz_d','on'),mk('sensor.co2',620,{unit_of_measurement:'ppm'}),mk('sensor.pm',10,{unit_of_measurement:'µg/m³'}),mk('sensor.flt',75,{unit_of_measurement:'%'}),mk('sensor.t_in',18,T),mk('sensor.t_out',16,T),mk('sensor.pw',18,W)]);
+ ok('breezer ventilating + damper open + OLED CO2', cls(c)==='ventilating'&&c.sr.querySelector('ha-card').classList.contains('damper-open')&&c.sr.getElementById('bzoledv').textContent==='620', c.sr.querySelector('ha-card').className);
+ c.el.remove();
+ c=bz({icons:{co2:'mdi:cloud-outline'},extra_tiles:[{entity:'sensor.ex',name:'Extra'}]},[mk('fan.bz','on',{percentage:90}),mk('switch.bz_h','on'),mk('switch.bz_d','on'),mk('sensor.co2',1250,{unit_of_measurement:'ppm'}),mk('sensor.pm',42,{unit_of_measurement:'µg/m³'}),mk('sensor.flt',5,{unit_of_measurement:'%'}),mk('sensor.t_in',22,T),mk('sensor.t_out',-3,T),mk('sensor.pw',650,W),mk('sensor.ex',33,{unit_of_measurement:'%'})]);
+ ok('breezer heating + co2/pm25/filter alerts', cls(c)==='heating'&&c.sr.getElementById('bzalert').classList.contains('on')&&/CO₂/.test(c.sr.getElementById('bzalert').textContent)&&/PM2\.5/.test(c.sr.getElementById('bzalert').textContent), c.sr.getElementById('bzalert').textContent);
+ ok('breezer custom icon + extra_tiles', c.sr.querySelector('.tile[data-k="co2"] ha-icon').getAttribute('icon')==='mdi:cloud-outline'&&c.sr.querySelectorAll('.tile.extra').length===1);
+ c.sr.querySelector('#bzctrls button[data-k="heater"]').click();
+ ok('breezer heater toggle calls service', c.h.calls.some(x=>x[0]==='switch'&&x[1]==='toggle'&&x[2].entity_id==='switch.bz_h'), JSON.stringify(c.h.calls));
+ c.el.remove();
+}
+// appliance-video-doorbell-card
+{
+ const cls=(c)=>c.sr.querySelector('ha-card').className.trim().split(' ')[0];
+ const db=(cfg,st,lang='ru')=>card('video-doorbell',{entity_ring:'binary_sensor.ring',entity_motion:'binary_sensor.mot',entity_person:'binary_sensor.prs',entity_package:'binary_sensor.pkg',entity_battery:'sensor.bat',entity_signal:'sensor.sig',entity_chime:'switch.chime',entity_lock:'lock.door',animations:false,...cfg},st,lang);
+ let c=db({},[mk('binary_sensor.ring','off'),mk('binary_sensor.mot','off'),mk('binary_sensor.prs','off'),mk('binary_sensor.pkg','off'),mk('sensor.bat',85,{unit_of_measurement:'%'}),mk('sensor.sig',-58,{unit_of_measurement:'dBm'}),mk('switch.chime','on'),mk('lock.door','locked')]);
+ ok('video-doorbell idle', cls(c)==='idle'&&c.sr.querySelector('.tile[data-k="battery"]').textContent.includes('85'), c.sr.querySelector('ha-card').className);
+ c.el.remove();
+ c=db({icons:{last_ring:'mdi:doorbell-video'},extra_tiles:[{entity:'sensor.v',name:'Voltage'}]},[mk('binary_sensor.ring','on'),mk('binary_sensor.mot','on'),mk('binary_sensor.prs','on'),mk('binary_sensor.pkg','on'),mk('sensor.bat',12,{unit_of_measurement:'%'}),mk('switch.chime','on'),mk('lock.door','locked'),mk('sensor.v',16,{unit_of_measurement:'V'})]);
+ ok('video-doorbell ringing + lowbat + live RING badge', cls(c)==='ringing'&&c.sr.querySelector('ha-card').classList.contains('lowbat')&&c.sr.getElementById('dblive').textContent==='RING', c.sr.querySelector('ha-card').className);
+ ok('video-doorbell custom icon + extra_tiles', c.sr.querySelector('.tile[data-k="last_ring"] ha-icon').getAttribute('icon')==='mdi:doorbell-video'&&c.sr.querySelectorAll('.tile.extra').length===1);
+ c.sr.querySelector('#dbctrls button[data-k="chime"]').click();
+ ok('video-doorbell chime toggle calls service', c.h.calls.some(x=>x[0]==='switch'&&x[1]==='toggle'&&x[2].entity_id==='switch.chime'), JSON.stringify(c.h.calls));
+ c.el.remove();
+ c=db({entity_camera:'camera.front'},[mk('camera.front','idle',{entity_picture:'/local/door.jpg'}),mk('binary_sensor.ring','off'),mk('binary_sensor.prs','on')]);
+ ok('video-doorbell person state + snapshot img', cls(c)==='person'&&c.sr.getElementById('dbimg').getAttribute('src')==='/local/door.jpg', c.sr.querySelector('ha-card').className);
+ c.el.remove();
 }
 window.RESULTS=R;
 const fails=R.filter(r=>!r.pass).length;

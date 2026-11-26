@@ -18,4 +18,9 @@
 .k-iron.st-steaming .ir-heat, .k-steam_station.st-steaming .ir-heat { opacity: .4; }
 .ir-steam path { fill: none; stroke: #dfe6ee; stroke-width: 2.4; stroke-linecap: round; opacity: 0; }
 .k-iron.st-steaming .ir-steam path, .k-steam_station.st-steaming .ir-steam path { animation: ac-steam 1.5s ease-out infinite; }
-.ir-steam path:nth-child(2) { animation-delay: .5s !important; } .ir-steam path:nth-child(3) { animation-delay: 1s !important; }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .ir-steam path { animation-delay: calc((sibling-index() - 1) * .5s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .ir-steam path:nth-child(2) { animation-delay: .5s !important; } .ir-steam path:nth-child(3) { animation-delay: 1s !important; }
+}

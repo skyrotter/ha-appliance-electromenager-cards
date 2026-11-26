@@ -56,7 +56,19 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
 /* hide_when_inactive en mode édition : la carte serait masquée, elle reste visible en transparence */
 .wrap.would-hide { opacity: .45; }
-.tile { display: flex; flex-direction: column; padding: 6px 9px; border-radius: 10px; min-width: 0; background: var(--ac-tile-bg, rgba(127,127,127,.09)); }
+.tile { position: relative; overflow: hidden; display: flex; flex-direction: column; padding: 6px 9px; border-radius: 10px; min-width: 0; background: var(--ac-tile-bg, rgba(127,127,127,.09)); }
+.tile > .val, .tile > .lbl, .tile.extra > .v, .tile.extra > .l { position: relative; z-index: 1; }
+.tile.extra { flex-direction: column-reverse; }
+:host([tile-order="name"]) .tile.extra { flex-direction: column; }
+.tile.extra .l { display: flex; align-items: center; gap: 3px; font-size: 11px; color: var(--secondary-text-color); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.tile.extra .l ha-icon { --mdc-icon-size: 13px; flex: none; }
+.tile.extra .v { font-size: 14px; font-weight: 600; color: var(--primary-text-color); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tile.extra .v small { font-size: 11px; font-weight: 500; color: var(--secondary-text-color); margin-left: 2px; }
+.wrap.layout-split .tile.extra .v { font-size: 11.5px !important; font-weight: 700 !important; line-height: 1.1 !important; }
+.wrap.layout-split .tile.extra .l { font-size: 8px !important; gap: 2.5px !important; line-height: 1 !important; margin-top: 1.5px !important; }
+.tile-spark { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 62%; pointer-events: none; z-index: 0; display: block; }
+.tile-spark .spark-area { fill: var(--spark-c, var(--c)); opacity: .14; }
+.tile-spark .spark-line { fill: none; stroke: var(--spark-c, var(--c)); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; opacity: .75; }
 /* tile_order: name → nom au-dessus de la valeur (ordre historique de ces cartes : valeur au-dessus) */
 :host([tile-order="name"]) .tile { flex-direction: column-reverse; }
 .tile:hover { background: var(--ac-tile-bg, rgba(127,127,127,.16)); filter: brightness(.96); }
@@ -309,3 +321,5 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 :host([tiles-pos="top"]) .wrap:not(.layout-split) .stats, :host([tiles-pos="bottom"]) .wrap:not(.layout-split) .stats { justify-self: stretch; width: 100%; }
 :host([tiles-pos="left"]) .wrap:not(.layout-split) .stats, :host([tiles-pos="right"]) .wrap:not(.layout-split) .stats { grid-template-columns: minmax(0, 1fr); align-self: center; justify-self: stretch; }
 :host([tiles-pos="left"]) .wrap:not(.layout-split) .illus, :host([tiles-pos="right"]) .wrap:not(.layout-split) .illus { justify-self: center; }
+
+:host([offscreen]) *, :host([offscreen]) svg * { animation-play-state: paused !important; }

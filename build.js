@@ -26,12 +26,14 @@
 "use strict";
 const fs = require("fs");
 const path = require("path");
+const vm = require("node:vm");
 
 const ROOT = __dirname;
 const SRC = path.join(ROOT, "src");
 const NAME = "ha-appliance-electromenager-cards.js";
 const DIST = path.join(ROOT, "dist", NAME);
 const CARDS_DIR = path.join(ROOT, "dist", "cards");
+const ASSETS_DIR = path.join(ROOT, "dist", "assets");
 
 /* The 26 core cards share one scope (one IIFE): order matters. */
 const CORE_FILES = [
@@ -42,6 +44,7 @@ const CORE_FILES = [
   "core/definitions.js",   // DEF: what each kind shows and needs
   "core/helpers.js",       // state parsing and formatting
   "core/base.js",          // ApplianceCardBase
+  "core/kinds/*.js",       // Per-kind compute, LCD and render handlers
   "core/editor.js",        // visual editor schema, stub config
   "core/style.js",         // STYLE, built from CSS_FILES
   "core/register.js",      // defines the custom elements
@@ -58,7 +61,7 @@ const CSS_FILES = [
  * window.appliance* helpers the other 56 call, so the loader awaits them
  * first; the rest load in parallel. */
 const CARD_FILES = [
-  "card-helpers", "editor-labels", "aquarium", "reef-aquarium", "linky", "battery", "ev-charger", "robot-vacuum", "robot-mower", "pellet-boiler", "gas-boiler", "water-heat-pump", "air-water-heat-pump", "diesel-heater", "jacuzzi", "internet-box", "hue-sync-box", "door-sensor", "motion-sensor", "alarm-keypad", "air-quality", "pet-feeder", "portable-ac", "access", "sauna", "pumps", "pool-robot", "ups", "underfloor-heating", "lights", "shutters", "water-meter", "gas-meter", "electric-meter", "trv", "room-climate", "mailbox", "smoke-detector", "smart-lock", "cat-flap", "pet-fountain", "soundbar", "leak-detector", "mini-pc", "nas", "tv-box", "scale", "thermo-heater", "water-valves", "water-softener", "camera", "poe-switch", "raspberry-pi", "water-filter", "irrigation", "led-strip", "rain-gauge", "plant-monitor", "co2-monitor", "litter-box", "barometer", "weather-station", "energy-monitor", "kitchen-timer", "oven-hob", "solar-house", "htpc", "humidifier", "fan-heater", "inflatable-spa", "heat-meter", "poubelle", "picker", "zigbee-coordinator", "wall-tablet",
+  "card-helpers", "editor-labels", "aquarium", "reef-aquarium", "linky", "battery", "ev-charger", "robot-vacuum", "robot-mower", "pellet-boiler", "gas-boiler", "water-heat-pump", "air-water-heat-pump", "diesel-heater", "jacuzzi", "internet-box", "hue-sync-box", "door-sensor", "motion-sensor", "alarm-keypad", "air-quality", "pet-feeder", "portable-ac", "access", "sauna", "pumps", "pool-robot", "ups", "underfloor-heating", "lights", "shutters", "water-meter", "gas-meter", "electric-meter", "trv", "room-climate", "mailbox", "smoke-detector", "smart-lock", "cat-flap", "pet-fountain", "soundbar", "leak-detector", "mini-pc", "nas", "tv-box", "scale", "thermo-heater", "water-valves", "water-softener", "camera", "poe-switch", "raspberry-pi", "water-filter", "irrigation", "led-strip", "rain-gauge", "plant-monitor", "co2-monitor", "litter-box", "barometer", "weather-station", "energy-monitor", "kitchen-timer", "oven-hob", "solar-house", "htpc", "humidifier", "fan-heater", "inflatable-spa", "heat-meter", "poubelle", "picker", "zigbee-coordinator", "wall-tablet", "breezer", "video-doorbell",
 ].map((n) => `cards/${n}.js`);
 
 const read = (p) => fs.readFileSync(p, "utf8").replace(/\r\n/g, "\n");
@@ -111,10 +114,23 @@ const substituteI18n = (text) => text.replace(/^([ \t]*)(.*?)\/\*@i18n (\w+)\*\/
   return indent + before + JSON.stringify(table);
 });
 
+/* ---- dynamic image assets (extracted from core & cards into dist/assets/*.js) ---- */
+const B64_RE = /(["'])(data:image\/(?:webp|png);base64,[A-Za-z0-9+/=]{1000,})\1/g;
+const assetGroups = new Map();
+const extractBase64Assets = (code, group) => code.replace(B64_RE, (_, _q, dataUri) => {
+  let list = assetGroups.get(group);
+  if (!list) { list = []; assetGroups.set(group, list); }
+  let idx = list.indexOf(dataUri);
+  if (idx < 0) { idx = list.length; list.push(dataUri); }
+  return `window.__acImg(${JSON.stringify(group)},${idx})`;
+});
+
 /* ---- core (one shared IIFE) ---- */
 const compactCss = (raw) => raw.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s+/gm, "").replace(/\n{2,}/g, "\n").trim();
 const css = compactCss(CSS_FILES.map(load).join("\n")).replace(/[\\`]|\$\{/g, (c) => `\\${c}`);
-let core = '(() => {\n"use strict";\n' + CORE_FILES.flatMap(expand).map(load).join("\n") + "})();\n";
+let core = '(() => {\n"use strict";\n'
+  + CORE_FILES.flatMap(expand).map((rel) => extractBase64Assets(load(rel), `core-${path.basename(rel, ".js")}`)).join("\n")
+  + "})();\n";
 const cssMarkers = core.split("/*@css*/``").length - 1;
 if (cssMarkers !== 1) throw new Error(`expected one /*@css*/\`\` marker, found ${cssMarkers}`);
 core = core.replace("/*@css*/``", () => "`\n" + css + "`");
@@ -124,7 +140,16 @@ core = substituteI18n(core);
 const chunkNames = CARD_FILES.map((f) => path.basename(f, ".js"));
 // /*@asset nom*/{} : insère src/assets/<nom>.json tel quel (photos détourées en base64 pour les cartes en photo)
 const substituteAssets = (text) => text.replace(/\/\*@asset ([\w-]+)\*\/\{\}/g, (_, n) => fs.readFileSync(path.join(SRC, "assets", `${n}.json`), "utf8").trim());
-const chunks = Object.fromEntries(CARD_FILES.map((f) => [path.basename(f, ".js"), substituteAssets(substituteI18n(load(f)))]));
+const chunks = Object.fromEntries(CARD_FILES.map((f) => {
+  const name = path.basename(f, ".js");
+  let code = extractBase64Assets(substituteAssets(substituteI18n(load(f))), name);
+  if (name !== "card-helpers" && name !== "editor-labels" && name !== "picker") {
+    code = code.replace(/\bcustomElements\.get\(/g, "(window.__acHasReal||customElements.get.bind(customElements))(");
+  }
+  return [name, code];
+}));
+const assetNames = [...assetGroups.keys()].sort();
+const assetChunks = Object.fromEntries(assetNames.map((g) => [g, `window.__acRegisterAssets(${JSON.stringify(g)},${JSON.stringify(assetGroups.get(g))});\n`]));
 
 for (const ns of Object.keys(i18n.en).filter((ns) => !usedI18n.has(ns))) warn(`en.json: namespace "${ns}" is not used by the source`);
 
@@ -142,34 +167,353 @@ for (const ns of Object.keys(i18n.en).filter((ns) => !usedI18n.has(ns))) warn(`e
   for (const t of [...found].filter((t) => !ignore.has(t) && !categorised.has(t)).sort()) warn(`${t} has no category: add it to CATS in src/cards/picker.js`);
 }
 
-/* ---- main file: header + core + the loader for the card chunks ---- */
-const [first, second, ...rest] = chunkNames; // card-helpers, editor-labels, then the 56 lazy cards
+/* ---- extract standalone card manifest & custom element tag map at build time ---- */
+const standaloneNames = chunkNames.filter((n) => n !== "card-helpers" && n !== "editor-labels" && n !== "picker");
+const tagToChunk = {};
+const manifestCards = [];
+{
+  class DummyEl { attachShadow() { return { innerHTML: "", adoptedStyleSheets: [], querySelector: () => null, querySelectorAll: () => [], appendChild: () => {} }; } }
+  const defined = {};
+  const customCards = [];
+  let currentChunk = "";
+  const sandbox = {
+    window: {
+      customCards,
+      addEventListener: () => {},
+      dispatchEvent: () => {},
+      location: { href: "http://localhost/" },
+      applianceResolveLanguage: () => "en",
+      __acImg: () => "data:image/webp;base64,",
+    },
+    customElements: {
+      define: (tag, cls) => {
+        defined[tag] = cls;
+        if (currentChunk) tagToChunk[String(tag).toLowerCase()] = currentChunk;
+      },
+      get: (tag) => defined[tag],
+      whenDefined: () => Promise.resolve(),
+    },
+    document: { documentElement: { lang: "en" }, querySelector: () => null, createElement: () => new DummyEl() },
+    navigator: { language: "en" },
+    HTMLElement: DummyEl,
+    CustomEvent: class {},
+    CSSStyleSheet: class { replaceSync() {} },
+    Intl, JSON, Math, Object, Array, String, Number, Boolean, Date, RegExp, Map, Set, Promise, Error, console,
+    parseFloat, parseInt, isNaN, isFinite, queueMicrotask: () => {}, setTimeout, clearTimeout, setInterval, clearInterval,
+  };
+  sandbox.window.window = sandbox.window;
+  sandbox.self = sandbox.window;
+  sandbox.globalThis = sandbox;
+  vm.createContext(sandbox);
+  vm.runInContext(chunks["card-helpers"], sandbox);
+  for (const name of standaloneNames) {
+    const prevLen = customCards.length;
+    currentChunk = name;
+    vm.runInContext(chunks[name], sandbox);
+    for (let i = prevLen; i < customCards.length; i++) manifestCards.push(customCards[i]);
+  }
+  var formTags = Object.entries(defined)
+    .filter(([t, cls]) => tagToChunk[String(t).toLowerCase()] && typeof cls?.getConfigForm === "function" && typeof cls?.getConfigElement !== "function")
+    .map(([t]) => String(t).toLowerCase());
+}
+
+/* ---- main file: header + asset bootstrap + core + on-demand lazy loader ---- */
 const VERSION_STR = /const VERSION = "([^"]+)"/.exec(load("core/version.js"))[1];
-const loader = `
-/* Lazy-loaded card chunks (dist/cards/*.js, fetched by HACS like any other
- * file in dist/). card-helpers and editor-labels define the window.appliance*
- * helpers the other chunks call, so they load first and are awaited; the
- * rest load in parallel (their relative finish order isn't guaranteed).
- * Requires this file to be registered as an ES module (import()/import.meta
- * need it), which is how HACS/Lovelace load it. */
-(async () => {
-  const base = import.meta.url;
-  // ?v=<version> : après une mise à jour, le navigateur ne ressert pas d'anciens morceaux depuis son cache
-  // un morceau qui échoue (réseau, cache, erreur de syntaxe) est signalé en console sans empêcher les autres ni les événements
-  const chunk = (name) => import(new URL(\`cards/\${name}.js?v=${VERSION_STR}\`, base).href)
-    .catch((e) => console.error(\`ha-appliance-electromenager-cards: chunk "\${name}" failed to load\`, e));
-  await chunk(${JSON.stringify(first)});
-  await chunk(${JSON.stringify(second)});
-  // card-helpers et editor-labels sont là : les cartes de base (dans ce fichier) appliquent alors transparence, taille et disposition du titre
-  window.dispatchEvent(new Event("appliance-helpers-ready"));
-  await Promise.allSettled([${rest.map((n) => JSON.stringify(n)).join(", ")}].map(chunk));
-  // Fires once every chunk has finished registering its card(s): anything that
-  // needs to see the complete window.customCards list (e.g. the single-card
-  // picker) must wait for this instead of assuming load order.
-  window.dispatchEvent(new Event("appliance-cards-ready"));
+const bootstrap = `
+/* Runtime bootstrap: dynamic photo asset hydrator & event pre-hook */
+(() => {
+  const w = window;
+  w.__acAssets = w.__acAssets || {};
+  const BLANK = "data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwA0JaQAA3AA/vuUAAA=";
+  const roots = new Set();
+  const RE_AC = /#ac:([^:]+):(\\d+)$/;
+  const hydrateRoot = (root, onlyGroup) => {
+    if (!root) return;
+    for (const el of root.querySelectorAll('[href*="#ac:"],[src*="#ac:"]')) {
+      const attr = el.hasAttribute("href") ? "href" : "src";
+      const val = el.getAttribute(attr);
+      const m = val && RE_AC.exec(val);
+      if (!m) continue;
+      const g = m[1], idx = Number(m[2]);
+      if (onlyGroup && g !== onlyGroup) continue;
+      const real = w.__acAssets[g] && w.__acAssets[g][idx];
+      if (real) {
+        el.setAttribute(attr, real);
+        if (attr === "href" && el.hasAttribute("xlink:href")) el.setAttribute("xlink:href", real);
+      } else if (typeof w.applianceLoadAsset === "function") {
+        w.applianceLoadAsset(g);
+      }
+    }
+  };
+  w.__acHydrateRoot = (root) => hydrateRoot(root);
+  w.__acHydrateAssets = (group) => { roots.forEach((r) => hydrateRoot(r, group)); };
+  w.__acImg = (group, idx) => {
+    const arr = w.__acAssets[group];
+    return (arr && arr[idx]) ? arr[idx] : \`\${BLANK}#ac:\${group}:\${idx}\`;
+  };
+  w.__acRegisterAssets = (group, list) => {
+    w.__acAssets[group] = list;
+    w.__acHydrateAssets(group);
+  };
+  if (typeof Element !== "undefined" && Element.prototype.attachShadow && !Element.prototype._acPatchedShadow) {
+    const origAttach = Element.prototype.attachShadow;
+    Element.prototype.attachShadow = function (init) {
+      const sr = origAttach.call(this, init);
+      if (this.localName && (this.localName.startsWith("appliance-") || this.localName.startsWith("ac-impl-appliance-"))) {
+        roots.add(sr);
+        if (typeof MutationObserver !== "undefined") {
+          let pending = false;
+          new MutationObserver(() => {
+            if (pending) return;
+            pending = true;
+            Promise.resolve().then(() => { pending = false; hydrateRoot(sr); });
+          }).observe(sr, { childList: true, subtree: true, attributes: true, attributeFilter: ["href", "src"] });
+        }
+      }
+      return sr;
+    };
+    Element.prototype._acPatchedShadow = true;
+  }
+  const origAdd = w.addEventListener.bind(w);
+  w.addEventListener = function (type, fn, opts) {
+    if (type === "appliance-cards-ready") {
+      w.__acWantAll = true;
+      if (typeof w.applianceLoadAllCards === "function") w.applianceLoadAllCards();
+    }
+    return origAdd(type, fn, opts);
+  };
 })();
 `;
-const out = load("header.js") + core + loader;
+
+const loader = `
+/* On-demand lazy loader for card chunks (dist/cards/*.js) and image assets (dist/assets/*.js).
+ * Only card-helpers and picker load on startup; standalone card chunks, editor-labels (i18n),
+ * and photo asset packs load dynamically on demand when a card/editor/photo is actually rendered. */
+(async () => {
+  const w = window;
+  const base = import.meta.url;
+  const TAG_TO_CHUNK = ${JSON.stringify(tagToChunk)};
+  const FORM_TAGS = new Set(${JSON.stringify(formTags)});
+  const ALL_CHUNKS = ${JSON.stringify(standaloneNames)};
+  const ASSET_GROUPS = ${JSON.stringify(assetNames)};
+  const MANIFEST_CARDS = ${JSON.stringify(manifestCards)};
+
+  w.customCards = w.customCards || [];
+  const origPush = w.customCards.push.bind(w.customCards);
+  w.customCards.push = function (...items) {
+    let res = w.customCards.length;
+    for (const item of items) {
+      if (item && w.__acHideCustomCard && w.__acHideCustomCard(item)) continue;
+      const idx = item && item.type ? w.customCards.findIndex((x) => x && x.type === item.type) : -1;
+      if (idx >= 0) w.customCards[idx] = item;
+      else res = origPush(item);
+    }
+    return res;
+  };
+  w.customCards.push(...MANIFEST_CARDS);
+
+  const chunkPromises = new Map();
+  const loadChunk = (name) => {
+    if (!name) return Promise.resolve();
+    let p = chunkPromises.get(name);
+    if (!p) {
+      p = import(new URL(\`cards/\${name}.js?v=${VERSION_STR}\`, base).href)
+        .catch((e) => console.error(\`ha-appliance-electromenager-cards: chunk "\${name}" failed to load\`, e));
+      chunkPromises.set(name, p);
+    }
+    return p;
+  };
+  w.applianceLoadChunk = loadChunk;
+  w.applianceLoadChunkForTag = (tag) => loadChunk(TAG_TO_CHUNK[String(tag || "").toLowerCase()]);
+
+  const assetPromises = new Map();
+  w.applianceLoadAsset = (group) => {
+    if (!group || w.__acAssets[group]) return Promise.resolve();
+    let p = assetPromises.get(group);
+    if (!p) {
+      p = import(new URL(\`assets/\${group}.js?v=${VERSION_STR}\`, base).href)
+        .catch((e) => console.error(\`ha-appliance-electromenager-cards: asset "\${group}" failed to load\`, e));
+      assetPromises.set(group, p);
+    }
+    return p;
+  };
+
+  let allCardsPromise = null;
+  let readyDispatched = false;
+  w.applianceLoadAllCards = () => {
+    if (!allCardsPromise) {
+      allCardsPromise = Promise.all([
+        loadChunk("card-helpers"),
+        loadChunk("editor-labels"),
+        Promise.allSettled(ASSET_GROUPS.map(w.applianceLoadAsset)),
+      ]).then(() => Promise.allSettled(ALL_CHUNKS.map(loadChunk)))
+        .then(() => {
+          if (!readyDispatched) {
+            readyDispatched = true;
+            if (typeof w.__acApplySelectorPrefs === "function") w.__acApplySelectorPrefs(true);
+            w.dispatchEvent(new Event("appliance-cards-ready"));
+            if (typeof w.__acApplySelectorPrefs === "function") w.__acApplySelectorPrefs(false);
+          }
+        });
+    }
+    return allCardsPromise;
+  };
+
+  if (typeof customElements !== "undefined") {
+    const ce = customElements;
+    const origWhen = ce.whenDefined.bind(ce);
+    const origGet = ce.get.bind(ce);
+    const origDefine = ce.define.bind(ce);
+    const REAL = {};
+    const STUBS = new Set();
+    const PENDING = new Map();
+    w.__acHasReal = (tag) => {
+      const k = String(tag || "").toLowerCase();
+      return REAL[k] || (STUBS.has(k) ? undefined : origGet(tag));
+    };
+    const notifyReal = (k, cls) => {
+      REAL[k] = cls;
+      STUBS.delete(k);
+      const list = PENDING.get(k);
+      if (list) { PENDING.delete(k); list.forEach((fn) => fn(cls)); }
+    };
+    ce.define = function (tag, cls, opts) {
+      const k = String(tag || "").toLowerCase();
+      if (STUBS.has(k)) {
+        const implTag = \`ac-impl-\${k}\`;
+        if (!origGet(implTag)) origDefine(implTag, cls, opts);
+        notifyReal(k, cls);
+        return;
+      }
+      if (!origGet(tag)) origDefine(tag, cls, opts);
+      REAL[k] = cls;
+    };
+    ce.whenDefined = function (tag) {
+      const k = String(tag || "").toLowerCase();
+      const baseTag = k.replace(/-editor$/, "");
+      const chunkName = TAG_TO_CHUNK[k] || TAG_TO_CHUNK[baseTag];
+      if (chunkName && !REAL[k]) {
+        return loadChunk(chunkName).then(() => REAL[k] || origWhen(tag));
+      }
+      return origWhen(tag);
+    };
+    ce.get = function (tag) {
+      const existing = origGet(tag);
+      if (!existing) {
+        const k = String(tag || "").toLowerCase();
+        const chunkName = TAG_TO_CHUNK[k] || TAG_TO_CHUNK[k.replace(/-editor$/, "")];
+        if (chunkName) loadChunk(chunkName);
+      }
+      return existing;
+    };
+    if (!w.__acWantAll && typeof HTMLElement !== "undefined") {
+      const onReal = (k, fn) => {
+        if (REAL[k]) { fn(REAL[k]); return; }
+        let arr = PENDING.get(k);
+        if (!arr) { arr = []; PENDING.set(k, arr); }
+        arr.push(fn);
+      };
+      for (const [tag, chunkName] of Object.entries(TAG_TO_CHUNK)) {
+        const k = tag.toLowerCase();
+        const isForm = FORM_TAGS.has(k);
+        if (!origGet(k)) {
+          STUBS.add(k);
+          const StubCard = class extends HTMLElement {
+            static getStubConfig(hass) {
+              loadChunk(chunkName);
+              return REAL[k] && REAL[k].getStubConfig ? REAL[k].getStubConfig(hass) : {};
+            }
+            constructor() {
+              super();
+              this._cfg = null; this._h = null; this._impl = null;
+              loadChunk(chunkName);
+              onReal(k, (Cls) => this._mount(Cls));
+            }
+            connectedCallback() {
+              if (this._impl && this._impl.parentNode !== this) {
+                this.style.display = "block";
+                this.style.height = "100%";
+                this.replaceChildren(this._impl);
+              }
+            }
+            _mount(Cls) {
+              if (!this._impl) this._impl = new Cls();
+              if (this.isConnected && this._impl.parentNode !== this) {
+                this.style.display = "block";
+                this.style.height = "100%";
+                this.replaceChildren(this._impl);
+              }
+              if (this._pv !== undefined) this._impl.preview = this._pv;
+              if (this._em !== undefined) this._impl.editMode = this._em;
+              if (this._cfg) this._impl.setConfig(this._cfg);
+              if (this._h) this._impl.hass = this._h;
+            }
+            get shadowRoot() { return this._impl ? this._impl.shadowRoot : super.shadowRoot; }
+            get _config() { return this._impl ? this._impl._config : this._cfg; }
+            setConfig(c) { this._cfg = c; if (this._impl) this._impl.setConfig(c); else loadChunk(chunkName); }
+            set hass(h) { this._h = h; if (this._impl) this._impl.hass = h; }
+            set preview(v) { this._pv = v; if (this._impl) this._impl.preview = v; }
+            get preview() { return this._impl ? this._impl.preview : !!this._pv; }
+            set editMode(v) { this._em = v; if (this._impl) this._impl.editMode = v; }
+            get editMode() { return this._impl ? this._impl.editMode : !!this._em; }
+            getCardSize() { return this._impl && this._impl.getCardSize ? this._impl.getCardSize() : 3; }
+            getGridOptions() { return this._impl && this._impl.getGridOptions ? this._impl.getGridOptions() : { columns: 6, min_columns: 3, rows: "auto", min_rows: 1 }; }
+          };
+          if (isForm) {
+            StubCard.getConfigForm = async () => {
+              await Promise.all([loadChunk(chunkName), loadChunk("editor-labels")]);
+              return REAL[k] && REAL[k].getConfigForm ? REAL[k].getConfigForm() : { schema: [] };
+            };
+          } else {
+            StubCard.getConfigElement = () => document.createElement(\`\${k}-editor\`);
+          }
+          origDefine(k, StubCard);
+        }
+        const ek = \`\${k}-editor\`;
+        if (!isForm && !origGet(ek)) {
+          STUBS.add(ek);
+          const StubEditor = class extends HTMLElement {
+            constructor() {
+              super();
+              this._cfg = null; this._h = null; this._impl = null;
+              Promise.all([
+                loadChunk("editor-labels"),
+                new Promise((resolve) => onReal(ek, resolve)),
+                loadChunk(chunkName),
+              ]).then(([, Cls]) => {
+                if (!this._impl) this._impl = new Cls();
+                if (this.isConnected && this._impl.parentNode !== this) this.replaceChildren(this._impl);
+                if (this._h) this._impl.hass = this._h;
+                if (this._cfg) this._impl.setConfig(this._cfg);
+              });
+            }
+            connectedCallback() {
+              if (this._impl && this._impl.parentNode !== this) this.replaceChildren(this._impl);
+            }
+            setConfig(c) { this._cfg = c; if (this._impl) this._impl.setConfig(c); }
+            set hass(h) { this._h = h; if (this._impl) this._impl.hass = h; }
+          };
+          origDefine(ek, StubEditor);
+        }
+      }
+    }
+  }
+  if (typeof document !== "undefined" && document.createElement) {
+    const origCreate = document.createElement.bind(document);
+    document.createElement = function (tag, opts) {
+      const chunkName = TAG_TO_CHUNK[String(tag || "").toLowerCase()];
+      if (chunkName && !customElements.get(tag)) loadChunk(chunkName);
+      return origCreate(tag, opts);
+    };
+  }
+
+  await loadChunk("card-helpers");
+  w.dispatchEvent(new Event("appliance-helpers-ready"));
+  await loadChunk("picker");
+  if (w.__acWantAll) await w.applianceLoadAllCards();
+})();
+`;
+const out = load("header.js") + bootstrap + core + loader;
 
 if (process.argv.includes("--check")) {
   const upToDate = (file, expected) => fs.existsSync(file) && read(file) === expected;
@@ -178,16 +522,24 @@ if (process.argv.includes("--check")) {
   for (const name of chunkNames) {
     if (!upToDate(path.join(CARDS_DIR, `${name}.js`), chunks[name])) { ok = false; console.error(`dist/cards/${name}.js is out of date.`); }
   }
-  // dist/cards/ must not contain anything stale from a renamed/removed card
+  for (const g of assetNames) {
+    if (!upToDate(path.join(ASSETS_DIR, `${g}.js`), assetChunks[g])) { ok = false; console.error(`dist/assets/${g}.js is out of date.`); }
+  }
+  // dist/cards/ and dist/assets/ must not contain anything stale from a renamed/removed card
   const extra = fs.existsSync(CARDS_DIR) ? fs.readdirSync(CARDS_DIR).filter((f) => !chunkNames.includes(path.basename(f, ".js"))) : [];
   for (const f of extra) { ok = false; console.error(`dist/cards/${f} is not built by build.js (stale file?).`); }
+  const extraAssets = fs.existsSync(ASSETS_DIR) ? fs.readdirSync(ASSETS_DIR).filter((f) => !assetNames.includes(path.basename(f, ".js"))) : [];
+  for (const f of extraAssets) { ok = false; console.error(`dist/assets/${f} is not built by build.js (stale file?).`); }
   if (!ok) { console.error("run `node build.js` and commit the result."); process.exit(1); }
-  console.log(`dist/ is up to date: ${NAME} + ${chunkNames.length} chunks (${langs.join(", ")}).`);
+  console.log(`dist/ is up to date: ${NAME} + ${chunkNames.length} chunks + ${assetNames.length} assets (${langs.join(", ")}).`);
 } else {
   fs.mkdirSync(path.dirname(DIST), { recursive: true });
   fs.writeFileSync(DIST, out);
   fs.rmSync(CARDS_DIR, { recursive: true, force: true });
   fs.mkdirSync(CARDS_DIR, { recursive: true });
   for (const name of chunkNames) fs.writeFileSync(path.join(CARDS_DIR, `${name}.js`), chunks[name]);
-  console.log(`built dist/${NAME} + ${chunkNames.length} chunks in dist/cards/ (${langs.join(", ")}${warnings ? `, ${warnings} warning(s)` : ""}).`);
+  fs.rmSync(ASSETS_DIR, { recursive: true, force: true });
+  fs.mkdirSync(ASSETS_DIR, { recursive: true });
+  for (const g of assetNames) fs.writeFileSync(path.join(ASSETS_DIR, `${g}.js`), assetChunks[g]);
+  console.log(`built dist/${NAME} + ${chunkNames.length} chunks in dist/cards/ + ${assetNames.length} assets in dist/assets/ (${langs.join(", ")}${warnings ? `, ${warnings} warning(s)` : ""}).`);
 }

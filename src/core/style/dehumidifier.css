@@ -26,8 +26,12 @@
 .k-dehumidifier.st-drying .dh-wave { animation: dh-wave 2.4s linear infinite; }
 .dh-drops path { fill: #9fdcff; opacity: 0; }
 .k-dehumidifier.st-drying .dh-drops path { animation: dh-drop 1.8s ease-in infinite; }
-.dh-drops path:nth-child(2) { animation-delay: -.6s !important; } .dh-drops path:nth-child(3) { animation-delay: -1.2s !important; }
-.k-dehumidifier.tank-full .dh-water rect { fill: #2d7fd0; }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .dh-drops path { animation-delay: calc((sibling-index() - 1) * -.6s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .dh-drops path:nth-child(2) { animation-delay: -.6s !important; } .dh-drops path:nth-child(3) { animation-delay: -1.2s !important; }
+}.k-dehumidifier.tank-full .dh-water rect { fill: #2d7fd0; }
 .k-dehumidifier.tank-full .lcd { fill: var(--ac-alert, #ff5252) !important; }
 .k-dehumidifier.st-off .lcd { fill: #24404f !important; }
 @keyframes dh-suck { from { stroke-dashoffset: 12; } to { stroke-dashoffset: 0; } }

@@ -490,7 +490,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
 
       // boutons de mode : modes proposés par la tête, dans l'ordre de Home Assistant
       const box = r.getElementById('tvmodes');
-      const modes = Array.isArray(k.a.hvac_modes) ? [...k.a.hvac_modes].sort((x, y) => (HVAC_ORDER.indexOf(x) + 1 || 99) - (HVAC_ORDER.indexOf(y) + 1 || 99)) : [];
+      const modes = Array.isArray(k.a.hvac_modes) ? k.a.hvac_modes.toSorted((x, y) => (HVAC_ORDER.indexOf(x) + 1 || 99) - (HVAC_ORDER.indexOf(y) + 1 || 99)) : [];
       box.hidden = c.show_hvac_modes === false || modes.length < 2 || mini;
       if (!box.hidden) {
         const key = modes.join(',');

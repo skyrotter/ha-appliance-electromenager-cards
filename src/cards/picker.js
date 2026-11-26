@@ -52,17 +52,24 @@
   // chunks se chargent en parallèle et peuvent finir après ce fichier. On applique une
   // première fois tout de suite (cas déjà couvert si tout est chargé), puis une seconde fois
   // quand le chargeur principal signale que tous les chunks ont terminé (voir build.js).
-  const applySelectorPrefs = () => {
+  const applySelectorPrefs = (deferHide) => {
     setPreviews(!!window.applianceCardsPreviews || getPref(PREV_KEY));
-    if (isSingle()) {
+    if (!deferHide && isSingle()) {
       window.customCards.filter(isOurs).forEach((c) => { if (!hidden.some((h) => h.type === c.type)) hidden.push(c); });
       const keep = window.customCards.filter((c) => !isOurs(c));
       window.customCards.length = 0;
       window.customCards.push(...keep);
+      window.__acHideCustomCard = (c) => {
+        if (!isOurs(c)) return false;
+        if (!window.applianceCardsPreviews && !getPref(PREV_KEY)) c.preview = false;
+        const idx = hidden.findIndex((h) => h.type === c.type);
+        if (idx >= 0) hidden[idx] = c; else hidden.push(c);
+        return true;
+      };
     }
   };
-  applySelectorPrefs();
-  window.addEventListener('appliance-cards-ready', applySelectorPrefs, { once: true });
+  applySelectorPrefs(!!window.__acWantAll);
+  window.__acApplySelectorPrefs = applySelectorPrefs;
 
   // Option : aucun aperçu live dans le sélecteur, y compris pour les cartes d'autres dépôts.
   // Les entrées déjà déclarées sont modifiées, celles déclarées plus tard le sont au moment du push.
@@ -77,10 +84,10 @@
   // Les « sous-catégories » sont les variantes de l'appareil (style, modèle, finition…), remontées en tête de l'éditeur.
   const CATS = {
     kitchen: 'washer washer-dryer dryer dishwasher oven microwave fridge chest-freezer drawer-freezer hob air-fryer coffee-maker thermomix cookeo kettle toaster range-hood wine-cooler beer-tap contact-grill deep-fryer kitchen-timer oven-hob',
-    climate: 'water-heater thermo-heater fan-heater infrared-panel underfloor-heating radiator towel-dryer pellet-stove pellet-boiler gas-boiler diesel-heater water-heat-pump air-water-heat-pump ac-split portable-ac heat-pump vmc room-climate trv dehumidifier humidifier air-purifier airbowl air-quality co2-monitor barometer weather-station fan ceiling-fan',
+    climate: 'water-heater thermo-heater fan-heater infrared-panel underfloor-heating radiator towel-dryer pellet-stove pellet-boiler gas-boiler diesel-heater water-heat-pump air-water-heat-pump ac-split portable-ac heat-pump vmc room-climate trv dehumidifier humidifier air-purifier airbowl breezer air-quality co2-monitor barometer weather-station fan ceiling-fan',
     energy: 'solar solar-house energy-monitor battery ev-charger linky water-meter heat-meter gas-meter electric-meter ups smart-plug power-strip phone-charger tool-charger',
     water: 'pool-pump dosing-pump pool-robot jacuzzi inflatable-spa sauna aquarium reef-aquarium irrigation rain-gauge plant-monitor water-pump industrial-pump sump-pump rainwater-tank water-valve smart-tap water-softener water-filter robot-mower-solo',
-    security: 'barrier sliding-gate swing-gate garage-door mailbox smart-lock door-sensor motion-sensor alarm-keypad smoke-detector leak-detector camera nvr',
+    security: 'barrier sliding-gate swing-gate garage-door mailbox smart-lock door-sensor motion-sensor alarm-keypad smoke-detector leak-detector camera nvr video-doorbell',
     lighting: 'light-bulb color-bulb filament-bulb pendant-light pendant-cluster desk-lamp floor-lamp chandelier garden-spotlight ceiling-spot ceiling-globe christmas-tree garland led-strip hue-sync-box',
     shutters: 'roller-shutter sliding-curtain venetian-blind swing-shutter pergola roof-window awning double-awning',
     media: 'tv htpc projector-screen av-receiver soundbar smart-speaker ps5 switch2 tv-box piano elliptical exercise-bike rowing-machine treadmill',
@@ -159,6 +166,7 @@
         // le chunk qui définit la carte n'est peut-être pas encore chargé : l'élément créé n'est alors qu'un HTMLElement
         // sans setConfig. On attend sa définition, puis on le met à niveau et on applique la config et hass les plus récents.
         if (child && !customElements.get(tag)) {
+          if (typeof window.applianceLoadChunkForTag === 'function') window.applianceLoadChunkForTag(tag);
           customElements.whenDefined(tag).then(() => {
             if (this._child !== child) return; // type d'appareil changé entre-temps
             customElements.upgrade(child);
@@ -208,6 +216,17 @@
       else { if (this._form) this._form.hass = hass; if (this._sub) this._sub.hass = hass; }
     }
     _render() {
+      if (!this._edLabelsLoaded && typeof window.applianceLoadChunk === 'function') {
+        if (window.applianceEditorLabel && window.applianceEditorLabel._full) this._edLabelsLoaded = true;
+        else {
+          this._edLabelsLoaded = 'loading';
+          window.applianceLoadChunk('editor-labels').then(() => {
+            this._edLabelsLoaded = true;
+            this._subTag = null;
+            this._render();
+          });
+        }
+      }
       if (!this._form) {
         this._form = document.createElement('ha-form');
         this._form.addEventListener('value-changed', (e) => {
@@ -217,9 +236,14 @@
           if (category !== undefined && category !== this._cat) { this._cat = category; this._render(); return; }
           if (!appliance || appliance === this._config.appliance) return;
           // nouveau type : on repart de la config par défaut de la carte choisie
-          const C = customElements.get(appliance);
-          const stub = C && C.getStubConfig ? C.getStubConfig(this._hass) : {};
-          this._fire(wrap(appliance, stub || {}));
+          const pick = () => {
+            const C = customElements.get(appliance);
+            const stub = C && C.getStubConfig ? C.getStubConfig(this._hass) : {};
+            this._fire(wrap(appliance, stub || {}));
+          };
+          if (!customElements.get(appliance) && typeof window.applianceLoadChunkForTag === 'function') {
+            window.applianceLoadChunkForTag(appliance).then(pick);
+          } else pick();
         });
         this.appendChild(this._form);
       }
@@ -233,7 +257,7 @@
         { name: 'category', selector: { select: { mode: 'dropdown', options: catOpts } } },
         { name: 'appliance', selector: { select: { mode: 'dropdown', options: opts } } },
       ];
-      this._form.computeLabel = (sc) => (sc.name === 'category' ? T.category : T.appliance);
+      this._form.computeLabel = (sc) => (sc && sc.name === 'category' ? T.category : T.appliance);
 
       // Options du sélecteur : propres au navigateur, hors config de la carte
       if (!this._opt) {
@@ -265,7 +289,14 @@
         if (this._sub) this._sub.remove();
         this._sub = null; this._subForm = null;
         const C = tag && customElements.get(tag);
-        if (C && C.getConfigElement) {
+        if (tag && !C && typeof window.applianceLoadChunkForTag === 'function') {
+          window.applianceLoadChunkForTag(tag).then(() => {
+            if (this._subTag === tag && customElements.get(tag)) {
+              this._subTag = null;
+              this._render();
+            }
+          });
+        } else if (C && C.getConfigElement) {
           this._sub = C.getConfigElement();
           this._sub.addEventListener('config-changed', (e) => {
             e.stopPropagation();
@@ -274,16 +305,27 @@
           this.appendChild(this._sub);
         } else if (C && C.getConfigForm) {
           // cartes « de base » : pas d'éditeur dédié, seulement un schéma ha-form (entité, capteurs, options…)
+          const applyForm = (f) => {
+            if (!f || !f.schema) return;
+            this._sub = document.createElement('ha-form');
+            this._subForm = f;
+            this._sub.schema = hoist(f.schema);
+            this._sub.computeLabel = f.computeLabel;
+            this._sub.addEventListener('value-changed', (e) => {
+              e.stopPropagation();
+              this._fire(wrap(this._config.appliance, e.detail.value));
+            });
+            this._sub.hass = this._hass;
+            this._sub.data = inner(this._config);
+            this.appendChild(this._sub);
+            if (this._opt && this._opt.parentNode) this.appendChild(this._opt.parentNode);
+          };
           const f = C.getConfigForm();
-          this._sub = document.createElement('ha-form');
-          this._subForm = f;
-          this._sub.schema = hoist(f.schema);
-          this._sub.computeLabel = f.computeLabel;
-          this._sub.addEventListener('value-changed', (e) => {
-            e.stopPropagation();
-            this._fire(wrap(this._config.appliance, e.detail.value));
-          });
-          this.appendChild(this._sub);
+          if (f && typeof f.then === 'function') {
+            f.then((resolved) => { if (this._subTag === tag) applyForm(resolved); });
+          } else {
+            applyForm(f);
+          }
         }
       }
       if (this._sub) {

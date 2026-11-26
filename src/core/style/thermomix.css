@@ -12,8 +12,12 @@
 .tmx-steam circle { opacity: 0; transform-box: fill-box; transform-origin: 50% 50%; filter: blur(1.4px); }
 .k-thermomix.st-heating .tmx-steam circle, .k-thermomix.st-cooking .tmx-steam circle, .k-thermomix.st-turbo .tmx-steam circle { animation: tmx-rise 2.4s ease-out infinite; }
 .k-thermomix.st-turbo .tmx-steam { opacity: .6; }
-.tmx-steam circle:nth-child(2) { animation-delay: .8s !important; } .tmx-steam circle:nth-child(3) { animation-delay: 1.6s !important; }
-/* mixage : vibration légère ; turbo : forte */
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .tmx-steam circle { animation-delay: calc((sibling-index() - 1) * .8s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .tmx-steam circle:nth-child(2) { animation-delay: .8s !important; } .tmx-steam circle:nth-child(3) { animation-delay: 1.6s !important; }
+}/* mixage : vibration légère ; turbo : forte */
 .tmx-body { transform-box: fill-box; transform-origin: 50% 100%; }
 .k-thermomix.st-mixing .tmx-body { animation: ac-shake .18s linear infinite; }
 /* cuisson : vapeur + brassage lent (vibration douce) */

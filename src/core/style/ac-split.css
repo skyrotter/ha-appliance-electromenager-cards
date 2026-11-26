@@ -13,8 +13,12 @@
 .ac-air path:nth-child(2) { animation-delay: -.3s !important; } .ac-air path:nth-child(3) { animation-delay: -.6s !important; } .ac-air path:nth-child(4) { animation-delay: -.15s !important; } .ac-air path:nth-child(5) { animation-delay: -.45s !important; }
 .ac-drops circle { fill: #7fd6c0; opacity: 0; }
 .k-ac_split.st-ac_dry .ac-drops circle { animation: ac-fall 1.6s ease-in infinite; }
-.ac-drops circle:nth-child(2) { animation-delay: .4s !important; } .ac-drops circle:nth-child(3) { animation-delay: .8s !important; } .ac-drops circle:nth-child(4) { animation-delay: 1.2s !important; }
-.ac-ico { opacity: 0; transition: opacity .4s; }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .ac-drops circle { animation-delay: calc((sibling-index() - 1) * .4s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .ac-drops circle:nth-child(2) { animation-delay: .4s !important; } .ac-drops circle:nth-child(3) { animation-delay: .8s !important; } .ac-drops circle:nth-child(4) { animation-delay: 1.2s !important; }
+}.ac-ico { opacity: 0; transition: opacity .4s; }
 .k-ac_split.st-cooling .ico-cool, .k-ac_split.mode-cool .ico-cool, .k-ac_split.st-heating .ico-heat, .k-ac_split.mode-heat .ico-heat,
 .k-ac_split.st-ac_dry .ico-dry, .k-ac_split.st-ac_fan .ico-fan { opacity: 1; }
 .k-ac_split.st-off .ac-ico, .k-ac_split.st-unavailable .ac-ico { opacity: 0 !important; }
@@ -26,8 +30,12 @@
 .k-ac_split.st-heating .ac-warm { opacity: 1; animation: ac-glow 3s ease-in-out infinite; }
 .ac-waves path { fill: none; stroke: #ffb37a; stroke-width: 1.6; stroke-linecap: round; opacity: 0; }
 .k-ac_split.st-heating .ac-waves path { animation: ac-steam 2.6s ease-out infinite; }
-.ac-waves path:nth-child(2) { animation-delay: .8s !important; } .ac-waves path:nth-child(3) { animation-delay: 1.6s !important; }
-.k-heat_pump.st-heating .hp-fins { stroke: #cfe9ff; }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .ac-waves path { animation-delay: calc((sibling-index() - 1) * .8s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .ac-waves path:nth-child(2) { animation-delay: .8s !important; } .ac-waves path:nth-child(3) { animation-delay: 1.6s !important; }
+}.k-heat_pump.st-heating .hp-fins { stroke: #cfe9ff; }
 @keyframes ac-blow { to { stroke-dashoffset: -24; } }
 @keyframes ac-swing { 0%, 100% { transform: translateY(4.5px) scaleY(.75); } 50% { transform: translateY(5.5px) scaleY(.55); } }
 /* humidité sous la température sur l'écran du split */

@@ -8,8 +8,12 @@
 .hd-steam path { transform-box: fill-box; transform-origin: 50% 100%; fill: none; stroke: #e3e8ed; stroke-width: 2.2; stroke-linecap: round; opacity: 0; }
 .k-range_hood.st-speed1 .hd-steam path, .k-range_hood.st-speed2 .hd-steam path { animation: hd-suck 2s ease-in infinite; }
 .k-range_hood.st-speed2 .hd-steam path { animation-duration: 1.2s; }
-.hd-steam path:nth-child(2) { animation-delay: .5s !important; } .hd-steam path:nth-child(3) { animation-delay: 1s !important; }
-.hd-led { fill: #59616b; transition: fill .3s; }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .hd-steam path { animation-delay: calc((sibling-index() - 1) * .5s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .hd-steam path:nth-child(2) { animation-delay: .5s !important; } .hd-steam path:nth-child(3) { animation-delay: 1s !important; }
+}.hd-led { fill: #59616b; transition: fill .3s; }
 .k-range_hood.st-speed1 .s1, .k-range_hood.st-speed2 .s1, .k-range_hood.st-speed2 .s2, .k-range_hood.st-speed2 .s3 { fill: #38d9ff; }
 .k-range_hood.lights-on .lt { fill: #ffd76a; }
 .hd-lamp { fill: #6b737c; transition: fill .4s; }

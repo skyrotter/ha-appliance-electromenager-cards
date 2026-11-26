@@ -5,8 +5,12 @@
 .k-radiator.st-heating .rglow.ph { opacity: calc(var(--heat) * .3); animation: none; } /* photos : simple voile chaud, sans le dégradé orange vif des dessins */
 .rwaves path { fill: none; stroke: var(--ac-heat); stroke-width: 1.8; stroke-linecap: round; opacity: 0; }
 .k-radiator.st-heating .rwaves path { animation: ac-steam calc(2.6s - var(--heat) * 1.2s) ease-out infinite; }
-.rwaves path:nth-child(2) { animation-delay: .5s !important; } .rwaves path:nth-child(3) { animation-delay: 1s !important; } .rwaves path:nth-child(4) { animation-delay: 1.5s !important; }
-.micon { fill: #c3c9cf; stroke: #c3c9cf; transition: fill .4s, stroke .4s; }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .rwaves path { animation-delay: calc((sibling-index() - 1) * .5s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .rwaves path:nth-child(2) { animation-delay: .5s !important; } .rwaves path:nth-child(3) { animation-delay: 1s !important; } .rwaves path:nth-child(4) { animation-delay: 1.5s !important; }
+}.micon { fill: #c3c9cf; stroke: #c3c9cf; transition: fill .4s, stroke .4s; }
 .micon.m-comfort circle { stroke: none; }
 .mode-comfort .m-comfort { fill: #ffb400; stroke: #ffb400; }
 .mode-eco .m-eco { fill: #5b7bd5; stroke: #5b7bd5; }
@@ -16,5 +20,9 @@
 .k-radiator.st-heating .l1 { fill: #ff8a3d; } .k-radiator.st-standby .l1 { fill: #3ddc84; }
 .cold-air path { fill: none; stroke: #6fbfff; stroke-width: 1.8; stroke-linecap: round; opacity: 0; }
 .win-open .cold-air path { animation: ac-wind 1.8s ease-in-out infinite; }
-.cold-air path:nth-child(2) { animation-delay: -.6s !important; } .cold-air path:nth-child(3) { animation-delay: -1.2s !important; }
-@keyframes ac-wind { 0% { opacity: 0; transform: translateX(-6px); } 40% { opacity: .9; } 100% { opacity: 0; transform: translateX(14px); } }
+@supports (animation-delay: calc(sibling-index() * 0.1s)) {
+  .cold-air path { animation-delay: calc((sibling-index() - 1) * -.6s) !important; }
+}
+@supports not (animation-delay: calc(sibling-index() * 0.1s)) {
+  .cold-air path:nth-child(2) { animation-delay: -.6s !important; } .cold-air path:nth-child(3) { animation-delay: -1.2s !important; }
+}@keyframes ac-wind { 0% { opacity: 0; transform: translateX(-6px); } 40% { opacity: .9; } 100% { opacity: 0; transform: translateX(14px); } }
