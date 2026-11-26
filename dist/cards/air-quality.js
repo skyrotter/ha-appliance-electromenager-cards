@@ -1,7 +1,8 @@
 /* Carte « Qualité de l'air » — custom:appliance-air-quality-card
- * Moniteur de qualité de l'air : CO₂, PM2.5, PM10, COV / TVOC, formaldéhyde, humidité, température (tout est facultatif).
- *   - Indicateur central : un visage dans un anneau qui passe de « Bon » à « Mauvais » selon le pire polluant (CO₂, PM, COV, formaldéhyde ;
- *     l'humidité et la température sont colorées mais ne comptent pas dans l'indicateur). Particules en suspension qui s'agitent quand l'air se dégrade,
+ * Moniteur de qualité de l'air : CO₂, particules (PM0.3 à PM10), COV / TVOC, NOx, formaldéhyde, gaz (CO, NO₂, O₃, propane, O₂), radon, humidité, température,
+ * pression, bruit (tout est facultatif).
+ *   - Indicateur central : un visage dans un anneau qui passe de « Bon » à « Mauvais » selon le pire polluant (CO₂, PM, COV, NOx, gaz, radon…) ;
+ *     l'humidité, la température, la pression, le bruit et l'O₂ sont colorés mais ne comptent pas dans l'indicateur. Particules en suspension qui s'agitent quand l'air se dégrade,
  *     étincelles quand il est bon.
  *   - Une tuile par mesure : valeur colorée selon des seuils, mini-courbe 24 h.
  *   - Courbe 24 h de la mesure choisie (un clic sur une tuile), avec les bandes de seuils colorées et une infobulle au survol.
@@ -31,7 +32,20 @@
       "voc": "VOC",
       "hcho": "Formaldehyde",
       "humidity": "Humidity",
-      "temperature": "Temperature"
+      "temperature": "Temperature",
+      "pm03": "PM0.3",
+      "pm1": "PM1",
+      "pm4": "PM4",
+      "nox": "NOx",
+      "co": "CO",
+      "no2": "NO₂",
+      "o3": "O₃",
+      "radon": "Radon",
+      "radon_long_term": "Radon (long term)",
+      "propane": "Propane",
+      "o2": "Oxygen (O₂)",
+      "pressure": "Pressure",
+      "noise": "Noise"
     },
     "es": {
       "name": "Calidad del aire",
@@ -73,7 +87,20 @@
       "voc": "COV",
       "hcho": "Formaldéhyde",
       "humidity": "Humidité",
-      "temperature": "Température"
+      "temperature": "Température",
+      "pm03": "PM0.3",
+      "pm1": "PM1",
+      "pm4": "PM4",
+      "nox": "NOx",
+      "co": "CO",
+      "no2": "NO₂",
+      "o3": "O₃",
+      "radon": "Radon",
+      "radon_long_term": "Radon (long terme)",
+      "propane": "Propane",
+      "o2": "Oxygène (O₂)",
+      "pressure": "Pression",
+      "noise": "Bruit"
     },
     "pt-BR": {
       "name": "Qualidade do ar",
@@ -142,16 +169,35 @@
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
 
   // mesures : clé de config, icône, seuils [bon → moyen, moyen → médiocre, médiocre → mauvais] ; comfort = plages de confort [bon min, bon max, moyen min, moyen max]
+  // d = décimales affichées ; cm = marge (hors plage de confort) au-delà de laquelle le niveau passe à « mauvais »
   const METRICS = {
-    co2: { opt: 'entity_co2', icon: 'mdi:molecule-co2', unit: 'ppm', th: [800, 1000, 1500], poll: true },
+    co2: { opt: 'entity_co2', icon: 'mdi:molecule-co2', unit: 'ppm', th: [800, 1000, 1500], poll: true, d: 0 },
+    pm03: { opt: 'entity_pm03', icon: 'mdi:dots-hexagon', unit: '#/cm³', th: [500, 1500, 3000], poll: true, d: 0 },
+    pm1: { opt: 'entity_pm1', icon: 'mdi:blur-linear', unit: 'µg/m³', th: [10, 25, 40], poll: true },
     pm25: { opt: 'entity_pm25', icon: 'mdi:blur', unit: 'µg/m³', th: [12, 35, 55], poll: true },
+    pm4: { opt: 'entity_pm4', icon: 'mdi:grain', unit: 'µg/m³', th: [15, 40, 75], poll: true },
     pm10: { opt: 'entity_pm10', icon: 'mdi:grain', unit: 'µg/m³', th: [20, 50, 100], poll: true },
-    voc: { opt: 'entity_voc', icon: 'mdi:air-filter', unit: 'ppb', th: [220, 660, 2200], poll: true },
+    voc: { opt: 'entity_voc', icon: 'mdi:air-filter', unit: 'ppb', th: [220, 660, 2200], poll: true, d: 0 },
+    nox: { opt: 'entity_nox', icon: 'mdi:molecule', unit: 'index', th: [20, 150, 300], poll: true, d: 0 },
     hcho: { opt: 'entity_hcho', icon: 'mdi:flask-outline', unit: 'µg/m³', th: [30, 60, 100], poll: true },
+    co: { opt: 'entity_co', icon: 'mdi:molecule-co', unit: 'ppm', th: [9, 25, 50], poll: true },
+    no2: { opt: 'entity_no2', icon: 'mdi:smog', unit: 'µg/m³', th: [40, 100, 200], poll: true },
+    o3: { opt: 'entity_o3', icon: 'mdi:weather-hazy', unit: 'µg/m³', th: [60, 100, 180], poll: true },
+    radon: { opt: 'entity_radon', icon: 'mdi:radioactive', unit: 'Bq/m³', th: [100, 150, 300], poll: true, d: 0 },
+    radon_long_term: { opt: 'entity_radon_long_term', icon: 'mdi:radioactive', unit: 'Bq/m³', th: [100, 150, 300], poll: true, d: 0 },
+    propane: { opt: 'entity_propane', icon: 'mdi:gas-cylinder', unit: '%LEL', th: [5, 10, 20], poll: true },
+    o2: { opt: 'entity_o2', icon: 'mdi:gas-mask', unit: '%', comfort: [19.5, 23.5, 18, 25], cm: 2 },
     humidity: { opt: 'entity_humidity', icon: 'mdi:water-percent', unit: '%', comfort: [40, 60, 30, 70] },
     temperature: { opt: 'entity_temperature', icon: 'mdi:thermometer', unit: '°C', comfort: [19, 24, 17, 26] },
+    pressure: { opt: 'entity_pressure', icon: 'mdi:gauge', unit: 'hPa', comfort: [1000, 1026, 985, 1040], cm: 30, d: 0 },
+    noise: { opt: 'entity_noise', icon: 'mdi:volume-high', unit: 'dB', th: [45, 65, 80], d: 0 },
   };
-  const ORDER = ['co2', 'pm25', 'pm10', 'voc', 'hcho', 'humidity', 'temperature'];
+  const ORDER = ['co2', 'pm03', 'pm1', 'pm25', 'pm4', 'pm10', 'voc', 'nox', 'hcho', 'co', 'no2', 'o3', 'radon', 'radon_long_term', 'propane', 'o2', 'humidity', 'temperature', 'pressure', 'noise'];
+  // seuils exprimés dans l'unité par défaut ci-dessus : facteur à appliquer quand l'entité utilise une autre unité (début de l'unité, en minuscules)
+  const UCONV = { co: { ppb: 1000 }, no2: { ppb: 1 / 1.88 }, o3: { ppb: 1 / 1.96 }, radon: { 'pci': 1 / 37 }, radon_long_term: { 'pci': 1 / 37 }, propane: { ppm: 210 } };
+  // pression : facteur vers l'hPa selon l'unité de l'entité
+  const PFAC = { hpa: 1, mbar: 1, kpa: 10, pa: 0.01, inhg: 33.8639, mmhg: 1.33322 };
+  const dec = (k, v) => (k === 'pressure' && v < 200 ? 2 : (METRICS[k] && METRICS[k].d) ?? 1); // pression en inHg : 2 décimales
   const LEVELS = ['good', 'moderate', 'poor', 'bad'];
 
   const CSS = `
@@ -227,7 +273,7 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      if (!ORDER.some((k) => c[METRICS[k].opt])) throw new Error('At least one sensor is required (entity_co2, entity_pm25, entity_pm10, entity_voc, ...)');
+      if (!ORDER.some((k) => c[METRICS[k].opt])) throw new Error('At least one sensor is required (entity_co2, entity_pm25, entity_pm10, entity_voc, entity_nox, entity_co, ...)');
       this._c = { show_status: true, show_chart: true, show_sparklines: true, ...c };
       this._built = false; this._hist = null; this._histAt = 0; this._live = {};
       if (this._hass) this._render();
@@ -254,7 +300,16 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
       // formaldéhyde : seuils en µg/m³ convertis (mg/m³ ÷ 1000 ; 1 ppb ≈ 1,23 µg/m³)
       if (k === 'hcho') return u.includes('mg') ? [.03, .06, .1] : u === 'ppb' ? [24, 49, 81] : u === 'ppm' ? [.024, .049, .081] : METRICS.hcho.th;
       if (k === 'co2' && u === '%') return [.08, .1, .15];
+      const cv = UCONV[k];
+      if (cv) { const f = Object.keys(cv).find((p) => u.startsWith(p)); if (f) return METRICS[k].th.map((t) => +(t * cv[f]).toPrecision(3)); }
       return METRICS[k].th;
+    }
+    // plage de confort dans l'unité de l'entité (pression : convertie depuis l'hPa)
+    _cmf(k, s) {
+      const M = METRICS[k].comfort;
+      if (k !== 'pressure') return M;
+      const f = PFAC[String((s && s.attributes && s.attributes.unit_of_measurement) || '').toLowerCase().replace(/\s/g, '')] || 1;
+      return M.map((v) => v / f);
     }
     // niveau 0 (bon) … 3 (mauvais) d'une valeur
     _level(k, v, s) {
@@ -262,8 +317,8 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
       const M = METRICS[k];
       if (M.comfort) {
         const u = String((s && s.attributes && s.attributes.unit_of_measurement) || '');
-        const x = k === 'temperature' && /f/i.test(u) ? (v - 32) / 1.8 : v, [a, b, c, d] = M.comfort;
-        return x >= a && x <= b ? 0 : x >= c && x <= d ? 1 : (x < c - 8 || x > d + 8) ? 3 : 2;
+        const x = k === 'temperature' && /f/i.test(u) ? (v - 32) / 1.8 : v, [a, b, c, d] = k === 'pressure' ? this._cmf(k, s) : M.comfort, m = (M.cm || 8) / (k === 'pressure' ? (PFAC[u.toLowerCase().replace(/\s/g, '')] || 1) : 1);
+        return x >= a && x <= b ? 0 : x >= c && x <= d ? 1 : (x < c - m || x > d + m) ? 3 : 2;
       }
       return this._th(k, s).filter((t) => v >= t).length;
     }
@@ -339,7 +394,7 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
       r.getElementById('aqring').setAttribute('stroke-dasharray', `${(level < 0 ? 0 : (lvC + 1) / 4 * 414.7).toFixed(1)} 415`);
       r.getElementById('aqmouth').setAttribute('d', MOUTH[lvC]);
       r.getElementById('aqextra').innerHTML = lvC === 3 ? '<path d="M-26 -22 L-10 -17M26 -22 L10 -17" stroke="#2b2f36" stroke-width="3" stroke-linecap="round"/>' : lvC === 2 ? '<path d="M30 -2 q4 7 0 11 q-4 -4 0 -11Z" fill="#6ab7ff"/>' : '';
-      r.getElementById('aqsub').textContent = level < 0 ? '' : lvC === 0 || !worst ? this._t('all_good') : `${this._t('main')} : ${this._l(worst.k)} ${this._fmt(worst.v, worst.k === 'voc' || worst.k === 'co2' ? 0 : 1)} ${worst.unit}`;
+      r.getElementById('aqsub').textContent = level < 0 ? '' : lvC === 0 || !worst ? this._t('all_good') : `${this._t('main')} : ${this._l(worst.k)} ${this._fmt(worst.v, dec(worst.k, worst.v))} ${worst.unit}`;
 
       // choix de la mesure du graphique : celle cliquée, sinon la pire, sinon la première
       if (!this._sel || !rows.find((x) => x.k === this._sel) || !this._userSel) this._sel = (worst || rows[0] || {}).k;
@@ -351,7 +406,7 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
         el.style.setProperty('--tc', x.lv < 0 ? '#8a929a' : COL[x.lv]);
         el.classList.toggle('sel', this._sel === k && c.show_chart !== false);
         el.querySelector('.l span').textContent = this._l(k);
-        const d = k === 'voc' || k === 'co2' ? 0 : 1, small = document.createElement('small'); small.textContent = isFinite(x.v) ? x.unit : '';
+        const d = dec(k, x.v), small = document.createElement('small'); small.textContent = isFinite(x.v) ? x.unit : '';
         el.querySelector('.v').replaceChildren(isFinite(x.v) ? this._fmt(x.v, d) : '--', small);
         const sv = el.querySelector('svg'); sv.style.display = c.show_sparklines === false ? 'none' : '';
         if (c.show_sparklines !== false) {
@@ -373,7 +428,7 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
       if (!x || c.show_chart === false) return;
       const COL = ['var(--aq-c0)', 'var(--aq-c1)', 'var(--aq-c2)', 'var(--aq-c3)'];
       r.getElementById('aqct').textContent = `${this._l(x.k)} · ${this._t('last24')}`;
-      const cv = r.getElementById('aqcv'); cv.textContent = isFinite(x.v) ? `${this._fmt(x.v, x.k === 'voc' || x.k === 'co2' ? 0 : 1)} ${x.unit}` : ''; box.style.setProperty('--tc', x.lv < 0 ? '#8a929a' : COL[x.lv]);
+      const cv = r.getElementById('aqcv'); cv.textContent = isFinite(x.v) ? `${this._fmt(x.v, dec(x.k, x.v))} ${x.unit}` : ''; box.style.setProperty('--tc', x.lv < 0 ? '#8a929a' : COL[x.lv]);
       const cc = r.getElementById('aqcc'), pts = this._series(x.id).filter((p) => isFinite(p.v));
       if (pts.length < 2) { cc.innerHTML = `<div class="msg">${esc(this._t(this._hist === null && this._histAt ? 'no_history' : 'loading'))}</div>`; return; }
       const now = Date.now(), t0 = now - 24 * 3600e3, W = 320, H = 130, L = 34, R = 6, Tp = 8, B = 20, iw = W - L - R, ih = H - Tp - B;
@@ -390,7 +445,7 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
         th.forEach((t) => { if (t > lo && t < hi) { const yy = Y(t), show = Math.abs(yy - lastY) > 10; if (show) lastY = yy; g += `<line x1="${L}" x2="${W - R}" y1="${Y(t).toFixed(1)}" y2="${Y(t).toFixed(1)}" stroke="rgba(127,127,127,.35)" stroke-dasharray="3 3"/>${show ? `<text x="${L - 4}" y="${(yy + 3).toFixed(1)}" text-anchor="end" font-size="9" fill="var(--secondary-text-color)">${this._fmt(t, t < 10 ? 1 : 0)}</text>` : ''}`; } });
         void bandsHi;
       } else if (x.M.comfort) {
-        const [a, b] = x.M.comfort; g += `<rect x="${L}" y="${Y(Math.min(b, hi)).toFixed(1)}" width="${iw}" height="${Math.max(0, Y(Math.max(a, lo)) - Y(Math.min(b, hi))).toFixed(1)}" fill="var(--aq-c0)" opacity=".13"/>`;
+        const [a, b] = this._cmf(x.k, x.s); g += `<rect x="${L}" y="${Y(Math.min(b, hi)).toFixed(1)}" width="${iw}" height="${Math.max(0, Y(Math.max(a, lo)) - Y(Math.min(b, hi))).toFixed(1)}" fill="var(--aq-c0)" opacity=".13"/>`;
       }
       // axe du bas : -24 h, -12 h, maintenant
       [[0, '-24 h'], [.5, '-12 h'], [1, this._t('now')]].forEach(([f, lab]) => { g += `<text x="${(L + f * iw).toFixed(1)}" y="${H - 5}" text-anchor="${f === 0 ? 'start' : f === 1 ? 'end' : 'middle'}" font-size="9" fill="var(--secondary-text-color)">${esc(lab)}</text>`; });
@@ -408,7 +463,7 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
         let best = pts[0]; for (const p of pts) if (Math.abs(p.t - t) < Math.abs(best.t - t)) best = p;
         cur.style.display = ''; cur.setAttribute('transform', `translate(${X(best.t).toFixed(1)} 0)`); cur.querySelector('circle').setAttribute('cy', Y(best.v).toFixed(1));
         const hhmm = window.applianceClock(this._hass, new Date(best.t), this._lang());
-        vEl.textContent = `${this._fmt(best.v, x.k === 'voc' || x.k === 'co2' ? 0 : 1)} ${x.unit} · ${hhmm}`;
+        vEl.textContent = `${this._fmt(best.v, dec(x.k, best.v))} ${x.unit} · ${hhmm}`;
       };
       const leave = () => { cur.style.display = 'none'; vEl.textContent = base; };
       hit.addEventListener('pointermove', move); hit.addEventListener('pointerdown', move); hit.addEventListener('pointerleave', leave);
@@ -435,7 +490,7 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
       this._form.data = this._c;
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
-        ent('entity_co2'), ent('entity_pm25'), ent('entity_pm10'), ent('entity_voc'), ent('entity_hcho'), ent('entity_humidity'), ent('entity_temperature'),
+        ORDER.map((k) => ent(METRICS[k].opt)),
         { name: 'thresholds', selector: { object: {} } },
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
@@ -453,7 +508,7 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
   window.customCards = window.customCards || [];
   window.customCards.push({
     type: TAG, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),
-    description: 'Qualité de l\'air : visage animé selon le pire polluant, CO₂, PM2.5, PM10, COV, formaldéhyde, humidité, température, courbes 24 h.', preview: true,
+    description: 'Qualité de l\'air : visage animé selon le pire polluant, CO₂, particules, COV, NOx, formaldéhyde, gaz, radon, humidité, température, pression, bruit, courbes 24 h.', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/air-quality.md',
   });
 })();
