@@ -3,7 +3,7 @@
  * pluie forte, neige, grêle, orage avec éclairs, brouillard, vent) qui suit la condition et le jour / la nuit ; température, ressenti, min / max ;
  * bandeau d'alerte ; prévisions horaires et sur plusieurs jours ; détails (vent avec flèche, humidité, UV, pression, visibilité, point de rosée,
  * nuages) ; arc du soleil (lever / coucher calculés pour la position de Home Assistant) et phase de la lune ; pluie dans l'heure (capteur
- * Météo-France facultatif) ; radar de pluie animé centré sur la maison (RainViewer + fond de carte OpenStreetMap, sans clé API).
+ * Météo-France facultatif) ; radar de pluie animé centré sur la maison (RainViewer + fond de carte gris Esri, sans clé API ; radar_map_url pour un autre fournisseur).
  */
 (() => {
   const TAG = 'appliance-weather-card';
@@ -162,7 +162,6 @@ ha-card{container-type:inline-size}
 .radar .map{position:relative;overflow:hidden;border-radius:10px;background:#1e2733;height:var(--rh,220px)}
 .radar .grid{position:absolute;left:50%;top:50%;width:768px;height:768px;transform-origin:0 0}
 .radar .grid img,.radar .rf img{position:absolute;width:256px;height:256px;display:block;user-select:none;-webkit-user-drag:none}
-.radar .grid.dark>img{filter:invert(1) hue-rotate(180deg) brightness(.85) contrast(.9)}
 .radar .rf{position:absolute;inset:0;opacity:0}.radar .rf.on{opacity:.8}
 .radar .home{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#fff;border:3px solid #e53935;box-shadow:0 0 0 2px rgba(255,255,255,.6)}
 .radar .pulse{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;border:2px solid #e53935;animation:wcpulse 2.2s ease-out infinite}
@@ -246,7 +245,7 @@ ha-card{container-type:inline-size}
         <div class="tiles hide" id="wctiles"></div>
         <div class="glass hide" id="wcsun"></div>
         <div class="glass radar hide" id="wcradar"><div class="t" id="wcrt"></div>
-          <div class="map" id="wcmap"><div class="grid" id="wcgrid"></div><div class="pulse"></div><div class="home"></div><div class="msg" id="wcmsg"></div><div class="att">© OpenStreetMap · RainViewer</div></div>
+          <div class="map" id="wcmap"><div class="grid" id="wcgrid"></div><div class="pulse"></div><div class="home"></div><div class="msg" id="wcmsg"></div><div class="att">© Esri · © OpenStreetMap · RainViewer</div></div>
           <div class="ctl"><button id="wcplay" aria-label="Play"></button><input type="range" id="wcseek" min="0" max="0" value="0"><span class="rt" id="wctime"></span></div></div>
         </div></ha-card>`;
       this._root = root; this._card = root.querySelector('ha-card'); this._cache = {};
@@ -393,7 +392,7 @@ ha-card{container-type:inline-size}
       box.classList.toggle('hide', !ok); if (!ok) return;
       this._root.getElementById('wcrt').textContent = this._t('radar');
       this._root.getElementById('wcmap').style.setProperty('--rh', `${Math.max(120, Number(c.radar_height) || 220)}px`);
-      const z = Math.max(3, Math.min(7, Math.round(Number(c.radar_zoom) || 7))), dark = hasDark(this._hass), key = `${z}|${lat}|${lon}|${dark}`;
+      const z = Math.max(3, Math.min(7, Math.round(Number(c.radar_zoom) || 7))), dark = hasDark(this._hass), key = `${z}|${lat}|${lon}|${dark}|${c.radar_map_url || ''}`;
       if (this._mapKey !== key) { this._mapKey = key; this._radarBase(z, lat, lon, dark); this._frames = null; this._rvAt = 0; this._root.querySelectorAll('.rf').forEach((e) => e.remove()); }
       if (!this._frames && !this._rvBusy && Date.now() - this._rvAt > 5 * 60000) this._radarLoad(z, lat, lon);
       else if (this._frames && Date.now() - this._rvAt > 10 * 60000 && !this._rvBusy) this._radarLoad(z, lat, lon);
@@ -404,14 +403,15 @@ ha-card{container-type:inline-size}
       const cx = Math.floor(xf), cy = Math.floor(yf);
       this._tile = { z, cx, cy, n }; this._ofs = { x: (xf - (cx - 1)) * 256 - 0, y: (yf - (cy - 1)) * 256 };
       const g = this._root.getElementById('wcgrid');
-      // fond OpenStreetMap standard (sans clé API) ; en thème sombre, les tuiles sont inversées par un filtre CSS (.dark)
-      g.classList.toggle('dark', !!dark);
+      // fond de carte : gris Esri (clair / sombre selon le thème), servi sans clé API ni référent — OpenStreetMap bloque les tuiles
+      // demandées depuis Home Assistant (403 « Access blocked ») et CARTO exige une clé. radar_map_url : autre fournisseur ({z} {x} {y})
+      const tpl = this._c.radar_map_url || `https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_${dark ? 'Dark' : 'Light'}_Gray_Base/MapServer/tile/{z}/{y}/{x}`;
       g.innerHTML = '';
       for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
         const x = ((cx + dx) % n + n) % n, y = cy + dy; if (y < 0 || y >= n) continue;
         const im = document.createElement('img'); im.alt = ''; im.draggable = false; im.decoding = 'async';
         im.style.left = `${(dx + 1) * 256}px`; im.style.top = `${(dy + 1) * 256}px`;
-        im.src = `https://tile.openstreetmap.org/${z}/${x}/${y}.png`;
+        im.src = tpl.replace('{z}', z).replace('{x}', x).replace('{y}', y);
         g.appendChild(im);
       }
       this._radarFit();
@@ -471,6 +471,7 @@ ha-card{container-type:inline-size}
         { name: 'entity_next_rain', selector: { entity: { domain: 'sensor' } } },
         { type: 'grid', name: '', schema: [bool('show_alert'), bool('show_next_rain'), bool('show_hourly'), bool('show_daily'), bool('show_details'), bool('show_sun'), bool('show_radar'), bool('animations')] },
         { type: 'grid', name: '', schema: [n('hourly_count', 3, 48), n('daily_count', 1, 10), n('radar_zoom', 3, 7), n('radar_height', 120, 600, 10), n('radar_color', 1, 8)] },
+        { name: 'radar_map_url', selector: { text: {} } },
         { type: 'grid', name: '', schema: [n('latitude', -90, 90, 0.0001), n('longitude', -180, 180, 0.0001)] },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         window.applianceLanguageField(T),

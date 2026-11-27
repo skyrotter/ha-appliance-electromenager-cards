@@ -3740,6 +3740,7 @@
     "f_latitude": "Latitude (default: Home Assistant)",
     "f_longitude": "Longitude (default: Home Assistant)",
     "f_radar_color": "Radar color scheme (1 to 8)",
+    "f_radar_map_url": "Base map URL (optional, {z} {x} {y})",
     "f_animations": "Animations"
   }
 }

@@ -1739,6 +1739,8 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
  ok('weather: detail tiles (wind with direction, humidity, pressure, visibility)',c.sr.querySelectorAll('#wctiles .tile').length>=4&&/W/.test(c.sr.querySelector('#wctiles .tile .s').textContent),c.sr.getElementById('wctiles').textContent);
  ok('weather: sun arc and moon phase',!!c.sr.querySelector('#wcsun svg.arc')&&!!c.sr.querySelector('#wcsun .moon-ph'));
  ok('weather: radar map 3x3 base tiles centred on the home',c.sr.querySelectorAll('#wcgrid > img').length===9&&!c.sr.getElementById('wcradar').classList.contains('hide'));
+ ok('weather radar: grey Esri base map (no API key, no blocked OSM tiles)',[...c.sr.querySelectorAll('#wcgrid > img')].every(i=>/arcgisonline\.com\/.*Gray_Base\/MapServer\/tile\/7\//.test(i.src)),c.sr.querySelector('#wcgrid > img').src);
+ {const c2=wc({radar_map_url:'https://tiles.example/{z}/{x}/{y}.png'},[W('sunny')]); ok('weather radar: radar_map_url template',/^https:\/\/tiles\.example\/7\/\d+\/\d+\.png$/.test(c2.sr.querySelector('#wcgrid > img').src),c2.sr.querySelector('#wcgrid > img').src);}
  c=wc({},[W('clear-night'),mk('sun.sun','below_horizon')]); const sn=c.sr.getElementById('wcscene');
  ok('weather clear night: stars + moon, no sun',/night/.test(sn.className)&&sn.querySelectorAll('.stars i').length>10&&!!sn.querySelector('.moon')&&!sn.querySelector('.sun'),sn.className);
  c=wc({},[W('sunny'),mk('sun.sun','above_horizon')]); ok('weather sunny: sun with rays, no cloud',!!c.sr.querySelector('#wcscene .sun .rays')&&c.sr.querySelectorAll('#wcscene .cl').length===0);
