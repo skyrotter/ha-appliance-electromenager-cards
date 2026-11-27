@@ -1727,6 +1727,8 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
  ok('window open 60 %: two sashes drawn, badge',c.sr.querySelectorAll('.wn-sash > g').length===2&&badge(c)==='Ouverte à 60 %',c.sr.querySelectorAll('.wn-sash > g').length+' '+badge(c));
  c.sr.querySelector('[data-a=close]').click(); ok('window close button -> close_cover',JSON.stringify(c.h.calls[0])==='["cover","close_cover",{"entity_id":"cover.f"}]',JSON.stringify(c.h.calls));
  c=card('window',{entity_state:'binary_sensor.k'},[mk('binary_sensor.k','on')]); ok('window with a contact sensor only: open',/open/.test(cls(c))&&c.sr.querySelectorAll('.wn-sash > g').length===2,cls(c)+' '+badge(c));
+ // CSS utilisateur (card_mod, <style> injecté) : doit l'emporter sur les styles de la bibliothèque (@layer), quel que soit l'ordre
+ {const c=card('ac-split',{entity:'climate.c'},[CL('cool','cooling')]);const st=document.createElement('style');st.textContent='.illus{width:77px;padding:0}';c.sr.appendChild(st);const il=c.sr.querySelector('.illus');ok('user <style> overrides library .illus (@layer)',getComputedStyle(il).width==='77px'||il.getBoundingClientRect().width===77,getComputedStyle(il).width);}
  // porte coulissante et capteurs d'ouverture supplémentaires (carte porte / fenêtre)
  {const dcls=(c)=>c.sr.querySelector('ha-card').className.trim().split(' ')[0], dbd=(c)=>c.sr.getElementById('dsbadge').textContent, chips=(c)=>[...c.sr.querySelectorAll('.chip')].map((x)=>x.textContent+(x.classList.contains('open')?'*':'')).join(',');
   let d=card('door-sensor',{model:'sliding_door',entity:'binary_sensor.a'},[mk('binary_sensor.a','off')]); ok('sliding door closed, no chips',dcls(d)==='closed'&&chips(d)===''&&d.sr.querySelector('#dsscene polygon'),dcls(d)+' '+chips(d));

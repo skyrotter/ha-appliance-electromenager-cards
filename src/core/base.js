@@ -204,7 +204,7 @@ class ApplianceCardBase extends HTMLElement {
     if (useAdopted) {
       try { this.shadowRoot.adoptedStyleSheets = [STYLE_SHEET]; } catch (e) {}
     }
-    const styleTag = (useAdopted && this.shadowRoot.adoptedStyleSheets.length) ? "" : `<style>${STYLE}</style>`;
+    const styleTag = (useAdopted && this.shadowRoot.adoptedStyleSheets.length) ? "" : `<style>${STYLE_LAYERED}</style>`;
     this.shadowRoot.innerHTML = `${styleTag}
       <ha-card>
         <div class="wrap" id="wrap">
