@@ -2716,7 +2716,9 @@
     "days": "j",
     "f_model": "Dessin",
     "model_culligan": "Culligan (tête de commande, bac à sel)",
-    "model_generic": "Générique (bouteille à tube central, bac à saumure avec canne)"
+    "model_generic": "Générique (bouteille à tube central, bac à saumure avec canne)",
+    "model_ecowater_evo": "EcoWater eVO Refiner (photo)",
+    "salt_days": "Autonomie du sel"
   },
   "internet_box": {
     "name": "Box internet",

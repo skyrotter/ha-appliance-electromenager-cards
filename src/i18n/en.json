@@ -2716,7 +2716,9 @@
     "days": "d",
     "f_model": "Drawing",
     "model_culligan": "Culligan (control head, salt tank)",
-    "model_generic": "Generic (tank with central tube, brine tank with cane)"
+    "model_generic": "Generic (tank with central tube, brine tank with cane)",
+    "model_ecowater_evo": "EcoWater eVO Refiner (photo)",
+    "salt_days": "Salt autonomy"
   },
   "internet_box": {
     "name": "Internet box",
