@@ -87,7 +87,7 @@ ha-card.on{--oh-c:#ff7043}
       r.getElementById('ohtitle').textContent = c.name || this._t('name');
       r.getElementById('ohbadge').textContent = fin(watts) || c.energy ? this._t(on ? 'active' : 'idle') : this._t('unavailable');
       const e = this._num(c.energy), eu = this._unit(c.energy, 'kWh'), kwh = fin(e) ? (/^\s*wh\s*$/i.test(eu) ? e / 1000 : /^\s*mwh\s*$/i.test(eu) ? e * 1000 : e) : NaN;
-      const price = c.price_per_kwh != null && c.price_per_kwh !== '' ? window.appliancePrice(hass, c.price_per_kwh) : NaN, cs = c.cost && hass.states[c.cost];
+      const price = c.price_per_kwh != null && c.price_per_kwh !== '' ? window.appliancePrice(hass, c.price_per_kwh, this, c.energy || c.power) : NaN, cs = c.cost && hass.states[c.cost];
       const cost = cs && !/^(unavailable|unknown)$/i.test(String(cs.state)) ? parseFloat(String(cs.state).replace(',', '.')) : (fin(price) && fin(kwh) ? kwh * price : NaN);
       const cur = c.currency || (hass.config && hass.config.currency) || '€', sym = ({ EUR: '€', USD: '$', GBP: '£', CHF: 'CHF' })[cur] || cur;
       const tile = (id, label, v, u, show) => { const el = r.getElementById(id); el.classList.toggle('hide', !show); el.innerHTML = `<div class="l">${esc(label)}</div><div class="v">${v}<small>${esc(u)}</small></div>`; };

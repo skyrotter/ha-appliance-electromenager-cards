@@ -72,7 +72,7 @@
 })();
 (() => {
 "use strict";
-const VERSION = "1.249.0";
+const VERSION = "1.250.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -7083,6 +7083,9 @@ ApplianceCardBase.prototype._render = function (m) {
   const prEnt = priceEntity(c.price_per_kwh);
   const pr = prEnt ? num(hass.states[prEnt]) : typeof c.price_per_kwh === "string" ? (/^\s*-?\d*[.,]?\d+\s*$/.test(c.price_per_kwh) ? Number(c.price_per_kwh.trim().replace(",", ".")) : NaN) : Number(c.price_per_kwh);
   const hasPr = c.price_per_kwh != null && c.price_per_kwh !== "" && Number.isFinite(pr);
+  // tarif variable (HC / HP) : prix moyen pondéré par la consommation de la période [t0, t1] (historique de HA), à défaut le prix actuel
+  const avgPr = (src, t0, t1) => { if (!prEnt || !src) return pr; const a = window.appliancePrice(hass, prEnt, this, src, t0, t1); return Number.isFinite(a) ? a : pr; };
+  const perStart = (p) => { const d = new Date(), R = ROLLING[p]; return R ? new Date(Date.now() - R * 86400000) : p === "week" ? new Date(d.getFullYear(), d.getMonth(), d.getDate() - ((d.getDay() + 6) % 7)) : p === "month" ? new Date(d.getFullYear(), d.getMonth(), 1) : p === "year" ? new Date(d.getFullYear(), 0, 1) : new Date(d.getFullYear(), d.getMonth(), d.getDate()); };
   // kWh calculés ou convertis : la précision d'affichage d'un capteur ne vaut que pour un compteur déjà en kWh (pas pour la puissance, ni un compteur en Wh)
   const kwhEnt = m.energy && m.energy.attributes && m.energy.attributes.unit_of_measurement === "kWh" ? c.energy : undefined;
   const showKwh = !(c.display === "cost" && hasPr), showCost = hasPr && c.display !== "energy";
@@ -7098,11 +7101,11 @@ ApplianceCardBase.prototype._render = function (m) {
   if (noEnergy) { /* tuile masquée */ } else if (m.energy && per && !dual && !solar) {
     if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2, 0, kwhEnt)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.energy, "", "energy");
     // coût de la période (mode € ou les deux) : conso de la période × prix du kWh actuel
-    if (showCost && (c.display === "cost" || c.display === "both") && showOpt("show_cost")) tile("mdi:cash", money(this._perKwh * pr), tr(hass, `cost_${per}`), prEnt || c.energy, "", "cost");
+    if (showCost && (c.display === "cost" || c.display === "both") && showOpt("show_cost")) tile("mdi:cash", money(this._perKwh * avgPr(c.energy, perStart(per))), tr(hass, `cost_${per}`), prEnt || c.energy, "", "cost");
   } else if (!c.energy && !m.energy && per && c.power && !dual && !solar) {
     // période calculée depuis la puissance de la prise (pas de compteur kWh) : kWh puis coût (avec price_per_kwh)
     if (showKwh) tile("mdi:calendar-today", `${fmtNum(hass, this._perKwh, 2)} kWh`, c.labels && c.labels.energy ? lb("energy") : tr(hass, `energy_${per}`), c.power, "", "energy");
-    if (showCost && showOpt("show_cost")) tile("mdi:cash", money(this._perKwh * pr), tr(hass, `cost_${per}`), prEnt || c.power, "", "cost");
+    if (showCost && showOpt("show_cost")) tile("mdi:cash", money(this._perKwh * avgPr(c.power, perStart(per))), tr(hass, `cost_${per}`), prEnt || c.power, "", "cost");
   } else if (m.energy) {
     const eVal = fmtEnergy(hass, m.energy) ?? "—";
     const yp = m.energy.attributes && m.energy.attributes.last_period;
@@ -7117,7 +7120,7 @@ ApplianceCardBase.prototype._render = function (m) {
     // prix du kWh (nombre ou entité tarif) avec un simple compteur d'énergie : coût = énergie du compteur × prix (sans capteur de coût, ni solaire / double compteur)
     const eF = { Wh: 1e-3, kWh: 1, MWh: 1e3, GWh: 1e6 }[m.energy.attributes && m.energy.attributes.unit_of_measurement], eV = num(m.energy);
     if (hasPr && showCost && !m.cost && !solar && !dual && showOpt("show_cost") && eF !== undefined && eV != null) {
-      tile("mdi:cash", money(eV * eF * pr), !(c.labels && c.labels.cost) && TILE_PERIODS.includes(c.energy_tile_period) ? tr(hass, `cost_${c.energy_tile_period}`) : lb("cost"), prEnt || c.energy, "", "cost");
+      tile("mdi:cash", money(eV * eF * avgPr(c.energy, TILE_PERIODS.includes(c.energy_tile_period) && c.energy_tile_period !== "total" ? perStart(c.energy_tile_period) : undefined)), !(c.labels && c.labels.cost) && TILE_PERIODS.includes(c.energy_tile_period) ? tr(hass, `cost_${c.energy_tile_period}`) : lb("cost"), prEnt || c.energy, "", "cost");
     }
   }
   if (m.energyS) tile("mdi:solar-power-variant", fmtEnergy(hass, m.energyS) ?? "—", lb("energy_solar"), c.energy_solar);
@@ -7150,7 +7153,7 @@ ApplianceCardBase.prototype._render = function (m) {
     tile("mdi:timer-outline", fmtDuration((cy.end - cy.start) / 60000), lb("cycle_duration"), c.power);
     if (showKwh) tile("mdi:lightning-bolt", `${fmtNum(hass, cy.kwh, 2, 0, kwhEnt)} kWh`, lb("cycle_energy"), c.energy || c.power);
     // prix du kWh : nombre, ou entité (tarif) ; devise de Home Assistant
-    if (showCost) tile("mdi:cash", money(cy.kwh * pr), lb("cycle_cost"), prEnt || c.energy || c.power);
+    if (showCost) tile("mdi:cash", money(cy.kwh * avgPr(c.energy || c.power, s0, s1)), lb("cycle_cost"), prEnt || c.energy || c.power);
   }
   if (solar && m.status !== "night" && m.frac != null && m.pw && !BAD.includes(String(m.pw.state).toLowerCase())) tile("mdi:white-balance-sunny", `${Math.round(m.frac * 100)} %`, lb("of_peak"), c.power);
   $("stats").innerHTML = tiles.join("");
@@ -9599,7 +9602,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
     if (!name) return Promise.resolve();
     let p = chunkPromises.get(name);
     if (!p) {
-      p = import(new URL(`cards/${name}.js?v=1.249.0`, base).href)
+      p = import(new URL(`cards/${name}.js?v=1.250.0`, base).href)
         .catch((e) => console.error(`ha-appliance-electromenager-cards: chunk "${name}" failed to load`, e));
       chunkPromises.set(name, p);
     }
@@ -9613,7 +9616,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
     if (!group || w.__acAssets[group]) return Promise.resolve();
     let p = assetPromises.get(group);
     if (!p) {
-      p = import(new URL(`assets/${group}.js?v=1.249.0`, base).href)
+      p = import(new URL(`assets/${group}.js?v=1.250.0`, base).href)
         .catch((e) => console.error(`ha-appliance-electromenager-cards: asset "${group}" failed to load`, e));
       assetPromises.set(group, p);
     }
