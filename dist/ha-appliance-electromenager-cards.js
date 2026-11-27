@@ -72,7 +72,7 @@
 })();
 (() => {
 "use strict";
-const VERSION = "1.239.0";
+const VERSION = "1.240.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -4838,6 +4838,8 @@ class ApplianceCardBase extends HTMLElement {
     });
     ["pointerup", "pointerleave", "pointercancel"].forEach((t) => il.addEventListener(t, stop));
     il.addEventListener("contextmenu", (ev) => { if (this._config.hold_action) ev.preventDefault(); });
+    // iOS ignore preventDefault sur « contextmenu » pour les images : sans ces propriétés (héritées), un appui long sur une photo ouvre le menu Partager / Enregistrer / Copier
+    il.style.webkitTouchCallout = "none"; il.style.webkitUserSelect = "none"; il.style.userSelect = "none";
     if (this._config.color) this.style.setProperty("--ac-accent", this._config.color);
     if (typeof window.__acHydrateRoot === "function") window.__acHydrateRoot(this.shadowRoot);
   }
@@ -9594,7 +9596,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
     if (!name) return Promise.resolve();
     let p = chunkPromises.get(name);
     if (!p) {
-      p = import(new URL(`cards/${name}.js?v=1.239.0`, base).href)
+      p = import(new URL(`cards/${name}.js?v=1.240.0`, base).href)
         .catch((e) => console.error(`ha-appliance-electromenager-cards: chunk "${name}" failed to load`, e));
       chunkPromises.set(name, p);
     }
@@ -9608,7 +9610,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
     if (!group || w.__acAssets[group]) return Promise.resolve();
     let p = assetPromises.get(group);
     if (!p) {
-      p = import(new URL(`assets/${group}.js?v=1.239.0`, base).href)
+      p = import(new URL(`assets/${group}.js?v=1.240.0`, base).href)
         .catch((e) => console.error(`ha-appliance-electromenager-cards: asset "${group}" failed to load`, e));
       assetPromises.set(group, p);
     }
