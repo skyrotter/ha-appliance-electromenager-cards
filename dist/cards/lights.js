@@ -27,7 +27,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--lc:#ffb347;--b:1;
 .uph.pair img.on{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);opacity:var(--b,0);filter:drop-shadow(0 0 calc(var(--gb,0) * 12px) color-mix(in srgb,var(--lc,#ffd98a) 70%,transparent));transition:opacity .4s}
 .uph.pair img.off{filter:none}
 .compact .uph{height:100%}
-/* ampoules Hue (option model) : le diffuseur (masque) se teinte de la couleur de l'ampoule et s'éclaire selon la luminosité */
+/* ampoules Hue (option model) : le diffuseur (masque) se teinte de la couleur de l'ampoule et s'éclaire selon la luminosité ;
+   la lueur part du seul diffuseur (masque flouté, derrière la photo) : ni halo autour du corps ni du culot, ni lueur découpée à plat */
+.uph.hue .glow{display:none}
+.uph.hue img{filter:none}
+.hw .hb{position:absolute;inset:0;filter:blur(9px);opacity:calc(var(--b,0) * .62);transition:opacity .4s;pointer-events:none}
+.hw .hb i{position:absolute;inset:0;-webkit-mask:var(--m) center/100% 100% no-repeat;mask:var(--m) center/100% 100% no-repeat;background:var(--lc,#ffd98a)}
 .hw{position:relative;display:inline-block;line-height:0;isolation:isolate}
 .hw .hl,.hw .hg{position:absolute;inset:0;pointer-events:none;-webkit-mask:var(--m) center/100% 100% no-repeat;mask:var(--m) center/100% 100% no-repeat;opacity:var(--b,0);transition:opacity .4s}
 .hw .hl{background:var(--lc,#ffd98a);mix-blend-mode:multiply}
@@ -373,7 +378,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const img = pair ? (imgOff || cfgImg || imgOn) : cfgImg || (hue ? hue.off : this.kind === 'ceiling_globe' ? GLOBE_IMG : '');
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="lttitle"></div><div class="badge" id="ltbadge"></div></div>
-        <div class="stage${img && this._c.image_background !== true ? ' ph' : this.kind === 'ceiling_spot' ? ' ceil' : ''}">${img ? `<div class="uph${pair ? ' pair' : ''}"><div class="glow"></div>${hue ? '<div class="hw' + (hue.fil ? ' fil' : '') + '" style="--m:url(' + hue.mask + ')' + (hue.fil ? ';--f:url(' + hue.fil + ');--h:url(' + hue.halo + ')' : '') + '">' : ''}<img class="off" draggable="false" src="${esc(img)}" alt="${esc(this._c.name || this._t(this.kind))}">${hue ? '<div class="hl"></div><div class="hg"></div>' + (hue.fil ? '<div class="hh"></div><div class="hf"></div>' : '') + '</div>' : ''}${pair ? `<img class="on" draggable="false" src="${esc(imgOn || cfgImg || imgOff)}" alt="">` : ''}</div>` : `<svg viewBox="0 0 200 180" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${SVGS[this.kind](this._c)}</svg>`}<div class="sb" id="ltsb"><input class="bs" id="ltbs" type="range" min="0" max="100" step="1"><span class="sv" id="ltsv"></span></div></div>
+        <div class="stage${img && this._c.image_background !== true ? ' ph' : this.kind === 'ceiling_spot' ? ' ceil' : ''}">${img ? `<div class="uph${pair ? ' pair' : ''}${hue ? ' hue' : ''}"><div class="glow"></div>${hue ? '<div class="hw' + (hue.fil ? ' fil' : '') + '" style="--m:url(' + hue.mask + ')' + (hue.fil ? ';--f:url(' + hue.fil + ');--h:url(' + hue.halo + ')' : '') + '"><div class="hb"><i></i></div>' : ''}<img class="off" draggable="false" src="${esc(img)}" alt="${esc(this._c.name || this._t(this.kind))}">${hue ? '<div class="hl"></div><div class="hg"></div>' + (hue.fil ? '<div class="hh"></div><div class="hf"></div>' : '') + '</div>' : ''}${pair ? `<img class="on" draggable="false" src="${esc(imgOn || cfgImg || imgOff)}" alt="">` : ''}</div>` : `<svg viewBox="0 0 200 180" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${SVGS[this.kind](this._c)}</svg>`}<div class="sb" id="ltsb"><input class="bs" id="ltbs" type="range" min="0" max="100" step="1"><span class="sv" id="ltsv"></span></div></div>
         <div class="ctl" id="ltctl">
           <button data-a="on"><ha-icon icon="mdi:lightbulb-on"></ha-icon><span></span></button>
           <button data-a="color" class="hide"><ha-icon icon="mdi:palette"></ha-icon><span></span></button>
