@@ -457,7 +457,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
   [[TAP_META, TT, 'mdi:water-pump'], [VALVE_META, TV, 'mdi:valve']].forEach(([meta, T]) => {
     const Card = class extends Base {}; Card.META = meta;
     const Ed = class extends Editor {}; Ed.META = meta;
-    customElements.define(meta.tag, Card); customElements.define(meta.tag + '-editor', Ed);
+    (window.__acDefine||customElements.define.bind(customElements))(meta.tag, Card); (window.__acDefine||customElements.define.bind(customElements))(meta.tag + '-editor', Ed);
     window.customCards = window.customCards || [];
     window.customCards.push({
       type: meta.tag, name: `Appliance – ${T.en.name} / ${T.fr.name}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l].name])),

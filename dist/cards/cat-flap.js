@@ -369,7 +369,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       });
     }
   }
-  customElements.define(TAG, ApplianceCatFlapCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceCatFlapCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceCatFlapCardEditor extends HTMLElement {
@@ -411,7 +411,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceCatFlapCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceCatFlapCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

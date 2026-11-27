@@ -312,7 +312,7 @@ svg{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));height
       });
     }
   }
-  customElements.define(TAG, ApplianceDieselHeaterCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceDieselHeaterCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceDieselHeaterCardEditor extends HTMLElement {
@@ -359,7 +359,7 @@ svg{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));height
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceDieselHeaterCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceDieselHeaterCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

@@ -376,7 +376,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       });
     }
   }
-  customElements.define(TAG, ApplianceGasBoilerCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceGasBoilerCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceGasBoilerCardEditor extends HTMLElement {
@@ -423,7 +423,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceGasBoilerCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceGasBoilerCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

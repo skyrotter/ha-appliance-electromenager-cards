@@ -334,7 +334,7 @@ svg.compact{max-width:calc(600px * var(--illus-scale,1))}
       </svg>`;
     }
   }
-  customElements.define(TAG, ApplianceWeatherStationCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceWeatherStationCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceWeatherStationCardEditor extends HTMLElement {
@@ -373,7 +373,7 @@ svg.compact{max-width:calc(600px * var(--illus-scale,1))}
       this._form.computeLabel = (s) => tr[`f_${s.name}`] || window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceWeatherStationCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceWeatherStationCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

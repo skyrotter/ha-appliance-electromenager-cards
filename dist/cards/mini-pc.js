@@ -387,7 +387,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       window.applianceExtraTiles(this, r.querySelector('.tiles'), c.extra_tiles, this._hass, c);
     }
   }
-  customElements.define(TAG, ApplianceMiniPcCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceMiniPcCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceMiniPcCardEditor extends HTMLElement {
@@ -432,7 +432,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'mini_pc_model' : s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceMiniPcCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceMiniPcCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

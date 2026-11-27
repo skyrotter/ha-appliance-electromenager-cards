@@ -317,8 +317,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     ['appliance-nvr-card', ApplianceNvrCard, ApplianceNvrCardEditor, 'name_nvr', 'Enregistreur vidéo NVR : voyants animés, mémoire, disque, puissance, énergie, uptime, CPU.']];
   window.customCards = window.customCards || [];
   for (const [tag, Card, Editor, key, desc] of defs) {
-    customElements.define(tag, Card);
-    customElements.define(tag + '-editor', Editor);
+    (window.__acDefine||customElements.define.bind(customElements))(tag, Card);
+    (window.__acDefine||customElements.define.bind(customElements))(tag + '-editor', Editor);
     window.customCards.push({ type: tag, name: `Appliance – ${T.en[key]} / ${T.fr[key]}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l][key]])), description: desc, preview: true,
       documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/camera.md' });
   }

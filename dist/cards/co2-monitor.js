@@ -262,7 +262,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       card.classList.toggle('notiles', !r.querySelector('.tile:not(.hide)')); // aucune tuile visible : l'image est centrée en mode compact
     }
   }
-  customElements.define(TAG, ApplianceCo2MonitorCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceCo2MonitorCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceCo2MonitorCardEditor extends HTMLElement {
@@ -299,7 +299,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._form.computeLabel = (s) => tr[`f_${s.name}`] || window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceCo2MonitorCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceCo2MonitorCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

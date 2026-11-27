@@ -239,7 +239,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       card.style.setProperty('--spd', `${(isNaN(rate) ? 1 : Math.max(.7, Math.min(1.3, 1.3 - rate / 40))).toFixed(2)}s`);
     }
   }
-  customElements.define(TAG, ApplianceRainGaugeCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceRainGaugeCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceRainGaugeCardEditor extends HTMLElement {
@@ -275,7 +275,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceRainGaugeCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceRainGaugeCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

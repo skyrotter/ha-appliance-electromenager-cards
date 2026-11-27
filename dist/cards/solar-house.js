@@ -330,7 +330,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       const evSub = r.querySelector('.tile[data-k="ev"] .s'); if (evSub) evSub.style.color = isFinite(v.car) && v.car < 20 ? (v.car < 10 ? '#e53935' : '#ef8a00') : ''; set('water', v.hasWh, this._fmt(v.wh));
     }
   }
-  customElements.define(TAG, ApplianceSolarHouseCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceSolarHouseCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceSolarHouseCardEditor extends HTMLElement {
@@ -371,7 +371,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       this._form.computeLabel = (s) => tr[`f_${s.name}`] || window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceSolarHouseCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceSolarHouseCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

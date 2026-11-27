@@ -4,7 +4,7 @@
 (() => {
 "use strict";
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
-const define = (tag, cls) => { if (!(window.__acHasReal||customElements.get.bind(customElements))(tag)) customElements.define(tag, cls); };
+const define = (tag, cls) => { if (!(window.__acHasReal||customElements.get.bind(customElements))(tag)) (window.__acDefine||customElements.define.bind(customElements))(tag, cls); };
 window.customCards = window.customCards || [];
 /* appliance-robot-vacuum-card — robot aspirateur + station de vidage, animé, avec commandes
  * type: custom:appliance-robot-vacuum-card

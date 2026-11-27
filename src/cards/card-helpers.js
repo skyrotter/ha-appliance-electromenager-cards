@@ -371,7 +371,7 @@
   };
   window.applianceEsc = escA;
   window.applianceDefine = (tag, cls, meta) => {
-    if (typeof customElements !== 'undefined' && !(window.__acHasReal ? window.__acHasReal(tag) : customElements.get(tag))) customElements.define(tag, cls);
+    if (typeof customElements !== 'undefined' && !(window.__acHasReal ? window.__acHasReal(tag) : customElements.get(tag))) (window.__acDefine || customElements.define.bind(customElements))(tag, cls);
     if (meta && typeof window !== 'undefined') {
       window.customCards = window.customCards || [];
       window.customCards.push({

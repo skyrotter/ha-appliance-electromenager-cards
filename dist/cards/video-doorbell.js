@@ -408,7 +408,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       };
     }
   }
-  if (!(window.__acHasReal||customElements.get.bind(customElements))(TAG + '-editor')) customElements.define(TAG + '-editor', ApplianceVideoDoorbellCardEditor);
+  if (!(window.__acHasReal||customElements.get.bind(customElements))(TAG + '-editor')) (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceVideoDoorbellCardEditor);
 
   window.applianceDefine(TAG, ApplianceVideoDoorbellCard, {
     name: `Appliance – ${T.en.name} / ${T.fr.name}`,

@@ -252,7 +252,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       });
     }
   }
-  customElements.define(TAG, ApplianceLedStripCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceLedStripCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceLedStripCardEditor extends HTMLElement {
@@ -287,7 +287,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceLedStripCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceLedStripCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

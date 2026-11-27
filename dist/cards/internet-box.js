@@ -502,7 +502,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       });
     }
   }
-  customElements.define(TAG, ApplianceInternetBoxCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceInternetBoxCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceInternetBoxCardEditor extends HTMLElement {
@@ -540,7 +540,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'internet_box_model' : s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceInternetBoxCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceInternetBoxCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

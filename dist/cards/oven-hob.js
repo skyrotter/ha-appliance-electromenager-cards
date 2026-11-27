@@ -96,7 +96,7 @@ ha-card.on{--oh-c:#ff7043}
       tile('oht3', this._t('cost'), fin(cost) ? this._fmt(cost, 2) : '--', sym, c.show_cost !== false && (fin(cost) || !!c.cost || c.price_per_kwh != null));
     }
   }
-  customElements.define(TAG, ApplianceOvenHobCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceOvenHobCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceOvenHobCardEditor extends HTMLElement {
@@ -131,7 +131,7 @@ ha-card.on{--oh-c:#ff7043}
       this._form.computeLabel = (s) => tr[`f_${s.name}`] || window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceOvenHobCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceOvenHobCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

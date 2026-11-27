@@ -236,7 +236,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       if (window.applianceExtraTiles) window.applianceExtraTiles(this, r.querySelector('.tiles'), c.extra_tiles, this._hass, c);
     }
   }
-  customElements.define(TAG, ApplianceWallTabletCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceWallTabletCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceWallTabletCardEditor extends HTMLElement {
@@ -269,7 +269,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._form.computeLabel = (s) => { const l = window.applianceLang(T, this._c, this._hass); return T[l][`f_${s.name}`] ?? T.en[`f_${s.name}`] ?? window.applianceEditorLabel(s.name, this._hass); };
     }
   }
-  customElements.define(TAG + '-editor', ApplianceWallTabletCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceWallTabletCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

@@ -641,7 +641,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
   for (const kind of Object.keys(KINDS)) {
     const tag = `appliance-${kind.replace(/_/g, '-')}-card`;
     const K = KINDS[kind];
-    customElements.define(tag, class extends ApplianceLightCard {
+    (window.__acDefine||customElements.define.bind(customElements))(tag, class extends ApplianceLightCard {
       get kind() { return kind; }
       static getConfigElement() { return document.createElement(tag + '-editor'); }
       static getStubConfig(hass) {
@@ -649,7 +649,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         return { entity: ids.find((i) => i.startsWith('light.') && K.re.test(i)) || ids.find((i) => i.startsWith('light.')) || '' };
       }
     });
-    customElements.define(tag + '-editor', class extends ApplianceLightCardEditor { get kind() { return kind; } });
+    (window.__acDefine||customElements.define.bind(customElements))(tag + '-editor', class extends ApplianceLightCardEditor { get kind() { return kind; } });
     window.customCards.push({ type: tag, name: `Appliance – ${T.en[kind]} / ${T.fr[kind]}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l][kind]])), preview: true,
       description: `${T.fr[kind]} animé(e) : la lumière suit l'état, la luminosité et la couleur de l'ampoule.`,
       documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards' });

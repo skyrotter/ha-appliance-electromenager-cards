@@ -372,7 +372,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       });
     }
   }
-  customElements.define(TAG, ApplianceWaterHeatPumpCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceWaterHeatPumpCard);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

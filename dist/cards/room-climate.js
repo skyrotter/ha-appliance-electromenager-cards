@@ -1119,7 +1119,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       document.body.appendChild(dlg);
     }
   }
-  customElements.define(TAG, ApplianceRoomClimateCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceRoomClimateCard);
 
   /* ---- pop-up d'historique ----
    * Ajouté à <body> (et non dans la carte) : un parent avec transform / contain n'emprisonne pas la superposition.
@@ -1455,7 +1455,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
       r.getElementById('days').innerHTML = dh;
     }
   }
-  customElements.define(TAG.replace('-card', '-dialog'), ApplianceRoomClimateDialog);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG.replace('-card', '-dialog'), ApplianceRoomClimateDialog);
 
   /* ---- éditeur visuel ---- */
   class ApplianceRoomClimateCardEditor extends HTMLElement {
@@ -1511,7 +1511,7 @@ ha-card.st-neon{background:#07080c;--ha-card-border-color:#000;color:#fff}
     }
     _lang() { return window.applianceLang(T, this._c, this._hass); }
   }
-  customElements.define(TAG + '-editor', ApplianceRoomClimateCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceRoomClimateCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({
