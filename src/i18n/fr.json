@@ -1211,6 +1211,7 @@
     "illus_pos_left": "À gauche, 2 premières tuiles à droite",
     "illus_pos_right": "À droite, 2 premières tuiles à gauche",
     "door_model": "Modèle",
+    "door_entities": "Capteurs d'ouverture supplémentaires (poignée, 2e vantail…)",
     "sync_box_model": "Vue du boîtier",
     "open_alert_minutes": "Alerte porte ouverte après (min)",
     "car_model": "Modèle de voiture",
@@ -1724,7 +1725,9 @@
     "entity_o2": "Capteur d'oxygène (O₂)",
     "entity_no2": "Capteur NO₂",
     "entity_o3": "Capteur d'ozone (O₃)",
-    "entity_noise": "Capteur de bruit (dB)"
+    "entity_noise": "Capteur de bruit (dB)",
+    "bulb_model": "Modèle d'ampoule (photo)",
+    "bulb_model_drawing": "Dessin (par défaut)"
   },
   "light": {
     "white_warm": "Blanc chaud",
@@ -1785,6 +1788,7 @@
     "no": "Non",
     "btn_light": "LED",
     "roof_window": "Fenêtre de toit",
+    "window": "Fenêtre",
     "rw_open": "Ouverte",
     "rw_closed": "Fermée",
     "rw_partial": "Ouverte à",
@@ -2278,6 +2282,8 @@
     "name": "Détecteur d'ouverture",
     "name_service_door": "Détecteur de porte de service",
     "name_window": "Détecteur de fenêtre",
+    "name_sliding_door": "Capteur de porte coulissante",
+    "model_sliding_door": "Porte coulissante",
     "model_front_door": "Porte d'entrée",
     "model_service_door": "Porte de service",
     "model_window": "Fenêtre",

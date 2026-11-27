@@ -1211,6 +1211,7 @@
     "illus_pos_left": "Left, first 2 tiles on the right",
     "illus_pos_right": "Right, first 2 tiles on the left",
     "door_model": "Model",
+    "door_entities": "Extra opening sensors (handle, 2nd leaf…)",
     "sync_box_model": "Box view",
     "open_alert_minutes": "Open alert after (min)",
     "car_model": "Car model",
@@ -1724,7 +1725,9 @@
     "entity_o2": "Oxygen (O₂) sensor",
     "entity_no2": "NO₂ sensor",
     "entity_o3": "Ozone (O₃) sensor",
-    "entity_noise": "Noise sensor (dB)"
+    "entity_noise": "Noise sensor (dB)",
+    "bulb_model": "Bulb model (photo)",
+    "bulb_model_drawing": "Drawing (default)"
   },
   "light": {
     "white_warm": "Warm white",
@@ -1785,6 +1788,7 @@
     "no": "No",
     "btn_light": "LED",
     "roof_window": "Roof window",
+    "window": "Window",
     "rw_open": "Open",
     "rw_closed": "Closed",
     "rw_partial": "Open",
@@ -2278,6 +2282,8 @@
     "name": "Door sensor",
     "name_service_door": "Service door sensor",
     "name_window": "Window sensor",
+    "name_sliding_door": "Sliding door sensor",
+    "model_sliding_door": "Sliding door",
     "model_front_door": "Front door",
     "model_service_door": "Service door",
     "model_window": "Window",

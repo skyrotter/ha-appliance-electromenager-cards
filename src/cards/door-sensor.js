@@ -1,9 +1,10 @@
 /* Carte « Détecteur d'ouverture » — custom:appliance-door-sensor-card
- * Porte d'entrée, porte de service ou fenêtre (option model) en PVC blanc, vue de trois quarts (vitrage, panneau mouluré, poignée), avec le capteur d'ouverture
+ * Porte d'entrée, porte de service, porte coulissante ou fenêtre (option model) en PVC blanc, vue de trois quarts (vitrage, panneau mouluré, poignée), avec le capteur d'ouverture
  * posé sur le cadre et son aimant sur le battant. Entité binary_sensor (door / opening / window / garage_door) :
  * fermée → le battant se referme ; ouverte → il pivote vers l'intérieur et la pièce s'éclaire ;
  * restée ouverte au-delà de open_alert_minutes → voyant rouge qui clignote, contour d'alerte, ondes et durée.
  * Batterie facultative (capteur % ou binary_sensor « pile faible ») : tuile + pictogramme qui clignote sous le seuil.
+ * Capteurs d'ouverture supplémentaires (entities : poignée, deuxième vantail, volet…) : la porte est ouverte dès que l'un d'eux l'est ; une pastille par capteur.
  * Tuiles : batterie, durée depuis le dernier changement.
  * La scène est en vraie 3D (rotation de 30° puis perspective douce) : les points sont projetés en JavaScript, le battant est animé
  * par interpolation (requestAnimationFrame) ; clignotements et ondes sont en CSS.
@@ -33,6 +34,9 @@ svg{display:block;width:100%;max-width:calc(240px * var(--illus-scale,1));height
 .tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
 .tile.warn .v{color:var(--ds-warn)}.tile.bad .v{color:var(--ds-alert)}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:6px}.chips:empty{display:none}
+.chip{display:inline-flex;align-items:center;gap:5px;max-width:100%;padding:3px 9px;border-radius:12px;font-size:11px;background:var(--ac-tile-bg,rgba(127,127,127,.09));color:var(--primary-text-color);cursor:pointer}
+.chip i{flex:none;width:8px;height:8px;border-radius:50%;background:var(--ds-ok)}.chip.open i{background:var(--ds-warn)}.chip.na i{background:#8a929a}.chip span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* ---- illustration : halo, voyant, contour d'alerte, ondes ---- */
 .halo{fill:url(#dshalo);opacity:.3;transition:opacity .5s}.open .halo{opacity:.4}.left_open .halo{animation:dspulse 1.1s ease-in-out infinite}
 .unavailable .halo,.unknown .halo{opacity:0}
@@ -78,6 +82,8 @@ svg{display:block;width:100%;max-width:calc(240px * var(--illus-scale,1));height
       g += poly(R(.07, .905, .93, .975), '#eceef1', 'stroke="#c4c9cf" stroke-width=".8"');
       g += poly(R(.855, .46, .935, .62), '#dfe2e6', 'stroke="#9aa3ad" stroke-width=".7"') + poly(R(.875, .44, .915, .56), '#aeb6bf', 'stroke="#6f7881" stroke-width=".8"') + poly(R(.885, .44, .905, .52), '#e8ecf0', 'opacity=".8"');
       return g + cyl(dp(.895, .595)); } },
+    // porte coulissante (baie vitrée) : deux vantaux, le mobile coulisse devant le fixe
+    sliding_door: { ow: 150, oh: 150, floor: true, slide: true, nameKey: 'name_sliding_door' },
     window: { ow: 90, oh: 120, floor: false, nameKey: 'name_window', decor: (R, dp) => {
       let g = poly(R(.07, .06, .93, .94), '#e3e6ea', EDGE) + poly(R(.13, .10, .87, .90), 'url(#dsglass)', 'stroke="#8d949b" stroke-width=".7"') + GLINT(dp, .13, .10, .87, .90);
       g += poly(R(.465, .10, .535, .90), '#eef0f3', 'stroke="#b4bac1" stroke-width=".7"') + poly(R(.13, .465, .87, .535), '#eef0f3', 'stroke="#b4bac1" stroke-width=".7"');   // croisillon PVC : traverse horizontale et montant vertical
@@ -85,8 +91,46 @@ svg{display:block;width:100%;max-width:calc(240px * var(--illus-scale,1));height
       return g; } },
   };
 
+  // embrasures (4 faces intérieures de l'ouverture), visibles selon l'angle de vue
+  const reveals = (OW, OH) => {
+    let g = '';
+    [[[[0, 0, 0], [0, 0, D], [0, OH, D], [0, OH, 0]], [1, 0, 0], '#c9ced4'], [[[OW, 0, 0], [OW, OH, 0], [OW, OH, D], [OW, 0, D]], [-1, 0, 0], '#aeb4bb'],
+      [[[0, 0, 0], [OW, 0, 0], [OW, 0, D], [0, 0, D]], [0, 1, 0], '#bfc4ca'], [[[0, OH, 0], [0, OH, D], [OW, OH, D], [OW, OH, 0]], [0, -1, 0], '#d9dde2']]
+      .forEach(([P, n, f]) => { if (vis(n, P[0])) g += poly(P, f); });
+    return g;
+  };
+  // porte coulissante : un vantail fixe (à gauche, derrière) et un vantail mobile (à droite, devant) qui coulisse devant le fixe ; a de 0 (fermée) à 1 (ouverte)
+  const slideScene = (a, M) => {
+    const OW = M.ow, OH = M.oh, PW = (OW - 2) / 2 + 4, sh = a * (OW - 2 - PW), zb = Z0 + TK + 2;
+    let g = poly([[0, 0, D], [OW, 0, D], [OW, OH, D], [0, OH, D]], 'url(#dsroom)');
+    const open = a * (OW - 2 - PW);
+    g += `<g clip-path="url(#dsclip)">${poly([[0, OH, D], [OW, OH, D], [OW, OH, 70], [0, OH, 70]], '#9c7440', 'opacity=".6"')}`
+      + poly([[OW - 1, OH, Z0], [OW - 1 - open, OH, Z0], [OW - 1 - open - 10, OH, 70], [OW - 1, OH, 70]], '#fff3c8', `opacity="${(.3 * Math.min(1, a * 1.4)).toFixed(2)}"`) + '</g>';
+    g += reveals(OW, OH);
+    // vantail : cadre PVC, vitrage, reflets, rail du bas, tranches ; poignée verticale sur le bord d'attaque du vantail mobile
+    const panel = (x0, x1, z, handle) => {
+      const Q = (xa, ya, xb, yb) => [[xa, ya, z], [xb, ya, z], [xb, yb, z], [xa, yb, z]], w = x1 - x0;
+      let h = '';
+      [[[[x0, 1, z], [x0, OH - 1, z], [x0, OH - 1, z + TK], [x0, 1, z + TK]], [-1, 0, 0], '#c4c9cf'], [[[x1, 1, z], [x1, 1, z + TK], [x1, OH - 1, z + TK], [x1, OH - 1, z]], [1, 0, 0], '#cdd2d8'],
+        [[[x0, 1, z], [x1, 1, z], [x1, 1, z + TK], [x0, 1, z + TK]], [0, -1, 0], '#dfe3e8']].forEach(([P, n, f]) => { if (vis(n, P[0])) h += poly(P, f, 'stroke="#b4bac1" stroke-width=".6"'); });
+      h += poly(Q(x0, 1, x1, OH - 1), 'url(#dspvc)', EDGE);
+      h += poly(Q(x0 + 4, 5, x1 - 4, OH - 9), 'url(#dsglass)', 'stroke="#8d949b" stroke-width=".7"');
+      h += poly([[x0 + 4 + w * .1, 5, z], [x0 + 4 + w * .3, 5, z], [x0 + 4 + w * .12, OH - 9, z], [x0 + 4 + w * .02, OH - 9, z]], '#fff', 'opacity=".26"');
+      h += poly([[x0 + 4 + w * .4, 5, z], [x0 + 4 + w * .48, 5, z], [x0 + 4 + w * .3, OH - 9, z], [x0 + 4 + w * .22, OH - 9, z]], '#fff', 'opacity=".16"');
+      h += poly(Q(x0 + 3, OH - 9, x1 - 3, OH - 2), '#eceef1', 'stroke="#c4c9cf" stroke-width=".7"');
+      if (handle) h += poly(Q(x0 + 6, OH * .38, x0 + 10, OH * .64), '#aeb6bf', 'stroke="#6f7881" stroke-width=".8"') + poly(Q(x0 + 7, OH * .38, x0 + 8.4, OH * .62), '#e8ecf0', 'opacity=".8"');
+      return h;
+    };
+    g += panel(1, 1 + PW, zb, false);
+    const sx0 = OW - 1 - PW - sh;
+    g += panel(sx0, sx0 + PW, Z0, true);
+    g += poly([[sx0 + PW - 16, 1.2, Z0], [sx0 + PW - 4, 1.2, Z0], [sx0 + PW - 4, 4.2, Z0], [sx0 + PW - 16, 4.2, Z0]], '#cfd4da', 'stroke="#7d858d" stroke-width=".6"'); // aimant du capteur
+    return g;
+  };
+
   // décor dynamique (dépend de l'angle a de 0 à 1) : pièce vue par l'ouverture, embrasures, battant. Charnière à droite, ouverture vers l'intérieur.
   const scene = (a, M) => {
+    if (M.slide) return slideScene(a, M);
     const OW = M.ow, OH = M.oh, WD = OW - 2, HD = OH - 2;
     const A = a * 70 * Math.PI / 180, ca = Math.cos(A), sa = Math.sin(A);
     const dp = (u, v, e = 0) => [OW - (1 + u * WD * ca - e * sa), 1 + v * HD, Z0 + u * WD * sa + e * ca]; // u : 0 charnière → 1 bord libre ; e : épaisseur
@@ -95,9 +139,7 @@ svg{display:block;width:100%;max-width:calc(240px * var(--illus-scale,1));height
     g += poly([[0, 0, D], [OW, 0, D], [OW, OH, D], [0, OH, D]], 'url(#dsroom)');
     if (M.floor) g += `<g clip-path="url(#dsclip)">${poly([[0, OH, D], [OW, OH, D], [OW, OH, 70], [0, OH, 70]], '#9c7440', 'opacity=".6"')}`
       + poly([[OW - 1, OH, Z0], [OW - (1 + WD * ca), OH, Z0 + WD * sa], [OW - (1 + WD * ca) - 10, OH, 70], [OW - 1, OH, 70]], '#fff3c8', `opacity="${(.28 * Math.sin(A)).toFixed(2)}"`) + '</g>';
-    [[[[0, 0, 0], [0, 0, D], [0, OH, D], [0, OH, 0]], [1, 0, 0], '#c9ced4'], [[[OW, 0, 0], [OW, OH, 0], [OW, OH, D], [OW, 0, D]], [-1, 0, 0], '#aeb4bb'],
-      [[[0, 0, 0], [OW, 0, 0], [OW, 0, D], [0, 0, D]], [0, 1, 0], '#bfc4ca'], [[[0, OH, 0], [0, OH, D], [OW, OH, D], [OW, OH, 0]], [0, -1, 0], '#d9dde2']]
-      .forEach(([P, n, f]) => { if (vis(n, P[0])) g += poly(P, f); });
+    g += reveals(OW, OH);
     // tranches du battant (visibles selon l'angle), puis face avant avec ses décors
     [[[dp(0, 0, 0), dp(1, 0, 0), dp(1, 0, TK), dp(0, 0, TK)], [0, -1, 0], '#dfe3e8'], [[dp(0, 1, 0), dp(0, 1, TK), dp(1, 1, TK), dp(1, 1, 0)], [0, 1, 0], '#cfd4da'],
       [[dp(0, 0, 0), dp(0, 0, TK), dp(0, 1, TK), dp(0, 1, 0)], [-eU[0], 0, -eU[2]], '#c4c9cf'], [[dp(1, 0, 0), dp(1, 1, 0), dp(1, 1, TK), dp(1, 0, TK)], eU, '#cdd2d8'],
@@ -153,6 +195,15 @@ svg{display:block;width:100%;max-width:calc(240px * var(--illus-scale,1));height
       if (this._hass) this._render();
     }
     // modèle courant : pose les dimensions de l'ouverture avant tout dessin (G est partagé par toutes les cartes de la page)
+    // capteurs d'ouverture : le principal (entity), puis les supplémentaires (entities : « binary_sensor.x » ou { entity, name }), sans doublon
+    _sensors() {
+      const c = this._c, out = [{ id: c.entity, name: '' }], seen = new Set([c.entity]);
+      (Array.isArray(c.entities) ? c.entities : []).forEach((x) => {
+        const id = typeof x === 'string' ? x : x && x.entity;
+        if (id && typeof id === 'string' && !seen.has(id)) { seen.add(id); out.push({ id, name: (x && x.name) || '' }); }
+      });
+      return out;
+    }
     _use() { const M = MODELS[this._c.model] || MODELS.front_door; G.ow = M.ow; G.oh = M.oh; return M; }
     set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     getCardSize() { return 5; }
@@ -181,11 +232,12 @@ svg{display:block;width:100%;max-width:calc(240px * var(--illus-scale,1));height
         <svg viewBox="0 0 240 200" role="img" aria-label="${(this._c.name || this._t(M.nameKey)).replace(/"/g, '')}">${defs(M)}
           <ellipse class="halo" cx="120" cy="96" rx="116" ry="100"/>${M.floor ? '<ellipse cx="120" cy="184" rx="86" ry="6" fill="#000" fill-opacity=".28"/>' : ''}
           <g id="dsscene"></g><g>${frame(M)}</g></svg>
+        <div class="chips" id="dschips"></div>
         <div class="alert" id="dsalert"><ha-icon icon="mdi:clock-alert-outline"></ha-icon><span></span></div>
         <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
       </ha-card>`;
       window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity));
-      root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => this._more({ battery: this._c.entity_battery, since: this._c.entity }[el.dataset.k])));
+      root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => this._more({ battery: this._c.entity_battery, since: this._sinceId || this._c.entity }[el.dataset.k])));
       this._root = root; this._card = root.querySelector('ha-card'); this._scene = root.getElementById('dsscene'); this._built = true; this._a = null; this._tgt = null;
     }
 
@@ -207,10 +259,16 @@ svg{display:block;width:100%;max-width:calc(240px * var(--illus-scale,1));height
 
     _render() {
       if (!this._built) this._build();
-      const c = this._c, r = this._root, card = this._card, s = this._st(c.entity);
-      const raw = s ? String(s.state).toLowerCase() : 'unavailable', alive = this._ok(s);
-      const isOpen = alive && /^(on|open|opened|true)$/.test(raw);
-      const mins = isOpen ? (Date.now() - Date.parse(s.last_changed)) / 60000 : 0;
+      const c = this._c, r = this._root, card = this._card, sensors = this._sensors().map((x) => ({ ...x, st: this._st(x.id) }));
+      const openOf = (x) => this._ok(x.st) && /^(on|open|opened|true)$/.test(String(x.st.state).toLowerCase());
+      const aliveL = sensors.filter((x) => this._ok(x.st)), openL = sensors.filter(openOf);
+      const alive = aliveL.length > 0, isOpen = openL.length > 0;
+      // ouverte dès qu'un capteur l'est : la durée est celle du capteur ouvert depuis le plus longtemps ; fermée : celle du dernier changement
+      const when = (x) => Date.parse(x.st && x.st.last_changed) || 0;
+      const pick = isOpen ? openL.reduce((a, x) => (when(x) < when(a) ? x : a)) : (aliveL.length ? aliveL.reduce((a, x) => (when(x) > when(a) ? x : a)) : sensors[0]);
+      const s = pick.st, raw = alive ? '' : String((sensors[0].st && sensors[0].st.state) || 'unavailable').toLowerCase();
+      this._sinceId = pick.id;
+      const mins = isOpen ? (Date.now() - when(pick)) / 60000 : 0;
       const left = isOpen && Number(c.open_alert_minutes) > 0 && mins >= Number(c.open_alert_minutes);
       const st = !alive ? (raw === 'unknown' ? 'unknown' : 'unavailable') : left ? 'left_open' : isOpen ? 'open' : 'closed';
       // batterie : % (sensor) ou binary_sensor « pile faible »
@@ -222,10 +280,22 @@ svg{display:block;width:100%;max-width:calc(240px * var(--illus-scale,1));height
       const al = r.getElementById('dsalert'); al.classList.toggle('on', left); al.classList.toggle('off', !(Number(c.open_alert_minutes) > 0)); // hauteur réservée : la tuile ne change plus de taille à l'alerte
       al.querySelector('span').textContent = left ? this._t('open_for').replace('{time}', this._dur(s)) : '';
       this._swing(isOpen ? 1 : 0);
+      // pastilles : une par capteur dès qu'il y en a plusieurs
+      const chips = r.getElementById('dschips'), many = sensors.length > 1;
+      const key = many ? sensors.map((x) => `${x.id}|${openOf(x) ? 1 : this._ok(x.st) ? 0 : 2}|${x.name || (x.st && x.st.attributes && x.st.attributes.friendly_name) || x.id}`).join(';') : '';
+      if (chips.dataset.k !== key) {
+        chips.dataset.k = key;
+        chips.replaceChildren(...(many ? sensors.map((x) => {
+          const el = document.createElement('div'), nm = x.name || (x.st && x.st.attributes && x.st.attributes.friendly_name) || x.id;
+          el.className = `chip${openOf(x) ? ' open' : this._ok(x.st) ? '' : ' na'}`; el.title = nm;
+          el.appendChild(document.createElement('i')); const sp = document.createElement('span'); sp.textContent = nm; el.appendChild(sp);
+          el.addEventListener('click', () => this._more(x.id)); return el;
+        }) : []));
+      }
 
       const V = {
         battery: [c.entity_battery, isFinite(bat) ? String(Math.round(bat)) : this._ok(bS) ? this._t(low ? 'low' : 'ok') : '--', isFinite(bat) ? '%' : '', low ? 'bad' : ''],
-        since: [c.entity, this._dur(s), '', ''],
+        since: [pick.id, this._dur(s), '', ''],
       };
       r.querySelector('.tile[data-k="battery"] ha-icon').setAttribute('icon', low ? 'mdi:battery-alert' : 'mdi:battery');
       TILES.forEach(([k, , opt]) => {
@@ -257,8 +327,9 @@ svg{display:block;width:100%;max-width:calc(240px * var(--illus-scale,1));height
       this._form.data = this._c;
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
-        { name: 'model', selector: { select: { mode: 'dropdown', options: [{ value: 'front_door', label: tr.model_front_door }, { value: 'service_door', label: tr.model_service_door }, { value: 'window', label: tr.model_window }] } } },
+        { name: 'model', selector: { select: { mode: 'dropdown', options: [{ value: 'front_door', label: tr.model_front_door }, { value: 'service_door', label: tr.model_service_door }, { value: 'sliding_door', label: tr.model_sliding_door }, { value: 'window', label: tr.model_window }] } } },
         { name: 'entity', required: true, selector: { entity: { domain: 'binary_sensor' } } },
+        { name: 'entities', selector: { entity: { domain: 'binary_sensor', multiple: true } } },
         { name: 'entity_battery', selector: { entity: { domain: ['sensor', 'binary_sensor'] } } },
         { name: 'battery_low', default: 20, selector: { number: { min: 1, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
         { name: 'open_alert_minutes', default: 5, selector: { number: { min: 0, max: 1440, step: 1, mode: 'box', unit_of_measurement: 'min' } } },
@@ -270,7 +341,7 @@ svg{display:block;width:100%;max-width:calc(240px * var(--illus-scale,1));height
         window.applianceLanguageField(T),
         { type: 'grid', name: '', schema: [bool('show_status'), bool('show_battery'), bool('show_since'), bool('animations')] },
       ];
-      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'door_model' : s.name, this._hass);
+      this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'door_model' : s.name === 'entities' ? 'door_entities' : s.name, this._hass);
     }
   }
   customElements.define(TAG + '-editor', ApplianceDoorSensorCardEditor);
