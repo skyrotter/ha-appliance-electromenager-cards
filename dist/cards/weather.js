@@ -3,7 +3,7 @@
  * pluie forte, neige, grêle, orage avec éclairs, brouillard, vent) qui suit la condition et le jour / la nuit ; température, ressenti, min / max ;
  * bandeau d'alerte ; prévisions horaires et sur plusieurs jours ; détails (vent avec flèche, humidité, UV, pression, visibilité, point de rosée,
  * nuages) ; arc du soleil (lever / coucher calculés pour la position de Home Assistant) et phase de la lune ; pluie dans l'heure (capteur
- * Météo-France facultatif) ; radar de pluie animé centré sur la maison (RainViewer + fond de carte OpenStreetMap / CARTO).
+ * Météo-France facultatif) ; radar de pluie animé centré sur la maison (RainViewer + fond de carte OpenStreetMap, sans clé API).
  */
 (() => {
   const TAG = 'appliance-weather-card';
@@ -162,6 +162,7 @@ ha-card{container-type:inline-size}
 .radar .map{position:relative;overflow:hidden;border-radius:10px;background:#1e2733;height:var(--rh,220px)}
 .radar .grid{position:absolute;left:50%;top:50%;width:768px;height:768px;transform-origin:0 0}
 .radar .grid img,.radar .rf img{position:absolute;width:256px;height:256px;display:block;user-select:none;-webkit-user-drag:none}
+.radar .grid.dark>img{filter:invert(1) hue-rotate(180deg) brightness(.85) contrast(.9)}
 .radar .rf{position:absolute;inset:0;opacity:0}.radar .rf.on{opacity:.8}
 .radar .home{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#fff;border:3px solid #e53935;box-shadow:0 0 0 2px rgba(255,255,255,.6)}
 .radar .pulse{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;border:2px solid #e53935;animation:wcpulse 2.2s ease-out infinite}
@@ -244,7 +245,7 @@ ha-card{container-type:inline-size}
         <div class="tiles hide" id="wctiles"></div>
         <div class="glass hide" id="wcsun"></div>
         <div class="glass radar hide" id="wcradar"><div class="t" id="wcrt"></div>
-          <div class="map" id="wcmap"><div class="grid" id="wcgrid"></div><div class="pulse"></div><div class="home"></div><div class="msg" id="wcmsg"></div><div class="att">© OpenStreetMap · © CARTO · RainViewer</div></div>
+          <div class="map" id="wcmap"><div class="grid" id="wcgrid"></div><div class="pulse"></div><div class="home"></div><div class="msg" id="wcmsg"></div><div class="att">© OpenStreetMap · RainViewer</div></div>
           <div class="ctl"><button id="wcplay" aria-label="Play"></button><input type="range" id="wcseek" min="0" max="0" value="0"><span class="rt" id="wctime"></span></div></div>
         </div></ha-card>`;
       this._root = root; this._card = root.querySelector('ha-card'); this._cache = {};
@@ -401,13 +402,15 @@ ha-card{container-type:inline-size}
       const n = 2 ** z, xf = ((lon + 180) / 360) * n, la = lat * RAD, yf = ((1 - Math.log(Math.tan(la) + 1 / Math.cos(la)) / Math.PI) / 2) * n;
       const cx = Math.floor(xf), cy = Math.floor(yf);
       this._tile = { z, cx, cy, n }; this._ofs = { x: (xf - (cx - 1)) * 256 - 0, y: (yf - (cy - 1)) * 256 };
-      const g = this._root.getElementById('wcgrid'), style = dark ? 'dark_all' : 'light_all', sub = 'abcd';
+      const g = this._root.getElementById('wcgrid');
+      // fond OpenStreetMap standard (sans clé API) ; en thème sombre, les tuiles sont inversées par un filtre CSS (.dark)
+      g.classList.toggle('dark', !!dark);
       g.innerHTML = '';
       for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
         const x = ((cx + dx) % n + n) % n, y = cy + dy; if (y < 0 || y >= n) continue;
         const im = document.createElement('img'); im.alt = ''; im.draggable = false; im.decoding = 'async';
         im.style.left = `${(dx + 1) * 256}px`; im.style.top = `${(dy + 1) * 256}px`;
-        im.src = `https://${sub[(x + y) % 4]}.basemaps.cartocdn.com/${style}/${z}/${x}/${y}.png`;
+        im.src = `https://tile.openstreetmap.org/${z}/${x}/${y}.png`;
         g.appendChild(im);
       }
       this._radarFit();
