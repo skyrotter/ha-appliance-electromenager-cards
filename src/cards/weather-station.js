@@ -206,7 +206,8 @@ svg.compact{max-width:calc(600px * var(--illus-scale,1))}
       const H = (this._hist && this._hist[this._c.entity_pressure]) || [];
       if (!fin(p) || !H.length) return null;
       const t0 = Date.now() - 3 * 3600e3, old = H.find((x) => x.t >= t0) || H[0];
-      const d = p - old.v * (pfac(this._unit(this._c.entity_pressure, 'hPa')) || 1); // p et la tendance sont en hPa return d > 2 ? 2 : d > 0.5 ? 1 : d < -2 ? -2 : d < -0.5 ? -1 : 0;
+      const d = p - old.v * (pfac(this._unit(this._c.entity_pressure, 'hPa')) || 1); // p et la tendance sont en hPa
+      return d > 2 ? 2 : d > 0.5 ? 1 : d < -2 ? -2 : d < -0.5 ? -1 : 0;
     }
 
     _build() {
