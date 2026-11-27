@@ -51,6 +51,8 @@ With a `light` entity the card shows **On / Off** (and **Colour** on the colour 
 
 ## Philips Hue bulbs (photo)
 
+<p align="center"><img src="../doors-windows-hue.gif" width="720" alt="Motorised window, sliding door with two opening sensors, and two Philips Hue bulbs, off then on"></p>
+
 On the **bulb** and **colour bulb** cards, `model` replaces the drawing with a cut-out photo of a Philips Hue bulb. Off, the bulb shows its frosted diffuser; on, the diffuser takes the colour of the light (warm white, colour temperature or colour) and lights up with the brightness, with a glow around the bulb.
 
 | `model` | Bulb |
