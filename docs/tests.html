@@ -1731,7 +1731,7 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
  {const fcd=(n)=>Array.from({length:n},(_,k)=>({datetime:new Date(Date.now()+k*86400e3).toISOString(),condition:k%2?'rainy':'sunny',temperature:20+k,templow:10+k,precipitation_probability:k*10}));
  const W=(st,a={})=>mk('weather.home',st,{temperature:21.4,temperature_unit:'°C',humidity:64,pressure:1012,wind_speed:18,wind_bearing:270,wind_gust_speed:35,wind_speed_unit:'km/h',visibility:10,dew_point:13,apparent_temperature:20,forecast:fcd(7),...a});
  const wc=(cfg,sts,lang)=>card('weather',{entity:'weather.home',latitude:48.85,longitude:2.35,...cfg},sts,lang);
- try{document.createElement('appliance-weather-card').setConfig({});ok('weather: entity required',false)}catch(e){ok('weather: entity required',/entity/.test(e.message),e.message)}
+ {const w0=document.createElement('appliance-weather-card');let thrown=false;try{w0.setConfig({})}catch(e){thrown=true}document.getElementById('g').appendChild(w0);w0.hass=hassOf([],'en');ok('weather without entity: no error, message to pick one',!thrown&&/Choose a weather entity/.test(w0.shadowRoot.textContent),w0.shadowRoot.textContent.slice(-120))}
  let c=wc({},[W('rainy'),mk('sun.sun','above_horizon')],'en'); const sc=c.sr.getElementById('wcscene');
  ok('weather rainy: rain scene, drops, clouds',/sky-rain/.test(sc.className)&&!/night/.test(sc.className)&&sc.querySelectorAll('.rain i').length>20&&sc.querySelectorAll('.cl').length>0,sc.className);
  ok('weather: temperature, high / low, feels like',/21\.4/.test(c.sr.getElementById('wcbig').textContent)&&/High 20/.test(c.sr.getElementById('wchl').textContent)&&/Feels like 20/.test(c.sr.getElementById('wchl').textContent),c.sr.getElementById('wchl').textContent);
