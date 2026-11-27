@@ -72,7 +72,7 @@
 })();
 (() => {
 "use strict";
-const VERSION = "1.246.0";
+const VERSION = "1.247.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -4789,7 +4789,7 @@ class ApplianceCardBase extends HTMLElement {
     if (useAdopted) {
       try { this.shadowRoot.adoptedStyleSheets = [STYLE_SHEET]; } catch (e) {}
     }
-    const styleTag = (useAdopted && this.shadowRoot.adoptedStyleSheets.length) ? "" : `<style>${STYLE}</style>`;
+    const styleTag = (useAdopted && this.shadowRoot.adoptedStyleSheets.length) ? "" : `<style>${STYLE_LAYERED}</style>`;
     this.shadowRoot.innerHTML = `${styleTag}
       <ha-card>
         <div class="wrap" id="wrap">
@@ -9531,11 +9531,14 @@ fill: var(--ac-alert, #ff3b30) !important;
 @supports not (animation-delay: calc(sibling-index() * 0.1s)) {
 .df-steam path:nth-child(2) { animation-delay: .8s !important; } .df-steam path:nth-child(3) { animation-delay: 1.6s !important; }
 }`;
+// Styles de la bibliothèque dans un @layer : tout CSS utilisateur (card_mod, <style> injecté) non « layered »
+// l'emporte, quel que soit l'ordre d'injection (les feuilles adoptées passent après les <style> du shadow root).
+const STYLE_LAYERED = `@layer appliance{${STYLE}}`;
 const STYLE_SHEET = (() => {
   try {
     if (typeof CSSStyleSheet !== "undefined" && CSSStyleSheet.prototype.replaceSync) {
       const sheet = new CSSStyleSheet();
-      sheet.replaceSync(STYLE);
+      sheet.replaceSync(STYLE_LAYERED);
       return sheet;
     }
   } catch (e) {}
@@ -9596,7 +9599,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
     if (!name) return Promise.resolve();
     let p = chunkPromises.get(name);
     if (!p) {
-      p = import(new URL(`cards/${name}.js?v=1.246.0`, base).href)
+      p = import(new URL(`cards/${name}.js?v=1.247.0`, base).href)
         .catch((e) => console.error(`ha-appliance-electromenager-cards: chunk "${name}" failed to load`, e));
       chunkPromises.set(name, p);
     }
@@ -9610,7 +9613,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
     if (!group || w.__acAssets[group]) return Promise.resolve();
     let p = assetPromises.get(group);
     if (!p) {
-      p = import(new URL(`assets/${group}.js?v=1.246.0`, base).href)
+      p = import(new URL(`assets/${group}.js?v=1.247.0`, base).href)
         .catch((e) => console.error(`ha-appliance-electromenager-cards: asset "${group}" failed to load`, e));
       assetPromises.set(group, p);
     }
