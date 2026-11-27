@@ -84,6 +84,15 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
 .off .at-tint,.unavailable .at-tint{opacity:.12}
 .noanim .at-in,.noanim .at-out,.noanim .at-body,.noanim .at-glow,.noanim .at-d{animation:none!important}
 .th-fan{transform-box:fill-box;transform-origin:50% 50%}
+/* modèle Thermor Aéromax Split */
+.tm-tint{opacity:.27;mix-blend-mode:multiply;transition:opacity .4s}.off .tm-tint,.unavailable .tm-tint{opacity:.1}
+.tm-val{fill:#5b6672;opacity:.88;font:600 118px Roboto,Arial,sans-serif;letter-spacing:-4px}.off .tm-val,.unavailable .tm-val{opacity:.4}
+.tm-fan{transform-box:fill-box;transform-origin:50% 50%;pointer-events:none}.tm-fan path,.tm-fan circle{fill:#1d242c;opacity:.5}
+.green .tm-fan,.boost .tm-fan{animation:thspin var(--spd) linear infinite}.boost .tm-fan{animation-duration:calc(var(--spd) * .55)}
+.tm-air path{stroke:#9fc4ea;stroke-width:9;stroke-linecap:round;stroke-dasharray:44 110;opacity:0}
+.green .tm-air path,.boost .tm-air path{opacity:.75;animation:tmair 1.5s linear infinite}@keyframes tmair{to{stroke-dashoffset:154}}
+.tm-glow{opacity:0}.boost .tm-glow{opacity:.85;animation:atglow 1.4s ease-in-out infinite alternate}
+.noanim .tm-fan,.noanim .tm-air path,.noanim .tm-glow{animation:none!important}
 .th-big{filter:drop-shadow(0 0 6px rgba(0,0,0,.85));pointer-events:none}
 .th-big text{fill:#fff;stroke:rgba(20,22,28,.8);stroke-width:14px;paint-order:stroke;stroke-linejoin:round;font:700 120px Roboto,Arial,sans-serif;text-anchor:middle;dominant-baseline:central}
 .th-lcd-txt{fill:#7fe0ff;font:700 29px 'Courier New',monospace;text-anchor:middle;dominant-baseline:central}.off .th-lcd-txt,.unavailable .th-lcd-txt{fill:#4f7d8f}
@@ -154,6 +163,22 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
  </g>
 </svg>`;
 
+
+  /* ---- modèle photo : Thermor Aéromax Split (ballon intérieur + unité extérieure ; scène 793 × 991, coordonnées de la photo) ----
+   * Calques : teinte rouge / bleue du ballon selon l'eau chaude, grande température sur le ballon, ventilateur de l'unité extérieure qui tourne
+   * (pompe à chaleur en marche, plus vite en Boost), air soufflé devant l'unité, lueur orange en bas du ballon (appoint électrique / Boost). */
+  const THERMOR_IMG = window.__acImg("thermo-heater",3);
+  const THERMOR = (label) => `<svg viewBox="0 0 793 991" role="img" aria-label="${label}" class="at tm">
+  <defs><clipPath id="tm-body"><rect x="0" y="4" width="222" height="820" rx="40"/></clipPath>
+   <linearGradient id="tm-g" gradientUnits="userSpaceOnUse" x1="0" y1="4" x2="0" y2="824"><stop id="tm-s0" offset="0" stop-color="#ff3b2e"/><stop id="tm-s1" offset=".4" stop-color="#ff3b2e"/><stop id="tm-s2" offset=".5" stop-color="#2d7bff"/><stop offset="1" stop-color="#2d7bff"/></linearGradient>
+   <radialGradient id="tm-ge" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff8a1f" stop-opacity=".9"/><stop offset="1" stop-color="#ff5a00" stop-opacity="0"/></radialGradient></defs>
+  <g class="tm-air" fill="none"><path d="M360 880Q300 860 230 880" /><path d="M360 915Q300 895 200 915" style="animation-delay:-.5s"/><path d="M360 950Q300 930 230 950" style="animation-delay:-1s"/></g>
+  <image href="${THERMOR_IMG}" x="0" y="0" width="793" height="991"/>
+  <g clip-path="url(#tm-body)"><rect x="0" y="4" width="222" height="820" fill="url(#tm-g)" class="tm-tint"/><ellipse class="tm-glow" cx="111" cy="800" rx="170" ry="110" fill="url(#tm-ge)"/></g>
+  <text id="tm-val" class="tm-val" x="111" y="400" text-anchor="middle">--</text>
+  <g class="tm-fan"><g transform="translate(484 786)">${[0, 72, 144, 216, 288].map((a) => `<path d="M0 0C20 -30 62 -64 108 -52C88 -22 44 8 0 0Z" transform="rotate(${a})"/>`).join('')}<circle r="20"/></g></g>
+</svg>`;
+
   const TILES = [['energy', 'mdi:lightning-bolt-outline', 'show_energy'], ['power', 'mdi:flash', 'show_power'], ['mode', 'mdi:cog-sync', 'show_mode'],
     ['temp', 'mdi:thermometer', 'show_temp'], ['bottom', 'mdi:thermometer-low', 'show_bottom'], ['target', 'mdi:target', 'show_target'], ['reserve', 'mdi:gauge', 'show_reserve'],
     ['volume', 'mdi:water', 'show_volume'], ['cycle', 'mdi:history', 'show_cycle'], ['duration', 'mdi:timer-outline', 'show_cycle'], ['cycle_kwh', 'mdi:lightning-bolt', 'show_cycle']];
@@ -192,13 +217,14 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
     _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _clock(t) { try { return window.applianceClock(this._hass, new Date(t), window.applianceLocale(this._c, this._hass)); } catch (e) { return new Date(t).toTimeString().slice(0, 5); } }
     _photo() { return this._c && this._c.model === 'atlantic_explorer_v5'; }
+    _thermor() { return this._c && this._c.model === 'thermor_aeromax_split'; }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
 
     _build() {
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="thtitle"></div><div class="badge" id="thbadge"></div></div>
-        <div class="body">${(this._c.model === 'atlantic_explorer_v5' ? ATLANTIC : SVG)((this._c.name || this._t('name')).replace(/"/g, ''))}
+        <div class="body">${(this._c.model === 'atlantic_explorer_v5' ? ATLANTIC : this._c.model === 'thermor_aeromax_split' ? THERMOR : SVG)((this._c.name || this._t('name')).replace(/"/g, ''))}
           <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
         </div>
       </ha-card>`;
@@ -297,6 +323,15 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       this._card.classList.toggle('draw', drawing);
     }
 
+    // Thermor Aéromax Split : teinte du ballon (limite eau chaude / froide à la hauteur de la réserve) et température sur le ballon
+    _renderThermor({ f, temp, target, tc }) {
+      const c = this._c, r = this._root, $ = (id) => r.getElementById(id);
+      $('tm-s1').setAttribute('offset', String(Math.max(0, f - .05).toFixed(3)));
+      $('tm-s2').setAttribute('offset', String(Math.min(1, f + .05).toFixed(3)));
+      const v = c.lcd_value === 'target' ? target : temp;
+      $('tm-val').textContent = isNaN(v) ? '--' : `${Math.round(v)}°`;
+    }
+
     _render() {
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card;
@@ -312,7 +347,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       this._fetchCycle(active);
       const cy = c.last_cycle && !active ? this._cycle : null;
       const keepDraw = this._card.classList.contains('draw');
-      const vert = c.layout === 'vertical' || (c.layout !== 'side' && this._photo());
+      const vert = c.layout === 'vertical' || (c.layout !== 'side' && (this._photo() || this._thermor()));
       card.className = `${mode}${c.animations === false ? ' noanim' : ''}${keepDraw ? ' draw' : ''}${vert ? ' vert' : ''}`;
       // vitesse du ventilateur : plus la puissance est élevée, plus il tourne vite (bornée)
       const spd = isNaN(power) ? 2 : Math.max(.7, Math.min(3, 3 - power / 500));
@@ -325,6 +360,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       if (isNaN(lvl)) lvl = mode === 'off' ? 0 : 60;
       const f = Math.max(0, Math.min(1, lvl / 100));
       if (this._photo()) this._renderPhoto({ f, mode, temp, lvl, bottom, reserve, tc });
+      else if (this._thermor()) this._renderThermor({ f, temp, target, tc });
       else {
       r.getElementById('thg0').setAttribute('offset', '0');
       // le dégradé va du bleu (bas) au rouge (haut) : l'étape violette est la limite entre l'eau froide en bas et l'eau chaude en haut,
@@ -343,7 +379,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       } else big.textContent = '';
       }
       // écran dessiné sur l'appareil : température actuelle de l'eau
-      if (!this._photo()) r.getElementById('thlcd').textContent = isNaN(temp) ? '--°' : `${this._fmt(temp, 1)}°`;
+      if (!this._photo() && !this._thermor()) r.getElementById('thlcd').textContent = isNaN(temp) ? '--°' : `${this._fmt(temp, 1)}°`;
       r.getElementById('thtitle').textContent = c.name || this._t('name');
       const badge = r.getElementById('thbadge');
       badge.textContent = this._t(`mode_${mode}`);
@@ -395,7 +431,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       this._form.data = this._c;
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
-        { name: 'model', selector: { select: { mode: 'dropdown', options: [{ value: '', label: 'Ariston Nuos (dessin / drawing)' }, { value: 'atlantic_explorer_v5', label: 'Atlantic Explorer V5 200 L (photo)' }] } } },
+        { name: 'model', selector: { select: { mode: 'dropdown', options: [{ value: '', label: 'Ariston Nuos (dessin / drawing)' }, { value: 'atlantic_explorer_v5', label: 'Atlantic Explorer V5 200 L (photo)' }, { value: 'thermor_aeromax_split', label: 'Thermor Aéromax Split (photo)' }] } } },
         { name: 'layout', selector: { select: { mode: 'dropdown', options: [{ value: '', label: 'Auto (photo : vertical) / Auto' }, { value: 'vertical', label: 'Photo pleine largeur, tuiles dessous / Vertical' }, { value: 'side', label: 'Photo à gauche, tuiles à droite / Side by side' }] } } },
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
