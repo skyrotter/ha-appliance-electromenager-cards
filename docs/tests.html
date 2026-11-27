@@ -1754,6 +1754,16 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
  c=wc({},[W('rainy')],'fr'); ok('weather: french interface',/Ressenti/.test(c.sr.getElementById('wchl').textContent),c.sr.getElementById('wchl').textContent);
  c=wc({animations:false},[W('rainy')]); ok('weather animations:false',c.sr.querySelector('ha-card').classList.contains('noanim'));
  c.sr.getElementById('wchead').click(); }
+ // tarif variable (HC / HP) : coût = kWh × prix en vigueur à chaque relevé (prix moyen pondéré), pas toute l'énergie au prix actuel
+ {const t0=new Date(new Date().setHours(0,0,0,0)).getTime()/1000, H=3600, hist={'sensor.tarif':[{s:'0.10',lu:t0},{s:'0.20',lu:t0+6*H}],'sensor.e':[{s:'0',lu:t0},{s:'1',lu:t0+3*H},{s:'2',lu:t0+8*H}]};
+ const sync=(v)=>({then(f){f(v);return this},catch(){return this},finally(f){f();return this}});
+ const mkH=(cb)=>{const h=hassOf([mk('sensor.tarif','0.20'),mk('sensor.e','2',{unit_of_measurement:'kWh'}),mk('switch.f','off')],'fr');h.callWS=(m)=>{cb&&cb(m);return sync(hist)};return h};
+ const el=document.createElement('appliance-fan-heater-card');el.setConfig({entity_status:'switch.f',entity_energy:'sensor.e',price_per_kwh:'sensor.tarif'});document.getElementById('g').appendChild(el);el.hass=mkH();
+ ok('variable tariff: cost = kWh x price at the time (2 kWh at 0.10 then 0.20 -> 0,3 and not 0,4)',/Coût0,3€/.test(el.shadowRoot.textContent.replace(/\s+/g,''))&&!/Coût0,4/.test(el.shadowRoot.textContent.replace(/\s+/g,'')),[...el.shadowRoot.querySelectorAll('[id]')].map(x=>x.id+'='+x.textContent.trim().slice(0,30)).join(' ')+' '+[...el.shadowRoot.querySelectorAll('.tile,.t')].map(x=>x.textContent.trim()).join('/'));
+ const e2=document.createElement('appliance-fan-heater-card');e2.setConfig({entity_status:'switch.f',entity_energy:'sensor.e',price_per_kwh:0.2});document.getElementById('g').appendChild(e2);e2.hass=mkH();
+ {const w=document.createElement('appliance-water-heater-card');w.setConfig({entity:'switch.f',energy:'sensor.e',price_per_kwh:'sensor.tarif'});document.getElementById('g').appendChild(w);w.hass=mkH();const tx=w.shadowRoot.textContent.replace(/\s+/g,'');
+ ok('variable tariff on the main cards: weighted cost',/0[,.]3\s?€|0[,.]30/.test(tx)&&!/0[,.]4\s?€|0[,.]40/.test(tx),tx.replace(/.*ha-card\{[^}]*\}/,'').slice(-200));}
+ ok('fixed price unchanged (2 kWh x 0.20 = 0,4)',/Coût0,4€/.test(e2.shadowRoot.textContent.replace(/\s+/g,''))); }
  // CSS utilisateur (card_mod, <style> injecté) : doit l'emporter sur les styles de la bibliothèque (@layer), quel que soit l'ordre
  {const c=card('ac-split',{entity:'climate.c'},[CL('cool','cooling')]);const st=document.createElement('style');st.textContent='.illus{width:77px;padding:0}';c.sr.appendChild(st);const il=c.sr.querySelector('.illus');ok('user <style> overrides library .illus (@layer)',getComputedStyle(il).width==='77px'||il.getBoundingClientRect().width===77,getComputedStyle(il).width);}
  // porte coulissante et capteurs d'ouverture supplémentaires (carte porte / fenêtre)

@@ -248,7 +248,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       // coût = énergie en kWh × prix (capteur en Wh / MWh converti)
       const eu = String(this._unit(c.entity_energy, 'kWh')).trim(), ekwh = /^wh$/i.test(eu) ? energy / 1000 : eu === 'MWh' ? energy * 1000 : energy;
       let cost = this._num(c.entity_cost), costU = this._unit(c.entity_cost, c.currency || '€');
-      if (isNaN(cost) && c.price_per_kwh && !isNaN(ekwh) && Number.isFinite(window.appliancePrice(this._hass, c.price_per_kwh))) { cost = ekwh * window.appliancePrice(this._hass, c.price_per_kwh); costU = c.currency || '€'; }
+      if (isNaN(cost) && c.price_per_kwh && !isNaN(ekwh) && Number.isFinite(window.appliancePrice(this._hass, c.price_per_kwh, this, c.entity_energy))) { cost = ekwh * window.appliancePrice(this._hass, c.price_per_kwh, this, c.entity_energy); costU = c.currency || '€'; }
       const V = {
         temp: [c.entity_temp, this._fmt(temp, 1), tc.unit],
         target: [c.entity_target_temp, this._fmt(target, 1), tc.unit],

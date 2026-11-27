@@ -222,7 +222,7 @@ svg.gauge{display:block;width:100%;max-width:calc(260px * var(--illus-scale,1));
       r.getElementById('embadge').textContent = ok ? this._t(['eco_good', 'eco_ok', 'eco_high'][lv]) : this._t('unavailable');
       this._loadStats();
       // tuiles : jour, coût, talon
-      const price = c.price_per_kwh != null && c.price_per_kwh !== '' ? window.appliancePrice(hass, c.price_per_kwh) : NaN, cs = c.entity_cost && this._st(c.entity_cost);
+      const price = c.price_per_kwh != null && c.price_per_kwh !== '' ? window.appliancePrice(hass, c.price_per_kwh, this, c.entity_energy || c.entity_power) : NaN, cs = c.entity_cost && this._st(c.entity_cost);
       let cost = cs && this._ok(cs) ? parseFloat(String(cs.state).replace(',', '.')) : (fin(price) && fin(d.today) ? d.today * price : NaN);
       const cur = c.currency || (hass.config && hass.config.currency) || '€', sym = ({ EUR: '€', USD: '$', GBP: '£', CHF: 'CHF' })[cur] || cur;
       const tile = (id, label, v, u, show) => { const el = r.getElementById(id); el.classList.toggle('hide', !show); el.innerHTML = `<div class="l">${esc(label)}</div><div class="v">${v}<small>${esc(u)}</small></div>`; };

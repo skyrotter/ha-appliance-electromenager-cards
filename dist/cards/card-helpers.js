@@ -69,10 +69,42 @@
   // réglages de HA lus par les cartes (langue, formats, unité de température, devise), comparés par valeur
   const settings = (h) => [h.language, h.locale?.language, h.locale?.number_format, h.locale?.time_format,
     h.config?.unit_system?.temperature, h.config?.currency].join('|');
-  // prix du kWh (option price_per_kwh) : un nombre, ou une entité (capteur de tarif heures pleines / creuses) ; NaN si l'entité est absente ou indisponible
-  window.appliancePrice = (hass, v) => {
-    if (typeof v === 'string' && /^[a-z_]+\.[a-z0-9_]+$/.test(v.trim())) { const st = hass && hass.states && hass.states[v.trim()]; return st ? parseFloat(String(st.state).replace(',', '.')) : NaN; }
+  // prix du kWh (option price_per_kwh) : un nombre, ou une entité (capteur de tarif heures pleines / creuses) ; NaN si l'entité est absente ou indisponible.
+  // Avec une carte (el) et le capteur de consommation (src, énergie en kWh ou puissance), un capteur de tarif donne le PRIX MOYEN PONDÉRÉ de la période
+  // [t0, t1] (par défaut : depuis minuit) : chaque kWh compté au prix en vigueur au moment où il a été consommé (historique de HC / HP). Tant que
+  // l'historique n'est pas lu (ou s'il est vide), c'est le prix actuel. cout = énergie × prix moyen = somme des kWh × prix de leur heure.
+  window.appliancePrice = (hass, v, el, src, t0, t1) => {
+    if (typeof v === 'string' && /^[a-z_]+\.[a-z0-9_]+$/.test(v.trim())) {
+      const id = v.trim(), st = hass && hass.states && hass.states[id], cur = st ? parseFloat(String(st.state).replace(',', '.')) : NaN;
+      const avg = el && src ? weightedPrice(el, hass, id, src, t0, t1) : NaN;
+      return Number.isFinite(avg) ? avg : cur;
+    }
     return Number(v);
+  };
+  const weightedPrice = (el, hass, priceId, src, t0, t1) => {
+    if (!hass || typeof hass.callWS !== 'function' || !hass.states[src] || !hass.states[priceId]) return NaN;
+    const d = new Date(), from = t0 ? +t0 : new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime(), to = t1 ? +t1 : Date.now();
+    const key = `${priceId}|${src}|${from}|${t1 ? to : 'now'}`, C = el._avgPrice || (el._avgPrice = {}), e = C[key], now = Date.now();
+    if (e && (e.busy || now - e.at < (t1 ? 6 * 3600e3 : 10 * 60000))) return e.v;
+    const ent = C[key] = { v: e ? e.v : NaN, at: now, busy: true };
+    const num = (x) => parseFloat(String(x).replace(',', '.')), tm = (p) => (p.lu ?? p.lc) * 1000;
+    hass.callWS({ type: 'history/history_during_period', start_time: new Date(from).toISOString(), end_time: new Date(to).toISOString(), entity_ids: [priceId, src], minimal_response: true, no_attributes: true, significant_changes_only: false })
+      .then((r) => {
+        const P = ((r && r[priceId]) || []).map((p) => ({ t: tm(p), v: num(p.s) })).filter((p) => Number.isFinite(p.t) && Number.isFinite(p.v));
+        const E = ((r && r[src]) || []).map((p) => ({ t: tm(p), v: num(p.s) })).filter((p) => Number.isFinite(p.t) && Number.isFinite(p.v));
+        if (!P.length || E.length < 2) { ent.v = NaN; return; }
+        const priceAt = (t) => { let x = P[0].v; for (const q of P) { if (q.t <= t) x = q.v; else break; } return x; };
+        const power = /^\s*k?w\s*$/i.test(String((hass.states[src].attributes || {}).unit_of_measurement || ''));
+        let w = 0, c = 0;
+        for (let i = 1; i < E.length; i++) {
+          // énergie : hausse du compteur (une baisse = remise à zéro, la nouvelle valeur compte) ; puissance : valeur précédente × durée
+          const k = power ? E[i - 1].v * (E[i].t - E[i - 1].t) : (E[i].v >= E[i - 1].v ? E[i].v - E[i - 1].v : E[i].v);
+          if (k > 0) { w += k; c += k * priceAt(power ? (E[i - 1].t + E[i].t) / 2 : E[i].t); }
+        }
+        ent.v = w > 0 ? c / w : NaN;
+      }).catch(() => { ent.v = NaN; })
+      .finally(() => { ent.busy = false; ent.at = Date.now(); if (el._hass) { el._applianceSeen = null; if (el._update) el._update(true); else if (el._render) el._render(); } });
+    return ent.v;
   };
   window.applianceChanged = (el, hass, cfg, ttl = 30000) => {
     const p = el._applianceSeen, now = Date.now();
