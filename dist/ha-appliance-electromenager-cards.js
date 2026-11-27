@@ -72,7 +72,7 @@
 })();
 (() => {
 "use strict";
-const VERSION = "1.256.0";
+const VERSION = "1.257.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -9602,7 +9602,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
   // navigateur) ; en cas d'échec définitif, le résultat n'est pas gardé : le prochain appel (carte affichée, retour sur l'onglet, réseau revenu) réessaie.
   const importRetry = (rel) => {
     const delays = [0, 800, 2500, 6000];
-    const attempt = (i) => new Promise((r) => setTimeout(r, delays[i])).then(() => import(new URL(`${rel}?v=1.256.0${i ? "&r=" + i : ""}`, base).href))
+    const attempt = (i) => new Promise((r) => setTimeout(r, delays[i])).then(() => import(new URL(`${rel}?v=1.257.0${i ? "&r=" + i : ""}`, base).href))
       .catch((e) => { if (i + 1 < delays.length) return attempt(i + 1); throw e; });
     return attempt(0);
   };
@@ -9611,7 +9611,10 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
     if (!name) return Promise.resolve();
     let p = chunkPromises.get(name);
     if (!p) {
-      p = importRetry(`cards/${name}.js`)
+      // une carte s'appuie sur les fonctions de card-helpers (window.applianceTemp, applianceChanged…) dès son premier rendu :
+      // son fichier n'est donc chargé qu'une fois card-helpers prêt, sinon une carte affichée tôt plante et reste vide
+      const after = name === "card-helpers" ? Promise.resolve() : loadChunk("card-helpers");
+      p = after.then(() => importRetry(`cards/${name}.js`))
         .catch((e) => {
           console.error(`ha-appliance-electromenager-cards: chunk "${name}" failed to load`, e);
           chunkPromises.delete(name);
