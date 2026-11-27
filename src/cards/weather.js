@@ -185,7 +185,8 @@ ha-card{container-type:inline-size}
     static getStubConfig(hass) { return { entity: Object.keys((hass && hass.states) || {}).find((i) => i.startsWith('weather.')) || '' }; }
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
-      if (!c || typeof c !== 'object' || !c.entity) throw new Error('A weather entity is required (entity)');
+      if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
+      // sans entité (carte tout juste ajoutée) : pas d'erreur, un message invite à en choisir une dans l'éditeur
       this._c = { entity_sun: 'sun.sun', show_alert: true, show_hourly: true, show_daily: true, show_details: true, show_sun: true, show_radar: true, show_next_rain: true, hourly_count: 12, daily_count: 5, radar_zoom: 7, radar_height: 220, radar_color: 2, animations: true, ...c };
       this._built = false; this._fcAt = 0; this._frames = null; this._rvAt = 0;
       if (this._hass) this._render();
@@ -275,7 +276,7 @@ ha-card{container-type:inline-size}
       const tu = a.temperature_unit || (hass.config && hass.config.unit_system && hass.config.unit_system.temperature) || '°C', tv = num(a.temperature);
       const fc = this._fc || { daily: [], hourly: [] }, today = fc.daily.find((x) => new Date(x.datetime).toDateString() === new Date().toDateString()) || fc.daily[0] || {};
       const place = c.name || a.friendly_name || (hass.config && hass.config.location_name) || this._t('name');
-      this._set('wchead', `<div><div class="place">${esc(place)}</div><div class="cond">${esc(ws ? this._cond(cond) : this._t('name'))}</div></div>`);
+      this._set('wchead', `<div><div class="place">${esc(place)}</div><div class="cond">${esc(!c.entity ? this._t('pick_entity') : ws ? this._cond(cond) : this._t('name'))}</div></div>`);
       this._set('wcbig', `<div class="temp">${fin(tv) ? this._fmt(tv, 1) : '--'}<sup>${esc(tu)}</sup></div>${ICON(cond, night)}`);
       const ap = num(a.apparent_temperature), hi = num(today.temperature), lo = num(today.templow);
       this._set('wchl', [fin(hi) ? `${this._t('high')} ${this._fmt(hi)}°` : '', fin(lo) ? `${this._t('low')} ${this._fmt(lo)}°` : '', fin(ap) ? `${this._t('feels')} ${this._fmt(ap)}°` : ''].filter(Boolean).join(' · '));

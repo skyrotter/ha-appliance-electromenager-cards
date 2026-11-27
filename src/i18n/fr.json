@@ -3699,6 +3699,7 @@
     "radar_now": "Maintenant",
     "radar_forecast": "Prévision",
     "radar_unavailable": "Radar indisponible",
+    "pick_entity": "Choisis une entité météo dans l'éditeur de la carte",
     "play": "Lecture",
     "pause": "Pause",
     "dry_hour": "Temps sec dans l'heure",
