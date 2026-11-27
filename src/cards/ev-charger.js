@@ -336,7 +336,7 @@ class ApplianceEvChargerCard extends HTMLElement {
     if (w !== null && ps && /kw/i.test(ps.attributes.unit_of_measurement || '')) w *= 1000;
     const energy = this._kwh(c.entity_session_energy), soc = this._num(c.entity_car_soc);
     let cost = this._num(c.entity_cost);
-    if (cost === null && energy !== null && c.price_per_kwh && Number.isFinite(window.appliancePrice(this._hass, c.price_per_kwh))) cost = energy * window.appliancePrice(this._hass, c.price_per_kwh);
+    if (cost === null && energy !== null && c.price_per_kwh && Number.isFinite(window.appliancePrice(this._hass, c.price_per_kwh, this, c.entity_session_energy))) cost = energy * window.appliancePrice(this._hass, c.price_per_kwh, this, c.entity_session_energy);
     let st = this._status(w || 0);
     const pl = this._flag(c.entity_plugged), clim = this._flag(c.entity_climate), doors = this._flag(c.entity_doors);
     if (pl === true && st === 'disconnected') st = 'plugged'; else if (pl === false && st !== 'charging') st = 'disconnected';
