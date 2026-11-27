@@ -87,8 +87,9 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
 /* modèle Thermor Aéromax Split */
 .tm-tint{opacity:.27;mix-blend-mode:multiply;transition:opacity .4s}.off .tm-tint,.unavailable .tm-tint{opacity:0}
 .tm-val{fill:#5b6672;opacity:.88;font:600 118px Roboto,Arial,sans-serif;letter-spacing:-4px}.off .tm-val,.unavailable .tm-val{opacity:.4}
-.tm-fan{transform-box:fill-box;transform-origin:50% 50%;pointer-events:none}.tm-fan path,.tm-fan circle{fill:#1d242c;opacity:.5}
-.off .tm-fan path,.off .tm-fan circle,.unavailable .tm-fan path{opacity:.25}
+.tm-fanw{pointer-events:none}.tm-fan{transform-box:view-box;transform-origin:482px 778px}
+.tm-blade{fill:#353d46;stroke:#5c6772;stroke-width:2;stroke-linejoin:round}.tm-hub{fill:#262c33;stroke:#56606b;stroke-width:2}
+.green .tm-blade,.boost .tm-blade{filter:blur(.7px)}.tm-grille{pointer-events:none}
 .green .tm-fan,.boost .tm-fan{animation:thspin var(--spd) linear infinite}.boost .tm-fan{animation-duration:calc(var(--spd) * .55)}
 .tm-air path{stroke:#9fc4ea;stroke-width:9;stroke-linecap:round;stroke-dasharray:44 110;opacity:0}
 .green .tm-air path,.boost .tm-air path{opacity:.75;animation:tmair 1.5s linear infinite}@keyframes tmair{to{stroke-dashoffset:154}}
@@ -169,6 +170,8 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
    * Calques : teinte rouge / bleue du ballon selon l'eau chaude, grande température sur le ballon, ventilateur de l'unité extérieure qui tourne
    * (pompe à chaleur en marche, plus vite en Boost), air soufflé devant l'unité, lueur orange en bas du ballon (appoint électrique / Boost). */
   const THERMOR_IMG = window.__acImg("thermo-heater",3);
+  // grille de l'unité extérieure découpée dans la photo (fils clairs, fond transparent) : posée par-dessus l'hélice, qui tourne derrière
+  const THERMOR_GRILLE = window.__acImg("thermo-heater",4);
   const THERMOR = (label) => `<svg viewBox="0 0 793 991" role="img" aria-label="${label}" class="at tm">
   <defs><clipPath id="tm-body"><rect x="0" y="4" width="222" height="820" rx="40"/></clipPath>
    <linearGradient id="tm-g" gradientUnits="userSpaceOnUse" x1="0" y1="4" x2="0" y2="824"><stop id="tm-s0" offset="0" stop-color="#ff3b2e"/><stop id="tm-s1" offset=".4" stop-color="#ff3b2e"/><stop id="tm-s2" offset=".5" stop-color="#2d7bff"/><stop offset="1" stop-color="#2d7bff"/></linearGradient>
@@ -177,7 +180,9 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
   <image href="${THERMOR_IMG}" x="0" y="0" width="793" height="991"/>
   <g clip-path="url(#tm-body)"><rect x="0" y="4" width="222" height="820" fill="url(#tm-g)" class="tm-tint"/><ellipse class="tm-glow" cx="111" cy="800" rx="170" ry="110" fill="url(#tm-ge)"/></g>
   <text id="tm-val" class="tm-val" x="111" y="400" text-anchor="middle">--</text>
-  <g class="tm-fan"><g transform="translate(484 786)">${[0, 72, 144, 216, 288].map((a) => `<path d="M0 0C20 -30 62 -64 108 -52C88 -22 44 8 0 0Z" transform="rotate(${a})"/>`).join('')}<circle r="20"/></g></g>
+  <clipPath id="tm-fc"><circle cx="482" cy="778" r="114"/></clipPath>
+  <g clip-path="url(#tm-fc)" class="tm-fanw"><circle cx="482" cy="778" r="114" fill="#15191e"/><g class="tm-fan"><g transform="translate(482 778)">${[0, 72, 144, 216, 288].map((a) => `<path class="tm-blade" d="M-7 -22C-30 -50 -26 -94 2 -108C30 -108 44 -82 33 -54C25 -36 13 -26 8 -22Z" transform="rotate(${a})"/>`).join('')}<circle class="tm-hub" r="24"/></g></g></g>
+  <image class="tm-grille" href="${THERMOR_GRILLE}" x="362" y="655" width="242" height="260"/>
 </svg>`;
 
   const TILES = [['energy', 'mdi:lightning-bolt-outline', 'show_energy'], ['power', 'mdi:flash', 'show_power'], ['mode', 'mdi:cog-sync', 'show_mode'],
