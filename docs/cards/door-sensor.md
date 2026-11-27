@@ -15,7 +15,7 @@ Four models (`model`), same white PVC style:
 
 <p align="center"><img src="../door-sensor-models.png" width="640" alt="Front door, service door and window"></p>
 
-<p align="center"><img src="../doors-windows-hue.gif" width="720" alt="Motorised window, sliding door with two opening sensors, and two Philips Hue bulbs, off then on"></p>
+<p align="center"><img src="../doors-windows-hue-v2.gif" width="720" alt="Motorised window, sliding door with two opening sensors, and two Philips Hue bulbs, off then on"></p>
 
 
 A white PVC front door, service door or window seen in 3/4 view, with the opening sensor on the frame and its magnet on the leaf. Works with any `binary_sensor` (door, opening, window, garage door contact).
