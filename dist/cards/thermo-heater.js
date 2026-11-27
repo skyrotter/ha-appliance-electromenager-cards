@@ -181,9 +181,9 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
   <g clip-path="url(#tm-body)"><rect x="0" y="4" width="222" height="820" fill="url(#tm-g)" class="tm-tint"/><ellipse class="tm-glow" cx="111" cy="800" rx="170" ry="110" fill="url(#tm-ge)"/></g>
   <text id="tm-val" class="tm-val" x="111" y="400" text-anchor="middle">--</text>
   <!-- logement de l'hélice : ellipse (face avant vue en perspective, bord haut de la grille incliné de 3°), relevée sur la photo -->
-  <clipPath id="tm-fc"><ellipse cx="484" cy="761" rx="104" ry="119" transform="rotate(-3 484 761)"/></clipPath>
-  <g clip-path="url(#tm-fc)" class="tm-fanw"><ellipse cx="484" cy="761" rx="104" ry="119" transform="rotate(-3 484 761)" fill="#15191e"/>
-   <g transform="translate(484 761) rotate(-3) scale(.912 1.044)"><g class="tm-fan"><circle r="112" fill="none"/>${[0, 72, 144, 216, 288].map((a) => `<path class="tm-blade" d="M-7 -22C-30 -50 -26 -94 2 -108C30 -108 44 -82 33 -54C25 -36 13 -26 8 -22Z" transform="rotate(${a})"/>`).join('')}<circle class="tm-hub" r="24"/></g></g></g>
+  <clipPath id="tm-fc"><ellipse cx="483" cy="783" rx="116" ry="142" transform="rotate(-3 483 783)"/></clipPath>
+  <g clip-path="url(#tm-fc)" class="tm-fanw"><ellipse cx="483" cy="783" rx="116" ry="142" transform="rotate(-3 483 783)" fill="#15191e"/>
+   <g transform="translate(483 783) rotate(-3) scale(1.036 1.268)"><g class="tm-fan"><circle r="112" fill="none"/>${[0, 72, 144, 216, 288].map((a) => `<path class="tm-blade" d="M-7 -22C-30 -50 -26 -94 2 -108C30 -108 44 -82 33 -54C25 -36 13 -26 8 -22Z" transform="rotate(${a})"/>`).join('')}<circle class="tm-hub" r="24"/></g></g></g>
   <image class="tm-grille" href="${THERMOR_GRILLE}" x="362" y="655" width="242" height="260"/>
 </svg>`;
 
