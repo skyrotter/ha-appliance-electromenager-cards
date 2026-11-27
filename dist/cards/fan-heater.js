@@ -242,7 +242,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       btn.disabled = !this._ok(this._st(sid));
     }
   }
-  customElements.define(TAG, ApplianceFanHeaterCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceFanHeaterCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceFanHeaterCardEditor extends HTMLElement {
@@ -282,7 +282,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceFanHeaterCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceFanHeaterCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

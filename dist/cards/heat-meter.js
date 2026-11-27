@@ -240,7 +240,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
       });
     }
   }
-  customElements.define(TAG, ApplianceHeatMeterCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceHeatMeterCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceHeatMeterCardEditor extends HTMLElement {
@@ -276,7 +276,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceHeatMeterCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceHeatMeterCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

@@ -145,6 +145,9 @@ const chunks = Object.fromEntries(CARD_FILES.map((f) => {
   let code = extractBase64Assets(substituteAssets(substituteI18n(load(f))), name);
   if (name !== "card-helpers" && name !== "editor-labels" && name !== "picker") {
     code = code.replace(/\bcustomElements\.get\(/g, "(window.__acHasReal||customElements.get.bind(customElements))(");
+    // define passe directement par le chargeur : une autre extension qui enveloppe customElements.define en sautant les balises
+    // déjà définies (ex. frontend de dreame_vacuum) verrait la carte provisoire et n'enregistrerait jamais la vraie carte
+    code = code.replace(/\bcustomElements\.define\(/g, "(window.__acDefine||customElements.define.bind(customElements))(");
   }
   return [name, code];
 }));
@@ -397,7 +400,7 @@ const loader = `
       const list = PENDING.get(k);
       if (list) { PENDING.delete(k); list.forEach((fn) => fn(cls)); }
     };
-    ce.define = function (tag, cls, opts) {
+    const acDefine = function (tag, cls, opts) {
       const k = String(tag || "").toLowerCase();
       if (STUBS.has(k)) {
         const implTag = \`ac-impl-\${k}\`;
@@ -408,6 +411,8 @@ const loader = `
       if (!origGet(tag)) origDefine(tag, cls, opts);
       REAL[k] = cls;
     };
+    ce.define = acDefine;
+    w.__acDefine = acDefine;
     ce.whenDefined = function (tag) {
       const k = String(tag || "").toLowerCase();
       const baseTag = k.replace(/-editor$/, "");

@@ -1043,7 +1043,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
   for (const kind of Object.keys(KINDS)) {
     const tag = `appliance-${kind.replace(/_/g, '-')}-card`;
     const K = KINDS[kind];
-    customElements.define(tag, class extends ApplianceShutterCard {
+    (window.__acDefine||customElements.define.bind(customElements))(tag, class extends ApplianceShutterCard {
       get kind() { return kind; }
       static getConfigElement() { return document.createElement(tag + '-editor'); }
       static getStubConfig(hass) {
@@ -1051,7 +1051,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--sh-move:var(--app
         return { entity: ids.find((i) => i.startsWith('cover.') && K.re.test(i)) || ids.find((i) => i.startsWith('cover.')) || '' };
       }
     });
-    customElements.define(tag + '-editor', class extends ApplianceShutterCardEditor { get kind() { return kind; } });
+    (window.__acDefine||customElements.define.bind(customElements))(tag + '-editor', class extends ApplianceShutterCardEditor { get kind() { return kind; } });
     window.customCards.push({ type: tag, name: `Appliance – ${T.en[kind]} / ${T.fr[kind]}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l][kind] ?? T.en[kind]])), preview: true,
       description: kind === 'sliding_curtain' ? `Animated sliding curtains: one or two fabric panels, open / stop / close controls, position, and day / night view.` : kind === 'double_awning' ? `${T.fr[kind]} animé : toile des deux côtés, bras articulés, ombre, vent fort, pluie, éclairage LED et vue jour / nuit.` : kind === 'awning' ? `${T.fr[kind]} animé : toile qui se déploie, bras articulés, ombre sur la terrasse, vent fort, pluie, éclairage LED et vue jour / nuit.` : kind === 'roof_window' ? `${T.fr[kind]} animée : ouvrant à rotation, volet roulant extérieur, pluie et vue jour / nuit.` : kind === 'pergola' ? `${T.fr[kind]} animée : lames orientables, pluie, éclairage LED et vue jour / nuit.` : `${T.fr[kind]} animé : position, inclinaison, mouvement et vue jour / nuit.`,
       documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards' });

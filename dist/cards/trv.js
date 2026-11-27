@@ -600,7 +600,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       }
     }
   }
-  customElements.define(TAG, ApplianceTrvCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceTrvCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceTrvCardEditor extends HTMLElement {
@@ -640,7 +640,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       this._form.computeLabel = (s) => (s.name === 'model' ? ({ ...T.en, ...T[lang] }).model || T.en.model : window.applianceEditorLabel(s.name, this._hass));
     }
   }
-  customElements.define(TAG + '-editor', ApplianceTrvCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceTrvCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

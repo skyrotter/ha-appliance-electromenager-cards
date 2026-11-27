@@ -541,7 +541,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
   for (const kind of Object.keys(KINDS)) {
     const tag = `appliance-${kind.replace('_', '-')}-card`;
     const K = KINDS[kind];
-    customElements.define(tag, class extends ApplianceAccessCard {
+    (window.__acDefine||customElements.define.bind(customElements))(tag, class extends ApplianceAccessCard {
       get kind() { return kind; }
       static getConfigElement() { return document.createElement(tag + '-editor'); }
       static getStubConfig(hass) {
@@ -555,7 +555,7 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--acc-move:var(--ap
         };
       }
     });
-    customElements.define(tag + '-editor', class extends ApplianceAccessCardEditor { get kind() { return kind; } });
+    (window.__acDefine||customElements.define.bind(customElements))(tag + '-editor', class extends ApplianceAccessCardEditor { get kind() { return kind; } });
     window.customCards.push({ type: tag, name: `Appliance – ${T.en[kind]} / ${T.fr[kind]}`, names: Object.fromEntries(Object.keys(T).map((l) => [l, T[l][kind]])), description: DESC[kind], preview: true,
       documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards' });
   }

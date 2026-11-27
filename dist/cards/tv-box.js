@@ -435,7 +435,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       });
     }
   }
-  customElements.define(TAG, ApplianceTvBoxCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceTvBoxCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceTvBoxCardEditor extends HTMLElement {
@@ -472,7 +472,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'tv_model' : s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceTvBoxCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceTvBoxCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

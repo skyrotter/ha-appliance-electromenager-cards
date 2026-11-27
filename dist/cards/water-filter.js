@@ -210,7 +210,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       });
     }
   }
-  customElements.define(TAG, ApplianceWaterFilterCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceWaterFilterCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceWaterFilterCardEditor extends HTMLElement {
@@ -248,7 +248,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     }
     _lbl(k, name) { const l = window.applianceLang(T, this._c, this._hass); return T[l][k] ?? T.en[k] ?? (name ? window.applianceEditorLabel(name, this._hass) : k); }
   }
-  customElements.define(TAG + '-editor', ApplianceWaterFilterCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceWaterFilterCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

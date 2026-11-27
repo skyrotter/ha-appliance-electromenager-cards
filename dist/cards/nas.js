@@ -460,7 +460,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       });
     }
   }
-  customElements.define(TAG, ApplianceNasCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceNasCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceNasCardEditor extends HTMLElement {
@@ -509,7 +509,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'nas_model' : s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceNasCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceNasCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

@@ -301,7 +301,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       });
     }
   }
-  customElements.define(TAG, ApplianceJacuzziCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceJacuzziCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceJacuzziCardEditor extends HTMLElement {
@@ -349,7 +349,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceJacuzziCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceJacuzziCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

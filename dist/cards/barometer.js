@@ -154,7 +154,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       card.classList.toggle('notiles', !r.querySelector('.tile:not(.hide)')); // aucune tuile visible : l'image est centrée en mode compact
     }
   }
-  customElements.define(TAG, ApplianceBarometerCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceBarometerCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceBarometerCardEditor extends HTMLElement {
@@ -188,7 +188,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._form.computeLabel = (s) => tr[`f_${s.name}`] || window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceBarometerCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceBarometerCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

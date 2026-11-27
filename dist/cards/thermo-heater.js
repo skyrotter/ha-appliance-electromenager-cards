@@ -448,7 +448,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       });
     }
   }
-  customElements.define(TAG, ApplianceThermoHeaterCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceThermoHeaterCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceThermoHeaterCardEditor extends HTMLElement {
@@ -492,7 +492,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceThermoHeaterCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceThermoHeaterCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

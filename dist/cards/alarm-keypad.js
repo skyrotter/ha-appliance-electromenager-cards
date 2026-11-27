@@ -198,7 +198,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       });
     }
   }
-  customElements.define(TAG, ApplianceAlarmKeypadCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceAlarmKeypadCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceAlarmKeypadCardEditor extends HTMLElement {
@@ -235,7 +235,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       this._form.computeLabel = (s) => tr['f_' + s.name] || T.en['f_' + s.name] || window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceAlarmKeypadCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceAlarmKeypadCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

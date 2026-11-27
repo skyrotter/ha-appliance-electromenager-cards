@@ -213,7 +213,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       if (o.ext) box.querySelector('#bext').addEventListener('click', sw(o.ext, false));
     }
   }
-  customElements.define(TAG, ApplianceSwitchPoeCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceSwitchPoeCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceSwitchPoeCardEditor extends HTMLElement {
@@ -241,7 +241,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._form.computeLabel = (s) => { const l = window.applianceLang(T, this._c, this._hass); return T[l][`f_${s.name}`] ?? T.en[`f_${s.name}`] ?? window.applianceEditorLabel(s.name, this._hass); };
     }
   }
-  customElements.define(TAG + '-editor', ApplianceSwitchPoeCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceSwitchPoeCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

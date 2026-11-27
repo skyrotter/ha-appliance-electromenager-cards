@@ -243,7 +243,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
     }
     _fmt(v) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: 1 }); }
   }
-  customElements.define(TAG, ApplianceSoundbarCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceSoundbarCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceSoundbarCardEditor extends HTMLElement {
@@ -278,7 +278,7 @@ svg{display:block;width:100%;max-width:calc(300px * var(--illus-scale,1));height
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceSoundbarCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceSoundbarCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

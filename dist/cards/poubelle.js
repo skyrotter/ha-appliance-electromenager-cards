@@ -562,7 +562,7 @@ class PoubelleCardEditor extends HTMLElement {
   }
 }
 
-customElements.define(`${TAG}-editor`, PoubelleCardEditor);
+(window.__acDefine||customElements.define.bind(customElements))(`${TAG}-editor`, PoubelleCardEditor);
 
 /*!
  * poubelle-card — animated Lovelace card for bin collection days
@@ -893,7 +893,7 @@ class PoubelleCard extends HTMLElement {
   }
 }
 
-customElements.define(TAG, PoubelleCard);
+(window.__acDefine||customElements.define.bind(customElements))(TAG, PoubelleCard);
 window.customCards = window.customCards || [];
 if (!window.customCards.some(c => c.type === TAG))
   window.customCards.push({ type: TAG, name: 'Appliance – Poubelle / Bin collection',

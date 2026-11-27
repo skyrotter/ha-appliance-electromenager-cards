@@ -255,7 +255,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       });
     }
   }
-  customElements.define(TAG, ApplianceLeakDetectorCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceLeakDetectorCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceLeakDetectorCardEditor extends HTMLElement {
@@ -300,7 +300,7 @@ svg{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));height
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceLeakDetectorCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceLeakDetectorCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

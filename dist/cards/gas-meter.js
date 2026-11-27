@@ -274,7 +274,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       });
     }
   }
-  customElements.define(TAG, ApplianceGasMeterCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceGasMeterCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceGasMeterCardEditor extends HTMLElement {
@@ -313,7 +313,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceGasMeterCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceGasMeterCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

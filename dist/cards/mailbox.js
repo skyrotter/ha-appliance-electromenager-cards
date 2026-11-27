@@ -350,7 +350,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       [0, 1].forEach((i) => { const row = r.getElementById('mbrow' + i); row.classList.toggle('hide', !row.querySelector('.tile:not(.hide)')); });
     }
   }
-  customElements.define(TAG, ApplianceMailboxCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceMailboxCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceMailboxCardEditor extends HTMLElement {
@@ -403,7 +403,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceMailboxCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceMailboxCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

@@ -282,7 +282,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     // valeurs Zigbee2MQTT (schedule, manual, remote, mode…) → texte traduit quand il existe
     _tr(v) { const k = `v_${String(v).toLowerCase().replace(/[^a-z0-9]+/g, '_')}`; return T[this._lang()][k] ?? T.en[k] ?? v; }
   }
-  customElements.define(TAG, AppliancePetFeederCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, AppliancePetFeederCard);
 
   /* ---- éditeur visuel ---- */
   class AppliancePetFeederCardEditor extends HTMLElement {
@@ -322,7 +322,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'pet_feeder_model' : s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', AppliancePetFeederCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', AppliancePetFeederCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

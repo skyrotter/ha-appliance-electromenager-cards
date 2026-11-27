@@ -255,7 +255,7 @@ svg.gauge{display:block;width:100%;max-width:calc(260px * var(--illus-scale,1));
       cc.innerHTML = `<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="${esc(this._t('hourly'))}">${g}</svg>`;
     }
   }
-  customElements.define(TAG, ApplianceEnergyMonitorCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceEnergyMonitorCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceEnergyMonitorCardEditor extends HTMLElement {
@@ -290,7 +290,7 @@ svg.gauge{display:block;width:100%;max-width:calc(260px * var(--illus-scale,1));
       this._form.computeLabel = (s) => tr[`f_${s.name}`] || window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceEnergyMonitorCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceEnergyMonitorCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({
