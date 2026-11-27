@@ -55,6 +55,7 @@ entity_reserve: sensor.boiler_hot_water_reserve   # optional, %
 | `layout` | `vertical`: large photo at full width with the tiles below (default with the photo model); `side`: photo on the left, tiles on the right (default with the drawn tank). |
 | `entity_pump` | `on` / `off` sensor: heat pump running. Without it, the mode and the power decide. |
 | `entity_boost` | `on` / `off` sensor: boost / electric backup. |
+| `entity_pump_time`, `entity_backup_time` | Cumulative operating time of the heat pump and of the electric backup (seconds, or min / h / d from the sensor unit, e.g. Overkiz / Cozytouch). Shown as tiles in hours, and used to tell what is running: a counter that changed less than `run_window` minutes ago (10 by default) means the heat pump (Green) or the backup (Boost) is working; both idle means Pause. `entity_pump` / `entity_boost` take precedence. |
 | `entity_draw` | Optional `on` / `off` sensor (or flow): hot water drawn. Without it, a drop of the hot water level or of the bottom temperature is detected. |
 
 ```yaml
@@ -67,6 +68,30 @@ tank_volume: 200
 entity_power: sensor.tank_plug_power
 entity_pump: sensor.tank_heat_pump_running
 entity_boost: sensor.tank_boost_mode
+```
+
+## Thermor Aéromax Split (photo)
+
+<p align="center"><img src="../thermor-aeromax-split.gif" width="360" alt="Thermor Aéromax Split: off, heat pump with the outdoor fan, boost"></p>
+
+`model: thermor_aeromax_split` shows the indoor hot water tank and the separate outdoor heat pump unit, animated:
+
+- **Tank**: tinted red (hot) at the top and blue (cold) at the bottom, the boundary following the hot water level, with the water temperature written on it (`lcd_value: target` shows the set temperature).
+- **Outdoor unit**: the **fan spins** behind its grille while the heat pump runs (faster in Boost) and the air blows out in front of the unit.
+- **Refrigerant lines** between the outdoor unit and the tank: hot gas (orange) going to the tank and liquid (blue) going back, animated while the heat pump runs.
+- **Boost**: an orange glow at the bottom of the tank while the electric backup heats.
+- The mode comes from the `water_heater` operation mode (`eco` = heat pump) or from the power, like the other models; `entity_pump` / `entity_boost` (`on` / `off` sensors) force it.
+
+```yaml
+type: custom:appliance-thermo-heater-card
+model: thermor_aeromax_split
+entity: water_heater.thermor_aeromax_split      # Overkiz / Cozytouch
+entity_temp: sensor.thermor_middle_water_temperature
+entity_power: sensor.thermor_electric_power_consumption
+entity_energy: sensor.thermor_electric_energy_consumption
+entity_pump_time: sensor.thermor_heat_pump_operating_time       # s
+entity_backup_time: sensor.thermor_electric_booster_operating_time   # s
+tank_volume: 200
 ```
 
 [← All cards](../../README.md#the-cards)

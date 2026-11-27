@@ -9,7 +9,7 @@
   const TAG = 'appliance-thermo-heater-card';
   if ((window.__acHasReal||customElements.get.bind(customElements))(TAG)) return;
 
-  const T = {"en":{"name":"Thermodynamic water heater","mode_off":"Off","mode_pause":"Pause","mode_green":"Green","mode_boost":"Boost","mode_unavailable":"Unavailable","energy":"Energy","power":"Power","mode":"Mode","temp":"Temperature","target":"Target","bottom":"Bottom","reserve":"Hot water","volume":"Volume","cycle":"Last cycle","duration":"Cycle duration","cycle_kwh":"Cycle energy"},"da":{"name":"Varmepumpevandvarmer","mode_off":"Slukket","mode_pause":"Pause","mode_green":"Grøn","mode_boost":"Boost","mode_unavailable":"Utilgængelig","energy":"Energi","power":"Effekt","mode":"Tilstand","temp":"Temperatur","target":"Mål","bottom":"Bund","reserve":"Varmt vand"},"de":{"name":"Wärmepumpen-Warmwasserbereiter","mode_off":"Aus","mode_pause":"Pause","mode_green":"Eco","mode_boost":"Boost","mode_unavailable":"Nicht verfügbar","energy":"Energie","power":"Leistung","mode":"Modus","temp":"Temperatur","target":"Soll","bottom":"Unten","reserve":"Warmwasser","volume":"Volumen","cycle":"Letzter Zyklus","duration":"Zyklusdauer","cycle_kwh":"Zyklusenergie"},"es":{"name":"Termo termodinámico","mode_off":"Apagado","mode_pause":"Pausa","mode_green":"Verde","mode_boost":"Boost","mode_unavailable":"No disponible","energy":"Energía","power":"Potencia","mode":"Modo","temp":"Temperatura","target":"Objetivo","bottom":"Parte inferior","reserve":"Agua caliente","volume":"Volumen","cycle":"Último ciclo","duration":"Duración del ciclo","cycle_kwh":"Energía del ciclo"},"fr":{"name":"Chauffe-eau thermodynamique","mode_off":"Arrêt","mode_pause":"Pause","mode_green":"Vert (éco)","mode_boost":"Boost","mode_unavailable":"Indisponible","energy":"Énergie","power":"Puissance","mode":"Mode","temp":"Température","target":"Consigne","bottom":"Bas du ballon","reserve":"Eau chaude","volume":"Volume","cycle":"Dernier cycle","duration":"Durée du cycle","cycle_kwh":"Conso du cycle"},"hu":{"name":"Termodinamikus bojler","mode_off":"Ki","mode_pause":"Szünet","mode_green":"Zöld","mode_boost":"Boost","mode_unavailable":"Nem elérhető","energy":"Energia","power":"Teljesítmény","mode":"Mód","temp":"Hőmérséklet","target":"Cél","bottom":"Alsó","reserve":"Meleg víz"},"pl":{"name":"Termodynamiczny podgrzewacz wody","mode_off":"Wył.","mode_pause":"Pauza","mode_green":"Eko","mode_boost":"Boost","mode_unavailable":"Niedostępny","energy":"Energia","power":"Moc","mode":"Tryb","temp":"Temperatura","target":"Cel","bottom":"Dół","reserve":"Ciepła woda"},"pt-BR":{"name":"Aquecedor de água termodinâmico","mode_off":"Desligado","mode_pause":"Pausa","mode_green":"Verde","mode_boost":"Reforço","mode_unavailable":"Indisponível","energy":"Energia","power":"Potência","mode":"Modo","temp":"Temperatura","target":"Desejada","bottom":"Parte inferior","reserve":"Água quente","volume":"Volume","cycle":"Último ciclo","duration":"Duração do ciclo","cycle_kwh":"Energia do ciclo"},"pt-PT":{"name":"Aquecedor de água termodinâmico","mode_off":"Desligado","mode_pause":"Pausa","mode_green":"Verde","mode_boost":"Reforço","mode_unavailable":"Indisponível","energy":"Energia","power":"Potência","mode":"Modo","temp":"Temperatura","target":"Pretendida","bottom":"Parte inferior","reserve":"Água quente","volume":"Volume","cycle":"Último ciclo","duration":"Duração do ciclo","cycle_kwh":"Energia do ciclo"},"ru":{"name":"Теплонасосный водонагреватель","mode_off":"Выключен","mode_pause":"Пауза","mode_green":"Эко","mode_boost":"Турбо","mode_unavailable":"Недоступно","energy":"Энергия","power":"Мощность","mode":"Режим","temp":"Температура","target":"Цель","bottom":"Низ бака","reserve":"Горячая вода","volume":"Объём","cycle":"Последний цикл","duration":"Длительность цикла","cycle_kwh":"Энергия цикла"},"sr":{"name":"Термодинамички бојлер","mode_off":"Искључено","mode_pause":"Пауза","mode_green":"Зелени","mode_boost":"Појачано","mode_unavailable":"Недоступно","energy":"Енергија","power":"Снага","mode":"Режим","temp":"Температура","target":"Циљна","bottom":"Дно","reserve":"Топла вода"},"sr-Latn":{"name":"Termodinamički bojler","mode_off":"Isključeno","mode_pause":"Pauza","mode_green":"Zeleni","mode_boost":"Pojačano","mode_unavailable":"Nedostupno","energy":"Energija","power":"Snaga","mode":"Režim","temp":"Temperatura","target":"Ciljna","bottom":"Dno","reserve":"Topla voda"},"uk":{"name":"Термодинамічний бойлер","mode_off":"Вимк.","mode_pause":"Пауза","mode_green":"Еко","mode_boost":"Форсаж","mode_unavailable":"Недоступно","energy":"Енергія","power":"Потужність","mode":"Режим","temp":"Температура","target":"Ціль","bottom":"Низ","reserve":"Гаряча вода","volume":"Об'єм","cycle":"Останній цикл","duration":"Тривалість циклу","cycle_kwh":"Енергія циклу"}};
+  const T = {"en":{"name":"Thermodynamic water heater","mode_off":"Off","mode_pause":"Pause","mode_green":"Green","mode_boost":"Boost","mode_unavailable":"Unavailable","energy":"Energy","power":"Power","mode":"Mode","temp":"Temperature","target":"Target","bottom":"Bottom","reserve":"Hot water","volume":"Volume","pump_time":"Heat pump time","backup_time":"Electric backup time","cycle":"Last cycle","duration":"Cycle duration","cycle_kwh":"Cycle energy"},"da":{"name":"Varmepumpevandvarmer","mode_off":"Slukket","mode_pause":"Pause","mode_green":"Grøn","mode_boost":"Boost","mode_unavailable":"Utilgængelig","energy":"Energi","power":"Effekt","mode":"Tilstand","temp":"Temperatur","target":"Mål","bottom":"Bund","reserve":"Varmt vand"},"de":{"name":"Wärmepumpen-Warmwasserbereiter","mode_off":"Aus","mode_pause":"Pause","mode_green":"Eco","mode_boost":"Boost","mode_unavailable":"Nicht verfügbar","energy":"Energie","power":"Leistung","mode":"Modus","temp":"Temperatur","target":"Soll","bottom":"Unten","reserve":"Warmwasser","volume":"Volumen","cycle":"Letzter Zyklus","duration":"Zyklusdauer","cycle_kwh":"Zyklusenergie"},"es":{"name":"Termo termodinámico","mode_off":"Apagado","mode_pause":"Pausa","mode_green":"Verde","mode_boost":"Boost","mode_unavailable":"No disponible","energy":"Energía","power":"Potencia","mode":"Modo","temp":"Temperatura","target":"Objetivo","bottom":"Parte inferior","reserve":"Agua caliente","volume":"Volumen","cycle":"Último ciclo","duration":"Duración del ciclo","cycle_kwh":"Energía del ciclo"},"fr":{"name":"Chauffe-eau thermodynamique","mode_off":"Arrêt","mode_pause":"Pause","mode_green":"Vert (éco)","mode_boost":"Boost","mode_unavailable":"Indisponible","energy":"Énergie","power":"Puissance","mode":"Mode","temp":"Température","target":"Consigne","bottom":"Bas du ballon","reserve":"Eau chaude","volume":"Volume","pump_time":"Temps pompe à chaleur","backup_time":"Temps appoint électrique","cycle":"Dernier cycle","duration":"Durée du cycle","cycle_kwh":"Conso du cycle"},"hu":{"name":"Termodinamikus bojler","mode_off":"Ki","mode_pause":"Szünet","mode_green":"Zöld","mode_boost":"Boost","mode_unavailable":"Nem elérhető","energy":"Energia","power":"Teljesítmény","mode":"Mód","temp":"Hőmérséklet","target":"Cél","bottom":"Alsó","reserve":"Meleg víz"},"pl":{"name":"Termodynamiczny podgrzewacz wody","mode_off":"Wył.","mode_pause":"Pauza","mode_green":"Eko","mode_boost":"Boost","mode_unavailable":"Niedostępny","energy":"Energia","power":"Moc","mode":"Tryb","temp":"Temperatura","target":"Cel","bottom":"Dół","reserve":"Ciepła woda"},"pt-BR":{"name":"Aquecedor de água termodinâmico","mode_off":"Desligado","mode_pause":"Pausa","mode_green":"Verde","mode_boost":"Reforço","mode_unavailable":"Indisponível","energy":"Energia","power":"Potência","mode":"Modo","temp":"Temperatura","target":"Desejada","bottom":"Parte inferior","reserve":"Água quente","volume":"Volume","pump_time":"Tempo bomba de calor","backup_time":"Tempo resistência elétrica","cycle":"Último ciclo","duration":"Duração do ciclo","cycle_kwh":"Energia do ciclo"},"pt-PT":{"name":"Aquecedor de água termodinâmico","mode_off":"Desligado","mode_pause":"Pausa","mode_green":"Verde","mode_boost":"Reforço","mode_unavailable":"Indisponível","energy":"Energia","power":"Potência","mode":"Modo","temp":"Temperatura","target":"Pretendida","bottom":"Parte inferior","reserve":"Água quente","volume":"Volume","pump_time":"Tempo bomba de calor","backup_time":"Tempo apoio elétrico","cycle":"Último ciclo","duration":"Duração do ciclo","cycle_kwh":"Energia do ciclo"},"ru":{"name":"Теплонасосный водонагреватель","mode_off":"Выключен","mode_pause":"Пауза","mode_green":"Эко","mode_boost":"Турбо","mode_unavailable":"Недоступно","energy":"Энергия","power":"Мощность","mode":"Режим","temp":"Температура","target":"Цель","bottom":"Низ бака","reserve":"Горячая вода","volume":"Объём","cycle":"Последний цикл","duration":"Длительность цикла","cycle_kwh":"Энергия цикла"},"sr":{"name":"Термодинамички бојлер","mode_off":"Искључено","mode_pause":"Пауза","mode_green":"Зелени","mode_boost":"Појачано","mode_unavailable":"Недоступно","energy":"Енергија","power":"Снага","mode":"Режим","temp":"Температура","target":"Циљна","bottom":"Дно","reserve":"Топла вода"},"sr-Latn":{"name":"Termodinamički bojler","mode_off":"Isključeno","mode_pause":"Pauza","mode_green":"Zeleni","mode_boost":"Pojačano","mode_unavailable":"Nedostupno","energy":"Energija","power":"Snaga","mode":"Režim","temp":"Temperatura","target":"Ciljna","bottom":"Dno","reserve":"Topla voda"},"uk":{"name":"Термодинамічний бойлер","mode_off":"Вимк.","mode_pause":"Пауза","mode_green":"Еко","mode_boost":"Форсаж","mode_unavailable":"Недоступно","energy":"Енергія","power":"Потужність","mode":"Режим","temp":"Температура","target":"Ціль","bottom":"Низ","reserve":"Гаряча вода","volume":"Об'єм","cycle":"Останній цикл","duration":"Тривалість циклу","cycle_kwh":"Енергія циклу"}};
   const asList = (v) => (Array.isArray(v) ? v : v ? [v] : []);
   // Dernier cycle terminé d'après l'historique de la puissance (même logique que la carte chauffe-eau).
   // pw : [{ t (ms), w (W) }] trié ; cycle = puissance > seuil, les creux plus courts que gapMin restent dans le cycle.
@@ -84,6 +84,20 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
 .off .at-tint,.unavailable .at-tint{opacity:.12}
 .noanim .at-in,.noanim .at-out,.noanim .at-body,.noanim .at-glow,.noanim .at-d{animation:none!important}
 .th-fan{transform-box:fill-box;transform-origin:50% 50%}
+/* modèle Thermor Aéromax Split */
+.tm-tint{opacity:.27;mix-blend-mode:multiply;transition:opacity .4s}.off .tm-tint,.unavailable .tm-tint{opacity:0}
+.tm-val{fill:#5b6672;opacity:.88;font:600 118px Roboto,Arial,sans-serif;letter-spacing:-4px}.off .tm-val,.unavailable .tm-val{opacity:.4}
+.tm-fanw{pointer-events:none}.tm-fan{transform-box:fill-box;transform-origin:50% 50%}
+.tm-blade{fill:#353d46;stroke:#5c6772;stroke-width:2;stroke-linejoin:round}.tm-hub{fill:#262c33;stroke:#56606b;stroke-width:2}
+.green .tm-blade,.boost .tm-blade{filter:blur(.7px)}.tm-grille{pointer-events:none}
+.green .tm-fan,.boost .tm-fan{animation:thspin var(--spd) linear infinite}.boost .tm-fan{animation-duration:calc(var(--spd) * .55)}
+.tm-air path{stroke:#9fc4ea;stroke-width:9;stroke-linecap:round;stroke-dasharray:44 110;opacity:0}
+.green .tm-air path,.boost .tm-air path{opacity:.75;animation:tmair 1.5s linear infinite}@keyframes tmair{to{stroke-dashoffset:154}}
+.tm-ins{stroke:#2e3338;stroke-width:12}.tm-hot,.tm-cold{stroke-width:4;stroke-dasharray:10 18;opacity:.35}.tm-hot{stroke:#ff7a45}.tm-cold{stroke:#5ec8ff}
+.green .tm-hot,.boost .tm-hot,.green .tm-cold,.boost .tm-cold{opacity:1;animation:tmline 1.1s linear infinite}@keyframes tmline{to{stroke-dashoffset:-28}}
+.off .tm-hot,.off .tm-cold,.unavailable .tm-hot,.unavailable .tm-cold{opacity:.15}
+.tm-glow{opacity:0}.boost .tm-glow{opacity:.85;animation:atglow 1.4s ease-in-out infinite alternate}
+.noanim .tm-fan,.noanim .tm-air path,.noanim .tm-glow,.noanim .tm-hot,.noanim .tm-cold{animation:none!important}
 .th-big{filter:drop-shadow(0 0 6px rgba(0,0,0,.85));pointer-events:none}
 .th-big text{fill:#fff;stroke:rgba(20,22,28,.8);stroke-width:14px;paint-order:stroke;stroke-linejoin:round;font:700 120px Roboto,Arial,sans-serif;text-anchor:middle;dominant-baseline:central}
 .th-lcd-txt{fill:#7fe0ff;font:700 29px 'Courier New',monospace;text-anchor:middle;dominant-baseline:central}.off .th-lcd-txt,.unavailable .th-lcd-txt{fill:#4f7d8f}
@@ -154,9 +168,40 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
  </g>
 </svg>`;
 
+
+  /* ---- modèle photo : Thermor Aéromax Split (ballon intérieur + unité extérieure ; scène 793 × 991, coordonnées de la photo) ----
+   * Calques : teinte rouge / bleue du ballon selon l'eau chaude, grande température sur le ballon, ventilateur de l'unité extérieure qui tourne
+   * (pompe à chaleur en marche, plus vite en Boost), air soufflé devant l'unité, lueur orange en bas du ballon (appoint électrique / Boost). */
+  const THERMOR_IMG = window.__acImg("thermo-heater",3);
+  // grille de l'unité extérieure découpée dans la photo (fils clairs, fond transparent) : posée par-dessus l'hélice, qui tourne derrière
+  const THERMOR_GRILLE = window.__acImg("thermo-heater",4);
+  const THERMOR = (label) => `<svg viewBox="0 0 793 991" role="img" aria-label="${label}" class="at tm">
+  <defs><clipPath id="tm-body"><rect x="0" y="4" width="222" height="820" rx="40"/></clipPath>
+   <linearGradient id="tm-g" gradientUnits="userSpaceOnUse" x1="0" y1="4" x2="0" y2="824"><stop id="tm-s0" offset="0" stop-color="#ff3b2e"/><stop id="tm-s1" offset=".4" stop-color="#ff3b2e"/><stop id="tm-s2" offset=".5" stop-color="#2d7bff"/><stop offset="1" stop-color="#2d7bff"/></linearGradient>
+   <radialGradient id="tm-ge" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff8a1f" stop-opacity=".9"/><stop offset="1" stop-color="#ff5a00" stop-opacity="0"/></radialGradient></defs>
+  <g class="tm-air" fill="none"><path d="M360 880Q300 860 230 880" /><path d="M360 915Q300 895 200 915" style="animation-delay:-.5s"/><path d="M360 950Q300 930 230 950" style="animation-delay:-1s"/></g>
+  <!-- liaisons frigorifiques entre l'unité extérieure et le ballon (gaz chaud vers le ballon, liquide de retour vers le groupe), passées derrière les deux appareils -->
+  <g class="tm-lines" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path class="tm-ins" d="M150 800V958H384"/><path class="tm-ins" d="M128 800V976H404"/>
+   <path class="tm-hot" d="M384 958H150V800"/><path class="tm-cold" d="M128 800V976H404"/></g>
+  <image href="${THERMOR_IMG}" x="0" y="0" width="793" height="991"/>
+  <!-- arrivée des liaisons sous l'unité extérieure : remontée + raccords, posés par-dessus la photo -->
+  <g class="tm-lines" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path class="tm-ins" d="M384 958V940"/><path class="tm-ins" d="M404 976V940"/>
+   <path class="tm-hot" d="M384 940V958"/><path class="tm-cold" d="M404 976V940"/></g>
+  <g fill="#b9bec4" stroke="#7d848c" stroke-width="1.5"><rect x="377" y="932" width="14" height="9" rx="2"/><rect x="397" y="932" width="14" height="9" rx="2"/></g>
+  <g clip-path="url(#tm-body)"><rect x="0" y="4" width="222" height="820" fill="url(#tm-g)" class="tm-tint"/><ellipse class="tm-glow" cx="111" cy="800" rx="170" ry="110" fill="url(#tm-ge)"/></g>
+  <text id="tm-val" class="tm-val" x="111" y="400" text-anchor="middle">--</text>
+  <!-- logement de l'hélice : ellipse (face avant vue en perspective, bord haut de la grille incliné de 3°), relevée sur la photo -->
+  <clipPath id="tm-fc"><ellipse cx="483" cy="783" rx="116" ry="142" transform="rotate(-3 483 783)"/></clipPath>
+  <g clip-path="url(#tm-fc)" class="tm-fanw"><ellipse cx="483" cy="783" rx="116" ry="142" transform="rotate(-3 483 783)" fill="#15191e"/>
+   <g transform="translate(483 783) rotate(-3) scale(1.036 1.268)"><g class="tm-fan"><circle r="112" fill="none"/>${[0, 72, 144, 216, 288].map((a) => `<path class="tm-blade" d="M-7 -22C-30 -50 -26 -94 2 -108C30 -108 44 -82 33 -54C25 -36 13 -26 8 -22Z" transform="rotate(${a})"/>`).join('')}<circle class="tm-hub" r="24"/></g></g></g>
+  <image class="tm-grille" href="${THERMOR_GRILLE}" x="362" y="655" width="242" height="260"/>
+</svg>`;
+
   const TILES = [['energy', 'mdi:lightning-bolt-outline', 'show_energy'], ['power', 'mdi:flash', 'show_power'], ['mode', 'mdi:cog-sync', 'show_mode'],
     ['temp', 'mdi:thermometer', 'show_temp'], ['bottom', 'mdi:thermometer-low', 'show_bottom'], ['target', 'mdi:target', 'show_target'], ['reserve', 'mdi:gauge', 'show_reserve'],
-    ['volume', 'mdi:water', 'show_volume'], ['cycle', 'mdi:history', 'show_cycle'], ['duration', 'mdi:timer-outline', 'show_cycle'], ['cycle_kwh', 'mdi:lightning-bolt', 'show_cycle']];
+    ['volume', 'mdi:water', 'show_volume'], ['pump_time', 'mdi:heat-pump-outline', 'show_pump_time'], ['backup_time', 'mdi:heating-coil', 'show_backup_time'], ['cycle', 'mdi:history', 'show_cycle'], ['duration', 'mdi:timer-outline', 'show_cycle'], ['cycle_kwh', 'mdi:lightning-bolt', 'show_cycle']];
   // mode lu sur l'entité ; les états reconnus (dans toutes les langues courantes) priment sur la puissance
   const RE_OFF = /^(off|unavailable|unknown|none|aus|arr[êe]t|spento|uit|av|oprit)$/i;
   const RE_BOOST = /boost|perform|turbo|electric|[ée]lectri|force|high.?demand|forc[ée]|intensiv|rapid|comfort/i;
@@ -173,7 +218,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { show_energy: true, show_power: true, show_mode: true, show_temp: true, show_target: true, show_reserve: true, show_bottom: true, show_volume: true, show_cycle: true, boost_above: 1000, green_above: c.running_above != null && c.green_above == null ? c.running_above : 150, ...c };
+      this._c = { show_energy: true, show_power: true, show_mode: true, show_temp: true, show_target: true, show_reserve: true, show_bottom: true, show_volume: true, show_pump_time: true, show_backup_time: true, show_cycle: true, boost_above: 1000, green_above: c.running_above != null && c.green_above == null ? c.running_above : 150, ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -191,20 +236,33 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
     _unit(id, d) { const s = this._st(id); return String((s && s.attributes && s.attributes.unit_of_measurement) || d).trim(); }
     _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
     _clock(t) { try { return window.applianceClock(this._hass, new Date(t), window.applianceLocale(this._c, this._hass)); } catch (e) { return new Date(t).toTimeString().slice(0, 5); } }
+    // compteur de temps de fonctionnement : null sans entité, sinon true s'il a changé depuis moins de run_window minutes
+    _running(id) {
+      const st = this._st(id); if (!this._ok(st)) return null;
+      const t = Date.parse(st.last_changed || st.last_updated || '');
+      return isFinite(t) && Date.now() - t < (Number(this._c.run_window) > 0 ? Number(this._c.run_window) : 10) * 60000;
+    }
+    // durée cumulée d'un compteur (s par défaut, ou min / h / d selon son unité) → « 1 234 h » ou « 3 h 05 »
+    _hours(id) {
+      const v = this._num(id); if (isNaN(v)) return '--';
+      const u = this._unit(id, 's').toLowerCase(), h = /^d/.test(u) ? v * 24 : /^h/.test(u) ? v : /^min/.test(u) ? v / 60 : v / 3600;
+      return h < 10 ? `${Math.floor(h)} h ${String(Math.round((h % 1) * 60)).padStart(2, '0')}` : `${this._fmt(h, 0)} h`;
+    }
     _photo() { return this._c && this._c.model === 'atlantic_explorer_v5'; }
+    _thermor() { return this._c && this._c.model === 'thermor_aeromax_split'; }
     _more(id) { if (id) this.dispatchEvent(new CustomEvent('hass-more-info', { detail: { entityId: id }, bubbles: true, composed: true })); }
 
     _build() {
       const root = this.shadowRoot || this.attachShadow({ mode: 'open' });
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="thtitle"></div><div class="badge" id="thbadge"></div></div>
-        <div class="body">${(this._c.model === 'atlantic_explorer_v5' ? ATLANTIC : SVG)((this._c.name || this._t('name')).replace(/"/g, ''))}
+        <div class="body">${(this._c.model === 'atlantic_explorer_v5' ? ATLANTIC : this._c.model === 'thermor_aeromax_split' ? THERMOR : SVG)((this._c.name || this._t('name')).replace(/"/g, ''))}
           <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
         </div>
       </ha-card>`;
       window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity || this._c.entity_power));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
-        const c = this._c; this._more({ energy: c.entity_energy, power: c.entity_power, mode: c.entity_mode || c.entity, temp: c.entity_temp || c.entity, bottom: c.entity_temp_bottom, target: c.entity_target || c.entity, reserve: c.entity_reserve || c.hot_water_level || c.hot_water_volume, volume: c.hot_water_volume || c.hot_water_level, cycle: c.entity_power, duration: c.entity_power, cycle_kwh: c.entity_energy || c.entity_power }[el.dataset.k]);
+        const c = this._c; this._more({ energy: c.entity_energy, power: c.entity_power, mode: c.entity_mode || c.entity, temp: c.entity_temp || c.entity, bottom: c.entity_temp_bottom, target: c.entity_target || c.entity, reserve: c.entity_reserve || c.hot_water_level || c.hot_water_volume, volume: c.hot_water_volume || c.hot_water_level, pump_time: c.entity_pump_time, backup_time: c.entity_backup_time, cycle: c.entity_power, duration: c.entity_power, cycle_kwh: c.entity_energy || c.entity_power }[el.dataset.k]);
       }));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
@@ -237,8 +295,13 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       }
       // entity_boost : capteur on / off du chauffage d'appoint (boost) ; entity_pump : capteur on / off de la pompe à chaleur en marche
       const bS = this._st(c.entity_boost), pS = this._st(c.entity_pump);
+      // compteurs de temps de fonctionnement (entity_pump_time / entity_backup_time, ex. Overkiz en secondes) : un compteur qui a bougé
+      // depuis moins de run_window minutes (10 par défaut) veut dire que l'élément tourne
+      const run = this._running(c.entity_pump_time), brun = this._running(c.entity_backup_time), live = mode !== 'off' && mode !== 'unavailable';
       if (this._ok(bS) && /^(on|true|heat|heating|boost)$/i.test(String(bS.state))) mode = 'boost';
+      else if (!this._ok(bS) && brun && live) mode = 'boost';
       else if (this._ok(pS) && mode !== 'off' && mode !== 'unavailable' && mode !== 'boost') mode = /^(on|true|running|heating)$/i.test(String(pS.state)) ? 'green' : 'pause';
+      else if (!this._ok(pS) && run != null && live && mode !== 'boost') mode = run ? 'green' : 'pause';
       return { mode, power, temp, bottom, target, reserve, tc };
     }
 
@@ -297,6 +360,15 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       this._card.classList.toggle('draw', drawing);
     }
 
+    // Thermor Aéromax Split : teinte du ballon (limite eau chaude / froide à la hauteur de la réserve) et température sur le ballon
+    _renderThermor({ f, temp, target, tc }) {
+      const c = this._c, r = this._root, $ = (id) => r.getElementById(id);
+      $('tm-s1').setAttribute('offset', String(Math.max(0, f - .05).toFixed(3)));
+      $('tm-s2').setAttribute('offset', String(Math.min(1, f + .05).toFixed(3)));
+      const v = c.lcd_value === 'target' ? target : temp;
+      $('tm-val').textContent = isNaN(v) ? '--' : `${Math.round(v)}°`;
+    }
+
     _render() {
       if (!this._built) this._build();
       const c = this._c, r = this._root, card = this._card;
@@ -312,7 +384,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       this._fetchCycle(active);
       const cy = c.last_cycle && !active ? this._cycle : null;
       const keepDraw = this._card.classList.contains('draw');
-      const vert = c.layout === 'vertical' || (c.layout !== 'side' && this._photo());
+      const vert = c.layout === 'vertical' || (c.layout !== 'side' && (this._photo() || this._thermor()));
       card.className = `${mode}${c.animations === false ? ' noanim' : ''}${keepDraw ? ' draw' : ''}${vert ? ' vert' : ''}`;
       // vitesse du ventilateur : plus la puissance est élevée, plus il tourne vite (bornée)
       const spd = isNaN(power) ? 2 : Math.max(.7, Math.min(3, 3 - power / 500));
@@ -325,6 +397,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       if (isNaN(lvl)) lvl = mode === 'off' ? 0 : 60;
       const f = Math.max(0, Math.min(1, lvl / 100));
       if (this._photo()) this._renderPhoto({ f, mode, temp, lvl, bottom, reserve, tc });
+      else if (this._thermor()) this._renderThermor({ f, temp, target, tc });
       else {
       r.getElementById('thg0').setAttribute('offset', '0');
       // le dégradé va du bleu (bas) au rouge (haut) : l'étape violette est la limite entre l'eau froide en bas et l'eau chaude en haut,
@@ -343,7 +416,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       } else big.textContent = '';
       }
       // écran dessiné sur l'appareil : température actuelle de l'eau
-      if (!this._photo()) r.getElementById('thlcd').textContent = isNaN(temp) ? '--°' : `${this._fmt(temp, 1)}°`;
+      if (!this._photo() && !this._thermor()) r.getElementById('thlcd').textContent = isNaN(temp) ? '--°' : `${this._fmt(temp, 1)}°`;
       r.getElementById('thtitle').textContent = c.name || this._t('name');
       const badge = r.getElementById('thbadge');
       badge.textContent = this._t(`mode_${mode}`);
@@ -359,6 +432,8 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
         target: [c.entity_target || c.entity, this._fmt(target, 0), tc.unit],
         reserve: [c.entity_reserve || c.hot_water_level || c.hot_water_volume, this._fmt(reserve, 0), c.entity_reserve ? ru : '%'],
         volume: [!isNaN(litres) && (c.hot_water_volume || c.hot_water_level), this._fmt(litres, 0), 'L'],
+        pump_time: [c.entity_pump_time, this._hours(c.entity_pump_time), ''],
+        backup_time: [c.entity_backup_time, this._hours(c.entity_backup_time), ''],
         cycle: [cy, cy ? `${this._clock(cy.start)} → ${this._clock(cy.end)}` : '', ''],
         duration: [cy, cy ? fmtDur((cy.end - cy.start) / 60000) : '', ''],
         cycle_kwh: [cy, cy ? this._fmt(cy.kwh, 2) : '', 'kWh'],
@@ -395,7 +470,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
       this._form.data = this._c;
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
-        { name: 'model', selector: { select: { mode: 'dropdown', options: [{ value: '', label: 'Ariston Nuos (dessin / drawing)' }, { value: 'atlantic_explorer_v5', label: 'Atlantic Explorer V5 200 L (photo)' }] } } },
+        { name: 'model', selector: { select: { mode: 'dropdown', options: [{ value: '', label: 'Ariston Nuos (dessin / drawing)' }, { value: 'atlantic_explorer_v5', label: 'Atlantic Explorer V5 200 L (photo)' }, { value: 'thermor_aeromax_split', label: 'Thermor Aéromax Split (photo)' }] } } },
         { name: 'layout', selector: { select: { mode: 'dropdown', options: [{ value: '', label: 'Auto (photo : vertical) / Auto' }, { value: 'vertical', label: 'Photo pleine largeur, tuiles dessous / Vertical' }, { value: 'side', label: 'Photo à gauche, tuiles à droite / Side by side' }] } } },
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
@@ -404,7 +479,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
         ent('entity', ['water_heater', 'climate', 'switch']), ent('entity_mode', ['select', 'input_select', 'sensor']),
         ent('entity_power', 'sensor'), ent('entity_energy', 'sensor'), ent('entity_temp', 'sensor'), ent('entity_target', ['sensor', 'number', 'input_number']),
         ent('entity_temp_bottom', 'sensor'), ent('entity_reserve', 'sensor'),
-        ent('entity_pump', ['sensor', 'binary_sensor', 'switch']), ent('entity_boost', ['sensor', 'binary_sensor', 'switch']), ent('entity_draw', ['sensor', 'binary_sensor']),
+        ent('entity_pump', ['sensor', 'binary_sensor', 'switch']), ent('entity_boost', ['sensor', 'binary_sensor', 'switch']), ent('entity_pump_time', 'sensor'), ent('entity_backup_time', 'sensor'), { name: 'run_window', selector: { number: { min: 1, max: 60, step: 1, mode: 'box', unit_of_measurement: 'min' } } }, ent('entity_draw', ['sensor', 'binary_sensor']),
         ent('hot_water_level', 'sensor'), ent('hot_water_volume', 'sensor'),
         { type: 'grid', name: '', schema: [{ name: 'tank_volume', selector: { number: { min: 0, max: 1000, step: 1, mode: 'box', unit_of_measurement: 'L' } } }, num('cycle_gap', 0, 240, 1, 15, 'min')] },
         { name: 'last_cycle', selector: { boolean: {} } },
