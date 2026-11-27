@@ -89,7 +89,7 @@
     water: 'pool-pump dosing-pump pool-robot jacuzzi inflatable-spa sauna aquarium reef-aquarium irrigation rain-gauge plant-monitor water-pump industrial-pump sump-pump rainwater-tank water-valve smart-tap water-softener water-filter robot-mower-solo',
     security: 'barrier sliding-gate swing-gate garage-door mailbox smart-lock door-sensor motion-sensor alarm-keypad smoke-detector leak-detector camera nvr video-doorbell',
     lighting: 'light-bulb color-bulb filament-bulb pendant-light pendant-cluster desk-lamp floor-lamp chandelier garden-spotlight ceiling-spot ceiling-globe christmas-tree garland led-strip hue-sync-box',
-    shutters: 'roller-shutter sliding-curtain venetian-blind swing-shutter pergola roof-window awning double-awning',
+    shutters: 'roller-shutter sliding-curtain venetian-blind swing-shutter pergola roof-window window awning double-awning',
     media: 'tv htpc projector-screen av-receiver soundbar smart-speaker ps5 switch2 tv-box piano elliptical exercise-bike rowing-machine treadmill',
     it: 'server-rack mini-pc nas internet-box desktop-pc monitor laptop printer printer-3d raspberry-pi poe-switch zigbee-coordinator wall-tablet',
     // catégorie par défaut des cartes non listées ; chaque carte doit pourtant être listée (build.js avertit sinon)

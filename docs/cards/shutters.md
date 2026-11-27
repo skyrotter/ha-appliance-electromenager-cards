@@ -116,6 +116,31 @@ name: Bedroom Velux
 entity_blind: cover.velux_bedroom_blind
 ```
 
+## Window
+
+`custom:appliance-window-card`: a two-leaf casement window on a rendered wall, with the room (curtain and hanging lamp, lit at night) seen through the opening. The two leaves swing inwards with `current_position` (0 closed, 100 open). Same states, buttons (Open / Half / Stop / Close), slider and tiles as the roof window.
+
+- `entity` is the **motorised window** (a `cover`: Velux KLF, Shelly, Zigbee window motor…). For a window **without motor**, give an opening sensor instead: `entity_state` (a contact `binary_sensor`, `on` = open) and, if you have it, `entity_position`. With sensors only the buttons are optional (`entity_open` / `entity_close` / `entity_stop` for independent devices).
+- `entity_rain` (binary_sensor `on`, or a sensor above 0): grey sky and rain, **Rain** tile
+- `show_rain`
+
+```yaml
+type: custom:appliance-window-card
+name: Living room window
+entity: cover.living_room_window
+entity_rain: binary_sensor.rain_sensor
+```
+
+Window with a contact sensor only:
+
+```yaml
+type: custom:appliance-window-card
+name: Bathroom window
+entity_state: binary_sensor.bathroom_window_contact
+```
+
+For a window or a door that only has opening sensors, with a drawing in PVC (door, service door, sliding door, window), see the [Door and window sensor](door-sensor.md) card: it accepts several opening sensors (handle, second leaf, shutter…) and shows one chip per sensor.
+
 ## Options
 
 - `entity` (cover)
