@@ -11,7 +11,7 @@
 - **Hourly forecast** (`hourly_count`, 12 by default) and **daily forecast** (`daily_count`, 5 by default) with icons, rain probability and a min / max bar, from `weather.get_forecasts`.
 - **Details**: wind with a direction arrow and gusts, humidity and dew point, UV index (attribute or `entity_uv`), pressure, visibility, cloud cover. A tile opens the more-info of the entity.
 - **Sun and moon**: sunrise, sunset and length of the day, calculated for the position of Home Assistant, with the sun on its arc, and the **moon phase**.
-- **Rain radar** around your home: animated RainViewer layers (last frames and, when available, the next ones) over an OpenStreetMap / CARTO base map, with a marker on your home, play / pause and a timeline. Needs internet access from the browser. `radar_zoom` (3 to 7), `radar_height`, `radar_color` (RainViewer scheme 1 to 8), `latitude` / `longitude` to look elsewhere.
+- **Rain radar** around your home: animated RainViewer layers (last frames and, when available, the next ones) over an OpenStreetMap base map (no API key needed; inverted automatically in dark theme), with a marker on your home, play / pause and a timeline. Needs internet access from the browser. `radar_zoom` (3 to 7), `radar_height`, `radar_color` (RainViewer scheme 1 to 8), `latitude` / `longitude` to look elsewhere.
 - Each block can be hidden: `show_alert`, `show_next_rain`, `show_hourly`, `show_daily`, `show_details`, `show_sun`, `show_radar`. `animations: false` freezes the scene (also frozen by the system setting "reduce motion").
 
 ```yaml
