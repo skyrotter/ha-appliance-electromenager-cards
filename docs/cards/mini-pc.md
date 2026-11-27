@@ -11,7 +11,7 @@ States: off, idle (CPU below 8 %), running, busy (CPU above `cpu_busy`), overhea
 
 ## Options
 
-- `model`: `bmax_b9` (default, BMAX B9 Max), `home_assistant_green`, `intel_nuc` (Intel NUC 7, square box seen from three quarters, square power button at the front that glows blue when on), `minisforum_x1` (Minisforum X1, photo with the blue power button at the front), `lenovo_m720s` (Lenovo ThinkCentre M720s SFF, slim tower, round power button at the top of the front), `lenovo_m920q` (Lenovo ThinkCentre M920q Tiny, 1-litre PC), `hp_prodesk_600_g3` (HP ProDesk 600 G3 Desktop Mini, front view, power button at the right and drive LED next to it) or `mac_mini` (Mac mini, front view: only the status LED, no button) (Home Assistant Green: translucent case on a finned heat sink, no button, a small LED at the front corner lights up when it runs). Same entities and tiles for both.
+- `model`: `bmax_b9` (default, BMAX B9 Max), `home_assistant_green`, `intel_nuc` (Intel NUC 7, square box seen from three quarters, square power button at the front that glows blue when on), `minisforum_x1` (Minisforum X1, photo with the blue power button at the front), `lenovo_m715q` (Lenovo ThinkCentre M715q Tiny, three-quarter photo, round power button at the top that glows blue when on), `lenovo_m720s` (Lenovo ThinkCentre M720s SFF, slim tower, round power button at the top of the front), `lenovo_m920q` (Lenovo ThinkCentre M920q Tiny, 1-litre PC), `hp_prodesk_600_g3` (HP ProDesk 600 G3 Desktop Mini, front view, power button at the right and drive LED next to it) or `mac_mini` (Mac mini, front view: only the status LED, no button) (Home Assistant Green: translucent case on a finned heat sink, no button, a small LED at the front corner lights up when it runs). Same entities and tiles for both.
 
 Every value tile can be hidden with its `show_…` option, and `language: fr|en|de|it|es|nb|nl|pl|ro|ru|sr|sr-Latn` forces the language.
 
@@ -26,6 +26,28 @@ Every value tile can be hidden with its `show_…` option, and `language: fr|en|
 - `animations` (default true)
 - `compact: true` (small fixed slots: smaller title, tiles and buttons, the illustration takes the remaining height), `transparent: true` (no card background), `illustration_size` (%)
 - One checkbox per tile in the visual editor: `show_status`, `show_cpu`, `show_temp`, `show_ram`, `show_disk`, `show_down`, `show_up`, `show_uptime`, `show_power`, `show_energy` (`show_network: false` hides both network tiles)
+
+## Example (Proxmox VE, integration from HACS)
+
+Number of VMs / containers and extra disks go in `extra_tiles`; the node sensors of the Proxmox VE integration feed the gauges.
+
+```yaml
+type: custom:appliance-mini-pc-card
+model: lenovo_m715q
+name: Proxmox server
+entity: switch.proxmox_plug              # smart plug (on / off)
+entity_power: sensor.proxmox_plug_power
+entity_energy: sensor.proxmox_plug_energy
+entity_cpu: sensor.node_pve_cpu_used
+entity_ram: sensor.node_pve_memory_used_percentage
+entity_disk: sensor.node_pve_disk_used_percentage
+entity_cpu_temp: sensor.proxmox_cpu_temperature   # any temperature sensor (script, SSH, Glances…)
+extra_tiles:
+  - { entity: sensor.node_pve_running_vms, name: VM, icon: mdi:server }
+  - { entity: sensor.node_pve_running_containers, name: LXC, icon: mdi:cube-outline }
+  - { entity: sensor.proxmox_nvme_temperature, name: NVMe, icon: mdi:harddisk }
+  - { entity: sensor.disk_pve_data_used_percentage, name: Data volume, icon: mdi:harddisk }
+```
 
 ## Example (System Monitor)
 
