@@ -87,7 +87,7 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
 /* modèle Thermor Aéromax Split */
 .tm-tint{opacity:.27;mix-blend-mode:multiply;transition:opacity .4s}.off .tm-tint,.unavailable .tm-tint{opacity:0}
 .tm-val{fill:#5b6672;opacity:.88;font:600 118px Roboto,Arial,sans-serif;letter-spacing:-4px}.off .tm-val,.unavailable .tm-val{opacity:.4}
-.tm-fanw{pointer-events:none}.tm-fan{transform-box:view-box;transform-origin:482px 778px}
+.tm-fanw{pointer-events:none}.tm-fan{transform-box:fill-box;transform-origin:50% 50%}
 .tm-blade{fill:#353d46;stroke:#5c6772;stroke-width:2;stroke-linejoin:round}.tm-hub{fill:#262c33;stroke:#56606b;stroke-width:2}
 .green .tm-blade,.boost .tm-blade{filter:blur(.7px)}.tm-grille{pointer-events:none}
 .green .tm-fan,.boost .tm-fan{animation:thspin var(--spd) linear infinite}.boost .tm-fan{animation-duration:calc(var(--spd) * .55)}
@@ -180,8 +180,10 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
   <image href="${THERMOR_IMG}" x="0" y="0" width="793" height="991"/>
   <g clip-path="url(#tm-body)"><rect x="0" y="4" width="222" height="820" fill="url(#tm-g)" class="tm-tint"/><ellipse class="tm-glow" cx="111" cy="800" rx="170" ry="110" fill="url(#tm-ge)"/></g>
   <text id="tm-val" class="tm-val" x="111" y="400" text-anchor="middle">--</text>
-  <clipPath id="tm-fc"><circle cx="482" cy="778" r="114"/></clipPath>
-  <g clip-path="url(#tm-fc)" class="tm-fanw"><circle cx="482" cy="778" r="114" fill="#15191e"/><g class="tm-fan"><g transform="translate(482 778)">${[0, 72, 144, 216, 288].map((a) => `<path class="tm-blade" d="M-7 -22C-30 -50 -26 -94 2 -108C30 -108 44 -82 33 -54C25 -36 13 -26 8 -22Z" transform="rotate(${a})"/>`).join('')}<circle class="tm-hub" r="24"/></g></g></g>
+  <!-- logement de l'hélice : ellipse (face avant vue en perspective, bord haut de la grille incliné de 3°), relevée sur la photo -->
+  <clipPath id="tm-fc"><ellipse cx="484" cy="761" rx="104" ry="119" transform="rotate(-3 484 761)"/></clipPath>
+  <g clip-path="url(#tm-fc)" class="tm-fanw"><ellipse cx="484" cy="761" rx="104" ry="119" transform="rotate(-3 484 761)" fill="#15191e"/>
+   <g transform="translate(484 761) rotate(-3) scale(.912 1.044)"><g class="tm-fan"><circle r="112" fill="none"/>${[0, 72, 144, 216, 288].map((a) => `<path class="tm-blade" d="M-7 -22C-30 -50 -26 -94 2 -108C30 -108 44 -82 33 -54C25 -36 13 -26 8 -22Z" transform="rotate(${a})"/>`).join('')}<circle class="tm-hub" r="24"/></g></g></g>
   <image class="tm-grille" href="${THERMOR_GRILLE}" x="362" y="655" width="242" height="260"/>
 </svg>`;
 
