@@ -85,9 +85,10 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
 .noanim .at-in,.noanim .at-out,.noanim .at-body,.noanim .at-glow,.noanim .at-d{animation:none!important}
 .th-fan{transform-box:fill-box;transform-origin:50% 50%}
 /* modèle Thermor Aéromax Split */
-.tm-tint{opacity:.27;mix-blend-mode:multiply;transition:opacity .4s}.off .tm-tint,.unavailable .tm-tint{opacity:.1}
+.tm-tint{opacity:.27;mix-blend-mode:multiply;transition:opacity .4s}.off .tm-tint,.unavailable .tm-tint{opacity:0}
 .tm-val{fill:#5b6672;opacity:.88;font:600 118px Roboto,Arial,sans-serif;letter-spacing:-4px}.off .tm-val,.unavailable .tm-val{opacity:.4}
 .tm-fan{transform-box:fill-box;transform-origin:50% 50%;pointer-events:none}.tm-fan path,.tm-fan circle{fill:#1d242c;opacity:.5}
+.off .tm-fan path,.off .tm-fan circle,.unavailable .tm-fan path{opacity:.25}
 .green .tm-fan,.boost .tm-fan{animation:thspin var(--spd) linear infinite}.boost .tm-fan{animation-duration:calc(var(--spd) * .55)}
 .tm-air path{stroke:#9fc4ea;stroke-width:9;stroke-linecap:round;stroke-dasharray:44 110;opacity:0}
 .green .tm-air path,.boost .tm-air path{opacity:.75;animation:tmair 1.5s linear infinite}@keyframes tmair{to{stroke-dashoffset:154}}
