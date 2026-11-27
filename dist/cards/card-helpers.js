@@ -333,6 +333,9 @@
     });
     ['pointerup', 'pointerleave', 'pointercancel'].forEach((t) => target.addEventListener(t, stop));
     target.addEventListener('contextmenu', (ev) => { if (cfg().hold_action) ev.preventDefault(); });
+    // iOS ignore preventDefault sur « contextmenu » pour les images : sans ces propriétés (héritées), un appui long sur une photo ouvre le menu
+    // Partager / Enregistrer / Copier par-dessus l'action tenir (hold_action)
+    target.style.webkitTouchCallout = 'none'; target.style.webkitUserSelect = 'none'; target.style.userSelect = 'none';
   };
   window.applianceEsc = escA;
   window.applianceDefine = (tag, cls, meta) => {

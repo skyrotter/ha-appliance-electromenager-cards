@@ -23,12 +23,12 @@ ha-card{display:block;padding:10px 12px 12px;overflow:hidden;--lc:#ffb347;--b:1;
 /* image perso (option image) : la photo remplace le dessin ; éclairée selon la luminosité (--pb = --b x image_max, lueur --gb = --b x glow_max), avec une lueur de la couleur de l'ampoule */
 .uph{position:relative;display:flex;align-items:center;justify-content:center;padding:6px 0}
 .uph .glow{position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle,var(--lc,#ffd98a) 0%,transparent 68%);opacity:calc(var(--gb,0) * .75);filter:blur(16px);transition:opacity .4s}
-.uph img{position:relative;display:block;max-width:100%;max-height:220px;zoom:var(--illus-scale,1);object-fit:contain;filter:brightness(calc(.4 + var(--pb,0) * .6)) saturate(calc(.55 + var(--pb,0) * .45)) drop-shadow(0 0 calc(var(--gb,0) * 12px) color-mix(in srgb,var(--lc,#ffd98a) calc(var(--gb,0) * 100%),transparent));transition:filter .4s}
+.uph img{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-user-drag:none;pointer-events:none;position:relative;display:block;max-width:100%;max-height:220px;zoom:var(--illus-scale,1);object-fit:contain;filter:brightness(calc(.4 + var(--pb,0) * .6)) saturate(calc(.55 + var(--pb,0) * .45)) drop-shadow(0 0 calc(var(--gb,0) * 12px) color-mix(in srgb,var(--lc,#ffd98a) calc(var(--gb,0) * 100%),transparent));transition:filter .4s}
 .uph.pair img.on{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);opacity:var(--b,0);filter:drop-shadow(0 0 calc(var(--gb,0) * 12px) color-mix(in srgb,var(--lc,#ffd98a) 70%,transparent));transition:opacity .4s}
 .uph.pair img.off{filter:none}
 .compact .uph{height:100%}
 .stage.ceil{background:radial-gradient(ellipse at 50% 45%,#4a5058,#2c3137 80%)}
-.stage{position:relative;margin:4px auto 0;max-width:calc(240px * var(--illus-scale,1));border-radius:14px;background:radial-gradient(ellipse at 50% 55%,#1d232b,#12161b 75%);overflow:hidden;cursor:pointer}
+.stage{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;position:relative;margin:4px auto 0;max-width:calc(240px * var(--illus-scale,1));border-radius:14px;background:radial-gradient(ellipse at 50% 55%,#1d232b,#12161b 75%);overflow:hidden;cursor:pointer}
 svg{display:block;width:100%;height:auto;overflow:visible}
 .ctl{display:flex;justify-content:center;gap:6px;margin-top:8px}
 .ctl.hide,.ctl button.hide{display:none}
@@ -350,7 +350,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       const pair = !!(imgOn || imgOff), img = pair ? (imgOff || cfgImg || imgOn) : cfgImg || (this.kind === 'ceiling_globe' ? GLOBE_IMG : '');
       root.innerHTML = `<style>${CSS}</style><ha-card>
         <div class="head"><div class="title" id="lttitle"></div><div class="badge" id="ltbadge"></div></div>
-        <div class="stage${img && this._c.image_background !== true ? ' ph' : this.kind === 'ceiling_spot' ? ' ceil' : ''}">${img ? `<div class="uph${pair ? ' pair' : ''}"><div class="glow"></div><img class="off" src="${esc(img)}" alt="${esc(this._c.name || this._t(this.kind))}">${pair ? `<img class="on" src="${esc(imgOn || cfgImg || imgOff)}" alt="">` : ''}</div>` : `<svg viewBox="0 0 200 180" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${SVGS[this.kind](this._c)}</svg>`}<div class="sb" id="ltsb"><input class="bs" id="ltbs" type="range" min="0" max="100" step="1"><span class="sv" id="ltsv"></span></div></div>
+        <div class="stage${img && this._c.image_background !== true ? ' ph' : this.kind === 'ceiling_spot' ? ' ceil' : ''}">${img ? `<div class="uph${pair ? ' pair' : ''}"><div class="glow"></div><img class="off" draggable="false" src="${esc(img)}" alt="${esc(this._c.name || this._t(this.kind))}">${pair ? `<img class="on" draggable="false" src="${esc(imgOn || cfgImg || imgOff)}" alt="">` : ''}</div>` : `<svg viewBox="0 0 200 180" role="img" aria-label="${esc(this._c.name || this._t(this.kind))}">${DEFS}${SVGS[this.kind](this._c)}</svg>`}<div class="sb" id="ltsb"><input class="bs" id="ltbs" type="range" min="0" max="100" step="1"><span class="sv" id="ltsv"></span></div></div>
         <div class="ctl" id="ltctl">
           <button data-a="on"><ha-icon icon="mdi:lightbulb-on"></ha-icon><span></span></button>
           <button data-a="color" class="hide"><ha-icon icon="mdi:palette"></ha-icon><span></span></button>

@@ -253,6 +253,8 @@ class ApplianceCardBase extends HTMLElement {
     });
     ["pointerup", "pointerleave", "pointercancel"].forEach((t) => il.addEventListener(t, stop));
     il.addEventListener("contextmenu", (ev) => { if (this._config.hold_action) ev.preventDefault(); });
+    // iOS ignore preventDefault sur « contextmenu » pour les images : sans ces propriétés (héritées), un appui long sur une photo ouvre le menu Partager / Enregistrer / Copier
+    il.style.webkitTouchCallout = "none"; il.style.webkitUserSelect = "none"; il.style.userSelect = "none";
     if (this._config.color) this.style.setProperty("--ac-accent", this._config.color);
     if (typeof window.__acHydrateRoot === "function") window.__acHydrateRoot(this.shadowRoot);
   }
