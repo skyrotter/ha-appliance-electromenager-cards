@@ -156,7 +156,7 @@ button ha-icon{--mdc-icon-size:18px}button.main{background:var(--kt-c);color:#ff
       });
     }
   }
-  customElements.define(TAG, ApplianceKitchenTimerCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceKitchenTimerCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceKitchenTimerCardEditor extends HTMLElement {
@@ -187,7 +187,7 @@ button ha-icon{--mdc-icon-size:18px}button.main{background:var(--kt-c);color:#ff
       this._form.computeLabel = (s) => tr[`f_${s.name}`] || window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceKitchenTimerCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceKitchenTimerCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

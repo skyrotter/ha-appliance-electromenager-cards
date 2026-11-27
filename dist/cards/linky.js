@@ -4,7 +4,7 @@
 (() => {
 "use strict";
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); // texte → HTML sûr
-const define = (tag, cls) => { if (!(window.__acHasReal||customElements.get.bind(customElements))(tag)) customElements.define(tag, cls); };
+const define = (tag, cls) => { if (!(window.__acHasReal||customElements.get.bind(customElements))(tag)) (window.__acDefine||customElements.define.bind(customElements))(tag, cls); };
 window.customCards = window.customCards || [];
 /* appliance-linky-card — compteur Linky animé (écran LCD, jauge vs puissance souscrite, index HP/HC)
  * type: custom:appliance-linky-card

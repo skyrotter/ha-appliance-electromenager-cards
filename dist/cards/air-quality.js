@@ -375,7 +375,7 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
       hit.addEventListener('pointermove', move); hit.addEventListener('pointerdown', move); hit.addEventListener('pointerleave', leave);
     }
   }
-  customElements.define(TAG, ApplianceAirQualityCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceAirQualityCard);
 
   /* ---- éditeur visuel ---- */
   const PRIMARY_ED = ['co2', 'pm1', 'pm25', 'pm10', 'voc', 'humidity', 'temperature'];
@@ -414,7 +414,7 @@ svg.face{display:block;width:100%;max-width:calc(190px * var(--illus-scale,1));h
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceAirQualityCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceAirQualityCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

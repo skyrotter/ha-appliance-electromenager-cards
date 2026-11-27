@@ -285,7 +285,7 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
       });
     }
   }
-  customElements.define(TAG, ApplianceSmokeDetectorCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceSmokeDetectorCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceSmokeDetectorCardEditor extends HTMLElement {
@@ -334,7 +334,7 @@ svg{display:block;width:100%;max-width:calc(200px * var(--illus-scale,1));height
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceSmokeDetectorCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceSmokeDetectorCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

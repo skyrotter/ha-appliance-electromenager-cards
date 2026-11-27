@@ -309,7 +309,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
       window.applianceExtraTiles(this, r.querySelector('.tiles'), c.extra_tiles, this._hass, c);
     }
   }
-  customElements.define(TAG, ApplianceUpsCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceUpsCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceUpsCardEditor extends HTMLElement {
@@ -351,7 +351,7 @@ svg{display:block;width:100%;max-width:calc(270px * var(--illus-scale,1));height
         : window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceUpsCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceUpsCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

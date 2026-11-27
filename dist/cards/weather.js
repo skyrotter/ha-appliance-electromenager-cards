@@ -443,7 +443,7 @@ ha-card{container-type:inline-size}
     }
   }
   const hasDark = (h) => !!(h && h.themes && h.themes.darkMode);
-  customElements.define(TAG, ApplianceWeatherCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceWeatherCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceWeatherCardEditor extends HTMLElement {
@@ -478,7 +478,7 @@ ha-card{container-type:inline-size}
       this._form.computeLabel = (s) => tr[`f_${s.name}`] || window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceWeatherCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceWeatherCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

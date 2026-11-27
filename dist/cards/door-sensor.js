@@ -306,7 +306,7 @@ svg{display:block;width:100%;max-width:calc(240px * var(--illus-scale,1));height
       });
     }
   }
-  customElements.define(TAG, ApplianceDoorSensorCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceDoorSensorCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceDoorSensorCardEditor extends HTMLElement {
@@ -344,7 +344,7 @@ svg{display:block;width:100%;max-width:calc(240px * var(--illus-scale,1));height
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'door_model' : s.name === 'entities' ? 'door_entities' : s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceDoorSensorCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceDoorSensorCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

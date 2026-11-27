@@ -335,7 +335,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       });
     }
   }
-  customElements.define(TAG, ApplianceSmartLockCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceSmartLockCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceSmartLockCardEditor extends HTMLElement {
@@ -385,7 +385,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'lock_model' : s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceSmartLockCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceSmartLockCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

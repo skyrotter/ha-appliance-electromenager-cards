@@ -302,7 +302,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       });
     }
   }
-  customElements.define(TAG, ApplianceElectricMeterCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceElectricMeterCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceElectricMeterCardEditor extends HTMLElement {
@@ -341,7 +341,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceElectricMeterCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceElectricMeterCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

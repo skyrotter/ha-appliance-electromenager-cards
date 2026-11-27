@@ -263,7 +263,7 @@ ha-card{--p:4.8s}ha-card.motion{--p:1.15s}ha-card.recent{--p:6s}
       });
     }
   }
-  customElements.define(TAG, ApplianceMotionSensorCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceMotionSensorCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceMotionSensorCardEditor extends HTMLElement {
@@ -303,7 +303,7 @@ ha-card{--p:4.8s}ha-card.motion{--p:1.15s}ha-card.recent{--p:6s}
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'door_model' : s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceMotionSensorCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceMotionSensorCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

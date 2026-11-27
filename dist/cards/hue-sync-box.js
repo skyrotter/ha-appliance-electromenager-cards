@@ -189,7 +189,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       });
     }
   }
-  customElements.define(TAG, ApplianceHueSyncBoxCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceHueSyncBoxCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceHueSyncBoxCardEditor extends HTMLElement {
@@ -227,7 +227,7 @@ svg{display:block;width:100%;max-width:calc(230px * var(--illus-scale,1));height
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name === 'model' ? 'sync_box_model' : s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceHueSyncBoxCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceHueSyncBoxCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

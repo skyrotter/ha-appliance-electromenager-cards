@@ -291,7 +291,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       });
     }
   }
-  customElements.define(TAG, ApplianceHumidifierCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceHumidifierCard);
 
   /* ---- éditeur visuel ---- */
   class ApplianceHumidifierCardEditor extends HTMLElement {
@@ -331,7 +331,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
     }
   }
-  customElements.define(TAG + '-editor', ApplianceHumidifierCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceHumidifierCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({

@@ -441,9 +441,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       });
     }
   }
-  customElements.define(TAG, ApplianceWaterSoftenerCard);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG, ApplianceWaterSoftenerCard);
   // ancienne carte « générique » : même carte avec model: generic par défaut (tableaux de bord existants)
-  customElements.define('appliance-water-softener-generic-card', class extends ApplianceWaterSoftenerCard {
+  (window.__acDefine||customElements.define.bind(customElements))('appliance-water-softener-generic-card', class extends ApplianceWaterSoftenerCard {
     setConfig(c) { super.setConfig({ model: 'generic', ...c }); }
   });
 
@@ -488,7 +488,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     }
     _lbl(k) { const l = window.applianceLang(T, this._c, this._hass); return T[l][k] ?? T.en[k] ?? k; }
   }
-  customElements.define(TAG + '-editor', ApplianceWaterSoftenerCardEditor);
+  (window.__acDefine||customElements.define.bind(customElements))(TAG + '-editor', ApplianceWaterSoftenerCardEditor);
 
   window.customCards = window.customCards || [];
   window.customCards.push({
