@@ -55,6 +55,7 @@ entity_reserve: sensor.boiler_hot_water_reserve   # optional, %
 | `layout` | `vertical`: large photo at full width with the tiles below (default with the photo model); `side`: photo on the left, tiles on the right (default with the drawn tank). |
 | `entity_pump` | `on` / `off` sensor: heat pump running. Without it, the mode and the power decide. |
 | `entity_boost` | `on` / `off` sensor: boost / electric backup. |
+| `entity_pump_time`, `entity_backup_time` | Cumulative operating time of the heat pump and of the electric backup (seconds, or min / h / d from the sensor unit, e.g. Overkiz / Cozytouch). Shown as tiles in hours, and used to tell what is running: a counter that changed less than `run_window` minutes ago (10 by default) means the heat pump (Green) or the backup (Boost) is working; both idle means Pause. `entity_pump` / `entity_boost` take precedence. |
 | `entity_draw` | Optional `on` / `off` sensor (or flow): hot water drawn. Without it, a drop of the hot water level or of the bottom temperature is detected. |
 
 ```yaml
@@ -88,6 +89,8 @@ entity: water_heater.thermor_aeromax_split      # Overkiz / Cozytouch
 entity_temp: sensor.thermor_middle_water_temperature
 entity_power: sensor.thermor_electric_power_consumption
 entity_energy: sensor.thermor_electric_energy_consumption
+entity_pump_time: sensor.thermor_heat_pump_operating_time       # s
+entity_backup_time: sensor.thermor_electric_booster_operating_time   # s
 tank_volume: 200
 ```
 

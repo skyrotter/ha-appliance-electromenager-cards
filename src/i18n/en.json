@@ -2571,6 +2571,8 @@
     "bottom": "Bottom",
     "reserve": "Hot water",
     "volume": "Volume",
+    "pump_time": "Heat pump time",
+    "backup_time": "Electric backup time",
     "cycle": "Last cycle",
     "duration": "Cycle duration",
     "cycle_kwh": "Cycle energy"

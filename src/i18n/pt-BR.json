@@ -2545,6 +2545,8 @@
     "bottom": "Parte inferior",
     "reserve": "Água quente",
     "volume": "Volume",
+    "pump_time": "Tempo bomba de calor",
+    "backup_time": "Tempo resistência elétrica",
     "cycle": "Último ciclo",
     "duration": "Duração do ciclo",
     "cycle_kwh": "Energia do ciclo"
