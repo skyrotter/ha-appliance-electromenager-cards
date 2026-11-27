@@ -51,6 +51,8 @@ The phase comes from the state of `entity` (a sensor, select, switch or binary s
 
 ### EcoWater eVO (Hydrolink integration)
 
+<p align="center"><img src="../water-softener-ecowater.gif" width="376" alt="Water softener card, EcoWater eVO model: service, brine draw, low salt"></p>
+
 With a regeneration binary sensor, use `entity_brine` (**on = regenerating**) rather than `entity`, where `off` means « the softener is switched off ».
 
 ```yaml
