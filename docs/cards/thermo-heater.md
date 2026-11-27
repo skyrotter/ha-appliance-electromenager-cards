@@ -76,7 +76,8 @@ entity_boost: sensor.tank_boost_mode
 `model: thermor_aeromax_split` shows the indoor hot water tank and the separate outdoor heat pump unit, animated:
 
 - **Tank**: tinted red (hot) at the top and blue (cold) at the bottom, the boundary following the hot water level, with the water temperature written on it (`lcd_value: target` shows the set temperature).
-- **Outdoor unit**: the **fan spins** while the heat pump runs (faster in Boost) and the air blows out in front of the unit.
+- **Outdoor unit**: the **fan spins** behind its grille while the heat pump runs (faster in Boost) and the air blows out in front of the unit.
+- **Refrigerant lines** between the outdoor unit and the tank: hot gas (orange) going to the tank and liquid (blue) going back, animated while the heat pump runs.
 - **Boost**: an orange glow at the bottom of the tank while the electric backup heats.
 - The mode comes from the `water_heater` operation mode (`eco` = heat pump) or from the power, like the other models; `entity_pump` / `entity_boost` (`on` / `off` sensors) force it.
 

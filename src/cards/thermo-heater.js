@@ -93,8 +93,11 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
 .green .tm-fan,.boost .tm-fan{animation:thspin var(--spd) linear infinite}.boost .tm-fan{animation-duration:calc(var(--spd) * .55)}
 .tm-air path{stroke:#9fc4ea;stroke-width:9;stroke-linecap:round;stroke-dasharray:44 110;opacity:0}
 .green .tm-air path,.boost .tm-air path{opacity:.75;animation:tmair 1.5s linear infinite}@keyframes tmair{to{stroke-dashoffset:154}}
+.tm-ins{stroke:#2e3338;stroke-width:12}.tm-hot,.tm-cold{stroke-width:4;stroke-dasharray:10 18;opacity:.35}.tm-hot{stroke:#ff7a45}.tm-cold{stroke:#5ec8ff}
+.green .tm-hot,.boost .tm-hot,.green .tm-cold,.boost .tm-cold{opacity:1;animation:tmline 1.1s linear infinite}@keyframes tmline{to{stroke-dashoffset:-28}}
+.off .tm-hot,.off .tm-cold,.unavailable .tm-hot,.unavailable .tm-cold{opacity:.15}
 .tm-glow{opacity:0}.boost .tm-glow{opacity:.85;animation:atglow 1.4s ease-in-out infinite alternate}
-.noanim .tm-fan,.noanim .tm-air path,.noanim .tm-glow{animation:none!important}
+.noanim .tm-fan,.noanim .tm-air path,.noanim .tm-glow,.noanim .tm-hot,.noanim .tm-cold{animation:none!important}
 .th-big{filter:drop-shadow(0 0 6px rgba(0,0,0,.85));pointer-events:none}
 .th-big text{fill:#fff;stroke:rgba(20,22,28,.8);stroke-width:14px;paint-order:stroke;stroke-linejoin:round;font:700 120px Roboto,Arial,sans-serif;text-anchor:middle;dominant-baseline:central}
 .th-lcd-txt{fill:#7fe0ff;font:700 29px 'Courier New',monospace;text-anchor:middle;dominant-baseline:central}.off .th-lcd-txt,.unavailable .th-lcd-txt{fill:#4f7d8f}
@@ -177,6 +180,10 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
    <linearGradient id="tm-g" gradientUnits="userSpaceOnUse" x1="0" y1="4" x2="0" y2="824"><stop id="tm-s0" offset="0" stop-color="#ff3b2e"/><stop id="tm-s1" offset=".4" stop-color="#ff3b2e"/><stop id="tm-s2" offset=".5" stop-color="#2d7bff"/><stop offset="1" stop-color="#2d7bff"/></linearGradient>
    <radialGradient id="tm-ge" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff8a1f" stop-opacity=".9"/><stop offset="1" stop-color="#ff5a00" stop-opacity="0"/></radialGradient></defs>
   <g class="tm-air" fill="none"><path d="M360 880Q300 860 230 880" /><path d="M360 915Q300 895 200 915" style="animation-delay:-.5s"/><path d="M360 950Q300 930 230 950" style="animation-delay:-1s"/></g>
+  <!-- liaisons frigorifiques entre l'unité extérieure et le ballon (gaz chaud vers le ballon, liquide de retour vers le groupe), passées derrière les deux appareils -->
+  <g class="tm-lines" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path class="tm-ins" d="M420 958H150V800"/><path class="tm-ins" d="M420 976H128V800"/>
+   <path class="tm-hot" d="M420 958H150V800"/><path class="tm-cold" d="M128 800V976H420"/></g>
   <image href="${THERMOR_IMG}" x="0" y="0" width="793" height="991"/>
   <g clip-path="url(#tm-body)"><rect x="0" y="4" width="222" height="820" fill="url(#tm-g)" class="tm-tint"/><ellipse class="tm-glow" cx="111" cy="800" rx="170" ry="110" fill="url(#tm-ge)"/></g>
   <text id="tm-val" class="tm-val" x="111" y="400" text-anchor="middle">--</text>
