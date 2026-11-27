@@ -1771,6 +1771,12 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
  ok('softener ecowater: photo drawn, service, salt days tile',!!c.sr.querySelector('svg image.evi')&&/service/.test(cl())&&/44/.test(c.sr.querySelector('.tile[data-k=salt_days]').textContent)&&!c.sr.querySelector('.tile[data-k=salt_days]').classList.contains('hide'),cl());
  c=ws({},base({low:'on'})); ok('softener alert on (low salt): red pill with its name and low-salt state',/lowsalt/.test(cl())&&/Low salt/.test(c.sr.getElementById('wsleak').textContent)&&c.sr.getElementById('wsleak').classList.contains('bad'),cl()+' '+c.sr.getElementById('wsleak').textContent);
  c=ws({},[mk('binary_sensor.rg','on'),...base().slice(1)]); ok('softener ecowater: regeneration (brine) from the binary sensor',/brine/.test(cl()),cl());}
+ // chauffe-eau thermodynamique : modèle Thermor Aéromax Split (photo)
+ {const th=(st,pw,t)=>card('thermo-heater',{model:'thermor_aeromax_split',entity:'water_heater.t',entity_power:'sensor.pw',entity_temp:'sensor.tm',tank_volume:200},[mk('water_heater.t',st,{current_temperature:t,temperature:58}),mk('sensor.pw',pw,{unit_of_measurement:'W',device_class:'power'}),mk('sensor.tm',t,{unit_of_measurement:'°C'})],'en');
+ let c=th('eco',420,54); const cls=()=>c.sr.querySelector('ha-card').className;
+ ok('thermor aeromax: photo with outdoor unit fan, temperature on the tank, heat pump running (green)',!!c.sr.querySelector('svg.tm image')&&!!c.sr.querySelector('.tm-fan')&&/54/.test(c.sr.getElementById('tm-val').textContent)&&/green/.test(cls()),cls());
+ c=th('electric',1800,43); ok('thermor aeromax: boost with the electric backup',/boost/.test(cls()),cls());
+ c=th('off',0,31); ok('thermor aeromax: off',/off/.test(cls())&&/31/.test(c.sr.getElementById('tm-val').textContent),cls()); }
  // CSS utilisateur (card_mod, <style> injecté) : doit l'emporter sur les styles de la bibliothèque (@layer), quel que soit l'ordre
  {const c=card('ac-split',{entity:'climate.c'},[CL('cool','cooling')]);const st=document.createElement('style');st.textContent='.illus{width:77px;padding:0}';c.sr.appendChild(st);const il=c.sr.querySelector('.illus');ok('user <style> overrides library .illus (@layer)',getComputedStyle(il).width==='77px'||il.getBoundingClientRect().width===77,getComputedStyle(il).width);}
  // porte coulissante et capteurs d'ouverture supplémentaires (carte porte / fenêtre)
