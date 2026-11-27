@@ -174,6 +174,7 @@ Clique sur une carte pour ses options et ses exemples (pages en anglais).
 | [Moniteur de CO₂](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/co2-monitor.md) | `custom:appliance-co2-monitor-card` |
 | [Baromètre](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/barometer.md) | `custom:appliance-barometer-card` |
 | [Station météo (style Davis Vantage Pro2)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/weather-station.md) | `custom:appliance-weather-station-card` |
+| [Météo animée](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/weather.md) | `custom:appliance-weather-card` |
 | [Moniteur de consommation (style Ecojoko)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/energy-monitor.md) | `custom:appliance-energy-monitor-card` |
 | [Minuteur de cuisine](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/kitchen-timer.md) | `custom:appliance-kitchen-timer-card` |
 | [Four et plaque (un seul capteur)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/oven-hob.md) | `custom:appliance-oven-hob-card` |
