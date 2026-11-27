@@ -326,7 +326,10 @@ const loader = `
     if (!name) return Promise.resolve();
     let p = chunkPromises.get(name);
     if (!p) {
-      p = importRetry(\`cards/\${name}.js\`)
+      // une carte s'appuie sur les fonctions de card-helpers (window.applianceTemp, applianceChanged…) dès son premier rendu :
+      // son fichier n'est donc chargé qu'une fois card-helpers prêt, sinon une carte affichée tôt plante et reste vide
+      const after = name === "card-helpers" ? Promise.resolve() : loadChunk("card-helpers");
+      p = after.then(() => importRetry(\`cards/\${name}.js\`))
         .catch((e) => {
           console.error(\`ha-appliance-electromenager-cards: chunk "\${name}" failed to load\`, e);
           chunkPromises.delete(name);
