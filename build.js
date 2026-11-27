@@ -312,17 +312,34 @@ const loader = `
   };
   w.customCards.push(...MANIFEST_CARDS);
 
+  // import() avec relances : une coupure réseau, un cache de WebView (appli iOS) ou un chargement lent ne doit pas laisser une carte vide jusqu'au
+  // rechargement de la page. 4 essais (0 / 0,8 / 2,5 / 6 s, le 2e et suivants avec un paramètre en plus pour éviter l'échec mis en cache par le
+  // navigateur) ; en cas d'échec définitif, le résultat n'est pas gardé : le prochain appel (carte affichée, retour sur l'onglet, réseau revenu) réessaie.
+  const importRetry = (rel) => {
+    const delays = [0, 800, 2500, 6000];
+    const attempt = (i) => new Promise((r) => setTimeout(r, delays[i])).then(() => import(new URL(\`\${rel}?v=${VERSION_STR}\${i ? "&r=" + i : ""}\`, base).href))
+      .catch((e) => { if (i + 1 < delays.length) return attempt(i + 1); throw e; });
+    return attempt(0);
+  };
   const chunkPromises = new Map();
   const loadChunk = (name) => {
     if (!name) return Promise.resolve();
     let p = chunkPromises.get(name);
     if (!p) {
-      p = import(new URL(\`cards/\${name}.js?v=${VERSION_STR}\`, base).href)
-        .catch((e) => console.error(\`ha-appliance-electromenager-cards: chunk "\${name}" failed to load\`, e));
+      p = importRetry(\`cards/\${name}.js\`)
+        .catch((e) => {
+          console.error(\`ha-appliance-electromenager-cards: chunk "\${name}" failed to load\`, e);
+          chunkPromises.delete(name);
+          w.dispatchEvent(new CustomEvent("appliance-chunk-failed", { detail: name }));
+        });
       chunkPromises.set(name, p);
     }
     return p;
   };
+  // retour sur l'onglet / réseau revenu : les cartes restées vides réessaient
+  const retryFailed = () => { w.dispatchEvent(new Event("appliance-chunk-retry")); };
+  w.addEventListener("online", retryFailed);
+  if (typeof document !== "undefined") document.addEventListener("visibilitychange", () => { if (!document.hidden) retryFailed(); });
   w.applianceLoadChunk = loadChunk;
   w.applianceLoadChunkForTag = (tag) => loadChunk(TAG_TO_CHUNK[String(tag || "").toLowerCase()]);
 
@@ -331,8 +348,8 @@ const loader = `
     if (!group || w.__acAssets[group]) return Promise.resolve();
     let p = assetPromises.get(group);
     if (!p) {
-      p = import(new URL(\`assets/\${group}.js?v=${VERSION_STR}\`, base).href)
-        .catch((e) => console.error(\`ha-appliance-electromenager-cards: asset "\${group}" failed to load\`, e));
+      p = importRetry(\`assets/\${group}.js\`)
+        .catch((e) => { console.error(\`ha-appliance-electromenager-cards: asset "\${group}" failed to load\`, e); assetPromises.delete(group); });
       assetPromises.set(group, p);
     }
     return p;
@@ -428,6 +445,25 @@ const loader = `
               this._cfg = null; this._h = null; this._impl = null;
               loadChunk(chunkName);
               onReal(k, (Cls) => this._mount(Cls));
+              // chargement définitivement échoué : un message au lieu d'une carte vide ; un clic, le retour sur l'onglet ou le réseau relancent
+              w.addEventListener("appliance-chunk-failed", (e) => { if (e.detail === chunkName && !this._impl) this._failed(); });
+              w.addEventListener("appliance-chunk-retry", () => { if (!this._impl && this._bad) this._retry(); });
+            }
+            _failed() {
+              this._bad = true;
+              const c = document.createElement("div");
+              c.style.cssText = "padding:14px 16px;border-radius:12px;background:var(--card-background-color,#222);color:var(--secondary-text-color,#999);font:13px/1.4 var(--paper-font-body1_-_font-family,sans-serif);cursor:pointer";
+              c.textContent = "\u26A0 " + k + " : chargement impossible. Touche pour r\u00e9essayer.";
+              c.addEventListener("click", () => this._retry());
+              this.replaceChildren(c);
+            }
+            _retry() {
+              this._bad = false;
+              const c = document.createElement("div");
+              c.style.cssText = "padding:14px 16px;color:var(--secondary-text-color,#999);font:13px sans-serif";
+              c.textContent = "\u2026";
+              this.replaceChildren(c);
+              loadChunk(chunkName);
             }
             connectedCallback() {
               if (this._impl && this._impl.parentNode !== this) {
