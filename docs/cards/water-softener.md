@@ -19,13 +19,15 @@ The phase comes from the state of `entity` (a sensor, select, switch or binary s
 
 | Option | What it does |
 |---|---|
-| `model` | drawing: `culligan` (default) or `generic`. The old `custom:appliance-water-softener-generic-card` still works and is the same card with `model: generic` |
+| `model` | drawing: `culligan` (default), `generic` or `ecowater_evo` (cut-out photo of the EcoWater eVO Refiner Power: the screen lights up blue in service and orange during a regeneration, a halo follows the phase, red when the salt is low, salt gauge on the side). The old `custom:appliance-water-softener-generic-card` still works and is the same card with `model: generic` |
 | `entity` | state of the softener (text of the current phase, or on / off) |
 | `entity_backwash`, `entity_brine`, `entity_rinse`, `entity_refill` | one entity per phase (`binary_sensor`, `switch`, `input_boolean` or `sensor`, **on = running**): backwash, brine draw, rinse, water return (brine tank refill). Used when `entity` does not give the phase; priority backwash > brine > rinse > refill |
 | `entity_service` | service phase (**on = running**): shows the blue « Service » state instead of the grey « Standby ». Also works when `entity` is on and its name contains « service » |
 | `entity_flow` | flow (L/min) |
 | `entity_capacity` | remaining capacity (%) |
 | `entity_salt` | salt level: in **%**, the salt height in the tank follows it; in **kg / lb / g**, add the tank capacity (`entity_salt_max` or `salt_max`). Alert at or below `salt_low` (20 % of the tank) |
+| `entity_salt_days` | estimated days before the salt runs out (tile « Salt autonomy ») |
+| `entity_alerts` | a list of alert entities (`binary_sensor`, `switch`, `input_boolean`: low salt, leak, system error…): a red pill lists the ones that are **on**. An alert whose name or id contains « salt » / « sel » / « salz » also triggers the low-salt state of the drawing |
 | `entity_salt_max`, `salt_max` | maximum salt the brine tank holds, in the same unit as `entity_salt`: an entity (`sensor`, `input_number`, `number`) or a fixed value. With it, the salt height in the drawing is `salt / maximum` (96 kg out of 150 kg = 64 %) |
 | `entity_hardness_in`, `entity_hardness_out` | hardness before and after, shown as `32 → 2 °f`. Accept a `sensor`, an `input_number` or a `number` (so do the other numeric entities: flow, capacity, salt, today, regeneration days, cycle volume, salt per year, power) |
 | `entity_leak` | leak status as text (e.g. a template sensor): a pill under the phase, **green** when the state is a normal one, **red** otherwise (`unavailable` / `unknown` stay grey). Tap opens the entity |
@@ -46,6 +48,27 @@ The phase comes from the state of `entity` (a sensor, select, switch or binary s
 | `salt_low`, `compact`, `show_flow`, `show_capacity`, `show_salt`, `show_hardness`, `show_today`, `show_regen`, `show_last_regen`, `show_cycle_volume`, `show_salt_year`, `show_power`, `animations`, `labels`, `language`, `illustration_size`, `transparent`, `tap_action`, `hold_action` | |
 
 `compact: true` is for small fixed slots (smaller title and tiles, the illustration takes the remaining height); `transparent: true` removes the card background.
+
+### EcoWater eVO (Hydrolink integration)
+
+<p align="center"><img src="../water-softener-ecowater.gif" width="376" alt="Water softener card, EcoWater eVO model: service, brine draw, low salt"></p>
+
+With a regeneration binary sensor, use `entity_brine` (**on = regenerating**) rather than `entity`, where `off` means « the softener is switched off ».
+
+```yaml
+type: custom:appliance-water-softener-card
+model: ecowater_evo
+entity_brine: binary_sensor.ecowater_regeneration
+entity_flow: sensor.ecowater_water_flow
+entity_salt: sensor.ecowater_salt_level            # %
+entity_salt_days: sensor.ecowater_salt_days_remaining
+entity_capacity: sensor.ecowater_remaining_softened_water   # L
+entity_today: sensor.ecowater_water_used_today
+entity_alerts:
+  - binary_sensor.ecowater_low_salt
+  - binary_sensor.ecowater_leak
+  - binary_sensor.ecowater_error
+```
 
 ```yaml
 type: custom:appliance-water-softener-card

@@ -1764,6 +1764,13 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
  {const w=document.createElement('appliance-water-heater-card');w.setConfig({entity:'switch.f',energy:'sensor.e',price_per_kwh:'sensor.tarif'});document.getElementById('g').appendChild(w);w.hass=mkH();const tx=w.shadowRoot.textContent.replace(/\s+/g,'');
  ok('variable tariff on the main cards: weighted cost',/0[,.]3\s?€|0[,.]30/.test(tx)&&!/0[,.]4\s?€|0[,.]40/.test(tx),tx.replace(/.*ha-card\{[^}]*\}/,'').slice(-200));}
  ok('fixed price unchanged (2 kWh x 0.20 = 0,4)',/Coût0,4€/.test(e2.shadowRoot.textContent.replace(/\s+/g,''))); }
+ // adoucisseur : modèle photo EcoWater, jours de sel, alertes
+ {const ws=(cfg,sts)=>card('water-softener',{model:'ecowater_evo',entity_brine:'binary_sensor.rg',entity_flow:'sensor.fl',entity_salt:'sensor.sl',entity_salt_days:'sensor.sd',entity_alerts:['binary_sensor.low','binary_sensor.err'],...cfg},sts,'en');
+ const base=(o={})=>[mk('binary_sensor.rg','off'),mk('sensor.fl',5,{unit_of_measurement:'L/min'}),mk('sensor.sl',70,{unit_of_measurement:'%'}),mk('sensor.sd',44,{unit_of_measurement:'d'}),mk('binary_sensor.low',o.low||'off',{friendly_name:'Low salt'}),mk('binary_sensor.err','off',{friendly_name:'System error'})];
+ let c=ws({},base()); const cl=()=>c.sr.querySelector('ha-card').className;
+ ok('softener ecowater: photo drawn, service, salt days tile',!!c.sr.querySelector('svg image.evi')&&/service/.test(cl())&&/44/.test(c.sr.querySelector('.tile[data-k=salt_days]').textContent)&&!c.sr.querySelector('.tile[data-k=salt_days]').classList.contains('hide'),cl());
+ c=ws({},base({low:'on'})); ok('softener alert on (low salt): red pill with its name and low-salt state',/lowsalt/.test(cl())&&/Low salt/.test(c.sr.getElementById('wsleak').textContent)&&c.sr.getElementById('wsleak').classList.contains('bad'),cl()+' '+c.sr.getElementById('wsleak').textContent);
+ c=ws({},[mk('binary_sensor.rg','on'),...base().slice(1)]); ok('softener ecowater: regeneration (brine) from the binary sensor',/brine/.test(cl()),cl());}
  // CSS utilisateur (card_mod, <style> injecté) : doit l'emporter sur les styles de la bibliothèque (@layer), quel que soit l'ordre
  {const c=card('ac-split',{entity:'climate.c'},[CL('cool','cooling')]);const st=document.createElement('style');st.textContent='.illus{width:77px;padding:0}';c.sr.appendChild(st);const il=c.sr.querySelector('.illus');ok('user <style> overrides library .illus (@layer)',getComputedStyle(il).width==='77px'||il.getBoundingClientRect().width===77,getComputedStyle(il).width);}
  // porte coulissante et capteurs d'ouverture supplémentaires (carte porte / fenêtre)
