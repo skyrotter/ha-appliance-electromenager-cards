@@ -3699,6 +3699,7 @@
     "radar_now": "Now",
     "radar_forecast": "Forecast",
     "radar_unavailable": "Radar unavailable",
+    "pick_entity": "Choose a weather entity in the card editor",
     "play": "Play",
     "pause": "Pause",
     "dry_hour": "Dry for the next hour",
