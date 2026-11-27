@@ -71,6 +71,8 @@ entity_boost: sensor.tank_boost_mode
 
 ## Thermor Aéromax Split (photo)
 
+<p align="center"><img src="../thermor-aeromax-split.gif" width="360" alt="Thermor Aéromax Split: off, heat pump with the outdoor fan, boost"></p>
+
 `model: thermor_aeromax_split` shows the indoor hot water tank and the separate outdoor heat pump unit, animated:
 
 - **Tank**: tinted red (hot) at the top and blue (cold) at the bottom, the boundary following the hot water level, with the water temperature written on it (`lcd_value: target` shows the set temperature).
