@@ -2690,7 +2690,9 @@
     "days": "d",
     "f_model": "Desenho",
     "model_culligan": "Culligan (cabeça de controlo, depósito de sal)",
-    "model_generic": "Genérico (depósito com tubo central, depósito de salmoura com tubo de aspiração)"
+    "model_generic": "Genérico (depósito com tubo central, depósito de salmoura com tubo de aspiração)",
+    "model_ecowater_evo": "EcoWater eVO Refiner (foto)",
+    "salt_days": "Autonomia do sal"
   },
   "internet_box": {
     "name": "Router de Internet",

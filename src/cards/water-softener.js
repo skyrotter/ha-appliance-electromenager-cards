@@ -82,6 +82,13 @@ svg{display:block;flex:0 1 calc(190px * var(--illus-scale,1));width:calc(190px *
 .noanim *{animation:none!important}
 /* service sans débit : tout est figé */
 .still *{animation:none!important}.still .pflow,.still .drop{opacity:0!important}
+/* ---- modèle EcoWater (photo) ---- */
+.evd{fill:#4fc3ff;opacity:.7;animation:wsblink 2.6s ease-in-out infinite}.evi{transition:filter .6s}
+.service .evi{filter:drop-shadow(0 0 5px rgba(79,195,255,.55))}.still .evi{filter:none}
+.backwash .evi,.brine .evi,.rinse .evi,.refill .evi{filter:drop-shadow(0 0 6px rgba(255,170,40,.75))}
+.backwash .evd,.brine .evd,.rinse .evd,.refill .evd{fill:#ffa000}.lowsalt .evd{fill:#e53935}.lowsalt .evi{filter:drop-shadow(0 0 6px rgba(229,57,53,.7))}
+.off .evd,.unavailable .evd{opacity:.1}
+.evt{font:600 9px/1 sans-serif;fill:var(--secondary-text-color)}
 /* ---- tiles_right : titre, état et dessin à gauche, tuiles en colonne à droite, depuis le haut de la carte ---- */
 ha-card.side{display:grid;grid-template-rows:auto auto auto 1fr;grid-template-columns:minmax(0,1fr) minmax(105px,.85fr);column-gap:12px;align-content:start;align-items:start}
 .side .head{grid-column:1;grid-row:1;min-width:0}.side .title{min-width:0;white-space:normal;overflow-wrap:anywhere}.side .leak{grid-column:1;grid-row:2}.side .prog{grid-column:1;grid-row:3}
@@ -200,7 +207,29 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     <g class="alertw"><circle cx="224" cy="134" r="10" fill="#e53935"/><path d="M224 127.5v7.5" stroke="#fff" stroke-width="2.3" stroke-linecap="round"/><circle cx="224" cy="139.5" r="1.4" fill="#fff"/></g>
   </svg>`;
 
-  const TILES = [['flow', 'mdi:water-pump', 'show_flow'], ['capacity', 'mdi:gauge', 'show_capacity'], ['salt', 'mdi:shaker-outline', 'show_salt'],
+  // Photo détourée de l'EcoWater eVO Refiner Power (armoire vue de trois quarts, écran bleu en haut, bac à sel sous le couvercle).
+  // Animations posées sur la photo : écran qui s'éclaire (bleu en service, orange en régénération, rouge sel bas), halo autour de l'armoire,
+  // tuyaux d'arrivée / départ, jauge de sel à droite. Repères : 250 × 290.
+  const IMG_ECOWATER = 'data:image/webp;base64,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';
+  const SVG_ECOWATER = (label, saltLbl) => `<svg viewBox="0 0 250 290" role="img" aria-label="${label}"><defs>
+    <linearGradient id="wsg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f7f9"/><stop offset="1" stop-color="#cdd6dc"/></linearGradient>
+    <clipPath id="wsgc"><rect x="204.5" y="76.5" width="21" height="165" rx="6"/></clipPath>
+    <radialGradient id="wssh"><stop offset="0" stop-color="#000" stop-opacity=".3"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
+    <ellipse cx="124" cy="279" rx="62" ry="6" fill="url(#wssh)"/>
+    <g class="pipe pin"><path class="pbase" d="M4 46 H94"/><path class="pflow" d="M4 46 H94"/></g>
+    <g class="pipe pout"><path class="pbase" d="M150 46 H172 V28 H246"/><path class="pflow" d="M150 46 H172 V28 H246"/></g>
+    <g class="pipe pdr"><path class="pbase" d="M96 268 H14" style="stroke:#a9a39a;stroke-width:4"/><path class="pflow" d="M96 268 H14"/></g>
+    <image class="evi" href="${IMG_ECOWATER}" x="72" y="14" width="105" height="262" preserveAspectRatio="none"/>
+    <rect class="evd" x="109" y="28.6" width="15.5" height="8.6" rx="1.4"/>
+    <circle class="led" cx="140.5" cy="33" r="1.5"/>
+    <text id="wslcd" display="none"></text>
+    <rect x="204" y="76" width="22" height="166" rx="6.5" fill="#ffffff" fill-opacity=".14" stroke="#8793a3" stroke-width="1.2"/>
+    <g clip-path="url(#wsgc)"><rect class="salt" x="204.5" y="76.5" width="21" height="165" fill="url(#wsg1)" opacity=".95"/></g>
+    <text x="215" y="258" text-anchor="middle" class="evt">${saltLbl}</text>
+    <g class="alertw"><circle cx="215" cy="60" r="10" fill="#e53935"/><path d="M215 53.5v7.5" stroke="#fff" stroke-width="2.3" stroke-linecap="round"/><circle cx="215" cy="66" r="1.4" fill="#fff"/></g>
+  </svg>`;
+
+  const TILES = [['flow', 'mdi:water-pump', 'show_flow'], ['capacity', 'mdi:gauge', 'show_capacity'], ['salt', 'mdi:shaker-outline', 'show_salt'], ['salt_days', 'mdi:calendar-clock', 'show_salt_days'],
     ['hardness', 'mdi:water-opacity', 'show_hardness'], ['today', 'mdi:calendar-today', 'show_today'], ['regen', 'mdi:calendar-refresh', 'show_regen'],
     ['last_regen', 'mdi:calendar-check', 'show_last_regen'], ['cycle_volume', 'mdi:water-sync', 'show_cycle_volume'], ['salt_year', 'mdi:shaker-outline', 'show_salt_year'], ['power', 'mdi:flash', 'show_power']];
   const RE = {
@@ -220,7 +249,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { show_flow: true, show_capacity: true, show_salt: true, show_hardness: true, show_today: true, show_regen: true, show_last_regen: true, show_cycle_volume: true, show_salt_year: true, show_power: true, salt_low: 20, ...c };
+      this._c = { show_flow: true, show_capacity: true, show_salt: true, show_salt_days: true, show_hardness: true, show_today: true, show_regen: true, show_last_regen: true, show_cycle_volume: true, show_salt_year: true, show_power: true, salt_low: 20, ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -235,6 +264,8 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
     _num(id) { const s = this._st(id); if (!s) return NaN; const v = parseFloat(String(s.state).replace(',', '.')); return isFinite(v) ? v : NaN; }
     _unit(id, d) { const s = this._st(id); return String((s && s.attributes && s.attributes.unit_of_measurement) || d).trim(); }
     _fmt(v, d = 0) { return isNaN(v) ? '--' : v.toLocaleString(window.applianceLocale(this._c, this._hass), { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+    // entity_alerts : liste d'entités d'alerte (sel bas, fuite, erreur système…) ; celles qui sont allumées
+    _alertsOn() { const l = [].concat(this._c.entity_alerts || []).filter(Boolean); return l.map((id) => this._st(id)).filter((st) => st && this._on(st.entity_id)); }
     _on(id) { const s = this._st(id); return !!s && /^(on|true|active|running|open)$/i.test(String(s.state)); }
     // timer HA (timer.xxx) : durée totale, temps restant et état, calculés à partir de ses attributs (duration, finishes_at, remaining)
     _tsec(v) { if (v == null || v === '') return NaN; if (typeof v === 'number') return v; const p = String(v).split(':').map(Number); return p.some(isNaN) ? NaN : p.length === 3 ? p[0] * 3600 + p[1] * 60 + p[2] : p.length === 2 ? p[0] * 60 + p[1] : p[0]; }
@@ -292,14 +323,14 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         <div class="head${this._c.status_position === 'below' ? ' below' : ''}"><div class="title" id="wstitle"></div><div class="badge" id="wsbadge"></div></div>
         <div class="leak" id="wsleak"></div>
         <div class="prog" id="wsprog"><div class="bar" id="wsbar"></div><div class="txt"><span id="wsptxt"></span><span id="wsprem"></span></div></div>
-        <div class="body">${(this._c.model === 'generic' ? SVG_GENERIC : SVG_CULLIGAN)((this._c.name || this._t('name')).replace(/"/g, ''))}
+        <div class="body">${(this._c.model === 'generic' ? SVG_GENERIC : this._c.model === 'ecowater_evo' ? SVG_ECOWATER : SVG_CULLIGAN)((this._c.name || this._t('name')).replace(/"/g, ''), this._t('salt'))}
           <div class="tiles">${TILES.map(([k, ic]) => `<div class="tile hide" data-k="${k}"><div class="l"><ha-icon icon="${ic}"></ha-icon><span class="lbl"></span></div><div class="v"></div></div>`).join('')}</div>
         </div></ha-card>`;
       window.applianceBindIllus(this, root.querySelector('svg'), () => this._more(this._c.entity || this._c.entity_flow));
       root.querySelectorAll('.tile').forEach((el) => el.addEventListener('click', () => {
-        const c = this._c; this._more({ flow: c.entity_flow, capacity: c.entity_capacity, salt: c.entity_salt, hardness: c.entity_hardness_out || c.entity_hardness_in, today: c.entity_today, regen: c.entity_regen_days, last_regen: c.entity_last_regen, cycle_volume: c.entity_cycle_volume, salt_year: c.entity_salt_year, power: c.entity_power }[el.dataset.k]);
+        const c = this._c; this._more({ flow: c.entity_flow, capacity: c.entity_capacity, salt: c.entity_salt, salt_days: c.entity_salt_days, hardness: c.entity_hardness_out || c.entity_hardness_in, today: c.entity_today, regen: c.entity_regen_days, last_regen: c.entity_last_regen, cycle_volume: c.entity_cycle_volume, salt_year: c.entity_salt_year, power: c.entity_power }[el.dataset.k]);
       }));
-      root.getElementById('wsleak').addEventListener('click', () => this._more(this._c.entity_leak));
+      root.getElementById('wsleak').addEventListener('click', (e) => this._more(e.currentTarget.dataset.e || this._c.entity_leak));
       this._root = root; this._card = root.querySelector('ha-card'); this._built = true;
     }
 
@@ -334,7 +365,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       // est salt / max ; sans maxi, ou si l'entité est déjà en %, la valeur est un pourcentage (comportement historique)
       const mx = !isNaN(this._num(c.entity_salt_max)) ? this._num(c.entity_salt_max) : Number(c.salt_max);
       const pct = !isNaN(salt) && mx > 0 && this._unit(c.entity_salt, '%') !== '%' ? salt / mx * 100 : salt;
-      const low = !isNaN(pct) && pct <= Number(c.salt_low);
+      const low = (!isNaN(pct) && pct <= Number(c.salt_low)) || this._alertsOn().some((st) => /salt|\bsel\b|salz|sale\b|zout|sal\b/i.test(`${st.entity_id} ${(st.attributes && st.attributes.friendly_name) || ''}`));
       const still = phase === 'service' && !isNaN(flow) && flow <= 0.05;
       return { phase, flow, salt, pct, low, still };
     }
@@ -366,6 +397,13 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         lk.classList.toggle('bad', !gone && !okList.includes(low));
         lk.textContent = gone ? '--' : raw;
       }
+      // alertes allumées (entity_alerts) : pastille rouge avec leurs noms, si entity_leak n'affiche pas déjà quelque chose de pire
+      const alOn = this._alertsOn();
+      if (alOn.length) {
+        lk.classList.add('on', 'bad'); lk.classList.remove('ok');
+        lk.textContent = alOn.map((st) => (st.attributes && st.attributes.friendly_name) || st.entity_id).join(' · ');
+        lk.dataset.e = alOn[0].entity_id;
+      } else delete lk.dataset.e;
       const fu = this._unit(c.entity_flow, 'L/min'), tu = this._unit(c.entity_today, 'L');
       const hin = this._num(c.entity_hardness_in), hout = this._num(c.entity_hardness_out), hu = this._unit(c.entity_hardness_out || c.entity_hardness_in, '°f');
       let lastTxt = null;
@@ -380,6 +418,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         flow: [c.entity_flow, this._fmt(flow, 1), fu],
         capacity: [c.entity_capacity, this._fmt(this._num(c.entity_capacity), 0), this._unit(c.entity_capacity, '%')],
         salt: [c.entity_salt, this._fmt(salt, 0), this._unit(c.entity_salt, '%')],
+        salt_days: [c.entity_salt_days, this._fmt(this._num(c.entity_salt_days), 0), this._unit(c.entity_salt_days, this._t('days'))],
         hardness: [c.entity_hardness_in || c.entity_hardness_out, !isNaN(hin) && !isNaN(hout) ? `${this._fmt(hin, 0)} → ${this._fmt(hout, 0)}` : this._fmt(!isNaN(hout) ? hout : hin, 0), hu],
         today: [c.entity_today, this._fmt(this._num(c.entity_today), 0), tu],
         regen: [c.entity_regen_days, this._fmt(this._num(c.entity_regen_days), 0), this._t('days')],
@@ -426,14 +465,14 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._form.hass = this._hass; this._form.data = { ...this._c };
       this._form.schema = [
         { name: 'name', selector: { text: {} } },
-        { name: 'model', default: 'culligan', selector: { select: { mode: 'dropdown', options: ['culligan', 'generic'].map((value) => ({ value, label: this._lbl(`model_${value}`) })) } } },
+        { name: 'model', default: 'culligan', selector: { select: { mode: 'dropdown', options: ['culligan', 'generic', 'ecowater_evo'].map((value) => ({ value, label: this._lbl(`model_${value}`) })) } } },
         { name: 'labels', selector: { object: {} } },
         { name: 'illustration_size', selector: { number: { min: 30, max: 300, step: 5, mode: 'slider', unit_of_measurement: '%' } } },
         { name: 'transparent', selector: { boolean: {} } },
         ...window.applianceTileFields(this._hass),
         ent('entity', ['sensor', 'binary_sensor', 'switch', 'input_boolean', 'select']),
         ent('entity_backwash', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_brine', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_rinse', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_refill', ['binary_sensor', 'switch', 'input_boolean', 'sensor']), ent('entity_service', ['binary_sensor', 'switch', 'input_boolean', 'sensor']),
-        ent('entity_flow', ['sensor', 'input_number', 'number']), ent('entity_capacity', ['sensor', 'input_number', 'number']), ent('entity_salt', ['sensor', 'input_number', 'number']), ent('entity_salt_max', ['sensor', 'input_number', 'number']), { name: 'salt_max', selector: { number: { min: 0, max: 2000, step: 1, mode: 'box' } } },
+        ent('entity_flow', ['sensor', 'input_number', 'number']), ent('entity_capacity', ['sensor', 'input_number', 'number']), ent('entity_salt', ['sensor', 'input_number', 'number']), ent('entity_salt_days', ['sensor', 'input_number', 'number']), { name: 'entity_alerts', selector: { entity: { multiple: true, domain: ['binary_sensor', 'input_boolean', 'switch'] } } }, ent('entity_salt_max', ['sensor', 'input_number', 'number']), { name: 'salt_max', selector: { number: { min: 0, max: 2000, step: 1, mode: 'box' } } },
         ent('entity_hardness_in', ['sensor', 'input_number', 'number']), ent('entity_hardness_out', ['sensor', 'input_number', 'number']),
         ent('entity_leak', ['sensor', 'binary_sensor', 'input_text', 'input_select']), { name: 'leak_ok_states', selector: { text: {} } },
         { name: 'status_position', selector: { select: { mode: 'dropdown', options: ['right', 'below'] } } },
