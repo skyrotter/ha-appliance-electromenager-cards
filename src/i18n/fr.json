@@ -1724,7 +1724,9 @@
     "entity_o2": "Capteur d'oxygène (O₂)",
     "entity_no2": "Capteur NO₂",
     "entity_o3": "Capteur d'ozone (O₃)",
-    "entity_noise": "Capteur de bruit (dB)"
+    "entity_noise": "Capteur de bruit (dB)",
+    "bulb_model": "Modèle d'ampoule (photo)",
+    "bulb_model_drawing": "Dessin (par défaut)"
   },
   "light": {
     "white_warm": "Blanc chaud",

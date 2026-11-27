@@ -1724,7 +1724,9 @@
     "entity_noise": "Sensor de ruído (dB)",
     "entity_charge_power": "Potência de carga da bateria (para a bateria)",
     "entity_discharge_power": "Potência de descarga da bateria (da bateria)",
-    "battery_model_zendure_sf800_plus": "Zendure SolarFlow 800 Plus (foto)"
+    "battery_model_zendure_sf800_plus": "Zendure SolarFlow 800 Plus (foto)",
+    "bulb_model": "Modelo de lâmpada (foto)",
+    "bulb_model_drawing": "Desenho (predefinição)"
   },
   "light": {
     "ceiling_globe": "Candeeiro de teto globo",

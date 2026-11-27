@@ -49,6 +49,26 @@ With a `light` entity the card shows **On / Off** (and **Colour** on the colour 
 - `animations`, `show_status`, `show_controls`, `show_button_labels` (default true; false = icons only), `show_brightness`, `show_power`, `show_energy`
 - `language: fr|en|de|it|es|nb|nl|pl|ro|ru|sr|sr-Latn`
 
+## Philips Hue bulbs (photo)
+
+On the **bulb** and **colour bulb** cards, `model` replaces the drawing with a cut-out photo of a Philips Hue bulb. Off, the bulb shows its frosted diffuser; on, the diffuser takes the colour of the light (warm white, colour temperature or colour) and lights up with the brightness, with a glow around the bulb.
+
+| `model` | Bulb |
+|---|---|
+| `hue_white` | Hue White A60 (E27) |
+| `hue_candle` | Hue White ambiance candle (E14) |
+| `hue_color` | Hue White and color ambiance A60 (E27) |
+| `hue_gu10` | Hue GU10 spot |
+| `hue_filament` | Hue Filament globe G125 |
+
+```yaml
+type: custom:appliance-color-bulb-card
+entity: light.living_room
+model: hue_color
+```
+
+`image` (your own photo) wins over `model`. `image_min` / `image_max` / `glow_max` work the same way (with a model, `image_min` is 60 % by default so a bulb that is off stays recognisable).
+
 ## Example
 
 ```yaml

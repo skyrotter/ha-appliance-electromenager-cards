@@ -1724,7 +1724,9 @@
     "entity_o2": "Oxygen (O₂) sensor",
     "entity_no2": "NO₂ sensor",
     "entity_o3": "Ozone (O₃) sensor",
-    "entity_noise": "Noise sensor (dB)"
+    "entity_noise": "Noise sensor (dB)",
+    "bulb_model": "Bulb model (photo)",
+    "bulb_model_drawing": "Drawing (default)"
   },
   "light": {
     "white_warm": "Warm white",

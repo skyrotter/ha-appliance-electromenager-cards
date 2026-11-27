@@ -72,7 +72,7 @@
 })();
 (() => {
 "use strict";
-const VERSION = "1.242.0";
+const VERSION = "1.243.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -9596,7 +9596,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
     if (!name) return Promise.resolve();
     let p = chunkPromises.get(name);
     if (!p) {
-      p = import(new URL(`cards/${name}.js?v=1.242.0`, base).href)
+      p = import(new URL(`cards/${name}.js?v=1.243.0`, base).href)
         .catch((e) => console.error(`ha-appliance-electromenager-cards: chunk "${name}" failed to load`, e));
       chunkPromises.set(name, p);
     }
@@ -9610,7 +9610,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
     if (!group || w.__acAssets[group]) return Promise.resolve();
     let p = assetPromises.get(group);
     if (!p) {
-      p = import(new URL(`assets/${group}.js?v=1.242.0`, base).href)
+      p = import(new URL(`assets/${group}.js?v=1.243.0`, base).href)
         .catch((e) => console.error(`ha-appliance-electromenager-cards: asset "${group}" failed to load`, e));
       assetPromises.set(group, p);
     }
