@@ -182,9 +182,14 @@ svg{display:block;flex:0 1 calc(130px * var(--illus-scale,1));width:calc(130px *
   <g class="tm-air" fill="none"><path d="M360 880Q300 860 230 880" /><path d="M360 915Q300 895 200 915" style="animation-delay:-.5s"/><path d="M360 950Q300 930 230 950" style="animation-delay:-1s"/></g>
   <!-- liaisons frigorifiques entre l'unité extérieure et le ballon (gaz chaud vers le ballon, liquide de retour vers le groupe), passées derrière les deux appareils -->
   <g class="tm-lines" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path class="tm-ins" d="M420 958H150V800"/><path class="tm-ins" d="M420 976H128V800"/>
-   <path class="tm-hot" d="M420 958H150V800"/><path class="tm-cold" d="M128 800V976H420"/></g>
+   <path class="tm-ins" d="M150 800V958H384"/><path class="tm-ins" d="M128 800V976H404"/>
+   <path class="tm-hot" d="M384 958H150V800"/><path class="tm-cold" d="M128 800V976H404"/></g>
   <image href="${THERMOR_IMG}" x="0" y="0" width="793" height="991"/>
+  <!-- arrivée des liaisons sous l'unité extérieure : remontée + raccords, posés par-dessus la photo -->
+  <g class="tm-lines" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path class="tm-ins" d="M384 958V940"/><path class="tm-ins" d="M404 976V940"/>
+   <path class="tm-hot" d="M384 940V958"/><path class="tm-cold" d="M404 976V940"/></g>
+  <g fill="#b9bec4" stroke="#7d848c" stroke-width="1.5"><rect x="377" y="932" width="14" height="9" rx="2"/><rect x="397" y="932" width="14" height="9" rx="2"/></g>
   <g clip-path="url(#tm-body)"><rect x="0" y="4" width="222" height="820" fill="url(#tm-g)" class="tm-tint"/><ellipse class="tm-glow" cx="111" cy="800" rx="170" ry="110" fill="url(#tm-ge)"/></g>
   <text id="tm-val" class="tm-val" x="111" y="400" text-anchor="middle">--</text>
   <!-- logement de l'hélice : ellipse (face avant vue en perspective, bord haut de la grille incliné de 3°), relevée sur la photo -->
