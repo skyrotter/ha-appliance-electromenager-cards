@@ -440,6 +440,9 @@ const loader = `
       };
       for (const [tag, chunkName] of Object.entries(TAG_TO_CHUNK)) {
         const k = tag.toLowerCase();
+        // seules les cartes ont une version provisoire : un élément interne (ex. la boîte de dialogue de la carte des pièces)
+        // est créé par sa carte une fois le fichier chargé et doit être la vraie classe, avec ses propriétés (dlg.card…)
+        if (!/-card$/.test(k)) continue;
         const isForm = FORM_TAGS.has(k);
         if (!origGet(k)) {
           STUBS.add(k);
