@@ -3201,6 +3201,8 @@
     "name": "Solar house",
     "production": "Production",
     "consumption": "Consumption",
+    "selfuse": "Solar share",
+    "from_solar": "from solar",
     "battery": "Battery",
     "grid": "Grid",
     "import": "Grid import",
