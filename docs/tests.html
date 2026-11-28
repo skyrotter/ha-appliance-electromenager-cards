@@ -1787,6 +1787,13 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
  ok('thermo: heat pump time counter moved recently -> heat pump running (green), tiles in hours',/green/.test(cls())&&/1,256 h/.test(tile('pump_time').textContent)&&/7 h 30/.test(tile('backup_time').textContent),cls()+' '+tile('pump_time').textContent+' '+tile('backup_time').textContent);
  c=th(old,rec); ok('thermo: backup time counter moved recently -> boost',/boost/.test(cls()),cls());
  c=th(old,old); ok('thermo: counters idle for hours -> pause',/pause/.test(cls()),cls()); }
+ // maison solaire : tuile Autoconsommation (part de la consommation couverte par le solaire)
+ {const sh=(sts)=>card('solar-house',{entity_solar:'sensor.s',entity_grid:'sensor.g',entity_home:'sensor.h'},sts,'en');
+ const W=(id,v)=>mk(id,v,{unit_of_measurement:'W'}); const tile=(c)=>c.sr.querySelector('.tile[data-k=selfuse]');
+ let c=sh([W('sensor.s',782),W('sensor.g',868),W('sensor.h',1650)]);
+ ok('solar house: self-consumption 782 / 1650 W = 47 %, 782 W from solar',!tile(c).classList.contains('hide')&&/47 %/.test(tile(c).textContent)&&/782 W from solar/.test(tile(c).textContent),tile(c).textContent);
+ c=sh([W('sensor.s',3000),W('sensor.g',-1500),W('sensor.h',1500)]); ok('solar house: surplus exported -> 100 % of the consumption covered',/100 %/.test(tile(c).textContent)&&/1.5 kW from solar/.test(tile(c).textContent),tile(c).textContent);
+ c=sh([W('sensor.s',0),W('sensor.g',900),W('sensor.h',900)]); ok('solar house: no production -> tile hidden',tile(c).classList.contains('hide')); }
  // CSS utilisateur (card_mod, <style> injecté) : doit l'emporter sur les styles de la bibliothèque (@layer), quel que soit l'ordre
  {const c=card('ac-split',{entity:'climate.c'},[CL('cool','cooling')]);const st=document.createElement('style');st.textContent='.illus{width:77px;padding:0}';c.sr.appendChild(st);const il=c.sr.querySelector('.illus');ok('user <style> overrides library .illus (@layer)',getComputedStyle(il).width==='77px'||il.getBoundingClientRect().width===77,getComputedStyle(il).width);}
  // porte coulissante et capteurs d'ouverture supplémentaires (carte porte / fenêtre)

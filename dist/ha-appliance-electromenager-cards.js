@@ -72,7 +72,7 @@
 })();
 (() => {
 "use strict";
-const VERSION = "1.257.3";
+const VERSION = "1.258.0";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -9602,7 +9602,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
   // navigateur) ; en cas d'échec définitif, le résultat n'est pas gardé : le prochain appel (carte affichée, retour sur l'onglet, réseau revenu) réessaie.
   const importRetry = (rel) => {
     const delays = [0, 800, 2500, 6000];
-    const attempt = (i) => new Promise((r) => setTimeout(r, delays[i])).then(() => import(new URL(`${rel}?v=1.257.3${i ? "&r=" + i : ""}`, base).href))
+    const attempt = (i) => new Promise((r) => setTimeout(r, delays[i])).then(() => import(new URL(`${rel}?v=1.258.0${i ? "&r=" + i : ""}`, base).href))
       .catch((e) => { if (i + 1 < delays.length) return attempt(i + 1); throw e; });
     return attempt(0);
   };

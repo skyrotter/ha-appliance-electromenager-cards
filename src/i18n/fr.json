@@ -3201,6 +3201,8 @@
     "name": "Maison solaire",
     "production": "Production",
     "consumption": "Consommation",
+    "selfuse": "Part solaire",
+    "from_solar": "du solaire",
     "battery": "Batterie",
     "grid": "Réseau",
     "import": "Soutirage",
