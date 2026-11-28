@@ -6,7 +6,7 @@
 
 - **Animated energy flows**: glowing dots move along the cables in the real direction of the energy, faster when the power is higher (`max_power`, 6000 W by default, is full speed). Colour = source of the energy: yellow (sun), green (battery), purple (grid).
   - panels → house; house → battery (charging) or battery → house (discharging); house → grid (export) or grid → house (import); house → EV charger; house → water heater.
-- **Live legends** on each element (production, battery level and power, import / export, house, EV, water heater) and **tiles** below.
+- **Live legends** on each element (production, battery level and power, import / export, house, EV, water heater) and **tiles** below. The **Solar share** tile shows the part of the house consumption covered by the solar production (production ÷ consumption, at most 100 %), e.g. `47 %` and `782 W from solar` for 782 W of production and 1.65 kW consumed; it only shows while the panels produce.
 - **Day / night** from `sun.sun` (or from the production): blue sky with sun, or night sky with moon and lit windows. The panels shine while producing, the battery level fills up (orange below 30 %, red below 15 %).
 - Status badge: **Self-powered**, **Exporting** or **Drawing from grid**.
 - Updates automatically whenever one of the entities changes.

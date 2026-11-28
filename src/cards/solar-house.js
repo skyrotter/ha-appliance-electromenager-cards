@@ -163,7 +163,7 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
     `<g class="pill p-${k}" transform="translate(${x} ${y})"><rect x="-27" y="-8" width="54" height="15" rx="7.5"/><path d="${ic}" fill="#ffb300" transform="translate(-24 -6.5)"/><text class="k" x="0" y="0" font-size="0"></text><text class="v" x="5" y="3" text-anchor="middle"></text></g>`).join('')}
 </svg>`;
 
-  const TILES = [['production', 'mdi:solar-power-variant'], ['consumption', 'mdi:home-lightning-bolt-outline'], ['battery', 'mdi:home-battery-outline'], ['grid', 'mdi:transmission-tower'], ['ev', 'mdi:ev-station'], ['water', 'mdi:water-boiler']];
+  const TILES = [['production', 'mdi:solar-power-variant'], ['consumption', 'mdi:home-lightning-bolt-outline'], ['selfuse', 'mdi:solar-power'], ['battery', 'mdi:home-battery-outline'], ['grid', 'mdi:transmission-tower'], ['ev', 'mdi:ev-station'], ['water', 'mdi:water-boiler']];
 
   class ApplianceSolarHouseCard extends HTMLElement {
     get _config() { return this._c; }
@@ -324,6 +324,9 @@ svg{display:block;width:100%;max-width:calc(100% * var(--illus-scale,1));height:
       const set = (k, show, val, sub) => { const el = r.querySelector(`.tile[data-k="${k}"]`); el.classList.toggle('hide', !show); el.querySelector('.lbl').textContent = this._l(k === 'water' ? 'water_heater' : k); el.querySelector('.v').textContent = val; el.querySelector('.s').textContent = sub || ''; };
       set('production', true, this._fmt(v.sol));
       set('consumption', true, this._fmt(v.home));
+      // autoconsommation : part de la consommation de la maison couverte par le solaire (le reste vient du réseau ou de la batterie)
+      const covered = v.home > THR && v.sol > THR ? Math.min(v.sol, v.home) : 0;
+      set('selfuse', v.home > THR && v.sol > THR, `${Math.round(covered / v.home * 100)} %`, `${this._fmt(covered)} ${this._t('from_solar')}`);
       set('battery', v.hasBatt, isFinite(v.soc) ? `${Math.round(v.soc)} %` : this._fmt(v.batt), chg ? `${this._t('charging')} ${this._fmt(v.batt)}` : dis ? `${this._t('discharging')} ${this._fmt(-v.batt)}` : '');
       set('grid', v.hasGrid, this._fmt(gv), exp ? this._t('export') : imp ? this._t('import') : '');
       set('ev', v.hasEv, this._fmt(v.ev), isFinite(v.car) ? `${this._t('car')} ${Math.round(v.car)} %` : '');

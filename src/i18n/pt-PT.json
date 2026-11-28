@@ -3201,6 +3201,8 @@
     "name": "Casa solar",
     "production": "Produção",
     "consumption": "Consumo",
+    "selfuse": "Parte solar",
+    "from_solar": "do solar",
     "battery": "Bateria",
     "grid": "Rede",
     "import": "Consumo da rede",
