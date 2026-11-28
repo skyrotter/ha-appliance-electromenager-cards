@@ -72,7 +72,7 @@
 })();
 (() => {
 "use strict";
-const VERSION = "1.257.2";
+const VERSION = "1.257.3";
 
 /* ------------------------------------------------------------------ */
 /* i18n — strings live in src/i18n/<lang>.json, inlined by build.js    */
@@ -9602,7 +9602,7 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
   // navigateur) ; en cas d'échec définitif, le résultat n'est pas gardé : le prochain appel (carte affichée, retour sur l'onglet, réseau revenu) réessaie.
   const importRetry = (rel) => {
     const delays = [0, 800, 2500, 6000];
-    const attempt = (i) => new Promise((r) => setTimeout(r, delays[i])).then(() => import(new URL(`${rel}?v=1.257.2${i ? "&r=" + i : ""}`, base).href))
+    const attempt = (i) => new Promise((r) => setTimeout(r, delays[i])).then(() => import(new URL(`${rel}?v=1.257.3${i ? "&r=" + i : ""}`, base).href))
       .catch((e) => { if (i + 1 < delays.length) return attempt(i + 1); throw e; });
     return attempt(0);
   };
@@ -9722,6 +9722,9 @@ console.info(`%c HA-APPLIANCE-CARDS %c v${VERSION} `,
       };
       for (const [tag, chunkName] of Object.entries(TAG_TO_CHUNK)) {
         const k = tag.toLowerCase();
+        // seules les cartes ont une version provisoire : un élément interne (ex. la boîte de dialogue de la carte des pièces)
+        // est créé par sa carte une fois le fichier chargé et doit être la vraie classe, avec ses propriétés (dlg.card…)
+        if (!/-card$/.test(k)) continue;
         const isForm = FORM_TAGS.has(k);
         if (!origGet(k)) {
           STUBS.add(k);
